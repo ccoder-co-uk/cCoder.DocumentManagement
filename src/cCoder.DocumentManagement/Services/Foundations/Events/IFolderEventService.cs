@@ -1,0 +1,22 @@
+using cCoder.DocumentManagement.Models;
+using cCoder.Data.Models.CMS;
+using cCoder.Data.Models.DMS;
+using cCoder.Data.Models.Security;
+
+
+namespace cCoder.DocumentManagement.Services.Foundations.Events;
+
+public interface IFolderEventService
+{
+    ValueTask RaiseFolderAddEventAsync(Folder entity);
+    ValueTask RaiseFolderUpdateEventAsync(Folder entity);
+    ValueTask RaiseFolderDeleteEventAsync(Folder entity);
+}
+
+
+
+
+
+
+
+

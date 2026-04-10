@@ -1,0 +1,32 @@
+using cCoder.DocumentManagement.Services.Processings;
+using FluentAssertions;
+using Xunit;
+
+
+namespace cCoder.Core.Services.Tests.DMS.Processings;
+
+public partial class DmsProcessingServiceTests
+{
+    [Fact]
+    public async Task ShouldThrowInvalidOperationExceptionWhenMethodIsUnsupported()
+    {
+        // Given
+        DmsProcessingRequest request = CreateRequest("PATCH", "/api/dms/folder/file.txt");
+
+        // When
+        Func<Task> act = async () => await dmsProcessingService.ProcessAsync(request);
+
+        // Then
+        await act.Should()
+            .ThrowAsync<InvalidOperationException>()
+            .WithMessage("Unsupported DMS method: PATCH");
+
+        dmsInstanceServiceMock.VerifyNoOtherCalls();
+    }
+}
+
+
+
+
+
+

@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Library</OutputType>
+    <IsPackable>true</IsPackable>
+    <NoWarn>1591</NoWarn>
+    <PackageId>cCoder.DocumentManagement</PackageId>
+    <PackageTags>cCoder;DocumentManagement;DMS;cCoder.DocumentManagement</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <ProjectUrl>https://github.com/ccoder-co-uk/cCoder.DocumentManagement</ProjectUrl>
+    <RepositoryUrl>https://github.com/ccoder-co-uk/cCoder.DocumentManagement.git</RepositoryUrl>
+    <PrivateRepositoryUrl>https://github.com/ccoder-co-uk/cCoder.DocumentManagement.git</PrivateRepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Description>cCoder.DocumentManagement</Description>
+    <Authors>cCoder</Authors>
+    <Copyright>2026 Paul Ward</Copyright>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="\" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="cCoder.Eventing.EventLibrary" Version="2026.3.13.1755" />
+    <PackageReference Include="cCoder.Data" Version="2026.4.10.1053" />
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="9.4.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="10.1.5" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.7.1" />
+  </ItemGroup>
+</Project>
