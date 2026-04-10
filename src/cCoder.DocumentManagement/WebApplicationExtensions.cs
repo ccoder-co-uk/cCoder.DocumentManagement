@@ -12,8 +12,6 @@ namespace cCoder.DocumentManagement;
 public static class WebApplicationExtensions
 {
     private const string MetadataScope = "DocumentManagement";
-    private const string ContentMetadataCacheTypeName =
-        "cCoder.ContentManagement.Exposures.Caching.IMetadataCache, cCoder.ContentManagement";
     private static readonly Regex DmsRouteRegex = new(@"^\/api\/dms.*", RegexOptions.Compiled);
     private static readonly Regex WebDavRouteRegex = new(@"^\/api\/webdav.*", RegexOptions.Compiled);
 
@@ -61,15 +59,6 @@ public static class WebApplicationExtensions
                     .GetKnownMetadata()
                     .Select(static metadata => JsonSerializer.Serialize(metadata)));
         }
-
-        RebuildContentMetadataCache(app.Services);
-    }
-
-    private static void RebuildContentMetadataCache(IServiceProvider services)
-    {
-        Type metadataCacheType = Type.GetType(ContentMetadataCacheTypeName, throwOnError: false);
-        object metadataCache = metadataCacheType is null ? null : services.GetService(metadataCacheType);
-        _ = metadataCacheType?.GetMethod("Rebuild")?.Invoke(metadataCache, null);
     }
 }
 
