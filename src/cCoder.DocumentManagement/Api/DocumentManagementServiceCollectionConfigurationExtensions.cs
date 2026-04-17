@@ -37,7 +37,7 @@ public static partial class IServiceCollectionExtensions
         return configuration;
     }
 
-    internal static void ConfigureDocumentManagementApiModel(this ODataConventionModelBuilder builder) =>
+    public static void ConfigureDocumentManagementApiModel(this ODataConventionModelBuilder builder) =>
         new DocumentManagementModelBuilder(builder).Configure();
 
     private static DocumentManagementConfiguration CreateConfiguration(
