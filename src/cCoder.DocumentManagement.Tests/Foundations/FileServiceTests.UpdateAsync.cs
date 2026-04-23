@@ -48,8 +48,10 @@ public partial class FileServiceTests
         FileEntity result = await fileService.UpdateAsync(file);
 
         // Then
-        result.Should().NotBeSameAs(file);
+        result.Should().BeSameAs(file);
         submitted.Should().NotBeNull();
+        submitted.Should().NotBeSameAs(file);
+        result.Should().NotBeSameAs(submitted);
         submitted.Should().BeEquivalentTo(file);
         result.Should().BeEquivalentTo(file);
         fileBrokerMock.Verify(x => x.UpdateFileAsync(It.IsAny<DataFile>()), Times.Once);

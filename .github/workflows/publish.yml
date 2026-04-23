@@ -37,10 +37,10 @@ jobs:
           "value=$(Get-Date -Format 'yyyy.M.d.HHmm')" >> $env:GITHUB_OUTPUT
 
       - name: Restore
-        run: dotnet restore cCoder.DocumentManagement.sln
+        run: dotnet restore src/cCoder.DocumentManagement.sln
 
       - name: Build
-        run: dotnet build cCoder.DocumentManagement.sln -c Release --no-restore /p:Version="${{ steps.version.outputs.value }}"
+        run: dotnet build src/cCoder.DocumentManagement.sln -c Release --no-restore /p:Version="${{ steps.version.outputs.value }}"
 
       - name: Test
         run: dotnet test src/cCoder.DocumentManagement.Tests/cCoder.DocumentManagement.Tests.csproj -c Release --no-build

@@ -28,7 +28,7 @@ public partial class FileServiceTests
 
         fileBrokerMock
             .Setup(x =>
-                x.AddFileAsync(It.Is<DataFile>(candidate => candidate.Id != file.Id))
+                x.AddFileAsync(It.Is<DataFile>(candidate => !ReferenceEquals(candidate, file)))
             )
             .Callback<DataFile>(candidate =>
                 submitted = new FileEntity
@@ -50,8 +50,10 @@ public partial class FileServiceTests
         FileEntity result = await fileService.AddAsync(file);
 
         // Then
-        result.Should().NotBeSameAs(file);
+        result.Should().BeSameAs(file);
         submitted.Should().NotBeNull();
+        submitted.Should().NotBeSameAs(file);
+        result.Should().NotBeSameAs(submitted);
 
         submitted
             .Should()
@@ -128,7 +130,7 @@ public partial class FileServiceTests
             );
 
         fileBrokerMock.Verify(
-            x => x.AddFileAsync(It.Is<DataFile>(candidate => candidate.Id != file.Id)),
+            x => x.AddFileAsync(It.Is<DataFile>(candidate => !ReferenceEquals(candidate, file))),
             Times.Once
         );
         fileBrokerMock.Verify(x => x.GetAppId(It.IsAny<DataFile>()), Times.AtMostOnce());

@@ -46,8 +46,10 @@ public partial class FileContentServiceTests
         FileContent result = await fileContentService.UpdateAsync(fileContent);
 
         // Then
-        result.Should().NotBeSameAs(fileContent);
+        result.Should().BeSameAs(fileContent);
         submitted.Should().NotBeNull();
+        submitted.Should().NotBeSameAs(fileContent);
+        result.Should().NotBeSameAs(submitted);
         submitted.Should().BeEquivalentTo(fileContent);
         result.Should().BeEquivalentTo(fileContent);
         fileContentBrokerMock.Verify(

@@ -28,7 +28,7 @@ public partial class FileContentServiceTests
         fileContentBrokerMock
             .Setup(x =>
                 x.AddFileContentAsync(
-                    It.Is<DataFileContent>(candidate => candidate.Id != fileContent.Id)
+                    It.Is<DataFileContent>(candidate => !ReferenceEquals(candidate, fileContent))
                 )
             )
             .Callback<DataFileContent>(candidate =>
@@ -50,8 +50,10 @@ public partial class FileContentServiceTests
         FileContent result = await fileContentService.AddAsync(fileContent);
 
         // Then
-        result.Should().NotBeSameAs(fileContent);
+        result.Should().BeSameAs(fileContent);
         submitted.Should().NotBeNull();
+        submitted.Should().NotBeSameAs(fileContent);
+        result.Should().NotBeSameAs(submitted);
 
         submitted
             .Should()
@@ -130,7 +132,7 @@ public partial class FileContentServiceTests
         fileContentBrokerMock.Verify(
             x =>
                 x.AddFileContentAsync(
-                    It.Is<DataFileContent>(candidate => candidate.Id != fileContent.Id)
+                    It.Is<DataFileContent>(candidate => !ReferenceEquals(candidate, fileContent))
                 ),
             Times.Once
         );

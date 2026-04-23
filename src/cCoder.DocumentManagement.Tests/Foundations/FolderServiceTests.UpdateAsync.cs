@@ -44,8 +44,10 @@ public partial class FolderServiceTests
         Folder result = await folderService.UpdateAsync(folder);
 
         // Then
-        result.Should().NotBeSameAs(folder);
+        result.Should().BeSameAs(folder);
         submitted.Should().NotBeNull();
+        submitted.Should().NotBeSameAs(folder);
+        result.Should().NotBeSameAs(submitted);
         submitted.Should().BeEquivalentTo(folder);
         result.Should().BeEquivalentTo(folder);
         folderBrokerMock.Verify(x => x.UpdateFolderAsync(It.IsAny<DataFolder>()), Times.Once);

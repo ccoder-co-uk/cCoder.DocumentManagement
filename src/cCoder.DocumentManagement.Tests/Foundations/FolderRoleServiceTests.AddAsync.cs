@@ -41,8 +41,10 @@ public partial class FolderRoleServiceTests
         FolderRole result = await folderRoleService.AddAsync(folderRole);
 
         // Then
-        result.Should().NotBeSameAs(folderRole);
+        result.Should().BeSameAs(folderRole);
         submitted.Should().NotBeNull();
+        submitted.Should().NotBeSameAs(folderRole);
+        result.Should().NotBeSameAs(submitted);
         submitted.Should().BeEquivalentTo(folderRole);
         result.Should().BeEquivalentTo(folderRole);
         folderRoleBrokerMock.Verify(

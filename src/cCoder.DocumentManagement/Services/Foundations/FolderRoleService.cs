@@ -24,10 +24,10 @@ internal class FolderRoleService(
             $"{nameof(FolderRole)}_create"
         );
 
-        newFolderRole = await folderRoleBroker.AddFolderRoleAsync(newFolderRole);
-        newFolderRole.Folder = folderRole.Folder;
-        newFolderRole.Role = folderRole.Role;
-        return newFolderRole;
+        FolderRole result = await folderRoleBroker.AddFolderRoleAsync(newFolderRole);
+        folderRole.FolderId = result.FolderId;
+        folderRole.RoleId = result.RoleId;
+        return folderRole;
     }
 
     public async ValueTask DeleteAsync(FolderRole folderRole)
