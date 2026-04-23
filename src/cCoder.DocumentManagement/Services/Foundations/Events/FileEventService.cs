@@ -1,6 +1,6 @@
 using cCoder.Data;
 using cCoder.DocumentManagement.Brokers.Events;
-using EventLibrary.Models;
+using cCoder.Eventing.Models;
 using FileEntity = cCoder.Data.Models.DMS.File;
 using LocalFile = cCoder.Data.Models.DMS.File;
 

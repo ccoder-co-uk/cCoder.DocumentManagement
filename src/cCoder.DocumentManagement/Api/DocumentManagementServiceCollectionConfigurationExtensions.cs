@@ -1,6 +1,6 @@
 using cCoder.DocumentManagement.Api.OData;
 using cCoder.DocumentManagement.Models;
-using EventLibrary;
+using cCoder.Eventing;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.OData.Batch;
 using Microsoft.AspNetCore.Server.Kestrel.Core;

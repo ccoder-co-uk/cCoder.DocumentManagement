@@ -4,7 +4,7 @@ using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
-using EventLibrary.Models;
+using cCoder.Eventing.Models;
 using DataFile = cCoder.Data.Models.DMS.File;
 using DataFileContent = cCoder.Data.Models.DMS.FileContent;
 using LocalFile = cCoder.Data.Models.DMS.File;

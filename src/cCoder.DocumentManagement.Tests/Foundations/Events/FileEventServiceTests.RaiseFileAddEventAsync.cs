@@ -1,4 +1,4 @@
-using EventLibrary.Models;
+using cCoder.Eventing.Models;
 using FluentAssertions;
 using Moq;
 using Xunit;

@@ -14,7 +14,7 @@ using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Foundations.Events;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using cCoder.DocumentManagement.Services.Processings;
-using EventLibrary;
+using cCoder.Eventing;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.OData.Batch;
 using Microsoft.AspNetCore.Server.Kestrel.Core;

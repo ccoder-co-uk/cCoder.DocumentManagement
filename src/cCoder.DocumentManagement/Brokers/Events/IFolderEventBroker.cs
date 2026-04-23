@@ -1,5 +1,5 @@
 using cCoder.Data.Models.DMS;
-using EventLibrary.Models;
+using cCoder.Eventing.Models;
 
 
 namespace cCoder.DocumentManagement.Brokers.Events;

@@ -1,5 +1,5 @@
-using EventLibrary;
-using EventLibrary.Models;
+using cCoder.Eventing;
+using cCoder.Eventing.Models;
 using FileEntity = cCoder.Data.Models.DMS.File;
 
 
