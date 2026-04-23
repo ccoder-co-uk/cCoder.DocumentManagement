@@ -72,9 +72,18 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
         newFileEntity.CreatedOn = now;
         newFileEntity.CreatedBy = currentUserId;
 
-        newFileEntity = await fileBroker.AddFileAsync(newFileEntity);
-        CopyFileChildren(newFileEntity, file);
-        return newFileEntity;
+        FileEntity result = await fileBroker.AddFileAsync(newFileEntity);
+        file.Id = result.Id;
+        file.FolderId = result.FolderId;
+        file.Name = result.Name;
+        file.Description = result.Description;
+        file.Path = result.Path;
+        file.MimeType = result.MimeType;
+        file.CreatedBy = result.CreatedBy;
+        file.Size = result.Size;
+        file.CreatedOn = result.CreatedOn;
+        file.DeletedOn = result.DeletedOn;
+        return file;
     }
 
     public async ValueTask<LocalFile> UpdateAsync(LocalFile file)
@@ -85,9 +94,18 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
             $"{nameof(cCoder.Data.Models.DMS.File)}_update"
         );
 
-        updateFileEntity = await fileBroker.UpdateFileAsync(updateFileEntity);
-        CopyFileChildren(updateFileEntity, file);
-        return updateFileEntity;
+        FileEntity result = await fileBroker.UpdateFileAsync(updateFileEntity);
+        file.Id = result.Id;
+        file.FolderId = result.FolderId;
+        file.Name = result.Name;
+        file.Description = result.Description;
+        file.Path = result.Path;
+        file.MimeType = result.MimeType;
+        file.CreatedBy = result.CreatedBy;
+        file.Size = result.Size;
+        file.CreatedOn = result.CreatedOn;
+        file.DeletedOn = result.DeletedOn;
+        return file;
     }
 
     public async ValueTask DeleteAsync(Guid id)
@@ -230,16 +248,6 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
         };
     }
 
-    private static void CopyFileChildren(FileEntity target, LocalFile source)
-    {
-        if (target == null || source == null)
-        {
-            return;
-        }
-
-        target.Folder = source.Folder;
-        target.Contents = source.Contents;
-    }
 }
 
 

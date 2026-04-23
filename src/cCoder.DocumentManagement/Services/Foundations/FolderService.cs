@@ -63,17 +63,27 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
     {
         authorizationBroker.Authorize(folder.AppId, $"{nameof(Folder)}_create");
         Folder newFolder = CreateStorageFolderForAdd(folder);
-        newFolder = await folderBroker.AddFolderAsync(newFolder);
-        CopyFolderChildren(newFolder, folder);
-        return newFolder;
+        Folder result = await folderBroker.AddFolderAsync(newFolder);
+        folder.Id = result.Id;
+        folder.AppId = result.AppId;
+        folder.ParentId = result.ParentId;
+        folder.Name = result.Name;
+        folder.Path = result.Path;
+        folder.DeletedOn = result.DeletedOn;
+        return folder;
     }
 
     public async ValueTask<Folder> AddForPathBuildAsync(Folder folder)
     {
         Folder newFolder = CreateStorageFolderForAdd(folder);
-        newFolder = await folderBroker.AddFolderAsync(newFolder);
-        CopyFolderChildren(newFolder, folder);
-        return newFolder;
+        Folder result = await folderBroker.AddFolderAsync(newFolder);
+        folder.Id = result.Id;
+        folder.AppId = result.AppId;
+        folder.ParentId = result.ParentId;
+        folder.Name = result.Name;
+        folder.Path = result.Path;
+        folder.DeletedOn = result.DeletedOn;
+        return folder;
     }
 
     public async ValueTask<Folder> UpdateAsync(Folder folder)
@@ -81,9 +91,14 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
         authorizationBroker.Authorize(folder.AppId, $"{nameof(Folder)}_update");
         Folder updateFolder = CreateStorageFolder(folder, includeId: true);
 
-        updateFolder = await folderBroker.UpdateFolderAsync(updateFolder);
-        CopyFolderChildren(updateFolder, folder);
-        return updateFolder;
+        Folder result = await folderBroker.UpdateFolderAsync(updateFolder);
+        folder.Id = result.Id;
+        folder.AppId = result.AppId;
+        folder.ParentId = result.ParentId;
+        folder.Name = result.Name;
+        folder.Path = result.Path;
+        folder.DeletedOn = result.DeletedOn;
+        return folder;
     }
 
     public async ValueTask DeleteAsync(Guid id)
@@ -270,19 +285,6 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
         return newFolder;
     }
 
-    private static void CopyFolderChildren(Folder target, Folder source)
-    {
-        if (target == null || source == null)
-        {
-            return;
-        }
-
-        target.App = source.App;
-        target.Parent = source.Parent;
-        target.SubFolders = source.SubFolders;
-        target.Files = source.Files;
-        target.Roles = source.Roles;
-    }
 }
 
 

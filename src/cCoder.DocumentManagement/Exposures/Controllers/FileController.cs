@@ -61,8 +61,8 @@ public partial class FileController : ODataController
     {
         try
         {
-            IQueryable<LocalFile> result = Service.GetAll().Where(file => file.Id == key);
-            return Ok(SingleResult.Create(result));
+            LocalFile result = Service.Get(key);
+            return result is null ? NotFound() : Ok(result);
         }
         catch (System.Security.SecurityException)
         {

@@ -1,4 +1,5 @@
 using cCoder.Data;
+using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -70,9 +71,19 @@ public sealed partial class FolderControllerTests
             .GetRequiredService<cCoder.Data.ICoreContextFactory>()
             .CreateCoreContext();
 
+        App hiddenApp = await core.AddAppAsync(new App
+        {
+            Name = Unique("HiddenApp"),
+            Domain = $"{Unique("hidden")}.local",
+            DefaultTheme = "Default",
+            DefaultCultureId = string.Empty,
+            TenantId = Unique("tenant"),
+            ConfigJson = "{}",
+        });
+
         Folder hiddenFolder = await core.AddFolderAsync(new Folder
         {
-            AppId = seededContext.AppId,
+            AppId = hiddenApp.Id,
             Name = Unique("HiddenFolder"),
             Path = Unique("hidden-folder").ToLowerInvariant(),
         });
@@ -81,6 +92,9 @@ public sealed partial class FolderControllerTests
 
         actualFolder.Should().BeNull();
 
+        core.Remove(hiddenFolder);
+        core.Remove(hiddenApp);
+        await core.SaveChangesAsync();
         await Teardown(seededContext);
     }
 }

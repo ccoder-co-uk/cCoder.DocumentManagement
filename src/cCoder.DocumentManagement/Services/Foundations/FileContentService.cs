@@ -49,9 +49,16 @@ internal class FileContentService(
         newFileContent.CreatedOn = now;
         newFileContent.CreatedBy = currentUserId;
 
-        newFileContent = await fileContentBroker.AddFileContentAsync(newFileContent);
-        newFileContent.File = fileContent.File;
-        return newFileContent;
+        FileContent result = await fileContentBroker.AddFileContentAsync(newFileContent);
+        fileContent.Id = result.Id;
+        fileContent.FileId = result.FileId;
+        fileContent.Description = result.Description;
+        fileContent.Size = result.Size;
+        fileContent.CreatedBy = result.CreatedBy;
+        fileContent.CreatedOn = result.CreatedOn;
+        fileContent.Version = result.Version;
+        fileContent.RawData = result.RawData;
+        return fileContent;
     }
 
     public async ValueTask<FileContent> UpdateAsync(FileContent fileContent)
@@ -62,9 +69,16 @@ internal class FileContentService(
             $"{nameof(FileContent)}_update"
         );
 
-        updateFileContent = await fileContentBroker.UpdateFileContentAsync(updateFileContent);
-        updateFileContent.File = fileContent.File;
-        return updateFileContent;
+        FileContent result = await fileContentBroker.UpdateFileContentAsync(updateFileContent);
+        fileContent.Id = result.Id;
+        fileContent.FileId = result.FileId;
+        fileContent.Description = result.Description;
+        fileContent.Size = result.Size;
+        fileContent.CreatedBy = result.CreatedBy;
+        fileContent.CreatedOn = result.CreatedOn;
+        fileContent.Version = result.Version;
+        fileContent.RawData = result.RawData;
+        return fileContent;
     }
 
     public async ValueTask DeleteAsync(Guid id)

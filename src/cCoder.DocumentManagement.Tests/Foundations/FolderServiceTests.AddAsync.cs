@@ -27,7 +27,7 @@ public partial class FolderServiceTests
 
         folderBrokerMock
             .Setup(x =>
-                x.AddFolderAsync(It.Is<DataFolder>(candidate => candidate.Id != folder.Id))
+                x.AddFolderAsync(It.Is<DataFolder>(candidate => !ReferenceEquals(candidate, folder)))
             )
             .Callback<DataFolder>(candidate =>
                 submitted = new Folder
@@ -46,8 +46,10 @@ public partial class FolderServiceTests
         Folder result = await folderService.AddAsync(folder);
 
         // Then
-        result.Should().NotBeSameAs(folder);
+        result.Should().BeSameAs(folder);
         submitted.Should().NotBeNull();
+        submitted.Should().NotBeSameAs(folder);
+        result.Should().NotBeSameAs(submitted);
 
         submitted
             .Should()
@@ -58,7 +60,7 @@ public partial class FolderServiceTests
             .BeEquivalentTo(folder, options => options.Excluding(candidate => candidate.Id));
 
         folderBrokerMock.Verify(
-            x => x.AddFolderAsync(It.Is<DataFolder>(candidate => candidate.Id != folder.Id)),
+            x => x.AddFolderAsync(It.Is<DataFolder>(candidate => !ReferenceEquals(candidate, folder))),
             Times.Once
         );
         folderBrokerMock.Verify(x => x.GetAppId(It.IsAny<DataFolder>()), Times.AtMostOnce());

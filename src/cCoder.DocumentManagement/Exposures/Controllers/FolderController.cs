@@ -72,8 +72,8 @@ public partial class FolderController : ODataController
     {
         try
         {
-            IQueryable<Folder> result = Service.GetAll().Where(folder => folder.Id == key);
-            return Ok(SingleResult.Create(result));
+            Folder result = Service.Get(key);
+            return result is null ? NotFound() : Ok(result);
         }
         catch (System.Security.SecurityException)
         {
