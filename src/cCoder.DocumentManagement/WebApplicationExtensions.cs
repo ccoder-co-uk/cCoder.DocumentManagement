@@ -9,13 +9,22 @@ using cCoder.DocumentManagement.Services.Foundations;
 
 namespace cCoder.DocumentManagement;
 
-public static class WebApplicationExtensions
+public static partial class WebApplicationExtensions
 {
     private const string MetadataScope = "DocumentManagement";
     private static readonly Regex DmsRouteRegex = new(@"^\/api\/dms.*", RegexOptions.Compiled);
     private static readonly Regex WebDavRouteRegex = new(@"^\/api\/webdav.*", RegexOptions.Compiled);
 
-    public static WebApplication UseDocumentManagementExposure(
+    public static WebApplication StartDocumentManagementWeb(
+        this WebApplication app,
+        ILogger log = null) =>
+        app.UseDocumentManagementExposure(log)
+            .UseDocumentManagementEventHandlers();
+
+    public static WebApplication StartDocumentManagementHostedServices(this WebApplication app) =>
+        app.UseDocumentManagementEventHandlers();
+
+    private static WebApplication UseDocumentManagementExposure(
         this WebApplication app,
         ILogger log = null
     )
@@ -35,7 +44,7 @@ public static class WebApplicationExtensions
         return app;
     }
 
-    public static WebApplication UseDocumentManagementEventHandlers(this WebApplication app)
+    private static WebApplication UseDocumentManagementEventHandlers(this WebApplication app)
     {
         using IServiceScope scope = app.Services.CreateScope();
         IServiceProvider services = scope.ServiceProvider;

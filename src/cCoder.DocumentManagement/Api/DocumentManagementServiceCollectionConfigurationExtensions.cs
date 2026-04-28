@@ -10,24 +10,24 @@ using Microsoft.OpenApi;
 
 namespace cCoder.DocumentManagement;
 
-public static class DocumentManagementServiceCollectionConfigurationExtensions
+public static partial class IServiceCollectionExtensions
 {
-    public static DocumentManagementConfiguration AddDocumentManagement(
+    private static DocumentManagementConfiguration AddConfiguredDocumentManagement(
         this IServiceCollection services,
         Action<IServiceCollection, DocumentManagementConfiguration> configure)
     {
         DocumentManagementConfiguration configuration = CreateConfiguration(services, configure);
-        IServiceCollectionExtensions.AddDocumentManagement(services);
+        services.AddDocumentManagement();
         return configuration;
     }
 
-    public static DocumentManagementConfiguration AddDocumentManagementApi(
+    private static DocumentManagementConfiguration AddConfiguredDocumentManagementWeb(
         this IServiceCollection services,
         Action<IServiceCollection, DocumentManagementConfiguration> configure,
         ODataConventionModelBuilder builder = null)
     {
         DocumentManagementConfiguration configuration = CreateConfiguration(services, configure);
-        IServiceCollectionExtensions.AddDocumentManagement(services);
+        services.AddDocumentManagementWeb(builder);
         services.AddConfiguredApi(
             configuration,
             "DocumentManagement",

@@ -44,7 +44,7 @@ public class Program
             builder.Services,
             coreConnection);
 
-        builder.Services.AddDocumentManagementApi();
+        builder.Services.AddDocumentManagementWeb();
 
         WebApplication app = builder.Build();
         log = app.Services.GetRequiredService<ILogger<Program>>();
@@ -63,10 +63,9 @@ public class Program
             .UseODataRouteDebug();
 
         app.UseDomainApiShell();
-        app.UseDocumentManagementExposure(log);
+        app.StartDocumentManagementWeb(log);
         app.UseDomainDefaultCors();
         app.UseDomainExceptionHandling(HandleUnhandledException);
-        app.UseDocumentManagementEventHandlers();
         app.Run();
     }
 
