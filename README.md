@@ -25,6 +25,18 @@ dotnet build src/cCoder.DocumentManagement.sln -v minimal
 dotnet test src/cCoder.DocumentManagement.sln -v minimal --no-build
 ```
 
+## Local Configuration
+
+The standalone web host reads local secrets from environment variables rather than committed config.
+
+Before running `src/DocumentManagement.Web`, set:
+
+- `ConnectionStrings__Core`
+- `ConnectionStrings__SSO`
+- `Settings__DecryptionKey`
+
+The committed `appsettings.json` keeps these values blank so user or machine environment variables can supply them during local development.
+
 ## Package
 
 The NuGet package produced by this repository is:
