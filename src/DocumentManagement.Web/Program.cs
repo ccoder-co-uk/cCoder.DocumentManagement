@@ -3,9 +3,7 @@ using Apps.Shared;
 using Apps.Shared.Models;
 using cCoder.DocumentManagement;
 using cCoder.Security;
-using cCoder.Security.Api;
-using cCoder.Security.Data.EF.MSSQL;
-using cCoder.Security.Objects;
+using cCoder.Security.Data.EF;
 using cCoder.Eventing;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.OData;
@@ -51,6 +49,7 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseSession();
+        app.UseStaticFiles();
 
         app.UseSwagger()
             .UseSwaggerUI(options =>
@@ -63,6 +62,8 @@ public class Program
             .UseODataRouteDebug();
 
         app.UseDomainApiShell();
+        app.MapGet("/Health", () => Results.Text("OK"));
+        app.MapGet("/", () => Results.Redirect("/tools/index.html"));
         app.StartDocumentManagementWeb(log);
         app.UseDomainDefaultCors();
         app.UseDomainExceptionHandling(HandleUnhandledException);
