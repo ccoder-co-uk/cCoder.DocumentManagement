@@ -1,9 +1,8 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.8.11925.187 insiders
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", ".", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cCoder.DocumentManagement", "cCoder.DocumentManagement\cCoder.DocumentManagement.csproj", "{F6DD35EA-84ED-4A5A-A68B-145523AC0BDC}"
 EndProject
@@ -76,9 +75,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F6DD35EA-84ED-4A5A-A68B-145523AC0BDC} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
-		{6C186379-0EB9-4E43-8E81-C839F414CAFB} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
-		{F1CB85EC-CD1F-485F-9A78-82BEBF64EFD7} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{AB8AC8C5-C2A1-4580-81F4-54F1C94F58B6} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal
