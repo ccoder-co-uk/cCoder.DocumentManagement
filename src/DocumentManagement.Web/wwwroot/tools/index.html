@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document Management</title>
+    <link rel="stylesheet" href="/tools/styles.css?v=folder-children-20260701">
+</head>
+<body class="dm-shell">
+    <header class="dm-header">
+        <div class="dm-brand">
+            <span class="dm-mark">DM</span>
+            <div>
+                <h1>Document Management</h1>
+                <span>Folders, files, content, and folder roles</span>
+            </div>
+        </div>
+
+        <div class="dm-auth">
+            <span id="auth-user" class="dm-auth-user">Guest</span>
+            <input id="auth-username" autocomplete="username" placeholder="User">
+            <input id="auth-password" autocomplete="current-password" placeholder="Password" type="password">
+            <button id="auth-login" type="button">Login</button>
+            <button id="auth-logout" type="button" hidden>Logout</button>
+        </div>
+
+        <div class="dm-header-actions">
+            <span id="status-message" class="dm-status">Ready</span>
+            <a href="/swagger" target="_blank" rel="noreferrer">Swagger</a>
+            <button id="health-check" type="button">Health</button>
+        </div>
+    </header>
+
+    <main class="dm-workbench">
+        <section class="dm-panel">
+            <div class="dm-toolbar">
+                <div>
+                    <h2>Folders</h2>
+                    <span>Expand a folder to manage its files and folder roles.</span>
+                </div>
+                <button id="create-folder" type="button">Create Folder</button>
+            </div>
+            <div id="folder-grid" class="dm-grid"></div>
+        </section>
+    </main>
+
+    <dialog id="editor-dialog" class="dm-dialog">
+        <form method="dialog">
+            <header>
+                <h3 id="editor-title">Edit</h3>
+                <button id="editor-close" value="cancel" type="submit">Close</button>
+            </header>
+            <div id="editor-fields" class="dm-editor-fields"></div>
+            <footer>
+                <button id="editor-save" value="default" type="submit">Save</button>
+            </footer>
+        </form>
+    </dialog>
+
+    <script src="/tools/api.js?v=folder-children-20260701"></script>
+    <script src="/tools/grids.js?v=folder-children-20260701"></script>
+</body>
+</html>
