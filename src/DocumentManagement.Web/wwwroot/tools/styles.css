@@ -61,6 +61,14 @@ body.dm-shell {
     font-weight: 700;
 }
 
+.dm-logo {
+    width: 126px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 3px;
+    background: #000;
+}
+
 .dm-auth input {
     width: 150px;
 }
@@ -103,13 +111,68 @@ a:hover {
 
 .dm-workbench {
     height: calc(100% - 58px);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
     overflow: auto;
     padding: 10px;
+}
+
+.dm-login-gate {
+    height: calc(100% - 58px);
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    text-align: center;
+}
+
+.dm-login-gate h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.dm-login-gate p {
+    margin: 0;
+    color: #607085;
+}
+
+body.dm-shell:not(.is-authenticated) .dm-workbench,
+body.dm-shell:not(.is-authenticated) .dm-header-actions {
+    display: none;
+}
+
+body.dm-shell.is-authenticated .dm-login-gate {
+    display: none;
+}
+
+.dm-workspace-tabs {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    min-height: 38px;
+    border-bottom: 1px solid #c8d2df;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.dm-workspace-tabs button {
+    margin-bottom: -1px;
+    border-radius: 4px 4px 0 0;
+    background: transparent;
+}
+
+.dm-workspace-tabs button.active {
+    border-color: #b6c4d4;
+    border-bottom-color: #fff;
+    background: #fff;
+    color: #0b5cab;
+    font-weight: 600;
 }
 
 .dm-panel {
     min-height: 100%;
     border: 1px solid #c8d2df;
+    border-top: 0;
     background: #fff;
 }
 
