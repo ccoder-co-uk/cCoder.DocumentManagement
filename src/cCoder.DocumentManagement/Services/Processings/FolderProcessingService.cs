@@ -328,32 +328,8 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         }
     }
 
-    public async ValueTask DeleteByAppIdAsync(int appId)
-    {
-        Folder[] folders =
-            [.. service.GetAll(ignoreFilters: true)
-                .Where(folder => folder.AppId == appId)
-                .OrderByDescending(folder => folder.Path.Length)];
-
-        if (folders.Length == 0)
-        {
-            return;
-        }
-
-        Guid[] folderIds = [.. folders.Select(folder => folder.Id)];
-        Guid[] fileIds = fileService.GetIdsByFolderIds(folderIds, ignoreFilters: true);
-
-        if (fileIds.Length > 0)
-        {
-            await fileContentService.DeleteAllForFilesAsync(fileIds);
-            await fileService.DeleteAllForAppAsync(
-                fileService.GetAll(ignoreFilters: true)
-                    .Where(file => fileIds.Contains(file.Id))
-                    .ToArray());
-        }
-
-        await service.DeleteAllForAppAsync(folders);
-    }
+    public ValueTask DeleteByAppIdAsync(int appId) =>
+        service.DeleteAllByAppIdAsync(appId);
 
     public async ValueTask SaveAsync(App app, cCoder.DocumentManagement.Models.Path path)
     {

@@ -23,6 +23,7 @@ public interface IFolderService
     ValueTask<Folder> UpdateForAppAsync(Folder folder);
     ValueTask DeleteAsync(Guid id);
     ValueTask DeleteAllForAppAsync(IEnumerable<Folder> folders);
+    ValueTask DeleteAllByAppIdAsync(int appId);
 }
 
 

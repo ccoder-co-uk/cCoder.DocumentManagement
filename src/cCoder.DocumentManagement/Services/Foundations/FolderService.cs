@@ -123,6 +123,9 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
         folderBroker.DeleteAllFoldersAsync(
             folders?.Select(folder => CreateStorageFolder(folder, includeId: true)) ?? []);
 
+    public ValueTask DeleteAllByAppIdAsync(int appId) =>
+        folderBroker.DeleteAllFoldersByAppIdAsync(appId);
+
     private static Folder CreateFolder(Folder folder) =>
         folder == null
             ? null

@@ -51,9 +51,19 @@ internal class FolderOrchestrationService(IFolderProcessingService processingSer
         return processingService.AddOrUpdate(items);
     }
 
+    public ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateForAppAsync(IEnumerable<Folder> items)
+    {
+        return processingService.AddOrUpdateForAppAsync(items);
+    }
+
     public ValueTask DeleteAllAsync(IEnumerable<Folder> items)
     {
         return processingService.DeleteAllAsync(items);
+    }
+
+    public ValueTask DeleteAllByAppIdAsync(int appId)
+    {
+        return processingService.DeleteByAppIdAsync(appId);
     }
 
     public ValueTask<List<Result<Guid?>>> CopyAsync(string source, string destination, int sourceAppId, int destAppId)
