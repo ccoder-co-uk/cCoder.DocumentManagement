@@ -94,6 +94,12 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
             $"{nameof(cCoder.Data.Models.DMS.File)}_update"
         );
 
+        return await UpdateForAppAsync(file);
+    }
+
+    public async ValueTask<LocalFile> UpdateForAppAsync(LocalFile file)
+    {
+        FileEntity updateFileEntity = CreateStorageFile(file, includeId: true);
         FileEntity result = await fileBroker.UpdateFileAsync(updateFileEntity);
         file.Id = result.Id;
         file.FolderId = result.FolderId;
@@ -131,6 +137,10 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
             FolderId = file.FolderId,
         });
     }
+
+    public ValueTask DeleteAllForAppAsync(IEnumerable<LocalFile> items) =>
+        fileBroker.DeleteAllFilesAsync(
+            items?.Select(file => CreateStorageFile(file, includeId: true)) ?? []);
 
     private static LocalFile CreateFile(FileEntity file) =>
         file == null

@@ -89,6 +89,11 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
     public async ValueTask<Folder> UpdateAsync(Folder folder)
     {
         authorizationBroker.Authorize(folder.AppId, $"{nameof(Folder)}_update");
+        return await UpdateForAppAsync(folder);
+    }
+
+    public async ValueTask<Folder> UpdateForAppAsync(Folder folder)
+    {
         Folder updateFolder = CreateStorageFolder(folder, includeId: true);
 
         Folder result = await folderBroker.UpdateFolderAsync(updateFolder);
@@ -113,6 +118,10 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
         authorizationBroker.Authorize(folder.AppId, $"{nameof(Folder)}_delete");
         _ = await folderBroker.DeleteFolderAsync(CreateStorageFolder(folder, includeId: true));
     }
+
+    public ValueTask DeleteAllForAppAsync(IEnumerable<Folder> folders) =>
+        folderBroker.DeleteAllFoldersAsync(
+            folders?.Select(folder => CreateStorageFolder(folder, includeId: true)) ?? []);
 
     private static Folder CreateFolder(Folder folder) =>
         folder == null

@@ -1,6 +1,7 @@
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.DocumentManagement.Services.Orchestrations;
+using cCoder.DocumentManagement.Services.Processings;
 using Moq;
 using Xunit;
 
@@ -8,39 +9,29 @@ namespace cCoder.Core.Services.Tests.DMS.Orchestrations;
 
 public class AppOrchestrationServiceTests
 {
-    private readonly Mock<IFolderOrchestrationService> folderOrchestrationServiceMock;
+    private readonly Mock<IFolderProcessingService> folderProcessingServiceMock;
     private readonly AppOrchestrationService service;
 
     public AppOrchestrationServiceTests()
     {
-        folderOrchestrationServiceMock = new Mock<IFolderOrchestrationService>(MockBehavior.Strict);
-        service = new AppOrchestrationService(folderOrchestrationServiceMock.Object);
+        folderProcessingServiceMock = new Mock<IFolderProcessingService>(MockBehavior.Strict);
+        service = new AppOrchestrationService(folderProcessingServiceMock.Object);
     }
 
     [Fact]
-    public async Task ShouldDeleteRootFoldersThroughFolderOrchestrationWhenDeleteAsync()
+    public async Task ShouldDeleteAppFoldersThroughFolderProcessingWhenDeleteAsync()
     {
         // Given
-        Guid rootFolderId = Guid.NewGuid();
-        Guid childFolderId = Guid.NewGuid();
-
-        Folder[] folders =
-        [
-            new Folder { Id = rootFolderId, AppId = 5, ParentId = null, Name = "Root", Path = "root" },
-            new Folder { Id = childFolderId, AppId = 5, ParentId = rootFolderId, Name = "Child", Path = "root/child" },
-            new Folder { Id = Guid.NewGuid(), AppId = 8, ParentId = null, Name = "Other", Path = "other" }
-        ];
-
-        folderOrchestrationServiceMock.Setup(x => x.GetAll(true)).Returns(folders.AsQueryable());
-        folderOrchestrationServiceMock.Setup(x => x.DeleteAsync(rootFolderId)).Returns(ValueTask.CompletedTask);
+        folderProcessingServiceMock
+            .Setup(x => x.DeleteByAppIdAsync(5))
+            .Returns(ValueTask.CompletedTask);
 
         // When
         await service.DeleteAsync(5);
 
         // Then
-        folderOrchestrationServiceMock.Verify(x => x.GetAll(true), Times.Once);
-        folderOrchestrationServiceMock.Verify(x => x.DeleteAsync(rootFolderId), Times.Once);
-        folderOrchestrationServiceMock.VerifyNoOtherCalls();
+        folderProcessingServiceMock.Verify(x => x.DeleteByAppIdAsync(5), Times.Once);
+        folderProcessingServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -57,14 +48,14 @@ public class AppOrchestrationServiceTests
             ]
         };
 
-        folderOrchestrationServiceMock
-            .Setup(x => x.AddOrUpdate(It.Is<IEnumerable<Folder>>(folders => folders.All(folder => folder.AppId == 7))))
+        folderProcessingServiceMock
+            .Setup(x => x.AddOrUpdateForAppAsync(It.Is<IEnumerable<Folder>>(folders => folders.All(folder => folder.AppId == 7))))
             .Returns(ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Models.Result<Folder>>>([]));
 
         // When
         await service.AddAsync(app);
 
         // Then
-        folderOrchestrationServiceMock.VerifyAll();
+        folderProcessingServiceMock.VerifyAll();
     }
 }

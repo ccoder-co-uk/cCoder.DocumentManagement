@@ -178,7 +178,17 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
             return;
 
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        coreDataContext.Folders.RemoveRange(items);
+        Guid[] folderIds = [.. items.Select(folder => folder.Id)];
+
+        Folder[] folders = await coreDataContext.Folders
+            .IgnoreQueryFilters()
+            .Include(folder => folder.Roles)
+            .Where(folder => folderIds.Contains(folder.Id))
+            .ToArrayAsync();
+
+        coreDataContext.FolderRoles.RemoveRange(
+            folders.SelectMany(folder => folder.Roles ?? []));
+        coreDataContext.Folders.RemoveRange(folders);
         _ = await coreDataContext.SaveChangesAsync();
     }
 
