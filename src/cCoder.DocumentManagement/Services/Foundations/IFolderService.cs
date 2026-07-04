@@ -20,7 +20,10 @@ public interface IFolderService
     ValueTask<Folder> AddForPathBuildAsync(Folder folder);
     ValueTask<Folder> AddAsync(Folder folder);
     ValueTask<Folder> UpdateAsync(Folder folder);
+    ValueTask<Folder> UpdateForAppAsync(Folder folder);
     ValueTask DeleteAsync(Guid id);
+    ValueTask DeleteAllForAppAsync(IEnumerable<Folder> folders);
+    ValueTask DeleteAllByAppIdAsync(int appId);
 }
 
 

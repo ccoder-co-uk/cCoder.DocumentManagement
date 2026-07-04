@@ -19,6 +19,7 @@ public interface IFolderBroker
     ValueTask<Folder> UpdateFolderAsync(Folder entity);
     ValueTask<int> DeleteFolderAsync(Folder entity);
     ValueTask DeleteAllFoldersAsync(IEnumerable<Folder> items);
+    ValueTask DeleteAllFoldersByAppIdAsync(int appId);
     int? GetAppId(Folder entity);
 }
 
@@ -178,8 +179,54 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
             return;
 
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        coreDataContext.Folders.RemoveRange(items);
+        Guid[] folderIds = [.. items.Select(folder => folder.Id)];
+
+        Folder[] folders = await coreDataContext.Folders
+            .IgnoreQueryFilters()
+            .Include(folder => folder.Roles)
+            .Where(folder => folderIds.Contains(folder.Id))
+            .ToArrayAsync();
+
+        coreDataContext.FolderRoles.RemoveRange(
+            folders.SelectMany(folder => folder.Roles ?? []));
+        coreDataContext.Folders.RemoveRange(folders);
         _ = await coreDataContext.SaveChangesAsync();
+    }
+
+    public async ValueTask DeleteAllFoldersByAppIdAsync(int appId)
+    {
+        using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+        IQueryable<Guid> folderIds =
+            coreDataContext.Folders
+                .IgnoreQueryFilters()
+                .Where(folder => folder.AppId == appId)
+                .Select(folder => folder.Id);
+
+        IQueryable<Guid> fileIds =
+            coreDataContext.Files
+                .IgnoreQueryFilters()
+                .Where(file => folderIds.Contains(file.FolderId))
+                .Select(file => file.Id);
+
+        await coreDataContext.FileContents
+            .IgnoreQueryFilters()
+            .Where(fileContent => fileIds.Contains(fileContent.FileId))
+            .ExecuteDeleteAsync();
+
+        await coreDataContext.Files
+            .IgnoreQueryFilters()
+            .Where(file => folderIds.Contains(file.FolderId))
+            .ExecuteDeleteAsync();
+
+        await coreDataContext.FolderRoles
+            .IgnoreQueryFilters()
+            .Where(folderRole => folderIds.Contains(folderRole.FolderId))
+            .ExecuteDeleteAsync();
+
+        await coreDataContext.Folders
+            .IgnoreQueryFilters()
+            .Where(folder => folder.AppId == appId)
+            .ExecuteDeleteAsync();
     }
 
     public int? GetAppId(Folder entity)

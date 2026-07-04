@@ -108,6 +108,31 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         return GetAll(ignoreFilters: true).FirstOrDefault((Folder folder) => folder.AppId == newFolder.AppId && folder.Path.ToLower() == newFolder.Path.ToLower());
     }
 
+    private async ValueTask<Folder> AddForAppAsync(Folder newFolder)
+    {
+        if (newFolder.ParentId.HasValue)
+        {
+            Folder parent = service.GetWithRoles(newFolder.ParentId.Value, ignoreFilters: true);
+            if (parent == null)
+            {
+                throw new InvalidOperationException("Parent folder doesn't exist.");
+            }
+
+            newFolder.Path = parent.Path + "/" + newFolder.Name;
+        }
+        else if (string.IsNullOrWhiteSpace(newFolder.Path))
+        {
+            newFolder.Path = newFolder.Name;
+        }
+
+        Folder existingFolder = GetAll(ignoreFilters: true)
+            .FirstOrDefault(folder =>
+                folder.AppId == newFolder.AppId
+                && folder.Path.ToLower() == newFolder.Path.ToLower());
+
+        return existingFolder ?? await service.AddForPathBuildAsync(newFolder);
+    }
+
     public async ValueTask DeleteAsync(Guid id)
     {
         Folder folder = service.GetWithRoles(id, ignoreFilters: true);
@@ -123,9 +148,17 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         Folder dbVersion = service.GetForUpdate(folder.Id, ignoreFilters: true);
         if (dbVersion != null && (User.IsAdminOfApp(dbVersion.AppId) || dbVersion.UserCan(User, "folder_update")))
         {
-            return await UpdateInternalAsync(dbVersion, folder);
+            return await UpdateInternalAsync(dbVersion, folder, authorize: true);
         }
         throw new SecurityException("Access Denied!");
+    }
+
+    private async ValueTask<Folder> UpdateForAppAsync(Folder folder)
+    {
+        Folder dbVersion = service.GetForUpdate(folder.Id, ignoreFilters: true)
+            ?? throw new InvalidOperationException("Folder doesn't exist.");
+
+        return await UpdateInternalAsync(dbVersion, folder, authorize: false);
     }
 
     public async ValueTask HandleFolderDeleteEventAsync(Folder folder)
@@ -254,6 +287,39 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         return results;
     }
 
+    public async ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateForAppAsync(IEnumerable<Folder> items)
+    {
+        List<Result<Folder>> results = new List<Result<Folder>>();
+
+        foreach (Folder item in items)
+        {
+            try
+            {
+                Folder savedItem = item.Id == Guid.Empty
+                    ? await AddForAppAsync(item)
+                    : await UpdateForAppAsync(item);
+
+                results.Add(new Result<Folder>
+                {
+                    Success = true,
+                    Item = savedItem,
+                    Message = item.Id == Guid.Empty ? "Added Successfully" : "Updated Successfully"
+                });
+            }
+            catch (Exception ex)
+            {
+                results.Add(new Result<Folder>
+                {
+                    Success = false,
+                    Item = item,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        return results;
+    }
+
     public async ValueTask DeleteAllAsync(IEnumerable<Folder> items)
     {
         foreach (Folder item in items)
@@ -261,6 +327,9 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
             await DeleteAsync(item.Id);
         }
     }
+
+    public ValueTask DeleteByAppIdAsync(int appId) =>
+        service.DeleteAllByAppIdAsync(appId);
 
     public async ValueTask SaveAsync(App app, cCoder.DocumentManagement.Models.Path path)
     {
@@ -292,7 +361,7 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         await MoveFolderAsync(app, oldPath, resolvedNewPath);
     }
 
-    private async ValueTask<Folder> UpdateInternalAsync(Folder dbVersion, Folder folder)
+    private async ValueTask<Folder> UpdateInternalAsync(Folder dbVersion, Folder folder, bool authorize)
     {
         string parentPath = new cCoder.DocumentManagement.Models.Path(folder.Path).ParentPath.FullPath;
         string newPath = ((!string.IsNullOrEmpty(parentPath)) ? "/" : "") + folder.Name.ToLower();
@@ -309,22 +378,30 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         dbVersion.RecomputePaths();
         if (existingDestionFolder != null)
         {
-            await MergeSourceIntoDestinationAsync(dbVersion, existingDestionFolder);
+            await MergeSourceIntoDestinationAsync(dbVersion, existingDestionFolder, authorize);
         }
         Folder destinationFolder = ((existingDestionFolder != null) ? service.GetForUpdate(existingDestionFolder.Id, ignoreFilters: true) : dbVersion);
         if (existingDestionFolder == null)
         {
-            destinationFolder = await service.UpdateAsync(destinationFolder);
+            destinationFolder = authorize
+                ? await service.UpdateAsync(destinationFolder)
+                : await service.UpdateForAppAsync(destinationFolder);
         }
-        await UpdateChildrenAsync(folder, destinationFolder);
+        await UpdateChildrenAsync(folder, destinationFolder, authorize);
         if (existingDestionFolder != null)
         {
-            await service.DeleteAsync(dbVersion.Id);
+            if (authorize)
+                await service.DeleteAsync(dbVersion.Id);
+            else
+                await service.DeleteAllForAppAsync([dbVersion]);
         }
         return destinationFolder;
     }
 
-    private async ValueTask MergeSourceIntoDestinationAsync(Folder dbVersion, Folder existingDestionFolder)
+    private async ValueTask MergeSourceIntoDestinationAsync(
+        Folder dbVersion,
+        Folder existingDestionFolder,
+        bool authorize)
     {
         if (dbVersion.Files != null && dbVersion.Files.Any())
         {
@@ -339,7 +416,10 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
                     Path = existingDestionFolder.Path
                 };
                 file.RecomputePath();
-                await fileService.UpdateAsync(file);
+                if (authorize)
+                    await fileService.UpdateAsync(file);
+                else
+                    await fileService.UpdateForAppAsync(file);
             }
         }
         if (dbVersion.SubFolders == null || !dbVersion.SubFolders.Any())
@@ -357,11 +437,14 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
                 Path = existingDestionFolder.Path
             };
             subFolder.RecomputePaths();
-            await service.UpdateAsync(subFolder);
+            if (authorize)
+                await service.UpdateAsync(subFolder);
+            else
+                await service.UpdateForAppAsync(subFolder);
         }
     }
 
-    private async ValueTask UpdateChildrenAsync(Folder folder, Folder dbVersion)
+    private async ValueTask UpdateChildrenAsync(Folder folder, Folder dbVersion, bool authorize)
     {
         if (dbVersion.Files != null && dbVersion.Files.Any())
         {
@@ -376,7 +459,10 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
                     Path = dbVersion.Path
                 };
                 file.RecomputePath();
-                await fileService.UpdateAsync(file);
+                if (authorize)
+                    await fileService.UpdateAsync(file);
+                else
+                    await fileService.UpdateForAppAsync(file);
             }
         }
         if (folder.Roles != null && folder.Roles.Any())
@@ -414,7 +500,9 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
                 Path = dbVersion.Path
             };
             childFolder.RecomputePaths();
-            Folder folder2 = ((!(childFolder.Id != Guid.Empty)) ? (await AddAsync(childFolder)) : (await UpdateAsync(childFolder)));
+            Folder folder2 = authorize
+                ? (!(childFolder.Id != Guid.Empty) ? await AddAsync(childFolder) : await UpdateAsync(childFolder))
+                : (!(childFolder.Id != Guid.Empty) ? await AddForAppAsync(childFolder) : await UpdateForAppAsync(childFolder));
             _ = folder2;
         }
     }

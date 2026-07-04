@@ -11,26 +11,17 @@ internal class AppOrchestrationService(IFolderOrchestrationService folderOrchest
     public async ValueTask AddAsync(App app)
     {
         StampFolders(app);
-        _ = await folderOrchestrationService.AddOrUpdate(app.Folders ?? []);
+        _ = await folderOrchestrationService.AddOrUpdateForAppAsync(app.Folders ?? []);
     }
 
     public async ValueTask UpdateAsync(App app)
     {
         StampFolders(app);
-        _ = await folderOrchestrationService.AddOrUpdate(app.Folders ?? []);
+        _ = await folderOrchestrationService.AddOrUpdateForAppAsync(app.Folders ?? []);
     }
 
-    public async ValueTask DeleteAsync(int appId)
-    {
-        Folder[] foldersToDelete =
-            [.. folderOrchestrationService.GetAll(true)
-                .Where(folder => folder.AppId == appId && folder.ParentId == null)];
-
-        foreach (Folder folder in foldersToDelete)
-        {
-            await folderOrchestrationService.DeleteAsync(folder.Id);
-        }
-    }
+    public ValueTask DeleteAsync(int appId) =>
+        folderOrchestrationService.DeleteAllByAppIdAsync(appId);
 
     private static void StampFolders(App app)
     {

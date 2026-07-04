@@ -18,7 +18,11 @@ public interface IFolderOrchestrationService
     ValueTask DeleteAsync(Guid id);
     ValueTask<IEnumerable<Result<Folder>>> AddOrUpdate(IEnumerable<Folder> items);
 
+    ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateForAppAsync(IEnumerable<Folder> items);
+
     ValueTask DeleteAllAsync(IEnumerable<Folder> items);
+
+    ValueTask DeleteAllByAppIdAsync(int appId);
 
     ValueTask<List<Result<Guid?>>> CopyAsync(string source, string destination, int sourceAppId, int destAppId);
 

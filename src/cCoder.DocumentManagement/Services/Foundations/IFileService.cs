@@ -18,7 +18,9 @@ public interface IFileService
     IQueryable<File> GetAll(bool ignoreFilters = false);
     ValueTask<File> AddAsync(File entity);
     ValueTask<File> UpdateAsync(File entity);
+    ValueTask<File> UpdateForAppAsync(File entity);
     ValueTask DeleteAsync(Guid id);
+    ValueTask DeleteAllForAppAsync(IEnumerable<File> items);
 }
 
 
