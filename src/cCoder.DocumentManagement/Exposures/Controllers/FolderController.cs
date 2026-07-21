@@ -41,7 +41,7 @@ public partial class FolderController : ODataController
             ? Ok(
                 new cCoder.DocumentManagement.Api.OData.DocumentManagementModelBuilder()
                     .Build()
-                    .EDMModel.GetExtendedMetadataForType("Core", typeof(Folder))
+                    .EDMModel.GetExtendedMetadataForType("DocumentManagement", typeof(Folder))
             )
             : Ok(new MetadataContainer(typeof(Folder), true, true));
     }

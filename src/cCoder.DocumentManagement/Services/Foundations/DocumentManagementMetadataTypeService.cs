@@ -12,8 +12,8 @@ internal sealed class DocumentManagementMetadataTypeService : IDocumentManagemen
     [
         new MetadataContainerSet
         {
-            Name = "Core",
-            UriBase = "Core",
+            Name = "DocumentManagement",
+            UriBase = "DocumentManagement",
             Types =
             [
                 Entity<DmsFile>(),
@@ -27,7 +27,7 @@ internal sealed class DocumentManagementMetadataTypeService : IDocumentManagemen
     private static ExtendedMetadataContainer Entity<T>() =>
         new(typeof(T), isEntity: true, hasEndpoint: true)
         {
-            Category = "Core",
+            Category = "DocumentManagement",
         };
 }
 
