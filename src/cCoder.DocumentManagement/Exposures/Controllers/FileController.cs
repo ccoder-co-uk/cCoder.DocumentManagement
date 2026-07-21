@@ -30,7 +30,7 @@ public partial class FileController : ODataController
             ? Ok(
                 new cCoder.DocumentManagement.Api.OData.DocumentManagementModelBuilder()
                     .Build()
-                    .EDMModel.GetExtendedMetadataForType("Core", typeof(LocalFile))
+                    .EDMModel.GetExtendedMetadataForType("DocumentManagement", typeof(LocalFile))
             )
             : Ok(new MetadataContainer(typeof(LocalFile), true, true));
     }
