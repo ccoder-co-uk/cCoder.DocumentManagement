@@ -24,6 +24,7 @@ public class FolderRoleBroker(ICoreContextFactory coreContextFactory) : IFolderR
     public IQueryable<FolderRole> GetAllFolderRoles(bool ignoreFilters)
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         return ignoreFilters
             ? coreDataContext.FolderRoles.IgnoreQueryFilters()
             : coreDataContext.FolderRoles;
@@ -59,6 +60,7 @@ public class FolderRoleBroker(ICoreContextFactory coreContextFactory) : IFolderR
     public int? GetAppId(FolderRole entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         return coreDataContext.Folders
 
             .Where(predicate: folder => folder.Id == entity.FolderId)

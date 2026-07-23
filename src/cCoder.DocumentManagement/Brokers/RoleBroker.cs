@@ -23,6 +23,7 @@ internal class RoleBroker(ICoreContextFactory coreContextFactory) : IRoleBroker
     public IQueryable<Role> GetAllRoles(bool ignoreFilters)
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         return ignoreFilters
             ? coreDataContext.Roles.IgnoreQueryFilters()
             : coreDataContext.Roles;
@@ -63,5 +64,6 @@ internal class RoleBroker(ICoreContextFactory coreContextFactory) : IRoleBroker
         _ = await coreDataContext.SaveChangesAsync();
     }
 
-    public int? GetAppId(Role entity) => entity.AppId;
+    public int? GetAppId(Role entity) =>
+        entity.AppId;
 }

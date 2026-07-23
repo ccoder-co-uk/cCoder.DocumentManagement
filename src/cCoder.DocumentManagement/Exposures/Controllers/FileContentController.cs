@@ -37,9 +37,9 @@ public partial class FileContentController : ODataController
             ? Ok(
                 value: new cCoder.DocumentManagement.Api.OData.DocumentManagementModelBuilder()
                     .Build()
-                    .EDMModel.GetExtendedMetadataForType("DocumentManagement", typeof(LocalFileContent))
+                    .EDMModel.GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(LocalFileContent))
             )
-            : Ok(value: new MetadataContainer(typeof(LocalFileContent), true, true));
+            : Ok(value: new MetadataContainer(type: typeof(LocalFileContent), isEntity: true, hasEndpoint: true));
     }
 
     [HttpGet]
@@ -52,7 +52,8 @@ public partial class FileContentController : ODataController
         MaxExpansionDepth = 5
     )]
     [ActionName("Get")]
-    public IActionResult GetAll(ODataQueryOptions<LocalFileContent> queryOptions) => Ok(value: Service.GetAll());
+    public IActionResult GetAll(ODataQueryOptions<LocalFileContent> queryOptions) =>
+        Ok(value: Service.GetAll());
 
     [HttpGet]
     [AllowAnonymous]
@@ -68,8 +69,10 @@ public partial class FileContentController : ODataController
     {
         try
         {
-            IQueryable<LocalFileContent> result = Service.GetAll().Where(predicate: fileContent => fileContent.Id == key);
-            return Ok(value: SingleResult.Create(result));
+            IQueryable<LocalFileContent> result = Service.GetAll()
+                .Where(predicate: fileContent => fileContent.Id == key);
+
+            return Ok(value: SingleResult.Create(queryable: result));
         }
         catch (System.Security.SecurityException)
         {
@@ -93,7 +96,7 @@ public partial class FileContentController : ODataController
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
         }
 
-        return Ok(value: await Service.AddAsync(entity));
+        return Ok(value: await Service.AddAsync(entity: entity));
     }
 
     [HttpPut]
@@ -113,20 +116,21 @@ public partial class FileContentController : ODataController
         }
 
         entity.Id = key;
-        return Ok(value: await Service.UpdateAsync(entity));
+        return Ok(value: await Service.UpdateAsync(entity: entity));
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
     public async Task<IActionResult> Patch([FromRoute] Guid key, Delta<LocalFileContent> delta)
     {
         LocalFileContent originalEntity = Service.Get(id: key);
+
         if (originalEntity == null)
         {
             return NotFound();
         }
 
         delta.Patch(original: originalEntity);
-        return Ok(value: await Service.UpdateAsync(originalEntity));
+        return Ok(value: await Service.UpdateAsync(entity: originalEntity));
     }
 
     [HttpDelete]

@@ -25,7 +25,8 @@ public partial class FolderRoleProcessingServiceTests
             await folderRoleProcessingService.AddOrUpdate(items: new[] { link });
 
         // Then
-        await act.Should().NotThrowAsync();
+        await act.Should()
+            .NotThrowAsync();
     }
 
 }

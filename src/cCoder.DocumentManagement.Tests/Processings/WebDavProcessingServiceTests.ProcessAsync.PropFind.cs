@@ -23,6 +23,7 @@ public partial class WebDavProcessingServiceTests
         // Given
         Folder folder = CreateFolderAsync(path: "folder");
         LocalFile file = CreateFileAsync(path: "folder/file.txt", folder: folder);
+
         DmsProcessingRequest request = CreateRequest(
             method: "PROPFIND",
             requestPath: "Core/App(7)/DAV/folder/file.txt",
@@ -31,17 +32,27 @@ public partial class WebDavProcessingServiceTests
                 buffer: "<propfind xmlns=\"DAV:\"><prop><displayname /></prop></propfind>"u8.ToArray()
             )
         );
-        fileServiceMock.Setup(expression: x => x.GetAll()).Returns(value: new[] { file }.AsQueryable());
+
+        fileServiceMock.Setup(expression: x => x.GetAll())
+            .Returns(value: new[] { file }.AsQueryable());
 
         // When
         DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
         string xml = ReadBodyText(stream: response.Body);
 
         // Then
-        response.StatusCode.Should().Be(expected: 207);
-        response.ContentType.Should().Be(expected: "text/xml; charset=\"utf-8\"");
-        xml.Should().Contain(expected: "file.txt");
-        xml.Should().Contain(expected: "Core/App(7)/DAV/folder/file.txt");
+        response.StatusCode.Should()
+            .Be(expected: 207);
+
+        response.ContentType.Should()
+            .Be(expected: "text/xml; charset=\"utf-8\"");
+
+        xml.Should()
+            .Contain(expected: "file.txt");
+
+        xml.Should()
+            .Contain(expected: "Core/App(7)/DAV/folder/file.txt");
+
         fileServiceMock.Verify(expression: x => x.GetAll(), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
@@ -53,6 +64,7 @@ public partial class WebDavProcessingServiceTests
     {
         // Given
         Folder childFolder = CreateFolderAsync(path: "docs");
+
         DmsProcessingRequest request = CreateRequest(
             method: "PROPFIND",
             requestPath: "Core/App(7)/DAV",
@@ -62,18 +74,29 @@ public partial class WebDavProcessingServiceTests
                 [key: "Depth"] = ["1"],
             }
         );
-        folderServiceMock.Setup(expression: x => x.GetAll()).Returns(value: new[] { childFolder }.AsQueryable());
-        fileServiceMock.Setup(expression: x => x.GetAll()).Returns(value: Array.Empty<LocalFile>().AsQueryable());
+
+        folderServiceMock.Setup(expression: x => x.GetAll())
+            .Returns(value: new[] { childFolder }.AsQueryable());
+
+        fileServiceMock.Setup(expression: x => x.GetAll())
+            .Returns(value: Array.Empty<LocalFile>()
+            .AsQueryable());
 
         // When
         DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
         string xml = ReadBodyText(stream: response.Body);
 
         // Then
-        response.StatusCode.Should().Be(expected: 207);
-        xml.Should().Contain(expected: "Root");
-        xml.Should().Contain(expected: "docs");
-        folderServiceMock.Verify(expression: x => x.GetAll(), times: Times.Exactly(2));
+        response.StatusCode.Should()
+            .Be(expected: 207);
+
+        xml.Should()
+            .Contain(expected: "Root");
+
+        xml.Should()
+            .Contain(expected: "docs");
+
+        folderServiceMock.Verify(expression: x => x.GetAll(), times: Times.Exactly(callCount: 2));
         fileServiceMock.Verify(expression: x => x.GetAll(), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();

@@ -25,23 +25,27 @@ public partial class FolderServiceTests
         Folder folder = CreateRandomFolder(id: folderId, appId: 7);
 
         folderBrokerMock
-            .Setup(expression: x => x.GetAllFolders(true))
-            .Returns(value: new[] { ToExternalFolder(folder) }.AsQueryable());
+            .Setup(expression: x => x.GetAllFolders(ignoreFilters: true))
+            .Returns(value: new[] { ToExternalFolder(folder: folder) }.AsQueryable());
 
-        authorizationBrokerMock.Setup(expression: x => x.Authorize((int?)7, "Folder_delete"));
-        folderBrokerMock.Setup(expression: x => x.DeleteFolderAsync(It.IsAny<DataFolder>())).ReturnsAsync(value: 1);
+        authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_delete"));
+
+        folderBrokerMock.Setup(expression: x => x.DeleteFolderAsync(entity: It.IsAny<DataFolder>()))
+            .ReturnsAsync(value: 1);
 
         // When
         await folderService.DeleteAsync(id: folderId);
 
         // Then
-        folderBrokerMock.Verify(expression: x => x.GetAllFolders(true), times: Times.Once);
+        folderBrokerMock.Verify(expression: x => x.GetAllFolders(ignoreFilters: true), times: Times.Once);
+
         folderBrokerMock.Verify(
-            expression: x => x.DeleteFolderAsync(It.Is<DataFolder>(candidate => candidate.Id == folder.Id)),
+            expression: x => x.DeleteFolderAsync(entity: It.Is<DataFolder>(match: candidate => candidate.Id == folder.Id)),
             times: Times.Once
         );
+
         folderBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize((int?)7, "Folder_delete"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_delete"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -53,21 +57,24 @@ public partial class FolderServiceTests
         Folder folder = CreateRandomFolder(id: folderId, appId: 7);
 
         folderBrokerMock
-            .Setup(expression: x => x.GetAllFolders(true))
-            .Returns(value: new[] { ToExternalFolder(folder) }.AsQueryable());
+            .Setup(expression: x => x.GetAllFolders(ignoreFilters: true))
+            .Returns(value: new[] { ToExternalFolder(folder: folder) }.AsQueryable());
 
         authorizationBrokerMock
-            .Setup(expression: x => x.Authorize((int?)7, "Folder_delete"))
-            .Throws(exception: new SecurityException("Access Denied!"));
+            .Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_delete"))
+            .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
         Func<Task> action = async () => await folderService.DeleteAsync(id: folderId);
 
         // Then
-        await action.Should().ThrowAsync<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
-        folderBrokerMock.Verify(expression: x => x.GetAllFolders(true), times: Times.Once);
+        await action.Should()
+            .ThrowAsync<SecurityException>()
+            .WithMessage(expectedWildcardPattern: "Access Denied!");
+
+        folderBrokerMock.Verify(expression: x => x.GetAllFolders(ignoreFilters: true), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize((int?)7, "Folder_delete"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_delete"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 

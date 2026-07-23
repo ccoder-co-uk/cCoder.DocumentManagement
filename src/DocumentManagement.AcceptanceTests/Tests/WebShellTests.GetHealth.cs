@@ -18,6 +18,7 @@ public sealed partial class WebShellTests
         string content = await GetOkContentAsync(path: "/Health");
 
         // Then
-        content.Should().Be(expected: "OK");
+        content.Should()
+            .Be(expected: "OK");
     }
 }

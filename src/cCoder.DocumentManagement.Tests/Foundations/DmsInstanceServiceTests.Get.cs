@@ -20,14 +20,18 @@ public partial class DmsInstanceServiceTests
         // Given
         DmsPath path = CreatePath(fullPath: "folder/file.txt");
         DMSResult result = CreateDmsResult(contentType: "text/plain");
-        dmsInstanceBrokerMock.Setup(expression: x => x.Get(path, 3, "needle")).Returns(value: result);
+
+        dmsInstanceBrokerMock.Setup(expression: x => x.Get(path: path, version: 3, search: "needle"))
+            .Returns(value: result);
 
         // When
         DMSResult returnedResult = dmsInstanceService.Get(path: path, version: 3, search: "needle");
 
         // Then
-        returnedResult.Should().BeSameAs(expected: result);
-        dmsInstanceBrokerMock.Verify(expression: x => x.Get(path, 3, "needle"), times: Times.Once);
+        returnedResult.Should()
+            .BeSameAs(expected: result);
+
+        dmsInstanceBrokerMock.Verify(expression: x => x.Get(path: path, version: 3, search: "needle"), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 

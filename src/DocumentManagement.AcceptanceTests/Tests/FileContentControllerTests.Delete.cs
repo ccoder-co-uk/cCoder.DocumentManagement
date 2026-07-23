@@ -16,6 +16,7 @@ public sealed partial class FileContentControllerTests
     {
         // Given
         SeededFileContentContext seededContext = await SeedDatabase("filecontent_create", "filecontent_delete");
+
         FileContent createdFileContent = await CreateFileContentAsync(payload: new
         {
             fileId = seededContext.FileId,
@@ -24,6 +25,7 @@ public sealed partial class FileContentControllerTests
             version = 1,
             rawData = new byte[] { 1, 2, 3, 4 },
         });
+
         int actualReadStatusCode;
 
         // When
@@ -31,8 +33,11 @@ public sealed partial class FileContentControllerTests
         actualReadStatusCode = await GetFileContentStatusCodeAsync(id: createdFileContent.Id);
 
         // Then
-        actualStatusCode.Should().Be(expected: 200);
-        actualReadStatusCode.Should().Be(expected: 404);
+        actualStatusCode.Should()
+            .Be(expected: 200);
+
+        actualReadStatusCode.Should()
+            .Be(expected: 404);
 
         await Teardown(seededContext: seededContext);
     }

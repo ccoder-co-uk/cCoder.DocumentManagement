@@ -25,13 +25,15 @@ public partial class FolderRoleServiceTests
 
         FolderRole submitted = null;
 
-        folderRoleBrokerMock.Setup(expression: x => x.GetAppId(It.IsAny<DataFolderRole>())).Returns(value: (int?)7);
-        authorizationBrokerMock.Setup(expression: x => x.Authorize((int?)7, "FolderRole_create"));
+        folderRoleBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFolderRole>()))
+            .Returns(value: (int?)7);
+
+        authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "FolderRole_create"));
 
         folderRoleBrokerMock
             .Setup(expression: x =>
                 x.AddFolderRoleAsync(
-                    It.Is<DataFolderRole>(candidate =>
+                    entity: It.Is<DataFolderRole>(match: candidate =>
                         candidate.FolderId == folderRole.FolderId && candidate.RoleId == folderRole.RoleId
                     )
                 )
@@ -45,24 +47,37 @@ public partial class FolderRoleServiceTests
         FolderRole result = await folderRoleService.AddAsync(folderRole: folderRole);
 
         // Then
-        result.Should().BeSameAs(expected: folderRole);
-        submitted.Should().NotBeNull();
-        submitted.Should().NotBeSameAs(unexpected: folderRole);
-        result.Should().NotBeSameAs(unexpected: submitted);
-        submitted.Should().BeEquivalentTo(expectation: folderRole);
-        result.Should().BeEquivalentTo(expectation: folderRole);
+        result.Should()
+            .BeSameAs(expected: folderRole);
+
+        submitted.Should()
+            .NotBeNull();
+
+        submitted.Should()
+            .NotBeSameAs(unexpected: folderRole);
+
+        result.Should()
+            .NotBeSameAs(unexpected: submitted);
+
+        submitted.Should()
+            .BeEquivalentTo(expectation: folderRole);
+
+        result.Should()
+            .BeEquivalentTo(expectation: folderRole);
+
         folderRoleBrokerMock.Verify(
             expression: x =>
                 x.AddFolderRoleAsync(
-                    It.Is<DataFolderRole>(candidate =>
+                    entity: It.Is<DataFolderRole>(match: candidate =>
                         candidate.FolderId == folderRole.FolderId && candidate.RoleId == folderRole.RoleId
                     )
                 ),
             times: Times.Once
         );
-        folderRoleBrokerMock.Verify(expression: x => x.GetAppId(It.IsAny<DataFolderRole>()), times: Times.AtMostOnce());
+
+        folderRoleBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFolderRole>()), times: Times.AtMostOnce());
         folderRoleBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize((int?)7, "FolderRole_create"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "FolderRole_create"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -72,19 +87,24 @@ public partial class FolderRoleServiceTests
         // Given
         FolderRole folderRole = CreateRandomFolderRole();
 
-        folderRoleBrokerMock.Setup(expression: x => x.GetAppId(It.IsAny<DataFolderRole>())).Returns(value: (int?)7);
+        folderRoleBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFolderRole>()))
+            .Returns(value: (int?)7);
+
         authorizationBrokerMock
-            .Setup(expression: x => x.Authorize((int?)7, "FolderRole_create"))
-            .Throws(exception: new SecurityException("Access Denied!"));
+            .Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "FolderRole_create"))
+            .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
         Func<Task> action = async () => await folderRoleService.AddAsync(folderRole: folderRole);
 
         // Then
-        await action.Should().ThrowAsync<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
-        folderRoleBrokerMock.Verify(expression: x => x.GetAppId(It.IsAny<DataFolderRole>()), times: Times.AtMostOnce());
+        await action.Should()
+            .ThrowAsync<SecurityException>()
+            .WithMessage(expectedWildcardPattern: "Access Denied!");
+
+        folderRoleBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFolderRole>()), times: Times.AtMostOnce());
         folderRoleBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize((int?)7, "FolderRole_create"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "FolderRole_create"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 

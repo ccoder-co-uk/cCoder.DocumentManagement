@@ -15,13 +15,15 @@ public partial class FileProcessingServiceTests
     {
         // Given
         Guid id = Guid.NewGuid();
-        fileServiceMock.Setup(expression: x => x.DeleteAsync(id)).Returns(value: ValueTask.CompletedTask);
+
+        fileServiceMock.Setup(expression: x => x.DeleteAsync(id: id))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
         await fileProcessingService.DeleteAsync(id: id);
 
         // Then
-        fileServiceMock.Verify(expression: x => x.DeleteAsync(id), times: Times.Once);
+        fileServiceMock.Verify(expression: x => x.DeleteAsync(id: id), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();
     }
 

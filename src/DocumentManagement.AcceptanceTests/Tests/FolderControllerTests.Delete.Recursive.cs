@@ -35,8 +35,9 @@ public sealed partial class FolderControllerTests
             {
                 Id = Guid.NewGuid(),
                 AppId = seededContext.AppId,
-                Name = Unique("Root"),
-                Path = Unique("root").ToLowerInvariant()
+                Name = Unique(prefix: "Root"),
+                Path = Unique(prefix: "root")
+                .ToLowerInvariant()
             });
 
             Folder childFolder = await core.AddFolderAsync(folder: new Folder
@@ -44,8 +45,9 @@ public sealed partial class FolderControllerTests
                 Id = Guid.NewGuid(),
                 AppId = seededContext.AppId,
                 ParentId = rootFolder.Id,
-                Name = Unique("Child"),
-                Path = $"{rootFolder.Path}/{Unique("child").ToLowerInvariant()}"
+                Name = Unique(prefix: "Child"),
+                Path = $"{rootFolder.Path}/{Unique(prefix: "child")
+                .ToLowerInvariant()}"
             });
 
             await core.AddFolderRoleAsync(folderRole: new FolderRole { FolderId = rootFolder.Id, RoleId = seededContext.RoleId });
@@ -90,11 +92,32 @@ public sealed partial class FolderControllerTests
                 .GetRequiredService<cCoder.Data.ICoreContextFactory>()
                 .CreateCoreContext();
 
-            actualStatusCode.Should().Be(expected: 200);
-            core.Set<Folder>().IgnoreQueryFilters().Any(predicate: folder => folder.Id == rootFolderId).Should().BeFalse();
-            core.Set<Folder>().IgnoreQueryFilters().Any(predicate: folder => folder.Id == childFolderId).Should().BeFalse();
-            core.Set<DmsFile>().IgnoreQueryFilters().Any(predicate: file => file.Id == fileId).Should().BeFalse();
-            core.Set<FileContent>().IgnoreQueryFilters().Any(predicate: content => content.FileId == fileId).Should().BeFalse();
+            actualStatusCode.Should()
+                .Be(expected: 200);
+
+            core.Set<Folder>()
+                .IgnoreQueryFilters()
+                .Any(predicate: folder => folder.Id == rootFolderId)
+                .Should()
+                .BeFalse();
+
+            core.Set<Folder>()
+                .IgnoreQueryFilters()
+                .Any(predicate: folder => folder.Id == childFolderId)
+                .Should()
+                .BeFalse();
+
+            core.Set<DmsFile>()
+                .IgnoreQueryFilters()
+                .Any(predicate: file => file.Id == fileId)
+                .Should()
+                .BeFalse();
+
+            core.Set<FileContent>()
+                .IgnoreQueryFilters()
+                .Any(predicate: content => content.FileId == fileId)
+                .Should()
+                .BeFalse();
         }
 
         await Teardown(seededContext: seededContext);

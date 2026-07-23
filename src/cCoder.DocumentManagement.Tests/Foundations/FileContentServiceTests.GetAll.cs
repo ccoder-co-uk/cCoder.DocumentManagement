@@ -23,14 +23,17 @@ public partial class FileContentServiceTests
         FileContent fileContent = CreateRandomFileContent();
         IQueryable<DataFileContent> fileContents = new[] { ToExternalFileContent(fileContent: fileContent) }.AsQueryable();
 
-        fileContentBrokerMock.Setup(expression: x => x.GetAllFileContents(false)).Returns(value: fileContents);
+        fileContentBrokerMock.Setup(expression: x => x.GetAllFileContents(ignoreFilters: false))
+            .Returns(value: fileContents);
 
         // When
         IQueryable<FileContent> result = fileContentService.GetAll();
 
         // Then
-        result.Should().BeEquivalentTo(expectation: new[] { fileContent }.AsQueryable());
-        fileContentBrokerMock.Verify(expression: x => x.GetAllFileContents(false), times: Times.Once);
+        result.Should()
+            .BeEquivalentTo(expectation: new[] { fileContent }.AsQueryable());
+
+        fileContentBrokerMock.Verify(expression: x => x.GetAllFileContents(ignoreFilters: false), times: Times.Once);
         fileContentBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }

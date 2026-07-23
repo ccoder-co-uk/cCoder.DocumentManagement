@@ -16,15 +16,16 @@ public partial class FileEventProcessingServiceTests
     {
         // Given
         FileEntity entity = CreateRandomFileEntity();
+
         fileEventServiceMock
-            .Setup(expression: x => x.RaiseFileUpdateEventAsync(entity))
+            .Setup(expression: x => x.RaiseFileUpdateEventAsync(entity: entity))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         await service.RaiseFileUpdateEventAsync(entity: entity);
 
         // Then
-        fileEventServiceMock.Verify(expression: x => x.RaiseFileUpdateEventAsync(entity), times: Times.Once);
+        fileEventServiceMock.Verify(expression: x => x.RaiseFileUpdateEventAsync(entity: entity), times: Times.Once);
         fileEventServiceMock.VerifyNoOtherCalls();
     }
 

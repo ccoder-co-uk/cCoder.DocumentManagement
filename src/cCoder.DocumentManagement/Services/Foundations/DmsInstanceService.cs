@@ -18,7 +18,8 @@ internal class DmsInstanceService(IDmsInstanceBroker dmsInstanceBroker) : IDmsIn
     public DmsResult Get(DmsPath path, int version = 0, string search = "") =>
         dmsInstanceBroker.Get(path: path, version: version, search: search);
 
-    public IEnumerable<File> Search(string needle) => dmsInstanceBroker.Search(needle: needle);
+    public IEnumerable<File> Search(string needle) =>
+        dmsInstanceBroker.Search(needle: needle);
 
     public ValueTask UnpackAsync(DmsPath path, Stream content, bool ignoreArchiveRoot = false) =>
         dmsInstanceBroker.UnpackAsync(path: path, content: content, ignoreArchiveRoot: ignoreArchiveRoot);

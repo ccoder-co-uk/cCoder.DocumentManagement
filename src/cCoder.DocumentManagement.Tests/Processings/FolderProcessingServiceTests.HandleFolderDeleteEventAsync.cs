@@ -19,6 +19,7 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         Folder folder = CreateRandomFolder();
+
         cCoder.Data.Models.DMS.File file = new()
         {
             Id = Guid.NewGuid(),
@@ -27,6 +28,7 @@ public partial class FolderProcessingServiceTests
             Name = "file.txt",
             Path = $"{folder.Path}/file.txt",
         };
+
         FileContent content = new()
         {
             Id = Guid.NewGuid(),
@@ -37,27 +39,34 @@ public partial class FolderProcessingServiceTests
             CreatedBy = "test-user",
             CreatedOn = DateTimeOffset.UtcNow,
         };
-        folderServiceMock.Setup(expression: x => x.GetAll(true)).Returns(value: new[] { folder }.AsQueryable());
+
+        folderServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
+            .Returns(value: new[] { folder }.AsQueryable());
+
         fileServiceMock
-            .Setup(expression: x => x.GetIdsByFolderIds(It.Is<Guid[]>(ids => ids.Single() == folder.Id), true))
+            .Setup(expression: x => x.GetIdsByFolderIds(folderIds: It.Is<Guid[]>(match: ids => ids.Single() == folder.Id), ignoreFilters: true))
             .Returns(value: [file.Id]);
+
         fileContentServiceMock
-            .Setup(expression: x => x.DeleteAllForFilesAsync(It.Is<Guid[]>(ids => ids.Single() == file.Id)))
+            .Setup(expression: x => x.DeleteAllForFilesAsync(fileIds: It.Is<Guid[]>(match: ids => ids.Single() == file.Id)))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         await folderProcessingService.HandleFolderDeleteEventAsync(folder: folder);
 
         // Then
-        folderServiceMock.Verify(expression: x => x.GetAll(true), times: Times.Exactly(2));
+        folderServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Exactly(callCount: 2));
+
         fileServiceMock.Verify(
-            expression: x => x.GetIdsByFolderIds(It.Is<Guid[]>(ids => ids.Single() == folder.Id), true),
+            expression: x => x.GetIdsByFolderIds(folderIds: It.Is<Guid[]>(match: ids => ids.Single() == folder.Id), ignoreFilters: true),
             times: Times.Once
         );
+
         fileContentServiceMock.Verify(
-            expression: x => x.DeleteAllForFilesAsync(It.Is<Guid[]>(ids => ids.Single() == file.Id)),
+            expression: x => x.DeleteAllForFilesAsync(fileIds: It.Is<Guid[]>(match: ids => ids.Single() == file.Id)),
             times: Times.Once
         );
+
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         fileContentServiceMock.VerifyNoOtherCalls();

@@ -22,14 +22,17 @@ public partial class CurrentAppResolverTests
         DefaultHttpContext httpContext = new();
         httpContext.Request.Path = "/webdav/Core/App(42)/Files";
 
-        appBrokerMock.Setup(expression: broker => broker.GetAppById(42)).Returns(value: dataApp);
+        appBrokerMock.Setup(expression: broker => broker.GetAppById(appId: 42))
+            .Returns(value: dataApp);
 
         IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
 
         App result = resolver.ResolveCurrentApp();
 
-        result.Should().BeEquivalentTo(expectation: CreateExpectedApp(dataApp));
-        appBrokerMock.Verify(expression: broker => broker.GetAppById(42), times: Times.Once);
+        result.Should()
+            .BeEquivalentTo(expectation: CreateExpectedApp(app: dataApp));
+
+        appBrokerMock.Verify(expression: broker => broker.GetAppById(appId: 42), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -39,15 +42,18 @@ public partial class CurrentAppResolverTests
         DefaultHttpContext httpContext = new();
         httpContext.Request.Path = "/webdav/Core/App(42)/Files";
 
-        appBrokerMock.Setup(expression: broker => broker.GetAppById(42)).Returns(value: (DataApp)null);
+        appBrokerMock.Setup(expression: broker => broker.GetAppById(appId: 42))
+            .Returns(value: (DataApp)null);
 
         IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
 
         Action action = () => resolver.ResolveCurrentApp();
 
-        action.Should().Throw<InvalidOperationException>()
+        action.Should()
+            .Throw<InvalidOperationException>()
             .WithMessage(expectedWildcardPattern: "Unable to resolve app '42'.");
-        appBrokerMock.Verify(expression: broker => broker.GetAppById(42), times: Times.Once);
+
+        appBrokerMock.Verify(expression: broker => broker.GetAppById(appId: 42), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -59,14 +65,17 @@ public partial class CurrentAppResolverTests
         httpContext.Request.Host = new HostString(value: "demo.localhost");
         httpContext.Request.Path = "/folder";
 
-        appBrokerMock.Setup(expression: broker => broker.GetAppByDomain("demo.localhost")).Returns(value: dataApp);
+        appBrokerMock.Setup(expression: broker => broker.GetAppByDomain(domain: "demo.localhost"))
+            .Returns(value: dataApp);
 
         IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
 
         App result = resolver.ResolveCurrentApp();
 
-        result.Should().BeEquivalentTo(expectation: CreateExpectedApp(dataApp));
-        appBrokerMock.Verify(expression: broker => broker.GetAppByDomain("demo.localhost"), times: Times.Once);
+        result.Should()
+            .BeEquivalentTo(expectation: CreateExpectedApp(app: dataApp));
+
+        appBrokerMock.Verify(expression: broker => broker.GetAppByDomain(domain: "demo.localhost"), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -76,15 +85,18 @@ public partial class CurrentAppResolverTests
         DefaultHttpContext httpContext = new();
         httpContext.Request.Host = new HostString(value: "missing.localhost");
 
-        appBrokerMock.Setup(expression: broker => broker.GetAppByDomain("missing.localhost")).Returns(value: (DataApp)null);
+        appBrokerMock.Setup(expression: broker => broker.GetAppByDomain(domain: "missing.localhost"))
+            .Returns(value: (DataApp)null);
 
         IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
 
         Action action = () => resolver.ResolveCurrentApp();
 
-        action.Should().Throw<InvalidOperationException>()
+        action.Should()
+            .Throw<InvalidOperationException>()
             .WithMessage(expectedWildcardPattern: "Unable to resolve current app for host 'missing.localhost'.");
-        appBrokerMock.Verify(expression: broker => broker.GetAppByDomain("missing.localhost"), times: Times.Once);
+
+        appBrokerMock.Verify(expression: broker => broker.GetAppByDomain(domain: "missing.localhost"), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
     }
 }

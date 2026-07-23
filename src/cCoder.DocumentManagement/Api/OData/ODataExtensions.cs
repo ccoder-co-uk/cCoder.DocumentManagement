@@ -79,8 +79,10 @@ internal static class ODataTypeExtensions
                 ?? type.GetProperty(name: "Id")
                 ?? type.GetProperty(name: type.Name + "Id")
                 ?? type.GetProperty(name: type.Name + "ID")
-                ?? type.GetProperties().FirstOrDefault(predicate: property =>
-                    property.GetCustomAttributes(typeof(KeyAttribute), false).Any());
+                ?? type.GetProperties()
+                .FirstOrDefault(predicate: property =>
+                    property.GetCustomAttributes(attributeType: typeof(KeyAttribute), inherit: false)
+                .Any());
 
             if (idProperty != null)
             {
@@ -106,16 +108,22 @@ internal sealed class CompositePropertyInfo(Type type) : PropertyInfo
     public override string Name => PropertyType.Name;
     public override Type ReflectedType => PropertyType.ReflectedType;
 
-    public override MethodInfo[] GetAccessors(bool nonPublic) => throw new NotImplementedException();
-    public override object[] GetCustomAttributes(bool inherit) => PropertyType.GetCustomAttributes(inherit: inherit);
+    public override MethodInfo[] GetAccessors(bool nonPublic) =>
+        throw new NotImplementedException();
+    public override object[] GetCustomAttributes(bool inherit) =>
+        PropertyType.GetCustomAttributes(inherit: inherit);
     public override object[] GetCustomAttributes(Type attributeType, bool inherit) =>
         PropertyType.GetCustomAttributes(attributeType: attributeType, inherit: inherit);
-    public override MethodInfo GetGetMethod(bool nonPublic) => throw new NotImplementedException();
-    public override ParameterInfo[] GetIndexParameters() => throw new NotImplementedException();
-    public override MethodInfo GetSetMethod(bool nonPublic) => throw new NotImplementedException();
+    public override MethodInfo GetGetMethod(bool nonPublic) =>
+        throw new NotImplementedException();
+    public override ParameterInfo[] GetIndexParameters() =>
+        throw new NotImplementedException();
+    public override MethodInfo GetSetMethod(bool nonPublic) =>
+        throw new NotImplementedException();
     public override object GetValue(object obj, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture) =>
         throw new NotImplementedException();
-    public override bool IsDefined(Type attributeType, bool inherit) => PropertyType.IsDefined(attributeType: attributeType, inherit: inherit);
+    public override bool IsDefined(Type attributeType, bool inherit) =>
+        PropertyType.IsDefined(attributeType: attributeType, inherit: inherit);
     public override void SetValue(object obj, object value, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture) =>
         throw new NotImplementedException();
 }

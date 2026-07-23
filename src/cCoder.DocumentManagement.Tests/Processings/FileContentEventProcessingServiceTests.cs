@@ -26,5 +26,6 @@ public partial class FileContentEventProcessingServiceTests
     }
 
     private static FileContent CreateRandomFileContent() =>
-        Builder<FileContent>.CreateNew().Build();
+        Builder<FileContent>.CreateNew()
+                                        .Build();
 }

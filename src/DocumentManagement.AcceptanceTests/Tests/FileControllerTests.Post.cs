@@ -34,8 +34,11 @@ public sealed partial class FileControllerTests
         actualFile = await GetFileAsync(id: expectedFile.Id);
 
         // Then
-        actualFile.Should().NotBeNull();
-        actualFile!.Name.Should().Be(expected: name);
+        actualFile.Should()
+            .NotBeNull();
+
+        actualFile!.Name.Should()
+            .Be(expected: name);
 
         await DeleteFileAsync(id: expectedFile.Id);
         await Teardown(seededContext: seededContext);

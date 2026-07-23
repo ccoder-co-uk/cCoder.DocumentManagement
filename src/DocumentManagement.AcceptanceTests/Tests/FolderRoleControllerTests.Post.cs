@@ -26,9 +26,14 @@ public sealed partial class FolderRoleControllerTests
         });
 
         // Then
-        actualFolderRole.Should().NotBeNull();
-        actualFolderRole.FolderId.Should().Be(expected: seededContext.FolderId);
-        actualFolderRole.RoleId.Should().Be(expected: seededContext.RoleId);
+        actualFolderRole.Should()
+            .NotBeNull();
+
+        actualFolderRole.FolderId.Should()
+            .Be(expected: seededContext.FolderId);
+
+        actualFolderRole.RoleId.Should()
+            .Be(expected: seededContext.RoleId);
 
         await Teardown(seededContext: seededContext);
     }

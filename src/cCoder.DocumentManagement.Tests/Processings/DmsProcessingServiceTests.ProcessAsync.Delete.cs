@@ -24,20 +24,27 @@ public partial class DmsProcessingServiceTests
         );
 
         dmsInstanceServiceMock
-            .Setup(expression: x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 4))
+            .Setup(expression: x => x.DropAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 4))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
-        response.ContentType.Should().Be(expected: "application/json");
-        response.HasBody.Should().BeFalse();
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
+        response.ContentType.Should()
+            .Be(expected: "application/json");
+
+        response.HasBody.Should()
+            .BeFalse();
+
         dmsInstanceServiceMock.Verify(
-            expression: x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 4),
+            expression: x => x.DropAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 4),
             times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 
@@ -48,18 +55,21 @@ public partial class DmsProcessingServiceTests
         DmsProcessingRequest request = CreateRequest(method: "DELETE", requestPath: "/api/dms/folder/file.txt");
 
         dmsInstanceServiceMock
-            .Setup(expression: x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0))
+            .Setup(expression: x => x.DropAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
         dmsInstanceServiceMock.Verify(
-            expression: x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0),
+            expression: x => x.DropAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0),
             times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 }

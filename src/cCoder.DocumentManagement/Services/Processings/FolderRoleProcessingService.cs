@@ -29,46 +29,64 @@ internal class FolderRoleProcessingService(IFolderRoleService service, IRoleBrok
         Folder folder = folderAndRole.Item2;
         bool flag = role != null && folder != null;
         Func<Folder, cCoder.Data.Models.Security.Role, bool> func = (Folder currentFolder, cCoder.Data.Models.Security.Role currentRole) => currentFolder.UserCan(user: User, privilege: "folderrole_create");
+
         if (flag && func(arg1: folder, arg2: role))
         {
             ICollection<cCoder.Data.Models.Security.FolderRole> roles = folder.Roles;
             return (roles == null || !roles.Any(predicate: (cCoder.Data.Models.Security.FolderRole r) => r.RoleId == role.Id)) ? service.AddAsync(folderRole: entity) : ValueTask.FromResult(result: entity);
         }
+
         if (role != null && folder != null)
         {
             ICollection<cCoder.Data.Models.Security.FolderRole> folders = role.Folders;
+
             if (folders != null && folders.Any(predicate: (cCoder.Data.Models.Security.FolderRole r) => r.FolderId == folder.Id))
             {
                 return ValueTask.FromResult(result: entity);
             }
         }
+
         throw new SecurityException(message: "Access Denied!");
     }
 
     public async ValueTask DeleteAsync(cCoder.Data.Models.Security.FolderRole link)
     {
-        Folder folder = folderService.GetAll(ignoreFilters: true).FirstOrDefault(predicate: (Folder u) => u.Id == link.FolderId);
-        cCoder.Data.Models.Security.FolderRole dbVersion = service.GetAll(ignoreFilters: true).FirstOrDefault(predicate: (cCoder.Data.Models.Security.FolderRole ur) => ur.RoleId == link.RoleId && ur.FolderId == link.FolderId);
+        Folder folder = folderService.GetAll(ignoreFilters: true)
+            .FirstOrDefault(predicate: (Folder u) => u.Id == link.FolderId);
+
+        cCoder.Data.Models.Security.FolderRole dbVersion = service.GetAll(ignoreFilters: true)
+            .FirstOrDefault(predicate: (cCoder.Data.Models.Security.FolderRole ur) => ur.RoleId == link.RoleId && ur.FolderId == link.FolderId);
+
         if (dbVersion == null || folder == null || !folder.UserCan(user: User, privilege: "folderrole_delete"))
         {
             throw new SecurityException(message: "Access Denied!");
         }
+
         await service.DeleteAsync(folderRole: dbVersion);
     }
 
     public async ValueTask<IEnumerable<Result<cCoder.Data.Models.Security.FolderRole>>> AddOrUpdate(IEnumerable<cCoder.Data.Models.Security.FolderRole> items)
     {
         cCoder.Data.Models.Security.FolderRole[] itemArray = items.ToArray();
-        Guid[] leftIds = itemArray.Select(selector: (cCoder.Data.Models.Security.FolderRole item) => item.FolderId).Distinct().ToArray();
+
+        Guid[] leftIds = itemArray.Select(selector: (cCoder.Data.Models.Security.FolderRole item) => item.FolderId)
+            .Distinct()
+            .ToArray();
+
         cCoder.Data.Models.Security.FolderRole[] existingItems = (from item in GetAll()
                                                                   where ((ReadOnlySpan<Guid>)leftIds).Contains(value: item.FolderId)
                                                                   select item).ToArray();
+
         List<Result<cCoder.Data.Models.Security.FolderRole>> results = new List<Result<cCoder.Data.Models.Security.FolderRole>>();
+
         foreach (IGrouping<Guid, cCoder.Data.Models.Security.FolderRole> group in from item in itemArray
                                                                                   group item by item.FolderId)
         {
             cCoder.Data.Models.Security.FolderRole[] groupItems = group.ToArray();
-            cCoder.Data.Models.Security.FolderRole[] existingGroupItems = existingItems.Where(predicate: (cCoder.Data.Models.Security.FolderRole item) => object.Equals(item.FolderId, group.Key)).ToArray();
+
+            cCoder.Data.Models.Security.FolderRole[] existingGroupItems = existingItems.Where(predicate: (cCoder.Data.Models.Security.FolderRole item) => object.Equals(objA: item.FolderId, objB: group.Key))
+                .ToArray();
+
             await DeleteAllAsync(items: existingGroupItems);
 
             foreach (cCoder.Data.Models.Security.FolderRole item in groupItems)
@@ -79,7 +97,7 @@ internal class FolderRoleProcessingService(IFolderRoleService service, IRoleBrok
                     {
                         Id = $"{item.FolderId}:{item.RoleId}",
                         Success = true,
-                        Item = await AddAsync(item),
+                        Item = await AddAsync(entity: item),
                         Message = "Added Successfully"
                     });
                 }
@@ -95,6 +113,7 @@ internal class FolderRoleProcessingService(IFolderRoleService service, IRoleBrok
                 }
             }
         }
+
         return results;
     }
 
@@ -108,6 +127,9 @@ internal class FolderRoleProcessingService(IFolderRoleService service, IRoleBrok
 
     private (cCoder.Data.Models.Security.Role role, Folder folder) GetFolderAndRole(cCoder.Data.Models.Security.FolderRole entity)
     {
-        return (role: roleBroker.GetAllRoles(ignoreFilters: true).IgnoreQueryFilters().FirstOrDefault(predicate: (cCoder.Data.Models.Security.Role r) => r.Id == entity.RoleId), folder: folderService.GetAll(ignoreFilters: true).FirstOrDefault(predicate: (Folder u) => u.Id == entity.FolderId));
+        return (role: roleBroker.GetAllRoles(ignoreFilters: true)
+            .IgnoreQueryFilters()
+            .FirstOrDefault(predicate: (cCoder.Data.Models.Security.Role r) => r.Id == entity.RoleId), folder: folderService.GetAll(ignoreFilters: true)
+            .FirstOrDefault(predicate: (Folder u) => u.Id == entity.FolderId));
     }
 }

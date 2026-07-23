@@ -26,7 +26,8 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
     private string BaseUrl { get; } = "/Api/Core/File";
     private static JsonSerializerOptions JsonOptions { get; } = new() { PropertyNameCaseInsensitive = true };
 
-    private static string Unique(string prefix) => $"{prefix}-{Guid.NewGuid():N}";
+    private static string Unique(string prefix) =>
+        $"{prefix}-{Guid.NewGuid():N}";
 
     private sealed record SeededFileContext(int AppId, Guid RoleId, Guid FolderId);
     private sealed record ODataEnvelope<T>(List<T> Value);
@@ -34,6 +35,7 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
     private async Task<SeededFileContext> SeedDatabase(params string[] privileges)
     {
         using IServiceScope scope = fixture.Factory.Services.CreateScope();
+
         using var core = scope.ServiceProvider
             .GetRequiredService<cCoder.Data.ICoreContextFactory>()
             .CreateCoreContext();
@@ -42,9 +44,9 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
         {
             Id = Guid.NewGuid(),
             AppId = AppId,
-            Name = Unique("AcceptanceRole"),
+            Name = Unique(prefix: "AcceptanceRole"),
             Description = "Acceptance role",
-            Privs = string.Join(',', privileges),
+            Privs = string.Join(separator: ',', value: privileges),
         });
 
         await core.AddUserRoleAsync(userRole: new UserRole { RoleId = role.Id, UserId = "Guest" });
@@ -52,11 +54,13 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
         Folder folder = await core.AddFolderAsync(folder: new Folder
         {
             AppId = AppId,
-            Name = Unique("Folder"),
-            Path = Unique("folder").ToLowerInvariant(),
+            Name = Unique(prefix: "Folder"),
+            Path = Unique(prefix: "folder")
+            .ToLowerInvariant(),
         });
 
-        Guid[] appRoleIds = core.Set<Role>().IgnoreQueryFilters()
+        Guid[] appRoleIds = core.Set<Role>()
+            .IgnoreQueryFilters()
             .Where(predicate: foundRole => foundRole.AppId == AppId)
             .Select(selector: foundRole => foundRole.Id)
             .ToArray();
@@ -73,7 +77,10 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
     {
         using HttpResponseMessage response = await Client.PostAsJsonAsync(requestUri: BaseUrl, value: payload);
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+
+        response.StatusCode.Should()
+            .Be(expected: HttpStatusCode.OK, because: content);
+
         return JsonSerializer.Deserialize<DmsFile>(json: content, options: JsonOptions)!;
     }
 
@@ -81,7 +88,10 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
     {
         using HttpResponseMessage response = await Client.PutAsJsonAsync(requestUri: $"{BaseUrl}({id})", value: payload);
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+
+        response.StatusCode.Should()
+            .Be(expected: HttpStatusCode.OK, because: content);
+
         return (int)response.StatusCode;
     }
 
@@ -91,9 +101,13 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
         {
             Content = JsonContent.Create(inputValue: payload),
         };
+
         using HttpResponseMessage response = await Client.SendAsync(request: request);
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+
+        response.StatusCode.Should()
+            .Be(expected: HttpStatusCode.OK, because: content);
+
         return (int)response.StatusCode;
     }
 
@@ -101,19 +115,24 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
     {
         using HttpResponseMessage response = await Client.DeleteAsync(requestUri: $"{BaseUrl}({id})");
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+
+        response.StatusCode.Should()
+            .Be(expected: HttpStatusCode.OK, because: content);
+
         return (int)response.StatusCode;
     }
 
     private async Task<DmsFile> GetFileAsync(Guid id)
     {
         using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}({id})");
+
         if (response.StatusCode == HttpStatusCode.NotFound)
         {
             return null;
         }
 
         string content = await response.Content.ReadAsStringAsync();
+
         if (!response.IsSuccessStatusCode)
         {
             return null;
@@ -130,43 +149,64 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
     private async Task Teardown(SeededFileContext seededContext)
     {
         using IServiceScope scope = fixture.Factory.Services.CreateScope();
+
         using var core = scope.ServiceProvider
             .GetRequiredService<cCoder.Data.ICoreContextFactory>()
             .CreateCoreContext();
 
-        FolderRole[] folderRoles = core.Set<FolderRole>().IgnoreQueryFilters()
+        FolderRole[] folderRoles = core.Set<FolderRole>()
+            .IgnoreQueryFilters()
             .Where(predicate: folderRole => folderRole.FolderId == seededContext.FolderId)
             .ToArray();
+
         if (folderRoles.Length > 0)
         {
             await core.DeleteAllAsync(folderRoles: folderRoles);
         }
 
-        FileContent[] contents = core.Set<FileContent>().IgnoreQueryFilters().Where(predicate: c => c.File.FolderId == seededContext.FolderId).ToArray();
+        FileContent[] contents = core.Set<FileContent>()
+            .IgnoreQueryFilters()
+            .Where(predicate: c => c.File.FolderId == seededContext.FolderId)
+            .ToArray();
+
         if (contents.Length > 0)
         {
             await core.DeleteAllAsync(fileContents: contents);
         }
 
-        DmsFile[] files = core.Set<DmsFile>().IgnoreQueryFilters().Where(predicate: file => file.FolderId == seededContext.FolderId).ToArray();
+        DmsFile[] files = core.Set<DmsFile>()
+            .IgnoreQueryFilters()
+            .Where(predicate: file => file.FolderId == seededContext.FolderId)
+            .ToArray();
+
         if (files.Length > 0)
         {
             await core.DeleteAllAsync(files: files);
         }
 
-        Folder folder = core.Set<Folder>().IgnoreQueryFilters().FirstOrDefault(predicate: found => found.Id == seededContext.FolderId);
+        Folder folder = core.Set<Folder>()
+            .IgnoreQueryFilters()
+            .FirstOrDefault(predicate: found => found.Id == seededContext.FolderId);
+
         if (folder is not null)
         {
             await core.DeleteAsync(folder: folder);
         }
 
-        UserRole[] userRoles = core.Set<UserRole>().IgnoreQueryFilters().Where(predicate: userRole => userRole.RoleId == seededContext.RoleId).ToArray();
+        UserRole[] userRoles = core.Set<UserRole>()
+            .IgnoreQueryFilters()
+            .Where(predicate: userRole => userRole.RoleId == seededContext.RoleId)
+            .ToArray();
+
         if (userRoles.Length > 0)
         {
             await core.DeleteAllAsync(userRoles: userRoles);
         }
 
-        Role role = core.Set<Role>().IgnoreQueryFilters().FirstOrDefault(predicate: found => found.Id == seededContext.RoleId);
+        Role role = core.Set<Role>()
+            .IgnoreQueryFilters()
+            .FirstOrDefault(predicate: found => found.Id == seededContext.RoleId);
+
         if (role is not null)
         {
             await core.DeleteAsync(role: role);
@@ -177,7 +217,10 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
     {
         using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}/$count");
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+
+        response.StatusCode.Should()
+            .Be(expected: HttpStatusCode.OK, because: content);
+
         return int.Parse(s: content);
     }
 
@@ -185,7 +228,10 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
     {
         using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}?$top={top}");
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+
+        response.StatusCode.Should()
+            .Be(expected: HttpStatusCode.OK, because: content);
+
         return JsonSerializer.Deserialize<ODataEnvelope<DmsFile>>(json: content, options: JsonOptions)!.Value;
     }
     private async Task<int> GetFileStatusCodeAsync(Guid id)

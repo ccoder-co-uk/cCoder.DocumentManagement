@@ -30,5 +30,7 @@ public partial class FolderOrchestrationServiceTests
         );
     }
 
-    private static Folder CreateRandomFolder() => Builder<Folder>.CreateNew().Build();
+    private static Folder CreateRandomFolder() =>
+        Builder<Folder>.CreateNew()
+                                                                             .Build();
 }

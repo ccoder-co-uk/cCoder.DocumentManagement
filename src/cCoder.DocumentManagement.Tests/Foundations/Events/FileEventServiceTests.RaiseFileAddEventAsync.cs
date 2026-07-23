@@ -22,7 +22,7 @@ public partial class FileEventServiceTests
         EventMessage<DataFile> actualMessage = null;
 
         fileEventBrokerMock
-            .Setup(expression: x => x.RaiseFileAddEventAsync(It.IsAny<EventMessage<DataFile>>()))
+            .Setup(expression: x => x.RaiseFileAddEventAsync(message: It.IsAny<EventMessage<DataFile>>()))
             .Callback<EventMessage<DataFile>>(action: message => actualMessage = message)
             .Returns(value: ValueTask.CompletedTask);
 
@@ -30,16 +30,29 @@ public partial class FileEventServiceTests
         await service.RaiseFileAddEventAsync(entity: entity);
 
         // Then
-        actualMessage.Should().NotBeNull();
-        actualMessage!.Data.Id.Should().Be(expected: entity.Id);
-        actualMessage.Data.Name.Should().Be(expected: entity.Name);
-        actualMessage.Data.Path.Should().Be(expected: entity.Path);
-        actualMessage.AuthInfo.Should().NotBeNull();
-        actualMessage.AuthInfo.SSOUserId.Should().Be(expected: CurrentUserId);
+        actualMessage.Should()
+            .NotBeNull();
+
+        actualMessage!.Data.Id.Should()
+            .Be(expected: entity.Id);
+
+        actualMessage.Data.Name.Should()
+            .Be(expected: entity.Name);
+
+        actualMessage.Data.Path.Should()
+            .Be(expected: entity.Path);
+
+        actualMessage.AuthInfo.Should()
+            .NotBeNull();
+
+        actualMessage.AuthInfo.SSOUserId.Should()
+            .Be(expected: CurrentUserId);
+
         fileEventBrokerMock.Verify(
-            expression: x => x.RaiseFileAddEventAsync(It.IsAny<EventMessage<DataFile>>()),
+            expression: x => x.RaiseFileAddEventAsync(message: It.IsAny<EventMessage<DataFile>>()),
             times: Times.Once
         );
+
         fileEventBrokerMock.VerifyNoOtherCalls();
     }
 

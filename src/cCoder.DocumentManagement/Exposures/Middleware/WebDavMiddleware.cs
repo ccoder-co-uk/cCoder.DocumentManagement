@@ -22,6 +22,7 @@ public class WebDavMiddleware
     {
         DmsProcessingResponse response =
             await dmsHttpRequestOrchestrationService.ProcessRequestAsync(context: context);
+
         await Respond(context: context, response: response);
     }
 

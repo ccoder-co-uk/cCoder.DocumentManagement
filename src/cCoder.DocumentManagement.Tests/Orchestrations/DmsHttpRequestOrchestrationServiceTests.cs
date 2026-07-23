@@ -68,15 +68,29 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             }
         }
 
-        requestMock.SetupGet(expression: x => x.Method).Returns(value: method);
-        requestMock.SetupGet(expression: x => x.Path).Returns(value: new PathString(path));
-        requestMock.SetupGet(expression: x => x.Host).Returns(value: new HostString(host));
-        requestMock.SetupGet(expression: x => x.QueryString).Returns(value: new QueryString(queryString));
-        requestMock.SetupGet(expression: x => x.Body).Returns(value: new MemoryStream(body ?? []));
-        requestMock.SetupGet(expression: x => x.Headers).Returns(value: headerDictionary);
-        requestMock.SetupGet(expression: x => x.ContentType).Returns(value: contentType);
+        requestMock.SetupGet(expression: x => x.Method)
+            .Returns(value: method);
 
-        contextMock.SetupGet(expression: x => x.Request).Returns(value: requestMock.Object);
+        requestMock.SetupGet(expression: x => x.Path)
+            .Returns(value: new PathString(value: path));
+
+        requestMock.SetupGet(expression: x => x.Host)
+            .Returns(value: new HostString(value: host));
+
+        requestMock.SetupGet(expression: x => x.QueryString)
+            .Returns(value: new QueryString(value: queryString));
+
+        requestMock.SetupGet(expression: x => x.Body)
+            .Returns(value: new MemoryStream(buffer: body ?? []));
+
+        requestMock.SetupGet(expression: x => x.Headers)
+            .Returns(value: headerDictionary);
+
+        requestMock.SetupGet(expression: x => x.ContentType)
+            .Returns(value: contentType);
+
+        contextMock.SetupGet(expression: x => x.Request)
+            .Returns(value: requestMock.Object);
 
         return contextMock.Object;
     }

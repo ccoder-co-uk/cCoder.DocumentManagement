@@ -27,7 +27,7 @@ public partial class FileContentEventServiceTests
             .Setup(
                 expression: x =>
                     x.RaiseFileContentUpdateEventAsync(
-                        It.IsAny<EventMessage<cCoder.Data.Models.DMS.FileContent>>()
+                        message: It.IsAny<EventMessage<cCoder.Data.Models.DMS.FileContent>>()
                     )
             )
             .Callback<EventMessage<cCoder.Data.Models.DMS.FileContent>>(action: message => actualMessage = message)
@@ -37,19 +37,32 @@ public partial class FileContentEventServiceTests
         await service.RaiseFileContentUpdateEventAsync(entity: entity);
 
         // Then
-        actualMessage.Should().NotBeNull();
-        actualMessage!.Data.Id.Should().Be(expected: entity.Id);
-        actualMessage.Data.FileId.Should().Be(expected: entity.FileId);
-        actualMessage.Data.Version.Should().Be(expected: entity.Version);
-        actualMessage.AuthInfo.Should().NotBeNull();
-        actualMessage.AuthInfo.SSOUserId.Should().Be(expected: CurrentUserId);
+        actualMessage.Should()
+            .NotBeNull();
+
+        actualMessage!.Data.Id.Should()
+            .Be(expected: entity.Id);
+
+        actualMessage.Data.FileId.Should()
+            .Be(expected: entity.FileId);
+
+        actualMessage.Data.Version.Should()
+            .Be(expected: entity.Version);
+
+        actualMessage.AuthInfo.Should()
+            .NotBeNull();
+
+        actualMessage.AuthInfo.SSOUserId.Should()
+            .Be(expected: CurrentUserId);
+
         fileContentEventBrokerMock.Verify(
             expression: x =>
                 x.RaiseFileContentUpdateEventAsync(
-                    It.IsAny<EventMessage<cCoder.Data.Models.DMS.FileContent>>()
+                    message: It.IsAny<EventMessage<cCoder.Data.Models.DMS.FileContent>>()
                 ),
             times: Times.Once
         );
+
         fileContentEventBrokerMock.VerifyNoOtherCalls();
     }
 

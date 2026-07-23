@@ -54,22 +54,41 @@ public partial class FolderServiceTests
             ],
         };
 
-        folderBrokerMock.Setup(expression: x => x.GetFolderForUpdate(folderId, true)).Returns(value: dataFolder);
+        folderBrokerMock.Setup(expression: x => x.GetFolderForUpdate(id: folderId, ignoreFilters: true))
+            .Returns(value: dataFolder);
 
         // When
         LocalFolder result = folderService.GetForUpdate(id: folderId, ignoreFilters: true);
 
         // Then
-        result.Should().NotBeNull();
-        result.App.Should().NotBeNull();
-        result.Parent.Should().NotBeNull();
-        result.SubFolders.Should().ContainSingle();
-        result.Files.Should().ContainSingle();
-        result.Roles.Should().ContainSingle();
-        result.Files.Single().Id.Should().Be(expected: fileId);
-        result.SubFolders.Single().Id.Should().Be(expected: childId);
-        result.Roles.Single().RoleId.Should().Be(expected: roleId);
-        folderBrokerMock.Verify(expression: x => x.GetFolderForUpdate(folderId, true), times: Times.Once);
+        result.Should()
+            .NotBeNull();
+
+        result.App.Should()
+            .NotBeNull();
+
+        result.Parent.Should()
+            .NotBeNull();
+
+        result.SubFolders.Should()
+            .ContainSingle();
+
+        result.Files.Should()
+            .ContainSingle();
+
+        result.Roles.Should()
+            .ContainSingle();
+
+        result.Files.Single().Id.Should()
+            .Be(expected: fileId);
+
+        result.SubFolders.Single().Id.Should()
+            .Be(expected: childId);
+
+        result.Roles.Single().RoleId.Should()
+            .Be(expected: roleId);
+
+        folderBrokerMock.Verify(expression: x => x.GetFolderForUpdate(id: folderId, ignoreFilters: true), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
@@ -97,17 +116,23 @@ public partial class FolderServiceTests
         };
 
         folderBrokerMock
-            .Setup(expression: x => x.GetFolderByPathWithParentAndRoles(7, "docs", true))
+            .Setup(expression: x => x.GetFolderByPathWithParentAndRoles(appId: 7, path: "docs", ignoreFilters: true))
             .Returns(value: dataFolder);
 
         // When
         LocalFolder result = folderService.GetByPathWithParentAndRoles(appId: 7, path: "docs", ignoreFilters: true);
 
         // Then
-        result.Should().NotBeNull();
-        result.Parent.Should().NotBeNull();
-        result.Roles.Should().ContainSingle();
-        folderBrokerMock.Verify(expression: x => x.GetFolderByPathWithParentAndRoles(7, "docs", true), times: Times.Once);
+        result.Should()
+            .NotBeNull();
+
+        result.Parent.Should()
+            .NotBeNull();
+
+        result.Roles.Should()
+            .ContainSingle();
+
+        folderBrokerMock.Verify(expression: x => x.GetFolderByPathWithParentAndRoles(appId: 7, path: "docs", ignoreFilters: true), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
@@ -133,17 +158,23 @@ public partial class FolderServiceTests
         };
 
         folderBrokerMock
-            .Setup(expression: x => x.GetFolderByPathWithSubFoldersAndFiles(7, "docs", false))
+            .Setup(expression: x => x.GetFolderByPathWithSubFoldersAndFiles(appId: 7, path: "docs", ignoreFilters: false))
             .Returns(value: dataFolder);
 
         // When
         LocalFolder result = folderService.GetByPathWithSubFoldersAndFiles(appId: 7, path: "docs", ignoreFilters: false);
 
         // Then
-        result.Should().NotBeNull();
-        result.SubFolders.Should().ContainSingle();
-        result.Files.Should().ContainSingle();
-        folderBrokerMock.Verify(expression: x => x.GetFolderByPathWithSubFoldersAndFiles(7, "docs", false), times: Times.Once);
+        result.Should()
+            .NotBeNull();
+
+        result.SubFolders.Should()
+            .ContainSingle();
+
+        result.Files.Should()
+            .ContainSingle();
+
+        folderBrokerMock.Verify(expression: x => x.GetFolderByPathWithSubFoldersAndFiles(appId: 7, path: "docs", ignoreFilters: false), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }

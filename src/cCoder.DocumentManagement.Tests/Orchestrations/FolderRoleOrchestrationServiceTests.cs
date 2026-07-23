@@ -30,5 +30,7 @@ public partial class FolderRoleOrchestrationServiceTests
         );
     }
 
-    private static FolderRole CreateRandomFolderRole() => Builder<FolderRole>.CreateNew().Build();
+    private static FolderRole CreateRandomFolderRole() =>
+        Builder<FolderRole>.CreateNew()
+                                                                                         .Build();
 }

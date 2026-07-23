@@ -22,6 +22,7 @@ internal class DmsProcessingService(
         string path = request.RequestPath[
             (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
         ];
+
         Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
 
         try
@@ -54,6 +55,7 @@ internal class DmsProcessingService(
             log.LogError(
                 message: $"An unhandled exception occurred whilst processing a DMS request to app on domain {request.App?.Domain ?? "Unknown"} ..."
             );
+
             log.LogError(message: $"Request details - Path: {path}, Query: {request.QueryString}");
             log.LogError(message: ex.Message);
             throw;
@@ -63,6 +65,7 @@ internal class DmsProcessingService(
             log.LogError(
                 message: $"An unhandled exception occurred whilst processing a DMS request to app on domain {request.App?.Domain ?? "Unknown"} ..."
             );
+
             log.LogError(message: $"Request details - Path: {path}, Query: {request.QueryString}");
             log.LogError(message: ex.Message);
             throw;
@@ -74,36 +77,42 @@ internal class DmsProcessingService(
         string path = request.RequestPath[
             (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
         ];
+
         Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
-        _ = int.TryParse(s: TryGetSingleValue(query, "version"), result: out int deleteVersion);
-        await dmsInstanceService.DropAsync(path: new LocalPath(path), version: deleteVersion);
+        _ = int.TryParse(s: TryGetSingleValue(query: query, key: "version"), result: out int deleteVersion);
+        await dmsInstanceService.DropAsync(path: new LocalPath(path: path), version: deleteVersion);
         return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
     }
 
     private async ValueTask<DmsProcessingResponse> HandleOptionsRequestAsync(
         DmsProcessingRequest request
-    ) => CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
+    ) =>
+        CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
 
     private async ValueTask<DmsProcessingResponse> HandleGetRequestAsync(DmsProcessingRequest request)
     {
         string path = request.RequestPath[
             (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
         ];
+
         Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
         bool download = query.ContainsKey(key: "download");
         string search = TryGetSingleValue(query: query, key: "search") ?? string.Empty;
-        int version = int.TryParse(s: TryGetSingleValue(query, "version"), result: out int parsedVersion)
+
+        int version = int.TryParse(s: TryGetSingleValue(query: query, key: "version"), result: out int parsedVersion)
             ? parsedVersion
             : 0;
+
         string[] downloadPaths =
             query.GetValueOrDefault(key: "downloadPaths")?.FirstOrDefault()?.Split(separator: ",") ?? [];
 
         DmsResult result =
             downloadPaths.Length > 0
                 ? dmsInstanceService.GetFilesZipped(
-                    paths: downloadPaths.Select(value => new LocalPath(value)).ToArray()
+                    paths: downloadPaths.Select(selector: value => new LocalPath(path: value))
+            .ToArray()
                 )
-                : dmsInstanceService.Get(path: new LocalPath(path), version: version, search: search);
+                : dmsInstanceService.Get(path: new LocalPath(path: path), version: version, search: search);
 
         return result != null
             ? CreateResponse(
@@ -120,6 +129,7 @@ internal class DmsProcessingService(
         string path = request.RequestPath[
             (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
         ];
+
         Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
 
         using MemoryStream memoryStream = new();
@@ -133,8 +143,8 @@ internal class DmsProcessingService(
             if (!string.IsNullOrWhiteSpace(value: newPath))
             {
                 await dmsInstanceService.CopyAsync(
-                    oldPath: new LocalPath(path.Split("?")[0]),
-                    newPath: new LocalPath(newPath)
+                    oldPath: new LocalPath(path: path.Split(separator: "?")[0]),
+                    newPath: new LocalPath(path: newPath)
                 );
             }
 
@@ -148,8 +158,8 @@ internal class DmsProcessingService(
             if (!string.IsNullOrWhiteSpace(value: newPath))
             {
                 await dmsInstanceService.MoveAsync(
-                    oldPath: new LocalPath(path.Split("?")[0]),
-                    newPath: new LocalPath(newPath)
+                    oldPath: new LocalPath(path: path.Split(separator: "?")[0]),
+                    newPath: new LocalPath(path: newPath)
                 );
             }
 
@@ -164,6 +174,7 @@ internal class DmsProcessingService(
         string path = request.RequestPath[
             (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
         ];
+
         Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
 
         using MemoryStream memoryStream = new();
@@ -177,8 +188,8 @@ internal class DmsProcessingService(
             if (!string.IsNullOrWhiteSpace(value: newPath))
             {
                 await dmsInstanceService.CopyAsync(
-                    oldPath: new LocalPath(path.Split("?")[0]),
-                    newPath: new LocalPath(newPath)
+                    oldPath: new LocalPath(path: path.Split(separator: "?")[0]),
+                    newPath: new LocalPath(path: newPath)
                 );
             }
 
@@ -192,8 +203,8 @@ internal class DmsProcessingService(
             if (!string.IsNullOrWhiteSpace(value: newPath))
             {
                 await dmsInstanceService.MoveAsync(
-                    oldPath: new LocalPath(path.Split("?")[0]),
-                    newPath: new LocalPath(newPath)
+                    oldPath: new LocalPath(path: path.Split(separator: "?")[0]),
+                    newPath: new LocalPath(path: newPath)
                 );
             }
 
@@ -218,14 +229,16 @@ internal class DmsProcessingService(
                 log.LogError(
                     message: $"User request to unpack an archive to a file path failed, The path is: {path}"
                 );
+
                 throw new InvalidOperationException(message: "Cannot unpack an archive to a file path");
             }
 
             bool ignoreArchiveRoot = string.Equals(
-                a: TryGetSingleValue(query, "ignoreArchiveRoot"),
+                a: TryGetSingleValue(query: query, key: "ignoreArchiveRoot"),
                 b: "true",
                 comparisonType: StringComparison.OrdinalIgnoreCase
             );
+
             await dmsInstanceService.UnpackAsync(
                 path: destinationPath,
                 content: memoryStream,

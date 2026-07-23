@@ -19,13 +19,15 @@ public class Path
     public Path ParentPath =>
         Segments.Length > 1
             ? new Path(
-                path: string.Join("/", Segments)[..(FullPath.Length - (1 + Segments.Last().Length))]
+                path: string.Join(separator: "/", value: Segments)[..(FullPath.Length - (1 + Segments.Last().Length))]
             )
             : Empty;
 
     public string Extension =>
         Segments.LastOrDefault()?.Contains(value: '.') ?? false
-            ? Segments.LastOrDefault()?.Split(separator: '.').Last().ToLower() ?? string.Empty
+            ? Segments.LastOrDefault()?.Split(separator: '.')
+                                                             .Last()
+                                                                    .ToLower() ?? string.Empty
             : string.Empty;
 
     public string MimeType
@@ -45,8 +47,10 @@ public class Path
 
     public Path(string path)
     {
-        FullPath = (path ?? string.Empty).Trim().TrimEnd(trimChar: '/');
+        FullPath = (path ?? string.Empty).Trim()
+            .TrimEnd(trimChar: '/');
     }
 
-    public override string ToString() => FullPath;
+    public override string ToString() =>
+        FullPath;
 }

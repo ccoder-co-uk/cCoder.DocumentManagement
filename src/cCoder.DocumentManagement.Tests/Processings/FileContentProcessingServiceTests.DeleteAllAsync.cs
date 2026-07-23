@@ -19,15 +19,16 @@ public partial class FileContentProcessingServiceTests
     {
         // Given
         FileContent fileContent = CreateRandomFileContent();
+
         fileContentServiceMock
-            .Setup(expression: x => x.DeleteAsync(fileContent.Id))
+            .Setup(expression: x => x.DeleteAsync(id: fileContent.Id))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         await fileContentProcessingService.DeleteAllAsync(items: new[] { fileContent });
 
         // Then
-        fileContentServiceMock.Verify(expression: x => x.DeleteAsync(fileContent.Id), times: Times.Once);
+        fileContentServiceMock.Verify(expression: x => x.DeleteAsync(id: fileContent.Id), times: Times.Once);
         fileContentServiceMock.VerifyNoOtherCalls();
     }
 

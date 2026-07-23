@@ -19,7 +19,8 @@ public sealed partial class WebShellTests(WebAcceptanceFixture fixture)
         using HttpResponseMessage response = await Client.GetAsync(requestUri: path);
         string content = await response.Content.ReadAsStringAsync();
 
-        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+        response.StatusCode.Should()
+            .Be(expected: HttpStatusCode.OK, because: content);
 
         return content;
     }

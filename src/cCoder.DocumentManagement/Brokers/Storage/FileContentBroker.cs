@@ -27,6 +27,7 @@ public class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileCo
     public IQueryable<FileContent> GetAllFileContents(bool ignoreFilters)
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         return ignoreFilters
             ? coreDataContext.FileContents.IgnoreQueryFilters()
             : coreDataContext.FileContents;
@@ -70,6 +71,7 @@ public class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileCo
     public async ValueTask DeleteAllFileContentsForFileAsync(Guid fileId)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         List<FileContent> items = coreDataContext.FileContents
             .IgnoreQueryFilters()
             .Where(predicate: fileContent => fileContent.FileId == fileId)
@@ -92,9 +94,10 @@ public class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileCo
         }
 
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         List<FileContent> items = coreDataContext.FileContents
             .IgnoreQueryFilters()
-            .Where(predicate: fileContent => fileIds.Contains(fileContent.FileId))
+            .Where(predicate: fileContent => fileIds.Contains(value: fileContent.FileId))
             .ToList();
 
         if (items.Count == 0)
@@ -109,6 +112,7 @@ public class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileCo
     public int? GetAppId(FileContent entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         return coreDataContext.Files
 
             .Where(predicate: file => file.Id == entity.FileId)

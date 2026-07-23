@@ -21,33 +21,38 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
+            .Setup(expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))
             .Callback(action: (int? appId, string privilege) =>
             {
-                if (!(currentUser?.Can(appId, privilege) ?? false))
+                if (!(currentUser?.Can(appId: appId, operation: privilege) ?? false))
                 {
-                    throw new SecurityException("Access Denied!");
+                    throw new SecurityException(message: "Access Denied!");
                 }
             });
 
         authorizationBrokerMock
-            .Setup(expression: x => x.IsAdminOfApp(It.IsAny<int>()))
-            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
+            .Setup(expression: x => x.IsAdminOfApp(appId: It.IsAny<int>()))
+            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId: appId) ?? false);
 
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(valueFunction: () => currentUser);
 
-        User user = ToLocalUser(user: TestUsers.WithPrivilege("app_admin", 1));
+        User user = ToLocalUser(user: TestUsers.WithPrivilege(privilege: "app_admin", appId: 1));
         currentUser = user;
         Folder folder = CreateRandomFolder();
-        folderServiceMock.Setup(expression: x => x.GetWithRoles(folder.Id, true)).Returns(value: folder);
-        folderServiceMock.Setup(expression: x => x.DeleteAsync(folder.Id)).Returns(value: ValueTask.CompletedTask);
+
+        folderServiceMock.Setup(expression: x => x.GetWithRoles(id: folder.Id, ignoreFilters: true))
+            .Returns(value: folder);
+
+        folderServiceMock.Setup(expression: x => x.DeleteAsync(id: folder.Id))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
         await folderProcessingService.DeleteAsync(id: folder.Id);
 
         // Then
-        folderServiceMock.Verify(expression: x => x.GetWithRoles(folder.Id, true), times: Times.Once);
-        folderServiceMock.Verify(expression: x => x.DeleteAsync(folder.Id), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetWithRoles(id: folder.Id, ignoreFilters: true), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.DeleteAsync(id: folder.Id), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         loggerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.AtLeastOnce);
@@ -59,31 +64,37 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
+            .Setup(expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))
             .Callback(action: (int? appId, string privilege) =>
             {
-                if (!(currentUser?.Can(appId, privilege) ?? false))
+                if (!(currentUser?.Can(appId: appId, operation: privilege) ?? false))
                 {
-                    throw new SecurityException("Access Denied!");
+                    throw new SecurityException(message: "Access Denied!");
                 }
             });
 
         authorizationBrokerMock
-            .Setup(expression: x => x.IsAdminOfApp(It.IsAny<int>()))
-            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
+            .Setup(expression: x => x.IsAdminOfApp(appId: It.IsAny<int>()))
+            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId: appId) ?? false);
 
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(valueFunction: () => currentUser);
 
         Folder folder = CreateRandomFolder();
         currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
-        folderServiceMock.Setup(expression: x => x.GetWithRoles(folder.Id, true)).Returns(value: folder);
+
+        folderServiceMock.Setup(expression: x => x.GetWithRoles(id: folder.Id, ignoreFilters: true))
+            .Returns(value: folder);
 
         // When
         Func<Task> act = async () => await folderProcessingService.DeleteAsync(id: folder.Id);
 
         // Then
-        await act.Should().ThrowAsync<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
-        folderServiceMock.Verify(expression: x => x.GetWithRoles(folder.Id, true), times: Times.Once);
+        await act.Should()
+            .ThrowAsync<SecurityException>()
+            .WithMessage(expectedWildcardPattern: "Access Denied!");
+
+        folderServiceMock.Verify(expression: x => x.GetWithRoles(id: folder.Id, ignoreFilters: true), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         loggerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.AtLeastOnce);

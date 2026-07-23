@@ -10,9 +10,12 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 internal class FileEventProcessingService(IFileEventService eventService) : IFileEventProcessingService
 {
-    public ValueTask RaiseFileAddEventAsync(LocalFile entity) => eventService.RaiseFileAddEventAsync(entity: entity);
+    public ValueTask RaiseFileAddEventAsync(LocalFile entity) =>
+        eventService.RaiseFileAddEventAsync(entity: entity);
 
-    public ValueTask RaiseFileUpdateEventAsync(LocalFile entity) => eventService.RaiseFileUpdateEventAsync(entity: entity);
+    public ValueTask RaiseFileUpdateEventAsync(LocalFile entity) =>
+        eventService.RaiseFileUpdateEventAsync(entity: entity);
 
-    public ValueTask RaiseFileDeleteEventAsync(LocalFile entity) => eventService.RaiseFileDeleteEventAsync(entity: entity);
+    public ValueTask RaiseFileDeleteEventAsync(LocalFile entity) =>
+        eventService.RaiseFileDeleteEventAsync(entity: entity);
 }

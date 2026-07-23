@@ -27,7 +27,7 @@ public partial class FolderRoleEventServiceTests
             .Setup(
                 expression: x =>
                     x.RaiseFolderRoleDeleteEventAsync(
-                        It.IsAny<EventMessage<cCoder.Data.Models.Security.FolderRole>>()
+                        message: It.IsAny<EventMessage<cCoder.Data.Models.Security.FolderRole>>()
                     )
             )
             .Callback<EventMessage<cCoder.Data.Models.Security.FolderRole>>(action: message => actualMessage = message)
@@ -37,18 +37,29 @@ public partial class FolderRoleEventServiceTests
         await service.RaiseFolderRoleDeleteEventAsync(entity: entity);
 
         // Then
-        actualMessage.Should().NotBeNull();
-        actualMessage!.Data.FolderId.Should().Be(expected: entity.FolderId);
-        actualMessage.Data.RoleId.Should().Be(expected: entity.RoleId);
-        actualMessage.AuthInfo.Should().NotBeNull();
-        actualMessage.AuthInfo.SSOUserId.Should().Be(expected: CurrentUserId);
+        actualMessage.Should()
+            .NotBeNull();
+
+        actualMessage!.Data.FolderId.Should()
+            .Be(expected: entity.FolderId);
+
+        actualMessage.Data.RoleId.Should()
+            .Be(expected: entity.RoleId);
+
+        actualMessage.AuthInfo.Should()
+            .NotBeNull();
+
+        actualMessage.AuthInfo.SSOUserId.Should()
+            .Be(expected: CurrentUserId);
+
         folderRoleEventBrokerMock.Verify(
             expression: x =>
                 x.RaiseFolderRoleDeleteEventAsync(
-                    It.IsAny<EventMessage<cCoder.Data.Models.Security.FolderRole>>()
+                    message: It.IsAny<EventMessage<cCoder.Data.Models.Security.FolderRole>>()
                 ),
             times: Times.Once
         );
+
         folderRoleEventBrokerMock.VerifyNoOtherCalls();
     }
 

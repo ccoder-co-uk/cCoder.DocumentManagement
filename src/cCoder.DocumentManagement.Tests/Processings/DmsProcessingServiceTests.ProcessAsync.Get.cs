@@ -21,6 +21,7 @@ public partial class DmsProcessingServiceTests
         // Given
         MemoryStream body = new(buffer: [1, 2, 3]);
         DMSResult result = new() { Data = body, MimeType = "text/plain" };
+
         DmsProcessingRequest request = CreateRequest(
             method: "GET",
             requestPath: "/api/dms/folder/file.txt",
@@ -29,7 +30,7 @@ public partial class DmsProcessingServiceTests
 
         dmsInstanceServiceMock
             .Setup(expression: x =>
-                x.Get(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 3, "needle")
+                x.Get(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 3, search: "needle")
             )
             .Returns(value: result);
 
@@ -37,14 +38,23 @@ public partial class DmsProcessingServiceTests
         DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 200);
-        response.ContentType.Should().Be(expected: "text/plain");
-        response.HasBody.Should().BeTrue();
-        response.Body.Should().BeSameAs(expected: body);
+        response.StatusCode.Should()
+            .Be(expected: 200);
+
+        response.ContentType.Should()
+            .Be(expected: "text/plain");
+
+        response.HasBody.Should()
+            .BeTrue();
+
+        response.Body.Should()
+            .BeSameAs(expected: body);
+
         dmsInstanceServiceMock.Verify(
-            expression: x => x.Get(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 3, "needle"),
+            expression: x => x.Get(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 3, search: "needle"),
             times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 
@@ -55,6 +65,7 @@ public partial class DmsProcessingServiceTests
         string[] expectedPaths = ["one.txt", "two.txt"];
         MemoryStream body = new(buffer: [9, 8, 7]);
         DMSResult result = new() { Data = body, MimeType = "application/zip" };
+
         DmsProcessingRequest request = CreateRequest(
             method: "GET",
             requestPath: "/api/dms/folder",
@@ -64,8 +75,9 @@ public partial class DmsProcessingServiceTests
         dmsInstanceServiceMock
             .Setup(expression: x =>
                 x.GetFilesZipped(
-                    It.Is<IEnumerable<DmsPath>>(paths =>
-                        paths.Select(path => path.FullPath).SequenceEqual(expectedPaths)
+                    paths: It.Is<IEnumerable<DmsPath>>(match: paths =>
+                        paths.Select(selector: path => path.FullPath)
+            .SequenceEqual(second: expectedPaths)
                     )
                 )
             )
@@ -75,19 +87,29 @@ public partial class DmsProcessingServiceTests
         DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 200);
-        response.ContentType.Should().Be(expected: "application/octet-stream");
-        response.HasBody.Should().BeTrue();
-        response.Body.Should().BeSameAs(expected: body);
+        response.StatusCode.Should()
+            .Be(expected: 200);
+
+        response.ContentType.Should()
+            .Be(expected: "application/octet-stream");
+
+        response.HasBody.Should()
+            .BeTrue();
+
+        response.Body.Should()
+            .BeSameAs(expected: body);
+
         dmsInstanceServiceMock.Verify(
             expression: x =>
                 x.GetFilesZipped(
-                    It.Is<IEnumerable<DmsPath>>(paths =>
-                        paths.Select(path => path.FullPath).SequenceEqual(expectedPaths)
+                    paths: It.Is<IEnumerable<DmsPath>>(match: paths =>
+                        paths.Select(selector: path => path.FullPath)
+            .SequenceEqual(second: expectedPaths)
                     )
                 ),
             times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 
@@ -99,7 +121,7 @@ public partial class DmsProcessingServiceTests
 
         dmsInstanceServiceMock
             .Setup(expression: x =>
-                x.Get(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0, string.Empty)
+                x.Get(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0, search: string.Empty)
             )
             .Returns(value: (DMSResult)null!);
 
@@ -107,13 +129,20 @@ public partial class DmsProcessingServiceTests
         DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
-        response.ContentType.Should().Be(expected: "plain/text");
-        response.HasBody.Should().BeFalse();
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
+        response.ContentType.Should()
+            .Be(expected: "plain/text");
+
+        response.HasBody.Should()
+            .BeFalse();
+
         dmsInstanceServiceMock.Verify(
-            expression: x => x.Get(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0, string.Empty),
+            expression: x => x.Get(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0, search: string.Empty),
             times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 }

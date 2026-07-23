@@ -26,5 +26,6 @@ public partial class FolderRoleEventProcessingServiceTests
     }
 
     private static FolderRole CreateRandomFolderRole() =>
-        Builder<FolderRole>.CreateNew().Build();
+        Builder<FolderRole>.CreateNew()
+                                       .Build();
 }

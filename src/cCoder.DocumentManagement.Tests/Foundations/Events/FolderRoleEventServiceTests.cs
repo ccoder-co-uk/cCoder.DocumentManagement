@@ -22,7 +22,8 @@ public partial class FolderRoleEventServiceTests
         authInfoMock = new Mock<ICoreAuthInfo>(behavior: MockBehavior.Strict);
         folderRoleEventBrokerMock = new(behavior: MockBehavior.Strict);
         authInfoMock = new();
-        authInfoMock.SetupGet(expression: x => x.SSOUserId).Returns(value: CurrentUserId);
+        authInfoMock.SetupGet(expression: x => x.SSOUserId)
+            .Returns(value: CurrentUserId);
         service = new cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService(
             folderRoleEventBroker: folderRoleEventBrokerMock.Object,
             authInfo: authInfoMock.Object

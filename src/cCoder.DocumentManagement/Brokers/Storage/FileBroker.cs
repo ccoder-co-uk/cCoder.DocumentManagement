@@ -32,6 +32,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
     public IQueryable<FileEntity> GetAllFiles(bool ignoreFilters)
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         return ignoreFilters
             ? coreDataContext.Files.IgnoreQueryFilters()
             : coreDataContext.Files;
@@ -40,6 +41,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
     public FileEntity GetFileByPath(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<FileEntity> query = ignoreFilters
             ? coreDataContext.Files.IgnoreQueryFilters()
             : coreDataContext.Files;
@@ -52,12 +54,13 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
     public Guid[] GetFileIdsByFolderIds(Guid[] folderIds, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<FileEntity> query = ignoreFilters
             ? coreDataContext.Files.IgnoreQueryFilters()
             : coreDataContext.Files;
 
         return query
-            .Where(predicate: file => folderIds.Contains(file.FolderId))
+            .Where(predicate: file => folderIds.Contains(value: file.FolderId))
             .Select(selector: file => file.Id)
             .ToArray();
     }
@@ -65,6 +68,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
     public FileEntity GetFileByPathWithFolderAndContents(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<FileEntity> query = ignoreFilters
             ? coreDataContext.Files.IgnoreQueryFilters()
             : coreDataContext.Files;
@@ -78,6 +82,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
     public FileEntity GetFileByPathWithFolderRolesAndContents(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<FileEntity> query = ignoreFilters
             ? coreDataContext.Files.IgnoreQueryFilters()
             : coreDataContext.Files;
@@ -93,6 +98,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
     public FileEntity GetFileWithFolderAndContents(Guid id, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<FileEntity> query = ignoreFilters
             ? coreDataContext.Files.IgnoreQueryFilters()
             : coreDataContext.Files;
@@ -106,6 +112,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
     public FileEntity GetFileWithFolderRolesAndContents(Guid id, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<FileEntity> query = ignoreFilters
             ? coreDataContext.Files.IgnoreQueryFilters()
             : coreDataContext.Files;
@@ -121,12 +128,13 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
     public IQueryable<FileEntity> SearchFiles(int appId, byte[] needle)
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         return coreDataContext.Files
             .Include(navigationPropertyPath: file => file.Folder)
             .Include(navigationPropertyPath: file => file.Contents)
             .Where(predicate: file =>
                 file.Folder.AppId == appId
-                && file.Contents.Any(content => content.RawData.SequenceEqual(needle)));
+                && file.Contents.Any(predicate: content => content.RawData.SequenceEqual(other: needle)));
     }
 
     public async ValueTask<FileEntity> AddFileAsync(FileEntity entity)
@@ -167,6 +175,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
     public int? GetAppId(FileEntity entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         return coreDataContext.Folders
 
             .Where(predicate: folder => folder.Id == entity.FolderId)

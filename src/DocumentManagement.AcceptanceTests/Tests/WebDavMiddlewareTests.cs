@@ -23,8 +23,13 @@ public sealed partial class WebDavMiddlewareTests(WebAcceptanceFixture fixture)
 
         using HttpResponseMessage response = await Client.SendAsync(request: request);
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().NotBe(unexpected: HttpStatusCode.NotFound, because: content);
-        response.StatusCode.Should().NotBe(unexpected: HttpStatusCode.MethodNotAllowed, because: content);
+
+        response.StatusCode.Should()
+            .NotBe(unexpected: HttpStatusCode.NotFound, because: content);
+
+        response.StatusCode.Should()
+            .NotBe(unexpected: HttpStatusCode.MethodNotAllowed, because: content);
+
         return (int)response.StatusCode;
     }
 }

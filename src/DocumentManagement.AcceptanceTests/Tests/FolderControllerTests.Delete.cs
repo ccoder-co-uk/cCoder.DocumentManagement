@@ -16,12 +16,14 @@ public sealed partial class FolderControllerTests
     {
         // Given
         SeededFolderContext seededContext = await SeedDatabase("folder_create", "folder_delete");
+
         Folder createdFolder = await CreateFolderAsync(payload: new
         {
             appId = seededContext.AppId,
-            name = Unique("Folder"),
+            name = Unique(prefix: "Folder"),
             path = "folder",
         });
+
         int actualReadStatusCode;
 
         // When
@@ -29,8 +31,11 @@ public sealed partial class FolderControllerTests
         actualReadStatusCode = await GetFolderStatusCodeAsync(id: createdFolder.Id);
 
         // Then
-        actualStatusCode.Should().Be(expected: 200);
-        actualReadStatusCode.Should().Be(expected: 404);
+        actualStatusCode.Should()
+            .Be(expected: 200);
+
+        actualReadStatusCode.Should()
+            .Be(expected: 404);
 
         await Teardown(seededContext: seededContext);
     }

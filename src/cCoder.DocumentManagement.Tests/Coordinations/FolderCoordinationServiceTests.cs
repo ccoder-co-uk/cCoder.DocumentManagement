@@ -33,6 +33,7 @@ public class FolderCoordinationServiceTests
         Guid folderId = Guid.NewGuid();
         Guid childFolderId = Guid.NewGuid();
         Guid childFileId = Guid.NewGuid();
+
         Folder folder = new()
         {
             Id = folderId,
@@ -42,7 +43,7 @@ public class FolderCoordinationServiceTests
         };
 
         fileOrchestrationServiceMock
-            .Setup(expression: service => service.GetAll(true))
+            .Setup(expression: service => service.GetAll(ignoreFilters: true))
             .Returns(value: new[]
             {
                 new File
@@ -55,7 +56,7 @@ public class FolderCoordinationServiceTests
             }.AsQueryable());
 
         folderOrchestrationServiceMock
-            .Setup(expression: service => service.GetAll(true))
+            .Setup(expression: service => service.GetAll(ignoreFilters: true))
             .Returns(value: new[]
             {
                 folder,
@@ -70,21 +71,21 @@ public class FolderCoordinationServiceTests
             }.AsQueryable());
 
         fileOrchestrationServiceMock
-            .Setup(expression: service => service.DeleteAsync(childFileId))
+            .Setup(expression: service => service.DeleteAsync(id: childFileId))
             .Returns(value: ValueTask.CompletedTask);
 
         folderOrchestrationServiceMock
-            .Setup(expression: service => service.DeleteAsync(childFolderId))
+            .Setup(expression: service => service.DeleteAsync(id: childFolderId))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         await coordinationService.DeleteFolderAsync(folder: folder);
 
         // Then
-        fileOrchestrationServiceMock.Verify(expression: service => service.GetAll(true), times: Times.Once);
-        folderOrchestrationServiceMock.Verify(expression: service => service.GetAll(true), times: Times.Once);
-        fileOrchestrationServiceMock.Verify(expression: service => service.DeleteAsync(childFileId), times: Times.Once);
-        folderOrchestrationServiceMock.Verify(expression: service => service.DeleteAsync(childFolderId), times: Times.Once);
+        fileOrchestrationServiceMock.Verify(expression: service => service.GetAll(ignoreFilters: true), times: Times.Once);
+        folderOrchestrationServiceMock.Verify(expression: service => service.GetAll(ignoreFilters: true), times: Times.Once);
+        fileOrchestrationServiceMock.Verify(expression: service => service.DeleteAsync(id: childFileId), times: Times.Once);
+        folderOrchestrationServiceMock.Verify(expression: service => service.DeleteAsync(id: childFolderId), times: Times.Once);
     }
 
     [Fact]

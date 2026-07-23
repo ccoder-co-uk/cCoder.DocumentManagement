@@ -34,9 +34,9 @@ public partial class FileController : ODataController
             ? Ok(
                 value: new cCoder.DocumentManagement.Api.OData.DocumentManagementModelBuilder()
                     .Build()
-                    .EDMModel.GetExtendedMetadataForType("DocumentManagement", typeof(LocalFile))
+                    .EDMModel.GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(LocalFile))
             )
-            : Ok(value: new MetadataContainer(typeof(LocalFile), true, true));
+            : Ok(value: new MetadataContainer(type: typeof(LocalFile), isEntity: true, hasEndpoint: true));
     }
 
     [HttpGet]
@@ -49,7 +49,8 @@ public partial class FileController : ODataController
         MaxExpansionDepth = 5
     )]
     [ActionName("Get")]
-    public IActionResult GetAll(ODataQueryOptions<LocalFile> queryOptions) => Ok(value: Service.GetAll());
+    public IActionResult GetAll(ODataQueryOptions<LocalFile> queryOptions) =>
+        Ok(value: Service.GetAll());
 
     [HttpGet]
     [AllowAnonymous]
@@ -90,7 +91,7 @@ public partial class FileController : ODataController
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
         }
 
-        return Ok(value: await Service.AddAsync(entity));
+        return Ok(value: await Service.AddAsync(entity: entity));
     }
 
     [HttpPut]
@@ -110,20 +111,21 @@ public partial class FileController : ODataController
         }
 
         entity.Id = key;
-        return Ok(value: await Service.UpdateAsync(entity));
+        return Ok(value: await Service.UpdateAsync(entity: entity));
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
     public async Task<IActionResult> Patch([FromRoute] Guid key, Delta<LocalFile> delta)
     {
         LocalFile originalEntity = Service.Get(id: key);
+
         if (originalEntity == null)
         {
             return NotFound();
         }
 
         delta.Patch(original: originalEntity);
-        return Ok(value: await Service.UpdateAsync(originalEntity));
+        return Ok(value: await Service.UpdateAsync(entity: originalEntity));
     }
 
     [HttpDelete]

@@ -24,10 +24,18 @@ public partial class WebDavProcessingServiceTests
         DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 401);
-        response.ContentType.Should().Be(expected: "text/xml; charset=\"utf-8\"");
-        response.HasBody.Should().BeTrue();
-        response.Headers.Should().Contain(predicate: header => header.Key == "WWW-Authenticate");
+        response.StatusCode.Should()
+            .Be(expected: 401);
+
+        response.ContentType.Should()
+            .Be(expected: "text/xml; charset=\"utf-8\"");
+
+        response.HasBody.Should()
+            .BeTrue();
+
+        response.Headers.Should()
+            .Contain(predicate: header => header.Key == "WWW-Authenticate");
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
@@ -43,9 +51,15 @@ public partial class WebDavProcessingServiceTests
         DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
-        response.HasBody.Should().BeFalse();
-        response.Headers.Should().Contain(predicate: header => header.Key == "DAV" && header.Value == "1, 2");
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
+        response.HasBody.Should()
+            .BeFalse();
+
+        response.Headers.Should()
+            .Contain(predicate: header => header.Key == "DAV" && header.Value == "1, 2");
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
@@ -61,8 +75,12 @@ public partial class WebDavProcessingServiceTests
         DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
-        response.HasBody.Should().BeFalse();
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
+        response.HasBody.Should()
+            .BeFalse();
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();

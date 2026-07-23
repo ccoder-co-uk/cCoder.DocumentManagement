@@ -20,13 +20,17 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         IQueryable<Folder> entities = new[] { CreateRandomFolder() }.AsQueryable();
-        folderServiceMock.Setup(expression: x => x.GetAll()).Returns(value: entities);
+
+        folderServiceMock.Setup(expression: x => x.GetAll())
+            .Returns(value: entities);
 
         // When
         IQueryable<Folder> result = folderProcessingService.GetAll();
 
         // Then
-        result.Should().BeSameAs(expected: entities);
+        result.Should()
+            .BeSameAs(expected: entities);
+
         folderServiceMock.Verify(expression: x => x.GetAll(), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
     }

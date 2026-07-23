@@ -21,9 +21,15 @@ public partial class DmsProcessingServiceTests
         DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
-        response.ContentType.Should().Be(expected: "application/json");
-        response.HasBody.Should().BeFalse();
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
+        response.ContentType.Should()
+            .Be(expected: "application/json");
+
+        response.HasBody.Should()
+            .BeFalse();
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 }

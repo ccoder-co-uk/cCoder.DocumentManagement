@@ -31,12 +31,14 @@ internal class WebDavProcessingService(
     public async ValueTask<DmsProcessingResponse> ProcessAsync(DmsProcessingRequest request)
     {
         int appId = ExtractAppId(requestPath: request.RequestPath);
+
         LocalPath path = new(
             path: WebUtility
-                .UrlDecode(NormalizeRequestPath(request.RequestPath, appId))
-                .TrimStart('/')
-                .TrimEnd('/')
+                .UrlDecode(encodedValue: NormalizeRequestPath(requestPath: request.RequestPath, appId: appId))
+                .TrimStart(trimChar: '/')
+                .TrimEnd(trimChar: '/')
         );
+
         string requestText = await ReadRequestBodyTextAsync(body: request.Body);
 
         log.LogDebug(message: $"HTTP {request.Method.ToUpperInvariant()} - {path} \n {requestText}");
@@ -48,6 +50,7 @@ internal class WebDavProcessingService(
         string sslPort = config.Settings.TryGetValue(key: "sslPort", value: out string configuredSslPort)
             ? configuredSslPort
             : "443";
+
         string urlBase = $"https://{app.Domain}:{sslPort}/Api/";
 
         List<KeyValuePair<string, string>> headers =
@@ -58,11 +61,13 @@ internal class WebDavProcessingService(
         if (!request.Headers.ContainsKey(key: "Authorization"))
         {
             headers.Add(
-                item: new KeyValuePair<string, string>("WWW-Authenticate", "Basic realm=\"server\"")
+                item: new KeyValuePair<string, string>(key: "WWW-Authenticate", value: "Basic realm=\"server\"")
             );
-            headers.Add(item: new KeyValuePair<string, string>("Connection", "close"));
+
+            headers.Add(item: new KeyValuePair<string, string>(key: "Connection", value: "close"));
+
             return CreateResponse(
-                body: EncodeText(string.Empty),
+                body: EncodeText(content: string.Empty),
                 hasBody: true,
                 contentType: "text/xml; charset=\"utf-8\"",
                 statusCode: 401,
@@ -77,23 +82,23 @@ internal class WebDavProcessingService(
                 case "OPTIONS":
                     headers.AddRange(collection: [
                         new KeyValuePair<string, string>(
-                            "Access-Control-Allow-Origin",
-                            request.Host
+                            key:                            "Access-Control-Allow-Origin",
+                            value:                            request.Host
                         ),
                         new KeyValuePair<string, string>(
-                            "Allow",
-                            "OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, COPY, MOVE, MKCOL, PROPFIND, PROPPATCH, LOCK, UNLOCK, ORDERPATCH"
+                            key:                            "Allow",
+                            value:                            "OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, COPY, MOVE, MKCOL, PROPFIND, PROPPATCH, LOCK, UNLOCK, ORDERPATCH"
                         ),
                         new KeyValuePair<string, string>(
-                            "Public",
-                            "OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, COPY, MOVE, MKCOL, PROPFIND, PROPPATCH, LOCK, UNLOCK, ORDERPATCH"
+                            key:                            "Public",
+                            value:                            "OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, COPY, MOVE, MKCOL, PROPFIND, PROPPATCH, LOCK, UNLOCK, ORDERPATCH"
                         ),
                         new KeyValuePair<string, string>(
-                            "Date",
-                            DateTimeOffset.Now.ToString("s") + "Z"
+                            key:                            "Date",
+                            value:                            DateTimeOffset.Now.ToString(format:"s") + "Z"
                         ),
-                        new KeyValuePair<string, string>("DAV", "1, 2"),
-                        new KeyValuePair<string, string>("MS-Author-Via", "DAV"),
+                        new KeyValuePair<string, string>(key:"DAV", value:"1, 2"),
+                        new KeyValuePair<string, string>(key:"MS-Author-Via", value:"DAV"),
                     ]);
 
                     return CreateResponse(
@@ -105,7 +110,7 @@ internal class WebDavProcessingService(
                     );
                 case "GET":
                     int getVer = int.TryParse(
-                        s: TryGetSingleValue(query, "version"),
+                        s: TryGetSingleValue(query: query, key: "version"),
                         result: out int parsedVersion
                     )
                         ? parsedVersion
@@ -124,24 +129,24 @@ internal class WebDavProcessingService(
                 case "PROPFIND":
                     string propFindBody = PropFind(request: request, appId: appId, path: path, requestText: requestText, ns: ns, urlBase: urlBase);
                     return CreateResponse(
-                        body: EncodeText(propFindBody),
-                        hasBody: !string.IsNullOrEmpty(propFindBody),
+                        body: EncodeText(content: propFindBody),
+                        hasBody: !string.IsNullOrEmpty(value: propFindBody),
                         contentType: "text/xml; charset=\"utf-8\"",
-                        statusCode: !string.IsNullOrEmpty(propFindBody) ? 207 : 404,
+                        statusCode: !string.IsNullOrEmpty(value: propFindBody) ? 207 : 404,
                         headers: headers
                     );
                 case "PROPPATCH":
                     string responseXmlElement = SerializeXml(
                         element: new XElement(
-                        ns + "multistatus",
-                        [
-                            new XAttribute(XNamespace.Xmlns + "D", "DAV:"),
-                            new XAttribute(XNamespace.Xmlns + "Z", "urn:schemas-microsoft-com:"),
+                        name: ns + "multistatus",
+                        content: [
+                            new XAttribute(name:XNamespace.Xmlns + "D", value:"DAV:"),
+                            new XAttribute(name:XNamespace.Xmlns + "Z", value:"urn:schemas-microsoft-com:"),
                         ])
                     );
 
                     return CreateResponse(
-                        body: EncodeText(responseXmlElement),
+                        body: EncodeText(content: responseXmlElement),
                         hasBody: true,
                         contentType: "text/xml; charset=\"utf-8\"",
                         statusCode: 200,
@@ -166,7 +171,7 @@ internal class WebDavProcessingService(
                 case "MOVE":
                     await dmsInstanceService.MoveAsync(
                         oldPath: path,
-                        newPath: ResolveDestinationPath(request, appId)
+                        newPath: ResolveDestinationPath(request: request, appId: appId)
                     );
                     return CreateResponse(
                         body: Stream.Null,
@@ -178,7 +183,7 @@ internal class WebDavProcessingService(
                 case "COPY":
                     await dmsInstanceService.CopyAsync(
                         oldPath: path,
-                        newPath: ResolveDestinationPath(request, appId)
+                        newPath: ResolveDestinationPath(request: request, appId: appId)
                     );
                     return CreateResponse(
                         body: Stream.Null,
@@ -190,7 +195,7 @@ internal class WebDavProcessingService(
                 case "DELETE":
                     await dmsInstanceService.DropAsync(
                         path: path,
-                        version: int.TryParse(TryGetSingleValue(query, "version"), out int deleteVersion)
+                        version: int.TryParse(s: TryGetSingleValue(query: query, key: "version"), result: out int deleteVersion)
                             ? deleteVersion
                             : 0
                     );
@@ -226,14 +231,15 @@ internal class WebDavProcessingService(
         catch (System.Security.SecurityException)
         {
             headers.Add(
-                item: new KeyValuePair<string, string>("WWW-Authenticate", "Basic realm=\"server\"")
+                item: new KeyValuePair<string, string>(key: "WWW-Authenticate", value: "Basic realm=\"server\"")
             );
+
             return CreateResponse(body: Stream.Null, hasBody: false, contentType: "text/xml; charset=\"utf-8\"", statusCode: 204, headers: headers);
         }
         catch (Exception ex)
         {
             return CreateResponse(
-                body: EncodeText(ex.Message),
+                body: EncodeText(content: ex.Message),
                 hasBody: true,
                 contentType: "text/xml; charset=\"utf-8\"",
                 statusCode: 200,
@@ -281,18 +287,18 @@ internal class WebDavProcessingService(
                 .FirstOrDefault(predicate: item =>
                     item.Folder.AppId == appId
                     && path.Length > 0
-                    && item.Path.Equals(path.FullPath, StringComparison.CurrentCultureIgnoreCase)
+                    && item.Path.Equals(value: path.FullPath, comparisonType: StringComparison.CurrentCultureIgnoreCase)
                 );
 
             XElement response = file?.ToWebDavResponse(urlBase: urlBase, ns: ns, requestedProperties: requestedProperties);
 
             return SerializeXml(element: new XElement(
-                ns + "multistatus",
-                new object[]
+                name: ns + "multistatus",
+                content: new object[]
                 {
-                    new XAttribute(XNamespace.Xmlns + "D", "DAV:"),
-                    new XAttribute(XNamespace.Xmlns + "Z", "urn:schemas-microsoft-com:"),
-                }.Union([response])
+                    new XAttribute(name:XNamespace.Xmlns + "D", value:"DAV:"),
+                    new XAttribute(name:XNamespace.Xmlns + "Z", value:"urn:schemas-microsoft-com:"),
+                }.Union(second: [response])
             ));
         }
         catch (Exception ex)
@@ -333,7 +339,7 @@ internal class WebDavProcessingService(
         List<LocalFolder> folders = [];
         List<LocalFile> files = [];
 
-        if (int.TryParse(s: GetHeaderValue(request, "Depth"), result: out int depth) && depth > 0)
+        if (int.TryParse(s: GetHeaderValue(request: request, key: "Depth"), result: out int depth) && depth > 0)
         {
             folders =
             [
@@ -344,8 +350,8 @@ internal class WebDavProcessingService(
                         && (
                             path.FullPath != string.Empty
                                 ? item.Parent.Path.Equals(
-                                    path.FullPath,
-                                    StringComparison.CurrentCultureIgnoreCase
+                                    value:                                    path.FullPath,
+                                    comparisonType:                                    StringComparison.CurrentCultureIgnoreCase
                                 )
                                 : item.ParentId == null
                         )
@@ -370,22 +376,22 @@ internal class WebDavProcessingService(
         }
 
         IEnumerable<XElement> response = folders
-            .Select(selector: item => item.ToWebDavResponse(urlBase, ns, requestedProperties))
-            .Union(second: files.Select(item => item.ToWebDavResponse(urlBase, ns, requestedProperties)));
+            .Select(selector: item => item.ToWebDavResponse(urlBase: urlBase, ns: ns, requestedProperties: requestedProperties))
+            .Union(second: files.Select(selector: item => item.ToWebDavResponse(urlBase: urlBase, ns: ns, requestedProperties: requestedProperties)));
 
         return SerializeXml(element: new XElement(
-            ns + "multistatus",
-            new object[]
+            name: ns + "multistatus",
+            content: new object[]
             {
-                new XAttribute(XNamespace.Xmlns + "D", "DAV:"),
-                new XAttribute(XNamespace.Xmlns + "Z", "urn:schemas-microsoft-com:"),
-            }.Union(response)
+                new XAttribute(name:XNamespace.Xmlns + "D", value:"DAV:"),
+                new XAttribute(name:XNamespace.Xmlns + "Z", value:"urn:schemas-microsoft-com:"),
+            }.Union(second: response)
         ));
     }
 
     private static LocalPath ResolveDestinationPath(DmsProcessingRequest request, int appId)
     {
-        string destination = WebUtility.UrlDecode(encodedValue: GetHeaderValue(request, "Destination"));
+        string destination = WebUtility.UrlDecode(encodedValue: GetHeaderValue(request: request, key: "Destination"));
         string marker = $"Core/App({appId})/DAV/";
         int markerIndex = destination.IndexOf(value: marker, comparisonType: StringComparison.OrdinalIgnoreCase);
 
@@ -394,7 +400,8 @@ internal class WebDavProcessingService(
             destination = destination[(markerIndex + marker.Length)..];
         }
 
-        return new LocalPath(path: destination.TrimStart('/').TrimEnd('/'));
+        return new LocalPath(path: destination.TrimStart(trimChar: '/')
+            .TrimEnd(trimChar: '/'));
     }
 
     private static int ExtractAppId(string requestPath)
@@ -453,7 +460,7 @@ internal class WebDavProcessingService(
 
     private static MemoryStream EncodeText(string content)
     {
-        MemoryStream stream = new(buffer: Encoding.UTF8.GetBytes(content ?? string.Empty));
+        MemoryStream stream = new(buffer: Encoding.UTF8.GetBytes(s: content ?? string.Empty));
         stream.Position = 0;
         return stream;
     }

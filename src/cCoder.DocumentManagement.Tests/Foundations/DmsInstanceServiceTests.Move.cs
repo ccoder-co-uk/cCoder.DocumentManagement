@@ -17,13 +17,15 @@ public partial class DmsInstanceServiceTests
         // Given
         DmsPath oldPath = CreatePath(fullPath: "folder/old.txt");
         DmsPath newPath = CreatePath(fullPath: "folder/new.txt");
-        dmsInstanceBrokerMock.Setup(expression: x => x.MoveAsync(oldPath, newPath)).Returns(value: ValueTask.CompletedTask);
+
+        dmsInstanceBrokerMock.Setup(expression: x => x.MoveAsync(oldPath: oldPath, newPath: newPath))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
         await dmsInstanceService.MoveAsync(oldPath: oldPath, newPath: newPath);
 
         // Then
-        dmsInstanceBrokerMock.Verify(expression: x => x.MoveAsync(oldPath, newPath), times: Times.Once);
+        dmsInstanceBrokerMock.Verify(expression: x => x.MoveAsync(oldPath: oldPath, newPath: newPath), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 

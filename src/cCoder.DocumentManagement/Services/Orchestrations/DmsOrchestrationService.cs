@@ -27,6 +27,7 @@ internal class DmsOrchestrationService(
     public DmsResult Get(LocalPath path, int version = 0, string search = "")
     {
         LocalApp app = currentAppResolver.ResolveCurrentApp();
+
         return path.IsToFile
             ? fileProcessingService.Get(app: app, path: path, version: version)
             : folderProcessingService.Get(app: app, path: path, search: search);
@@ -35,7 +36,10 @@ internal class DmsOrchestrationService(
     public IEnumerable<DataFile> Search(string needle)
     {
         LocalApp app = currentAppResolver.ResolveCurrentApp();
-        return fileProcessingService.Search(app: app, needle: needle).Select(selector: ToExternalFile).ToArray();
+
+        return fileProcessingService.Search(app: app, needle: needle)
+            .Select(selector: ToExternalFile)
+            .ToArray();
     }
 
     public async ValueTask UnpackAsync(LocalPath path, Stream content, bool ignoreArchiveRoot = false)
@@ -47,6 +51,7 @@ internal class DmsOrchestrationService(
     public async ValueTask SaveAsync(LocalPath path, Stream content = null)
     {
         LocalApp app = currentAppResolver.ResolveCurrentApp();
+
         if (path.IsToFile)
         {
             await fileProcessingService.SaveAsync(app: app, path: path, content: content);
@@ -60,6 +65,7 @@ internal class DmsOrchestrationService(
     public async ValueTask DropAsync(LocalPath path, int version = 0)
     {
         LocalApp app = currentAppResolver.ResolveCurrentApp();
+
         if (path.IsToFile)
         {
             await fileProcessingService.DropAsync(app: app, path: path, version: version);
@@ -73,6 +79,7 @@ internal class DmsOrchestrationService(
     public async ValueTask CopyAsync(LocalPath oldPath, LocalPath newPath)
     {
         LocalApp app = currentAppResolver.ResolveCurrentApp();
+
         if (oldPath.IsToFile)
         {
             await fileProcessingService.CopyAsync(app: app, oldPath: oldPath, newPath: newPath);
@@ -86,6 +93,7 @@ internal class DmsOrchestrationService(
     public async ValueTask MoveAsync(LocalPath oldPath, LocalPath newPath)
     {
         LocalApp app = currentAppResolver.ResolveCurrentApp();
+
         if (oldPath.IsToFile)
         {
             await fileProcessingService.MoveAsync(app: app, oldPath: oldPath, newPath: newPath);
@@ -95,17 +103,18 @@ internal class DmsOrchestrationService(
             await folderProcessingService.MoveAsync(app: app, oldPath: oldPath, newPath: newPath);
         }
     }
-    private static DataFile ToExternalFile(LocalFile file) => file == null ? null : new DataFile
-    {
-        Id = file.Id,
-        FolderId = file.FolderId,
-        Name = file.Name,
-        Description = file.Description,
-        Path = file.Path,
-        MimeType = file.MimeType,
-        CreatedBy = file.CreatedBy,
-        Size = file.Size,
-        CreatedOn = file.CreatedOn,
-        DeletedOn = file.DeletedOn,
-    };
+    private static DataFile ToExternalFile(LocalFile file) =>
+        file == null ? null : new DataFile
+        {
+            Id = file.Id,
+            FolderId = file.FolderId,
+            Name = file.Name,
+            Description = file.Description,
+            Path = file.Path,
+            MimeType = file.MimeType,
+            CreatedBy = file.CreatedBy,
+            Size = file.Size,
+            CreatedOn = file.CreatedOn,
+            DeletedOn = file.DeletedOn,
+        };
 }

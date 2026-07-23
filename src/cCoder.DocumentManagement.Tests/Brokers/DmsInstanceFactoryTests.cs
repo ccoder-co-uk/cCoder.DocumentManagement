@@ -21,15 +21,19 @@ public class DmsInstanceFactoryTests
     {
         IEnumerable<DataFile> expectedFiles = [new() { Id = Guid.NewGuid(), Name = "file.txt" }];
         var orchestrationServiceMock = new Mock<IDmsOrchestrationService>(behavior: MockBehavior.Strict);
-        orchestrationServiceMock.Setup(expression: service => service.Search("needle")).Returns(value: expectedFiles);
+
+        orchestrationServiceMock.Setup(expression: service => service.Search(needle: "needle"))
+            .Returns(value: expectedFiles);
 
         var factory = new DmsInstanceFactory(dmsOrchestrationService: orchestrationServiceMock.Object);
 
         IDms dms = factory.CreateDms();
         IEnumerable<DataFile> actualFiles = dms.Search(needle: "needle");
 
-        actualFiles.Should().BeSameAs(expected: expectedFiles);
-        orchestrationServiceMock.Verify(expression: service => service.Search("needle"), times: Times.Once);
+        actualFiles.Should()
+            .BeSameAs(expected: expectedFiles);
+
+        orchestrationServiceMock.Verify(expression: service => service.Search(needle: "needle"), times: Times.Once);
         orchestrationServiceMock.VerifyNoOtherCalls();
     }
 
@@ -41,7 +45,7 @@ public class DmsInstanceFactoryTests
         using var content = new MemoryStream(buffer: [1, 2, 3]);
 
         orchestrationServiceMock
-            .Setup(expression: service => service.SaveAsync(path, content))
+            .Setup(expression: service => service.SaveAsync(path: path, content: content))
             .Returns(value: ValueTask.CompletedTask);
 
         var factory = new DmsInstanceFactory(dmsOrchestrationService: orchestrationServiceMock.Object);
@@ -49,7 +53,7 @@ public class DmsInstanceFactoryTests
         IDms dms = factory.CreateDms();
         await dms.SaveAsync(path: path, content: content);
 
-        orchestrationServiceMock.Verify(expression: service => service.SaveAsync(path, content), times: Times.Once);
+        orchestrationServiceMock.Verify(expression: service => service.SaveAsync(path: path, content: content), times: Times.Once);
         orchestrationServiceMock.VerifyNoOtherCalls();
     }
 }

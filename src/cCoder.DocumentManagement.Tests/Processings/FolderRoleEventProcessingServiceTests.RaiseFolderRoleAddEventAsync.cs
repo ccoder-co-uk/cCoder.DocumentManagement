@@ -19,15 +19,16 @@ public partial class FolderRoleEventProcessingServiceTests
     {
         // Given
         FolderRole entity = CreateRandomFolderRole();
+
         folderRoleEventServiceMock
-            .Setup(expression: x => x.RaiseFolderRoleAddEventAsync(entity))
+            .Setup(expression: x => x.RaiseFolderRoleAddEventAsync(entity: entity))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         await service.RaiseFolderRoleAddEventAsync(entity: entity);
 
         // Then
-        folderRoleEventServiceMock.Verify(expression: x => x.RaiseFolderRoleAddEventAsync(entity), times: Times.Once);
+        folderRoleEventServiceMock.Verify(expression: x => x.RaiseFolderRoleAddEventAsync(entity: entity), times: Times.Once);
         folderRoleEventServiceMock.VerifyNoOtherCalls();
     }
 

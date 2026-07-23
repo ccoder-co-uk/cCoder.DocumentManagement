@@ -24,7 +24,8 @@ public sealed partial class FileControllerTests
         int actualCount = await GetFileCountAsync();
 
         // Then
-        actualCount.Should().BeGreaterThanOrEqualTo(expected: 0);
+        actualCount.Should()
+            .BeGreaterThanOrEqualTo(expected: 0);
     }
 
     [Fact]
@@ -36,7 +37,8 @@ public sealed partial class FileControllerTests
         IReadOnlyList<DmsFile> actualFiles = await GetFilesAsync(top: 1);
 
         // Then
-        actualFiles.Should().NotBeNull();
+        actualFiles.Should()
+            .NotBeNull();
     }
 
     [Fact]
@@ -45,6 +47,7 @@ public sealed partial class FileControllerTests
         // Given
         SeededFileContext seededContext = await SeedDatabase("file_create", "file_delete");
         string name = Unique(prefix: "File");
+
         DmsFile expectedFile = await CreateFileAsync(payload: new
         {
             folderId = seededContext.FolderId,
@@ -54,15 +57,21 @@ public sealed partial class FileControllerTests
             mimeType = "text/plain",
             size = "12",
         });
+
         DmsFile actualFile;
 
         // When
         actualFile = await GetFileAsync(id: expectedFile.Id);
 
         // Then
-        actualFile.Should().NotBeNull();
-        actualFile!.Id.Should().Be(expected: expectedFile.Id);
-        actualFile.Name.Should().Be(expected: name);
+        actualFile.Should()
+            .NotBeNull();
+
+        actualFile!.Id.Should()
+            .Be(expected: expectedFile.Id);
+
+        actualFile.Name.Should()
+            .Be(expected: name);
 
         await DeleteFileAsync(id: expectedFile.Id);
         await Teardown(seededContext: seededContext);
@@ -74,40 +83,43 @@ public sealed partial class FileControllerTests
         SeededFileContext seededContext = await SeedDatabase();
 
         using IServiceScope scope = fixture.Factory.Services.CreateScope();
+
         using var core = scope.ServiceProvider
             .GetRequiredService<cCoder.Data.ICoreContextFactory>()
             .CreateCoreContext();
 
         App hiddenApp = await core.AddAppAsync(app: new App
         {
-            Name = Unique("HiddenApp"),
-            Domain = $"{Unique("hidden")}.local",
+            Name = Unique(prefix: "HiddenApp"),
+            Domain = $"{Unique(prefix: "hidden")}.local",
             DefaultTheme = "Default",
             DefaultCultureId = string.Empty,
-            TenantId = Unique("tenant"),
+            TenantId = Unique(prefix: "tenant"),
             ConfigJson = "{}",
         });
 
         cCoder.Data.Models.DMS.Folder hiddenFolder = await core.AddFolderAsync(folder: new cCoder.Data.Models.DMS.Folder
         {
             AppId = hiddenApp.Id,
-            Name = Unique("HiddenFolder"),
-            Path = Unique("hidden-folder").ToLowerInvariant(),
+            Name = Unique(prefix: "HiddenFolder"),
+            Path = Unique(prefix: "hidden-folder")
+            .ToLowerInvariant(),
         });
 
         DmsFile hiddenFile = await core.AddDmsFileAsync(file: new DmsFile
         {
             FolderId = hiddenFolder.Id,
-            Name = Unique("HiddenFile"),
+            Name = Unique(prefix: "HiddenFile"),
             Description = "Hidden file",
-            Path = $"{Unique("hidden")}.txt".ToLowerInvariant(),
+            Path = $"{Unique(prefix: "hidden")}.txt".ToLowerInvariant(),
             MimeType = "text/plain",
             Size = "12",
         });
 
         DmsFile actualFile = await GetFileAsync(id: hiddenFile.Id);
 
-        actualFile.Should().BeNull();
+        actualFile.Should()
+            .BeNull();
 
         core.Remove(entity: hiddenFile);
         core.Remove(entity: hiddenFolder);

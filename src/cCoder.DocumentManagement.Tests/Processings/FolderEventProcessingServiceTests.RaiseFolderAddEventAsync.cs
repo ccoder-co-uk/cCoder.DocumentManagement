@@ -19,15 +19,16 @@ public partial class FolderEventProcessingServiceTests
     {
         // Given
         Folder entity = CreateRandomFolder();
+
         folderEventServiceMock
-            .Setup(expression: x => x.RaiseFolderAddEventAsync(entity))
+            .Setup(expression: x => x.RaiseFolderAddEventAsync(entity: entity))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         await service.RaiseFolderAddEventAsync(entity: entity);
 
         // Then
-        folderEventServiceMock.Verify(expression: x => x.RaiseFolderAddEventAsync(entity), times: Times.Once);
+        folderEventServiceMock.Verify(expression: x => x.RaiseFolderAddEventAsync(entity: entity), times: Times.Once);
         folderEventServiceMock.VerifyNoOtherCalls();
     }
 

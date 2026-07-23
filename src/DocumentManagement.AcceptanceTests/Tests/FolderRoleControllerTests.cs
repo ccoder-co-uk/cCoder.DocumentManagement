@@ -25,7 +25,8 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
     private string BaseUrl { get; } = "/Api/Core/FolderRole";
     private static JsonSerializerOptions JsonOptions { get; } = new() { PropertyNameCaseInsensitive = true };
 
-    private static string Unique(string prefix) => $"{prefix}-{Guid.NewGuid():N}";
+    private static string Unique(string prefix) =>
+        $"{prefix}-{Guid.NewGuid():N}";
 
     private sealed record SeededFolderRoleContext(int AppId, Guid FolderId, Guid AccessRoleId, Guid RoleId);
     private sealed record ODataEnvelope<T>(List<T> Value);
@@ -33,17 +34,18 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
     private async Task<SeededFolderRoleContext> SeedDatabase(bool includeFolderRole = false, params string[] privileges)
     {
         using IServiceScope scope = fixture.Factory.Services.CreateScope();
+
         using var core = scope.ServiceProvider
             .GetRequiredService<cCoder.Data.ICoreContextFactory>()
             .CreateCoreContext();
 
         App app = await core.AddAppAsync(app: new App
         {
-            Name = Unique("AcceptanceApp"),
-            Domain = $"{Unique("folderrole")}.local",
+            Name = Unique(prefix: "AcceptanceApp"),
+            Domain = $"{Unique(prefix: "folderrole")}.local",
             DefaultTheme = "Default",
             DefaultCultureId = string.Empty,
-            TenantId = Unique("tenant"),
+            TenantId = Unique(prefix: "tenant"),
             ConfigJson = "{}",
         });
 
@@ -51,9 +53,9 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
         {
             Id = Guid.NewGuid(),
             AppId = app.Id,
-            Name = Unique("AccessRole"),
+            Name = Unique(prefix: "AccessRole"),
             Description = "Acceptance access role",
-            Privs = string.Join(',', privileges),
+            Privs = string.Join(separator: ',', value: privileges),
         });
 
         await core.AddUserRoleAsync(userRole: new UserRole { RoleId = accessRole.Id, UserId = "Guest" });
@@ -62,7 +64,7 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
         {
             Id = Guid.NewGuid(),
             AppId = app.Id,
-            Name = Unique("TargetRole"),
+            Name = Unique(prefix: "TargetRole"),
             Description = "Acceptance target role",
             Privs = "folder_read",
         });
@@ -70,8 +72,9 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
         Folder folder = await core.AddFolderAsync(folder: new Folder
         {
             AppId = app.Id,
-            Name = Unique("Folder"),
-            Path = Unique("folder").ToLowerInvariant(),
+            Name = Unique(prefix: "Folder"),
+            Path = Unique(prefix: "folder")
+            .ToLowerInvariant(),
         });
 
         await core.AddFolderRoleAsync(folderRole: new FolderRole
@@ -96,42 +99,64 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
     {
         using HttpResponseMessage response = await Client.PostAsJsonAsync(requestUri: BaseUrl, value: payload);
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+
+        response.StatusCode.Should()
+            .Be(expected: HttpStatusCode.OK, because: content);
+
         return JsonSerializer.Deserialize<FolderRole>(json: content, options: JsonOptions)!;
     }
 
     private async Task Teardown(SeededFolderRoleContext seededContext)
     {
         using IServiceScope scope = fixture.Factory.Services.CreateScope();
+
         using var core = scope.ServiceProvider
             .GetRequiredService<cCoder.Data.ICoreContextFactory>()
             .CreateCoreContext();
 
-        FolderRole[] folderRoles = core.Set<FolderRole>().IgnoreQueryFilters().Where(predicate: folderRole => folderRole.FolderId == seededContext.FolderId).ToArray();
+        FolderRole[] folderRoles = core.Set<FolderRole>()
+            .IgnoreQueryFilters()
+            .Where(predicate: folderRole => folderRole.FolderId == seededContext.FolderId)
+            .ToArray();
+
         if (folderRoles.Length > 0)
         {
             await core.DeleteAllAsync(folderRoles: folderRoles);
         }
 
-        Folder folder = core.Set<Folder>().IgnoreQueryFilters().FirstOrDefault(predicate: found => found.Id == seededContext.FolderId);
+        Folder folder = core.Set<Folder>()
+            .IgnoreQueryFilters()
+            .FirstOrDefault(predicate: found => found.Id == seededContext.FolderId);
+
         if (folder is not null)
         {
             await core.DeleteAsync(folder: folder);
         }
 
-        UserRole[] userRoles = core.Set<UserRole>().IgnoreQueryFilters().Where(predicate: userRole => userRole.RoleId == seededContext.AccessRoleId).ToArray();
+        UserRole[] userRoles = core.Set<UserRole>()
+            .IgnoreQueryFilters()
+            .Where(predicate: userRole => userRole.RoleId == seededContext.AccessRoleId)
+            .ToArray();
+
         if (userRoles.Length > 0)
         {
             await core.DeleteAllAsync(userRoles: userRoles);
         }
 
-        Role[] roles = core.Set<Role>().IgnoreQueryFilters().Where(predicate: found => found.Id == seededContext.AccessRoleId || found.Id == seededContext.RoleId).ToArray();
+        Role[] roles = core.Set<Role>()
+            .IgnoreQueryFilters()
+            .Where(predicate: found => found.Id == seededContext.AccessRoleId || found.Id == seededContext.RoleId)
+            .ToArray();
+
         if (roles.Length > 0)
         {
             await core.DeleteAllAsync(roles: roles);
         }
 
-        App app = core.Set<App>().IgnoreQueryFilters().FirstOrDefault(predicate: found => found.Id == seededContext.AppId);
+        App app = core.Set<App>()
+            .IgnoreQueryFilters()
+            .FirstOrDefault(predicate: found => found.Id == seededContext.AppId);
+
         if (app is not null)
         {
             await core.DeleteAsync(app: app);
@@ -143,7 +168,10 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
     {
         using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}/$count");
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+
+        response.StatusCode.Should()
+            .Be(expected: HttpStatusCode.OK, because: content);
+
         return int.Parse(s: content);
     }
 
@@ -151,13 +179,17 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
     {
         using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}?$top={top}");
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+
+        response.StatusCode.Should()
+            .Be(expected: HttpStatusCode.OK, because: content);
+
         return JsonSerializer.Deserialize<ODataEnvelope<FolderRole>>(json: content, options: JsonOptions)!.Value;
     }
 
     private async Task<FolderRole> FindFolderRoleAsync(Guid folderId, Guid roleId)
     {
         IReadOnlyList<FolderRole> folderRoles = await GetFolderRolesAsync(top: 200);
+
         return folderRoles.FirstOrDefault(predicate: folderRole =>
             folderRole.FolderId == folderId && folderRole.RoleId == roleId
         );

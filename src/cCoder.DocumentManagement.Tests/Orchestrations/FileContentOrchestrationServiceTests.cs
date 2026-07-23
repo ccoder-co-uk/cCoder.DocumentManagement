@@ -31,5 +31,6 @@ public partial class FileContentOrchestrationServiceTests
     }
 
     private static FileContent CreateRandomFileContent() =>
-        Builder<FileContent>.CreateNew().Build();
+        Builder<FileContent>.CreateNew()
+                                        .Build();
 }

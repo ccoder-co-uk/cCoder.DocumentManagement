@@ -22,7 +22,8 @@ public partial class FileEventServiceTests
         authInfoMock = new Mock<ICoreAuthInfo>(behavior: MockBehavior.Strict);
         fileEventBrokerMock = new(behavior: MockBehavior.Strict);
         authInfoMock = new();
-        authInfoMock.SetupGet(expression: x => x.SSOUserId).Returns(value: CurrentUserId);
+        authInfoMock.SetupGet(expression: x => x.SSOUserId)
+            .Returns(value: CurrentUserId);
         service = new cCoder.DocumentManagement.Services.Foundations.Events.FileEventService(
             fileEventBroker: fileEventBrokerMock.Object,
             authInfo: authInfoMock.Object

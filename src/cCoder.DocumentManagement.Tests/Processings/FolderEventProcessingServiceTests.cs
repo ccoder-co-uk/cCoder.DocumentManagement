@@ -26,5 +26,6 @@ public partial class FolderEventProcessingServiceTests
     }
 
     private static Folder CreateRandomFolder() =>
-        Builder<Folder>.CreateNew().Build();
+        Builder<Folder>.CreateNew()
+                                   .Build();
 }

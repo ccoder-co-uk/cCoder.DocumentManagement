@@ -13,7 +13,9 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 internal class FolderRoleEventProcessingService(IFolderRoleEventService eventService) : IFolderRoleEventProcessingService
 {
-    public ValueTask RaiseFolderRoleAddEventAsync(FolderRole entity) => eventService.RaiseFolderRoleAddEventAsync(entity: entity);
+    public ValueTask RaiseFolderRoleAddEventAsync(FolderRole entity) =>
+        eventService.RaiseFolderRoleAddEventAsync(entity: entity);
 
-    public ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole entity) => eventService.RaiseFolderRoleDeleteEventAsync(entity: entity);
+    public ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole entity) =>
+        eventService.RaiseFolderRoleDeleteEventAsync(entity: entity);
 }

@@ -15,5 +15,6 @@ public interface IDmsInstanceFactory
 public class DmsInstanceFactory(IDmsOrchestrationService dmsOrchestrationService)
     : IDmsInstanceFactory
 {
-    public IDms CreateDms() => new Dms(dmsOrchestrationService: dmsOrchestrationService);
+    public IDms CreateDms() =>
+        new Dms(dmsOrchestrationService: dmsOrchestrationService);
 }

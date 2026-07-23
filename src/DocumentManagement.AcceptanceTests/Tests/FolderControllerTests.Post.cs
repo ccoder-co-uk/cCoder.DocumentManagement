@@ -31,8 +31,11 @@ public sealed partial class FolderControllerTests
         actualFolder = await GetFolderAsync(id: expectedFolder.Id);
 
         // Then
-        actualFolder.Should().NotBeNull();
-        actualFolder!.Name.Should().Be(expected: name);
+        actualFolder.Should()
+            .NotBeNull();
+
+        actualFolder!.Name.Should()
+            .Be(expected: name);
 
         await DeleteFolderAsync(id: expectedFolder.Id);
         await Teardown(seededContext: seededContext);

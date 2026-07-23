@@ -20,14 +20,18 @@ public partial class FileContentOrchestrationServiceTests
     {
         // Given
         IQueryable<FileContent> entities = new[] { CreateRandomFileContent() }.AsQueryable();
-        fileContentProcessingServiceMock.Setup(expression: x => x.GetAll(true)).Returns(value: entities);
+
+        fileContentProcessingServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
+            .Returns(value: entities);
 
         // When
         IQueryable<FileContent> result = orchestrationService.GetAll(ignoreFilters: true);
 
         // Then
-        result.Should().BeSameAs(expected: entities);
-        fileContentProcessingServiceMock.Verify(expression: x => x.GetAll(true), times: Times.Once);
+        result.Should()
+            .BeSameAs(expected: entities);
+
+        fileContentProcessingServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Once);
         fileContentProcessingServiceMock.VerifyNoOtherCalls();
         fileContentEventProcessingServiceMock.VerifyNoOtherCalls();
     }

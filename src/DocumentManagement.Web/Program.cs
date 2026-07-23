@@ -36,10 +36,11 @@ public class Program
 
         builder.Services.AddSecurityApi(configAction: (services, securityConfig) =>
         {
-            securityConfig.AddMSSQLModelProvider(services, ssoConnection);
+            securityConfig.AddMSSQLModelProvider(services: services, connectionString: ssoConnection);
+
             securityConfig.UseAESHMMACPasswordEncryption(
-                services,
-                builder.Configuration.GetSection("Settings")["DecryptionKey"]);
+                services: services,
+                decryptionKey: builder.Configuration.GetSection(key: "Settings")[key: "DecryptionKey"]);
         });
 
         cCoder.Data.IServiceCollectionExtensions.AddCoreData(
@@ -58,16 +59,16 @@ public class Program
         app.UseSwagger()
             .UseSwaggerUI(setupAction: options =>
             {
-                options.SwaggerEndpoint("/swagger/DocumentManagement/swagger.json", "DocumentManagement API");
-                options.SwaggerEndpoint("/swagger/Core/swagger.json", "Core API");
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Core API");
+                options.SwaggerEndpoint(url: "/swagger/DocumentManagement/swagger.json", name: "DocumentManagement API");
+                options.SwaggerEndpoint(url: "/swagger/Core/swagger.json", name: "Core API");
+                options.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "Core API");
             })
             .UseODataBatching()
             .UseODataRouteDebug();
 
         app.UseDomainApiShell();
-        app.MapGet(pattern: "/Health", handler: () => Results.Text("OK"));
-        app.MapGet(pattern: "/", handler: () => Results.Redirect("/tools/index.html"));
+        app.MapGet(pattern: "/Health", handler: () => Results.Text(content: "OK"));
+        app.MapGet(pattern: "/", handler: () => Results.Redirect(url: "/tools/index.html"));
         app.StartDocumentManagementWeb(log: log);
         app.UseDomainDefaultCors();
         app.UseDomainExceptionHandling(errorHandler: HandleUnhandledException);
@@ -80,6 +81,7 @@ public class Program
 
         context.Response.StatusCode =
             exception?.GetType() == typeof(SecurityException) ? 401 : 500;
+
         context.Response.ContentType = "application/json";
 
         if (exception is null)
@@ -88,7 +90,8 @@ public class Program
         }
 
         log.LogError(message: "{Message}\n{StackTrace}", exception.Message, exception.StackTrace);
+
         await context.Response.WriteAsync(
-            text: "{ \"error\": \"" + exception.Message.Replace("\"", "\'") + "\" }");
+            text: "{ \"error\": \"" + exception.Message.Replace(oldValue: "\"", newValue: "\'") + "\" }");
     }
 }

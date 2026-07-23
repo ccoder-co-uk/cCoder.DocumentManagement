@@ -39,7 +39,10 @@ internal class DocumentManagementMigrationAggregationService(
                 ? [jsonBroker.ParseJson<FolderRoleInfo>(json: item.Data)]
                 : jsonBroker.ParseJson<FolderRoleInfo[]>(json: item.Data);
 
-            var roles = roleService.GetAll(ignoreFilters: false).Where(predicate: role => role.AppId == appId).ToArray();
+            var roles = roleService.GetAll(ignoreFilters: false)
+                .Where(predicate: role => role.AppId == appId)
+                .ToArray();
+
             var folders = folderOrchestrationService
                 .GetAll(ignoreFilters: false)
                 .Where(predicate: folder => folder.AppId == appId)
@@ -121,15 +124,15 @@ internal class DocumentManagementMigrationAggregationService(
 
         var folderRoles = folderRoleOrchestrationService.GetAll(ignoreFilters: true)
             .Where(predicate: folderRole =>
-                folderIds.Contains(folderRole.FolderId)
-                && roleIds.Contains(folderRole.RoleId))
+                folderIds.Contains(value: folderRole.FolderId)
+                && roleIds.Contains(value: folderRole.RoleId))
             .ToArray();
 
         FolderRoleInfo[] folderRoleInfos = folderRoles
             .Select(selector: folderRole => new FolderRoleInfo
             {
-                Path = folderPathsById[folderRole.FolderId],
-                Name = roleNamesById[folderRole.RoleId],
+                Path = folderPathsById[key: folderRole.FolderId],
+                Name = roleNamesById[key: folderRole.RoleId],
             })
             .ToArray();
 

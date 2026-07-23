@@ -25,13 +25,14 @@ public partial class FolderServiceTests
 
         Folder submitted = null;
 
-        folderBrokerMock.Setup(expression: x => x.GetAppId(It.IsAny<DataFolder>())).Returns(value: (int?)7);
+        folderBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFolder>()))
+            .Returns(value: (int?)7);
 
-        authorizationBrokerMock.Setup(expression: x => x.Authorize((int?)7, "Folder_create"));
+        authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_create"));
 
         folderBrokerMock
             .Setup(expression: x =>
-                x.AddFolderAsync(It.Is<DataFolder>(candidate => !ReferenceEquals(candidate, folder)))
+                x.AddFolderAsync(entity: It.Is<DataFolder>(match: candidate => !ReferenceEquals(objA: candidate, objB: folder)))
             )
             .Callback<DataFolder>(action: candidate =>
                 submitted = new Folder
@@ -50,26 +51,34 @@ public partial class FolderServiceTests
         Folder result = await folderService.AddAsync(folder: folder);
 
         // Then
-        result.Should().BeSameAs(expected: folder);
-        submitted.Should().NotBeNull();
-        submitted.Should().NotBeSameAs(unexpected: folder);
-        result.Should().NotBeSameAs(unexpected: submitted);
+        result.Should()
+            .BeSameAs(expected: folder);
+
+        submitted.Should()
+            .NotBeNull();
+
+        submitted.Should()
+            .NotBeSameAs(unexpected: folder);
+
+        result.Should()
+            .NotBeSameAs(unexpected: submitted);
 
         submitted
             .Should()
-            .BeEquivalentTo(expectation: folder, config: options => options.Excluding(candidate => candidate.Id));
+            .BeEquivalentTo(expectation: folder, config: options => options.Excluding(expression: candidate => candidate.Id));
 
         result
             .Should()
-            .BeEquivalentTo(expectation: folder, config: options => options.Excluding(candidate => candidate.Id));
+            .BeEquivalentTo(expectation: folder, config: options => options.Excluding(expression: candidate => candidate.Id));
 
         folderBrokerMock.Verify(
-            expression: x => x.AddFolderAsync(It.Is<DataFolder>(candidate => !ReferenceEquals(candidate, folder))),
+            expression: x => x.AddFolderAsync(entity: It.Is<DataFolder>(match: candidate => !ReferenceEquals(objA: candidate, objB: folder))),
             times: Times.Once
         );
-        folderBrokerMock.Verify(expression: x => x.GetAppId(It.IsAny<DataFolder>()), times: Times.AtMostOnce());
+
+        folderBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
         folderBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize((int?)7, "Folder_create"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_create"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -80,17 +89,20 @@ public partial class FolderServiceTests
         Folder folder = CreateRandomFolder(appId: 7);
 
         authorizationBrokerMock
-            .Setup(expression: x => x.Authorize((int?)7, "Folder_create"))
-            .Throws(exception: new SecurityException("Access Denied!"));
+            .Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_create"))
+            .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
         Func<Task> action = async () => await folderService.AddAsync(folder: folder);
 
         // Then
-        await action.Should().ThrowAsync<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
-        folderBrokerMock.Verify(expression: x => x.GetAppId(It.IsAny<DataFolder>()), times: Times.AtMostOnce());
+        await action.Should()
+            .ThrowAsync<SecurityException>()
+            .WithMessage(expectedWildcardPattern: "Access Denied!");
+
+        folderBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
         folderBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize((int?)7, "Folder_create"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_create"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 

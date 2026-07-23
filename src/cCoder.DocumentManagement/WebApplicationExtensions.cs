@@ -35,13 +35,14 @@ public static partial class WebApplicationExtensions
     {
         log?.LogInformation(message: "Initialising Document Management");
         PopulateMetadataTypeCache(app: app);
+
         app.MapWhen(
-            predicate: context => DmsRouteRegex.IsMatch(context.Request.Path.Value?.ToLower() ?? string.Empty),
+            predicate: context => DmsRouteRegex.IsMatch(input: context.Request.Path.Value?.ToLower() ?? string.Empty),
             configuration: branch => branch.UseMiddleware<DMSMiddleware>()
         );
 
         app.MapWhen(
-            predicate: context => WebDavRouteRegex.IsMatch(context.Request.Path.Value?.ToLower() ?? string.Empty),
+            predicate: context => WebDavRouteRegex.IsMatch(input: context.Request.Path.Value?.ToLower() ?? string.Empty),
             configuration: branch => branch.UseMiddleware<WebDavMiddleware>()
         );
 
@@ -72,7 +73,7 @@ public static partial class WebApplicationExtensions
                 typeSetPayloads: app.Services
                     .GetRequiredService<IDocumentManagementMetadataTypeService>()
                     .GetKnownMetadata()
-                    .Select(static metadata => JsonSerializer.Serialize(metadata)));
+                    .Select(selector: static metadata => JsonSerializer.Serialize(value: metadata)));
         }
     }
 }

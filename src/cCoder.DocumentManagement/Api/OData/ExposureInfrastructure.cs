@@ -21,6 +21,7 @@ namespace cCoder.DocumentManagement.Api.OData
         {
             ExtendedMetadataContainer result = new(type: type, isEntity: true, hasEndpoint: hasEndpoint) { Category = context };
             IEdmEntitySet set = model.EntityContainer.FindEntitySet(setName: type.Name);
+
             if (set is null)
             {
                 result.HasEndpoint = false;
@@ -35,11 +36,11 @@ namespace cCoder.DocumentManagement.Api.OData
                     Url = $"{result.Category}/{type.Name}/{operation.Name}()",
                     Queryable = operation.IsFunction(),
                     HttpVerb = operation.IsFunction() ? "GET" : "POST",
-                    ReturnType = BuildMetaFor(operation.GetReturn()?.Type?.Definition),
+                    ReturnType = BuildMetaFor(definition: operation.GetReturn()?.Type?.Definition),
                     Parameters = operation
-                        .Parameters?.Where(parameter => parameter.Name != "bindingParameter")
-                        .Select(parameter => new { parameter.Name, TypeName = parameter.Type.FullName() })
-                        .ToDictionary(item => item.Name, item => item.TypeName),
+                        .Parameters?.Where(predicate: parameter => parameter.Name != "bindingParameter")
+                        .Select(selector: parameter => new { parameter.Name, TypeName = parameter.Type.FullName() })
+                        .ToDictionary(keySelector: item => item.Name, elementSelector: item => item.TypeName),
                 });
 
             result.Operations = GetBaseCrudOperations(type: result)
@@ -163,7 +164,8 @@ namespace cCoder.DocumentManagement.Api.OData
                 {
                     Key = item.Key,
                     Value = item.Value?.RawValue,
-                    Errors = item.Value?.Errors?.Select(error => $"{error.ErrorMessage} - {error.Exception?.Message}").ToArray(),
+                    Errors = item.Value?.Errors?.Select(selector: error => $"{error.ErrorMessage} - {error.Exception?.Message}")
+                                                                                                                      .ToArray(),
                 })
                 .ToArray()
                 .ToJsonForOdata();

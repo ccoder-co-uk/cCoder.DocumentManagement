@@ -16,6 +16,7 @@ public sealed partial class FileContentControllerTests
     {
         // Given
         SeededFileContentContext seededContext = await SeedDatabase("filecontent_create", "filecontent_update", "filecontent_delete");
+
         FileContent createdFileContent = await CreateFileContentAsync(payload: new
         {
             fileId = seededContext.FileId,
@@ -24,6 +25,7 @@ public sealed partial class FileContentControllerTests
             version = 1,
             rawData = new byte[] { 1, 2, 3, 4 },
         });
+
         FileContent actualFileContent;
 
         // When
@@ -36,8 +38,11 @@ public sealed partial class FileContentControllerTests
         actualFileContent = await GetFileContentAsync(id: createdFileContent.Id);
 
         // Then
-        actualFileContent.Should().NotBeNull();
-        actualFileContent!.Version.Should().Be(expected: 3);
+        actualFileContent.Should()
+            .NotBeNull();
+
+        actualFileContent!.Version.Should()
+            .Be(expected: 3);
 
         await DeleteFileContentAsync(id: createdFileContent.Id);
         await Teardown(seededContext: seededContext);

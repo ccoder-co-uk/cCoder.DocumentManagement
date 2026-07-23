@@ -21,13 +21,17 @@ internal class FileContentService(
 {
     public FileContent Get(Guid id)
     {
-        FileContent fileContent = GetAll().FirstOrDefault(predicate: i => i.Id == id);
+        FileContent fileContent = GetAll()
+            .FirstOrDefault(predicate: i => i.Id == id);
+
         if (fileContent is not null)
         {
             return fileContent;
         }
 
-        FileContent unrestrictedFileContent = GetAll(ignoreFilters: true).FirstOrDefault(predicate: i => i.Id == id);
+        FileContent unrestrictedFileContent = GetAll(ignoreFilters: true)
+            .FirstOrDefault(predicate: i => i.Id == id);
+
         if (unrestrictedFileContent is not null)
         {
             throw new SecurityException(message: "Access Denied!");
@@ -48,10 +52,12 @@ internal class FileContentService(
     public async ValueTask<FileContent> AddAsync(FileContent fileContent)
     {
         cCoder.Data.Models.DMS.FileContent newFileContent = CreateStorageFileContent(fileContent: fileContent, includeId: false);
+
         authorizationBroker.Authorize(
-            appId: fileContentBroker.GetAppId(newFileContent),
+            appId: fileContentBroker.GetAppId(entity: newFileContent),
             privilege: $"{nameof(FileContent)}_create"
         );
+
         string currentUserId = authorizationBroker.GetCurrentUser().Id;
         DateTimeOffset now = DateTimeOffset.UtcNow;
         newFileContent.CreatedOn = now;
@@ -72,8 +78,9 @@ internal class FileContentService(
     public async ValueTask<FileContent> UpdateAsync(FileContent fileContent)
     {
         cCoder.Data.Models.DMS.FileContent updateFileContent = CreateStorageFileContent(fileContent: fileContent, includeId: true);
+
         authorizationBroker.Authorize(
-            appId: fileContentBroker.GetAppId(updateFileContent),
+            appId: fileContentBroker.GetAppId(entity: updateFileContent),
             privilege: $"{nameof(FileContent)}_update"
         );
 
@@ -92,11 +99,13 @@ internal class FileContentService(
     public async ValueTask DeleteAsync(Guid id)
     {
         FileContent fileContent = Get(id: id);
+
         authorizationBroker.Authorize(
-            appId: fileContentBroker.GetAppId(CreateStorageFileContent(fileContent, includeId: true)),
+            appId: fileContentBroker.GetAppId(entity: CreateStorageFileContent(fileContent: fileContent, includeId: true)),
             privilege: $"{nameof(FileContent)}_delete"
         );
-        _ = await fileContentBroker.DeleteFileContentAsync(entity: CreateStorageFileContent(fileContent, includeId: true));
+
+        _ = await fileContentBroker.DeleteFileContentAsync(entity: CreateStorageFileContent(fileContent: fileContent, includeId: true));
     }
 
     private static cCoder.Data.Models.DMS.FileContent CreateStorageFileContent(FileContent fileContent, bool includeId)

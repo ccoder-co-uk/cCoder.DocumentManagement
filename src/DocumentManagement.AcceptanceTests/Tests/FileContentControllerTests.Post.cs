@@ -27,14 +27,17 @@ public sealed partial class FileContentControllerTests
             description = "Acceptance content",
             size = "4",
             version = 1,
-            rawData = Convert.ToBase64String(Encoding.UTF8.GetBytes("test")),
+            rawData = Convert.ToBase64String(inArray: Encoding.UTF8.GetBytes(s: "test")),
         });
 
         actualFileContent = await GetFileContentAsync(id: expectedFileContent.Id);
 
         // Then
-        actualFileContent.Should().NotBeNull();
-        actualFileContent!.Id.Should().Be(expected: expectedFileContent.Id);
+        actualFileContent.Should()
+            .NotBeNull();
+
+        actualFileContent!.Id.Should()
+            .Be(expected: expectedFileContent.Id);
 
         await DeleteFileContentAsync(id: expectedFileContent.Id);
         await Teardown(seededContext: seededContext);

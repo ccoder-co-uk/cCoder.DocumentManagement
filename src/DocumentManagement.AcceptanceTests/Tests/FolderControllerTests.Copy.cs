@@ -27,6 +27,7 @@ public sealed partial class FolderControllerTests
         });
 
         string destinationName = "copiedfolder";
+
         Folder destinationFolder = await CreateFolderAsync(payload: new
         {
             appId = destinationContext.AppId,
@@ -42,7 +43,8 @@ public sealed partial class FolderControllerTests
             destinationAppId: destinationContext.AppId);
 
         // Then
-        actualStatusCode.Should().Be(expected: 200);
+        actualStatusCode.Should()
+            .Be(expected: 200);
 
         await DeleteFolderAsync(id: sourceFolder.Id);
         await DeleteFolderAsync(id: destinationFolder.Id);

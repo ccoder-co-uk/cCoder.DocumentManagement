@@ -23,14 +23,17 @@ public partial class FolderRoleServiceTests
         FolderRole folderRole = CreateRandomFolderRole();
         IQueryable<DataFolderRole> folderRoles = new[] { ToExternalFolderRole(folderRole: folderRole) }.AsQueryable();
 
-        folderRoleBrokerMock.Setup(expression: x => x.GetAllFolderRoles(false)).Returns(value: folderRoles);
+        folderRoleBrokerMock.Setup(expression: x => x.GetAllFolderRoles(ignoreFilters: false))
+            .Returns(value: folderRoles);
 
         // When
         IQueryable<FolderRole> result = folderRoleService.GetAll();
 
         // Then
-        result.Should().BeEquivalentTo(expectation: new[] { folderRole }.AsQueryable());
-        folderRoleBrokerMock.Verify(expression: x => x.GetAllFolderRoles(false), times: Times.Once);
+        result.Should()
+            .BeEquivalentTo(expectation: new[] { folderRole }.AsQueryable());
+
+        folderRoleBrokerMock.Verify(expression: x => x.GetAllFolderRoles(ignoreFilters: false), times: Times.Once);
         folderRoleBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }

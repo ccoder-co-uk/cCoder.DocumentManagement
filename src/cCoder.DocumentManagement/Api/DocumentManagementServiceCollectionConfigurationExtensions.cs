@@ -32,6 +32,7 @@ public static partial class IServiceCollectionExtensions
     {
         DocumentManagementConfiguration configuration = CreateConfiguration(services: services, configure: configure);
         services.AddDocumentManagementWeb(builder: builder);
+
         services.AddConfiguredApi(
             configuration: configuration,
             documentName: "DocumentManagement",
@@ -79,28 +80,31 @@ public static partial class IServiceCollectionExtensions
 
         IEdmModel routeModel = BuildRouteModel(configureModel: configureModel);
         DefaultODataBatchHandler batchHandler = new();
+
         string rootPath = string.IsNullOrWhiteSpace(value: configuration.RootPath)
             ? $"Api/{documentName}"
             : configuration.RootPath;
 
-        services.AddControllers().AddOData(setupAction: options =>
+        services.AddControllers()
+            .AddOData(setupAction: options =>
         {
             options.RouteOptions.EnableQualifiedOperationCall = false;
             options.EnableAttributeRouting = true;
             options.RouteOptions.EnableKeyAsSegment = false;
+
             options.Expand()
                 .Count()
                 .Filter()
                 .Select()
                 .OrderBy()
-                .SetMaxTop(1000)
-                .AddRouteComponents(rootPath, routeModel, batchHandler);
+                .SetMaxTop(maxTopValue: 1000)
+                .AddRouteComponents(routePrefix: rootPath, model: routeModel, batchHandler: batchHandler);
 
             if (builder is null
                 && configuration.IncludeLegacyCoreContext
-                && !string.Equals(rootPath, "Api/Core", StringComparison.OrdinalIgnoreCase))
+                && !string.Equals(a: rootPath, b: "Api/Core", comparisonType: StringComparison.OrdinalIgnoreCase))
             {
-                _ = options.AddRouteComponents("Api/Core", routeModel, batchHandler);
+                _ = options.AddRouteComponents(routePrefix: "Api/Core", model: routeModel, batchHandler: batchHandler);
             }
         });
     }
@@ -113,22 +117,23 @@ public static partial class IServiceCollectionExtensions
     {
         services.AddSwaggerGen(setupAction: options =>
         {
-            options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
-            AddSwaggerDocuments(options, documentName, configuration);
+            options.ResolveConflictingActions(resolver: apiDescriptions => apiDescriptions.First());
+            AddSwaggerDocuments(options: options, documentName: documentName, configuration: configuration);
+
             options.DocInclusionPredicate(
-                (swaggerDocumentName, apiDescription) =>
+                predicate: (swaggerDocumentName, apiDescription) =>
                     ShouldIncludeInDocument(
-                        swaggerDocumentName,
-                        apiDescription.RelativePath,
-                        documentName,
-                        configuration));
+                        swaggerDocumentName: swaggerDocumentName,
+                        relativePath: apiDescription.RelativePath,
+                        documentName: documentName,
+                        configuration: configuration));
 
             if (useFullSchemaIds)
             {
-                options.CustomSchemaIds(type => type.FullName?.Replace('+', '.') ?? type.Name);
+                options.CustomSchemaIds(schemaIdSelector: type => type.FullName?.Replace(oldChar: '+', newChar: '.') ?? type.Name);
             }
 
-            options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+            options.AddSecurityDefinition(name: "bearer", securityScheme: new OpenApiSecurityScheme
             {
                 Description = @"Authorization header using the Bearer scheme.",
                 Name = "Authorization",
@@ -157,6 +162,7 @@ public static partial class IServiceCollectionExtensions
                 Title = "Core API definition",
                 Version = "Core",
             });
+
             options.SwaggerDoc(name: "v1", info: new OpenApiInfo
             {
                 Title = "Core API definition",
@@ -182,6 +188,7 @@ public static partial class IServiceCollectionExtensions
         }
 
         string path = NormalizePath(relativePath: relativePath);
+
         string rootPath = string.IsNullOrWhiteSpace(value: configuration.RootPath)
             ? $"Api/{documentName}"
             : configuration.RootPath;
@@ -194,6 +201,7 @@ public static partial class IServiceCollectionExtensions
     private static bool MatchesContextRoute(string path, string rootPath)
     {
         string normalizedPath = NormalizePath(relativePath: rootPath);
+
         return path.Equals(value: normalizedPath, comparisonType: StringComparison.OrdinalIgnoreCase)
             || path.StartsWith(value: $"{normalizedPath}/", comparisonType: StringComparison.OrdinalIgnoreCase);
     }
@@ -214,23 +222,29 @@ public static partial class IServiceCollectionExtensions
         services.AddResponseCompression();
         services.AddHttpClient();
         services.AddHttpContextAccessor();
+
         services.AddScoped(
             serviceType: typeof(HttpContext),
             implementationFactory: ctx => ctx.GetService<IHttpContextAccessor>()?.HttpContext ?? new DefaultHttpContext());
+
         services.AddScoped(serviceType: typeof(HttpRequest), implementationFactory: ctx => ctx.GetRequiredService<HttpContext>().Request);
         services.AddSession();
+
         services.AddHsts(configureOptions: options =>
         {
             options.Preload = true;
             options.IncludeSubDomains = true;
-            options.MaxAge = TimeSpan.FromMinutes(60);
+            options.MaxAge = TimeSpan.FromMinutes(minutes: 60);
         });
+
         services.AddMvc(setupAction: options => options.EnableEndpointRouting = false);
         services.AddRazorPages();
+
         services.Configure<KestrelServerOptions>(configureOptions: options =>
         {
             options.Limits.MaxRequestBodySize = int.MaxValue;
         });
+
         services.AddEndpointsApiExplorer();
         services.AddSignalR();
     }

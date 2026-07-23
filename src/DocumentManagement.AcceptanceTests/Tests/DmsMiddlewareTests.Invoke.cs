@@ -21,8 +21,13 @@ public sealed partial class DmsMiddlewareTests
         actualResult = await InvokeOptionsAsync();
 
         // Then
-        actualResult.StatusCode.Should().Be(expected: (int)HttpStatusCode.NoContent);
-        actualResult.Headers.Should().Contain(expected: "Access-Control-Allow-Origin");
-        actualResult.Headers.Should().Contain(expected: "Access-Control-Allow-Methods");
+        actualResult.StatusCode.Should()
+            .Be(expected: (int)HttpStatusCode.NoContent);
+
+        actualResult.Headers.Should()
+            .Contain(expected: "Access-Control-Allow-Origin");
+
+        actualResult.Headers.Should()
+            .Contain(expected: "Access-Control-Allow-Methods");
     }
 }

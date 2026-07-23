@@ -23,15 +23,17 @@ public partial class FolderServiceTests
         Folder folder = CreateRandomFolder(id: folderId);
 
         folderBrokerMock
-            .Setup(expression: x => x.GetAllFolders(false))
-            .Returns(value: new[] { ToExternalFolder(folder) }.AsQueryable());
+            .Setup(expression: x => x.GetAllFolders(ignoreFilters: false))
+            .Returns(value: new[] { ToExternalFolder(folder: folder) }.AsQueryable());
 
         // When
         Folder result = folderService.Get(id: folderId);
 
         // Then
-        result.Should().BeEquivalentTo(expectation: folder);
-        folderBrokerMock.Verify(expression: x => x.GetAllFolders(false), times: Times.Once);
+        result.Should()
+            .BeEquivalentTo(expectation: folder);
+
+        folderBrokerMock.Verify(expression: x => x.GetAllFolders(ignoreFilters: false), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }

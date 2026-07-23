@@ -23,6 +23,7 @@ public partial class FolderProcessingServiceTests
         // Given
         App app = CreateRandomAppForTests();
         Guid appRoleId = Guid.NewGuid();
+
         currentUser = new User
         {
             Id = "test-user",
@@ -41,7 +42,9 @@ public partial class FolderProcessingServiceTests
                 },
             ],
         };
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
+
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(valueFunction: () => currentUser);
 
         DmsPath path = new(path: "docs/nested");
         Folder createdRoot = CreateRandomFolder();
@@ -65,18 +68,23 @@ public partial class FolderProcessingServiceTests
         };
 
         folderServiceMock
-            .Setup(expression: x => x.GetByPathWithRoles(app.Id, "docs/nested", true))
+            .Setup(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs/nested", ignoreFilters: true))
             .Returns(value: (Folder)null);
+
         folderServiceMock
-            .Setup(expression: x => x.GetByPathWithRoles(app.Id, "docs", true))
+            .Setup(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs", ignoreFilters: true))
             .Returns(value: (Folder)null);
-        roleServiceMock.Setup(expression: x => x.GetAll(true)).Returns(value: new[] { appRole }.AsQueryable());
+
+        roleServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
+            .Returns(value: new[] { appRole }.AsQueryable());
+
         folderServiceMock
-            .Setup(expression: x => x.AddForPathBuildAsync(It.Is<Folder>(f => f.Path == "docs" && f.ParentId == null)))
+            .Setup(expression: x => x.AddForPathBuildAsync(folder: It.Is<Folder>(match: f => f.Path == "docs" && f.ParentId == null)))
             .ReturnsAsync(value: createdRoot);
+
         folderServiceMock
             .Setup(expression: x =>
-                x.AddForPathBuildAsync(It.Is<Folder>(f => f.Path == "docs/nested"))
+                x.AddForPathBuildAsync(folder: It.Is<Folder>(match: f => f.Path == "docs/nested"))
             )
             .Callback<Folder>(action: folder => submittedChild = folder)
             .ReturnsAsync(value: createdChild);
@@ -85,21 +93,32 @@ public partial class FolderProcessingServiceTests
         await folderProcessingService.SaveAsync(app: app, path: path);
 
         // Then
-        folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(app.Id, "docs/nested", true), times: Times.Once);
-        folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(app.Id, "docs", true), times: Times.Once);
-        roleServiceMock.Verify(expression: x => x.GetAll(true), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs/nested", ignoreFilters: true), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs", ignoreFilters: true), times: Times.Once);
+        roleServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Once);
+
         folderServiceMock.Verify(
-            expression: x => x.AddForPathBuildAsync(It.Is<Folder>(f => f.Path == "docs" && f.ParentId == null)),
+            expression: x => x.AddForPathBuildAsync(folder: It.Is<Folder>(match: f => f.Path == "docs" && f.ParentId == null)),
             times: Times.Once
         );
+
         folderServiceMock.Verify(
-            expression: x => x.AddForPathBuildAsync(It.Is<Folder>(f => f.Path == "docs/nested")),
+            expression: x => x.AddForPathBuildAsync(folder: It.Is<Folder>(match: f => f.Path == "docs/nested")),
             times: Times.Once
         );
-        submittedChild.Should().NotBeNull();
-        submittedChild.ParentId.Should().Be(expected: createdRoot.Id);
-        submittedChild.Roles.Should().ContainSingle();
-        submittedChild.Roles.Single().RoleId.Should().Be(expected: appRole.Id);
+
+        submittedChild.Should()
+            .NotBeNull();
+
+        submittedChild.ParentId.Should()
+            .Be(expected: createdRoot.Id);
+
+        submittedChild.Roles.Should()
+            .ContainSingle();
+
+        submittedChild.Roles.Single().RoleId.Should()
+            .Be(expected: appRole.Id);
+
         authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.AtLeastOnce());
         folderServiceMock.VerifyNoOtherCalls();
         roleServiceMock.VerifyNoOtherCalls();
@@ -112,6 +131,7 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         Guid roleId = Guid.NewGuid();
+
         currentUser = new User
         {
             Id = "test-user",
@@ -130,7 +150,9 @@ public partial class FolderProcessingServiceTests
                 },
             ],
         };
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
+
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(valueFunction: () => currentUser);
 
         App app = CreateRandomAppForTests();
         DmsPath path = new(path: "docs/nested");
@@ -138,6 +160,7 @@ public partial class FolderProcessingServiceTests
         parentFolder.AppId = app.Id;
         parentFolder.Name = "docs";
         parentFolder.Path = "docs";
+
         parentFolder.Roles =
         [
             new FolderRole
@@ -160,15 +183,17 @@ public partial class FolderProcessingServiceTests
         createdChild.Path = "docs/nested";
 
         folderServiceMock
-            .Setup(expression: x => x.GetByPathWithRoles(app.Id, "docs/nested", true))
+            .Setup(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs/nested", ignoreFilters: true))
             .Returns(value: (Folder)null);
+
         folderServiceMock
-            .Setup(expression: x => x.GetByPathWithRoles(app.Id, "docs", true))
+            .Setup(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs", ignoreFilters: true))
             .Returns(value: parentFolder);
+
         folderServiceMock
             .Setup(expression: x =>
                 x.AddForPathBuildAsync(
-                    It.Is<Folder>(f =>
+                    folder: It.Is<Folder>(match: f =>
                         f.Path == "docs/nested"
                         && f.ParentId == parentFolder.Id
                         && f.Roles.Single().RoleId == roleId)
@@ -180,19 +205,21 @@ public partial class FolderProcessingServiceTests
         await folderProcessingService.SaveAsync(app: app, path: path);
 
         // Then
-        folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(app.Id, "docs/nested", true), times: Times.Once);
-        folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(app.Id, "docs", true), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs/nested", ignoreFilters: true), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs", ignoreFilters: true), times: Times.Once);
         roleServiceMock.VerifyNoOtherCalls();
+
         folderServiceMock.Verify(
             expression: x =>
                 x.AddForPathBuildAsync(
-                    It.Is<Folder>(f =>
+                    folder: It.Is<Folder>(match: f =>
                         f.Path == "docs/nested"
                         && f.ParentId == parentFolder.Id
                         && f.Roles.Single().RoleId == roleId)
                 ),
             times: Times.Once
         );
+
         authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.AtLeastOnce());
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
@@ -204,20 +231,26 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
+
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(valueFunction: () => currentUser);
 
         App app = CreateRandomAppForTests();
         DmsPath path = new(path: "docs");
+
         folderServiceMock
-            .Setup(expression: x => x.GetByPathWithRoles(app.Id, path.Lowered, true))
+            .Setup(expression: x => x.GetByPathWithRoles(appId: app.Id, path: path.Lowered, ignoreFilters: true))
             .Returns(value: (Folder)null);
 
         // When
         Func<Task> act = async () => await folderProcessingService.SaveAsync(app: app, path: path);
 
         // Then
-        await act.Should().ThrowAsync<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
-        folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(app.Id, path.Lowered, true), times: Times.Once);
+        await act.Should()
+            .ThrowAsync<SecurityException>()
+            .WithMessage(expectedWildcardPattern: "Access Denied!");
+
+        folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: path.Lowered, ignoreFilters: true), times: Times.Once);
         roleServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.AtLeastOnce());

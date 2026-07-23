@@ -24,7 +24,8 @@ public partial class DmsInstanceServiceTests
         dmsInstanceService = new DmsInstanceService(dmsInstanceBroker: dmsInstanceBrokerMock.Object);
     }
 
-    private static DmsPath CreatePath(string fullPath) => new(path: fullPath);
+    private static DmsPath CreatePath(string fullPath) =>
+        new(path: fullPath);
 
     private static DMSResult CreateDmsResult(string contentType = "application/json") =>
         new() { MimeType = contentType, Data = new MemoryStream(buffer: [1, 2, 3]) };

@@ -20,13 +20,17 @@ public partial class FileContentProcessingServiceTests
     {
         // Given
         IQueryable<FileContent> entities = new[] { CreateRandomFileContent() }.AsQueryable();
-        fileContentServiceMock.Setup(expression: x => x.GetAll()).Returns(value: entities);
+
+        fileContentServiceMock.Setup(expression: x => x.GetAll())
+            .Returns(value: entities);
 
         // When
         IQueryable<FileContent> result = fileContentProcessingService.GetAll();
 
         // Then
-        result.Should().BeSameAs(expected: entities);
+        result.Should()
+            .BeSameAs(expected: entities);
+
         fileContentServiceMock.Verify(expression: x => x.GetAll(), times: Times.Once);
         fileContentServiceMock.VerifyNoOtherCalls();
     }

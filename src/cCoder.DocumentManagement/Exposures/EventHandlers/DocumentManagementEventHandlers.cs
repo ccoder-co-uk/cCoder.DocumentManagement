@@ -10,5 +10,6 @@ namespace cCoder.DocumentManagement.Exposures.EventHandlers;
 internal class DocumentManagementEventHandlers(IEventHandlerService eventHandlerService)
     : IDocumentManagementEventHandlers
 {
-    public void ListenToAllEvents() => eventHandlerService.ListenToAllEvents();
+    public void ListenToAllEvents() =>
+        eventHandlerService.ListenToAllEvents();
 }

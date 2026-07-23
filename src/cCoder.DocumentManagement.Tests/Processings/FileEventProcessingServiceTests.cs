@@ -23,5 +23,6 @@ public partial class FileEventProcessingServiceTests
     }
 
     private static FileEntity CreateRandomFileEntity() =>
-        Builder<FileEntity>.CreateNew().Build();
+        Builder<FileEntity>.CreateNew()
+                                       .Build();
 }

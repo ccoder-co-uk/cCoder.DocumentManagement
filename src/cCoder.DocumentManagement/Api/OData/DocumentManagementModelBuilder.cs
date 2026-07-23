@@ -48,6 +48,8 @@ internal class DocumentManagementModelBuilder : ODataModelBuilder
         AddSet<FileContent, Guid>();
         AddJoinSet(key: (Expression<Func<FolderRole, object>>)((FolderRole i) => new { i.FolderId, i.RoleId }));
         base.Builder.Namespace = "";
-        base.Builder.EntityType<Folder>().Collection.Action(name: "Copy").ReturnsCollection<Result<Guid?>>();
+
+        base.Builder.EntityType<Folder>().Collection.Action(name: "Copy")
+            .ReturnsCollection<Result<Guid?>>();
     }
 }

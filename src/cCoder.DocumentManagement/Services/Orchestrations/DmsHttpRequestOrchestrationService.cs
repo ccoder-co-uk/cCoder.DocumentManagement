@@ -63,11 +63,13 @@ internal class DmsHttpRequestOrchestrationService(
     {
         List<KeyValuePair<string, string>> headers = [.. response.Headers];
         AddHeaderIfMissing(headers: headers, key: "Access-Control-Allow-Origin", value: "*");
+
         AddHeaderIfMissing(
             headers: headers,
             key: "Access-Control-Allow-Headers",
             value: "access-control-allow-origin,authorization,content-type,x-requested-with"
         );
+
         AddHeaderIfMissing(headers: headers, key: "Access-Control-Allow-Methods", value: "PUT,POST,GET,DELETE,OPTIONS");
         AddHeaderIfMissing(headers: headers, key: "Cache-Control", value: "max-age=2592000");
 
@@ -111,11 +113,11 @@ internal class DmsHttpRequestOrchestrationService(
     {
         if (
             !headers.Any(predicate: header =>
-                string.Equals(header.Key, key, StringComparison.OrdinalIgnoreCase)
+                string.Equals(a: header.Key, b: key, comparisonType: StringComparison.OrdinalIgnoreCase)
             )
         )
         {
-            headers.Add(item: new KeyValuePair<string, string>(key, value));
+            headers.Add(item: new KeyValuePair<string, string>(key: key, value: value));
         }
     }
 }

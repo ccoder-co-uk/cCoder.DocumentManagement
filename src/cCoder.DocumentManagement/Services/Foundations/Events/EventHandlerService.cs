@@ -40,41 +40,44 @@ internal class EventHandlerService(IEventHubBroker eventHubBroker) : IEventHandl
         ListenToAppDeleteEvents();
     }
 
-    void ListenToFolderEvents() => ListenToFolderDeleteEvents();
+    void ListenToFolderEvents() =>
+        ListenToFolderDeleteEvents();
 
-    void ListenToFileEvents() => ListenToFileDeleteEvents();
+    void ListenToFileEvents() =>
+        ListenToFileDeleteEvents();
 
-    void ListenToPackageEvents() => ListenToPackageImportEvents();
+    void ListenToPackageEvents() =>
+        ListenToPackageImportEvents();
 
     void ListenToAppAddEvents() =>
         eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
             eventName: "app_add",
-            handler: (service, app) => service.AddAsync(app));
+            handler: (service, app) => service.AddAsync(app: app));
 
     void ListenToAppUpdateEvents() =>
         eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
             eventName: "app_update",
-            handler: (service, app) => service.UpdateAsync(app));
+            handler: (service, app) => service.UpdateAsync(app: app));
 
     void ListenToAppDeleteEvents() =>
         eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
             eventName: "app_delete",
-            handler: (service, app) => service.DeleteAsync(app.Id));
+            handler: (service, app) => service.DeleteAsync(appId: app.Id));
 
     void ListenToFolderDeleteEvents() =>
         eventHubBroker.ListenToEvent<DataFolder, IFolderCoordinationService>(
             eventName: "folder_delete",
-            handler: (service, folder) => service.DeleteFolderAsync(folder));
+            handler: (service, folder) => service.DeleteFolderAsync(folder: folder));
 
     void ListenToFileDeleteEvents() =>
         eventHubBroker.ListenToEvent<DmsFile, IFileOrchestrationService>(
             eventName: "file_delete",
-            handler: (service, file) => service.HandleFileDeleteEventAsync(file));
+            handler: (service, file) => service.HandleFileDeleteEventAsync(file: file));
 
     void ListenToPackageImportEvents() =>
         eventHubBroker.ListenToEvent<(int appId, Package package), IDocumentManagementMigrationAggregationService>(
             eventName: "package_import",
-            handler: (service, args) => service.ImportPackageAsync(args.appId, ToLocalPackage(args.package)));
+            handler: (service, args) => service.ImportPackageAsync(appId: args.appId, package: ToLocalPackage(package: args.package)));
 
     static DocumentManagementPackage ToLocalPackage(Package package) =>
         package == null ? null : new DocumentManagementPackage(name: package.Name)
@@ -84,7 +87,8 @@ internal class EventHandlerService(IEventHubBroker eventHubBroker) : IEventHandl
             Description = package.Description,
             Category = package.Category,
             SourceApi = package.SourceApi,
-            Items = package.Items?.Select(selector: ToLocalPackageItem).ToArray(),
+            Items = package.Items?.Select(selector: ToLocalPackageItem)
+                                                                       .ToArray(),
         };
 
     static DocumentManagementPackageItem ToLocalPackageItem(DataPackageItem packageItem) =>

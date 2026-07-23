@@ -21,7 +21,10 @@ public sealed partial class WebDavMiddlewareTests
         actualStatusCode = await InvokeOptionsAsync();
 
         // Then
-        actualStatusCode.Should().NotBe(unexpected: (int)HttpStatusCode.NotFound);
-        actualStatusCode.Should().NotBe(unexpected: (int)HttpStatusCode.MethodNotAllowed);
+        actualStatusCode.Should()
+            .NotBe(unexpected: (int)HttpStatusCode.NotFound);
+
+        actualStatusCode.Should()
+            .NotBe(unexpected: (int)HttpStatusCode.MethodNotAllowed);
     }
 }

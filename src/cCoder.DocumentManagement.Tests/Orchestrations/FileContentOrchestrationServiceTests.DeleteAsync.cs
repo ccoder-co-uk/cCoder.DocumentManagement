@@ -20,20 +20,24 @@ public partial class FileContentOrchestrationServiceTests
         // Given
         Guid id = Guid.NewGuid();
         FileContent entity = CreateRandomFileContent();
-        fileContentProcessingServiceMock.Setup(expression: x => x.Get(id)).Returns(value: entity);
-        fileContentProcessingServiceMock.Setup(expression: x => x.DeleteAsync(id)).Returns(value: ValueTask.CompletedTask);
+
+        fileContentProcessingServiceMock.Setup(expression: x => x.Get(id: id))
+            .Returns(value: entity);
+
+        fileContentProcessingServiceMock.Setup(expression: x => x.DeleteAsync(id: id))
+            .Returns(value: ValueTask.CompletedTask);
 
         fileContentEventProcessingServiceMock
-            .Setup(expression: x => x.RaiseFileContentDeleteEventAsync(entity))
+            .Setup(expression: x => x.RaiseFileContentDeleteEventAsync(entity: entity))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         await orchestrationService.DeleteAsync(id: id);
 
         // Then
-        fileContentProcessingServiceMock.Verify(expression: x => x.Get(id), times: Times.Once);
-        fileContentProcessingServiceMock.Verify(expression: x => x.DeleteAsync(id), times: Times.Once);
-        fileContentEventProcessingServiceMock.Verify(expression: x => x.RaiseFileContentDeleteEventAsync(entity), times: Times.Once);
+        fileContentProcessingServiceMock.Verify(expression: x => x.Get(id: id), times: Times.Once);
+        fileContentProcessingServiceMock.Verify(expression: x => x.DeleteAsync(id: id), times: Times.Once);
+        fileContentEventProcessingServiceMock.Verify(expression: x => x.RaiseFileContentDeleteEventAsync(entity: entity), times: Times.Once);
     }
 
 }

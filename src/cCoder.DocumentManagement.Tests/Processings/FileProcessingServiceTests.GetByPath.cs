@@ -18,23 +18,26 @@ public partial class FileProcessingServiceTests
     {
         // Given
         authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
+            .Setup(expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))
             .Callback(action: (int? appId, string privilege) =>
             {
-                if (!(currentUser?.Can(appId, privilege) ?? false))
+                if (!(currentUser?.Can(appId: appId, operation: privilege) ?? false))
                 {
-                    throw new SecurityException("Access Denied!");
+                    throw new SecurityException(message: "Access Denied!");
                 }
             });
 
         authorizationBrokerMock
-            .Setup(expression: x => x.IsAdminOfApp(It.IsAny<int>()))
-            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
+            .Setup(expression: x => x.IsAdminOfApp(appId: It.IsAny<int>()))
+            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId: appId) ?? false);
 
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(valueFunction: () => currentUser);
 
         cCoder.Data.Models.DMS.File file = CreateRandomFile(appId: 3, path: "root/file.txt");
-        fileServiceMock.Setup(expression: x => x.GetByPath(3, "root/file.txt", true)).Returns(value: file);
+
+        fileServiceMock.Setup(expression: x => x.GetByPath(appId: 3, path: "root/file.txt", ignoreFilters: true))
+            .Returns(value: file);
 
         // When
         cCoder.Data.Models.DMS.File result = fileProcessingService.GetByPath(
@@ -43,8 +46,10 @@ public partial class FileProcessingServiceTests
         );
 
         // Then
-        result.Should().BeEquivalentTo(expectation: file);
-        fileServiceMock.Verify(expression: x => x.GetByPath(3, "root/file.txt", true), times: Times.Once);
+        result.Should()
+            .BeEquivalentTo(expectation: file);
+
+        fileServiceMock.Verify(expression: x => x.GetByPath(appId: 3, path: "root/file.txt", ignoreFilters: true), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();
     }
 
@@ -53,29 +58,34 @@ public partial class FileProcessingServiceTests
     {
         // Given
         authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
+            .Setup(expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))
             .Callback(action: (int? appId, string privilege) =>
             {
-                if (!(currentUser?.Can(appId, privilege) ?? false))
+                if (!(currentUser?.Can(appId: appId, operation: privilege) ?? false))
                 {
-                    throw new SecurityException("Access Denied!");
+                    throw new SecurityException(message: "Access Denied!");
                 }
             });
 
         authorizationBrokerMock
-            .Setup(expression: x => x.IsAdminOfApp(It.IsAny<int>()))
-            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
+            .Setup(expression: x => x.IsAdminOfApp(appId: It.IsAny<int>()))
+            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId: appId) ?? false);
 
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(valueFunction: () => currentUser);
 
-        fileServiceMock.Setup(expression: x => x.GetByPath(3, "root/file.txt", true)).Returns(value: (cCoder.Data.Models.DMS.File)null);
+        fileServiceMock.Setup(expression: x => x.GetByPath(appId: 3, path: "root/file.txt", ignoreFilters: true))
+            .Returns(value: (cCoder.Data.Models.DMS.File)null);
 
         // When
         Action act = () => fileProcessingService.GetByPath(appId: 3, path: "root/file.txt");
 
         // Then
-        act.Should().Throw<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
-        fileServiceMock.Verify(expression: x => x.GetByPath(3, "root/file.txt", true), times: Times.Once);
+        act.Should()
+            .Throw<SecurityException>()
+            .WithMessage(expectedWildcardPattern: "Access Denied!");
+
+        fileServiceMock.Verify(expression: x => x.GetByPath(appId: 3, path: "root/file.txt", ignoreFilters: true), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();
     }
 

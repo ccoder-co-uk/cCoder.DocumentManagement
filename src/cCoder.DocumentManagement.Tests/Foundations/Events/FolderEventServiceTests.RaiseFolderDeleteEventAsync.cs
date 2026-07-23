@@ -27,7 +27,7 @@ public partial class FolderEventServiceTests
             .Setup(
                 expression: x =>
                     x.RaiseFolderDeleteEventAsync(
-                        It.IsAny<EventMessage<cCoder.Data.Models.DMS.Folder>>()
+                        message: It.IsAny<EventMessage<cCoder.Data.Models.DMS.Folder>>()
                     )
             )
             .Callback<EventMessage<cCoder.Data.Models.DMS.Folder>>(action: message => actualMessage = message)
@@ -37,20 +37,35 @@ public partial class FolderEventServiceTests
         await service.RaiseFolderDeleteEventAsync(entity: entity);
 
         // Then
-        actualMessage.Should().NotBeNull();
-        actualMessage!.Data.Id.Should().Be(expected: entity.Id);
-        actualMessage.Data.AppId.Should().Be(expected: entity.AppId);
-        actualMessage.Data.Name.Should().Be(expected: entity.Name);
-        actualMessage.Data.Path.Should().Be(expected: entity.Path);
-        actualMessage.AuthInfo.Should().NotBeNull();
-        actualMessage.AuthInfo.SSOUserId.Should().Be(expected: CurrentUserId);
+        actualMessage.Should()
+            .NotBeNull();
+
+        actualMessage!.Data.Id.Should()
+            .Be(expected: entity.Id);
+
+        actualMessage.Data.AppId.Should()
+            .Be(expected: entity.AppId);
+
+        actualMessage.Data.Name.Should()
+            .Be(expected: entity.Name);
+
+        actualMessage.Data.Path.Should()
+            .Be(expected: entity.Path);
+
+        actualMessage.AuthInfo.Should()
+            .NotBeNull();
+
+        actualMessage.AuthInfo.SSOUserId.Should()
+            .Be(expected: CurrentUserId);
+
         folderEventBrokerMock.Verify(
             expression: x =>
                 x.RaiseFolderDeleteEventAsync(
-                    It.IsAny<EventMessage<cCoder.Data.Models.DMS.Folder>>()
+                    message: It.IsAny<EventMessage<cCoder.Data.Models.DMS.Folder>>()
                 ),
             times: Times.Once
         );
+
         folderEventBrokerMock.VerifyNoOtherCalls();
     }
 

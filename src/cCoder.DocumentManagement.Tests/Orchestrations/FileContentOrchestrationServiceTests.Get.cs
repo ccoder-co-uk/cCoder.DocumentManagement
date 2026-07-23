@@ -21,14 +21,18 @@ public partial class FileContentOrchestrationServiceTests
         // Given
         Guid id = Guid.NewGuid();
         FileContent entity = CreateRandomFileContent();
-        fileContentProcessingServiceMock.Setup(expression: x => x.Get(id)).Returns(value: entity);
+
+        fileContentProcessingServiceMock.Setup(expression: x => x.Get(id: id))
+            .Returns(value: entity);
 
         // When
         FileContent result = orchestrationService.Get(id: id);
 
         // Then
-        result.Should().BeSameAs(expected: entity);
-        fileContentProcessingServiceMock.Verify(expression: x => x.Get(id), times: Times.Once);
+        result.Should()
+            .BeSameAs(expected: entity);
+
+        fileContentProcessingServiceMock.Verify(expression: x => x.Get(id: id), times: Times.Once);
         fileContentProcessingServiceMock.VerifyNoOtherCalls();
         fileContentEventProcessingServiceMock.VerifyNoOtherCalls();
     }

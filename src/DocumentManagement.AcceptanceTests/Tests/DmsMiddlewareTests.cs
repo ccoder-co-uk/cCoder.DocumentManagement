@@ -21,7 +21,11 @@ public sealed partial class DmsMiddlewareTests(WebAcceptanceFixture fixture)
         using HttpRequestMessage request = new(method: HttpMethod.Options, requestUri: $"{BaseUrl}/test-folder");
         using HttpResponseMessage response = await Client.SendAsync(request: request);
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(expected: HttpStatusCode.NoContent, because: content);
-        return ((int)response.StatusCode, response.Headers.Select(selector: header => header.Key).ToArray());
+
+        response.StatusCode.Should()
+            .Be(expected: HttpStatusCode.NoContent, because: content);
+
+        return ((int)response.StatusCode, response.Headers.Select(selector: header => header.Key)
+            .ToArray());
     }
 }

@@ -20,15 +20,17 @@ public partial class FileServiceTests
         FileEntity file = CreateRandomFile(id: fileId);
 
         fileBrokerMock
-            .Setup(expression: x => x.GetAllFiles(false))
-            .Returns(value: new[] { ToExternalFile(file) }.AsQueryable());
+            .Setup(expression: x => x.GetAllFiles(ignoreFilters: false))
+            .Returns(value: new[] { ToExternalFile(file: file) }.AsQueryable());
 
         // When
         FileEntity result = fileService.Get(id: fileId);
 
         // Then
-        result.Should().BeEquivalentTo(expectation: file);
-        fileBrokerMock.Verify(expression: x => x.GetAllFiles(false), times: Times.Once);
+        result.Should()
+            .BeEquivalentTo(expectation: file);
+
+        fileBrokerMock.Verify(expression: x => x.GetAllFiles(ignoreFilters: false), times: Times.Once);
         fileBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }

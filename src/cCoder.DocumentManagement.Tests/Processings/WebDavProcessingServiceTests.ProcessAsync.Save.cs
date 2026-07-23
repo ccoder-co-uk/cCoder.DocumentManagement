@@ -20,6 +20,7 @@ public partial class WebDavProcessingServiceTests
         byte[] bytes = [1, 2, 3];
         MemoryStream body = new(buffer: bytes);
         byte[] capturedBytes = [];
+
         DmsProcessingRequest request = CreateRequest(
             method: "POST",
             requestPath: "Core/App(7)/DAV/folder/file.txt",
@@ -29,28 +30,35 @@ public partial class WebDavProcessingServiceTests
         dmsInstanceServiceMock
             .Setup(expression: x =>
                 x.SaveAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.IsAny<Stream>()
+                    path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    content: It.IsAny<Stream>()
                 )
             )
-            .Callback<DmsPath, Stream>(action: (_, stream) => capturedBytes = ReadAllBytes(stream))
+            .Callback<DmsPath, Stream>(action: (_, stream) => capturedBytes = ReadAllBytes(stream: stream))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 201);
-        response.ContentType.Should().Be(expected: "text/plain");
-        capturedBytes.Should().Equal(elements: bytes);
+        response.StatusCode.Should()
+            .Be(expected: 201);
+
+        response.ContentType.Should()
+            .Be(expected: "text/plain");
+
+        capturedBytes.Should()
+            .Equal(elements: bytes);
+
         dmsInstanceServiceMock.Verify(
             expression: x =>
                 x.SaveAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.IsAny<Stream>()
+                    path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    content: It.IsAny<Stream>()
                 ),
             times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
@@ -63,6 +71,7 @@ public partial class WebDavProcessingServiceTests
         byte[] bytes = [4, 5, 6];
         MemoryStream body = new(buffer: bytes);
         byte[] capturedBytes = [];
+
         DmsProcessingRequest request = CreateRequest(
             method: "PUT",
             requestPath: "Core/App(7)/DAV/folder/file.txt",
@@ -72,27 +81,32 @@ public partial class WebDavProcessingServiceTests
         dmsInstanceServiceMock
             .Setup(expression: x =>
                 x.SaveAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.IsAny<Stream>()
+                    path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    content: It.IsAny<Stream>()
                 )
             )
-            .Callback<DmsPath, Stream>(action: (_, stream) => capturedBytes = ReadAllBytes(stream))
+            .Callback<DmsPath, Stream>(action: (_, stream) => capturedBytes = ReadAllBytes(stream: stream))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 201);
-        capturedBytes.Should().Equal(elements: bytes);
+        response.StatusCode.Should()
+            .Be(expected: 201);
+
+        capturedBytes.Should()
+            .Equal(elements: bytes);
+
         dmsInstanceServiceMock.Verify(
             expression: x =>
                 x.SaveAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.IsAny<Stream>()
+                    path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    content: It.IsAny<Stream>()
                 ),
             times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
@@ -106,7 +120,7 @@ public partial class WebDavProcessingServiceTests
 
         dmsInstanceServiceMock
             .Setup(expression: x =>
-                x.SaveAsync(It.Is<DmsPath>(path => path.FullPath == "folder"), It.IsAny<Stream>())
+                x.SaveAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder"), content: It.IsAny<Stream>())
             )
             .Returns(value: ValueTask.CompletedTask);
 
@@ -114,11 +128,14 @@ public partial class WebDavProcessingServiceTests
         DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
         dmsInstanceServiceMock.Verify(
-            expression: x => x.SaveAsync(It.Is<DmsPath>(path => path.FullPath == "folder"), It.IsAny<Stream>()),
+            expression: x => x.SaveAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder"), content: It.IsAny<Stream>()),
             times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();

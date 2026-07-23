@@ -18,15 +18,19 @@ public partial class DmsInstanceServiceTests
         cCoder.Data.Models.DMS.File firstFile = CreateFileAsync();
         cCoder.Data.Models.DMS.File secondFile = CreateFileAsync();
         cCoder.Data.Models.DMS.File[] files = [firstFile, secondFile];
-        dmsInstanceBrokerMock.Setup(expression: x => x.Search("term")).Returns(value: files);
+
+        dmsInstanceBrokerMock.Setup(expression: x => x.Search(needle: "term"))
+            .Returns(value: files);
 
         // When
         IEnumerable<cCoder.Data.Models.DMS.File> returnedFiles =
             dmsInstanceService.Search(needle: "term");
 
         // Then
-        returnedFiles.Should().BeSameAs(expected: files);
-        dmsInstanceBrokerMock.Verify(expression: x => x.Search("term"), times: Times.Once);
+        returnedFiles.Should()
+            .BeSameAs(expected: files);
+
+        dmsInstanceBrokerMock.Verify(expression: x => x.Search(needle: "term"), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 

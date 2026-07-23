@@ -25,12 +25,13 @@ public partial class FolderServiceTests
 
         Folder submitted = null;
 
-        folderBrokerMock.Setup(expression: x => x.GetAppId(It.IsAny<DataFolder>())).Returns(value: (int?)7);
+        folderBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFolder>()))
+            .Returns(value: (int?)7);
 
-        authorizationBrokerMock.Setup(expression: x => x.Authorize((int?)7, "Folder_update"));
+        authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_update"));
 
         folderBrokerMock
-            .Setup(expression: x => x.UpdateFolderAsync(It.IsAny<DataFolder>()))
+            .Setup(expression: x => x.UpdateFolderAsync(entity: It.IsAny<DataFolder>()))
             .Callback<DataFolder>(action: candidate =>
                 submitted = new Folder
                 {
@@ -48,16 +49,28 @@ public partial class FolderServiceTests
         Folder result = await folderService.UpdateAsync(folder: folder);
 
         // Then
-        result.Should().BeSameAs(expected: folder);
-        submitted.Should().NotBeNull();
-        submitted.Should().NotBeSameAs(unexpected: folder);
-        result.Should().NotBeSameAs(unexpected: submitted);
-        submitted.Should().BeEquivalentTo(expectation: folder);
-        result.Should().BeEquivalentTo(expectation: folder);
-        folderBrokerMock.Verify(expression: x => x.UpdateFolderAsync(It.IsAny<DataFolder>()), times: Times.Once);
-        folderBrokerMock.Verify(expression: x => x.GetAppId(It.IsAny<DataFolder>()), times: Times.AtMostOnce());
+        result.Should()
+            .BeSameAs(expected: folder);
+
+        submitted.Should()
+            .NotBeNull();
+
+        submitted.Should()
+            .NotBeSameAs(unexpected: folder);
+
+        result.Should()
+            .NotBeSameAs(unexpected: submitted);
+
+        submitted.Should()
+            .BeEquivalentTo(expectation: folder);
+
+        result.Should()
+            .BeEquivalentTo(expectation: folder);
+
+        folderBrokerMock.Verify(expression: x => x.UpdateFolderAsync(entity: It.IsAny<DataFolder>()), times: Times.Once);
+        folderBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
         folderBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize((int?)7, "Folder_update"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_update"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -68,17 +81,20 @@ public partial class FolderServiceTests
         Folder folder = CreateRandomFolder(appId: 7);
 
         authorizationBrokerMock
-            .Setup(expression: x => x.Authorize((int?)7, "Folder_update"))
-            .Throws(exception: new SecurityException("Access Denied!"));
+            .Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_update"))
+            .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
         Func<Task> action = async () => await folderService.UpdateAsync(folder: folder);
 
         // Then
-        await action.Should().ThrowAsync<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
-        folderBrokerMock.Verify(expression: x => x.GetAppId(It.IsAny<DataFolder>()), times: Times.AtMostOnce());
+        await action.Should()
+            .ThrowAsync<SecurityException>()
+            .WithMessage(expectedWildcardPattern: "Access Denied!");
+
+        folderBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
         folderBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize((int?)7, "Folder_update"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_update"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 

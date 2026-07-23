@@ -19,15 +19,16 @@ public partial class FileContentEventProcessingServiceTests
     {
         // Given
         FileContent entity = CreateRandomFileContent();
+
         fileContentEventServiceMock
-            .Setup(expression: x => x.RaiseFileContentAddEventAsync(entity))
+            .Setup(expression: x => x.RaiseFileContentAddEventAsync(entity: entity))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         await service.RaiseFileContentAddEventAsync(entity: entity);
 
         // Then
-        fileContentEventServiceMock.Verify(expression: x => x.RaiseFileContentAddEventAsync(entity), times: Times.Once);
+        fileContentEventServiceMock.Verify(expression: x => x.RaiseFileContentAddEventAsync(entity: entity), times: Times.Once);
         fileContentEventServiceMock.VerifyNoOtherCalls();
     }
 

@@ -16,15 +16,17 @@ public sealed partial class FileControllerTests
     {
         // Given
         SeededFileContext seededContext = await SeedDatabase("file_create", "file_update", "file_delete");
+
         DmsFile createdFile = await CreateFileAsync(payload: new
         {
             folderId = seededContext.FolderId,
-            name = Unique("File"),
+            name = Unique(prefix: "File"),
             description = "Acceptance file",
             path = "file.txt",
             mimeType = "text/plain",
             size = "12",
         });
+
         string updatedName = Unique(prefix: "UpdatedFile");
         DmsFile actualFile;
 
@@ -43,8 +45,11 @@ public sealed partial class FileControllerTests
         actualFile = await GetFileAsync(id: createdFile.Id);
 
         // Then
-        actualFile.Should().NotBeNull();
-        actualFile!.Name.Should().Be(expected: updatedName);
+        actualFile.Should()
+            .NotBeNull();
+
+        actualFile!.Name.Should()
+            .Be(expected: updatedName);
 
         await DeleteFileAsync(id: createdFile.Id);
         await Teardown(seededContext: seededContext);

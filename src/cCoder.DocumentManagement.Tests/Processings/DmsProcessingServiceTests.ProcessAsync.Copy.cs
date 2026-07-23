@@ -21,14 +21,14 @@ public partial class DmsProcessingServiceTests
             method: "POST",
             requestPath: "/api/dms/folder/file.txt",
             queryString: "?copyTo=folder/archive/file.txt",
-            body: new MemoryStream([1, 2])
+            body: new MemoryStream(buffer: [1, 2])
         );
 
         dmsInstanceServiceMock
             .Setup(expression: x =>
                 x.CopyAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
+                    oldPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    newPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/archive/file.txt")
                 )
             )
             .Returns(value: ValueTask.CompletedTask);
@@ -37,16 +37,21 @@ public partial class DmsProcessingServiceTests
         DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
-        response.HasBody.Should().BeFalse();
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
+        response.HasBody.Should()
+            .BeFalse();
+
         dmsInstanceServiceMock.Verify(
             expression: x =>
                 x.CopyAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
+                    oldPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    newPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/archive/file.txt")
                 ),
             times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 
@@ -64,8 +69,12 @@ public partial class DmsProcessingServiceTests
         DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
-        response.HasBody.Should().BeFalse();
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
+        response.HasBody.Should()
+            .BeFalse();
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 
@@ -77,14 +86,14 @@ public partial class DmsProcessingServiceTests
             method: "PUT",
             requestPath: "/api/dms/folder/file.txt",
             queryString: "?copyTo=folder/archive/file.txt",
-            body: new MemoryStream([1, 2])
+            body: new MemoryStream(buffer: [1, 2])
         );
 
         dmsInstanceServiceMock
             .Setup(expression: x =>
                 x.CopyAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
+                    oldPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    newPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/archive/file.txt")
                 )
             )
             .Returns(value: ValueTask.CompletedTask);
@@ -93,16 +102,21 @@ public partial class DmsProcessingServiceTests
         DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
-        response.HasBody.Should().BeFalse();
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
+        response.HasBody.Should()
+            .BeFalse();
+
         dmsInstanceServiceMock.Verify(
             expression: x =>
                 x.CopyAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
+                    oldPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    newPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/archive/file.txt")
                 ),
             times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 
@@ -116,8 +130,12 @@ public partial class DmsProcessingServiceTests
         DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
-        response.HasBody.Should().BeFalse();
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
+        response.HasBody.Should()
+            .BeFalse();
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 }

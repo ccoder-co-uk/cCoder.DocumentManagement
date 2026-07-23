@@ -17,13 +17,15 @@ public partial class DmsInstanceServiceTests
         // Given
         DmsPath path = CreatePath(fullPath: "folder/file.txt");
         MemoryStream stream = new(buffer: [4, 5, 6]);
-        dmsInstanceBrokerMock.Setup(expression: x => x.SaveAsync(path, stream)).Returns(value: ValueTask.CompletedTask);
+
+        dmsInstanceBrokerMock.Setup(expression: x => x.SaveAsync(path: path, content: stream))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
         await dmsInstanceService.SaveAsync(path: path, content: stream);
 
         // Then
-        dmsInstanceBrokerMock.Verify(expression: x => x.SaveAsync(path, stream), times: Times.Once);
+        dmsInstanceBrokerMock.Verify(expression: x => x.SaveAsync(path: path, content: stream), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 

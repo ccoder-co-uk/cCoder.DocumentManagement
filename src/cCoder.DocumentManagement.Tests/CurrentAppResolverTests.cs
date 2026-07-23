@@ -23,7 +23,7 @@ public partial class CurrentAppResolverTests
     private static DataApp CreateRandomDataApp(int id = 0, string domain = null) =>
         Builder<DataApp>
             .CreateNew()
-            .With(func: app => app.Id = id == 0 ? Random.Shared.Next(1, 1000) : id)
+            .With(func: app => app.Id = id == 0 ? Random.Shared.Next(minValue: 1, maxValue: 1000) : id)
             .With(func: app => app.Domain = domain ?? $"app-{Guid.NewGuid():N}.test")
             .With(func: app => app.ConfigJson = "{}")
             .Build();

@@ -123,7 +123,8 @@ public partial class FolderProcessingServiceTests
                             Description = role.Role.Description,
                             Privs = role.Role.Privs,
                         },
-                }).ToList() ?? [],
+                })
+                  .ToList() ?? [],
                 Files = folder.Files?.Select(selector: file => new DataFile
                 {
                     Id = file.Id,
@@ -136,7 +137,7 @@ public partial class FolderProcessingServiceTests
                     CreatedBy = file.CreatedBy,
                     CreatedOn = file.CreatedOn,
                     DeletedOn = file.DeletedOn,
-                    Contents = file.Contents?.Select(content => new DataFileContent
+                    Contents = file.Contents?.Select(selector: content => new DataFileContent
                     {
                         Id = content.Id,
                         FileId = content.FileId,
@@ -146,7 +147,9 @@ public partial class FolderProcessingServiceTests
                         CreatedOn = content.CreatedOn,
                         Version = content.Version,
                         RawData = content.RawData,
-                    }).ToList() ?? [],
-                }).ToList() ?? [],
+                    })
+                      .ToList() ?? [],
+                })
+                  .ToList() ?? [],
             };
 }

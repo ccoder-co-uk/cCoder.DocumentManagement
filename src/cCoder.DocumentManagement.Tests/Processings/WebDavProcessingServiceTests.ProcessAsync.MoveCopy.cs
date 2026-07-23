@@ -33,8 +33,8 @@ public partial class WebDavProcessingServiceTests
         dmsInstanceServiceMock
             .Setup(expression: x =>
                 x.MoveAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
+                    oldPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    newPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/archive/file.txt")
                 )
             )
             .Returns(value: ValueTask.CompletedTask);
@@ -43,15 +43,18 @@ public partial class WebDavProcessingServiceTests
         DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
         dmsInstanceServiceMock.Verify(
             expression: x =>
                 x.MoveAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
+                    oldPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    newPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/archive/file.txt")
                 ),
             times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 
@@ -75,8 +78,8 @@ public partial class WebDavProcessingServiceTests
         dmsInstanceServiceMock
             .Setup(expression: x =>
                 x.CopyAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
+                    oldPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    newPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/archive/file.txt")
                 )
             )
             .Returns(value: ValueTask.CompletedTask);
@@ -85,15 +88,18 @@ public partial class WebDavProcessingServiceTests
         DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(expected: 204);
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
         dmsInstanceServiceMock.Verify(
             expression: x =>
                 x.CopyAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
+                    oldPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    newPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/archive/file.txt")
                 ),
             times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 }

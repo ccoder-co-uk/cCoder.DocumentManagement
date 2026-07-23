@@ -18,19 +18,26 @@ public partial class FolderProcessingServiceTests
     public async Task ShouldDeleteEachFolderWhenUserIsAppAdminForDeleteAllAsync()
     {
         // Given
-        User actor = ToLocalUser(user: TestUsers.WithPrivilege("app_admin", 1));
+        User actor = ToLocalUser(user: TestUsers.WithPrivilege(privilege: "app_admin", appId: 1));
         currentUser = actor;
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
+
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(valueFunction: () => currentUser);
+
         Folder folder = CreateRandomFolder();
-        folderServiceMock.Setup(expression: x => x.GetWithRoles(folder.Id, true)).Returns(value: folder);
-        folderServiceMock.Setup(expression: x => x.DeleteAsync(folder.Id)).Returns(value: ValueTask.CompletedTask);
+
+        folderServiceMock.Setup(expression: x => x.GetWithRoles(id: folder.Id, ignoreFilters: true))
+            .Returns(value: folder);
+
+        folderServiceMock.Setup(expression: x => x.DeleteAsync(id: folder.Id))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
         await folderProcessingService.DeleteAllAsync(items: new[] { folder });
 
         // Then
-        folderServiceMock.Verify(expression: x => x.GetWithRoles(folder.Id, true), times: Times.Once);
-        folderServiceMock.Verify(expression: x => x.DeleteAsync(folder.Id), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetWithRoles(id: folder.Id, ignoreFilters: true), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.DeleteAsync(id: folder.Id), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         loggerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.AtLeastOnce);

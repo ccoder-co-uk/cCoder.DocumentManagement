@@ -26,14 +26,14 @@ public class AppOrchestrationServiceTests
     {
         // Given
         folderOrchestrationServiceMock
-            .Setup(expression: x => x.DeleteAllByAppIdAsync(5))
+            .Setup(expression: x => x.DeleteAllByAppIdAsync(appId: 5))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         await service.DeleteAsync(appId: 5);
 
         // Then
-        folderOrchestrationServiceMock.Verify(expression: x => x.DeleteAllByAppIdAsync(5), times: Times.Once);
+        folderOrchestrationServiceMock.Verify(expression: x => x.DeleteAllByAppIdAsync(appId: 5), times: Times.Once);
         folderOrchestrationServiceMock.VerifyNoOtherCalls();
     }
 
@@ -52,8 +52,8 @@ public class AppOrchestrationServiceTests
         };
 
         folderOrchestrationServiceMock
-            .Setup(expression: x => x.AddOrUpdateForAppAsync(It.Is<IEnumerable<Folder>>(folders => folders.All(folder => folder.AppId == 7))))
-            .Returns(value: ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Models.Result<Folder>>>([]));
+            .Setup(expression: x => x.AddOrUpdateForAppAsync(items: It.Is<IEnumerable<Folder>>(match: folders => folders.All(predicate: folder => folder.AppId == 7))))
+            .Returns(value: ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Models.Result<Folder>>>(result: []));
 
         // When
         await service.AddAsync(app: app);

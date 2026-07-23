@@ -22,14 +22,18 @@ public partial class DmsInstanceServiceTests
         DmsPath secondPath = CreatePath(fullPath: "folder/two.txt");
         DmsPath[] paths = [firstPath, secondPath];
         DMSResult result = CreateDmsResult(contentType: "application/zip");
-        dmsInstanceBrokerMock.Setup(expression: x => x.GetFilesZipped(paths)).Returns(value: result);
+
+        dmsInstanceBrokerMock.Setup(expression: x => x.GetFilesZipped(paths: paths))
+            .Returns(value: result);
 
         // When
         DMSResult returnedResult = dmsInstanceService.GetFilesZipped(paths: paths);
 
         // Then
-        returnedResult.Should().BeSameAs(expected: result);
-        dmsInstanceBrokerMock.Verify(expression: x => x.GetFilesZipped(paths), times: Times.Once);
+        returnedResult.Should()
+            .BeSameAs(expected: result);
+
+        dmsInstanceBrokerMock.Verify(expression: x => x.GetFilesZipped(paths: paths), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 

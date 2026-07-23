@@ -33,6 +33,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
     public IQueryable<Folder> GetAllFolders(bool ignoreFilters)
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<Folder> query = ignoreFilters
             ? coreDataContext.Folders.IgnoreQueryFilters()
             : coreDataContext.Folders;
@@ -46,6 +47,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
     public Folder GetFolderWithRoles(Guid id, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<Folder> query = ignoreFilters
             ? coreDataContext.Folders.IgnoreQueryFilters()
             : coreDataContext.Folders;
@@ -59,6 +61,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
     public Folder GetFolderForUpdate(Guid id, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<Folder> query = ignoreFilters
             ? coreDataContext.Folders.IgnoreQueryFilters()
             : coreDataContext.Folders;
@@ -77,6 +80,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
     public Folder GetFolderByPath(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<Folder> query = ignoreFilters
             ? coreDataContext.Folders.IgnoreQueryFilters()
             : coreDataContext.Folders;
@@ -87,6 +91,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
     public Folder GetFolderByPathWithRoles(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<Folder> query = ignoreFilters
             ? coreDataContext.Folders.IgnoreQueryFilters()
             : coreDataContext.Folders;
@@ -100,6 +105,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
     public Folder GetFolderByPathWithParentAndRoles(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<Folder> query = ignoreFilters
             ? coreDataContext.Folders.IgnoreQueryFilters()
             : coreDataContext.Folders;
@@ -114,6 +120,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
     public Folder GetFolderByPathWithRolesAndFilesAndContents(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<Folder> query = ignoreFilters
             ? coreDataContext.Folders.IgnoreQueryFilters()
             : coreDataContext.Folders;
@@ -129,6 +136,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
     public Folder GetFolderByPathWithSubFoldersAndFiles(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<Folder> query = ignoreFilters
             ? coreDataContext.Folders.IgnoreQueryFilters()
             : coreDataContext.Folders;
@@ -158,6 +166,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
     public async ValueTask<int> DeleteFolderAsync(Folder entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         Folder folder = await coreDataContext.Folders
             .IgnoreQueryFilters()
             .Include(navigationPropertyPath: foundFolder => foundFolder.Roles)
@@ -190,11 +199,12 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
         Folder[] folders = await coreDataContext.Folders
             .IgnoreQueryFilters()
             .Include(navigationPropertyPath: folder => folder.Roles)
-            .Where(predicate: folder => folderIds.Contains(folder.Id))
+            .Where(predicate: folder => folderIds.Contains(value: folder.Id))
             .ToArrayAsync();
 
         coreDataContext.FolderRoles.RemoveRange(
-            entities: folders.SelectMany(folder => folder.Roles ?? []));
+            entities: folders.SelectMany(selector: folder => folder.Roles ?? []));
+
         coreDataContext.Folders.RemoveRange(entities: folders);
         _ = await coreDataContext.SaveChangesAsync();
     }
@@ -202,6 +212,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
     public async ValueTask DeleteAllFoldersByAppIdAsync(int appId)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         IQueryable<Guid> folderIds =
             coreDataContext.Folders
                 .IgnoreQueryFilters()
@@ -211,22 +222,22 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
         IQueryable<Guid> fileIds =
             coreDataContext.Files
                 .IgnoreQueryFilters()
-                .Where(predicate: file => folderIds.Contains(file.FolderId))
+                .Where(predicate: file => folderIds.Contains(item: file.FolderId))
                 .Select(selector: file => file.Id);
 
         await coreDataContext.FileContents
             .IgnoreQueryFilters()
-            .Where(predicate: fileContent => fileIds.Contains(fileContent.FileId))
+            .Where(predicate: fileContent => fileIds.Contains(item: fileContent.FileId))
             .ExecuteDeleteAsync();
 
         await coreDataContext.Files
             .IgnoreQueryFilters()
-            .Where(predicate: file => folderIds.Contains(file.FolderId))
+            .Where(predicate: file => folderIds.Contains(item: file.FolderId))
             .ExecuteDeleteAsync();
 
         await coreDataContext.FolderRoles
             .IgnoreQueryFilters()
-            .Where(predicate: folderRole => folderIds.Contains(folderRole.FolderId))
+            .Where(predicate: folderRole => folderIds.Contains(item: folderRole.FolderId))
             .ExecuteDeleteAsync();
 
         await coreDataContext.Folders

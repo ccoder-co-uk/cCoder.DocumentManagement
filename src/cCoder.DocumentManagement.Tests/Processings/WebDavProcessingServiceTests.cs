@@ -109,7 +109,8 @@ public partial class WebDavProcessingServiceTests
             Id = Guid.NewGuid(),
             AppId = appId,
             ParentId = parentId == Guid.Empty ? null : parentId,
-            Name = name ?? (path.Length == 0 ? "Root" : path.Split(separator: '/').Last()),
+            Name = name ?? (path.Length == 0 ? "Root" : path.Split(separator: '/')
+                                                                                  .Last()),
             Path = path,
             Files = [],
             SubFolders = [],
@@ -122,7 +123,8 @@ public partial class WebDavProcessingServiceTests
             Id = Guid.NewGuid(),
             FolderId = folder.Id,
             Folder = folder,
-            Name = path.Split(separator: '/').Last(),
+            Name = path.Split(separator: '/')
+                                             .Last(),
             Path = path,
             MimeType = "text/plain",
             CreatedOn = DateTimeOffset.UtcNow,

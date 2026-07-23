@@ -42,12 +42,12 @@ public static partial class IServiceCollectionExtensions
         this IServiceCollection services,
         Action<DocumentManagementConfiguration> configure = null,
         ODataConventionModelBuilder builder = null) =>
-        services.AddConfiguredDocumentManagementWeb(configure: (_, configuration) => configure?.Invoke(configuration), builder: builder);
+        services.AddConfiguredDocumentManagementWeb(configure: (_, configuration) => configure?.Invoke(obj: configuration), builder: builder);
 
     public static void AddDocumentManagementHostedServices(
         this IServiceCollection services,
         Action<DocumentManagementConfiguration> configure = null) =>
-        services.AddConfiguredDocumentManagement(configure: (_, configuration) => configure?.Invoke(configuration));
+        services.AddConfiguredDocumentManagement(configure: (_, configuration) => configure?.Invoke(obj: configuration));
 
     private static void AddDocumentManagement(this IServiceCollection services)
     {

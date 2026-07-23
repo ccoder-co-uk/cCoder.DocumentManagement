@@ -19,9 +19,12 @@ public partial class FileProcessingServiceTests
     public async Task ShouldCreateAndReturnFileWhenUserCanCreateFileForAddAsync()
     {
         // Given
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
-        User actor = ToLocalUser(user: TestUsers.WithPrivilege("file_create", 1));
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(valueFunction: () => currentUser);
+
+        User actor = ToLocalUser(user: TestUsers.WithPrivilege(privilege: "file_create", appId: 1));
         Guid folderId = Guid.NewGuid();
+
         Folder folder = new()
         {
             Id = folderId,
@@ -33,6 +36,7 @@ public partial class FileProcessingServiceTests
                 new FolderRole { RoleId = actor.Roles.First().RoleId, Role = actor.Roles.First().Role },
             ],
         };
+
         cCoder.Data.Models.DMS.File file = CreateRandomFile(path: "file.txt");
         file.FolderId = folderId;
         file.Name = "file.txt";
@@ -43,22 +47,27 @@ public partial class FileProcessingServiceTests
         createdFile.Contents = [];
         currentUser = actor;
 
-        folderServiceMock.Setup(expression: x => x.GetWithRoles(folderId, true)).Returns(value: folder);
+        folderServiceMock.Setup(expression: x => x.GetWithRoles(id: folderId, ignoreFilters: true))
+            .Returns(value: folder);
+
         fileServiceMock
-            .Setup(expression: x => x.AddAsync(It.IsAny<cCoder.Data.Models.DMS.File>()))
+            .Setup(expression: x => x.AddAsync(entity: It.IsAny<cCoder.Data.Models.DMS.File>()))
             .ReturnsAsync(value: createdFile);
+
         fileServiceMock
-            .Setup(expression: x => x.GetWithFolderAndContents(createdFile.Id, true))
+            .Setup(expression: x => x.GetWithFolderAndContents(id: createdFile.Id, ignoreFilters: true))
             .Returns(value: createdFile);
 
         // When
         cCoder.Data.Models.DMS.File result = await fileProcessingService.AddAsync(newFile: file);
 
         // Then
-        result.Should().BeEquivalentTo(expectation: createdFile);
-        fileServiceMock.Verify(expression: x => x.AddAsync(It.IsAny<cCoder.Data.Models.DMS.File>()), times: Times.Once);
-        fileServiceMock.Verify(expression: x => x.GetWithFolderAndContents(createdFile.Id, true), times: Times.Once);
-        folderServiceMock.Verify(expression: x => x.GetWithRoles(folderId, true), times: Times.Once);
+        result.Should()
+            .BeEquivalentTo(expectation: createdFile);
+
+        fileServiceMock.Verify(expression: x => x.AddAsync(entity: It.IsAny<cCoder.Data.Models.DMS.File>()), times: Times.Once);
+        fileServiceMock.Verify(expression: x => x.GetWithFolderAndContents(id: createdFile.Id, ignoreFilters: true), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetWithRoles(id: folderId, ignoreFilters: true), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
     }

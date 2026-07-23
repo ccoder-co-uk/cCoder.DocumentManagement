@@ -21,16 +21,19 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         // Given
         App app = CreateApp();
         HttpContext context = CreateContext(method: "GET", path: "/api/webdav/Core/App(7)/DAV/folder/file.txt");
+
         DmsProcessingResponse response = CreateResponse(
             statusCode: 207,
             contentType: "text/xml; charset=\"utf-8\""
         );
-        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp()).Returns(value: app);
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
 
         webDavProcessingServiceMock
             .Setup(expression: x =>
                 x.ProcessAsync(
-                    It.Is<DmsProcessingRequest>(request =>
+                    request: It.Is<DmsProcessingRequest>(match: request =>
                         request.App.Id == app.Id
                         && request.App.Domain == app.Domain
                         && request.App.Name == app.Name
@@ -48,12 +51,16 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         );
 
         // Then
-        returnedResponse.Should().BeSameAs(expected: response);
+        returnedResponse.Should()
+            .BeSameAs(expected: response);
+
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
+
         webDavProcessingServiceMock.Verify(
-            expression: x => x.ProcessAsync(It.IsAny<DmsProcessingRequest>()),
+            expression: x => x.ProcessAsync(request: It.IsAny<DmsProcessingRequest>()),
             times: Times.Once
         );
+
         currentAppResolverMock.VerifyNoOtherCalls();
         webDavProcessingServiceMock.VerifyNoOtherCalls();
         dmsProcessingServiceMock.VerifyNoOtherCalls();
@@ -64,18 +71,22 @@ public partial class DmsHttpRequestOrchestrationServiceTests
     {
         // Given
         App app = CreateApp();
+
         HttpContext context = CreateContext(
             method: "GET",
             path: "/api/dms/folder/file.txt",
             queryString: "?version=3"
         );
+
         DmsProcessingResponse response = CreateResponse(statusCode: 200, headers: []);
-        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp()).Returns(value: app);
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
 
         dmsProcessingServiceMock
             .Setup(expression: x =>
                 x.ProcessAsync(
-                    It.Is<DmsProcessingRequest>(request =>
+                    request: It.Is<DmsProcessingRequest>(match: request =>
                         request.App.Id == app.Id
                         && request.App.Domain == app.Domain
                         && request.App.Name == app.Name
@@ -94,18 +105,23 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         );
 
         // Then
-        returnedResponse.StatusCode.Should().Be(expected: 200);
+        returnedResponse.StatusCode.Should()
+            .Be(expected: 200);
 
         returnedResponse
             .Headers.Should()
             .Contain(predicate: header => header.Key == "Access-Control-Allow-Origin" && header.Value == "*");
 
-        returnedResponse.Headers.Should().Contain(predicate: header => header.Key == "Cache-Control");
+        returnedResponse.Headers.Should()
+            .Contain(predicate: header => header.Key == "Cache-Control");
+
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
+
         dmsProcessingServiceMock.Verify(
-            expression: x => x.ProcessAsync(It.IsAny<DmsProcessingRequest>()),
+            expression: x => x.ProcessAsync(request: It.IsAny<DmsProcessingRequest>()),
             times: Times.Once
         );
+
         currentAppResolverMock.VerifyNoOtherCalls();
         dmsProcessingServiceMock.VerifyNoOtherCalls();
         webDavProcessingServiceMock.VerifyNoOtherCalls();
@@ -117,16 +133,19 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         // Given
         App app = CreateApp();
         HttpContext context = CreateContext(method: "GET", path: "/api/dms/folder/file.txt");
+
         DmsProcessingResponse response = CreateResponse(
             headers:
             [
                 new KeyValuePair<string, string>(key:"Access-Control-Allow-Origin", value:"custom-origin"),
             ]
         );
-        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp()).Returns(value: app);
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
 
         dmsProcessingServiceMock
-            .Setup(expression: x => x.ProcessAsync(It.IsAny<DmsProcessingRequest>()))
+            .Setup(expression: x => x.ProcessAsync(request: It.IsAny<DmsProcessingRequest>()))
             .ReturnsAsync(value: response);
 
         // When
@@ -147,10 +166,12 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             );
 
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
+
         dmsProcessingServiceMock.Verify(
-            expression: x => x.ProcessAsync(It.IsAny<DmsProcessingRequest>()),
+            expression: x => x.ProcessAsync(request: It.IsAny<DmsProcessingRequest>()),
             times: Times.Once
         );
+
         currentAppResolverMock.VerifyNoOtherCalls();
         dmsProcessingServiceMock.VerifyNoOtherCalls();
         webDavProcessingServiceMock.VerifyNoOtherCalls();
@@ -162,11 +183,13 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         // Given
         App app = CreateApp();
         HttpContext context = CreateContext(method: "GET", path: "/api/dms/folder/file.txt", host: "tenant.test");
-        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp()).Returns(value: app);
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
 
         dmsProcessingServiceMock
-            .Setup(expression: x => x.ProcessAsync(It.IsAny<DmsProcessingRequest>()))
-            .ThrowsAsync(exception: new SecurityException("Denied"));
+            .Setup(expression: x => x.ProcessAsync(request: It.IsAny<DmsProcessingRequest>()))
+            .ThrowsAsync(exception: new SecurityException(message: "Denied"));
 
         // When
         DmsProcessingResponse returnedResponse = await orchestrationService.ProcessRequestAsync(
@@ -174,8 +197,11 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         );
 
         // Then
-        returnedResponse.StatusCode.Should().Be(expected: 204);
-        returnedResponse.ContentType.Should().Be(expected: "application/json");
+        returnedResponse.StatusCode.Should()
+            .Be(expected: 204);
+
+        returnedResponse.ContentType.Should()
+            .Be(expected: "application/json");
 
         returnedResponse
             .Headers.Should()
@@ -184,10 +210,12 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             );
 
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
+
         dmsProcessingServiceMock.Verify(
-            expression: x => x.ProcessAsync(It.IsAny<DmsProcessingRequest>()),
+            expression: x => x.ProcessAsync(request: It.IsAny<DmsProcessingRequest>()),
             times: Times.Once
         );
+
         currentAppResolverMock.VerifyNoOtherCalls();
         dmsProcessingServiceMock.VerifyNoOtherCalls();
         webDavProcessingServiceMock.VerifyNoOtherCalls();

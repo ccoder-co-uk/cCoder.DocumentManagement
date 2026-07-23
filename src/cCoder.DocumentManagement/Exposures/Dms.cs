@@ -18,7 +18,8 @@ public class Dms(IDmsOrchestrationService dmsOrchestrationService) : IDms
     public DmsResult Get(DmsPath path, int version = 0, string search = "") =>
         dmsOrchestrationService.Get(path: path, version: version, search: search);
 
-    public IEnumerable<DmsFile> Search(string needle) => dmsOrchestrationService.Search(needle: needle);
+    public IEnumerable<DmsFile> Search(string needle) =>
+        dmsOrchestrationService.Search(needle: needle);
 
     public ValueTask UnpackAsync(DmsPath path, Stream content, bool ignoreArchiveRoot = false) =>
         dmsOrchestrationService.UnpackAsync(path: path, content: content, ignoreArchiveRoot: ignoreArchiveRoot);

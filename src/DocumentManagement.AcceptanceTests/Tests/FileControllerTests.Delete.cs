@@ -16,15 +16,17 @@ public sealed partial class FileControllerTests
     {
         // Given
         SeededFileContext seededContext = await SeedDatabase("file_create", "file_delete");
+
         DmsFile createdFile = await CreateFileAsync(payload: new
         {
             folderId = seededContext.FolderId,
-            name = Unique("File"),
+            name = Unique(prefix: "File"),
             description = "Acceptance file",
             path = "file.txt",
             mimeType = "text/plain",
             size = "12",
         });
+
         int actualReadStatusCode;
 
         // When
@@ -32,8 +34,11 @@ public sealed partial class FileControllerTests
         actualReadStatusCode = await GetFileStatusCodeAsync(id: createdFile.Id);
 
         // Then
-        actualStatusCode.Should().Be(expected: 200);
-        actualReadStatusCode.Should().Be(expected: 404);
+        actualStatusCode.Should()
+            .Be(expected: 200);
+
+        actualReadStatusCode.Should()
+            .Be(expected: 404);
 
         await Teardown(seededContext: seededContext);
     }

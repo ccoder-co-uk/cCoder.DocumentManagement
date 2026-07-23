@@ -26,7 +26,7 @@ public class FolderRoleController : ODataController
     [HttpGet]
     public IActionResult GetMetadata()
     {
-        return Ok(value: new MetadataContainer(typeof(FolderRole), isEntity: true, hasEndpoint: true));
+        return Ok(value: new MetadataContainer(type: typeof(FolderRole), isEntity: true, hasEndpoint: true));
     }
 
     [HttpGet]
@@ -44,7 +44,8 @@ public class FolderRoleController : ODataController
         {
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: base.ModelState);
         }
-        return Ok(value: await Service.AddAsync(entity));
+
+        return Ok(value: await Service.AddAsync(entity: entity));
     }
 
     [HttpPost]
@@ -54,6 +55,7 @@ public class FolderRoleController : ODataController
         {
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: base.ModelState);
         }
+
         await Service.DeleteAllAsync(items: items.Value);
         return Ok();
     }

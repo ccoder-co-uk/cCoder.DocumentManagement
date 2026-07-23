@@ -24,16 +24,18 @@ internal sealed class WebAcceptanceFactory(AcceptanceSettings settings)
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment(environment: "Acceptance");
+
         builder.ConfigureAppConfiguration(configureDelegate: (_, config) =>
         {
             config.AddInMemoryCollection(
-            [
-                new KeyValuePair<string, string>("ConnectionStrings:Core", settings.CoreConnectionString),
-                new KeyValuePair<string, string>("ConnectionStrings:SSO", settings.SsoConnectionString),
-                new KeyValuePair<string, string>("Settings:DecryptionKey", settings.DecryptionKey),
-                new KeyValuePair<string, string>("Settings:enableExternalEventing", "false"),
+            initialData: [
+                new KeyValuePair<string, string>(key:"ConnectionStrings:Core", value:settings.CoreConnectionString),
+                new KeyValuePair<string, string>(key:"ConnectionStrings:SSO", value:settings.SsoConnectionString),
+                new KeyValuePair<string, string>(key:"Settings:DecryptionKey", value:settings.DecryptionKey),
+                new KeyValuePair<string, string>(key:"Settings:enableExternalEventing", value:"false"),
             ]);
         });
+
         builder.ConfigureTestServices(services =>
         {
             services.RemoveAll<ICoreContextFactory>();
@@ -44,19 +46,21 @@ internal sealed class WebAcceptanceFactory(AcceptanceSettings settings)
                 {
                     ConnectionStrings = new Dictionary<string, string>
                     {
-                        ["Core"] = settings.CoreConnectionString,
-                        ["SSO"] = settings.SsoConnectionString,
+                        [key: "Core"] = settings.CoreConnectionString,
+                        [key: "SSO"] = settings.SsoConnectionString,
                     },
                     Settings = new Dictionary<string, string>
                     {
-                        ["DecryptionKey"] = settings.DecryptionKey,
-                        ["enableExternalEventing"] = "false",
+                        [key: "DecryptionKey"] = settings.DecryptionKey,
+                        [key: "enableExternalEventing"] = "false",
                     },
                     Services = new Dictionary<string, string>(),
                 });
+
             services.AddSingleton<ISecurityDbContextFactory>(
                 _ => new MSSQLSecurityDbContextFactory(settings.SsoConnectionString)
             );
+
             services.AddCoreData(connectionString: settings.CoreConnectionString);
         });
     }
