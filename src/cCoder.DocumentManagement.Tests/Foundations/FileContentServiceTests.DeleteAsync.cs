@@ -28,7 +28,7 @@ public partial class FileContentServiceTests
         FileContent fileContent = CreateRandomFileContent(id: fileContentId);
 
         fileContentBrokerMock
-            .Setup(expression: x => x.GetAllFileContents(ignoreFilters: false))
+            .Setup(expression: x => x.SelectAllFileContents(ignoreFilters: false))
             .Returns(value: new[] { ToExternalFileContent(fileContent: fileContent) }.AsQueryable());
 
         fileContentBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFileContent>()))
@@ -44,7 +44,7 @@ public partial class FileContentServiceTests
         await fileContentService.DeleteAsync(id: fileContentId);
 
         // Then
-        fileContentBrokerMock.Verify(expression: x => x.GetAllFileContents(ignoreFilters: false), times: Times.Once);
+        fileContentBrokerMock.Verify(expression: x => x.SelectAllFileContents(ignoreFilters: false), times: Times.Once);
 
         fileContentBrokerMock.Verify(
             expression: x => x.DeleteFileContentAsync(entity: It.Is<DataFileContent>(match: candidate => candidate.Id == fileContent.Id)),
@@ -69,7 +69,7 @@ public partial class FileContentServiceTests
         FileContent fileContent = CreateRandomFileContent(id: fileContentId);
 
         fileContentBrokerMock
-            .Setup(expression: x => x.GetAllFileContents(ignoreFilters: false))
+            .Setup(expression: x => x.SelectAllFileContents(ignoreFilters: false))
             .Returns(value: new[] { ToExternalFileContent(fileContent: fileContent) }.AsQueryable());
 
         fileContentBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFileContent>()))
@@ -87,7 +87,7 @@ public partial class FileContentServiceTests
             .ThrowAsync<SecurityException>()
             .WithMessage(expectedWildcardPattern: "Access Denied!");
 
-        fileContentBrokerMock.Verify(expression: x => x.GetAllFileContents(ignoreFilters: false), times: Times.Once);
+        fileContentBrokerMock.Verify(expression: x => x.SelectAllFileContents(ignoreFilters: false), times: Times.Once);
 
         fileContentBrokerMock.Verify(
             expression: x => x.GetAppId(entity: It.IsAny<DataFileContent>()),

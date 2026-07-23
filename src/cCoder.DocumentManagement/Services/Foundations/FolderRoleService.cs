@@ -18,7 +18,7 @@ internal class FolderRoleService(
 ) : IFolderRoleService
 {
     public IQueryable<FolderRole> GetAll(bool ignoreFilters = false) =>
-        folderRoleBroker.GetAllFolderRoles(ignoreFilters: ignoreFilters);
+        folderRoleBroker.SelectAllFolderRoles(ignoreFilters: ignoreFilters);
 
     public async ValueTask<FolderRole> AddAsync(FolderRole folderRole)
     {
@@ -29,7 +29,7 @@ internal class FolderRoleService(
             privilege: $"{nameof(FolderRole)}_create"
         );
 
-        FolderRole result = await folderRoleBroker.AddFolderRoleAsync(entity: newFolderRole);
+        FolderRole result = await folderRoleBroker.InsertFolderRoleAsync(entity: newFolderRole);
         folderRole.FolderId = result.FolderId;
         folderRole.RoleId = result.RoleId;
         return folderRole;

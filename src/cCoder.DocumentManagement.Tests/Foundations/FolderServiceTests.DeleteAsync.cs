@@ -25,7 +25,7 @@ public partial class FolderServiceTests
         Folder folder = CreateRandomFolder(id: folderId, appId: 7);
 
         folderBrokerMock
-            .Setup(expression: x => x.GetAllFolders(ignoreFilters: true))
+            .Setup(expression: x => x.SelectAllFolders(ignoreFilters: true))
             .Returns(value: new[] { ToExternalFolder(folder: folder) }.AsQueryable());
 
         authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_delete"));
@@ -37,7 +37,7 @@ public partial class FolderServiceTests
         await folderService.DeleteAsync(id: folderId);
 
         // Then
-        folderBrokerMock.Verify(expression: x => x.GetAllFolders(ignoreFilters: true), times: Times.Once);
+        folderBrokerMock.Verify(expression: x => x.SelectAllFolders(ignoreFilters: true), times: Times.Once);
 
         folderBrokerMock.Verify(
             expression: x => x.DeleteFolderAsync(entity: It.Is<DataFolder>(match: candidate => candidate.Id == folder.Id)),
@@ -57,7 +57,7 @@ public partial class FolderServiceTests
         Folder folder = CreateRandomFolder(id: folderId, appId: 7);
 
         folderBrokerMock
-            .Setup(expression: x => x.GetAllFolders(ignoreFilters: true))
+            .Setup(expression: x => x.SelectAllFolders(ignoreFilters: true))
             .Returns(value: new[] { ToExternalFolder(folder: folder) }.AsQueryable());
 
         authorizationBrokerMock
@@ -72,7 +72,7 @@ public partial class FolderServiceTests
             .ThrowAsync<SecurityException>()
             .WithMessage(expectedWildcardPattern: "Access Denied!");
 
-        folderBrokerMock.Verify(expression: x => x.GetAllFolders(ignoreFilters: true), times: Times.Once);
+        folderBrokerMock.Verify(expression: x => x.SelectAllFolders(ignoreFilters: true), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_delete"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();

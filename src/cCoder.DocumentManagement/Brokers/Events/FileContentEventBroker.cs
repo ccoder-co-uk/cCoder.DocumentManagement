@@ -9,7 +9,7 @@ using cCoder.Eventing.Models;
 
 namespace cCoder.DocumentManagement.Brokers.Events;
 
-public class FileContentEventBroker(IEventHub eventHub) : IFileContentEventBroker
+internal sealed class FileContentEventBroker(IEventHub eventHub) : IFileContentEventBroker
 {
     public ValueTask RaiseFileContentAddEventAsync(EventMessage<FileContent> message) =>
         eventHub.RaiseEventAsync(name: "file_content_add", message: message);

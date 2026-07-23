@@ -22,7 +22,7 @@ public interface IDmsInstanceBroker
     ValueTask MoveAsync(DmsPath oldPath, DmsPath newPath);
 }
 
-public class DmsInstanceBroker(IDmsInstanceFactory dmsInstanceFactory) : IDmsInstanceBroker
+internal sealed class DmsInstanceBroker(IDmsInstanceFactory dmsInstanceFactory) : IDmsInstanceBroker
 {
     public DmsResult GetFilesZipped(IEnumerable<DmsPath> paths)
         =>

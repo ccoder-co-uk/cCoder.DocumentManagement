@@ -51,7 +51,7 @@ public sealed partial class FileContentControllerTests(WebAcceptanceFixture fixt
 
         await core.AddUserRoleAsync(userRole: new UserRole { RoleId = role.Id, UserId = "Guest" });
 
-        Folder folder = await core.AddFolderAsync(folder: new Folder
+        Folder folder = await core.InsertFolderAsync(folder: new Folder
         {
             AppId = AppId,
             Name = Unique(prefix: "Folder"),
@@ -67,7 +67,7 @@ public sealed partial class FileContentControllerTests(WebAcceptanceFixture fixt
 
         foreach (Guid roleId in appRoleIds)
         {
-            await core.AddFolderRoleAsync(folderRole: new FolderRole { FolderId = folder.Id, RoleId = roleId });
+            await core.InsertFolderRoleAsync(folderRole: new FolderRole { FolderId = folder.Id, RoleId = roleId });
         }
 
         DmsFile file = await core.AddDmsFileAsync(file: new DmsFile

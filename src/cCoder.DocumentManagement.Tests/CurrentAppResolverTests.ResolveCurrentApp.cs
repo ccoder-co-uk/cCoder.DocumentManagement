@@ -22,7 +22,7 @@ public partial class CurrentAppResolverTests
         DefaultHttpContext httpContext = new();
         httpContext.Request.Path = "/webdav/Core/App(42)/Files";
 
-        appBrokerMock.Setup(expression: broker => broker.GetAppById(appId: 42))
+        appBrokerMock.Setup(expression: broker => broker.SelectAppById(appId: 42))
             .Returns(value: dataApp);
 
         IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
@@ -32,7 +32,7 @@ public partial class CurrentAppResolverTests
         result.Should()
             .BeEquivalentTo(expectation: CreateExpectedApp(app: dataApp));
 
-        appBrokerMock.Verify(expression: broker => broker.GetAppById(appId: 42), times: Times.Once);
+        appBrokerMock.Verify(expression: broker => broker.SelectAppById(appId: 42), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -42,7 +42,7 @@ public partial class CurrentAppResolverTests
         DefaultHttpContext httpContext = new();
         httpContext.Request.Path = "/webdav/Core/App(42)/Files";
 
-        appBrokerMock.Setup(expression: broker => broker.GetAppById(appId: 42))
+        appBrokerMock.Setup(expression: broker => broker.SelectAppById(appId: 42))
             .Returns(value: (DataApp)null);
 
         IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
@@ -53,7 +53,7 @@ public partial class CurrentAppResolverTests
             .Throw<InvalidOperationException>()
             .WithMessage(expectedWildcardPattern: "Unable to resolve app '42'.");
 
-        appBrokerMock.Verify(expression: broker => broker.GetAppById(appId: 42), times: Times.Once);
+        appBrokerMock.Verify(expression: broker => broker.SelectAppById(appId: 42), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -65,7 +65,7 @@ public partial class CurrentAppResolverTests
         httpContext.Request.Host = new HostString(value: "demo.localhost");
         httpContext.Request.Path = "/folder";
 
-        appBrokerMock.Setup(expression: broker => broker.GetAppByDomain(domain: "demo.localhost"))
+        appBrokerMock.Setup(expression: broker => broker.SelectAppByDomain(domain: "demo.localhost"))
             .Returns(value: dataApp);
 
         IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
@@ -75,7 +75,7 @@ public partial class CurrentAppResolverTests
         result.Should()
             .BeEquivalentTo(expectation: CreateExpectedApp(app: dataApp));
 
-        appBrokerMock.Verify(expression: broker => broker.GetAppByDomain(domain: "demo.localhost"), times: Times.Once);
+        appBrokerMock.Verify(expression: broker => broker.SelectAppByDomain(domain: "demo.localhost"), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -85,7 +85,7 @@ public partial class CurrentAppResolverTests
         DefaultHttpContext httpContext = new();
         httpContext.Request.Host = new HostString(value: "missing.localhost");
 
-        appBrokerMock.Setup(expression: broker => broker.GetAppByDomain(domain: "missing.localhost"))
+        appBrokerMock.Setup(expression: broker => broker.SelectAppByDomain(domain: "missing.localhost"))
             .Returns(value: (DataApp)null);
 
         IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
@@ -96,7 +96,7 @@ public partial class CurrentAppResolverTests
             .Throw<InvalidOperationException>()
             .WithMessage(expectedWildcardPattern: "Unable to resolve current app for host 'missing.localhost'.");
 
-        appBrokerMock.Verify(expression: broker => broker.GetAppByDomain(domain: "missing.localhost"), times: Times.Once);
+        appBrokerMock.Verify(expression: broker => broker.SelectAppByDomain(domain: "missing.localhost"), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
     }
 }

@@ -23,7 +23,7 @@ public partial class FolderServiceTests
         Folder folder = CreateRandomFolder(id: folderId);
 
         folderBrokerMock
-            .Setup(expression: x => x.GetAllFolders(ignoreFilters: false))
+            .Setup(expression: x => x.SelectAllFolders(ignoreFilters: false))
             .Returns(value: new[] { ToExternalFolder(folder: folder) }.AsQueryable());
 
         // When
@@ -33,7 +33,7 @@ public partial class FolderServiceTests
         result.Should()
             .BeEquivalentTo(expectation: folder);
 
-        folderBrokerMock.Verify(expression: x => x.GetAllFolders(ignoreFilters: false), times: Times.Once);
+        folderBrokerMock.Verify(expression: x => x.SelectAllFolders(ignoreFilters: false), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }

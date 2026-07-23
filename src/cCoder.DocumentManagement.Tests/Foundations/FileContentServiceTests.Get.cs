@@ -23,7 +23,7 @@ public partial class FileContentServiceTests
         FileContent fileContent = CreateRandomFileContent(id: fileContentId);
 
         fileContentBrokerMock
-            .Setup(expression: x => x.GetAllFileContents(ignoreFilters: false))
+            .Setup(expression: x => x.SelectAllFileContents(ignoreFilters: false))
             .Returns(value: new[] { ToExternalFileContent(fileContent: fileContent) }.AsQueryable());
 
         // When
@@ -33,7 +33,7 @@ public partial class FileContentServiceTests
         result.Should()
             .BeEquivalentTo(expectation: fileContent);
 
-        fileContentBrokerMock.Verify(expression: x => x.GetAllFileContents(ignoreFilters: false), times: Times.Once);
+        fileContentBrokerMock.Verify(expression: x => x.SelectAllFileContents(ignoreFilters: false), times: Times.Once);
         fileContentBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }

@@ -31,7 +31,7 @@ public sealed partial class FolderControllerTests
                 .GetRequiredService<cCoder.Data.ICoreContextFactory>()
                 .CreateCoreContext();
 
-            Folder rootFolder = await core.AddFolderAsync(folder: new Folder
+            Folder rootFolder = await core.InsertFolderAsync(folder: new Folder
             {
                 Id = Guid.NewGuid(),
                 AppId = seededContext.AppId,
@@ -40,7 +40,7 @@ public sealed partial class FolderControllerTests
                 .ToLowerInvariant()
             });
 
-            Folder childFolder = await core.AddFolderAsync(folder: new Folder
+            Folder childFolder = await core.InsertFolderAsync(folder: new Folder
             {
                 Id = Guid.NewGuid(),
                 AppId = seededContext.AppId,
@@ -50,8 +50,8 @@ public sealed partial class FolderControllerTests
                 .ToLowerInvariant()}"
             });
 
-            await core.AddFolderRoleAsync(folderRole: new FolderRole { FolderId = rootFolder.Id, RoleId = seededContext.RoleId });
-            await core.AddFolderRoleAsync(folderRole: new FolderRole { FolderId = childFolder.Id, RoleId = seededContext.RoleId });
+            await core.InsertFolderRoleAsync(folderRole: new FolderRole { FolderId = rootFolder.Id, RoleId = seededContext.RoleId });
+            await core.InsertFolderRoleAsync(folderRole: new FolderRole { FolderId = childFolder.Id, RoleId = seededContext.RoleId });
 
             DmsFile file = await core.AddDmsFileAsync(file: new DmsFile
             {
@@ -65,7 +65,7 @@ public sealed partial class FolderControllerTests
                 Size = "1 B"
             });
 
-            await core.AddFileContentAsync(fileContent: new FileContent
+            await core.InsertFileContentAsync(fileContent: new FileContent
             {
                 Id = Guid.NewGuid(),
                 FileId = file.Id,

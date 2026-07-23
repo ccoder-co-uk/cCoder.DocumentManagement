@@ -36,7 +36,7 @@ public partial class FileServiceTests
 
         fileBrokerMock
             .Setup(expression: x =>
-                x.AddFileAsync(entity: It.Is<DataFile>(match: candidate => !ReferenceEquals(objA: candidate, objB: file)))
+                x.InsertFileAsync(entity: It.Is<DataFile>(match: candidate => !ReferenceEquals(objA: candidate, objB: file)))
             )
             .Callback<DataFile>(action: candidate =>
                 submitted = new FileEntity
@@ -145,7 +145,7 @@ public partial class FileServiceTests
             );
 
         fileBrokerMock.Verify(
-            expression: x => x.AddFileAsync(entity: It.Is<DataFile>(match: candidate => !ReferenceEquals(objA: candidate, objB: file))),
+            expression: x => x.InsertFileAsync(entity: It.Is<DataFile>(match: candidate => !ReferenceEquals(objA: candidate, objB: file))),
             times: Times.Once
         );
 

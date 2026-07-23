@@ -27,14 +27,14 @@ internal class CurrentAppResolver(
 
             if (end > start && int.TryParse(s: requestPath[start..end], result: out int appId))
             {
-                return ToResolvedApp(app: appBroker.GetAppById(appId: appId))
+                return ToResolvedApp(app: appBroker.SelectAppById(appId: appId))
                     ?? throw new InvalidOperationException(message: $"Unable to resolve app '{appId}'.");
             }
         }
 
         string host = httpContext?.Request.Host.Host ?? string.Empty;
 
-        return ToResolvedApp(app: appBroker.GetAppByDomain(domain: host))
+        return ToResolvedApp(app: appBroker.SelectAppByDomain(domain: host))
             ?? throw new InvalidOperationException(message: $"Unable to resolve current app for host '{host}'.");
     }
 

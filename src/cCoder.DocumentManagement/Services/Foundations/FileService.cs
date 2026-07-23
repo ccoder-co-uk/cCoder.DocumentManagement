@@ -40,26 +40,26 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
     }
 
     public IQueryable<LocalFile> GetAll(bool ignoreFilters = false) =>
-        fileBroker.GetAllFiles(ignoreFilters: ignoreFilters);
+        fileBroker.SelectAllFiles(ignoreFilters: ignoreFilters);
 
     public Guid[] GetIdsByFolderIds(Guid[] folderIds, bool ignoreFilters = false) =>
         fileBroker.GetFileIdsByFolderIds(folderIds: folderIds, ignoreFilters: ignoreFilters);
 
     public LocalFile GetWithFolderAndContents(Guid id, bool ignoreFilters = false) =>
-        CreateFile(file: fileBroker.GetFileWithFolderAndContents(id: id, ignoreFilters: ignoreFilters));
+        CreateFile(file: fileBroker.SelectFileWithFolderAndContents(id: id, ignoreFilters: ignoreFilters));
 
     public LocalFile GetWithFolderRolesAndContents(Guid id, bool ignoreFilters = false) =>
-        CreateFileWithFolderRoles(file: fileBroker.GetFileWithFolderRolesAndContents(id: id, ignoreFilters: ignoreFilters));
+        CreateFileWithFolderRoles(file: fileBroker.SelectFileWithFolderRolesAndContents(id: id, ignoreFilters: ignoreFilters));
 
     public LocalFile GetByPath(int appId, string path, bool ignoreFilters = false) =>
-        CreateFile(file: fileBroker.GetFileByPath(appId: appId, path: path, ignoreFilters: ignoreFilters));
+        CreateFile(file: fileBroker.SelectFileByPath(appId: appId, path: path, ignoreFilters: ignoreFilters));
 
     public LocalFile GetByPathWithFolderAndContents(
         int appId,
         string path,
         bool ignoreFilters = false
     ) =>
-        CreateFile(file: fileBroker.GetFileByPathWithFolderAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters));
+        CreateFile(file: fileBroker.SelectFileByPathWithFolderAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters));
 
     public LocalFile GetByPathWithFolderRolesAndContents(
         int appId,
@@ -67,11 +67,11 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
         bool ignoreFilters = false
     ) =>
         CreateFileWithFolderRoles(
-            file: fileBroker.GetFileByPathWithFolderRolesAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters)
+            file: fileBroker.SelectFileByPathWithFolderRolesAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters)
         );
 
     public IQueryable<LocalFile> Search(int appId, byte[] needle) =>
-        fileBroker.SearchFiles(appId: appId, needle: needle)
+        fileBroker.SelectFilesByContent(appId: appId, needle: needle)
                                                             .AsEnumerable()
                                                                            .Select(selector: CreateFile)
                                                                                                         .AsQueryable();
@@ -90,7 +90,7 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
         newFileEntity.CreatedOn = now;
         newFileEntity.CreatedBy = currentUserId;
 
-        FileEntity result = await fileBroker.AddFileAsync(entity: newFileEntity);
+        FileEntity result = await fileBroker.InsertFileAsync(entity: newFileEntity);
         file.Id = result.Id;
         file.FolderId = result.FolderId;
         file.Name = result.Name;

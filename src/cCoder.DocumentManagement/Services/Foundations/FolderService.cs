@@ -39,22 +39,22 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
     }
 
     public IQueryable<Folder> GetAll(bool ignoreFilters = false) =>
-        folderBroker.GetAllFolders(ignoreFilters: ignoreFilters);
+        folderBroker.SelectAllFolders(ignoreFilters: ignoreFilters);
 
     public Folder GetWithRoles(Guid id, bool ignoreFilters = false) =>
-        CreateFolder(folder: folderBroker.GetFolderWithRoles(id: id, ignoreFilters: ignoreFilters));
+        CreateFolder(folder: folderBroker.SelectFolderWithRoles(id: id, ignoreFilters: ignoreFilters));
 
     public Folder GetForUpdate(Guid id, bool ignoreFilters = false) =>
-        CreateFolderForUpdate(folder: folderBroker.GetFolderForUpdate(id: id, ignoreFilters: ignoreFilters));
+        CreateFolderForUpdate(folder: folderBroker.SelectFolderForUpdate(id: id, ignoreFilters: ignoreFilters));
 
     public Folder GetByPath(int appId, string path, bool ignoreFilters = false) =>
-        CreateFolder(folder: folderBroker.GetFolderByPath(appId: appId, path: path, ignoreFilters: ignoreFilters));
+        CreateFolder(folder: folderBroker.SelectFolderByPath(appId: appId, path: path, ignoreFilters: ignoreFilters));
 
     public Folder GetByPathWithRoles(int appId, string path, bool ignoreFilters = false) =>
-        CreateFolder(folder: folderBroker.GetFolderByPathWithRoles(appId: appId, path: path, ignoreFilters: ignoreFilters));
+        CreateFolder(folder: folderBroker.SelectFolderByPathWithRoles(appId: appId, path: path, ignoreFilters: ignoreFilters));
 
     public Folder GetByPathWithParentAndRoles(int appId, string path, bool ignoreFilters = false) =>
-        CreateFolderWithParent(folder: folderBroker.GetFolderByPathWithParentAndRoles(appId: appId, path: path, ignoreFilters: ignoreFilters));
+        CreateFolderWithParent(folder: folderBroker.SelectFolderByPathWithParentAndRoles(appId: appId, path: path, ignoreFilters: ignoreFilters));
 
     public Folder GetByPathWithRolesAndFilesAndContents(
         int appId,
@@ -62,7 +62,7 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
         bool ignoreFilters = false
     ) =>
         CreateFolderWithRolesAndFiles(
-            folder: folderBroker.GetFolderByPathWithRolesAndFilesAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters)
+            folder: folderBroker.SelectFolderByPathWithRolesAndFilesAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters)
         );
 
     public Folder GetByPathWithSubFoldersAndFiles(
@@ -70,13 +70,13 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
         string path,
         bool ignoreFilters = false
     ) =>
-        CreateFolderForMove(folder: folderBroker.GetFolderByPathWithSubFoldersAndFiles(appId: appId, path: path, ignoreFilters: ignoreFilters));
+        CreateFolderForMove(folder: folderBroker.SelectFolderByPathWithSubFoldersAndFiles(appId: appId, path: path, ignoreFilters: ignoreFilters));
 
     public async ValueTask<Folder> AddAsync(Folder folder)
     {
         authorizationBroker.Authorize(appId: folder.AppId, privilege: $"{nameof(Folder)}_create");
         Folder newFolder = CreateStorageFolderForAdd(folder: folder);
-        Folder result = await folderBroker.AddFolderAsync(entity: newFolder);
+        Folder result = await folderBroker.InsertFolderAsync(entity: newFolder);
         folder.Id = result.Id;
         folder.AppId = result.AppId;
         folder.ParentId = result.ParentId;
@@ -89,7 +89,7 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
     public async ValueTask<Folder> AddForPathBuildAsync(Folder folder)
     {
         Folder newFolder = CreateStorageFolderForAdd(folder: folder);
-        Folder result = await folderBroker.AddFolderAsync(entity: newFolder);
+        Folder result = await folderBroker.InsertFolderAsync(entity: newFolder);
         folder.Id = result.Id;
         folder.AppId = result.AppId;
         folder.ParentId = result.ParentId;

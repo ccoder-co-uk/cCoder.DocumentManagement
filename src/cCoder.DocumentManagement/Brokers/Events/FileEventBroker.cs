@@ -9,7 +9,7 @@ using FileEntity = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.DocumentManagement.Brokers.Events;
 
-public class FileEventBroker(IEventHub eventHub) : IFileEventBroker
+internal sealed class FileEventBroker(IEventHub eventHub) : IFileEventBroker
 {
     public ValueTask RaiseFileAddEventAsync(EventMessage<FileEntity> message) =>
         eventHub.RaiseEventAsync(name: "file_add", message: message);

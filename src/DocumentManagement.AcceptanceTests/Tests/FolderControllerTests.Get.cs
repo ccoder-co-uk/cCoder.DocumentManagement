@@ -95,7 +95,7 @@ public sealed partial class FolderControllerTests
             ConfigJson = "{}",
         });
 
-        Folder hiddenFolder = await core.AddFolderAsync(folder: new Folder
+        Folder hiddenFolder = await core.InsertFolderAsync(folder: new Folder
         {
             AppId = hiddenApp.Id,
             Name = Unique(prefix: "HiddenFolder"),

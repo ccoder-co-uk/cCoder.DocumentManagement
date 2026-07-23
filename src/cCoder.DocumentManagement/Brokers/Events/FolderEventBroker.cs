@@ -9,7 +9,7 @@ using cCoder.Eventing.Models;
 
 namespace cCoder.DocumentManagement.Brokers.Events;
 
-public class FolderEventBroker(IEventHub eventHub) : IFolderEventBroker
+internal sealed class FolderEventBroker(IEventHub eventHub) : IFolderEventBroker
 {
     public ValueTask RaiseFolderAddEventAsync(EventMessage<Folder> message) =>
         eventHub.RaiseEventAsync(name: "folder_add", message: message);

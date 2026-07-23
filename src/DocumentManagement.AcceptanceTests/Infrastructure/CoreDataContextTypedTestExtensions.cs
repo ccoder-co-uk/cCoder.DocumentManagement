@@ -108,21 +108,21 @@ internal static class CoreDataContextTypedTestExtensions
         return entity;
     }
 
-    public static async Task<Folder> AddFolderAsync(this CoreDataContext core, Folder folder)
+    public static async Task<Folder> InsertFolderAsync(this CoreDataContext core, Folder folder)
     {
         Folder entity = (await core.Folders.AddAsync(entity: folder)).Entity;
         _ = await core.SaveChangesAsync();
         return entity;
     }
 
-    public static async Task<FolderRole> AddFolderRoleAsync(this CoreDataContext core, FolderRole folderRole)
+    public static async Task<FolderRole> InsertFolderRoleAsync(this CoreDataContext core, FolderRole folderRole)
     {
         FolderRole entity = (await core.FolderRoles.AddAsync(entity: folderRole)).Entity;
         _ = await core.SaveChangesAsync();
         return entity;
     }
 
-    public static async Task<FileEntity> AddFileAsync(this CoreDataContext core, FileEntity file)
+    public static async Task<FileEntity> InsertFileAsync(this CoreDataContext core, FileEntity file)
     {
         FileEntity entity = (await core.Files.AddAsync(entity: file)).Entity;
         _ = await core.SaveChangesAsync();
@@ -130,9 +130,9 @@ internal static class CoreDataContextTypedTestExtensions
     }
 
     public static Task<FileEntity> AddDmsFileAsync(this CoreDataContext core, FileEntity file) =>
-        core.AddFileAsync(file: file);
+        core.InsertFileAsync(file: file);
 
-    public static async Task<FileContent> AddFileContentAsync(this CoreDataContext core, FileContent fileContent)
+    public static async Task<FileContent> InsertFileContentAsync(this CoreDataContext core, FileContent fileContent)
     {
         FileContent entity = (await core.FileContents.AddAsync(entity: fileContent)).Entity;
         _ = await core.SaveChangesAsync();

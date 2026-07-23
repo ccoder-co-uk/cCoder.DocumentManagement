@@ -32,7 +32,7 @@ public partial class FolderServiceTests
 
         folderBrokerMock
             .Setup(expression: x =>
-                x.AddFolderAsync(entity: It.Is<DataFolder>(match: candidate => !ReferenceEquals(objA: candidate, objB: folder)))
+                x.InsertFolderAsync(entity: It.Is<DataFolder>(match: candidate => !ReferenceEquals(objA: candidate, objB: folder)))
             )
             .Callback<DataFolder>(action: candidate =>
                 submitted = new Folder
@@ -72,7 +72,7 @@ public partial class FolderServiceTests
             .BeEquivalentTo(expectation: folder, config: options => options.Excluding(expression: candidate => candidate.Id));
 
         folderBrokerMock.Verify(
-            expression: x => x.AddFolderAsync(entity: It.Is<DataFolder>(match: candidate => !ReferenceEquals(objA: candidate, objB: folder))),
+            expression: x => x.InsertFolderAsync(entity: It.Is<DataFolder>(match: candidate => !ReferenceEquals(objA: candidate, objB: folder))),
             times: Times.Once
         );
 

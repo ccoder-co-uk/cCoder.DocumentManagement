@@ -11,25 +11,25 @@ namespace cCoder.DocumentManagement.Brokers.Storage;
 
 public interface IFileBroker
 {
-    IQueryable<FileEntity> GetAllFiles(bool ignoreFilters);
+    IQueryable<FileEntity> SelectAllFiles(bool ignoreFilters);
     Guid[] GetFileIdsByFolderIds(Guid[] folderIds, bool ignoreFilters);
-    FileEntity GetFileByPath(int appId, string path, bool ignoreFilters);
-    FileEntity GetFileByPathWithFolderAndContents(int appId, string path, bool ignoreFilters);
-    FileEntity GetFileByPathWithFolderRolesAndContents(int appId, string path, bool ignoreFilters);
-    FileEntity GetFileWithFolderAndContents(Guid id, bool ignoreFilters);
-    FileEntity GetFileWithFolderRolesAndContents(Guid id, bool ignoreFilters);
-    IQueryable<FileEntity> SearchFiles(int appId, byte[] needle);
-    ValueTask<FileEntity> AddFileAsync(FileEntity entity);
+    FileEntity SelectFileByPath(int appId, string path, bool ignoreFilters);
+    FileEntity SelectFileByPathWithFolderAndContents(int appId, string path, bool ignoreFilters);
+    FileEntity SelectFileByPathWithFolderRolesAndContents(int appId, string path, bool ignoreFilters);
+    FileEntity SelectFileWithFolderAndContents(Guid id, bool ignoreFilters);
+    FileEntity SelectFileWithFolderRolesAndContents(Guid id, bool ignoreFilters);
+    IQueryable<FileEntity> SelectFilesByContent(int appId, byte[] needle);
+    ValueTask<FileEntity> InsertFileAsync(FileEntity entity);
     ValueTask<FileEntity> UpdateFileAsync(FileEntity entity);
     ValueTask<int> DeleteFileAsync(FileEntity entity);
     ValueTask DeleteAllFilesAsync(IEnumerable<FileEntity> items);
     int? GetAppId(FileEntity entity);
 }
 
-public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
+internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
 {
 
-    public IQueryable<FileEntity> GetAllFiles(bool ignoreFilters)
+    public IQueryable<FileEntity> SelectAllFiles(bool ignoreFilters)
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -38,7 +38,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
             : coreDataContext.Files;
     }
 
-    public FileEntity GetFileByPath(int appId, string path, bool ignoreFilters)
+    public FileEntity SelectFileByPath(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -65,7 +65,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
             .ToArray();
     }
 
-    public FileEntity GetFileByPathWithFolderAndContents(int appId, string path, bool ignoreFilters)
+    public FileEntity SelectFileByPathWithFolderAndContents(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -79,7 +79,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
             .FirstOrDefault(predicate: file => file.Folder.AppId == appId && file.Path.ToLower() == path.ToLower());
     }
 
-    public FileEntity GetFileByPathWithFolderRolesAndContents(int appId, string path, bool ignoreFilters)
+    public FileEntity SelectFileByPathWithFolderRolesAndContents(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -95,7 +95,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
             .FirstOrDefault(predicate: file => file.Folder.AppId == appId && file.Path.ToLower() == path.ToLower());
     }
 
-    public FileEntity GetFileWithFolderAndContents(Guid id, bool ignoreFilters)
+    public FileEntity SelectFileWithFolderAndContents(Guid id, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -109,7 +109,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
             .FirstOrDefault(predicate: file => file.Id == id);
     }
 
-    public FileEntity GetFileWithFolderRolesAndContents(Guid id, bool ignoreFilters)
+    public FileEntity SelectFileWithFolderRolesAndContents(Guid id, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -125,7 +125,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
             .FirstOrDefault(predicate: file => file.Id == id);
     }
 
-    public IQueryable<FileEntity> SearchFiles(int appId, byte[] needle)
+    public IQueryable<FileEntity> SelectFilesByContent(int appId, byte[] needle)
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -137,7 +137,7 @@ public class FileBroker(ICoreContextFactory coreContextFactory) : IFileBroker
                 && file.Contents.Any(predicate: content => content.RawData.SequenceEqual(other: needle)));
     }
 
-    public async ValueTask<FileEntity> AddFileAsync(FileEntity entity)
+    public async ValueTask<FileEntity> InsertFileAsync(FileEntity entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
         FileEntity result = (await coreDataContext.Files.AddAsync(entity: entity)).Entity;

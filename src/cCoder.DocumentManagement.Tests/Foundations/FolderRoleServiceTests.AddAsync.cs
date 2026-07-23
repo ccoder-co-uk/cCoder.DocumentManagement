@@ -32,7 +32,7 @@ public partial class FolderRoleServiceTests
 
         folderRoleBrokerMock
             .Setup(expression: x =>
-                x.AddFolderRoleAsync(
+                x.InsertFolderRoleAsync(
                     entity: It.Is<DataFolderRole>(match: candidate =>
                         candidate.FolderId == folderRole.FolderId && candidate.RoleId == folderRole.RoleId
                     )
@@ -67,7 +67,7 @@ public partial class FolderRoleServiceTests
 
         folderRoleBrokerMock.Verify(
             expression: x =>
-                x.AddFolderRoleAsync(
+                x.InsertFolderRoleAsync(
                     entity: It.Is<DataFolderRole>(match: candidate =>
                         candidate.FolderId == folderRole.FolderId && candidate.RoleId == folderRole.RoleId
                     )

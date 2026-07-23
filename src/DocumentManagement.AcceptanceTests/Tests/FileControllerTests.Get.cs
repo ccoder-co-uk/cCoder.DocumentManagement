@@ -98,7 +98,7 @@ public sealed partial class FileControllerTests
             ConfigJson = "{}",
         });
 
-        cCoder.Data.Models.DMS.Folder hiddenFolder = await core.AddFolderAsync(folder: new cCoder.Data.Models.DMS.Folder
+        cCoder.Data.Models.DMS.Folder hiddenFolder = await core.InsertFolderAsync(folder: new cCoder.Data.Models.DMS.Folder
         {
             AppId = hiddenApp.Id,
             Name = Unique(prefix: "HiddenFolder"),

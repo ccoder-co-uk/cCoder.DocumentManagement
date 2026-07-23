@@ -23,7 +23,7 @@ public partial class FolderServiceTests
         Folder folder = CreateRandomFolder();
         IQueryable<DataFolder> folders = new[] { ToExternalFolder(folder: folder) }.AsQueryable();
 
-        folderBrokerMock.Setup(expression: x => x.GetAllFolders(ignoreFilters: false))
+        folderBrokerMock.Setup(expression: x => x.SelectAllFolders(ignoreFilters: false))
             .Returns(value: folders);
 
         // When
@@ -33,7 +33,7 @@ public partial class FolderServiceTests
         result.Should()
             .BeEquivalentTo(expectation: new[] { folder }.AsQueryable());
 
-        folderBrokerMock.Verify(expression: x => x.GetAllFolders(ignoreFilters: false), times: Times.Once);
+        folderBrokerMock.Verify(expression: x => x.SelectAllFolders(ignoreFilters: false), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
@@ -79,7 +79,7 @@ public partial class FolderServiceTests
                 }
             }.AsQueryable();
 
-        folderBrokerMock.Setup(expression: x => x.GetAllFolders(ignoreFilters: false))
+        folderBrokerMock.Setup(expression: x => x.SelectAllFolders(ignoreFilters: false))
             .Returns(value: folders);
 
         // When
@@ -99,7 +99,7 @@ public partial class FolderServiceTests
         result.Files.Single().Id.Should()
             .Be(expected: fileId);
 
-        folderBrokerMock.Verify(expression: x => x.GetAllFolders(ignoreFilters: false), times: Times.Once);
+        folderBrokerMock.Verify(expression: x => x.SelectAllFolders(ignoreFilters: false), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }

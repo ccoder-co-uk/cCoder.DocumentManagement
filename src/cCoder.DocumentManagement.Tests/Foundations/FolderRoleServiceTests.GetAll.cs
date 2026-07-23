@@ -23,7 +23,7 @@ public partial class FolderRoleServiceTests
         FolderRole folderRole = CreateRandomFolderRole();
         IQueryable<DataFolderRole> folderRoles = new[] { ToExternalFolderRole(folderRole: folderRole) }.AsQueryable();
 
-        folderRoleBrokerMock.Setup(expression: x => x.GetAllFolderRoles(ignoreFilters: false))
+        folderRoleBrokerMock.Setup(expression: x => x.SelectAllFolderRoles(ignoreFilters: false))
             .Returns(value: folderRoles);
 
         // When
@@ -33,7 +33,7 @@ public partial class FolderRoleServiceTests
         result.Should()
             .BeEquivalentTo(expectation: new[] { folderRole }.AsQueryable());
 
-        folderRoleBrokerMock.Verify(expression: x => x.GetAllFolderRoles(ignoreFilters: false), times: Times.Once);
+        folderRoleBrokerMock.Verify(expression: x => x.SelectAllFolderRoles(ignoreFilters: false), times: Times.Once);
         folderRoleBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }

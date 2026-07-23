@@ -11,20 +11,20 @@ namespace cCoder.DocumentManagement.Brokers.Storage;
 
 public interface IFileContentBroker
 {
-    IQueryable<FileContent> GetAllFileContents(bool ignoreFilters);
+    IQueryable<FileContent> SelectAllFileContents(bool ignoreFilters);
     ValueTask DeleteAllFileContentsForFileAsync(Guid fileId);
     ValueTask DeleteAllFileContentsForFilesAsync(Guid[] fileIds);
-    ValueTask<FileContent> AddFileContentAsync(FileContent entity);
+    ValueTask<FileContent> InsertFileContentAsync(FileContent entity);
     ValueTask<FileContent> UpdateFileContentAsync(FileContent entity);
     ValueTask<int> DeleteFileContentAsync(FileContent entity);
     ValueTask DeleteAllFileContentsAsync(IEnumerable<FileContent> items);
     int? GetAppId(FileContent entity);
 }
 
-public class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileContentBroker
+internal sealed class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileContentBroker
 {
 
-    public IQueryable<FileContent> GetAllFileContents(bool ignoreFilters)
+    public IQueryable<FileContent> SelectAllFileContents(bool ignoreFilters)
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -33,7 +33,7 @@ public class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileCo
             : coreDataContext.FileContents;
     }
 
-    public async ValueTask<FileContent> AddFileContentAsync(FileContent entity)
+    public async ValueTask<FileContent> InsertFileContentAsync(FileContent entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
         FileContent result = (await coreDataContext.FileContents.AddAsync(entity: entity)).Entity;

@@ -10,20 +10,20 @@ namespace cCoder.DocumentManagement.Brokers.Storage;
 
 public interface IAppBroker
 {
-    App GetAppById(int appId);
-    App GetAppByDomain(string domain);
+    App SelectAppById(int appId);
+    App SelectAppByDomain(string domain);
 }
 
 internal sealed class AppBroker(ICoreContextFactory coreContextFactory) : IAppBroker
 {
-    public App GetAppById(int appId)
+    public App SelectAppById(int appId)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
         return coreDataContext.Apps.FirstOrDefault(predicate: app => app.Id == appId);
     }
 
-    public App GetAppByDomain(string domain)
+    public App SelectAppByDomain(string domain)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 

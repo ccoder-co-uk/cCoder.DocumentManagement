@@ -20,7 +20,7 @@ public partial class FileServiceTests
         FileEntity file = CreateRandomFile(id: fileId);
 
         fileBrokerMock
-            .Setup(expression: x => x.GetAllFiles(ignoreFilters: false))
+            .Setup(expression: x => x.SelectAllFiles(ignoreFilters: false))
             .Returns(value: new[] { ToExternalFile(file: file) }.AsQueryable());
 
         // When
@@ -30,7 +30,7 @@ public partial class FileServiceTests
         result.Should()
             .BeEquivalentTo(expectation: file);
 
-        fileBrokerMock.Verify(expression: x => x.GetAllFiles(ignoreFilters: false), times: Times.Once);
+        fileBrokerMock.Verify(expression: x => x.SelectAllFiles(ignoreFilters: false), times: Times.Once);
         fileBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }

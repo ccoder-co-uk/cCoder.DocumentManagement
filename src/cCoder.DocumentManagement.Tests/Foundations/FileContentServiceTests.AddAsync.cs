@@ -35,7 +35,7 @@ public partial class FileContentServiceTests
 
         fileContentBrokerMock
             .Setup(expression: x =>
-                x.AddFileContentAsync(
+                x.InsertFileContentAsync(
                     entity: It.Is<DataFileContent>(match: candidate => !ReferenceEquals(objA: candidate, objB: fileContent))
                 )
             )
@@ -146,7 +146,7 @@ public partial class FileContentServiceTests
 
         fileContentBrokerMock.Verify(
             expression: x =>
-                x.AddFileContentAsync(
+                x.InsertFileContentAsync(
                     entity: It.Is<DataFileContent>(match: candidate => !ReferenceEquals(objA: candidate, objB: fileContent))
                 ),
             times: Times.Once

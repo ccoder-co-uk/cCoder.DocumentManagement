@@ -11,17 +11,17 @@ namespace cCoder.DocumentManagement.Brokers.Storage;
 
 public interface IFolderRoleBroker
 {
-    IQueryable<FolderRole> GetAllFolderRoles(bool ignoreFilters);
-    ValueTask<FolderRole> AddFolderRoleAsync(FolderRole entity);
+    IQueryable<FolderRole> SelectAllFolderRoles(bool ignoreFilters);
+    ValueTask<FolderRole> InsertFolderRoleAsync(FolderRole entity);
     ValueTask<int> DeleteFolderRoleAsync(FolderRole entity);
     ValueTask DeleteAllFolderRolesAsync(IEnumerable<FolderRole> items);
     int? GetAppId(FolderRole entity);
 }
 
-public class FolderRoleBroker(ICoreContextFactory coreContextFactory) : IFolderRoleBroker
+internal sealed class FolderRoleBroker(ICoreContextFactory coreContextFactory) : IFolderRoleBroker
 {
 
-    public IQueryable<FolderRole> GetAllFolderRoles(bool ignoreFilters)
+    public IQueryable<FolderRole> SelectAllFolderRoles(bool ignoreFilters)
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -30,7 +30,7 @@ public class FolderRoleBroker(ICoreContextFactory coreContextFactory) : IFolderR
             : coreDataContext.FolderRoles;
     }
 
-    public async ValueTask<FolderRole> AddFolderRoleAsync(FolderRole entity)
+    public async ValueTask<FolderRole> InsertFolderRoleAsync(FolderRole entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
         FolderRole result = (await coreDataContext.FolderRoles.AddAsync(entity: entity)).Entity;

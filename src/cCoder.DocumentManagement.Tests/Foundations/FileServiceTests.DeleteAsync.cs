@@ -29,7 +29,7 @@ public partial class FileServiceTests
         FileEntity file = CreateRandomFile(id: fileId);
 
         fileBrokerMock
-            .Setup(expression: x => x.GetAllFiles(ignoreFilters: true))
+            .Setup(expression: x => x.SelectAllFiles(ignoreFilters: true))
             .Returns(value: new[] { ToExternalFile(file: file) }.AsQueryable());
 
         fileBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFile>()))
@@ -44,7 +44,7 @@ public partial class FileServiceTests
         await fileService.DeleteAsync(id: fileId);
 
         // Then
-        fileBrokerMock.Verify(expression: x => x.GetAllFiles(ignoreFilters: true), times: Times.Once);
+        fileBrokerMock.Verify(expression: x => x.SelectAllFiles(ignoreFilters: true), times: Times.Once);
 
         fileBrokerMock.Verify(
             expression: x => x.DeleteFileAsync(entity: It.Is<DataFile>(match: candidate => candidate.Id == file.Id)),
@@ -65,7 +65,7 @@ public partial class FileServiceTests
         FileEntity file = CreateRandomFile(id: fileId);
 
         fileBrokerMock
-            .Setup(expression: x => x.GetAllFiles(ignoreFilters: true))
+            .Setup(expression: x => x.SelectAllFiles(ignoreFilters: true))
             .Returns(value: new[] { ToExternalFile(file: file) }.AsQueryable());
 
         fileBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFile>()))
@@ -83,7 +83,7 @@ public partial class FileServiceTests
             .ThrowAsync<SecurityException>()
             .WithMessage(expectedWildcardPattern: "Access Denied!");
 
-        fileBrokerMock.Verify(expression: x => x.GetAllFiles(ignoreFilters: true), times: Times.Once);
+        fileBrokerMock.Verify(expression: x => x.SelectAllFiles(ignoreFilters: true), times: Times.Once);
         fileBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "file_delete"), times: Times.Once);

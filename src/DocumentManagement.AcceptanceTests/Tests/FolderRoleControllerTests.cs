@@ -69,7 +69,7 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
             Privs = "folder_read",
         });
 
-        Folder folder = await core.AddFolderAsync(folder: new Folder
+        Folder folder = await core.InsertFolderAsync(folder: new Folder
         {
             AppId = app.Id,
             Name = Unique(prefix: "Folder"),
@@ -77,7 +77,7 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
             .ToLowerInvariant(),
         });
 
-        await core.AddFolderRoleAsync(folderRole: new FolderRole
+        await core.InsertFolderRoleAsync(folderRole: new FolderRole
         {
             FolderId = folder.Id,
             RoleId = accessRole.Id,
@@ -85,7 +85,7 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
 
         if (includeFolderRole)
         {
-            await core.AddFolderRoleAsync(folderRole: new FolderRole
+            await core.InsertFolderRoleAsync(folderRole: new FolderRole
             {
                 FolderId = folder.Id,
                 RoleId = role.Id,

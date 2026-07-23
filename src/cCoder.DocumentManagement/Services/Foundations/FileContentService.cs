@@ -41,7 +41,7 @@ internal class FileContentService(
     }
 
     public IQueryable<FileContent> GetAll(bool ignoreFilters = false) =>
-        fileContentBroker.GetAllFileContents(ignoreFilters: ignoreFilters);
+        fileContentBroker.SelectAllFileContents(ignoreFilters: ignoreFilters);
 
     public ValueTask DeleteAllForFileAsync(Guid fileId) =>
         fileContentBroker.DeleteAllFileContentsForFileAsync(fileId: fileId);
@@ -63,7 +63,7 @@ internal class FileContentService(
         newFileContent.CreatedOn = now;
         newFileContent.CreatedBy = currentUserId;
 
-        FileContent result = await fileContentBroker.AddFileContentAsync(entity: newFileContent);
+        FileContent result = await fileContentBroker.InsertFileContentAsync(entity: newFileContent);
         fileContent.Id = result.Id;
         fileContent.FileId = result.FileId;
         fileContent.Description = result.Description;

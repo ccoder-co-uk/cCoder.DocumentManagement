@@ -11,15 +11,15 @@ namespace cCoder.DocumentManagement.Brokers.Storage;
 
 public interface IFolderBroker
 {
-    IQueryable<Folder> GetAllFolders(bool ignoreFilters);
-    Folder GetFolderWithRoles(Guid id, bool ignoreFilters);
-    Folder GetFolderForUpdate(Guid id, bool ignoreFilters);
-    Folder GetFolderByPath(int appId, string path, bool ignoreFilters);
-    Folder GetFolderByPathWithRoles(int appId, string path, bool ignoreFilters);
-    Folder GetFolderByPathWithParentAndRoles(int appId, string path, bool ignoreFilters);
-    Folder GetFolderByPathWithRolesAndFilesAndContents(int appId, string path, bool ignoreFilters);
-    Folder GetFolderByPathWithSubFoldersAndFiles(int appId, string path, bool ignoreFilters);
-    ValueTask<Folder> AddFolderAsync(Folder entity);
+    IQueryable<Folder> SelectAllFolders(bool ignoreFilters);
+    Folder SelectFolderWithRoles(Guid id, bool ignoreFilters);
+    Folder SelectFolderForUpdate(Guid id, bool ignoreFilters);
+    Folder SelectFolderByPath(int appId, string path, bool ignoreFilters);
+    Folder SelectFolderByPathWithRoles(int appId, string path, bool ignoreFilters);
+    Folder SelectFolderByPathWithParentAndRoles(int appId, string path, bool ignoreFilters);
+    Folder SelectFolderByPathWithRolesAndFilesAndContents(int appId, string path, bool ignoreFilters);
+    Folder SelectFolderByPathWithSubFoldersAndFiles(int appId, string path, bool ignoreFilters);
+    ValueTask<Folder> InsertFolderAsync(Folder entity);
     ValueTask<Folder> UpdateFolderAsync(Folder entity);
     ValueTask<int> DeleteFolderAsync(Folder entity);
     ValueTask DeleteAllFoldersAsync(IEnumerable<Folder> items);
@@ -27,10 +27,10 @@ public interface IFolderBroker
     int? GetAppId(Folder entity);
 }
 
-public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroker
+internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroker
 {
 
-    public IQueryable<Folder> GetAllFolders(bool ignoreFilters)
+    public IQueryable<Folder> SelectAllFolders(bool ignoreFilters)
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -44,7 +44,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
             .AsSplitQuery();
     }
 
-    public Folder GetFolderWithRoles(Guid id, bool ignoreFilters)
+    public Folder SelectFolderWithRoles(Guid id, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -58,7 +58,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
             .FirstOrDefault(predicate: folder => folder.Id == id);
     }
 
-    public Folder GetFolderForUpdate(Guid id, bool ignoreFilters)
+    public Folder SelectFolderForUpdate(Guid id, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -77,7 +77,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
             .FirstOrDefault(predicate: folder => folder.Id == id);
     }
 
-    public Folder GetFolderByPath(int appId, string path, bool ignoreFilters)
+    public Folder SelectFolderByPath(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -88,7 +88,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
         return query.FirstOrDefault(predicate: folder => folder.AppId == appId && folder.Path == path);
     }
 
-    public Folder GetFolderByPathWithRoles(int appId, string path, bool ignoreFilters)
+    public Folder SelectFolderByPathWithRoles(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -102,7 +102,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
             .FirstOrDefault(predicate: folder => folder.AppId == appId && folder.Path == path);
     }
 
-    public Folder GetFolderByPathWithParentAndRoles(int appId, string path, bool ignoreFilters)
+    public Folder SelectFolderByPathWithParentAndRoles(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -117,7 +117,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
             .FirstOrDefault(predicate: folder => folder.AppId == appId && folder.Path == path);
     }
 
-    public Folder GetFolderByPathWithRolesAndFilesAndContents(int appId, string path, bool ignoreFilters)
+    public Folder SelectFolderByPathWithRolesAndFilesAndContents(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -133,7 +133,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
             .FirstOrDefault(predicate: folder => folder.AppId == appId && folder.Path == path);
     }
 
-    public Folder GetFolderByPathWithSubFoldersAndFiles(int appId, string path, bool ignoreFilters)
+    public Folder SelectFolderByPathWithSubFoldersAndFiles(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -147,7 +147,7 @@ public class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroke
             .FirstOrDefault(predicate: folder => folder.AppId == appId && folder.Path == path);
     }
 
-    public async ValueTask<Folder> AddFolderAsync(Folder entity)
+    public async ValueTask<Folder> InsertFolderAsync(Folder entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
         Folder result = (await coreDataContext.Folders.AddAsync(entity: entity)).Entity;

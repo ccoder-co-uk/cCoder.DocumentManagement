@@ -14,7 +14,7 @@ public interface IJsonBroker
     string Serialize(object value);
 }
 
-public class JsonBroker : IJsonBroker
+internal sealed class JsonBroker : IJsonBroker
 {
     public object ParseJson(string json) =>
         JsonConvert.DeserializeObject(value: json);
