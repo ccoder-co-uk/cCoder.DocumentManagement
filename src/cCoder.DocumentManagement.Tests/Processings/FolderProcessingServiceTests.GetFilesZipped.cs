@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.IO.Compression;
 using System.Security;
 using cCoder.Data;
@@ -22,19 +26,19 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         App app = CreateRandomAppForTests();
-        DmsPath filePath = new("docs/file.txt");
+        DmsPath filePath = new(path: "docs/file.txt");
         fileServiceMock
-            .Setup(x => x.GetByPathWithFolderAndContents(app.Id, filePath.Lowered, false))
-            .Returns((DmsFile)null);
+            .Setup(expression: x => x.GetByPathWithFolderAndContents(app.Id, filePath.Lowered, false))
+            .Returns(value: (DmsFile)null);
 
         // When
-        Action act = () => folderProcessingService.GetFilesZipped(app, [filePath]);
+        Action act = () => folderProcessingService.GetFilesZipped(app: app, paths: [filePath]);
 
         // Then
-        act.Should().Throw<SecurityException>().WithMessage("Access Denied!");
+        act.Should().Throw<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
         fileServiceMock.Verify(
-            x => x.GetByPathWithFolderAndContents(app.Id, filePath.Lowered, false),
-            Times.Once
+            expression: x => x.GetByPathWithFolderAndContents(app.Id, filePath.Lowered, false),
+            times: Times.Once
         );
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
@@ -46,8 +50,8 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         App app = CreateRandomAppForTests();
-        DmsPath directFilePath = new("docs/direct.txt");
-        DmsPath folderPath = new("docs");
+        DmsPath directFilePath = new(path: "docs/direct.txt");
+        DmsPath folderPath = new(path: "docs");
 
         DmsFile directFile = new()
         {
@@ -90,33 +94,32 @@ public partial class FolderProcessingServiceTests
         };
 
         fileServiceMock
-            .Setup(x => x.GetByPathWithFolderAndContents(app.Id, directFilePath.Lowered, false))
-            .Returns(directFile);
-        folderServiceMock.Setup(x => x.GetByPath(app.Id, folderPath.Lowered, false)).Returns(rootFolder);
-        folderServiceMock.Setup(x => x.GetAll(false)).Returns(new[] { rootFolder }.AsQueryable());
-        fileServiceMock.Setup(x => x.GetAll(false)).Returns(new[] { nestedFile }.AsQueryable());
-        fileContentServiceMock.Setup(x => x.GetAll(false)).Returns(new[] { nestedContent }.AsQueryable());
+            .Setup(expression: x => x.GetByPathWithFolderAndContents(app.Id, directFilePath.Lowered, false))
+            .Returns(value: directFile);
+        folderServiceMock.Setup(expression: x => x.GetByPath(app.Id, folderPath.Lowered, false)).Returns(value: rootFolder);
+        folderServiceMock.Setup(expression: x => x.GetAll(false)).Returns(value: new[] { rootFolder }.AsQueryable());
+        fileServiceMock.Setup(expression: x => x.GetAll(false)).Returns(value: new[] { nestedFile }.AsQueryable());
+        fileContentServiceMock.Setup(expression: x => x.GetAll(false)).Returns(value: new[] { nestedContent }.AsQueryable());
 
         // When
-        DMSResult result = folderProcessingService.GetFilesZipped(app, [directFilePath, folderPath]);
+        DMSResult result = folderProcessingService.GetFilesZipped(app: app, paths: [directFilePath, folderPath]);
 
         // Then
-        using ZipArchive zip = new(result.Data, ZipArchiveMode.Read);
-        zip.Entries.Select(entry => entry.FullName)
+        using ZipArchive zip = new(stream: result.Data, mode: ZipArchiveMode.Read);
+        zip.Entries.Select(selector: entry => entry.FullName)
             .Should()
-            .BeEquivalentTo(["direct.txt", "docs/", "docs/nested.txt"]);
+            .BeEquivalentTo(expectation: ["direct.txt", "docs/", "docs/nested.txt"]);
 
         fileServiceMock.Verify(
-            x => x.GetByPathWithFolderAndContents(app.Id, directFilePath.Lowered, false),
-            Times.Once
+            expression: x => x.GetByPathWithFolderAndContents(app.Id, directFilePath.Lowered, false),
+            times: Times.Once
         );
-        folderServiceMock.Verify(x => x.GetByPath(app.Id, folderPath.Lowered, false), Times.Once);
-        folderServiceMock.Verify(x => x.GetAll(false), Times.Once);
-        fileServiceMock.Verify(x => x.GetAll(false), Times.Once);
-        fileContentServiceMock.Verify(x => x.GetAll(false), Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetByPath(app.Id, folderPath.Lowered, false), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetAll(false), times: Times.Once);
+        fileServiceMock.Verify(expression: x => x.GetAll(false), times: Times.Once);
+        fileContentServiceMock.Verify(expression: x => x.GetAll(false), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
         fileContentServiceMock.VerifyNoOtherCalls();
     }
 }
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using Moq;
 using Xunit;
 using FileEntity = cCoder.Data.Models.DMS.File;
@@ -13,23 +17,15 @@ public partial class FileEventProcessingServiceTests
         // Given
         FileEntity entity = CreateRandomFileEntity();
         fileEventServiceMock
-            .Setup(x => x.RaiseFileUpdateEventAsync(entity))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFileUpdateEventAsync(entity))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFileUpdateEventAsync(entity);
+        await service.RaiseFileUpdateEventAsync(entity: entity);
 
         // Then
-        fileEventServiceMock.Verify(x => x.RaiseFileUpdateEventAsync(entity), Times.Once);
+        fileEventServiceMock.Verify(expression: x => x.RaiseFileUpdateEventAsync(entity), times: Times.Once);
         fileEventServiceMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

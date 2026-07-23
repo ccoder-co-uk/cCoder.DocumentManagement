@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -20,27 +24,20 @@ public partial class DmsOrchestrationServiceTests
 
     public DmsOrchestrationServiceTests()
     {
-        currentAppResolverMock = new Mock<IDocumentManagementCurrentAppResolver>(MockBehavior.Strict);
-        fileProcessingServiceMock = new Mock<IFileProcessingService>(MockBehavior.Strict);
-        folderProcessingServiceMock = new Mock<IFolderProcessingService>(MockBehavior.Strict);
+        currentAppResolverMock = new Mock<IDocumentManagementCurrentAppResolver>(behavior: MockBehavior.Strict);
+        fileProcessingServiceMock = new Mock<IFileProcessingService>(behavior: MockBehavior.Strict);
+        folderProcessingServiceMock = new Mock<IFolderProcessingService>(behavior: MockBehavior.Strict);
         orchestrationService = new DmsOrchestrationService(
-            currentAppResolverMock.Object,
-            fileProcessingServiceMock.Object,
-            folderProcessingServiceMock.Object
+            currentAppResolver: currentAppResolverMock.Object,
+            fileProcessingService: fileProcessingServiceMock.Object,
+            folderProcessingService: folderProcessingServiceMock.Object
         );
     }
 
     private static App CreateRandomApp() =>
         Builder<App>.CreateNew()
-            .With(app => app.Domain = $"app-{Guid.NewGuid():N}.test")
-            .With(app => app.Roles = [])
-            .With(app => app.Folders = [])
+            .With(func: app => app.Domain = $"app-{Guid.NewGuid():N}.test")
+            .With(func: app => app.Roles = [])
+            .With(func: app => app.Folders = [])
             .Build();
 }
-
-
-
-
-
-
-

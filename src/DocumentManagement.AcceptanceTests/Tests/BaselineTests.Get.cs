@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Text.Json;
 using FluentAssertions;
 using Xunit;
@@ -11,6 +15,6 @@ public sealed partial class BaselineTests
     {
         JsonElement baseline = await GetBaselineAsync();
 
-        baseline.ValueKind.Should().Be(JsonValueKind.Array);
+        baseline.ValueKind.Should().Be(expected: JsonValueKind.Array);
     }
 }

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.DocumentManagement.Services.Orchestrations;
@@ -13,8 +17,8 @@ public class AppOrchestrationServiceTests
 
     public AppOrchestrationServiceTests()
     {
-        folderOrchestrationServiceMock = new Mock<IFolderOrchestrationService>(MockBehavior.Strict);
-        service = new AppOrchestrationService(folderOrchestrationServiceMock.Object);
+        folderOrchestrationServiceMock = new Mock<IFolderOrchestrationService>(behavior: MockBehavior.Strict);
+        service = new AppOrchestrationService(folderOrchestrationService: folderOrchestrationServiceMock.Object);
     }
 
     [Fact]
@@ -22,14 +26,14 @@ public class AppOrchestrationServiceTests
     {
         // Given
         folderOrchestrationServiceMock
-            .Setup(x => x.DeleteAllByAppIdAsync(5))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.DeleteAllByAppIdAsync(5))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.DeleteAsync(5);
+        await service.DeleteAsync(appId: 5);
 
         // Then
-        folderOrchestrationServiceMock.Verify(x => x.DeleteAllByAppIdAsync(5), Times.Once);
+        folderOrchestrationServiceMock.Verify(expression: x => x.DeleteAllByAppIdAsync(5), times: Times.Once);
         folderOrchestrationServiceMock.VerifyNoOtherCalls();
     }
 
@@ -48,11 +52,11 @@ public class AppOrchestrationServiceTests
         };
 
         folderOrchestrationServiceMock
-            .Setup(x => x.AddOrUpdateForAppAsync(It.Is<IEnumerable<Folder>>(folders => folders.All(folder => folder.AppId == 7))))
-            .Returns(ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Models.Result<Folder>>>([]));
+            .Setup(expression: x => x.AddOrUpdateForAppAsync(It.Is<IEnumerable<Folder>>(folders => folders.All(folder => folder.AppId == 7))))
+            .Returns(value: ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Models.Result<Folder>>>([]));
 
         // When
-        await service.AddAsync(app);
+        await service.AddAsync(app: app);
 
         // Then
         folderOrchestrationServiceMock.VerifyAll();

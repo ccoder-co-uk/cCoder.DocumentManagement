@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -16,23 +20,15 @@ public partial class FileContentEventProcessingServiceTests
         // Given
         FileContent entity = CreateRandomFileContent();
         fileContentEventServiceMock
-            .Setup(x => x.RaiseFileContentDeleteEventAsync(entity))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFileContentDeleteEventAsync(entity))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFileContentDeleteEventAsync(entity);
+        await service.RaiseFileContentDeleteEventAsync(entity: entity);
 
         // Then
-        fileContentEventServiceMock.Verify(x => x.RaiseFileContentDeleteEventAsync(entity), Times.Once);
+        fileContentEventServiceMock.Verify(expression: x => x.RaiseFileContentDeleteEventAsync(entity), times: Times.Once);
         fileContentEventServiceMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

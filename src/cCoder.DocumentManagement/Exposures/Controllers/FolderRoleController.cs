@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Api.OData;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -22,7 +26,7 @@ public class FolderRoleController : ODataController
     [HttpGet]
     public IActionResult GetMetadata()
     {
-        return Ok(new MetadataContainer(typeof(FolderRole), isEntity: true, hasEndpoint: true));
+        return Ok(value: new MetadataContainer(typeof(FolderRole), isEntity: true, hasEndpoint: true));
     }
 
     [HttpGet]
@@ -30,7 +34,7 @@ public class FolderRoleController : ODataController
     [ActionName("Get")]
     public IActionResult GetAll()
     {
-        return Ok(Service.GetAll());
+        return Ok(value: Service.GetAll());
     }
 
     [HttpPost]
@@ -38,9 +42,9 @@ public class FolderRoleController : ODataController
     {
         if (!base.ModelState.IsValid)
         {
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(base.ModelState);
+            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: base.ModelState);
         }
-        return Ok(await Service.AddAsync(entity));
+        return Ok(value: await Service.AddAsync(entity));
     }
 
     [HttpPost]
@@ -48,10 +52,9 @@ public class FolderRoleController : ODataController
     {
         if (!base.ModelState.IsValid)
         {
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(base.ModelState);
+            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: base.ModelState);
         }
-        await Service.DeleteAllAsync(items.Value);
+        await Service.DeleteAllAsync(items: items.Value);
         return Ok();
     }
 }
-

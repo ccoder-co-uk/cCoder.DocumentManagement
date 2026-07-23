@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using FluentAssertions;
 using Xunit;
 
@@ -11,14 +15,14 @@ public sealed partial class WebShellTests
         // Given
 
         // When
-        string content = await GetOkContentAsync("/tools/index.html");
+        string content = await GetOkContentAsync(path: "/tools/index.html");
 
         // Then
-        content.Should().Contain("Document Management");
-        content.Should().Contain("folder-grid");
-        content.Should().Contain("/tools/api.js");
-        content.Should().Contain("/tools/grids.js");
-        content.Should().Contain("/tools/styles.css");
+        content.Should().Contain(expected: "Document Management");
+        content.Should().Contain(expected: "folder-grid");
+        content.Should().Contain(expected: "/tools/api.js");
+        content.Should().Contain(expected: "/tools/grids.js");
+        content.Should().Contain(expected: "/tools/styles.css");
     }
 
     [Fact]
@@ -27,15 +31,15 @@ public sealed partial class WebShellTests
         // Given
 
         // When
-        string content = await GetOkContentAsync("/tools/grids.js");
+        string content = await GetOkContentAsync(path: "/tools/grids.js");
 
         // Then
-        content.Should().Contain("DocumentManagementGrids");
-        content.Should().Contain("data-child-grid=\"File\"");
-        content.Should().Contain("data-child-grid=\"FolderRole\"");
-        content.Should().Contain("data-child-grid=\"FileContent\"");
-        content.Should().Contain("loadFolderDetails");
-        content.Should().Contain("loadFileDetails");
+        content.Should().Contain(expected: "DocumentManagementGrids");
+        content.Should().Contain(expected: "data-child-grid=\"File\"");
+        content.Should().Contain(expected: "data-child-grid=\"FolderRole\"");
+        content.Should().Contain(expected: "data-child-grid=\"FileContent\"");
+        content.Should().Contain(expected: "loadFolderDetails");
+        content.Should().Contain(expected: "loadFileDetails");
     }
 
     [Fact]
@@ -44,11 +48,11 @@ public sealed partial class WebShellTests
         // Given
 
         // When
-        string content = await GetOkContentAsync("/tools/styles.css");
+        string content = await GetOkContentAsync(path: "/tools/styles.css");
 
         // Then
-        content.Should().Contain(".dm-table");
-        content.Should().Contain(".dm-detail");
-        content.Should().Contain(".dm-tab-panel");
+        content.Should().Contain(expected: ".dm-table");
+        content.Should().Contain(expected: ".dm-detail");
+        content.Should().Contain(expected: ".dm-tab-panel");
     }
 }

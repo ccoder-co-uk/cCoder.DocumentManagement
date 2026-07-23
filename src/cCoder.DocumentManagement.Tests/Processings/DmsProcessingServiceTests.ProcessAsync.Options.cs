@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Xunit;
@@ -11,21 +15,15 @@ public partial class DmsProcessingServiceTests
     public async Task ShouldReturnNoContentWhenMethodIsOptions()
     {
         // Given
-        DmsProcessingRequest request = CreateRequest("OPTIONS", "/api/dms/folder");
+        DmsProcessingRequest request = CreateRequest(method: "OPTIONS", requestPath: "/api/dms/folder");
 
         // When
-        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request);
+        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(204);
-        response.ContentType.Should().Be("application/json");
+        response.StatusCode.Should().Be(expected: 204);
+        response.ContentType.Should().Be(expected: "application/json");
         response.HasBody.Should().BeFalse();
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 }
-
-
-
-
-
-

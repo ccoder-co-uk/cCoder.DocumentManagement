@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -17,20 +21,22 @@ public partial class FolderRoleProcessingServiceTests
     {
         // Given
         authorizationBrokerMock
-            .Setup(x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
-            .Callback((int? appId, string privilege) =>
+            .Setup(expression: x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
+            .Callback(action: (int? appId, string privilege) =>
             {
                 if (!(currentUser?.Can(appId, privilege) ?? false))
+                {
                     throw new SecurityException("Access Denied!");
+                }
             });
 
         authorizationBrokerMock
-            .Setup(x => x.IsAdminOfApp(It.IsAny<int>()))
-            .Returns((int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
+            .Setup(expression: x => x.IsAdminOfApp(It.IsAny<int>()))
+            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
 
-        authorizationBrokerMock.Setup(x => x.GetCurrentUser()).Returns(() => currentUser);
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
 
-        User user = ToLocalUser(TestUsers.WithPrivilege("folderrole_create", 1));
+        User user = ToLocalUser(user: TestUsers.WithPrivilege("folderrole_create", 1));
         UserRole currentUserRole = user.Roles.First();
         DataRole roleToAdd = new()
         {
@@ -57,16 +63,16 @@ public partial class FolderRoleProcessingServiceTests
         };
         FolderRole link = new() { FolderId = folder.Id, RoleId = roleToAdd.Id };
         currentUser = user;
-        roleBrokerMock.Setup(x => x.GetAllRoles(true)).Returns(new[] { roleToAdd }.AsQueryable());
-        folderServiceMock.Setup(x => x.GetAll(true)).Returns(new[] { folder }.AsQueryable());
-        folderRoleServiceMock.Setup(x => x.AddAsync(link)).ReturnsAsync(link);
+        roleBrokerMock.Setup(expression: x => x.GetAllRoles(true)).Returns(value: new[] { roleToAdd }.AsQueryable());
+        folderServiceMock.Setup(expression: x => x.GetAll(true)).Returns(value: new[] { folder }.AsQueryable());
+        folderRoleServiceMock.Setup(expression: x => x.AddAsync(link)).ReturnsAsync(value: link);
 
         // When
-        FolderRole result = await folderRoleProcessingService.AddAsync(link);
+        FolderRole result = await folderRoleProcessingService.AddAsync(entity: link);
 
         // Then
-        Assert.Same(link, result);
-        folderRoleServiceMock.Verify(x => x.AddAsync(link), Times.Once);
+        Assert.Same(expected: link, actual: result);
+        folderRoleServiceMock.Verify(expression: x => x.AddAsync(link), times: Times.Once);
     }
 
     [Fact]
@@ -74,18 +80,20 @@ public partial class FolderRoleProcessingServiceTests
     {
         // Given
         authorizationBrokerMock
-            .Setup(x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
-            .Callback((int? appId, string privilege) =>
+            .Setup(expression: x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
+            .Callback(action: (int? appId, string privilege) =>
             {
                 if (!(currentUser?.Can(appId, privilege) ?? false))
+                {
                     throw new SecurityException("Access Denied!");
+                }
             });
 
         authorizationBrokerMock
-            .Setup(x => x.IsAdminOfApp(It.IsAny<int>()))
-            .Returns((int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
+            .Setup(expression: x => x.IsAdminOfApp(It.IsAny<int>()))
+            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
 
-        authorizationBrokerMock.Setup(x => x.GetCurrentUser()).Returns(() => currentUser);
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
 
         DataRole roleToAdd = new()
         {
@@ -108,11 +116,11 @@ public partial class FolderRoleProcessingServiceTests
             SubFolders = [],
         };
         FolderRole link = new() { FolderId = folder.Id, RoleId = roleToAdd.Id };
-        roleBrokerMock.Setup(x => x.GetAllRoles(true)).Returns(new[] { roleToAdd }.AsQueryable());
-        folderServiceMock.Setup(x => x.GetAll(true)).Returns(new[] { folder }.AsQueryable());
+        roleBrokerMock.Setup(expression: x => x.GetAllRoles(true)).Returns(value: new[] { roleToAdd }.AsQueryable());
+        folderServiceMock.Setup(expression: x => x.GetAll(true)).Returns(value: new[] { folder }.AsQueryable());
 
         // When
-        await Assert.ThrowsAsync<SecurityException>(async () =>
+        await Assert.ThrowsAsync<SecurityException>(testCode: async () =>
             await folderRoleProcessingService.AddAsync(link)
         );
 
@@ -120,15 +128,3 @@ public partial class FolderRoleProcessingServiceTests
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

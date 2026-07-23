@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -15,23 +19,15 @@ public partial class FileContentOrchestrationServiceTests
     {
         // Given
         FileContent[] entities = [CreateRandomFileContent()];
-        fileContentProcessingServiceMock.Setup(x => x.DeleteAllAsync(entities)).Returns(ValueTask.CompletedTask);
+        fileContentProcessingServiceMock.Setup(expression: x => x.DeleteAllAsync(entities)).Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.DeleteAllAsync(entities);
+        await orchestrationService.DeleteAllAsync(items: entities);
 
         // Then
-        fileContentProcessingServiceMock.Verify(x => x.DeleteAllAsync(entities), Times.Once);
+        fileContentProcessingServiceMock.Verify(expression: x => x.DeleteAllAsync(entities), times: Times.Once);
         fileContentProcessingServiceMock.VerifyNoOtherCalls();
         fileContentEventProcessingServiceMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

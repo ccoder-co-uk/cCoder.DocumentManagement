@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using cCoder.Data.Models.DMS;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +35,7 @@ public class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileCo
     public async ValueTask<FileContent> AddFileContentAsync(FileContent entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        FileContent result = (await coreDataContext.FileContents.AddAsync(entity)).Entity;
+        FileContent result = (await coreDataContext.FileContents.AddAsync(entity: entity)).Entity;
         _ = await coreDataContext.SaveChangesAsync();
         return result;
     }
@@ -39,7 +43,7 @@ public class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileCo
     public async ValueTask<FileContent> UpdateFileContentAsync(FileContent entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        FileContent result = coreDataContext.FileContents.Update(entity).Entity;
+        FileContent result = coreDataContext.FileContents.Update(entity: entity).Entity;
         _ = await coreDataContext.SaveChangesAsync();
         return result;
     }
@@ -47,17 +51,19 @@ public class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileCo
     public async ValueTask<int> DeleteFileContentAsync(FileContent entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        coreDataContext.FileContents.Remove(entity);
+        coreDataContext.FileContents.Remove(entity: entity);
         return await coreDataContext.SaveChangesAsync();
     }
 
     public async ValueTask DeleteAllFileContentsAsync(IEnumerable<FileContent> items)
     {
         if (items == null || !items.Any())
+        {
             return;
+        }
 
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        coreDataContext.FileContents.RemoveRange(items);
+        coreDataContext.FileContents.RemoveRange(entities: items);
         _ = await coreDataContext.SaveChangesAsync();
     }
 
@@ -66,31 +72,37 @@ public class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileCo
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
         List<FileContent> items = coreDataContext.FileContents
             .IgnoreQueryFilters()
-            .Where(fileContent => fileContent.FileId == fileId)
+            .Where(predicate: fileContent => fileContent.FileId == fileId)
             .ToList();
 
         if (items.Count == 0)
+        {
             return;
+        }
 
-        coreDataContext.FileContents.RemoveRange(items);
+        coreDataContext.FileContents.RemoveRange(entities: items);
         _ = await coreDataContext.SaveChangesAsync();
     }
 
     public async ValueTask DeleteAllFileContentsForFilesAsync(Guid[] fileIds)
     {
         if (fileIds == null || fileIds.Length == 0)
+        {
             return;
+        }
 
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
         List<FileContent> items = coreDataContext.FileContents
             .IgnoreQueryFilters()
-            .Where(fileContent => fileIds.Contains(fileContent.FileId))
+            .Where(predicate: fileContent => fileIds.Contains(fileContent.FileId))
             .ToList();
 
         if (items.Count == 0)
+        {
             return;
+        }
 
-        coreDataContext.FileContents.RemoveRange(items);
+        coreDataContext.FileContents.RemoveRange(entities: items);
         _ = await coreDataContext.SaveChangesAsync();
     }
 
@@ -99,19 +111,12 @@ public class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileCo
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
         return coreDataContext.Files
 
-            .Where(file => file.Id == entity.FileId)
-            .Join(coreDataContext.Folders,
-                file => file.FolderId,
-                folder => folder.Id,
-                (file, folder) => (int?)folder.AppId)
+            .Where(predicate: file => file.Id == entity.FileId)
+            .Join(inner: coreDataContext.Folders,
+                outerKeySelector: file => file.FolderId,
+                innerKeySelector: folder => folder.Id,
+                resultSelector: (file, folder) => (int?)folder.AppId)
             .FirstOrDefault();
 
     }
 }
-
-
-
-
-
-
-

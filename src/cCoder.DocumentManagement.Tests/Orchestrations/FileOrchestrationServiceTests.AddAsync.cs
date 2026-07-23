@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using FizzWare.NBuilder;
 using FluentAssertions;
 using Moq;
@@ -14,26 +18,19 @@ public partial class FileOrchestrationServiceTests
         // Given
         cCoder.Data.Models.DMS.File entity =
             Builder<cCoder.Data.Models.DMS.File>.CreateNew().Build();
-        fileProcessingServiceMock.Setup(x => x.AddAsync(entity)).ReturnsAsync(entity);
+        fileProcessingServiceMock.Setup(expression: x => x.AddAsync(entity)).ReturnsAsync(value: entity);
 
         fileEventProcessingServiceMock
-            .Setup(x => x.RaiseFileAddEventAsync(entity))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFileAddEventAsync(entity))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        cCoder.Data.Models.DMS.File result = await orchestrationService.AddAsync(entity);
+        cCoder.Data.Models.DMS.File result = await orchestrationService.AddAsync(entity: entity);
 
         // Then
-        result.Should().BeSameAs(entity);
-        fileProcessingServiceMock.Verify(x => x.AddAsync(entity), Times.Once);
-        fileEventProcessingServiceMock.Verify(x => x.RaiseFileAddEventAsync(entity), Times.Once);
+        result.Should().BeSameAs(expected: entity);
+        fileProcessingServiceMock.Verify(expression: x => x.AddAsync(entity), times: Times.Once);
+        fileEventProcessingServiceMock.Verify(expression: x => x.RaiseFileAddEventAsync(entity), times: Times.Once);
     }
 
 }
-
-
-
-
-
-
-

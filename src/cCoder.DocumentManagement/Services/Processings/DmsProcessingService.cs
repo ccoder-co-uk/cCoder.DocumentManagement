@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Services.Foundations;
@@ -16,51 +20,51 @@ internal class DmsProcessingService(
     public async ValueTask<DmsProcessingResponse> ProcessAsync(DmsProcessingRequest request)
     {
         string path = request.RequestPath[
-            (request.RequestPath.IndexOf("/dms/", StringComparison.CurrentCultureIgnoreCase) + 5)..
+            (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
         ];
-        Dictionary<string, string[]> query = ParseQuery(request.QueryString);
+        Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
 
         try
         {
             switch (request.Method)
             {
                 case "OPTIONS":
-                    log.LogInformation($"DMS({request.App.Id}) OPTIONS {path}");
-                    return await HandleOptionsRequestAsync(request);
+                    log.LogInformation(message: $"DMS({request.App.Id}) OPTIONS {path}");
+                    return await HandleOptionsRequestAsync(request: request);
                 case "GET":
-                    log.LogInformation($"DMS({request.App.Id}) Get {path}");
-                    return await HandleGetRequestAsync(request);
+                    log.LogInformation(message: $"DMS({request.App.Id}) Get {path}");
+                    return await HandleGetRequestAsync(request: request);
                 case "POST":
-                    log.LogInformation($"DMS({request.App.Id}) POST {path}");
-                    return await HandlePostRequestAsync(request);
+                    log.LogInformation(message: $"DMS({request.App.Id}) POST {path}");
+                    return await HandlePostRequestAsync(request: request);
                 case "PUT":
-                    log.LogInformation($"DMS({request.App.Id}) PUT {path}");
-                    return await HandlePutRequestAsync(request);
+                    log.LogInformation(message: $"DMS({request.App.Id}) PUT {path}");
+                    return await HandlePutRequestAsync(request: request);
                 case "DELETE":
-                    log.LogInformation($"DMS({request.App.Id}) DELETE {path}");
-                    return await HandleDeleteRequestAsync(request);
+                    log.LogInformation(message: $"DMS({request.App.Id}) DELETE {path}");
+                    return await HandleDeleteRequestAsync(request: request);
                 default:
                     throw new InvalidOperationException(
-                        $"Unsupported DMS method: {request.Method}"
+                        message: $"Unsupported DMS method: {request.Method}"
                     );
             }
         }
         catch (SecurityException ex)
         {
             log.LogError(
-                $"An unhandled exception occurred whilst processing a DMS request to app on domain {request.App?.Domain ?? "Unknown"} ..."
+                message: $"An unhandled exception occurred whilst processing a DMS request to app on domain {request.App?.Domain ?? "Unknown"} ..."
             );
-            log.LogError($"Request details - Path: {path}, Query: {request.QueryString}");
-            log.LogError(ex.Message);
+            log.LogError(message: $"Request details - Path: {path}, Query: {request.QueryString}");
+            log.LogError(message: ex.Message);
             throw;
         }
         catch (Exception ex)
         {
             log.LogError(
-                $"An unhandled exception occurred whilst processing a DMS request to app on domain {request.App?.Domain ?? "Unknown"} ..."
+                message: $"An unhandled exception occurred whilst processing a DMS request to app on domain {request.App?.Domain ?? "Unknown"} ..."
             );
-            log.LogError($"Request details - Path: {path}, Query: {request.QueryString}");
-            log.LogError(ex.Message);
+            log.LogError(message: $"Request details - Path: {path}, Query: {request.QueryString}");
+            log.LogError(message: ex.Message);
             throw;
         }
     }
@@ -68,127 +72,135 @@ internal class DmsProcessingService(
     private async ValueTask<DmsProcessingResponse> HandleDeleteRequestAsync(DmsProcessingRequest request)
     {
         string path = request.RequestPath[
-            (request.RequestPath.IndexOf("/dms/", StringComparison.CurrentCultureIgnoreCase) + 5)..
+            (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
         ];
-        Dictionary<string, string[]> query = ParseQuery(request.QueryString);
-        _ = int.TryParse(TryGetSingleValue(query, "version"), out int deleteVersion);
-        await dmsInstanceService.DropAsync(new LocalPath(path), deleteVersion);
-        return CreateResponse(Stream.Null, false, "application/json", 204);
+        Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
+        _ = int.TryParse(s: TryGetSingleValue(query, "version"), result: out int deleteVersion);
+        await dmsInstanceService.DropAsync(path: new LocalPath(path), version: deleteVersion);
+        return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
     }
 
     private async ValueTask<DmsProcessingResponse> HandleOptionsRequestAsync(
         DmsProcessingRequest request
-    ) => CreateResponse(Stream.Null, false, "application/json", 204);
+    ) => CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
 
     private async ValueTask<DmsProcessingResponse> HandleGetRequestAsync(DmsProcessingRequest request)
     {
         string path = request.RequestPath[
-            (request.RequestPath.IndexOf("/dms/", StringComparison.CurrentCultureIgnoreCase) + 5)..
+            (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
         ];
-        Dictionary<string, string[]> query = ParseQuery(request.QueryString);
-        bool download = query.ContainsKey("download");
-        string search = TryGetSingleValue(query, "search") ?? string.Empty;
-        int version = int.TryParse(TryGetSingleValue(query, "version"), out int parsedVersion)
+        Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
+        bool download = query.ContainsKey(key: "download");
+        string search = TryGetSingleValue(query: query, key: "search") ?? string.Empty;
+        int version = int.TryParse(s: TryGetSingleValue(query, "version"), result: out int parsedVersion)
             ? parsedVersion
             : 0;
         string[] downloadPaths =
-            query.GetValueOrDefault("downloadPaths")?.FirstOrDefault()?.Split(",") ?? [];
+            query.GetValueOrDefault(key: "downloadPaths")?.FirstOrDefault()?.Split(separator: ",") ?? [];
 
         DmsResult result =
             downloadPaths.Length > 0
                 ? dmsInstanceService.GetFilesZipped(
-                    downloadPaths.Select(value => new LocalPath(value)).ToArray()
+                    paths: downloadPaths.Select(value => new LocalPath(value)).ToArray()
                 )
-                : dmsInstanceService.Get(new LocalPath(path), version, search);
+                : dmsInstanceService.Get(path: new LocalPath(path), version: version, search: search);
 
         return result != null
             ? CreateResponse(
-                result.Data,
-                true,
-                download ? "application/octet-stream" : result.MimeType,
-                200
+                body: result.Data,
+                hasBody: true,
+                contentType: download ? "application/octet-stream" : result.MimeType,
+                statusCode: 200
             )
-            : CreateResponse(Stream.Null, false, "plain/text", 204);
+            : CreateResponse(body: Stream.Null, hasBody: false, contentType: "plain/text", statusCode: 204);
     }
 
     private async ValueTask<DmsProcessingResponse> HandlePostRequestAsync(DmsProcessingRequest request)
     {
         string path = request.RequestPath[
-            (request.RequestPath.IndexOf("/dms/", StringComparison.CurrentCultureIgnoreCase) + 5)..
+            (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
         ];
-        Dictionary<string, string[]> query = ParseQuery(request.QueryString);
+        Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
 
         using MemoryStream memoryStream = new();
-        await request.Body.CopyToAsync(memoryStream);
+        await request.Body.CopyToAsync(destination: memoryStream);
         memoryStream.Position = 0;
 
-        if (query.ContainsKey("copyTo"))
+        if (query.ContainsKey(key: "copyTo"))
         {
-            string newPath = TryGetSingleValue(query, "copyTo");
+            string newPath = TryGetSingleValue(query: query, key: "copyTo");
 
-            if (!string.IsNullOrWhiteSpace(newPath))
+            if (!string.IsNullOrWhiteSpace(value: newPath))
+            {
                 await dmsInstanceService.CopyAsync(
-                    new LocalPath(path.Split("?")[0]),
-                    new LocalPath(newPath)
+                    oldPath: new LocalPath(path.Split("?")[0]),
+                    newPath: new LocalPath(newPath)
                 );
+            }
 
-            return CreateResponse(Stream.Null, false, "application/json", 204);
+            return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
         }
 
-        if (query.ContainsKey("moveTo"))
+        if (query.ContainsKey(key: "moveTo"))
         {
-            string newPath = TryGetSingleValue(query, "moveTo");
+            string newPath = TryGetSingleValue(query: query, key: "moveTo");
 
-            if (!string.IsNullOrWhiteSpace(newPath))
+            if (!string.IsNullOrWhiteSpace(value: newPath))
+            {
                 await dmsInstanceService.MoveAsync(
-                    new LocalPath(path.Split("?")[0]),
-                    new LocalPath(newPath)
+                    oldPath: new LocalPath(path.Split("?")[0]),
+                    newPath: new LocalPath(newPath)
                 );
+            }
 
-            return CreateResponse(Stream.Null, false, "application/json", 204);
+            return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
         }
 
-        return await SaveOrUnpackAsync(path, query, memoryStream);
+        return await SaveOrUnpackAsync(path: path, query: query, memoryStream: memoryStream);
     }
 
     private async ValueTask<DmsProcessingResponse> HandlePutRequestAsync(DmsProcessingRequest request)
     {
         string path = request.RequestPath[
-            (request.RequestPath.IndexOf("/dms/", StringComparison.CurrentCultureIgnoreCase) + 5)..
+            (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
         ];
-        Dictionary<string, string[]> query = ParseQuery(request.QueryString);
+        Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
 
         using MemoryStream memoryStream = new();
-        await request.Body.CopyToAsync(memoryStream);
+        await request.Body.CopyToAsync(destination: memoryStream);
         memoryStream.Position = 0;
 
-        if (query.ContainsKey("copyTo"))
+        if (query.ContainsKey(key: "copyTo"))
         {
-            string newPath = TryGetSingleValue(query, "copyTo");
+            string newPath = TryGetSingleValue(query: query, key: "copyTo");
 
-            if (!string.IsNullOrWhiteSpace(newPath))
+            if (!string.IsNullOrWhiteSpace(value: newPath))
+            {
                 await dmsInstanceService.CopyAsync(
-                    new LocalPath(path.Split("?")[0]),
-                    new LocalPath(newPath)
+                    oldPath: new LocalPath(path.Split("?")[0]),
+                    newPath: new LocalPath(newPath)
                 );
+            }
 
-            return CreateResponse(Stream.Null, false, "application/json", 204);
+            return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
         }
 
-        if (query.ContainsKey("moveTo"))
+        if (query.ContainsKey(key: "moveTo"))
         {
-            string newPath = TryGetSingleValue(query, "moveTo");
+            string newPath = TryGetSingleValue(query: query, key: "moveTo");
 
-            if (!string.IsNullOrWhiteSpace(newPath))
+            if (!string.IsNullOrWhiteSpace(value: newPath))
+            {
                 await dmsInstanceService.MoveAsync(
-                    new LocalPath(path.Split("?")[0]),
-                    new LocalPath(newPath)
+                    oldPath: new LocalPath(path.Split("?")[0]),
+                    newPath: new LocalPath(newPath)
                 );
+            }
 
-            return CreateResponse(Stream.Null, false, "application/json", 204);
+            return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
         }
 
-        return await SaveOrUnpackAsync(path, query, memoryStream);
+        return await SaveOrUnpackAsync(path: path, query: query, memoryStream: memoryStream);
     }
 
     private async ValueTask<DmsProcessingResponse> SaveOrUnpackAsync(
@@ -197,35 +209,35 @@ internal class DmsProcessingService(
         MemoryStream memoryStream
     )
     {
-        LocalPath destinationPath = new(path);
+        LocalPath destinationPath = new(path: path);
 
-        if (query.ContainsKey("unpack"))
+        if (query.ContainsKey(key: "unpack"))
         {
             if (destinationPath.IsToFile)
             {
                 log.LogError(
-                    $"User request to unpack an archive to a file path failed, The path is: {path}"
+                    message: $"User request to unpack an archive to a file path failed, The path is: {path}"
                 );
-                throw new InvalidOperationException("Cannot unpack an archive to a file path");
+                throw new InvalidOperationException(message: "Cannot unpack an archive to a file path");
             }
 
             bool ignoreArchiveRoot = string.Equals(
-                TryGetSingleValue(query, "ignoreArchiveRoot"),
-                "true",
-                StringComparison.OrdinalIgnoreCase
+                a: TryGetSingleValue(query, "ignoreArchiveRoot"),
+                b: "true",
+                comparisonType: StringComparison.OrdinalIgnoreCase
             );
             await dmsInstanceService.UnpackAsync(
-                destinationPath,
-                memoryStream,
-                ignoreArchiveRoot
+                path: destinationPath,
+                content: memoryStream,
+                ignoreArchiveRoot: ignoreArchiveRoot
             );
         }
         else
         {
-            await dmsInstanceService.SaveAsync(destinationPath, memoryStream);
+            await dmsInstanceService.SaveAsync(path: destinationPath, content: memoryStream);
         }
 
-        return CreateResponse(Stream.Null, false, "application/json", 204);
+        return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
     }
 
     private static DmsProcessingResponse CreateResponse(
@@ -243,45 +255,37 @@ internal class DmsProcessingService(
         };
 
     private static string TryGetSingleValue(Dictionary<string, string[]> query, string key) =>
-        query.TryGetValue(key, out string[] values) ? values.FirstOrDefault() : null;
+        query.TryGetValue(key: key, value: out string[] values) ? values.FirstOrDefault() : null;
 
     private static Dictionary<string, string[]> ParseQuery(string queryString)
     {
         Dictionary<string, List<string>> query = [];
-        string normalizedQuery = queryString?.TrimStart('?') ?? string.Empty;
+        string normalizedQuery = queryString?.TrimStart(trimChar: '?') ?? string.Empty;
 
-        if (string.IsNullOrWhiteSpace(normalizedQuery))
+        if (string.IsNullOrWhiteSpace(value: normalizedQuery))
         {
             return [];
         }
 
-        foreach (string pair in normalizedQuery.Split('&', StringSplitOptions.RemoveEmptyEntries))
+        foreach (string pair in normalizedQuery.Split(separator: '&', options: StringSplitOptions.RemoveEmptyEntries))
         {
-            string[] parts = pair.Split('=', 2);
-            string key = Uri.UnescapeDataString(parts[0]);
-            string value = parts.Length > 1 ? Uri.UnescapeDataString(parts[1]) : string.Empty;
+            string[] parts = pair.Split(separator: '=', count: 2);
+            string key = Uri.UnescapeDataString(stringToUnescape: parts[0]);
+            string value = parts.Length > 1 ? Uri.UnescapeDataString(stringToUnescape: parts[1]) : string.Empty;
 
-            if (!query.TryGetValue(key, out List<string> values))
+            if (!query.TryGetValue(key: key, value: out List<string> values))
             {
                 values = [];
-                query[key] = values;
+                query[key: key] = values;
             }
 
-            values.Add(value);
+            values.Add(item: value);
         }
 
         return query.ToDictionary(
-            entry => entry.Key,
-            entry => entry.Value.ToArray(),
-            StringComparer.OrdinalIgnoreCase
+            keySelector: entry => entry.Key,
+            elementSelector: entry => entry.Value.ToArray(),
+            comparer: StringComparer.OrdinalIgnoreCase
         );
     }
 }
-
-
-
-
-
-
-
-

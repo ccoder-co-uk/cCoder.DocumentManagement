@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using Apps.Shared;
 using Apps.Shared.Models;
@@ -17,20 +21,20 @@ public class Program
 
     public static void Main(string[] args)
     {
-        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args: args);
 
-        string coreConnection = builder.Configuration.GetConnectionString("Core")
-            ?? throw new InvalidOperationException("ConnectionStrings:Core is required.");
+        string coreConnection = builder.Configuration.GetConnectionString(name: "Core")
+            ?? throw new InvalidOperationException(message: "ConnectionStrings:Core is required.");
 
-        string ssoConnection = builder.Configuration.GetConnectionString("SSO")
-            ?? throw new InvalidOperationException("ConnectionStrings:SSO is required.");
+        string ssoConnection = builder.Configuration.GetConnectionString(name: "SSO")
+            ?? throw new InvalidOperationException(message: "ConnectionStrings:SSO is required.");
 
         Config config = new();
-        builder.Configuration.Bind(config);
-        builder.Services.AddSingleton(config);
+        builder.Configuration.Bind(instance: config);
+        builder.Services.AddSingleton(implementationInstance: config);
         builder.Services.AddEventing();
 
-        builder.Services.AddSecurityApi((services, securityConfig) =>
+        builder.Services.AddSecurityApi(configAction: (services, securityConfig) =>
         {
             securityConfig.AddMSSQLModelProvider(services, ssoConnection);
             securityConfig.UseAESHMMACPasswordEncryption(
@@ -39,8 +43,8 @@ public class Program
         });
 
         cCoder.Data.IServiceCollectionExtensions.AddCoreData(
-            builder.Services,
-            coreConnection);
+            services: builder.Services,
+            connectionString: coreConnection);
 
         builder.Services.AddDocumentManagementWeb();
 
@@ -52,7 +56,7 @@ public class Program
         app.UseStaticFiles();
 
         app.UseSwagger()
-            .UseSwaggerUI(options =>
+            .UseSwaggerUI(setupAction: options =>
             {
                 options.SwaggerEndpoint("/swagger/DocumentManagement/swagger.json", "DocumentManagement API");
                 options.SwaggerEndpoint("/swagger/Core/swagger.json", "Core API");
@@ -62,11 +66,11 @@ public class Program
             .UseODataRouteDebug();
 
         app.UseDomainApiShell();
-        app.MapGet("/Health", () => Results.Text("OK"));
-        app.MapGet("/", () => Results.Redirect("/tools/index.html"));
-        app.StartDocumentManagementWeb(log);
+        app.MapGet(pattern: "/Health", handler: () => Results.Text("OK"));
+        app.MapGet(pattern: "/", handler: () => Results.Redirect("/tools/index.html"));
+        app.StartDocumentManagementWeb(log: log);
         app.UseDomainDefaultCors();
-        app.UseDomainExceptionHandling(HandleUnhandledException);
+        app.UseDomainExceptionHandling(errorHandler: HandleUnhandledException);
         app.Run();
     }
 
@@ -79,13 +83,12 @@ public class Program
         context.Response.ContentType = "application/json";
 
         if (exception is null)
+        {
             return;
+        }
 
-        log.LogError("{Message}\n{StackTrace}", exception.Message, exception.StackTrace);
+        log.LogError(message: "{Message}\n{StackTrace}", exception.Message, exception.StackTrace);
         await context.Response.WriteAsync(
-            "{ \"error\": \"" + exception.Message.Replace("\"", "\'") + "\" }");
+            text: "{ \"error\": \"" + exception.Message.Replace("\"", "\'") + "\" }");
     }
 }
-
-
-

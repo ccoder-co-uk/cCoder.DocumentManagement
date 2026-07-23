@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using App = cCoder.Data.Models.CMS.App;
 
@@ -16,15 +20,13 @@ internal sealed class AppBroker(ICoreContextFactory coreContextFactory) : IAppBr
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        return coreDataContext.Apps.FirstOrDefault(app => app.Id == appId);
+        return coreDataContext.Apps.FirstOrDefault(predicate: app => app.Id == appId);
     }
 
     public App GetAppByDomain(string domain)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        return coreDataContext.Apps.FirstOrDefault(app => app.Domain == domain);
+        return coreDataContext.Apps.FirstOrDefault(predicate: app => app.Domain == domain);
     }
 }
-
-

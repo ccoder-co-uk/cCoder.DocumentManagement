@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data.Models.DMS;
 using FluentAssertions;
 using Xunit;
@@ -12,7 +16,7 @@ public sealed partial class FileContentControllerTests
     {
         // Given
         SeededFileContentContext seededContext = await SeedDatabase("filecontent_create", "filecontent_delete");
-        FileContent createdFileContent = await CreateFileContentAsync(new
+        FileContent createdFileContent = await CreateFileContentAsync(payload: new
         {
             fileId = seededContext.FileId,
             description = "Acceptance content",
@@ -23,18 +27,13 @@ public sealed partial class FileContentControllerTests
         int actualReadStatusCode;
 
         // When
-        int actualStatusCode = await DeleteFileContentAsync(createdFileContent.Id);
-        actualReadStatusCode = await GetFileContentStatusCodeAsync(createdFileContent.Id);
+        int actualStatusCode = await DeleteFileContentAsync(id: createdFileContent.Id);
+        actualReadStatusCode = await GetFileContentStatusCodeAsync(id: createdFileContent.Id);
 
         // Then
-        actualStatusCode.Should().Be(200);
-        actualReadStatusCode.Should().Be(404);
+        actualStatusCode.Should().Be(expected: 200);
+        actualReadStatusCode.Should().Be(expected: 404);
 
-        await Teardown(seededContext);
+        await Teardown(seededContext: seededContext);
     }
 }
-
-
-
-
-

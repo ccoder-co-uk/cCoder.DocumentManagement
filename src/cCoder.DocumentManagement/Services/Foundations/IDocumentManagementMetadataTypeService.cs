@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Api.OData;
 
 
@@ -7,4 +11,3 @@ internal interface IDocumentManagementMetadataTypeService
 {
     IEnumerable<MetadataContainerSet> GetKnownMetadata();
 }
-

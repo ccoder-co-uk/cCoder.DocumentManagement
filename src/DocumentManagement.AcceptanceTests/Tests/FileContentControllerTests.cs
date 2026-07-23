@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -34,7 +38,7 @@ public sealed partial class FileContentControllerTests(WebAcceptanceFixture fixt
             .GetRequiredService<cCoder.Data.ICoreContextFactory>()
             .CreateCoreContext();
 
-        Role role = await core.AddRoleAsync(new Role
+        Role role = await core.AddRoleAsync(role: new Role
         {
             Id = Guid.NewGuid(),
             AppId = AppId,
@@ -43,9 +47,9 @@ public sealed partial class FileContentControllerTests(WebAcceptanceFixture fixt
             Privs = string.Join(',', privileges),
         });
 
-        await core.AddUserRoleAsync(new UserRole { RoleId = role.Id, UserId = "Guest" });
+        await core.AddUserRoleAsync(userRole: new UserRole { RoleId = role.Id, UserId = "Guest" });
 
-        Folder folder = await core.AddFolderAsync(new Folder
+        Folder folder = await core.AddFolderAsync(folder: new Folder
         {
             AppId = AppId,
             Name = Unique("Folder"),
@@ -53,14 +57,16 @@ public sealed partial class FileContentControllerTests(WebAcceptanceFixture fixt
         });
 
         Guid[] appRoleIds = core.Set<Role>().IgnoreQueryFilters()
-            .Where(foundRole => foundRole.AppId == AppId)
-            .Select(foundRole => foundRole.Id)
+            .Where(predicate: foundRole => foundRole.AppId == AppId)
+            .Select(selector: foundRole => foundRole.Id)
             .ToArray();
 
         foreach (Guid roleId in appRoleIds)
-            await core.AddFolderRoleAsync(new FolderRole { FolderId = folder.Id, RoleId = roleId });
+        {
+            await core.AddFolderRoleAsync(folderRole: new FolderRole { FolderId = folder.Id, RoleId = roleId });
+        }
 
-        DmsFile file = await core.AddDmsFileAsync(new DmsFile
+        DmsFile file = await core.AddDmsFileAsync(file: new DmsFile
         {
             FolderId = folder.Id,
             Name = Unique("File"),
@@ -70,59 +76,65 @@ public sealed partial class FileContentControllerTests(WebAcceptanceFixture fixt
             Size = "8",
         });
 
-        return new SeededFileContentContext(AppId, role.Id, folder.Id, file.Id);
+        return new SeededFileContentContext(AppId: AppId, RoleId: role.Id, FolderId: folder.Id, FileId: file.Id);
     }
 
     private async Task<FileContent> CreateFileContentAsync(object payload)
     {
-        using HttpResponseMessage response = await Client.PostAsJsonAsync(BaseUrl, payload);
+        using HttpResponseMessage response = await Client.PostAsJsonAsync(requestUri: BaseUrl, value: payload);
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(HttpStatusCode.OK, content);
-        return JsonSerializer.Deserialize<FileContent>(content, JsonOptions)!;
+        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+        return JsonSerializer.Deserialize<FileContent>(json: content, options: JsonOptions)!;
     }
 
     private async Task<int> UpdateFileContentAsync(Guid id, object payload)
     {
-        using HttpResponseMessage response = await Client.PutAsJsonAsync($"{BaseUrl}({id})", payload);
+        using HttpResponseMessage response = await Client.PutAsJsonAsync(requestUri: $"{BaseUrl}({id})", value: payload);
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(HttpStatusCode.OK, content);
+        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
         return (int)response.StatusCode;
     }
 
     private async Task<int> PatchFileContentAsync(Guid id, object payload)
     {
-        using HttpRequestMessage request = new(HttpMethod.Patch, $"{BaseUrl}({id})")
+        using HttpRequestMessage request = new(method: HttpMethod.Patch, requestUri: $"{BaseUrl}({id})")
         {
-            Content = JsonContent.Create(payload),
+            Content = JsonContent.Create(inputValue: payload),
         };
-        using HttpResponseMessage response = await Client.SendAsync(request);
+        using HttpResponseMessage response = await Client.SendAsync(request: request);
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(HttpStatusCode.OK, content);
+        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
         return (int)response.StatusCode;
     }
 
     private async Task<int> DeleteFileContentAsync(Guid id)
     {
-        using HttpResponseMessage response = await Client.DeleteAsync($"{BaseUrl}({id})");
+        using HttpResponseMessage response = await Client.DeleteAsync(requestUri: $"{BaseUrl}({id})");
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(HttpStatusCode.OK, content);
+        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
         return (int)response.StatusCode;
     }
 
     private async Task<FileContent> GetFileContentAsync(Guid id)
     {
-        using HttpResponseMessage response = await Client.GetAsync($"{BaseUrl}({id})");
+        using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}({id})");
         if (response.StatusCode == HttpStatusCode.NotFound)
+        {
             return null;
+        }
 
         string content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
+        {
             return null;
+        }
 
-        if (content.Contains("\"value\":[]", StringComparison.Ordinal))
+        if (content.Contains(value: "\"value\":[]", comparisonType: StringComparison.Ordinal))
+        {
             return null;
+        }
 
-        return JsonSerializer.Deserialize<FileContent>(content, JsonOptions);
+        return JsonSerializer.Deserialize<FileContent>(json: content, options: JsonOptions);
     }
 
     private async Task Teardown(SeededFileContentContext seededContext)
@@ -133,57 +145,62 @@ public sealed partial class FileContentControllerTests(WebAcceptanceFixture fixt
             .CreateCoreContext();
 
         FolderRole[] folderRoles = core.Set<FolderRole>().IgnoreQueryFilters()
-            .Where(folderRole => folderRole.FolderId == seededContext.FolderId)
+            .Where(predicate: folderRole => folderRole.FolderId == seededContext.FolderId)
             .ToArray();
         if (folderRoles.Length > 0)
-            await core.DeleteAllAsync(folderRoles);
+        {
+            await core.DeleteAllAsync(folderRoles: folderRoles);
+        }
 
-        FileContent[] contents = core.Set<FileContent>().IgnoreQueryFilters().Where(c => c.FileId == seededContext.FileId).ToArray();
+        FileContent[] contents = core.Set<FileContent>().IgnoreQueryFilters().Where(predicate: c => c.FileId == seededContext.FileId).ToArray();
         if (contents.Length > 0)
-            await core.DeleteAllAsync(contents);
+        {
+            await core.DeleteAllAsync(fileContents: contents);
+        }
 
-        DmsFile file = core.Set<DmsFile>().IgnoreQueryFilters().FirstOrDefault(found => found.Id == seededContext.FileId);
+        DmsFile file = core.Set<DmsFile>().IgnoreQueryFilters().FirstOrDefault(predicate: found => found.Id == seededContext.FileId);
         if (file is not null)
-            await core.DeleteAsync(file);
+        {
+            await core.DeleteAsync(file: file);
+        }
 
-        Folder folder = core.Set<Folder>().IgnoreQueryFilters().FirstOrDefault(found => found.Id == seededContext.FolderId);
+        Folder folder = core.Set<Folder>().IgnoreQueryFilters().FirstOrDefault(predicate: found => found.Id == seededContext.FolderId);
         if (folder is not null)
-            await core.DeleteAsync(folder);
+        {
+            await core.DeleteAsync(folder: folder);
+        }
 
-        UserRole[] userRoles = core.Set<UserRole>().IgnoreQueryFilters().Where(userRole => userRole.RoleId == seededContext.RoleId).ToArray();
+        UserRole[] userRoles = core.Set<UserRole>().IgnoreQueryFilters().Where(predicate: userRole => userRole.RoleId == seededContext.RoleId).ToArray();
         if (userRoles.Length > 0)
-            await core.DeleteAllAsync(userRoles);
+        {
+            await core.DeleteAllAsync(userRoles: userRoles);
+        }
 
-        Role role = core.Set<Role>().IgnoreQueryFilters().FirstOrDefault(found => found.Id == seededContext.RoleId);
+        Role role = core.Set<Role>().IgnoreQueryFilters().FirstOrDefault(predicate: found => found.Id == seededContext.RoleId);
         if (role is not null)
-            await core.DeleteAsync(role);
+        {
+            await core.DeleteAsync(role: role);
+        }
     }
 
     private async Task<int> GetFileContentCountAsync()
     {
-        using HttpResponseMessage response = await Client.GetAsync($"{BaseUrl}/$count");
+        using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}/$count");
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(HttpStatusCode.OK, content);
-        return int.Parse(content);
+        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+        return int.Parse(s: content);
     }
 
     private async Task<IReadOnlyList<FileContent>> GetFileContentsAsync(int top)
     {
-        using HttpResponseMessage response = await Client.GetAsync($"{BaseUrl}?$top={top}");
+        using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}?$top={top}");
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(HttpStatusCode.OK, content);
-        return JsonSerializer.Deserialize<ODataEnvelope<FileContent>>(content, JsonOptions)!.Value;
+        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
+        return JsonSerializer.Deserialize<ODataEnvelope<FileContent>>(json: content, options: JsonOptions)!.Value;
     }
     private async Task<int> GetFileContentStatusCodeAsync(Guid id)
     {
-        using HttpResponseMessage response = await Client.GetAsync($"{BaseUrl}({id})");
+        using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}({id})");
         return (int)response.StatusCode;
     }
 }
-
-
-
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -10,27 +14,27 @@ internal class FileContentProcessingService(IFileContentService service) : IFile
 {
     public FileContent Get(Guid id)
     {
-        return service.Get(id);
+        return service.Get(id: id);
     }
 
     public IQueryable<FileContent> GetAll(bool ignoreFilters = false)
     {
-        return service.GetAll(ignoreFilters);
+        return service.GetAll(ignoreFilters: ignoreFilters);
     }
 
     public ValueTask<FileContent> AddAsync(FileContent entity)
     {
-        return service.AddAsync(entity);
+        return service.AddAsync(fileContent: entity);
     }
 
     public ValueTask<FileContent> UpdateAsync(FileContent entity)
     {
-        return service.UpdateAsync(entity);
+        return service.UpdateAsync(fileContent: entity);
     }
 
     public ValueTask DeleteAsync(Guid id)
     {
-        return service.DeleteAsync(id);
+        return service.DeleteAsync(id: id);
     }
 
     public async ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdate(IEnumerable<FileContent> items)
@@ -41,9 +45,9 @@ internal class FileContentProcessingService(IFileContentService service) : IFile
         {
             try
             {
-                FileContent savedItem = item.Id == Guid.Empty ? await AddAsync(item) : await UpdateAsync(item);
+                FileContent savedItem = item.Id == Guid.Empty ? await AddAsync(entity: item) : await UpdateAsync(entity: item);
 
-                results.Add(new Result<FileContent>
+                results.Add(item: new Result<FileContent>
                 {
                     Success = true,
                     Item = savedItem,
@@ -52,7 +56,7 @@ internal class FileContentProcessingService(IFileContentService service) : IFile
             }
             catch (Exception ex)
             {
-                results.Add(new Result<FileContent>
+                results.Add(item: new Result<FileContent>
                 {
                     Success = false,
                     Item = item,
@@ -68,7 +72,7 @@ internal class FileContentProcessingService(IFileContentService service) : IFile
     {
         foreach (FileContent item in items)
         {
-            await DeleteAsync(item.Id);
+            await DeleteAsync(id: item.Id);
         }
     }
 }

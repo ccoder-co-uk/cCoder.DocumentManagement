@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -16,27 +20,19 @@ public partial class FolderOrchestrationServiceTests
     {
         // Given
         Folder entity = CreateRandomFolder();
-        folderProcessingServiceMock.Setup(x => x.UpdateAsync(entity)).ReturnsAsync(entity);
+        folderProcessingServiceMock.Setup(expression: x => x.UpdateAsync(entity)).ReturnsAsync(value: entity);
 
         folderEventProcessingServiceMock
-            .Setup(x => x.RaiseFolderUpdateEventAsync(entity))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFolderUpdateEventAsync(entity))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        Folder result = await orchestrationService.UpdateAsync(entity);
+        Folder result = await orchestrationService.UpdateAsync(entity: entity);
 
         // Then
-        result.Should().BeSameAs(entity);
-        folderProcessingServiceMock.Verify(x => x.UpdateAsync(entity), Times.Once);
-        folderEventProcessingServiceMock.Verify(x => x.RaiseFolderUpdateEventAsync(entity), Times.Once);
+        result.Should().BeSameAs(expected: entity);
+        folderProcessingServiceMock.Verify(expression: x => x.UpdateAsync(entity), times: Times.Once);
+        folderEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderUpdateEventAsync(entity), times: Times.Once);
     }
 
 }
-
-
-
-
-
-
-
-

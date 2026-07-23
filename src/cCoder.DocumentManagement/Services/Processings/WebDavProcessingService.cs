@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
@@ -26,43 +30,43 @@ internal class WebDavProcessingService(
 {
     public async ValueTask<DmsProcessingResponse> ProcessAsync(DmsProcessingRequest request)
     {
-        int appId = ExtractAppId(request.RequestPath);
+        int appId = ExtractAppId(requestPath: request.RequestPath);
         LocalPath path = new(
-            WebUtility
+            path: WebUtility
                 .UrlDecode(NormalizeRequestPath(request.RequestPath, appId))
                 .TrimStart('/')
                 .TrimEnd('/')
         );
-        string requestText = await ReadRequestBodyTextAsync(request.Body);
+        string requestText = await ReadRequestBodyTextAsync(body: request.Body);
 
-        log.LogDebug($"HTTP {request.Method.ToUpperInvariant()} - {path} \n {requestText}");
+        log.LogDebug(message: $"HTTP {request.Method.ToUpperInvariant()} - {path} \n {requestText}");
 
         XNamespace ns = "DAV:";
         App app = request.App;
-        Dictionary<string, string[]> query = ParseQuery(request.QueryString);
+        Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
 
-        string sslPort = config.Settings.TryGetValue("sslPort", out string configuredSslPort)
+        string sslPort = config.Settings.TryGetValue(key: "sslPort", value: out string configuredSslPort)
             ? configuredSslPort
             : "443";
         string urlBase = $"https://{app.Domain}:{sslPort}/Api/";
 
         List<KeyValuePair<string, string>> headers =
         [
-            new KeyValuePair<string, string>("Host", urlBase + "DAV/"),
+            new KeyValuePair<string, string>(key:"Host", value:urlBase + "DAV/"),
         ];
 
-        if (!request.Headers.ContainsKey("Authorization"))
+        if (!request.Headers.ContainsKey(key: "Authorization"))
         {
             headers.Add(
-                new KeyValuePair<string, string>("WWW-Authenticate", "Basic realm=\"server\"")
+                item: new KeyValuePair<string, string>("WWW-Authenticate", "Basic realm=\"server\"")
             );
-            headers.Add(new KeyValuePair<string, string>("Connection", "close"));
+            headers.Add(item: new KeyValuePair<string, string>("Connection", "close"));
             return CreateResponse(
-                EncodeText(string.Empty),
-                true,
-                "text/xml; charset=\"utf-8\"",
-                401,
-                headers
+                body: EncodeText(string.Empty),
+                hasBody: true,
+                contentType: "text/xml; charset=\"utf-8\"",
+                statusCode: 401,
+                headers: headers
             );
         }
 
@@ -71,7 +75,7 @@ internal class WebDavProcessingService(
             switch (request.Method.ToUpperInvariant())
             {
                 case "OPTIONS":
-                    headers.AddRange([
+                    headers.AddRange(collection: [
                         new KeyValuePair<string, string>(
                             "Access-Control-Allow-Origin",
                             request.Host
@@ -93,42 +97,42 @@ internal class WebDavProcessingService(
                     ]);
 
                     return CreateResponse(
-                        Stream.Null,
-                        false,
-                        "text/xml; charset=\"utf-8\"",
-                        204,
-                        headers
+                        body: Stream.Null,
+                        hasBody: false,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        statusCode: 204,
+                        headers: headers
                     );
                 case "GET":
                     int getVer = int.TryParse(
-                        TryGetSingleValue(query, "version"),
-                        out int parsedVersion
+                        s: TryGetSingleValue(query, "version"),
+                        result: out int parsedVersion
                     )
                         ? parsedVersion
                         : 0;
 
-                    DmsResult getResult = dmsInstanceService.Get(path, getVer);
-                    return CreateResponse(getResult.Data, true, getResult.MimeType, 200, headers);
+                    DmsResult getResult = dmsInstanceService.Get(path: path, version: getVer);
+                    return CreateResponse(body: getResult.Data, hasBody: true, contentType: getResult.MimeType, statusCode: 200, headers: headers);
                 case "HEAD":
                     return CreateResponse(
-                        Stream.Null,
-                        false,
-                        "text/xml; charset=\"utf-8\"",
-                        204,
-                        headers
+                        body: Stream.Null,
+                        hasBody: false,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        statusCode: 204,
+                        headers: headers
                     );
                 case "PROPFIND":
-                    string propFindBody = PropFind(request, appId, path, requestText, ns, urlBase);
+                    string propFindBody = PropFind(request: request, appId: appId, path: path, requestText: requestText, ns: ns, urlBase: urlBase);
                     return CreateResponse(
-                        EncodeText(propFindBody),
-                        !string.IsNullOrEmpty(propFindBody),
-                        "text/xml; charset=\"utf-8\"",
-                        !string.IsNullOrEmpty(propFindBody) ? 207 : 404,
-                        headers
+                        body: EncodeText(propFindBody),
+                        hasBody: !string.IsNullOrEmpty(propFindBody),
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        statusCode: !string.IsNullOrEmpty(propFindBody) ? 207 : 404,
+                        headers: headers
                     );
                 case "PROPPATCH":
                     string responseXmlElement = SerializeXml(
-                        new XElement(
+                        element: new XElement(
                         ns + "multistatus",
                         [
                             new XAttribute(XNamespace.Xmlns + "D", "DAV:"),
@@ -137,103 +141,103 @@ internal class WebDavProcessingService(
                     );
 
                     return CreateResponse(
-                        EncodeText(responseXmlElement),
-                        true,
-                        "text/xml; charset=\"utf-8\"",
-                        200,
-                        headers
+                        body: EncodeText(responseXmlElement),
+                        hasBody: true,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        statusCode: 200,
+                        headers: headers
                     );
                 case "POST":
                 case "PUT":
                     request.Body.Position = 0;
-                    await dmsInstanceService.SaveAsync(path, request.Body);
+                    await dmsInstanceService.SaveAsync(path: path, content: request.Body);
                     request.Body.Position = 0;
-                    return CreateResponse(request.Body, true, request.ContentType, 201, headers);
+                    return CreateResponse(body: request.Body, hasBody: true, contentType: request.ContentType, statusCode: 201, headers: headers);
                 case "MKCOL":
                     request.Body.Position = 0;
-                    await dmsInstanceService.SaveAsync(path, request.Body);
+                    await dmsInstanceService.SaveAsync(path: path, content: request.Body);
                     return CreateResponse(
-                        Stream.Null,
-                        false,
-                        "text/xml; charset=\"utf-8\"",
-                        204,
-                        headers
+                        body: Stream.Null,
+                        hasBody: false,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        statusCode: 204,
+                        headers: headers
                     );
                 case "MOVE":
                     await dmsInstanceService.MoveAsync(
-                        path,
-                        ResolveDestinationPath(request, appId)
+                        oldPath: path,
+                        newPath: ResolveDestinationPath(request, appId)
                     );
                     return CreateResponse(
-                        Stream.Null,
-                        false,
-                        "text/xml; charset=\"utf-8\"",
-                        204,
-                        headers
+                        body: Stream.Null,
+                        hasBody: false,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        statusCode: 204,
+                        headers: headers
                     );
                 case "COPY":
                     await dmsInstanceService.CopyAsync(
-                        path,
-                        ResolveDestinationPath(request, appId)
+                        oldPath: path,
+                        newPath: ResolveDestinationPath(request, appId)
                     );
                     return CreateResponse(
-                        Stream.Null,
-                        false,
-                        "text/xml; charset=\"utf-8\"",
-                        204,
-                        headers
+                        body: Stream.Null,
+                        hasBody: false,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        statusCode: 204,
+                        headers: headers
                     );
                 case "DELETE":
                     await dmsInstanceService.DropAsync(
-                        path,
-                        int.TryParse(TryGetSingleValue(query, "version"), out int deleteVersion)
+                        path: path,
+                        version: int.TryParse(TryGetSingleValue(query, "version"), out int deleteVersion)
                             ? deleteVersion
                             : 0
                     );
                     return CreateResponse(
-                        Stream.Null,
-                        false,
-                        "text/xml; charset=\"utf-8\"",
-                        204,
-                        headers
+                        body: Stream.Null,
+                        hasBody: false,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        statusCode: 204,
+                        headers: headers
                     );
                 case "LOCK":
                     return CreateResponse(
-                        Stream.Null,
-                        false,
-                        "text/xml; charset=\"utf-8\"",
-                        200,
-                        headers
+                        body: Stream.Null,
+                        hasBody: false,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        statusCode: 200,
+                        headers: headers
                     );
                 case "UNLOCK":
                     return CreateResponse(
-                        Stream.Null,
-                        false,
-                        "text/xml; charset=\"utf-8\"",
-                        204,
-                        headers
+                        body: Stream.Null,
+                        hasBody: false,
+                        contentType: "text/xml; charset=\"utf-8\"",
+                        statusCode: 204,
+                        headers: headers
                     );
                 default:
                     throw new InvalidOperationException(
-                        $"Unsupported WebDAV method: {request.Method}"
+                        message: $"Unsupported WebDAV method: {request.Method}"
                     );
             }
         }
         catch (System.Security.SecurityException)
         {
             headers.Add(
-                new KeyValuePair<string, string>("WWW-Authenticate", "Basic realm=\"server\"")
+                item: new KeyValuePair<string, string>("WWW-Authenticate", "Basic realm=\"server\"")
             );
-            return CreateResponse(Stream.Null, false, "text/xml; charset=\"utf-8\"", 204, headers);
+            return CreateResponse(body: Stream.Null, hasBody: false, contentType: "text/xml; charset=\"utf-8\"", statusCode: 204, headers: headers);
         }
         catch (Exception ex)
         {
             return CreateResponse(
-                EncodeText(ex.Message),
-                true,
-                "text/xml; charset=\"utf-8\"",
-                200,
-                headers
+                body: EncodeText(ex.Message),
+                hasBody: true,
+                contentType: "text/xml; charset=\"utf-8\"",
+                statusCode: 200,
+                headers: headers
             );
         }
     }
@@ -249,17 +253,17 @@ internal class WebDavProcessingService(
     {
         XDocument requestBody =
             requestText.Length > 0 && request.ContentType == "application/xml"
-                ? XDocument.Parse(requestText)
+                ? XDocument.Parse(text: requestText)
                 : new XDocument();
 
         IEnumerable<string> requestedProperties = requestBody
-            .Descendants(ns + "prop")
+            .Descendants(name: ns + "prop")
             .DescendantNodes()
-            .Select(node => ((XElement)node).Name.LocalName);
+            .Select(selector: node => ((XElement)node).Name.LocalName);
 
         return !path.IsToFile
-            ? PropFindFolder(request, appId, path, ns, urlBase, requestedProperties)
-            : PropFindFile(appId, path, ns, urlBase, requestedProperties);
+            ? PropFindFolder(request: request, appId: appId, path: path, ns: ns, urlBase: urlBase, requestedProperties: requestedProperties)
+            : PropFindFile(appId: appId, path: path, ns: ns, urlBase: urlBase, requestedProperties: requestedProperties);
     }
 
     private string PropFindFile(
@@ -274,15 +278,15 @@ internal class WebDavProcessingService(
         {
             LocalFile file = fileService
                 .GetAll()
-                .FirstOrDefault(item =>
+                .FirstOrDefault(predicate: item =>
                     item.Folder.AppId == appId
                     && path.Length > 0
                     && item.Path.Equals(path.FullPath, StringComparison.CurrentCultureIgnoreCase)
                 );
 
-            XElement response = file?.ToWebDavResponse(urlBase, ns, requestedProperties);
+            XElement response = file?.ToWebDavResponse(urlBase: urlBase, ns: ns, requestedProperties: requestedProperties);
 
-            return SerializeXml(new XElement(
+            return SerializeXml(element: new XElement(
                 ns + "multistatus",
                 new object[]
                 {
@@ -293,7 +297,7 @@ internal class WebDavProcessingService(
         }
         catch (Exception ex)
         {
-            log.LogError(ex.Message + "\n" + ex.StackTrace);
+            log.LogError(message: ex.Message + "\n" + ex.StackTrace);
             return string.Empty;
         }
     }
@@ -311,7 +315,7 @@ internal class WebDavProcessingService(
             path.FullPath != string.Empty
                 ? folderService
                     .GetAll()
-                    .FirstOrDefault(item => item.AppId == appId && item.Path == path.FullPath)
+                    .FirstOrDefault(predicate: item => item.AppId == appId && item.Path == path.FullPath)
                 : new LocalFolder
                 {
                     Name = "Root",
@@ -319,7 +323,7 @@ internal class WebDavProcessingService(
                     [
                         .. folderService
                             .GetAll()
-                            .Where(item => item.AppId == appId && item.ParentId == null),
+                            .Where(predicate:item => item.AppId == appId && item.ParentId == null),
                     ],
                     Files = [],
                     Path = string.Empty,
@@ -329,13 +333,13 @@ internal class WebDavProcessingService(
         List<LocalFolder> folders = [];
         List<LocalFile> files = [];
 
-        if (int.TryParse(GetHeaderValue(request, "Depth"), out int depth) && depth > 0)
+        if (int.TryParse(s: GetHeaderValue(request, "Depth"), result: out int depth) && depth > 0)
         {
             folders =
             [
                 .. folderService
                     .GetAll()
-                    .Where(item =>
+                    .Where(predicate:item =>
                         item.AppId == appId
                         && (
                             path.FullPath != string.Empty
@@ -352,7 +356,7 @@ internal class WebDavProcessingService(
             [
                 .. fileService
                     .GetAll()
-                    .Where(item =>
+                    .Where(predicate:item =>
                         item.Folder.AppId == appId
                         && path.Length > 0
                         && item.Folder.Path == path.FullPath
@@ -362,14 +366,14 @@ internal class WebDavProcessingService(
 
         if (folder != null)
         {
-            folders.Insert(0, folder);
+            folders.Insert(index: 0, item: folder);
         }
 
         IEnumerable<XElement> response = folders
-            .Select(item => item.ToWebDavResponse(urlBase, ns, requestedProperties))
-            .Union(files.Select(item => item.ToWebDavResponse(urlBase, ns, requestedProperties)));
+            .Select(selector: item => item.ToWebDavResponse(urlBase, ns, requestedProperties))
+            .Union(second: files.Select(item => item.ToWebDavResponse(urlBase, ns, requestedProperties)));
 
-        return SerializeXml(new XElement(
+        return SerializeXml(element: new XElement(
             ns + "multistatus",
             new object[]
             {
@@ -381,31 +385,35 @@ internal class WebDavProcessingService(
 
     private static LocalPath ResolveDestinationPath(DmsProcessingRequest request, int appId)
     {
-        string destination = WebUtility.UrlDecode(GetHeaderValue(request, "Destination"));
+        string destination = WebUtility.UrlDecode(encodedValue: GetHeaderValue(request, "Destination"));
         string marker = $"Core/App({appId})/DAV/";
-        int markerIndex = destination.IndexOf(marker, StringComparison.OrdinalIgnoreCase);
+        int markerIndex = destination.IndexOf(value: marker, comparisonType: StringComparison.OrdinalIgnoreCase);
 
         if (markerIndex >= 0)
         {
             destination = destination[(markerIndex + marker.Length)..];
         }
 
-        return new LocalPath(destination.TrimStart('/').TrimEnd('/'));
+        return new LocalPath(path: destination.TrimStart('/').TrimEnd('/'));
     }
 
     private static int ExtractAppId(string requestPath)
     {
         string marker = "Core/App(";
-        int markerIndex = requestPath.IndexOf(marker, StringComparison.OrdinalIgnoreCase);
+        int markerIndex = requestPath.IndexOf(value: marker, comparisonType: StringComparison.OrdinalIgnoreCase);
 
         if (markerIndex < 0)
-            throw new FormatException($"Unable to resolve AppId from request path '{requestPath}'.");
+        {
+            throw new FormatException(message: $"Unable to resolve AppId from request path '{requestPath}'.");
+        }
 
         int start = markerIndex + marker.Length;
-        int end = requestPath.IndexOf(')', start);
+        int end = requestPath.IndexOf(value: ')', startIndex: start);
 
-        if (end <= start || !int.TryParse(requestPath[start..end], out int appId))
-            throw new FormatException($"Unable to resolve AppId from request path '{requestPath}'.");
+        if (end <= start || !int.TryParse(s: requestPath[start..end], result: out int appId))
+        {
+            throw new FormatException(message: $"Unable to resolve AppId from request path '{requestPath}'.");
+        }
 
         return appId;
     }
@@ -413,7 +421,7 @@ internal class WebDavProcessingService(
     private static string NormalizeRequestPath(string requestPath, int appId)
     {
         string marker = $"Core/App({appId})/DAV";
-        int markerIndex = requestPath.IndexOf(marker, StringComparison.OrdinalIgnoreCase);
+        int markerIndex = requestPath.IndexOf(value: marker, comparisonType: StringComparison.OrdinalIgnoreCase);
 
         return markerIndex >= 0
             ? requestPath[(markerIndex + marker.Length)..]
@@ -433,25 +441,25 @@ internal class WebDavProcessingService(
         }
 
         using MemoryStream memoryStream = new();
-        await body.CopyToAsync(memoryStream);
+        await body.CopyToAsync(destination: memoryStream);
 
         if (body.CanSeek)
         {
             body.Position = 0;
         }
 
-        return Encoding.UTF8.GetString(memoryStream.ToArray());
+        return Encoding.UTF8.GetString(bytes: memoryStream.ToArray());
     }
 
     private static MemoryStream EncodeText(string content)
     {
-        MemoryStream stream = new(Encoding.UTF8.GetBytes(content ?? string.Empty));
+        MemoryStream stream = new(buffer: Encoding.UTF8.GetBytes(content ?? string.Empty));
         stream.Position = 0;
         return stream;
     }
 
     private static string SerializeXml(XElement element) =>
-        element.ToString(SaveOptions.DisableFormatting);
+        element.ToString(options: SaveOptions.DisableFormatting);
 
     private static DmsProcessingResponse CreateResponse(
         Stream body,
@@ -470,52 +478,42 @@ internal class WebDavProcessingService(
         };
 
     private static string TryGetSingleValue(Dictionary<string, string[]> query, string key) =>
-        query.TryGetValue(key, out string[] values) ? values.FirstOrDefault() : null;
+        query.TryGetValue(key: key, value: out string[] values) ? values.FirstOrDefault() : null;
 
     private static string GetHeaderValue(DmsProcessingRequest request, string key) =>
-        request.Headers.TryGetValue(key, out string[] values)
+        request.Headers.TryGetValue(key: key, value: out string[] values)
             ? values.FirstOrDefault() ?? string.Empty
             : string.Empty;
 
     private static Dictionary<string, string[]> ParseQuery(string queryString)
     {
         Dictionary<string, List<string>> query = [];
-        string normalizedQuery = queryString?.TrimStart('?') ?? string.Empty;
+        string normalizedQuery = queryString?.TrimStart(trimChar: '?') ?? string.Empty;
 
-        if (string.IsNullOrWhiteSpace(normalizedQuery))
+        if (string.IsNullOrWhiteSpace(value: normalizedQuery))
         {
             return [];
         }
 
-        foreach (string pair in normalizedQuery.Split('&', StringSplitOptions.RemoveEmptyEntries))
+        foreach (string pair in normalizedQuery.Split(separator: '&', options: StringSplitOptions.RemoveEmptyEntries))
         {
-            string[] parts = pair.Split('=', 2);
-            string key = Uri.UnescapeDataString(parts[0]);
-            string value = parts.Length > 1 ? Uri.UnescapeDataString(parts[1]) : string.Empty;
+            string[] parts = pair.Split(separator: '=', count: 2);
+            string key = Uri.UnescapeDataString(stringToUnescape: parts[0]);
+            string value = parts.Length > 1 ? Uri.UnescapeDataString(stringToUnescape: parts[1]) : string.Empty;
 
-            if (!query.TryGetValue(key, out List<string> values))
+            if (!query.TryGetValue(key: key, value: out List<string> values))
             {
                 values = [];
-                query[key] = values;
+                query[key: key] = values;
             }
 
-            values.Add(value);
+            values.Add(item: value);
         }
 
         return query.ToDictionary(
-            entry => entry.Key,
-            entry => entry.Value.ToArray(),
-            StringComparer.OrdinalIgnoreCase
+            keySelector: entry => entry.Key,
+            elementSelector: entry => entry.Value.ToArray(),
+            comparer: StringComparer.OrdinalIgnoreCase
         );
     }
 }
-
-
-
-
-
-
-
-
-
-

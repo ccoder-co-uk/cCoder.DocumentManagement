@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -18,30 +22,30 @@ public partial class FileServiceTests
     public async Task ShouldDelegateToBrokerWhenUserIsAuthorizedForDeleteAsync()
     {
         // Given
-        authorizationBrokerMock.Setup(x => x.GetCurrentUser()).Returns(new User { Id = "test-user" });
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(value: new User { Id = "test-user" });
         Guid fileId = Guid.NewGuid();
         FileEntity file = CreateRandomFile(id: fileId);
 
         fileBrokerMock
-            .Setup(x => x.GetAllFiles(true))
-            .Returns(new[] { ToExternalFile(file) }.AsQueryable());
+            .Setup(expression: x => x.GetAllFiles(true))
+            .Returns(value: new[] { ToExternalFile(file) }.AsQueryable());
 
-        fileBrokerMock.Setup(x => x.GetAppId(It.IsAny<DataFile>())).Returns((int?)7);
-        authorizationBrokerMock.Setup(x => x.Authorize((int?)7, "file_delete"));
-        fileBrokerMock.Setup(x => x.DeleteFileAsync(It.IsAny<DataFile>())).ReturnsAsync(1);
+        fileBrokerMock.Setup(expression: x => x.GetAppId(It.IsAny<DataFile>())).Returns(value: (int?)7);
+        authorizationBrokerMock.Setup(expression: x => x.Authorize((int?)7, "file_delete"));
+        fileBrokerMock.Setup(expression: x => x.DeleteFileAsync(It.IsAny<DataFile>())).ReturnsAsync(value: 1);
 
         // When
-        await fileService.DeleteAsync(fileId);
+        await fileService.DeleteAsync(id: fileId);
 
         // Then
-        fileBrokerMock.Verify(x => x.GetAllFiles(true), Times.Once);
+        fileBrokerMock.Verify(expression: x => x.GetAllFiles(true), times: Times.Once);
         fileBrokerMock.Verify(
-            x => x.DeleteFileAsync(It.Is<DataFile>(candidate => candidate.Id == file.Id)),
-            Times.Once
+            expression: x => x.DeleteFileAsync(It.Is<DataFile>(candidate => candidate.Id == file.Id)),
+            times: Times.Once
         );
-        fileBrokerMock.Verify(x => x.GetAppId(It.IsAny<DataFile>()), Times.AtMostOnce());
+        fileBrokerMock.Verify(expression: x => x.GetAppId(It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(x => x.Authorize((int?)7, "file_delete"), Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize((int?)7, "file_delete"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -53,32 +57,24 @@ public partial class FileServiceTests
         FileEntity file = CreateRandomFile(id: fileId);
 
         fileBrokerMock
-            .Setup(x => x.GetAllFiles(true))
-            .Returns(new[] { ToExternalFile(file) }.AsQueryable());
+            .Setup(expression: x => x.GetAllFiles(true))
+            .Returns(value: new[] { ToExternalFile(file) }.AsQueryable());
 
-        fileBrokerMock.Setup(x => x.GetAppId(It.IsAny<DataFile>())).Returns((int?)7);
+        fileBrokerMock.Setup(expression: x => x.GetAppId(It.IsAny<DataFile>())).Returns(value: (int?)7);
         authorizationBrokerMock
-            .Setup(x => x.Authorize((int?)7, "file_delete"))
-            .Throws(new SecurityException("Access Denied!"));
+            .Setup(expression: x => x.Authorize((int?)7, "file_delete"))
+            .Throws(exception: new SecurityException("Access Denied!"));
 
         // When
-        Func<Task> action = async () => await fileService.DeleteAsync(fileId);
+        Func<Task> action = async () => await fileService.DeleteAsync(id: fileId);
 
         // Then
-        await action.Should().ThrowAsync<SecurityException>().WithMessage("Access Denied!");
-        fileBrokerMock.Verify(x => x.GetAllFiles(true), Times.Once);
-        fileBrokerMock.Verify(x => x.GetAppId(It.IsAny<DataFile>()), Times.AtMostOnce());
+        await action.Should().ThrowAsync<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
+        fileBrokerMock.Verify(expression: x => x.GetAllFiles(true), times: Times.Once);
+        fileBrokerMock.Verify(expression: x => x.GetAppId(It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(x => x.Authorize((int?)7, "file_delete"), Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize((int?)7, "file_delete"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

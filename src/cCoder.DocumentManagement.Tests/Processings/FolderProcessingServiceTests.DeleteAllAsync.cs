@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -14,33 +18,23 @@ public partial class FolderProcessingServiceTests
     public async Task ShouldDeleteEachFolderWhenUserIsAppAdminForDeleteAllAsync()
     {
         // Given
-        User actor = ToLocalUser(TestUsers.WithPrivilege("app_admin", 1));
+        User actor = ToLocalUser(user: TestUsers.WithPrivilege("app_admin", 1));
         currentUser = actor;
-        authorizationBrokerMock.Setup(x => x.GetCurrentUser()).Returns(() => currentUser);
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
         Folder folder = CreateRandomFolder();
-        folderServiceMock.Setup(x => x.GetWithRoles(folder.Id, true)).Returns(folder);
-        folderServiceMock.Setup(x => x.DeleteAsync(folder.Id)).Returns(ValueTask.CompletedTask);
+        folderServiceMock.Setup(expression: x => x.GetWithRoles(folder.Id, true)).Returns(value: folder);
+        folderServiceMock.Setup(expression: x => x.DeleteAsync(folder.Id)).Returns(value: ValueTask.CompletedTask);
 
         // When
-        await folderProcessingService.DeleteAllAsync(new[] { folder });
+        await folderProcessingService.DeleteAllAsync(items: new[] { folder });
 
         // Then
-        folderServiceMock.Verify(x => x.GetWithRoles(folder.Id, true), Times.Once);
-        folderServiceMock.Verify(x => x.DeleteAsync(folder.Id), Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetWithRoles(folder.Id, true), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.DeleteAsync(folder.Id), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         loggerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(x => x.GetCurrentUser(), Times.AtLeastOnce);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.AtLeastOnce);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-
-
-

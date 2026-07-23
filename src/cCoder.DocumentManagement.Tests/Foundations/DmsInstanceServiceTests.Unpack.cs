@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using Moq;
 using Xunit;
 using DmsPath = cCoder.DocumentManagement.Models.Path;
@@ -11,23 +15,19 @@ public partial class DmsInstanceServiceTests
     public async Task ShouldDelegateToBrokerWhenUnpack()
     {
         // Given
-        DmsPath path = CreatePath("folder/archive");
-        MemoryStream stream = new([1, 2, 3]);
+        DmsPath path = CreatePath(fullPath: "folder/archive");
+        MemoryStream stream = new(buffer: [1, 2, 3]);
 
         dmsInstanceBrokerMock
-            .Setup(x => x.UnpackAsync(path, stream, true))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.UnpackAsync(path, stream, true))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await dmsInstanceService.UnpackAsync(path, stream, true);
+        await dmsInstanceService.UnpackAsync(path: path, content: stream, ignoreArchiveRoot: true);
 
         // Then
-        dmsInstanceBrokerMock.Verify(x => x.UnpackAsync(path, stream, true), Times.Once);
+        dmsInstanceBrokerMock.Verify(expression: x => x.UnpackAsync(path, stream, true), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-

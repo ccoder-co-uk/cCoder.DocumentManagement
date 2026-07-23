@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Text.RegularExpressions;
 using System;
 using System.Text.Json;
@@ -12,13 +16,13 @@ namespace cCoder.DocumentManagement;
 public static partial class WebApplicationExtensions
 {
     private const string MetadataScope = "DocumentManagement";
-    private static readonly Regex DmsRouteRegex = new(@"^\/api\/dms.*", RegexOptions.Compiled);
-    private static readonly Regex WebDavRouteRegex = new(@"^\/api\/webdav.*", RegexOptions.Compiled);
+    private static readonly Regex DmsRouteRegex = new(pattern: @"^\/api\/dms.*", options: RegexOptions.Compiled);
+    private static readonly Regex WebDavRouteRegex = new(pattern: @"^\/api\/webdav.*", options: RegexOptions.Compiled);
 
     public static WebApplication StartDocumentManagementWeb(
         this WebApplication app,
         ILogger log = null) =>
-        app.UseDocumentManagementExposure(log)
+        app.UseDocumentManagementExposure(log: log)
             .UseDocumentManagementEventHandlers();
 
     public static WebApplication StartDocumentManagementHostedServices(this WebApplication app) =>
@@ -29,16 +33,16 @@ public static partial class WebApplicationExtensions
         ILogger log = null
     )
     {
-        log?.LogInformation("Initialising Document Management");
-        PopulateMetadataTypeCache(app);
+        log?.LogInformation(message: "Initialising Document Management");
+        PopulateMetadataTypeCache(app: app);
         app.MapWhen(
-            context => DmsRouteRegex.IsMatch(context.Request.Path.Value?.ToLower() ?? string.Empty),
-            branch => branch.UseMiddleware<DMSMiddleware>()
+            predicate: context => DmsRouteRegex.IsMatch(context.Request.Path.Value?.ToLower() ?? string.Empty),
+            configuration: branch => branch.UseMiddleware<DMSMiddleware>()
         );
 
         app.MapWhen(
-            context => WebDavRouteRegex.IsMatch(context.Request.Path.Value?.ToLower() ?? string.Empty),
-            branch => branch.UseMiddleware<WebDavMiddleware>()
+            predicate: context => WebDavRouteRegex.IsMatch(context.Request.Path.Value?.ToLower() ?? string.Empty),
+            configuration: branch => branch.UseMiddleware<WebDavMiddleware>()
         );
 
         return app;
@@ -50,7 +54,9 @@ public static partial class WebApplicationExtensions
         IServiceProvider services = scope.ServiceProvider;
 
         foreach (IDocumentManagementEventHandlers handlers in services.GetServices<IDocumentManagementEventHandlers>())
+        {
             handlers.ListenToAllEvents();
+        }
 
         return app;
     }
@@ -59,18 +65,14 @@ public static partial class WebApplicationExtensions
     {
         IMetadataTypeCache metadataTypeCache = app.Services.GetRequiredService<IMetadataTypeCache>();
 
-        if (!metadataTypeCache.Contains(MetadataScope))
+        if (!metadataTypeCache.Contains(scope: MetadataScope))
         {
             metadataTypeCache.Set(
-                MetadataScope,
-                app.Services
+                scope: MetadataScope,
+                typeSetPayloads: app.Services
                     .GetRequiredService<IDocumentManagementMetadataTypeService>()
                     .GetKnownMetadata()
                     .Select(static metadata => JsonSerializer.Serialize(metadata)));
         }
     }
 }
-
-
-
-

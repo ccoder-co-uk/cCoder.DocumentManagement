@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Models;
@@ -16,37 +20,41 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
 {
     public LocalFile Get(Guid id)
     {
-        LocalFile file = GetAll().FirstOrDefault(i => i.Id == id);
+        LocalFile file = GetAll().FirstOrDefault(predicate: i => i.Id == id);
         if (file is not null)
+        {
             return file;
+        }
 
-        LocalFile unrestrictedFile = GetAll(true).FirstOrDefault(i => i.Id == id);
+        LocalFile unrestrictedFile = GetAll(ignoreFilters: true).FirstOrDefault(predicate: i => i.Id == id);
         if (unrestrictedFile is not null)
-            throw new SecurityException("Access Denied!");
+        {
+            throw new SecurityException(message: "Access Denied!");
+        }
 
         return null;
     }
 
     public IQueryable<LocalFile> GetAll(bool ignoreFilters = false) =>
-        fileBroker.GetAllFiles(ignoreFilters);
+        fileBroker.GetAllFiles(ignoreFilters: ignoreFilters);
 
     public Guid[] GetIdsByFolderIds(Guid[] folderIds, bool ignoreFilters = false) =>
-        fileBroker.GetFileIdsByFolderIds(folderIds, ignoreFilters);
+        fileBroker.GetFileIdsByFolderIds(folderIds: folderIds, ignoreFilters: ignoreFilters);
 
     public LocalFile GetWithFolderAndContents(Guid id, bool ignoreFilters = false) =>
-        CreateFile(fileBroker.GetFileWithFolderAndContents(id, ignoreFilters));
+        CreateFile(file: fileBroker.GetFileWithFolderAndContents(id, ignoreFilters));
 
     public LocalFile GetWithFolderRolesAndContents(Guid id, bool ignoreFilters = false) =>
-        CreateFileWithFolderRoles(fileBroker.GetFileWithFolderRolesAndContents(id, ignoreFilters));
+        CreateFileWithFolderRoles(file: fileBroker.GetFileWithFolderRolesAndContents(id, ignoreFilters));
 
     public LocalFile GetByPath(int appId, string path, bool ignoreFilters = false) =>
-        CreateFile(fileBroker.GetFileByPath(appId, path, ignoreFilters));
+        CreateFile(file: fileBroker.GetFileByPath(appId, path, ignoreFilters));
 
     public LocalFile GetByPathWithFolderAndContents(
         int appId,
         string path,
         bool ignoreFilters = false
-    ) => CreateFile(fileBroker.GetFileByPathWithFolderAndContents(appId, path, ignoreFilters));
+    ) => CreateFile(file: fileBroker.GetFileByPathWithFolderAndContents(appId, path, ignoreFilters));
 
     public LocalFile GetByPathWithFolderRolesAndContents(
         int appId,
@@ -54,25 +62,25 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
         bool ignoreFilters = false
     ) =>
         CreateFileWithFolderRoles(
-            fileBroker.GetFileByPathWithFolderRolesAndContents(appId, path, ignoreFilters)
+            file: fileBroker.GetFileByPathWithFolderRolesAndContents(appId, path, ignoreFilters)
         );
 
     public IQueryable<LocalFile> Search(int appId, byte[] needle) =>
-        fileBroker.SearchFiles(appId, needle).AsEnumerable().Select(CreateFile).AsQueryable();
+        fileBroker.SearchFiles(appId: appId, needle: needle).AsEnumerable().Select(selector: CreateFile).AsQueryable();
 
     public async ValueTask<LocalFile> AddAsync(LocalFile file)
     {
-        FileEntity newFileEntity = CreateStorageFile(file, includeId: false);
+        FileEntity newFileEntity = CreateStorageFile(file: file, includeId: false);
         authorizationBroker.Authorize(
-            fileBroker.GetAppId(newFileEntity),
-            $"{nameof(cCoder.Data.Models.DMS.File)}_create"
+            appId: fileBroker.GetAppId(newFileEntity),
+            privilege: $"{nameof(cCoder.Data.Models.DMS.File)}_create"
         );
         string currentUserId = authorizationBroker.GetCurrentUser().Id;
         DateTimeOffset now = DateTimeOffset.UtcNow;
         newFileEntity.CreatedOn = now;
         newFileEntity.CreatedBy = currentUserId;
 
-        FileEntity result = await fileBroker.AddFileAsync(newFileEntity);
+        FileEntity result = await fileBroker.AddFileAsync(entity: newFileEntity);
         file.Id = result.Id;
         file.FolderId = result.FolderId;
         file.Name = result.Name;
@@ -88,19 +96,19 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
 
     public async ValueTask<LocalFile> UpdateAsync(LocalFile file)
     {
-        FileEntity updateFileEntity = CreateStorageFile(file, includeId: true);
+        FileEntity updateFileEntity = CreateStorageFile(file: file, includeId: true);
         authorizationBroker.Authorize(
-            fileBroker.GetAppId(updateFileEntity),
-            $"{nameof(cCoder.Data.Models.DMS.File)}_update"
+            appId: fileBroker.GetAppId(updateFileEntity),
+            privilege: $"{nameof(cCoder.Data.Models.DMS.File)}_update"
         );
 
-        return await UpdateForAppAsync(file);
+        return await UpdateForAppAsync(file: file);
     }
 
     public async ValueTask<LocalFile> UpdateForAppAsync(LocalFile file)
     {
-        FileEntity updateFileEntity = CreateStorageFile(file, includeId: true);
-        FileEntity result = await fileBroker.UpdateFileAsync(updateFileEntity);
+        FileEntity updateFileEntity = CreateStorageFile(file: file, includeId: true);
+        FileEntity result = await fileBroker.UpdateFileAsync(entity: updateFileEntity);
         file.Id = result.Id;
         file.FolderId = result.FolderId;
         file.Name = result.Name;
@@ -116,7 +124,7 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
 
     public async ValueTask DeleteAsync(Guid id)
     {
-        LocalFile file = GetAll(ignoreFilters: true).FirstOrDefault(foundFile => foundFile.Id == id);
+        LocalFile file = GetAll(ignoreFilters: true).FirstOrDefault(predicate: foundFile => foundFile.Id == id);
 
         if (file is null)
         {
@@ -124,14 +132,14 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
         }
 
         authorizationBroker.Authorize(
-            fileBroker.GetAppId(new FileEntity
+            appId: fileBroker.GetAppId(new FileEntity
             {
                 Id = file.Id,
                 FolderId = file.FolderId,
             }),
-            $"file_delete"
+            privilege: $"file_delete"
         );
-        _ = await fileBroker.DeleteFileAsync(new FileEntity
+        _ = await fileBroker.DeleteFileAsync(entity: new FileEntity
         {
             Id = file.Id,
             FolderId = file.FolderId,
@@ -140,7 +148,7 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
 
     public ValueTask DeleteAllForAppAsync(IEnumerable<LocalFile> items) =>
         fileBroker.DeleteAllFilesAsync(
-            items?.Select(file => CreateStorageFile(file, includeId: true)) ?? []);
+            items: items?.Select(file => CreateStorageFile(file, includeId: true)) ?? []);
 
     private static LocalFile CreateFile(FileEntity file) =>
         file == null
@@ -157,8 +165,8 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
                 Size = file.Size,
                 CreatedOn = file.CreatedOn,
                 DeletedOn = file.DeletedOn,
-                Folder = CreateFolder(file.Folder),
-                Contents = file.Contents?.Select(CreateFileContent).ToList() ?? [],
+                Folder = CreateFolder(folder: file.Folder),
+                Contents = file.Contents?.Select(selector: CreateFileContent).ToList() ?? [],
             };
 
     private static LocalFile CreateFileWithFolderRoles(FileEntity file) =>
@@ -176,8 +184,8 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
                 Size = file.Size,
                 CreatedOn = file.CreatedOn,
                 DeletedOn = file.DeletedOn,
-                Folder = CreateFolderWithRoles(file.Folder),
-                Contents = file.Contents?.Select(CreateFileContent).ToList() ?? [],
+                Folder = CreateFolderWithRoles(folder: file.Folder),
+                Contents = file.Contents?.Select(selector: CreateFileContent).ToList() ?? [],
             };
 
     private static Folder CreateFolder(Folder folder) =>
@@ -204,7 +212,7 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
                 Name = folder.Name,
                 Path = folder.Path,
                 DeletedOn = folder.DeletedOn,
-                Roles = folder.Roles?.Select(folderRole => new FolderRole
+                Roles = folder.Roles?.Select(selector: folderRole => new FolderRole
                 {
                     FolderId = folderRole.FolderId,
                     RoleId = folderRole.RoleId,
@@ -259,16 +267,3 @@ internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authoriz
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

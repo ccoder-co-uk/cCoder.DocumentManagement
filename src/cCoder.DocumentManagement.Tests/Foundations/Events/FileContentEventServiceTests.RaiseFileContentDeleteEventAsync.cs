@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -21,40 +25,32 @@ public partial class FileContentEventServiceTests
 
         fileContentEventBrokerMock
             .Setup(
-                x =>
+                expression: x =>
                     x.RaiseFileContentDeleteEventAsync(
                         It.IsAny<EventMessage<cCoder.Data.Models.DMS.FileContent>>()
                     )
             )
-            .Callback<EventMessage<cCoder.Data.Models.DMS.FileContent>>(message => actualMessage = message)
-            .Returns(ValueTask.CompletedTask);
+            .Callback<EventMessage<cCoder.Data.Models.DMS.FileContent>>(action: message => actualMessage = message)
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFileContentDeleteEventAsync(entity);
+        await service.RaiseFileContentDeleteEventAsync(entity: entity);
 
         // Then
         actualMessage.Should().NotBeNull();
-        actualMessage!.Data.Id.Should().Be(entity.Id);
-        actualMessage.Data.FileId.Should().Be(entity.FileId);
-        actualMessage.Data.Version.Should().Be(entity.Version);
+        actualMessage!.Data.Id.Should().Be(expected: entity.Id);
+        actualMessage.Data.FileId.Should().Be(expected: entity.FileId);
+        actualMessage.Data.Version.Should().Be(expected: entity.Version);
         actualMessage.AuthInfo.Should().NotBeNull();
-        actualMessage.AuthInfo.SSOUserId.Should().Be(CurrentUserId);
+        actualMessage.AuthInfo.SSOUserId.Should().Be(expected: CurrentUserId);
         fileContentEventBrokerMock.Verify(
-            x =>
+            expression: x =>
                 x.RaiseFileContentDeleteEventAsync(
                     It.IsAny<EventMessage<cCoder.Data.Models.DMS.FileContent>>()
                 ),
-            Times.Once
+            times: Times.Once
         );
         fileContentEventBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

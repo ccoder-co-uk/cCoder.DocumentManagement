@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -12,6 +16,3 @@ public interface IDocumentManagementMigrationAggregationService
 
     DocumentManagementPackage ExportPackage(int appId, string packageName);
 }
-
-
-

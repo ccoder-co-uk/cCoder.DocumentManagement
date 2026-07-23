@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Orchestrations;
 using Folder = cCoder.Data.Models.DMS.Folder;
 
@@ -18,22 +22,22 @@ internal class FolderCoordinationService(
 
         Guid[] childFileIds =
             [.. fileOrchestrationService.GetAll(ignoreFilters: true)
-                .Where(file => file.FolderId == folderId)
-                .Select(file => file.Id)];
+                .Where(predicate:file => file.FolderId == folderId)
+                .Select(selector:file => file.Id)];
 
         Guid[] childFolderIds =
             [.. folderOrchestrationService.GetAll(ignoreFilters: true)
-                .Where(childFolder => childFolder.ParentId == folderId)
-                .Select(childFolder => childFolder.Id)];
+                .Where(predicate:childFolder => childFolder.ParentId == folderId)
+                .Select(selector:childFolder => childFolder.Id)];
 
         foreach (Guid childFileId in childFileIds)
         {
-            await fileOrchestrationService.DeleteAsync(childFileId);
+            await fileOrchestrationService.DeleteAsync(id: childFileId);
         }
 
         foreach (Guid childFolderId in childFolderIds)
         {
-            await folderOrchestrationService.DeleteAsync(childFolderId);
+            await folderOrchestrationService.DeleteAsync(id: childFolderId);
         }
     }
 }

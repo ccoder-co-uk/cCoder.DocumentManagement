@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Net;
 using FluentAssertions;
 using Xunit;
@@ -17,10 +21,7 @@ public sealed partial class WebDavMiddlewareTests
         actualStatusCode = await InvokeOptionsAsync();
 
         // Then
-        actualStatusCode.Should().NotBe((int)HttpStatusCode.NotFound);
-        actualStatusCode.Should().NotBe((int)HttpStatusCode.MethodNotAllowed);
+        actualStatusCode.Should().NotBe(unexpected: (int)HttpStatusCode.NotFound);
+        actualStatusCode.Should().NotBe(unexpected: (int)HttpStatusCode.MethodNotAllowed);
     }
 }
-
-
-

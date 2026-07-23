@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -18,23 +22,14 @@ public partial class FileContentOrchestrationServiceTests
 
     public FileContentOrchestrationServiceTests()
     {
-        fileContentProcessingServiceMock = new Mock<IFileContentProcessingService>(MockBehavior.Strict);
-        fileContentEventProcessingServiceMock = new Mock<IFileContentEventProcessingService>(MockBehavior.Strict);
+        fileContentProcessingServiceMock = new Mock<IFileContentProcessingService>(behavior: MockBehavior.Strict);
+        fileContentEventProcessingServiceMock = new Mock<IFileContentEventProcessingService>(behavior: MockBehavior.Strict);
         orchestrationService = new FileContentOrchestrationService(
-            fileContentProcessingServiceMock.Object,
-            fileContentEventProcessingServiceMock.Object
+            processingService: fileContentProcessingServiceMock.Object,
+            eventService: fileContentEventProcessingServiceMock.Object
         );
     }
 
     private static FileContent CreateRandomFileContent() =>
         Builder<FileContent>.CreateNew().Build();
 }
-
-
-
-
-
-
-
-
-

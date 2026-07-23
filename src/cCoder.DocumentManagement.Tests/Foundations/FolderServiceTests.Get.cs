@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -19,24 +23,17 @@ public partial class FolderServiceTests
         Folder folder = CreateRandomFolder(id: folderId);
 
         folderBrokerMock
-            .Setup(x => x.GetAllFolders(false))
-            .Returns(new[] { ToExternalFolder(folder) }.AsQueryable());
+            .Setup(expression: x => x.GetAllFolders(false))
+            .Returns(value: new[] { ToExternalFolder(folder) }.AsQueryable());
 
         // When
-        Folder result = folderService.Get(folderId);
+        Folder result = folderService.Get(id: folderId);
 
         // Then
-        result.Should().BeEquivalentTo(folder);
-        folderBrokerMock.Verify(x => x.GetAllFolders(false), Times.Once);
+        result.Should().BeEquivalentTo(expectation: folder);
+        folderBrokerMock.Verify(expression: x => x.GetAllFolders(false), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-

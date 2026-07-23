@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -20,45 +24,51 @@ internal class DocumentManagementMigrationAggregationService(
     public async ValueTask ImportPackageAsync(int appId, DocumentManagementPackage package)
     {
         if (package.Items is null || package.Items.Count == 0)
+        {
             return;
+        }
 
         foreach (DocumentManagementPackageItem item in package.Items)
         {
             if (item.Type != "Core/FolderRole")
+            {
                 continue;
+            }
 
-            FolderRoleInfo[] folderRoleInfos = item.Data.StartsWith("{")
-                ? [jsonBroker.ParseJson<FolderRoleInfo>(item.Data)]
-                : jsonBroker.ParseJson<FolderRoleInfo[]>(item.Data);
+            FolderRoleInfo[] folderRoleInfos = item.Data.StartsWith(value: "{")
+                ? [jsonBroker.ParseJson<FolderRoleInfo>(json: item.Data)]
+                : jsonBroker.ParseJson<FolderRoleInfo[]>(json: item.Data);
 
-            var roles = roleService.GetAll(false).Where(role => role.AppId == appId).ToArray();
+            var roles = roleService.GetAll(ignoreFilters: false).Where(predicate: role => role.AppId == appId).ToArray();
             var folders = folderOrchestrationService
-                .GetAll(false)
-                .Where(folder => folder.AppId == appId)
+                .GetAll(ignoreFilters: false)
+                .Where(predicate: folder => folder.AppId == appId)
                 .ToArray();
 
             List<LocalFolderRole> folderRolesToAdd = [];
 
             foreach (FolderRoleInfo folderRoleInfo in folderRoleInfos)
             {
-                var folder = folders.FirstOrDefault(existing => existing.Path == folderRoleInfo.Path);
-                var role = roles.FirstOrDefault(existing => existing.Name == folderRoleInfo.Name);
+                var folder = folders.FirstOrDefault(predicate: existing => existing.Path == folderRoleInfo.Path);
+                var role = roles.FirstOrDefault(predicate: existing => existing.Name == folderRoleInfo.Name);
 
                 if (folder is not null && role is not null)
-                    folderRolesToAdd.Add(new LocalFolderRole { FolderId = folder.Id, RoleId = role.Id });
+                {
+                    folderRolesToAdd.Add(item: new LocalFolderRole { FolderId = folder.Id, RoleId = role.Id });
+                }
             }
 
-        _ = await folderRoleOrchestrationService.AddOrUpdate(folderRolesToAdd);
+            _ = await folderRoleOrchestrationService.AddOrUpdate(items: folderRolesToAdd);
         }
     }
 
     public DocumentManagementPackage ExportPackage(int appId, string packageName)
     {
         var package = packageName == "FolderRoles"
-            ? ExportFolderRoles(appId)
-            : new Data.Models.Packaging.Package(packageName) { Items = [] };
+            ? ExportFolderRoles(appId: appId)
+            : new Data.Models.Packaging.Package(name: packageName) { Items = [] };
 
-        return new DocumentManagementPackage(package.Name)
+        return new DocumentManagementPackage(name: package.Name)
         {
             Id = package.Id,
             Name = package.Name,
@@ -66,7 +76,7 @@ internal class DocumentManagementMigrationAggregationService(
             Category = package.Category,
             SourceApi = package.SourceApi,
             Items = package.Items?
-                .Select(item => new DocumentManagementPackageItem
+                .Select(selector: item => new DocumentManagementPackageItem
                 {
                     Id = item.Id,
                     PackageId = item.PackageId,
@@ -79,66 +89,60 @@ internal class DocumentManagementMigrationAggregationService(
 
     private cCoder.Data.Models.Packaging.Package ExportFolderRoles(int appId)
     {
-        var roles = roleService.GetAll(true)
-            .Where(role => role.AppId == appId)
-            .Select(role => new { role.Id, role.Name })
+        var roles = roleService.GetAll(ignoreFilters: true)
+            .Where(predicate: role => role.AppId == appId)
+            .Select(selector: role => new { role.Id, role.Name })
             .ToArray();
 
-        var folders = folderOrchestrationService.GetAll(true)
-            .Where(folder => folder.AppId == appId)
-            .Select(folder => new { folder.Id, folder.Path })
+        var folders = folderOrchestrationService.GetAll(ignoreFilters: true)
+            .Where(predicate: folder => folder.AppId == appId)
+            .Select(selector: folder => new { folder.Id, folder.Path })
             .ToArray();
 
         if (roles.Length == 0 || folders.Length == 0)
         {
-            return new Data.Models.Packaging.Package("FolderRoles")
+            return new Data.Models.Packaging.Package(name: "FolderRoles")
             {
                 Items =
                 [
                     new Data.Models.Packaging.PackageItem
                     {
                         Type = "Core/FolderRole",
-                        Data = jsonBroker.Serialize(Array.Empty<FolderRoleInfo>()),
+                        Data = jsonBroker.Serialize(value:Array.Empty<FolderRoleInfo>()),
                     },
                 ],
             };
         }
 
-        var roleNamesById = roles.ToDictionary(role => role.Id, role => role.Name);
-        var folderPathsById = folders.ToDictionary(folder => folder.Id, folder => folder.Path);
+        var roleNamesById = roles.ToDictionary(keySelector: role => role.Id, elementSelector: role => role.Name);
+        var folderPathsById = folders.ToDictionary(keySelector: folder => folder.Id, elementSelector: folder => folder.Path);
         Guid[] roleIds = roleNamesById.Keys.ToArray();
         Guid[] folderIds = folderPathsById.Keys.ToArray();
 
-        var folderRoles = folderRoleOrchestrationService.GetAll(true)
-            .Where(folderRole =>
+        var folderRoles = folderRoleOrchestrationService.GetAll(ignoreFilters: true)
+            .Where(predicate: folderRole =>
                 folderIds.Contains(folderRole.FolderId)
                 && roleIds.Contains(folderRole.RoleId))
             .ToArray();
 
         FolderRoleInfo[] folderRoleInfos = folderRoles
-            .Select(folderRole => new FolderRoleInfo
+            .Select(selector: folderRole => new FolderRoleInfo
             {
                 Path = folderPathsById[folderRole.FolderId],
                 Name = roleNamesById[folderRole.RoleId],
             })
             .ToArray();
 
-        return new Data.Models.Packaging.Package("FolderRoles")
+        return new Data.Models.Packaging.Package(name: "FolderRoles")
         {
             Items =
             [
                 new Data.Models.Packaging.PackageItem
                 {
                     Type = "Core/FolderRole",
-                    Data = jsonBroker.Serialize(folderRoleInfos),
+                    Data = jsonBroker.Serialize(value:folderRoleInfos),
                 },
             ],
         };
     }
 }
-
-
-
-
-
-

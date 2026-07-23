@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Foundations.Events;
 
 
@@ -8,5 +12,3 @@ internal class DocumentManagementEventHandlers(IEventHandlerService eventHandler
 {
     public void ListenToAllEvents() => eventHandlerService.ListenToAllEvents();
 }
-
-

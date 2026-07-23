@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Models;
@@ -22,10 +26,10 @@ internal class FileContentEventService(
         EventMessage<DataFileContent> message = new()
         {
             AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFileContent(entity),
+            Data = ToExternalFileContent(fileContent: entity),
         };
 
-        await fileContentEventBroker.RaiseFileContentAddEventAsync(message);
+        await fileContentEventBroker.RaiseFileContentAddEventAsync(message: message);
     }
 
     public async ValueTask RaiseFileContentUpdateEventAsync(FileContent entity)
@@ -33,10 +37,10 @@ internal class FileContentEventService(
         EventMessage<DataFileContent> message = new()
         {
             AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFileContent(entity),
+            Data = ToExternalFileContent(fileContent: entity),
         };
 
-        await fileContentEventBroker.RaiseFileContentUpdateEventAsync(message);
+        await fileContentEventBroker.RaiseFileContentUpdateEventAsync(message: message);
     }
 
     public async ValueTask RaiseFileContentDeleteEventAsync(FileContent entity)
@@ -44,10 +48,10 @@ internal class FileContentEventService(
         EventMessage<DataFileContent> message = new()
         {
             AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFileContent(entity),
+            Data = ToExternalFileContent(fileContent: entity),
         };
 
-        await fileContentEventBroker.RaiseFileContentDeleteEventAsync(message);
+        await fileContentEventBroker.RaiseFileContentDeleteEventAsync(message: message);
     }
 
     private static DataFileContent ToExternalFileContent(FileContent fileContent) =>
@@ -63,7 +67,7 @@ internal class FileContentEventService(
                 CreatedOn = fileContent.CreatedOn,
                 Version = fileContent.Version,
                 RawData = fileContent.RawData,
-                File = ToExternalFile(fileContent.File),
+                File = ToExternalFile(file: fileContent.File),
             };
 
     private static DataFile ToExternalFile(LocalFile file) =>
@@ -83,12 +87,3 @@ internal class FileContentEventService(
                 DeletedOn = file.DeletedOn,
             };
 }
-
-
-
-
-
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -15,7 +19,7 @@ namespace cCoder.Core.Services.Tests.DMS.Processings;
 public partial class FolderRoleProcessingServiceTests
 {
     private readonly Mock<IFolderService> folderServiceMock = new();
-    private User currentUser = ToLocalUser(TestUsers.WithoutPrivileges());
+    private User currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
     private readonly Mock<IFolderRoleService> folderRoleServiceMock = new();
     private readonly Mock<IRoleBroker> roleBrokerMock = new();
     private readonly Mock<IAuthorizationBroker> authorizationBrokerMock = new();
@@ -24,10 +28,10 @@ public partial class FolderRoleProcessingServiceTests
     public FolderRoleProcessingServiceTests()
     {
         folderRoleProcessingService = new FolderRoleProcessingService(
-            folderRoleServiceMock.Object,
-            roleBrokerMock.Object,
-            folderServiceMock.Object,
-            authorizationBrokerMock.Object
+            service: folderRoleServiceMock.Object,
+            roleBroker: roleBrokerMock.Object,
+            folderService: folderServiceMock.Object,
+            authorizationBroker: authorizationBrokerMock.Object
         );
     }
 
@@ -38,7 +42,7 @@ public partial class FolderRoleProcessingServiceTests
             {
                 Id = user.Id,
                 Roles = user.Roles?
-                    .Select(role => new UserRole
+                    .Select(selector: role => new UserRole
                     {
                         UserId = role.UserId,
                         RoleId = role.RoleId,
@@ -56,22 +60,3 @@ public partial class FolderRoleProcessingServiceTests
                     .ToArray(),
             };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

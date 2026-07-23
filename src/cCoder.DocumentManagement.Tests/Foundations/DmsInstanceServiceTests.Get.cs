@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using FluentAssertions;
 using Moq;
@@ -14,21 +18,17 @@ public partial class DmsInstanceServiceTests
     public void ShouldReturnBrokerResultWhenGet()
     {
         // Given
-        DmsPath path = CreatePath("folder/file.txt");
-        DMSResult result = CreateDmsResult("text/plain");
-        dmsInstanceBrokerMock.Setup(x => x.Get(path, 3, "needle")).Returns(result);
+        DmsPath path = CreatePath(fullPath: "folder/file.txt");
+        DMSResult result = CreateDmsResult(contentType: "text/plain");
+        dmsInstanceBrokerMock.Setup(expression: x => x.Get(path, 3, "needle")).Returns(value: result);
 
         // When
-        DMSResult returnedResult = dmsInstanceService.Get(path, 3, "needle");
+        DMSResult returnedResult = dmsInstanceService.Get(path: path, version: 3, search: "needle");
 
         // Then
-        returnedResult.Should().BeSameAs(result);
-        dmsInstanceBrokerMock.Verify(x => x.Get(path, 3, "needle"), Times.Once);
+        returnedResult.Should().BeSameAs(expected: result);
+        dmsInstanceBrokerMock.Verify(expression: x => x.Get(path, 3, "needle"), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-

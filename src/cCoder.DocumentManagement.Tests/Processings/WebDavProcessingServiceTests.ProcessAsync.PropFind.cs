@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -17,28 +21,28 @@ public partial class WebDavProcessingServiceTests
     public async Task ShouldReturnMetadataXmlWhenMethodIsPropFindForFile()
     {
         // Given
-        Folder folder = CreateFolderAsync("folder");
-        LocalFile file = CreateFileAsync("folder/file.txt", folder);
+        Folder folder = CreateFolderAsync(path: "folder");
+        LocalFile file = CreateFileAsync(path: "folder/file.txt", folder: folder);
         DmsProcessingRequest request = CreateRequest(
-            "PROPFIND",
-            "Core/App(7)/DAV/folder/file.txt",
+            method: "PROPFIND",
+            requestPath: "Core/App(7)/DAV/folder/file.txt",
             contentType: "application/xml",
             body: new MemoryStream(
-                "<propfind xmlns=\"DAV:\"><prop><displayname /></prop></propfind>"u8.ToArray()
+                buffer: "<propfind xmlns=\"DAV:\"><prop><displayname /></prop></propfind>"u8.ToArray()
             )
         );
-        fileServiceMock.Setup(x => x.GetAll()).Returns(new[] { file }.AsQueryable());
+        fileServiceMock.Setup(expression: x => x.GetAll()).Returns(value: new[] { file }.AsQueryable());
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request);
-        string xml = ReadBodyText(response.Body);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
+        string xml = ReadBodyText(stream: response.Body);
 
         // Then
-        response.StatusCode.Should().Be(207);
-        response.ContentType.Should().Be("text/xml; charset=\"utf-8\"");
-        xml.Should().Contain("file.txt");
-        xml.Should().Contain("Core/App(7)/DAV/folder/file.txt");
-        fileServiceMock.Verify(x => x.GetAll(), Times.Once);
+        response.StatusCode.Should().Be(expected: 207);
+        response.ContentType.Should().Be(expected: "text/xml; charset=\"utf-8\"");
+        xml.Should().Contain(expected: "file.txt");
+        xml.Should().Contain(expected: "Core/App(7)/DAV/folder/file.txt");
+        fileServiceMock.Verify(expression: x => x.GetAll(), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
         dmsInstanceServiceMock.VerifyNoOtherCalls();
@@ -48,40 +52,31 @@ public partial class WebDavProcessingServiceTests
     public async Task ShouldReturnFolderMetadataXmlWhenMethodIsPropFindForRootFolder()
     {
         // Given
-        Folder childFolder = CreateFolderAsync("docs");
+        Folder childFolder = CreateFolderAsync(path: "docs");
         DmsProcessingRequest request = CreateRequest(
-            "PROPFIND",
-            "Core/App(7)/DAV",
-            headers: new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
+            method: "PROPFIND",
+            requestPath: "Core/App(7)/DAV",
+            headers: new Dictionary<string, string[]>(comparer: StringComparer.OrdinalIgnoreCase)
             {
-                ["Authorization"] = ["Basic token"],
-                ["Depth"] = ["1"],
+                [key: "Authorization"] = ["Basic token"],
+                [key: "Depth"] = ["1"],
             }
         );
-        folderServiceMock.Setup(x => x.GetAll()).Returns(new[] { childFolder }.AsQueryable());
-        fileServiceMock.Setup(x => x.GetAll()).Returns(Array.Empty<LocalFile>().AsQueryable());
+        folderServiceMock.Setup(expression: x => x.GetAll()).Returns(value: new[] { childFolder }.AsQueryable());
+        fileServiceMock.Setup(expression: x => x.GetAll()).Returns(value: Array.Empty<LocalFile>().AsQueryable());
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request);
-        string xml = ReadBodyText(response.Body);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
+        string xml = ReadBodyText(stream: response.Body);
 
         // Then
-        response.StatusCode.Should().Be(207);
-        xml.Should().Contain("Root");
-        xml.Should().Contain("docs");
-        folderServiceMock.Verify(x => x.GetAll(), Times.Exactly(2));
-        fileServiceMock.Verify(x => x.GetAll(), Times.Once);
+        response.StatusCode.Should().Be(expected: 207);
+        xml.Should().Contain(expected: "Root");
+        xml.Should().Contain(expected: "docs");
+        folderServiceMock.Verify(expression: x => x.GetAll(), times: Times.Exactly(2));
+        fileServiceMock.Verify(expression: x => x.GetAll(), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 }
-
-
-
-
-
-
-
-
-

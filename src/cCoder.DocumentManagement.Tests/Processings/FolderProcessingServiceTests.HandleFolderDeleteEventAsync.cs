@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -33,26 +37,26 @@ public partial class FolderProcessingServiceTests
             CreatedBy = "test-user",
             CreatedOn = DateTimeOffset.UtcNow,
         };
-        folderServiceMock.Setup(x => x.GetAll(true)).Returns(new[] { folder }.AsQueryable());
+        folderServiceMock.Setup(expression: x => x.GetAll(true)).Returns(value: new[] { folder }.AsQueryable());
         fileServiceMock
-            .Setup(x => x.GetIdsByFolderIds(It.Is<Guid[]>(ids => ids.Single() == folder.Id), true))
-            .Returns([file.Id]);
+            .Setup(expression: x => x.GetIdsByFolderIds(It.Is<Guid[]>(ids => ids.Single() == folder.Id), true))
+            .Returns(value: [file.Id]);
         fileContentServiceMock
-            .Setup(x => x.DeleteAllForFilesAsync(It.Is<Guid[]>(ids => ids.Single() == file.Id)))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.DeleteAllForFilesAsync(It.Is<Guid[]>(ids => ids.Single() == file.Id)))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await folderProcessingService.HandleFolderDeleteEventAsync(folder);
+        await folderProcessingService.HandleFolderDeleteEventAsync(folder: folder);
 
         // Then
-        folderServiceMock.Verify(x => x.GetAll(true), Times.Exactly(2));
+        folderServiceMock.Verify(expression: x => x.GetAll(true), times: Times.Exactly(2));
         fileServiceMock.Verify(
-            x => x.GetIdsByFolderIds(It.Is<Guid[]>(ids => ids.Single() == folder.Id), true),
-            Times.Once
+            expression: x => x.GetIdsByFolderIds(It.Is<Guid[]>(ids => ids.Single() == folder.Id), true),
+            times: Times.Once
         );
         fileContentServiceMock.Verify(
-            x => x.DeleteAllForFilesAsync(It.Is<Guid[]>(ids => ids.Single() == file.Id)),
-            Times.Once
+            expression: x => x.DeleteAllForFilesAsync(It.Is<Guid[]>(ids => ids.Single() == file.Id)),
+            times: Times.Once
         );
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
@@ -61,12 +65,3 @@ public partial class FolderProcessingServiceTests
     }
 
 }
-
-
-
-
-
-
-
-
-

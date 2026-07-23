@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Models;
@@ -20,10 +24,10 @@ internal class FolderRoleEventService(
         EventMessage<DataFolderRole> message = new()
         {
             AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFolderRole(entity),
+            Data = ToExternalFolderRole(folderRole: entity),
         };
 
-        await folderRoleEventBroker.RaiseFolderRoleAddEventAsync(message);
+        await folderRoleEventBroker.RaiseFolderRoleAddEventAsync(message: message);
     }
 
     public async ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole entity)
@@ -31,10 +35,10 @@ internal class FolderRoleEventService(
         EventMessage<DataFolderRole> message = new()
         {
             AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFolderRole(entity),
+            Data = ToExternalFolderRole(folderRole: entity),
         };
 
-        await folderRoleEventBroker.RaiseFolderRoleDeleteEventAsync(message);
+        await folderRoleEventBroker.RaiseFolderRoleDeleteEventAsync(message: message);
     }
 
     private static DataFolderRole ToExternalFolderRole(FolderRole folderRole) =>
@@ -46,12 +50,3 @@ internal class FolderRoleEventService(
                 RoleId = folderRole.RoleId,
             };
 }
-
-
-
-
-
-
-
-
-

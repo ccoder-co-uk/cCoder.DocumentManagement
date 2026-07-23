@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -21,14 +25,14 @@ public partial class DmsHttpRequestOrchestrationServiceTests
 
     public DmsHttpRequestOrchestrationServiceTests()
     {
-        currentAppResolverMock = new Mock<IDocumentManagementCurrentAppResolver>(MockBehavior.Strict);
-        dmsProcessingServiceMock = new Mock<IDmsProcessingService>(MockBehavior.Strict);
-        webDavProcessingServiceMock = new Mock<IWebDavProcessingService>(MockBehavior.Strict);
+        currentAppResolverMock = new Mock<IDocumentManagementCurrentAppResolver>(behavior: MockBehavior.Strict);
+        dmsProcessingServiceMock = new Mock<IDmsProcessingService>(behavior: MockBehavior.Strict);
+        webDavProcessingServiceMock = new Mock<IWebDavProcessingService>(behavior: MockBehavior.Strict);
 
         orchestrationService = new DmsHttpRequestOrchestrationService(
-            currentAppResolverMock.Object,
-            dmsProcessingServiceMock.Object,
-            webDavProcessingServiceMock.Object
+            currentAppResolver: currentAppResolverMock.Object,
+            dmsProcessingService: dmsProcessingServiceMock.Object,
+            webDavProcessingService: webDavProcessingServiceMock.Object
         );
     }
 
@@ -59,18 +63,20 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         if (headers != null)
         {
             foreach ((string key, string[] values) in headers)
-                headerDictionary.Append(key, values);
+            {
+                headerDictionary.Append(key: key, value: values);
+            }
         }
 
-        requestMock.SetupGet(x => x.Method).Returns(method);
-        requestMock.SetupGet(x => x.Path).Returns(new PathString(path));
-        requestMock.SetupGet(x => x.Host).Returns(new HostString(host));
-        requestMock.SetupGet(x => x.QueryString).Returns(new QueryString(queryString));
-        requestMock.SetupGet(x => x.Body).Returns(new MemoryStream(body ?? []));
-        requestMock.SetupGet(x => x.Headers).Returns(headerDictionary);
-        requestMock.SetupGet(x => x.ContentType).Returns(contentType);
+        requestMock.SetupGet(expression: x => x.Method).Returns(value: method);
+        requestMock.SetupGet(expression: x => x.Path).Returns(value: new PathString(path));
+        requestMock.SetupGet(expression: x => x.Host).Returns(value: new HostString(host));
+        requestMock.SetupGet(expression: x => x.QueryString).Returns(value: new QueryString(queryString));
+        requestMock.SetupGet(expression: x => x.Body).Returns(value: new MemoryStream(body ?? []));
+        requestMock.SetupGet(expression: x => x.Headers).Returns(value: headerDictionary);
+        requestMock.SetupGet(expression: x => x.ContentType).Returns(value: contentType);
 
-        contextMock.SetupGet(x => x.Request).Returns(requestMock.Object);
+        contextMock.SetupGet(expression: x => x.Request).Returns(value: requestMock.Object);
 
         return contextMock.Object;
     }
@@ -86,15 +92,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             StatusCode = statusCode,
             ContentType = contentType,
             HasBody = hasBody,
-            Body = hasBody ? new MemoryStream([1, 2, 3]) : Stream.Null,
+            Body = hasBody ? new MemoryStream(buffer: [1, 2, 3]) : Stream.Null,
             Headers = headers ?? [],
         };
 }
-
-
-
-
-
-
-
-

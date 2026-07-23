@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -14,17 +18,17 @@ internal class FolderRoleService(
 ) : IFolderRoleService
 {
     public IQueryable<FolderRole> GetAll(bool ignoreFilters = false) =>
-        folderRoleBroker.GetAllFolderRoles(ignoreFilters);
+        folderRoleBroker.GetAllFolderRoles(ignoreFilters: ignoreFilters);
 
     public async ValueTask<FolderRole> AddAsync(FolderRole folderRole)
     {
-        cCoder.Data.Models.Security.FolderRole newFolderRole = CreateStorageFolderRole(folderRole);
+        cCoder.Data.Models.Security.FolderRole newFolderRole = CreateStorageFolderRole(folderRole: folderRole);
         authorizationBroker.Authorize(
-            folderRoleBroker.GetAppId(newFolderRole),
-            $"{nameof(FolderRole)}_create"
+            appId: folderRoleBroker.GetAppId(newFolderRole),
+            privilege: $"{nameof(FolderRole)}_create"
         );
 
-        FolderRole result = await folderRoleBroker.AddFolderRoleAsync(newFolderRole);
+        FolderRole result = await folderRoleBroker.AddFolderRoleAsync(entity: newFolderRole);
         folderRole.FolderId = result.FolderId;
         folderRole.RoleId = result.RoleId;
         return folderRole;
@@ -33,10 +37,10 @@ internal class FolderRoleService(
     public async ValueTask DeleteAsync(FolderRole folderRole)
     {
         authorizationBroker.Authorize(
-            folderRoleBroker.GetAppId(CreateStorageFolderRole(folderRole)),
-            $"{nameof(FolderRole)}_delete"
+            appId: folderRoleBroker.GetAppId(CreateStorageFolderRole(folderRole)),
+            privilege: $"{nameof(FolderRole)}_delete"
         );
-        _ = await folderRoleBroker.DeleteFolderRoleAsync(CreateStorageFolderRole(folderRole));
+        _ = await folderRoleBroker.DeleteFolderRoleAsync(entity: CreateStorageFolderRole(folderRole));
     }
 
     private static cCoder.Data.Models.Security.FolderRole CreateStorageFolderRole(FolderRole folderRole)
@@ -53,15 +57,3 @@ internal class FolderRoleService(
         };
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

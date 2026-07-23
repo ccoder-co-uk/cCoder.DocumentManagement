@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Moq;
@@ -14,34 +18,34 @@ public partial class DmsProcessingServiceTests
     {
         // Given
         DmsProcessingRequest request = CreateRequest(
-            "PUT",
-            "/api/dms/folder/file.txt",
-            "?moveTo=folder/archive/file.txt",
-            new MemoryStream([1, 2])
+            method: "PUT",
+            requestPath: "/api/dms/folder/file.txt",
+            queryString: "?moveTo=folder/archive/file.txt",
+            body: new MemoryStream([1, 2])
         );
 
         dmsInstanceServiceMock
-            .Setup(x =>
+            .Setup(expression: x =>
                 x.MoveAsync(
                     It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
                     It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
                 )
             )
-            .Returns(ValueTask.CompletedTask);
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request);
+        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(204);
+        response.StatusCode.Should().Be(expected: 204);
         response.HasBody.Should().BeFalse();
         dmsInstanceServiceMock.Verify(
-            x =>
+            expression: x =>
                 x.MoveAsync(
                     It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
                     It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
                 ),
-            Times.Once
+            times: Times.Once
         );
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
@@ -50,13 +54,13 @@ public partial class DmsProcessingServiceTests
     public async Task ShouldReturnNoContentWithoutMoveWhenPutIncludesBlankMoveTo()
     {
         // Given
-        DmsProcessingRequest request = CreateRequest("PUT", "/api/dms/folder/file.txt", "?moveTo=");
+        DmsProcessingRequest request = CreateRequest(method: "PUT", requestPath: "/api/dms/folder/file.txt", queryString: "?moveTo=");
 
         // When
-        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request);
+        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(204);
+        response.StatusCode.Should().Be(expected: 204);
         response.HasBody.Should().BeFalse();
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
@@ -66,19 +70,19 @@ public partial class DmsProcessingServiceTests
     {
         // Given
         DmsProcessingRequest request = CreateRequest(
-            "PUT",
-            "/api/dms/folder/archive.zip",
-            "?unpack=true",
-            new MemoryStream([1, 2, 3])
+            method: "PUT",
+            requestPath: "/api/dms/folder/archive.zip",
+            queryString: "?unpack=true",
+            body: new MemoryStream([1, 2, 3])
         );
 
         // When
-        Func<Task> act = async () => await dmsProcessingService.ProcessAsync(request);
+        Func<Task> act = async () => await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
         await act.Should()
             .ThrowAsync<InvalidOperationException>()
-            .WithMessage("Cannot unpack an archive to a file path");
+            .WithMessage(expectedWildcardPattern: "Cannot unpack an archive to a file path");
 
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
@@ -88,41 +92,41 @@ public partial class DmsProcessingServiceTests
     {
         // Given
         byte[] originalBytes = [1, 2, 3, 4];
-        MemoryStream requestBody = new(originalBytes);
+        MemoryStream requestBody = new(buffer: originalBytes);
         byte[] capturedBytes = [];
         DmsProcessingRequest request = CreateRequest(
-            "PUT",
-            "/api/dms/folder/archive",
-            "?unpack=true&ignoreArchiveRoot=true",
-            requestBody
+            method: "PUT",
+            requestPath: "/api/dms/folder/archive",
+            queryString: "?unpack=true&ignoreArchiveRoot=true",
+            body: requestBody
         );
 
         dmsInstanceServiceMock
-            .Setup(x =>
+            .Setup(expression: x =>
                 x.UnpackAsync(
                     It.Is<DmsPath>(path => path.FullPath == "folder/archive"),
                     It.IsAny<Stream>(),
                     true
                 )
             )
-            .Callback<DmsPath, Stream, bool>((_, stream, _) => capturedBytes = ReadAllBytes(stream))
-            .Returns(ValueTask.CompletedTask);
+            .Callback<DmsPath, Stream, bool>(action: (_, stream, _) => capturedBytes = ReadAllBytes(stream))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request);
+        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(204);
+        response.StatusCode.Should().Be(expected: 204);
         response.HasBody.Should().BeFalse();
-        capturedBytes.Should().Equal(originalBytes);
+        capturedBytes.Should().Equal(elements: originalBytes);
         dmsInstanceServiceMock.Verify(
-            x =>
+            expression: x =>
                 x.UnpackAsync(
                     It.Is<DmsPath>(path => path.FullPath == "folder/archive"),
                     It.IsAny<Stream>(),
                     true
                 ),
-            Times.Once
+            times: Times.Once
         );
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
@@ -132,47 +136,40 @@ public partial class DmsProcessingServiceTests
     {
         // Given
         byte[] originalBytes = [5, 6, 7];
-        MemoryStream requestBody = new(originalBytes);
+        MemoryStream requestBody = new(buffer: originalBytes);
         byte[] capturedBytes = [];
         DmsProcessingRequest request = CreateRequest(
-            "PUT",
-            "/api/dms/folder/file.txt",
-            string.Empty,
-            requestBody
+            method: "PUT",
+            requestPath: "/api/dms/folder/file.txt",
+            queryString: string.Empty,
+            body: requestBody
         );
 
         dmsInstanceServiceMock
-            .Setup(x =>
+            .Setup(expression: x =>
                 x.SaveAsync(
                     It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
                     It.IsAny<Stream>()
                 )
             )
-            .Callback<DmsPath, Stream>((_, stream) => capturedBytes = ReadAllBytes(stream))
-            .Returns(ValueTask.CompletedTask);
+            .Callback<DmsPath, Stream>(action: (_, stream) => capturedBytes = ReadAllBytes(stream))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request);
+        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(204);
+        response.StatusCode.Should().Be(expected: 204);
         response.HasBody.Should().BeFalse();
-        capturedBytes.Should().Equal(originalBytes);
+        capturedBytes.Should().Equal(elements: originalBytes);
         dmsInstanceServiceMock.Verify(
-            x =>
+            expression: x =>
                 x.SaveAsync(
                     It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
                     It.IsAny<Stream>()
                 ),
-            Times.Once
+            times: Times.Once
         );
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 }
-
-
-
-
-
-
-

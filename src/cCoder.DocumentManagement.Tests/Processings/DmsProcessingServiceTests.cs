@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -19,12 +23,12 @@ public partial class DmsProcessingServiceTests
 
     public DmsProcessingServiceTests()
     {
-        dmsInstanceServiceMock = new Mock<IDmsInstanceService>(MockBehavior.Strict);
+        dmsInstanceServiceMock = new Mock<IDmsInstanceService>(behavior: MockBehavior.Strict);
         dmsInstanceServiceMock = new();
         loggerMock = new();
         dmsProcessingService = new DmsProcessingService(
-            dmsInstanceServiceMock.Object,
-            loggerMock.Object
+            dmsInstanceService: dmsInstanceServiceMock.Object,
+            log: loggerMock.Object
         );
     }
 
@@ -51,22 +55,14 @@ public partial class DmsProcessingServiceTests
             RequestPath = requestPath,
             Host = "example.test",
             QueryString = queryString,
-            Body = body ?? new MemoryStream([]),
+            Body = body ?? new MemoryStream(buffer: []),
         };
 
     private static byte[] ReadAllBytes(Stream stream)
     {
         stream.Position = 0;
         using MemoryStream copyStream = new();
-        stream.CopyTo(copyStream);
+        stream.CopyTo(destination: copyStream);
         return copyStream.ToArray();
     }
 }
-
-
-
-
-
-
-
-

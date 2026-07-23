@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -17,21 +21,10 @@ public partial class FolderEventProcessingServiceTests
 
     public FolderEventProcessingServiceTests()
     {
-        folderEventServiceMock = new Mock<IFolderEventService>(MockBehavior.Strict);
-        service = new FolderEventProcessingService(folderEventServiceMock.Object);
+        folderEventServiceMock = new Mock<IFolderEventService>(behavior: MockBehavior.Strict);
+        service = new FolderEventProcessingService(eventService: folderEventServiceMock.Object);
     }
 
     private static Folder CreateRandomFolder() =>
         Builder<Folder>.CreateNew().Build();
 }
-
-
-
-
-
-
-
-
-
-
-

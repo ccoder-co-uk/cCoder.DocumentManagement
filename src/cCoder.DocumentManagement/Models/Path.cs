@@ -1,8 +1,12 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 namespace cCoder.DocumentManagement.Models;
 
 public class Path
 {
-    public static Path Empty { get; } = new(string.Empty);
+    public static Path Empty { get; } = new(path: string.Empty);
 
     public string Name => Segments.LastOrDefault();
 
@@ -10,26 +14,26 @@ public class Path
 
     public string Lowered => FullPath.ToLower();
 
-    public string[] Segments => FullPath.Split('/');
+    public string[] Segments => FullPath.Split(separator: '/');
 
     public Path ParentPath =>
         Segments.Length > 1
             ? new Path(
-                string.Join("/", Segments)[..(FullPath.Length - (1 + Segments.Last().Length))]
+                path: string.Join("/", Segments)[..(FullPath.Length - (1 + Segments.Last().Length))]
             )
             : Empty;
 
     public string Extension =>
-        Segments.LastOrDefault()?.Contains('.') ?? false
-            ? Segments.LastOrDefault()?.Split('.').Last().ToLower() ?? string.Empty
+        Segments.LastOrDefault()?.Contains(value: '.') ?? false
+            ? Segments.LastOrDefault()?.Split(separator: '.').Last().ToLower() ?? string.Empty
             : string.Empty;
 
     public string MimeType
     {
         get
         {
-            Mapping mapping = Models.MimeType.Get(Extension);
-            return string.IsNullOrWhiteSpace(mapping.MimeType) ? "text/plain" : mapping.MimeType;
+            Mapping mapping = Models.MimeType.Get(fileExtension: Extension);
+            return string.IsNullOrWhiteSpace(value: mapping.MimeType) ? "text/plain" : mapping.MimeType;
         }
     }
 
@@ -41,9 +45,8 @@ public class Path
 
     public Path(string path)
     {
-        FullPath = (path ?? string.Empty).Trim().TrimEnd('/');
+        FullPath = (path ?? string.Empty).Trim().TrimEnd(trimChar: '/');
     }
 
     public override string ToString() => FullPath;
 }
-

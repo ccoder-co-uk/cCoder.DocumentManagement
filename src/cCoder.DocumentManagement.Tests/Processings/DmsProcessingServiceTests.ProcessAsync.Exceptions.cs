@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
@@ -14,20 +18,20 @@ public partial class DmsProcessingServiceTests
     public async Task ShouldRethrowWhenDmsInstanceThrowsSecurityException()
     {
         // Given
-        DmsProcessingRequest request = CreateRequest("DELETE", "/api/dms/folder/file.txt");
+        DmsProcessingRequest request = CreateRequest(method: "DELETE", requestPath: "/api/dms/folder/file.txt");
 
         dmsInstanceServiceMock
-            .Setup(x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0))
-            .Throws(new SecurityException("Access Denied!"));
+            .Setup(expression: x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0))
+            .Throws(exception: new SecurityException("Access Denied!"));
 
         // When
-        Func<Task> act = async () => await dmsProcessingService.ProcessAsync(request);
+        Func<Task> act = async () => await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        await act.Should().ThrowAsync<SecurityException>().WithMessage("Access Denied!");
+        await act.Should().ThrowAsync<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
         dmsInstanceServiceMock.Verify(
-            x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0),
-            Times.Once
+            expression: x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0),
+            times: Times.Once
         );
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
@@ -36,30 +40,23 @@ public partial class DmsProcessingServiceTests
     public async Task ShouldRethrowWhenDmsInstanceThrowsException()
     {
         // Given
-        DmsProcessingRequest request = CreateRequest("GET", "/api/dms/folder/file.txt");
+        DmsProcessingRequest request = CreateRequest(method: "GET", requestPath: "/api/dms/folder/file.txt");
 
         dmsInstanceServiceMock
-            .Setup(x =>
+            .Setup(expression: x =>
                 x.Get(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0, string.Empty)
             )
-            .Throws(new InvalidOperationException("Boom"));
+            .Throws(exception: new InvalidOperationException("Boom"));
 
         // When
-        Func<Task> act = async () => await dmsProcessingService.ProcessAsync(request);
+        Func<Task> act = async () => await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        await act.Should().ThrowAsync<InvalidOperationException>().WithMessage("Boom");
+        await act.Should().ThrowAsync<InvalidOperationException>().WithMessage(expectedWildcardPattern: "Boom");
         dmsInstanceServiceMock.Verify(
-            x => x.Get(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0, string.Empty),
-            Times.Once
+            expression: x => x.Get(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0, string.Empty),
+            times: Times.Once
         );
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 }
-
-
-
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Processings;
 
 
@@ -7,10 +11,3 @@ public interface IDmsHttpRequestOrchestrationService
 {
     ValueTask<DmsProcessingResponse> ProcessRequestAsync(HttpContext context);
 }
-
-
-
-
-
-
-

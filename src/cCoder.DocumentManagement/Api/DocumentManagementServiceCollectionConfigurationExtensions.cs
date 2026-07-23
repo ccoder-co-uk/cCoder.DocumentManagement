@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Api.OData;
 using cCoder.DocumentManagement.Models;
 using cCoder.Eventing;
@@ -16,7 +20,7 @@ public static partial class IServiceCollectionExtensions
         this IServiceCollection services,
         Action<IServiceCollection, DocumentManagementConfiguration> configure)
     {
-        DocumentManagementConfiguration configuration = CreateConfiguration(services, configure);
+        DocumentManagementConfiguration configuration = CreateConfiguration(services: services, configure: configure);
         services.AddDocumentManagement();
         return configuration;
     }
@@ -26,28 +30,28 @@ public static partial class IServiceCollectionExtensions
         Action<IServiceCollection, DocumentManagementConfiguration> configure,
         ODataConventionModelBuilder builder = null)
     {
-        DocumentManagementConfiguration configuration = CreateConfiguration(services, configure);
-        services.AddDocumentManagementWeb(builder);
+        DocumentManagementConfiguration configuration = CreateConfiguration(services: services, configure: configure);
+        services.AddDocumentManagementWeb(builder: builder);
         services.AddConfiguredApi(
-            configuration,
-            "DocumentManagement",
-            static modelBuilder => modelBuilder.ConfigureDocumentManagementApiModel(),
-            builder);
+            configuration: configuration,
+            documentName: "DocumentManagement",
+            configureModel: static modelBuilder => modelBuilder.ConfigureDocumentManagementApiModel(),
+            builder: builder);
 
         return configuration;
     }
 
     public static void ConfigureDocumentManagementApiModel(this ODataConventionModelBuilder builder) =>
-        new DocumentManagementModelBuilder(builder).Configure();
+        new DocumentManagementModelBuilder(builder: builder).Configure();
 
     private static DocumentManagementConfiguration CreateConfiguration(
         IServiceCollection services,
         Action<IServiceCollection, DocumentManagementConfiguration> configure)
     {
         DocumentManagementConfiguration configuration = new();
-        configure?.Invoke(services, configuration);
-        services.AddSingleton(configuration);
-        services.AddEventProviders(configuration.EventProviders);
+        configure?.Invoke(arg1: services, arg2: configuration);
+        services.AddSingleton(implementationInstance: configuration);
+        services.AddEventProviders(eventProviders: configuration.EventProviders);
         return configuration;
     }
 
@@ -59,23 +63,27 @@ public static partial class IServiceCollectionExtensions
         ODataConventionModelBuilder builder = null,
         bool useFullSchemaIds = false)
     {
-        services.AddSingleton<Action<ODataConventionModelBuilder>>(configureModel);
+        services.AddSingleton<Action<ODataConventionModelBuilder>>(implementationInstance: configureModel);
 
         if (builder is not null)
-            configureModel(builder);
+        {
+            configureModel(obj: builder);
+        }
 
-        AddAspNet(services);
+        AddAspNet(services: services);
 
         if (builder is null)
-            AddApiDocumentation(services, documentName, configuration, useFullSchemaIds);
+        {
+            AddApiDocumentation(services: services, documentName: documentName, configuration: configuration, useFullSchemaIds: useFullSchemaIds);
+        }
 
-        IEdmModel routeModel = BuildRouteModel(configureModel);
+        IEdmModel routeModel = BuildRouteModel(configureModel: configureModel);
         DefaultODataBatchHandler batchHandler = new();
-        string rootPath = string.IsNullOrWhiteSpace(configuration.RootPath)
+        string rootPath = string.IsNullOrWhiteSpace(value: configuration.RootPath)
             ? $"Api/{documentName}"
             : configuration.RootPath;
 
-        services.AddControllers().AddOData(options =>
+        services.AddControllers().AddOData(setupAction: options =>
         {
             options.RouteOptions.EnableQualifiedOperationCall = false;
             options.EnableAttributeRouting = true;
@@ -103,7 +111,7 @@ public static partial class IServiceCollectionExtensions
         DocumentManagementConfiguration configuration,
         bool useFullSchemaIds)
     {
-        services.AddSwaggerGen(options =>
+        services.AddSwaggerGen(setupAction: options =>
         {
             options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             AddSwaggerDocuments(options, documentName, configuration);
@@ -116,7 +124,9 @@ public static partial class IServiceCollectionExtensions
                         configuration));
 
             if (useFullSchemaIds)
+            {
                 options.CustomSchemaIds(type => type.FullName?.Replace('+', '.') ?? type.Name);
+            }
 
             options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
             {
@@ -134,7 +144,7 @@ public static partial class IServiceCollectionExtensions
         string documentName,
         DocumentManagementConfiguration configuration)
     {
-        options.SwaggerDoc(documentName, new OpenApiInfo
+        options.SwaggerDoc(name: documentName, info: new OpenApiInfo
         {
             Title = $"{documentName} API definition",
             Version = documentName,
@@ -142,12 +152,12 @@ public static partial class IServiceCollectionExtensions
 
         if (configuration.IncludeLegacyCoreContext)
         {
-            options.SwaggerDoc("Core", new OpenApiInfo
+            options.SwaggerDoc(name: "Core", info: new OpenApiInfo
             {
                 Title = "Core API definition",
                 Version = "Core",
             });
-            options.SwaggerDoc("v1", new OpenApiInfo
+            options.SwaggerDoc(name: "v1", info: new OpenApiInfo
             {
                 Title = "Core API definition",
                 Version = "v1",
@@ -161,36 +171,40 @@ public static partial class IServiceCollectionExtensions
         string documentName,
         DocumentManagementConfiguration configuration)
     {
-        if (string.IsNullOrWhiteSpace(relativePath))
+        if (string.IsNullOrWhiteSpace(value: relativePath))
+        {
             return false;
+        }
 
-        if (string.Equals(swaggerDocumentName, "v1", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(a: swaggerDocumentName, b: "v1", comparisonType: StringComparison.OrdinalIgnoreCase))
+        {
             swaggerDocumentName = "Core";
+        }
 
-        string path = NormalizePath(relativePath);
-        string rootPath = string.IsNullOrWhiteSpace(configuration.RootPath)
+        string path = NormalizePath(relativePath: relativePath);
+        string rootPath = string.IsNullOrWhiteSpace(value: configuration.RootPath)
             ? $"Api/{documentName}"
             : configuration.RootPath;
 
-        return string.Equals(swaggerDocumentName, "Core", StringComparison.OrdinalIgnoreCase)
-            ? configuration.IncludeLegacyCoreContext && MatchesContextRoute(path, "Api/Core")
-            : MatchesContextRoute(path, rootPath);
+        return string.Equals(a: swaggerDocumentName, b: "Core", comparisonType: StringComparison.OrdinalIgnoreCase)
+            ? configuration.IncludeLegacyCoreContext && MatchesContextRoute(path: path, rootPath: "Api/Core")
+            : MatchesContextRoute(path: path, rootPath: rootPath);
     }
 
     private static bool MatchesContextRoute(string path, string rootPath)
     {
-        string normalizedPath = NormalizePath(rootPath);
-        return path.Equals(normalizedPath, StringComparison.OrdinalIgnoreCase)
-            || path.StartsWith($"{normalizedPath}/", StringComparison.OrdinalIgnoreCase);
+        string normalizedPath = NormalizePath(relativePath: rootPath);
+        return path.Equals(value: normalizedPath, comparisonType: StringComparison.OrdinalIgnoreCase)
+            || path.StartsWith(value: $"{normalizedPath}/", comparisonType: StringComparison.OrdinalIgnoreCase);
     }
 
     private static string NormalizePath(string relativePath) =>
-        relativePath.StartsWith('/') ? relativePath : $"/{relativePath}";
+        relativePath.StartsWith(value: '/') ? relativePath : $"/{relativePath}";
 
     private static IEdmModel BuildRouteModel(Action<ODataConventionModelBuilder> configureModel)
     {
         ODataConventionModelBuilder builder = new();
-        configureModel(builder);
+        configureModel(obj: builder);
         return builder.GetEdmModel();
     }
 
@@ -201,19 +215,19 @@ public static partial class IServiceCollectionExtensions
         services.AddHttpClient();
         services.AddHttpContextAccessor();
         services.AddScoped(
-            typeof(HttpContext),
-            ctx => ctx.GetService<IHttpContextAccessor>()?.HttpContext ?? new DefaultHttpContext());
-        services.AddScoped(typeof(HttpRequest), ctx => ctx.GetRequiredService<HttpContext>().Request);
+            serviceType: typeof(HttpContext),
+            implementationFactory: ctx => ctx.GetService<IHttpContextAccessor>()?.HttpContext ?? new DefaultHttpContext());
+        services.AddScoped(serviceType: typeof(HttpRequest), implementationFactory: ctx => ctx.GetRequiredService<HttpContext>().Request);
         services.AddSession();
-        services.AddHsts(options =>
+        services.AddHsts(configureOptions: options =>
         {
             options.Preload = true;
             options.IncludeSubDomains = true;
             options.MaxAge = TimeSpan.FromMinutes(60);
         });
-        services.AddMvc(options => options.EnableEndpointRouting = false);
+        services.AddMvc(setupAction: options => options.EnableEndpointRouting = false);
         services.AddRazorPages();
-        services.Configure<KestrelServerOptions>(options =>
+        services.Configure<KestrelServerOptions>(configureOptions: options =>
         {
             options.Limits.MaxRequestBodySize = int.MaxValue;
         });
@@ -221,4 +235,3 @@ public static partial class IServiceCollectionExtensions
         services.AddSignalR();
     }
 }
-

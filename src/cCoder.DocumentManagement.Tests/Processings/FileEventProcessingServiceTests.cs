@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Foundations.Events;
 using cCoder.DocumentManagement.Services.Processings;
 using FizzWare.NBuilder;
@@ -14,21 +18,10 @@ public partial class FileEventProcessingServiceTests
 
     public FileEventProcessingServiceTests()
     {
-        fileEventServiceMock = new Mock<IFileEventService>(MockBehavior.Strict);
-        service = new FileEventProcessingService(fileEventServiceMock.Object);
+        fileEventServiceMock = new Mock<IFileEventService>(behavior: MockBehavior.Strict);
+        service = new FileEventProcessingService(eventService: fileEventServiceMock.Object);
     }
 
     private static FileEntity CreateRandomFileEntity() =>
         Builder<FileEntity>.CreateNew().Build();
 }
-
-
-
-
-
-
-
-
-
-
-

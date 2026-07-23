@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Orchestrations;
 
@@ -11,5 +15,5 @@ public interface IDmsInstanceFactory
 public class DmsInstanceFactory(IDmsOrchestrationService dmsOrchestrationService)
     : IDmsInstanceFactory
 {
-    public IDms CreateDms() => new Dms(dmsOrchestrationService);
+    public IDms CreateDms() => new Dms(dmsOrchestrationService: dmsOrchestrationService);
 }

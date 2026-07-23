@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Orchestrations;
 using cCoder.DocumentManagement.Services.Processings;
 
@@ -8,7 +12,7 @@ public class WebDavMiddleware
 {
     public WebDavMiddleware(RequestDelegate next)
     {
-        ArgumentNullException.ThrowIfNull(next);
+        ArgumentNullException.ThrowIfNull(argument: next);
     }
 
     public async Task InvokeAsync(
@@ -17,16 +21,18 @@ public class WebDavMiddleware
     )
     {
         DmsProcessingResponse response =
-            await dmsHttpRequestOrchestrationService.ProcessRequestAsync(context);
-        await Respond(context, response);
+            await dmsHttpRequestOrchestrationService.ProcessRequestAsync(context: context);
+        await Respond(context: context, response: response);
     }
 
     private static async Task Respond(HttpContext context, DmsProcessingResponse response)
     {
         foreach (KeyValuePair<string, string> header in response.Headers)
         {
-            if (!context.Response.Headers.ContainsKey(header.Key))
-                context.Response.Headers.Append(header.Key, header.Value);
+            if (!context.Response.Headers.ContainsKey(key: header.Key))
+            {
+                context.Response.Headers.Append(key: header.Key, value: header.Value);
+            }
         }
 
         context.Response.ContentType = response.ContentType;
@@ -34,13 +40,9 @@ public class WebDavMiddleware
 
         if (response.HasBody)
         {
-            context.Response.Headers.Append("Content-Length", response.Body.Length.ToString());
-            await response.Body.CopyToAsync(context.Response.Body);
+            context.Response.Headers.Append(key: "Content-Length", value: response.Body.Length.ToString());
+            await response.Body.CopyToAsync(destination: context.Response.Body);
             response.Body.Close();
         }
     }
 }
-
-
-
-

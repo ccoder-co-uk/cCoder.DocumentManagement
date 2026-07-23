@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -16,14 +20,5 @@ public class DmsProcessingRequest
     public string ContentType { get; init; } = string.Empty;
     public Stream Body { get; init; } = Stream.Null;
     public Dictionary<string, string[]> Headers { get; init; } =
-        new(StringComparer.OrdinalIgnoreCase);
+        new(comparer: StringComparer.OrdinalIgnoreCase);
 }
-
-
-
-
-
-
-
-
-

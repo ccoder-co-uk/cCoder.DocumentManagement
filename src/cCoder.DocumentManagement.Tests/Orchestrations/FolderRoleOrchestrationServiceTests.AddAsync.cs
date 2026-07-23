@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -16,27 +20,19 @@ public partial class FolderRoleOrchestrationServiceTests
     {
         // Given
         FolderRole entity = CreateRandomFolderRole();
-        folderRoleProcessingServiceMock.Setup(x => x.AddAsync(entity)).ReturnsAsync(entity);
+        folderRoleProcessingServiceMock.Setup(expression: x => x.AddAsync(entity)).ReturnsAsync(value: entity);
 
         folderRoleEventProcessingServiceMock
-            .Setup(x => x.RaiseFolderRoleAddEventAsync(entity))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFolderRoleAddEventAsync(entity))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        FolderRole result = await orchestrationService.AddAsync(entity);
+        FolderRole result = await orchestrationService.AddAsync(entity: entity);
 
         // Then
-        result.Should().BeSameAs(entity);
-        folderRoleProcessingServiceMock.Verify(x => x.AddAsync(entity), Times.Once);
-        folderRoleEventProcessingServiceMock.Verify(x => x.RaiseFolderRoleAddEventAsync(entity), Times.Once);
+        result.Should().BeSameAs(expected: entity);
+        folderRoleProcessingServiceMock.Verify(expression: x => x.AddAsync(entity), times: Times.Once);
+        folderRoleEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderRoleAddEventAsync(entity), times: Times.Once);
     }
 
 }
-
-
-
-
-
-
-
-

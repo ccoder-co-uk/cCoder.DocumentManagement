@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -21,41 +25,33 @@ public partial class FolderEventServiceTests
 
         folderEventBrokerMock
             .Setup(
-                x =>
+                expression: x =>
                     x.RaiseFolderAddEventAsync(
                         It.IsAny<EventMessage<cCoder.Data.Models.DMS.Folder>>()
                     )
             )
-            .Callback<EventMessage<cCoder.Data.Models.DMS.Folder>>(message => actualMessage = message)
-            .Returns(ValueTask.CompletedTask);
+            .Callback<EventMessage<cCoder.Data.Models.DMS.Folder>>(action: message => actualMessage = message)
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFolderAddEventAsync(entity);
+        await service.RaiseFolderAddEventAsync(entity: entity);
 
         // Then
         actualMessage.Should().NotBeNull();
-        actualMessage!.Data.Id.Should().Be(entity.Id);
-        actualMessage.Data.AppId.Should().Be(entity.AppId);
-        actualMessage.Data.Name.Should().Be(entity.Name);
-        actualMessage.Data.Path.Should().Be(entity.Path);
+        actualMessage!.Data.Id.Should().Be(expected: entity.Id);
+        actualMessage.Data.AppId.Should().Be(expected: entity.AppId);
+        actualMessage.Data.Name.Should().Be(expected: entity.Name);
+        actualMessage.Data.Path.Should().Be(expected: entity.Path);
         actualMessage.AuthInfo.Should().NotBeNull();
-        actualMessage.AuthInfo.SSOUserId.Should().Be(CurrentUserId);
+        actualMessage.AuthInfo.SSOUserId.Should().Be(expected: CurrentUserId);
         folderEventBrokerMock.Verify(
-            x =>
+            expression: x =>
                 x.RaiseFolderAddEventAsync(
                     It.IsAny<EventMessage<cCoder.Data.Models.DMS.Folder>>()
                 ),
-            Times.Once
+            times: Times.Once
         );
         folderEventBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

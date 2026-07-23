@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -22,22 +26,22 @@ public partial class WebDavProcessingServiceTests
 
     public WebDavProcessingServiceTests()
     {
-        fileServiceMock = new Mock<IFileService>(MockBehavior.Strict);
-        folderServiceMock = new Mock<IFolderService>(MockBehavior.Strict);
-        dmsInstanceServiceMock = new Mock<IDmsInstanceService>(MockBehavior.Strict);
+        fileServiceMock = new Mock<IFileService>(behavior: MockBehavior.Strict);
+        folderServiceMock = new Mock<IFolderService>(behavior: MockBehavior.Strict);
+        dmsInstanceServiceMock = new Mock<IDmsInstanceService>(behavior: MockBehavior.Strict);
         fileServiceMock = new();
         folderServiceMock = new();
         dmsInstanceServiceMock = new();
         loggerMock = new();
 
-        Config config = new() { Settings = new Dictionary<string, string> { ["sslPort"] = "443" } };
+        Config config = new() { Settings = new Dictionary<string, string> { [key: "sslPort"] = "443" } };
 
         webDavProcessingService = new WebDavProcessingService(
-            fileServiceMock.Object,
-            folderServiceMock.Object,
-            dmsInstanceServiceMock.Object,
-            config,
-            loggerMock.Object
+            fileService: fileServiceMock.Object,
+            folderService: folderServiceMock.Object,
+            dmsInstanceService: dmsInstanceServiceMock.Object,
+            config: config,
+            log: loggerMock.Object
         );
     }
 
@@ -67,19 +71,19 @@ public partial class WebDavProcessingServiceTests
             Host = "example.test",
             QueryString = queryString,
             ContentType = contentType,
-            Body = body ?? new MemoryStream([]),
+            Body = body ?? new MemoryStream(buffer: []),
             Headers =
                 headers
-                ?? new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
+                ?? new Dictionary<string, string[]>(comparer: StringComparer.OrdinalIgnoreCase)
                 {
-                    ["Authorization"] = ["Basic token"],
+                    [key: "Authorization"] = ["Basic token"],
                 },
         };
 
     private static string ReadBodyText(Stream stream)
     {
         stream.Position = 0;
-        using StreamReader reader = new(stream, leaveOpen: true);
+        using StreamReader reader = new(stream: stream, leaveOpen: true);
         string text = reader.ReadToEnd();
         stream.Position = 0;
         return text;
@@ -89,7 +93,7 @@ public partial class WebDavProcessingServiceTests
     {
         stream.Position = 0;
         using MemoryStream copy = new();
-        stream.CopyTo(copy);
+        stream.CopyTo(destination: copy);
         stream.Position = 0;
         return copy.ToArray();
     }
@@ -105,7 +109,7 @@ public partial class WebDavProcessingServiceTests
             Id = Guid.NewGuid(),
             AppId = appId,
             ParentId = parentId == Guid.Empty ? null : parentId,
-            Name = name ?? (path.Length == 0 ? "Root" : path.Split('/').Last()),
+            Name = name ?? (path.Length == 0 ? "Root" : path.Split(separator: '/').Last()),
             Path = path,
             Files = [],
             SubFolders = [],
@@ -118,7 +122,7 @@ public partial class WebDavProcessingServiceTests
             Id = Guid.NewGuid(),
             FolderId = folder.Id,
             Folder = folder,
-            Name = path.Split('/').Last(),
+            Name = path.Split(separator: '/').Last(),
             Path = path,
             MimeType = "text/plain",
             CreatedOn = DateTimeOffset.UtcNow,
@@ -135,13 +139,3 @@ public partial class WebDavProcessingServiceTests
             ],
         };
 }
-
-
-
-
-
-
-
-
-
-

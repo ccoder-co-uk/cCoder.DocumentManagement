@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -10,29 +14,29 @@ internal class FolderRoleOrchestrationService(IFolderRoleProcessingService proce
 {
     public IQueryable<FolderRole> GetAll(bool ignoreFilters = false)
     {
-        return processingService.GetAll(ignoreFilters);
+        return processingService.GetAll(ignoreFilters: ignoreFilters);
     }
 
     public async ValueTask<FolderRole> AddAsync(FolderRole entity)
     {
-        FolderRole result = await processingService.AddAsync(entity);
-        await eventService.RaiseFolderRoleAddEventAsync(result);
+        FolderRole result = await processingService.AddAsync(entity: entity);
+        await eventService.RaiseFolderRoleAddEventAsync(entity: result);
         return result;
     }
 
     public async ValueTask DeleteAsync(FolderRole entity)
     {
-        await eventService.RaiseFolderRoleDeleteEventAsync(entity);
-        await processingService.DeleteAsync(entity);
+        await eventService.RaiseFolderRoleDeleteEventAsync(entity: entity);
+        await processingService.DeleteAsync(entity: entity);
     }
 
     public ValueTask<IEnumerable<Result<FolderRole>>> AddOrUpdate(IEnumerable<FolderRole> items)
     {
-        return processingService.AddOrUpdate(items);
+        return processingService.AddOrUpdate(items: items);
     }
 
     public ValueTask DeleteAllAsync(IEnumerable<FolderRole> items)
     {
-        return processingService.DeleteAllAsync(items);
+        return processingService.DeleteAllAsync(items: items);
     }
 }

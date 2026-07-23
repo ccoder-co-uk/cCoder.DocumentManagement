@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 namespace cCoder.DocumentManagement.Services.Processings;
 
 public class DmsProcessingResponse
@@ -8,8 +12,3 @@ public class DmsProcessingResponse
     public bool HasBody { get; init; }
     public List<KeyValuePair<string, string>> Headers { get; init; } = [];
 }
-
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data.Models.CMS;
 using cCoder.DocumentManagement.Brokers.Storage;
 
@@ -14,21 +18,23 @@ internal class CurrentAppResolver(
         string requestPath = httpContext?.Request.Path.Value ?? string.Empty;
 
         if (
-            requestPath.Contains("/webdav", StringComparison.OrdinalIgnoreCase)
-            && requestPath.Contains("Core/App(", StringComparison.OrdinalIgnoreCase)
+            requestPath.Contains(value: "/webdav", comparisonType: StringComparison.OrdinalIgnoreCase)
+            && requestPath.Contains(value: "Core/App(", comparisonType: StringComparison.OrdinalIgnoreCase)
         )
         {
-            int start = requestPath.IndexOf("Core/App(", StringComparison.OrdinalIgnoreCase) + 9;
-            int end = requestPath.IndexOf(')', start);
+            int start = requestPath.IndexOf(value: "Core/App(", comparisonType: StringComparison.OrdinalIgnoreCase) + 9;
+            int end = requestPath.IndexOf(value: ')', startIndex: start);
 
-            if (end > start && int.TryParse(requestPath[start..end], out int appId))
-                return ToResolvedApp(appBroker.GetAppById(appId))
-                    ?? throw new InvalidOperationException($"Unable to resolve app '{appId}'.");
+            if (end > start && int.TryParse(s: requestPath[start..end], result: out int appId))
+            {
+                return ToResolvedApp(app: appBroker.GetAppById(appId))
+                    ?? throw new InvalidOperationException(message: $"Unable to resolve app '{appId}'.");
+            }
         }
 
         string host = httpContext?.Request.Host.Host ?? string.Empty;
-        return ToResolvedApp(appBroker.GetAppByDomain(host))
-            ?? throw new InvalidOperationException($"Unable to resolve current app for host '{host}'.");
+        return ToResolvedApp(app: appBroker.GetAppByDomain(host))
+            ?? throw new InvalidOperationException(message: $"Unable to resolve current app for host '{host}'.");
     }
 
     private static App ToResolvedApp(App app) =>
@@ -47,6 +53,3 @@ internal class CurrentAppResolver(
                 Folders = [],
             };
 }
-
-
-

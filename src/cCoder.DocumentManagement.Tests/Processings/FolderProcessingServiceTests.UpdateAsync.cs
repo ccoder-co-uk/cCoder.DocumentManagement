@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -19,20 +23,22 @@ public partial class FolderProcessingServiceTests
         // Then
         // Given
         authorizationBrokerMock
-            .Setup(x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
-            .Callback((int? appId, string privilege) =>
+            .Setup(expression: x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
+            .Callback(action: (int? appId, string privilege) =>
             {
                 if (!(currentUser?.Can(appId, privilege) ?? false))
+                {
                     throw new SecurityException("Access Denied!");
+                }
             });
 
         authorizationBrokerMock
-            .Setup(x => x.IsAdminOfApp(It.IsAny<int>()))
-            .Returns((int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
+            .Setup(expression: x => x.IsAdminOfApp(It.IsAny<int>()))
+            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
 
-        authorizationBrokerMock.Setup(x => x.GetCurrentUser()).Returns(() => currentUser);
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
 
-        User actor = ToLocalUser(TestUsers.WithPrivilege("app_admin", 1));
+        User actor = ToLocalUser(user: TestUsers.WithPrivilege("app_admin", 1));
         currentUser = actor;
         Folder dbFolder = CreateRandomFolder();
         dbFolder.Name = "Docs";
@@ -52,25 +58,25 @@ public partial class FolderProcessingServiceTests
             Files = [],
             SubFolders = [],
         };
-        folderServiceMock.Setup(x => x.GetForUpdate(folder.Id, true)).Returns(dbFolder);
-        folderServiceMock.Setup(x => x.GetAll()).Returns(new[] { dbFolder }.AsQueryable());
-        folderServiceMock.Setup(x => x.UpdateAsync(It.IsAny<Folder>())).ReturnsAsync((Folder item) => item);
+        folderServiceMock.Setup(expression: x => x.GetForUpdate(folder.Id, true)).Returns(value: dbFolder);
+        folderServiceMock.Setup(expression: x => x.GetAll()).Returns(value: new[] { dbFolder }.AsQueryable());
+        folderServiceMock.Setup(expression: x => x.UpdateAsync(It.IsAny<Folder>())).ReturnsAsync(valueFunction: (Folder item) => item);
         // When
-        Folder result = await folderProcessingService.UpdateAsync(folder);
+        Folder result = await folderProcessingService.UpdateAsync(folder: folder);
 
         // Then
         result.Should().NotBeNull();
-        result.Id.Should().Be(folder.Id);
-        result.AppId.Should().Be(folder.AppId);
-        result.Name.Should().Be(folder.Name);
-        result.Path.Should().Be(folder.Path);
-        result.ParentId.Should().Be(folder.ParentId);
-        folderServiceMock.Verify(x => x.GetForUpdate(folder.Id, true), Times.Once);
-        folderServiceMock.Verify(x => x.GetAll(), Times.Once);
-        folderServiceMock.Verify(x => x.UpdateAsync(It.IsAny<Folder>()), Times.Once);
+        result.Id.Should().Be(expected: folder.Id);
+        result.AppId.Should().Be(expected: folder.AppId);
+        result.Name.Should().Be(expected: folder.Name);
+        result.Path.Should().Be(expected: folder.Path);
+        result.ParentId.Should().Be(expected: folder.ParentId);
+        folderServiceMock.Verify(expression: x => x.GetForUpdate(folder.Id, true), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetAll(), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.UpdateAsync(It.IsAny<Folder>()), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         loggerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(x => x.GetCurrentUser(), Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -82,20 +88,22 @@ public partial class FolderProcessingServiceTests
         // Then
         // Given
         authorizationBrokerMock
-            .Setup(x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
-            .Callback((int? appId, string privilege) =>
+            .Setup(expression: x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
+            .Callback(action: (int? appId, string privilege) =>
             {
                 if (!(currentUser?.Can(appId, privilege) ?? false))
+                {
                     throw new SecurityException("Access Denied!");
+                }
             });
 
         authorizationBrokerMock
-            .Setup(x => x.IsAdminOfApp(It.IsAny<int>()))
-            .Returns((int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
+            .Setup(expression: x => x.IsAdminOfApp(It.IsAny<int>()))
+            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
 
-        authorizationBrokerMock.Setup(x => x.GetCurrentUser()).Returns(() => currentUser);
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
 
-        currentUser = ToLocalUser(TestUsers.WithoutPrivileges());
+        currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
         Folder dbFolder = CreateRandomFolder();
         dbFolder.Name = "Docs";
         dbFolder.Path = "Docs";
@@ -114,29 +122,18 @@ public partial class FolderProcessingServiceTests
             Files = [],
             SubFolders = [],
         };
-        folderServiceMock.Setup(x => x.GetForUpdate(folder.Id, true)).Returns(dbFolder);
+        folderServiceMock.Setup(expression: x => x.GetForUpdate(folder.Id, true)).Returns(value: dbFolder);
 
         // When
-        Func<Task> act = async () => await folderProcessingService.UpdateAsync(folder);
+        Func<Task> act = async () => await folderProcessingService.UpdateAsync(folder: folder);
 
         // Then
-        await act.Should().ThrowAsync<SecurityException>().WithMessage("Access Denied!");
-        folderServiceMock.Verify(x => x.GetForUpdate(folder.Id, true), Times.Once);
+        await act.Should().ThrowAsync<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
+        folderServiceMock.Verify(expression: x => x.GetForUpdate(folder.Id, true), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         loggerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(x => x.GetCurrentUser(), Times.Exactly(2));
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Exactly(2));
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-

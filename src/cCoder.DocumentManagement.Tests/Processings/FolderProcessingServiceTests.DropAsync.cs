@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -17,8 +21,8 @@ public partial class FolderProcessingServiceTests
     public async Task ShouldDeleteFolderWhenUserCanDeleteForDropAsync()
     {
         // Given
-        currentUser = ToLocalUser(TestUsers.WithPrivilege("folder_delete", 1));
-        authorizationBrokerMock.Setup(x => x.GetCurrentUser()).Returns(() => currentUser);
+        currentUser = ToLocalUser(user: TestUsers.WithPrivilege("folder_delete", 1));
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
 
         App app = CreateRandomAppForTests();
         Folder folder = CreateRandomFolder();
@@ -40,18 +44,18 @@ public partial class FolderProcessingServiceTests
         ];
 
         folderServiceMock
-            .Setup(x => x.GetByPathWithRoles(app.Id, folder.Path, false))
-            .Returns(folder);
-        folderServiceMock.Setup(x => x.DeleteAsync(folder.Id)).Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.GetByPathWithRoles(app.Id, folder.Path, false))
+            .Returns(value: folder);
+        folderServiceMock.Setup(expression: x => x.DeleteAsync(folder.Id)).Returns(value: ValueTask.CompletedTask);
 
         // When
-        await folderProcessingService.DropAsync(app, new DmsPath(folder.Path));
+        await folderProcessingService.DropAsync(app: app, path: new DmsPath(folder.Path));
 
         // Then
-        folderServiceMock.Verify(x => x.GetByPathWithRoles(app.Id, folder.Path, false), Times.Once);
-        folderServiceMock.Verify(x => x.DeleteAsync(folder.Id), Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(app.Id, folder.Path, false), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.DeleteAsync(folder.Id), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(x => x.GetCurrentUser(), Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -59,23 +63,22 @@ public partial class FolderProcessingServiceTests
     public async Task ShouldThrowSecurityExceptionWhenFolderCannotBeDeletedForDropAsync()
     {
         // Given
-        currentUser = ToLocalUser(TestUsers.WithoutPrivileges());
-        authorizationBrokerMock.Setup(x => x.GetCurrentUser()).Returns(() => currentUser);
+        currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser()).Returns(valueFunction: () => currentUser);
 
         App app = CreateRandomAppForTests();
-        DmsPath path = new("docs");
+        DmsPath path = new(path: "docs");
         folderServiceMock
-            .Setup(x => x.GetByPathWithRoles(app.Id, path.Lowered, false))
-            .Returns((Folder)null);
+            .Setup(expression: x => x.GetByPathWithRoles(app.Id, path.Lowered, false))
+            .Returns(value: (Folder)null);
 
         // When
-        Func<Task> act = async () => await folderProcessingService.DropAsync(app, path);
+        Func<Task> act = async () => await folderProcessingService.DropAsync(app: app, path: path);
 
         // Then
-        await act.Should().ThrowAsync<SecurityException>().WithMessage("Access Denied!");
-        folderServiceMock.Verify(x => x.GetByPathWithRoles(app.Id, path.Lowered, false), Times.Once);
+        await act.Should().ThrowAsync<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
+        folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(app.Id, path.Lowered, false), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 }
-

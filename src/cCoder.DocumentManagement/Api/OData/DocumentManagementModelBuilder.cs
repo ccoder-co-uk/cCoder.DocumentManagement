@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Linq.Expressions;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
@@ -11,7 +15,7 @@ namespace cCoder.DocumentManagement.Api.OData;
 internal class DocumentManagementModelBuilder : ODataModelBuilder
 {
     public DocumentManagementModelBuilder(ODataConventionModelBuilder builder = null)
-        : base(builder)
+        : base(builder: builder)
     {
     }
 
@@ -42,8 +46,8 @@ internal class DocumentManagementModelBuilder : ODataModelBuilder
         AddSet<FileModel, Guid>();
         AddSet<Folder, Guid>();
         AddSet<FileContent, Guid>();
-        AddJoinSet((Expression<Func<FolderRole, object>>)((FolderRole i) => new { i.FolderId, i.RoleId }));
+        AddJoinSet(key: (Expression<Func<FolderRole, object>>)((FolderRole i) => new { i.FolderId, i.RoleId }));
         base.Builder.Namespace = "";
-        base.Builder.EntityType<Folder>().Collection.Action("Copy").ReturnsCollection<Result<Guid?>>();
+        base.Builder.EntityType<Folder>().Collection.Action(name: "Copy").ReturnsCollection<Result<Guid?>>();
     }
 }

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Packaging;
@@ -38,12 +42,12 @@ public static partial class IServiceCollectionExtensions
         this IServiceCollection services,
         Action<DocumentManagementConfiguration> configure = null,
         ODataConventionModelBuilder builder = null) =>
-        services.AddConfiguredDocumentManagementWeb((_, configuration) => configure?.Invoke(configuration), builder);
+        services.AddConfiguredDocumentManagementWeb(configure: (_, configuration) => configure?.Invoke(configuration), builder: builder);
 
     public static void AddDocumentManagementHostedServices(
         this IServiceCollection services,
         Action<DocumentManagementConfiguration> configure = null) =>
-        services.AddConfiguredDocumentManagement((_, configuration) => configure?.Invoke(configuration));
+        services.AddConfiguredDocumentManagement(configure: (_, configuration) => configure?.Invoke(configuration));
 
     private static void AddDocumentManagement(this IServiceCollection services)
     {

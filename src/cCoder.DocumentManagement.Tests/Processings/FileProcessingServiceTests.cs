@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -15,7 +19,7 @@ public partial class FileProcessingServiceTests
     private readonly Mock<IFileService> fileServiceMock = new();
     private readonly Mock<IFolderService> folderServiceMock = new();
     private readonly Mock<IFileContentService> fileContentServiceMock = new();
-    private User currentUser = ToLocalUser(TestUsers.WithoutPrivileges());
+    private User currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
     private readonly Mock<IAuthorizationBroker> authorizationBrokerMock = new();
     private readonly Mock<IFileContentProcessingService> fileContentProcessingServiceMock = new();
     private readonly FileProcessingService fileProcessingService;
@@ -23,11 +27,11 @@ public partial class FileProcessingServiceTests
     public FileProcessingServiceTests()
     {
         fileProcessingService = new FileProcessingService(
-            fileServiceMock.Object,
-            folderServiceMock.Object,
-            fileContentServiceMock.Object,
-            fileContentProcessingServiceMock.Object,
-            authorizationBrokerMock.Object
+            service: fileServiceMock.Object,
+            folderService: folderServiceMock.Object,
+            fileContentService: fileContentServiceMock.Object,
+            fileContentProcessingService: fileContentProcessingServiceMock.Object,
+            authorizationBroker: authorizationBrokerMock.Object
         );
     }
 
@@ -67,7 +71,7 @@ public partial class FileProcessingServiceTests
                 Email = user.Email,
                 IsActive = user.IsActive,
                 Roles = user.Roles?
-                    .Select(role => new UserRole
+                    .Select(selector: role => new UserRole
                     {
                         UserId = role.UserId,
                         RoleId = role.RoleId,
@@ -85,19 +89,3 @@ public partial class FileProcessingServiceTests
                     .ToArray(),
             };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

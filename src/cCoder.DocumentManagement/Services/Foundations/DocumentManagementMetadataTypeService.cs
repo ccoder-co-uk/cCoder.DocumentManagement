@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Api.OData;
 using cCoder.Data.Models.DMS;
 using DmsFile = cCoder.Data.Models.DMS.File;
@@ -25,9 +29,8 @@ internal sealed class DocumentManagementMetadataTypeService : IDocumentManagemen
     ];
 
     private static ExtendedMetadataContainer Entity<T>() =>
-        new(typeof(T), isEntity: true, hasEndpoint: true)
+        new(type: typeof(T), isEntity: true, hasEndpoint: true)
         {
             Category = "DocumentManagement",
         };
 }
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
@@ -14,19 +18,19 @@ public partial class WebDavProcessingServiceTests
     public async Task ShouldReturnChallengeResponseWhenDmsInstanceThrowsSecurityException()
     {
         // Given
-        DmsProcessingRequest request = CreateRequest("DELETE", "Core/App(7)/DAV/folder/file.txt");
+        DmsProcessingRequest request = CreateRequest(method: "DELETE", requestPath: "Core/App(7)/DAV/folder/file.txt");
 
         dmsInstanceServiceMock
-            .Setup(x => x.DropAsync(It.IsAny<DmsPath>(), 0))
-            .Throws(new SecurityException("Denied"));
+            .Setup(expression: x => x.DropAsync(It.IsAny<DmsPath>(), 0))
+            .Throws(exception: new SecurityException("Denied"));
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(204);
-        response.Headers.Should().Contain(header => header.Key == "WWW-Authenticate");
-        dmsInstanceServiceMock.Verify(x => x.DropAsync(It.IsAny<DmsPath>(), 0), Times.Once);
+        response.StatusCode.Should().Be(expected: 204);
+        response.Headers.Should().Contain(predicate: header => header.Key == "WWW-Authenticate");
+        dmsInstanceServiceMock.Verify(expression: x => x.DropAsync(It.IsAny<DmsPath>(), 0), times: Times.Once);
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 
@@ -34,24 +38,17 @@ public partial class WebDavProcessingServiceTests
     public async Task ShouldReturnMessageBodyWhenMethodIsUnsupported()
     {
         // Given
-        DmsProcessingRequest request = CreateRequest("TRACE", "Core/App(7)/DAV/folder/file.txt");
+        DmsProcessingRequest request = CreateRequest(method: "TRACE", requestPath: "Core/App(7)/DAV/folder/file.txt");
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request);
-        string body = ReadBodyText(response.Body);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
+        string body = ReadBodyText(stream: response.Body);
 
         // Then
-        response.StatusCode.Should().Be(200);
-        body.Should().Contain("Unsupported WebDAV method: TRACE");
+        response.StatusCode.Should().Be(expected: 200);
+        body.Should().Contain(expected: "Unsupported WebDAV method: TRACE");
         dmsInstanceServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
     }
 }
-
-
-
-
-
-
-

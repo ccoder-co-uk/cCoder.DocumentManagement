@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using cCoder.DocumentManagement.Brokers.Events;
 using Moq;
@@ -14,23 +18,14 @@ public partial class FileEventServiceTests
 
     public FileEventServiceTests()
     {
-        fileEventBrokerMock = new Mock<IFileEventBroker>(MockBehavior.Strict);
-        authInfoMock = new Mock<ICoreAuthInfo>(MockBehavior.Strict);
-        fileEventBrokerMock = new(MockBehavior.Strict);
+        fileEventBrokerMock = new Mock<IFileEventBroker>(behavior: MockBehavior.Strict);
+        authInfoMock = new Mock<ICoreAuthInfo>(behavior: MockBehavior.Strict);
+        fileEventBrokerMock = new(behavior: MockBehavior.Strict);
         authInfoMock = new();
-        authInfoMock.SetupGet(x => x.SSOUserId).Returns(CurrentUserId);
+        authInfoMock.SetupGet(expression: x => x.SSOUserId).Returns(value: CurrentUserId);
         service = new cCoder.DocumentManagement.Services.Foundations.Events.FileEventService(
-            fileEventBrokerMock.Object,
-            authInfoMock.Object
+            fileEventBroker: fileEventBrokerMock.Object,
+            authInfo: authInfoMock.Object
         );
     }
 }
-
-
-
-
-
-
-
-
-

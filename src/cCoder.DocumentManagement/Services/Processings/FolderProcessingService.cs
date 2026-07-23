@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.IO.Compression;
 using System.Security;
 using cCoder.DocumentManagement.Brokers;
@@ -17,33 +21,33 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
 
     public Folder Get(Guid id)
     {
-        return service.Get(id);
+        return service.Get(id: id);
     }
 
     public IQueryable<Folder> GetAll(bool ignoreFilters = false)
     {
-        return service.GetAll(ignoreFilters);
+        return service.GetAll(ignoreFilters: ignoreFilters);
     }
 
     public async ValueTask<List<Result<Guid?>>> CopyAsync(string source, string destination, int sourceAppId, int destAppId)
     {
-        Folder sourceFolder = service.GetByPathWithRolesAndFilesAndContents(sourceAppId, source.ToLower(), ignoreFilters: true);
-        Folder destinationFolder = service.GetByPathWithRolesAndFilesAndContents(destAppId, destination.ToLower(), ignoreFilters: true);
+        Folder sourceFolder = service.GetByPathWithRolesAndFilesAndContents(appId: sourceAppId, path: source.ToLower(), ignoreFilters: true);
+        Folder destinationFolder = service.GetByPathWithRolesAndFilesAndContents(appId: destAppId, path: destination.ToLower(), ignoreFilters: true);
         if (sourceFolder == null)
         {
-            throw new InvalidOperationException("Source folder doesn't exist.");
+            throw new InvalidOperationException(message: "Source folder doesn't exist.");
         }
-        if ((!sourceFolder.UserCan(User, "file_update") || !sourceFolder.UserCan(User, "file_create")) && !User.IsAdminOfApp(destAppId))
+        if ((!sourceFolder.UserCan(user: User, privilege: "file_update") || !sourceFolder.UserCan(user: User, privilege: "file_create")) && !User.IsAdminOfApp(appId: destAppId))
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
         if (destinationFolder == null)
         {
-            throw new InvalidOperationException("Destination folder doesn't exist.");
+            throw new InvalidOperationException(message: "Destination folder doesn't exist.");
         }
-        if ((!destinationFolder.UserCan(User, "file_update") || !destinationFolder.UserCan(User, "file_create")) && !User.IsAdminOfApp(destAppId))
+        if ((!destinationFolder.UserCan(user: User, privilege: "file_update") || !destinationFolder.UserCan(user: User, privilege: "file_create")) && !User.IsAdminOfApp(appId: destAppId))
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
         App destinationApp = new App
         {
@@ -54,11 +58,11 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         cCoder.Data.Models.DMS.File[] array = sourceFiles;
         foreach (cCoder.Data.Models.DMS.File entry in array)
         {
-            using MemoryStream sourceStream = new MemoryStream(entry.Contents.OrderBy((FileContent k) => k.Version).FirstOrDefault().RawData);
+            using MemoryStream sourceStream = new MemoryStream(buffer: entry.Contents.OrderBy((FileContent k) => k.Version).FirstOrDefault().RawData);
             try
             {
-                await fileProcessingService.SaveAsync(destinationApp, new cCoder.DocumentManagement.Models.Path(destinationFolder.Path + "/" + entry.Name), sourceStream);
-                results.Add(new Result<Guid?>
+                await fileProcessingService.SaveAsync(app: destinationApp, path: new cCoder.DocumentManagement.Models.Path(destinationFolder.Path + "/" + entry.Name), content: sourceStream);
+                results.Add(item: new Result<Guid?>
                 {
                     Item = entry.Id,
                     Success = true,
@@ -68,7 +72,7 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
             catch (Exception ex)
             {
                 Exception ex2 = ex;
-                results.Add(new Result<Guid?>
+                results.Add(item: new Result<Guid?>
                 {
                     Item = null,
                     Success = false,
@@ -84,10 +88,10 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
     {
         if (newFolder.ParentId.HasValue)
         {
-            Folder parent = Get(newFolder.ParentId.Value);
+            Folder parent = Get(id: newFolder.ParentId.Value);
             if (parent == null)
             {
-                throw new SecurityException("Access Denied!");
+                throw new SecurityException(message: "Access Denied!");
             }
             newFolder.Path = parent.Path + "/" + newFolder.Name;
         }
@@ -95,7 +99,7 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         {
             newFolder.Path = newFolder.Name;
         }
-        Folder existingFolder = GetAll(ignoreFilters: true).FirstOrDefault((Folder folder) => folder.AppId == newFolder.AppId && folder.Path.ToLower() == newFolder.Path.ToLower());
+        Folder existingFolder = GetAll(ignoreFilters: true).FirstOrDefault(predicate: (Folder folder) => folder.AppId == newFolder.AppId && folder.Path.ToLower() == newFolder.Path.ToLower());
         if (existingFolder != null)
         {
             return existingFolder;
@@ -104,76 +108,76 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         {
             Id = newFolder.AppId
         };
-        await SaveAsync(app, new cCoder.DocumentManagement.Models.Path(newFolder.Path));
-        return GetAll(ignoreFilters: true).FirstOrDefault((Folder folder) => folder.AppId == newFolder.AppId && folder.Path.ToLower() == newFolder.Path.ToLower());
+        await SaveAsync(app: app, path: new cCoder.DocumentManagement.Models.Path(newFolder.Path));
+        return GetAll(ignoreFilters: true).FirstOrDefault(predicate: (Folder folder) => folder.AppId == newFolder.AppId && folder.Path.ToLower() == newFolder.Path.ToLower());
     }
 
     private async ValueTask<Folder> AddForAppAsync(Folder newFolder)
     {
         if (newFolder.ParentId.HasValue)
         {
-            Folder parent = service.GetWithRoles(newFolder.ParentId.Value, ignoreFilters: true);
+            Folder parent = service.GetWithRoles(id: newFolder.ParentId.Value, ignoreFilters: true);
             if (parent == null)
             {
-                throw new InvalidOperationException("Parent folder doesn't exist.");
+                throw new InvalidOperationException(message: "Parent folder doesn't exist.");
             }
 
             newFolder.Path = parent.Path + "/" + newFolder.Name;
         }
-        else if (string.IsNullOrWhiteSpace(newFolder.Path))
+        else if (string.IsNullOrWhiteSpace(value: newFolder.Path))
         {
             newFolder.Path = newFolder.Name;
         }
 
         Folder existingFolder = GetAll(ignoreFilters: true)
-            .FirstOrDefault(folder =>
+            .FirstOrDefault(predicate: folder =>
                 folder.AppId == newFolder.AppId
                 && folder.Path.ToLower() == newFolder.Path.ToLower());
 
-        return existingFolder ?? await service.AddForPathBuildAsync(newFolder);
+        return existingFolder ?? await service.AddForPathBuildAsync(folder: newFolder);
     }
 
     public async ValueTask DeleteAsync(Guid id)
     {
-        Folder folder = service.GetWithRoles(id, ignoreFilters: true);
-        if (folder == null || (!User.IsAdminOfApp(folder.AppId) && !folder.UserCan(User, "folder_delete")))
+        Folder folder = service.GetWithRoles(id: id, ignoreFilters: true);
+        if (folder == null || (!User.IsAdminOfApp(appId: folder.AppId) && !folder.UserCan(user: User, privilege: "folder_delete")))
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
-        await service.DeleteAsync(id);
+        await service.DeleteAsync(id: id);
     }
 
     public async ValueTask<Folder> UpdateAsync(Folder folder)
     {
-        Folder dbVersion = service.GetForUpdate(folder.Id, ignoreFilters: true);
-        if (dbVersion != null && (User.IsAdminOfApp(dbVersion.AppId) || dbVersion.UserCan(User, "folder_update")))
+        Folder dbVersion = service.GetForUpdate(id: folder.Id, ignoreFilters: true);
+        if (dbVersion != null && (User.IsAdminOfApp(appId: dbVersion.AppId) || dbVersion.UserCan(user: User, privilege: "folder_update")))
         {
-            return await UpdateInternalAsync(dbVersion, folder, authorize: true);
+            return await UpdateInternalAsync(dbVersion: dbVersion, folder: folder, authorize: true);
         }
-        throw new SecurityException("Access Denied!");
+        throw new SecurityException(message: "Access Denied!");
     }
 
     private async ValueTask<Folder> UpdateForAppAsync(Folder folder)
     {
-        Folder dbVersion = service.GetForUpdate(folder.Id, ignoreFilters: true)
-            ?? throw new InvalidOperationException("Folder doesn't exist.");
+        Folder dbVersion = service.GetForUpdate(id: folder.Id, ignoreFilters: true)
+            ?? throw new InvalidOperationException(message: "Folder doesn't exist.");
 
-        return await UpdateInternalAsync(dbVersion, folder, authorize: false);
+        return await UpdateInternalAsync(dbVersion: dbVersion, folder: folder, authorize: false);
     }
 
     public async ValueTask HandleFolderDeleteEventAsync(Folder folder)
     {
-        Folder dbFolder = GetAll(ignoreFilters: true).FirstOrDefault((Folder foundFolder) => foundFolder.Id == folder.Id);
+        Folder dbFolder = GetAll(ignoreFilters: true).FirstOrDefault(predicate: (Folder foundFolder) => foundFolder.Id == folder.Id);
         if (dbFolder != null)
         {
             string folderPathPrefix = dbFolder.Path + "/";
             Guid[] folderIds = (from foundFolder in GetAll(ignoreFilters: true)
-                                where foundFolder.Path == dbFolder.Path || foundFolder.Path.StartsWith(folderPathPrefix)
+                                where foundFolder.Path == dbFolder.Path || foundFolder.Path.StartsWith(value: folderPathPrefix)
                                 select foundFolder.Id).ToArray();
-            Guid[] fileIds = fileService.GetIdsByFolderIds(folderIds, ignoreFilters: true);
+            Guid[] fileIds = fileService.GetIdsByFolderIds(folderIds: folderIds, ignoreFilters: true);
             if (fileIds.Length != 0)
             {
-                await fileContentService.DeleteAllForFilesAsync(fileIds);
+                await fileContentService.DeleteAllForFilesAsync(fileIds: fileIds);
             }
         }
     }
@@ -181,33 +185,33 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
     public DMSResult GetFilesZipped(App app, IEnumerable<cCoder.DocumentManagement.Models.Path> paths)
     {
         using MemoryStream memoryStream = new MemoryStream();
-        using (ZipArchive zip = new ZipArchive(memoryStream, ZipArchiveMode.Create))
+        using (ZipArchive zip = new ZipArchive(stream: memoryStream, mode: ZipArchiveMode.Create))
         {
             foreach (cCoder.DocumentManagement.Models.Path path in paths)
             {
                 if (path.IsToFile)
                 {
-                    cCoder.Data.Models.DMS.File byPathWithFolderAndContents = fileService.GetByPathWithFolderAndContents(app.Id, path.Lowered);
+                    cCoder.Data.Models.DMS.File byPathWithFolderAndContents = fileService.GetByPathWithFolderAndContents(appId: app.Id, path: path.Lowered);
                     if (byPathWithFolderAndContents == null)
                     {
-                        throw new SecurityException("Access Denied!");
+                        throw new SecurityException(message: "Access Denied!");
                     }
-                    AddFileToZip(zip, byPathWithFolderAndContents, byPathWithFolderAndContents.Contents);
+                    AddFileToZip(zip: zip, file: byPathWithFolderAndContents, fileContents: byPathWithFolderAndContents.Contents);
                     continue;
                 }
-                Folder byPath = service.GetByPath(app.Id, path.Lowered);
+                Folder byPath = service.GetByPath(appId: app.Id, path: path.Lowered);
                 if (byPath == null)
                 {
-                    throw new SecurityException("Access Denied!");
+                    throw new SecurityException(message: "Access Denied!");
                 }
-                FolderArchiveData folderArchiveData = LoadFolderArchiveData(app.Id, byPath.Path, ignoreFilters: false);
-                AddFolderToZip(zip, byPath, folderArchiveData.SubFoldersByParentId, folderArchiveData.FilesByFolderId, folderArchiveData.FileContentsByFileId);
+                FolderArchiveData folderArchiveData = LoadFolderArchiveData(appId: app.Id, rootPath: byPath.Path, ignoreFilters: false);
+                AddFolderToZip(zip: zip, folder: byPath, subFoldersByParentId: folderArchiveData.SubFoldersByParentId, filesByFolderId: folderArchiveData.FilesByFolderId, fileContentsByFileId: folderArchiveData.FileContentsByFileId);
             }
         }
         return new DMSResult
         {
             MimeType = "application/zip",
-            Data = new MemoryStream(memoryStream.ToArray())
+            Data = new MemoryStream(buffer: memoryStream.ToArray())
         };
     }
 
@@ -215,43 +219,43 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
     {
         if (path.IsToFile)
         {
-            throw new InvalidOperationException("To get a file, use file processing operations.");
+            throw new InvalidOperationException(message: "To get a file, use file processing operations.");
         }
-        Folder byPath = service.GetByPath(app.Id, path.Lowered);
+        Folder byPath = service.GetByPath(appId: app.Id, path: path.Lowered);
         if (byPath == null)
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
-        FolderArchiveData folderArchiveData = LoadFolderArchiveData(app.Id, byPath.Path, ignoreFilters: false);
+        FolderArchiveData folderArchiveData = LoadFolderArchiveData(appId: app.Id, rootPath: byPath.Path, ignoreFilters: false);
         using MemoryStream memoryStream = new MemoryStream();
-        using (ZipArchive zip = new ZipArchive(memoryStream, ZipArchiveMode.Create))
+        using (ZipArchive zip = new ZipArchive(stream: memoryStream, mode: ZipArchiveMode.Create))
         {
-            AddFolderToZip(zip, byPath, folderArchiveData.SubFoldersByParentId, folderArchiveData.FilesByFolderId, folderArchiveData.FileContentsByFileId, null, search);
+            AddFolderToZip(zip: zip, folder: byPath, subFoldersByParentId: folderArchiveData.SubFoldersByParentId, filesByFolderId: folderArchiveData.FilesByFolderId, fileContentsByFileId: folderArchiveData.FileContentsByFileId, prefix: null, search: search);
         }
         return new DMSResult
         {
             MimeType = "application/zip",
-            Data = new MemoryStream(memoryStream.ToArray())
+            Data = new MemoryStream(buffer: memoryStream.ToArray())
         };
     }
 
     public async ValueTask UnpackAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content, bool ignoreArchiveRoot = false)
     {
-        Folder folder = await BuildPathAsync(app, path);
-        if (!User.IsAdminOfApp(app.Id) && !folder.UserCan(User, "file_create"))
+        Folder folder = await BuildPathAsync(app: app, folderPath: path);
+        if (!User.IsAdminOfApp(appId: app.Id) && !folder.UserCan(user: User, privilege: "file_create"))
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
-        using ZipArchive archive = new ZipArchive(content, ZipArchiveMode.Read);
-        ZipArchiveEntry rootEntry = archive.Entries.OrderBy((ZipArchiveEntry zipArchiveEntry) => zipArchiveEntry.FullName.Split('/').Length).First();
+        using ZipArchive archive = new ZipArchive(stream: content, mode: ZipArchiveMode.Read);
+        ZipArchiveEntry rootEntry = archive.Entries.OrderBy(keySelector: (ZipArchiveEntry zipArchiveEntry) => zipArchiveEntry.FullName.Split('/').Length).First();
         string ignoreSegment = rootEntry.FullName;
         foreach (ZipArchiveEntry entry in archive.Entries)
         {
             using Stream entryStream = entry.Open();
-            string destinationPath = (ignoreArchiveRoot ? (path.FullPath + "/" + entry.FullName).Replace(ignoreSegment, "") : (path.FullPath + "/" + entry.FullName));
+            string destinationPath = (ignoreArchiveRoot ? (path.FullPath + "/" + entry.FullName).Replace(oldValue: ignoreSegment, newValue: "") : (path.FullPath + "/" + entry.FullName));
             if (path.Lowered != destinationPath.ToLower())
             {
-                await fileProcessingService.SaveAsync(app, new cCoder.DocumentManagement.Models.Path(destinationPath), entryStream);
+                await fileProcessingService.SaveAsync(app: app, path: new cCoder.DocumentManagement.Models.Path(destinationPath), content: entryStream);
             }
         }
     }
@@ -264,9 +268,9 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         {
             try
             {
-                Folder savedItem = item.Id == Guid.Empty ? await AddAsync(item) : await UpdateAsync(item);
+                Folder savedItem = item.Id == Guid.Empty ? await AddAsync(newFolder: item) : await UpdateAsync(folder: item);
 
-                results.Add(new Result<Folder>
+                results.Add(item: new Result<Folder>
                 {
                     Success = true,
                     Item = savedItem,
@@ -275,7 +279,7 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
             }
             catch (Exception ex)
             {
-                results.Add(new Result<Folder>
+                results.Add(item: new Result<Folder>
                 {
                     Success = false,
                     Item = item,
@@ -296,10 +300,10 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
             try
             {
                 Folder savedItem = item.Id == Guid.Empty
-                    ? await AddForAppAsync(item)
-                    : await UpdateForAppAsync(item);
+                    ? await AddForAppAsync(newFolder: item)
+                    : await UpdateForAppAsync(folder: item);
 
-                results.Add(new Result<Folder>
+                results.Add(item: new Result<Folder>
                 {
                     Success = true,
                     Item = savedItem,
@@ -308,7 +312,7 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
             }
             catch (Exception ex)
             {
-                results.Add(new Result<Folder>
+                results.Add(item: new Result<Folder>
                 {
                     Success = false,
                     Item = item,
@@ -324,51 +328,51 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
     {
         foreach (Folder item in items)
         {
-            await DeleteAsync(item.Id);
+            await DeleteAsync(id: item.Id);
         }
     }
 
     public ValueTask DeleteByAppIdAsync(int appId) =>
-        service.DeleteAllByAppIdAsync(appId);
+        service.DeleteAllByAppIdAsync(appId: appId);
 
     public async ValueTask SaveAsync(App app, cCoder.DocumentManagement.Models.Path path)
     {
-        await BuildPathAsync(app, path);
+        await BuildPathAsync(app: app, folderPath: path);
     }
 
     public async ValueTask DropAsync(App app, cCoder.DocumentManagement.Models.Path path)
     {
-        await DropFolderAsync(app, path);
+        await DropFolderAsync(app: app, path: path);
     }
 
     public async ValueTask CopyAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
     {
         if (oldPath.IsToFile)
         {
-            throw new InvalidOperationException("To copy a file, use file processing operations.");
+            throw new InvalidOperationException(message: "To copy a file, use file processing operations.");
         }
-        await CopyFolderAsync(app, oldPath, newPath);
+        await CopyFolderAsync(app: app, oldPath: oldPath, newPath: newPath);
     }
 
     public async ValueTask MoveAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
     {
         if (oldPath.IsToFile)
         {
-            throw new InvalidOperationException("To move a file, use file processing operations.");
+            throw new InvalidOperationException(message: "To move a file, use file processing operations.");
         }
-        Folder newParent = ((!string.IsNullOrEmpty(newPath.ParentPath.Lowered)) ? service.GetByPath(app.Id, newPath.ParentPath.Lowered) : null);
-        cCoder.DocumentManagement.Models.Path resolvedNewPath = new cCoder.DocumentManagement.Models.Path((newParent != null) ? (newParent.Path + "/" + newPath.Name) : newPath.Name);
-        await MoveFolderAsync(app, oldPath, resolvedNewPath);
+        Folder newParent = ((!string.IsNullOrEmpty(value: newPath.ParentPath.Lowered)) ? service.GetByPath(appId: app.Id, path: newPath.ParentPath.Lowered) : null);
+        cCoder.DocumentManagement.Models.Path resolvedNewPath = new cCoder.DocumentManagement.Models.Path(path: (newParent != null) ? (newParent.Path + "/" + newPath.Name) : newPath.Name);
+        await MoveFolderAsync(app: app, oldPath: oldPath, newPath: resolvedNewPath);
     }
 
     private async ValueTask<Folder> UpdateInternalAsync(Folder dbVersion, Folder folder, bool authorize)
     {
-        string parentPath = new cCoder.DocumentManagement.Models.Path(folder.Path).ParentPath.FullPath;
-        string newPath = ((!string.IsNullOrEmpty(parentPath)) ? "/" : "") + folder.Name.ToLower();
-        Folder existingDestionFolder = GetAll().FirstOrDefault((Folder foundFolder) => foundFolder.Path == newPath && foundFolder.Path != dbVersion.Path && foundFolder.AppId == folder.AppId);
+        string parentPath = new cCoder.DocumentManagement.Models.Path(path: folder.Path).ParentPath.FullPath;
+        string newPath = ((!string.IsNullOrEmpty(value: parentPath)) ? "/" : "") + folder.Name.ToLower();
+        Folder existingDestionFolder = GetAll().FirstOrDefault(predicate: (Folder foundFolder) => foundFolder.Path == newPath && foundFolder.Path != dbVersion.Path && foundFolder.AppId == folder.AppId);
         if (folder.ParentId != dbVersion.ParentId)
         {
-            dbVersion.Parent = (folder.ParentId.HasValue ? service.Get(folder.ParentId.Value) : null);
+            dbVersion.Parent = (folder.ParentId.HasValue ? service.Get(id: folder.ParentId.Value) : null);
         }
         dbVersion.AppId = folder.AppId;
         dbVersion.ParentId = folder.ParentId;
@@ -378,22 +382,26 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         dbVersion.RecomputePaths();
         if (existingDestionFolder != null)
         {
-            await MergeSourceIntoDestinationAsync(dbVersion, existingDestionFolder, authorize);
+            await MergeSourceIntoDestinationAsync(dbVersion: dbVersion, existingDestionFolder: existingDestionFolder, authorize: authorize);
         }
-        Folder destinationFolder = ((existingDestionFolder != null) ? service.GetForUpdate(existingDestionFolder.Id, ignoreFilters: true) : dbVersion);
+        Folder destinationFolder = ((existingDestionFolder != null) ? service.GetForUpdate(id: existingDestionFolder.Id, ignoreFilters: true) : dbVersion);
         if (existingDestionFolder == null)
         {
             destinationFolder = authorize
-                ? await service.UpdateAsync(destinationFolder)
-                : await service.UpdateForAppAsync(destinationFolder);
+                ? await service.UpdateAsync(folder: destinationFolder)
+                : await service.UpdateForAppAsync(folder: destinationFolder);
         }
-        await UpdateChildrenAsync(folder, destinationFolder, authorize);
+        await UpdateChildrenAsync(folder: folder, dbVersion: destinationFolder, authorize: authorize);
         if (existingDestionFolder != null)
         {
             if (authorize)
-                await service.DeleteAsync(dbVersion.Id);
+            {
+                await service.DeleteAsync(id: dbVersion.Id);
+            }
             else
-                await service.DeleteAllForAppAsync([dbVersion]);
+            {
+                await service.DeleteAllForAppAsync(folders: [dbVersion]);
+            }
         }
         return destinationFolder;
     }
@@ -417,9 +425,13 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
                 };
                 file.RecomputePath();
                 if (authorize)
-                    await fileService.UpdateAsync(file);
+                {
+                    await fileService.UpdateAsync(entity: file);
+                }
                 else
-                    await fileService.UpdateForAppAsync(file);
+                {
+                    await fileService.UpdateForAppAsync(entity: file);
+                }
             }
         }
         if (dbVersion.SubFolders == null || !dbVersion.SubFolders.Any())
@@ -438,9 +450,13 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
             };
             subFolder.RecomputePaths();
             if (authorize)
-                await service.UpdateAsync(subFolder);
+            {
+                await service.UpdateAsync(folder: subFolder);
+            }
             else
-                await service.UpdateForAppAsync(subFolder);
+            {
+                await service.UpdateForAppAsync(folder: subFolder);
+            }
         }
     }
 
@@ -460,9 +476,13 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
                 };
                 file.RecomputePath();
                 if (authorize)
-                    await fileService.UpdateAsync(file);
+                {
+                    await fileService.UpdateAsync(entity: file);
+                }
                 else
-                    await fileService.UpdateForAppAsync(file);
+                {
+                    await fileService.UpdateForAppAsync(entity: file);
+                }
             }
         }
         if (folder.Roles != null && folder.Roles.Any())
@@ -470,19 +490,19 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
             FolderRole[] array = dbVersion.Roles?.ToArray() ?? Array.Empty<FolderRole>();
             foreach (FolderRole existingRole in array)
             {
-                await folderRoleService.DeleteAsync(existingRole);
+                await folderRoleService.DeleteAsync(folderRole: existingRole);
             }
             dbVersion.Roles = new List<FolderRole>();
             foreach (FolderRole role in folder.Roles)
             {
-                FolderRole addedRole = await folderRoleService.AddAsync(new FolderRole
+                FolderRole addedRole = await folderRoleService.AddAsync(folderRole: new FolderRole
                 {
                     FolderId = dbVersion.Id,
                     RoleId = role.RoleId,
                     Folder = dbVersion,
                     Role = role.Role
                 });
-                dbVersion.Roles.Add(addedRole);
+                dbVersion.Roles.Add(item: addedRole);
             }
         }
         if (dbVersion.SubFolders == null)
@@ -501,8 +521,8 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
             };
             childFolder.RecomputePaths();
             Folder folder2 = authorize
-                ? (!(childFolder.Id != Guid.Empty) ? await AddAsync(childFolder) : await UpdateAsync(childFolder))
-                : (!(childFolder.Id != Guid.Empty) ? await AddForAppAsync(childFolder) : await UpdateForAppAsync(childFolder));
+                ? (!(childFolder.Id != Guid.Empty) ? await AddAsync(newFolder: childFolder) : await UpdateAsync(folder: childFolder))
+                : (!(childFolder.Id != Guid.Empty) ? await AddForAppAsync(newFolder: childFolder) : await UpdateForAppAsync(folder: childFolder));
             _ = folder2;
         }
     }
@@ -513,25 +533,25 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         {
             return null;
         }
-        Folder existingFolder = service.GetByPathWithRoles(app.Id, folderPath.Lowered, ignoreFilters: true);
+        Folder existingFolder = service.GetByPathWithRoles(appId: app.Id, path: folderPath.Lowered, ignoreFilters: true);
         if (existingFolder == null)
         {
-            existingFolder = await CreateFolderAsync(app, folderPath);
+            existingFolder = await CreateFolderAsync(app: app, folderPath: folderPath);
         }
         return existingFolder;
     }
 
     private async ValueTask<Folder> CreateFolderAsync(App app, cCoder.DocumentManagement.Models.Path folderPath)
     {
-        Folder folder = ((folderPath.ParentPath.Depth <= 0) ? null : (await BuildPathAsync(app, folderPath.ParentPath)));
+        Folder folder = ((folderPath.ParentPath.Depth <= 0) ? null : (await BuildPathAsync(app: app, folderPath: folderPath.ParentPath)));
         Folder parentFolder = folder;
-        bool userCanCreateInApp = User.IsAdminOfApp(app.Id) && User.Can(app.Id, "folder_create");
-        bool userCanCreateFolderInParentFolder = parentFolder?.UserCan(User, "folder_create") ?? false;
+        bool userCanCreateInApp = User.IsAdminOfApp(appId: app.Id) && User.Can(appId: app.Id, operation: "folder_create");
+        bool userCanCreateFolderInParentFolder = parentFolder?.UserCan(user: User, privilege: "folder_create") ?? false;
         if (!userCanCreateInApp && !userCanCreateFolderInParentFolder)
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
-        List<FolderRole> folderRoles = ((parentFolder != null) ? parentFolder.Roles.Select((FolderRole folderRole) => new FolderRole
+        List<FolderRole> folderRoles = ((parentFolder != null) ? parentFolder.Roles.Select(selector: (FolderRole folderRole) => new FolderRole
         {
             RoleId = folderRole.RoleId
         }).ToList() : (from role in roleService.GetAll(ignoreFilters: true)
@@ -540,7 +560,7 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
                        {
                            RoleId = role.Id
                        }).ToList());
-        return await service.AddForPathBuildAsync(new Folder
+        return await service.AddForPathBuildAsync(folder: new Folder
         {
             AppId = app.Id,
             ParentId = parentFolder?.Id,
@@ -552,39 +572,39 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
 
     private async ValueTask DropFolderAsync(App app, cCoder.DocumentManagement.Models.Path path)
     {
-        Folder folder = service.GetByPathWithRoles(app.Id, path.Lowered);
-        if (folder == null || !folder.UserCan(User, "folder_delete"))
+        Folder folder = service.GetByPathWithRoles(appId: app.Id, path: path.Lowered);
+        if (folder == null || !folder.UserCan(user: User, privilege: "folder_delete"))
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
-        await service.DeleteAsync(folder.Id);
+        await service.DeleteAsync(id: folder.Id);
     }
 
     private async ValueTask MoveFolderAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
     {
-        Folder folder = (string.IsNullOrEmpty(newPath.ParentPath.Lowered) ? null : (await BuildPathAsync(app, newPath.ParentPath)));
+        Folder folder = (string.IsNullOrEmpty(value: newPath.ParentPath.Lowered) ? null : (await BuildPathAsync(app: app, folderPath: newPath.ParentPath)));
         Folder newParent = folder;
-        Folder oldParent = ((!string.IsNullOrEmpty(oldPath.ParentPath.Lowered)) ? service.GetByPathWithRoles(app.Id, oldPath.ParentPath.Lowered) : null);
-        bool userIsAdmin = User.IsAdminOfApp(app.Id) && User.Can(app.Id, "folder_update");
-        if (!userIsAdmin && !(oldParent?.UserCan(User, "folder_update") ?? false))
+        Folder oldParent = ((!string.IsNullOrEmpty(value: oldPath.ParentPath.Lowered)) ? service.GetByPathWithRoles(appId: app.Id, path: oldPath.ParentPath.Lowered) : null);
+        bool userIsAdmin = User.IsAdminOfApp(appId: app.Id) && User.Can(appId: app.Id, operation: "folder_update");
+        if (!userIsAdmin && !(oldParent?.UserCan(user: User, privilege: "folder_update") ?? false))
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
-        if (!userIsAdmin && !(newParent?.UserCan(User, "folder_update") ?? false))
+        if (!userIsAdmin && !(newParent?.UserCan(user: User, privilege: "folder_update") ?? false))
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
-        Folder folder2 = service.GetByPathWithSubFoldersAndFiles(app.Id, oldPath.Lowered);
+        Folder folder2 = service.GetByPathWithSubFoldersAndFiles(appId: app.Id, path: oldPath.Lowered);
         if (folder2 == null)
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
-        (string Name, cCoder.DocumentManagement.Models.Path OldPath)[] subFolderMoves = folder2.SubFolders?.Select((Folder subFolder) => (Name: subFolder.Name, new cCoder.DocumentManagement.Models.Path(subFolder.Path))).ToArray() ?? Array.Empty<(string, cCoder.DocumentManagement.Models.Path)>();
+        (string Name, cCoder.DocumentManagement.Models.Path OldPath)[] subFolderMoves = folder2.SubFolders?.Select(selector: (Folder subFolder) => (Name: subFolder.Name, new cCoder.DocumentManagement.Models.Path(subFolder.Path))).ToArray() ?? Array.Empty<(string, cCoder.DocumentManagement.Models.Path)>();
         folder2.ParentId = newParent?.Id;
         folder2.Parent = newParent;
         folder2.Name = newPath.Name;
         folder2.RecomputePaths();
-        await service.UpdateAsync(folder2);
+        await service.UpdateAsync(folder: folder2);
         if (folder2.Files != null)
         {
             foreach (cCoder.Data.Models.DMS.File file in folder2.Files)
@@ -592,42 +612,42 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
                 file.FolderId = folder2.Id;
                 file.Folder = folder2;
                 file.RecomputePath();
-                await fileService.UpdateAsync(file);
+                await fileService.UpdateAsync(entity: file);
             }
         }
         (string Name, cCoder.DocumentManagement.Models.Path OldPath)[] array = subFolderMoves;
         for (int num = 0; num < array.Length; num++)
         {
             var (name, oldSubFolderPath) = array[num];
-            await MoveFolderAsync(app, oldSubFolderPath, new cCoder.DocumentManagement.Models.Path(folder2.Path + "/" + name));
+            await MoveFolderAsync(app: app, oldPath: oldSubFolderPath, newPath: new cCoder.DocumentManagement.Models.Path(folder2.Path + "/" + name));
         }
     }
 
     private async ValueTask CopyFolderAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
     {
-        Folder sourceFolder = service.GetByPathWithParentAndRoles(app.Id, oldPath.Lowered, ignoreFilters: true);
+        Folder sourceFolder = service.GetByPathWithParentAndRoles(appId: app.Id, path: oldPath.Lowered, ignoreFilters: true);
         if (sourceFolder == null)
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
         Folder oldParent = sourceFolder.Parent;
-        bool userIsAdmin = User.IsAdminOfApp(app.Id) && User.Can(app.Id, "folder_update");
-        if (!userIsAdmin && !(oldParent?.UserCan(User, "folder_update") ?? false))
+        bool userIsAdmin = User.IsAdminOfApp(appId: app.Id) && User.Can(appId: app.Id, operation: "folder_update");
+        if (!userIsAdmin && !(oldParent?.UserCan(user: User, privilege: "folder_update") ?? false))
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
-        Folder destinationFolder = await BuildPathAsync(app, newPath);
-        if (!userIsAdmin && !(destinationFolder?.UserCan(User, "folder_update") ?? false))
+        Folder destinationFolder = await BuildPathAsync(app: app, folderPath: newPath);
+        if (!userIsAdmin && !(destinationFolder?.UserCan(user: User, privilege: "folder_update") ?? false))
         {
-            throw new SecurityException("Access Denied!");
+            throw new SecurityException(message: "Access Denied!");
         }
         cCoder.Data.Models.DMS.File[] sourceFiles = (from file2 in fileService.GetAll(ignoreFilters: true)
-                                                               where file2.FolderId == sourceFolder.Id
-                                                               select file2).ToArray();
+                                                     where file2.FolderId == sourceFolder.Id
+                                                     select file2).ToArray();
         cCoder.Data.Models.DMS.File[] array = sourceFiles;
         foreach (cCoder.Data.Models.DMS.File file in array)
         {
-            await fileProcessingService.CopyAsync(app, new cCoder.DocumentManagement.Models.Path(file.Path), new cCoder.DocumentManagement.Models.Path(destinationFolder.Path + "/" + file.Name));
+            await fileProcessingService.CopyAsync(app: app, oldPath: new cCoder.DocumentManagement.Models.Path(file.Path), newPath: new cCoder.DocumentManagement.Models.Path(destinationFolder.Path + "/" + file.Name));
         }
         Folder[] sourceSubFolders = (from folder2 in service.GetAll()
                                      where folder2.ParentId == sourceFolder.Id
@@ -635,39 +655,39 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         Folder[] array2 = sourceSubFolders;
         foreach (Folder folder in array2)
         {
-            await CopyFolderAsync(app, new cCoder.DocumentManagement.Models.Path(folder.Path), new cCoder.DocumentManagement.Models.Path(destinationFolder.Path + "/" + folder.Name));
+            await CopyFolderAsync(app: app, oldPath: new cCoder.DocumentManagement.Models.Path(folder.Path), newPath: new cCoder.DocumentManagement.Models.Path(destinationFolder.Path + "/" + folder.Name));
         }
     }
 
     private FolderArchiveData LoadFolderArchiveData(int appId, string rootPath, bool ignoreFilters)
     {
-        Folder[] source = (from foundFolder in GetAll(ignoreFilters)
-                           where foundFolder.AppId == appId && (foundFolder.Path == rootPath || foundFolder.Path.StartsWith($"{rootPath}/"))
+        Folder[] source = (from foundFolder in GetAll(ignoreFilters: ignoreFilters)
+                           where foundFolder.AppId == appId && (foundFolder.Path == rootPath || foundFolder.Path.StartsWith(value: $"{rootPath}/"))
                            select foundFolder).ToArray();
-        Guid[] folderIds = source.Select((Folder folder) => folder.Id).ToArray();
-        cCoder.Data.Models.DMS.File[] source2 = ((folderIds.Length == 0) ? Array.Empty<cCoder.Data.Models.DMS.File>() : (from file in fileService.GetAll(ignoreFilters)
-                                                                                                                                             where ((ReadOnlySpan<Guid>)folderIds).Contains(file.FolderId)
-                                                                                                                                             select file).ToArray());
-        Guid[] fileIds = source2.Select((cCoder.Data.Models.DMS.File file) => file.Id).ToArray();
-        FileContent[] source3 = ((fileIds.Length == 0) ? Array.Empty<FileContent>() : (from fileContent in fileContentService.GetAll(ignoreFilters)
-                                                                                       where ((ReadOnlySpan<Guid>)fileIds).Contains(fileContent.FileId)
+        Guid[] folderIds = source.Select(selector: (Folder folder) => folder.Id).ToArray();
+        cCoder.Data.Models.DMS.File[] source2 = ((folderIds.Length == 0) ? Array.Empty<cCoder.Data.Models.DMS.File>() : (from file in fileService.GetAll(ignoreFilters: ignoreFilters)
+                                                                                                                         where ((ReadOnlySpan<Guid>)folderIds).Contains(value: file.FolderId)
+                                                                                                                         select file).ToArray());
+        Guid[] fileIds = source2.Select(selector: (cCoder.Data.Models.DMS.File file) => file.Id).ToArray();
+        FileContent[] source3 = ((fileIds.Length == 0) ? Array.Empty<FileContent>() : (from fileContent in fileContentService.GetAll(ignoreFilters: ignoreFilters)
+                                                                                       where ((ReadOnlySpan<Guid>)fileIds).Contains(value: fileContent.FileId)
                                                                                        select fileContent).ToArray());
-        return new FolderArchiveData(source.ToLookup((Folder folder) => folder.ParentId), source2.ToLookup((cCoder.Data.Models.DMS.File file) => file.FolderId), source3.ToLookup((FileContent fileContent) => fileContent.FileId));
+        return new FolderArchiveData(SubFoldersByParentId: source.ToLookup((Folder folder) => folder.ParentId), FilesByFolderId: source2.ToLookup((cCoder.Data.Models.DMS.File file) => file.FolderId), FileContentsByFileId: source3.ToLookup((FileContent fileContent) => fileContent.FileId));
     }
 
     private static void AddFolderToZip(ZipArchive zip, Folder folder, ILookup<Guid?, Folder> subFoldersByParentId, ILookup<Guid, cCoder.Data.Models.DMS.File> filesByFolderId, ILookup<Guid, FileContent> fileContentsByFileId, string prefix = null, string search = "")
     {
         string text = ((prefix == null) ? (folder.Name + "/") : (prefix + folder.Name + "/"));
-        zip.CreateEntry(text, CompressionLevel.Optimal);
-        foreach (Folder item in subFoldersByParentId[folder.Id].OrderBy((Folder folder2) => folder2.Name))
+        zip.CreateEntry(entryName: text, compressionLevel: CompressionLevel.Optimal);
+        foreach (Folder item in subFoldersByParentId[key: folder.Id].OrderBy(keySelector: (Folder folder2) => folder2.Name))
         {
-            AddFolderToZip(zip, item, subFoldersByParentId, filesByFolderId, fileContentsByFileId, text, search);
+            AddFolderToZip(zip: zip, folder: item, subFoldersByParentId: subFoldersByParentId, filesByFolderId: filesByFolderId, fileContentsByFileId: fileContentsByFileId, prefix: text, search: search);
         }
-        foreach (cCoder.Data.Models.DMS.File item2 in filesByFolderId[folder.Id].OrderBy((cCoder.Data.Models.DMS.File file) => file.Name))
+        foreach (cCoder.Data.Models.DMS.File item2 in filesByFolderId[key: folder.Id].OrderBy(keySelector: (cCoder.Data.Models.DMS.File file) => file.Name))
         {
-            if (string.IsNullOrEmpty(search) || text.Contains(search))
+            if (string.IsNullOrEmpty(value: search) || text.Contains(value: search))
             {
-                AddFileToZip(zip, item2, fileContentsByFileId[item2.Id], text);
+                AddFileToZip(zip: zip, file: item2, fileContents: fileContentsByFileId[item2.Id], prefix: text);
             }
         }
     }
@@ -682,7 +702,7 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         {
             return;
         }
-        using Stream stream = zip.CreateEntry(entryName, CompressionLevel.Optimal).Open();
-        stream.Write(array, 0, array.Length);
+        using Stream stream = zip.CreateEntry(entryName: entryName, compressionLevel: CompressionLevel.Optimal).Open();
+        stream.Write(buffer: array, offset: 0, count: array.Length);
     }
 }

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -19,24 +23,17 @@ public partial class FileContentServiceTests
         FileContent fileContent = CreateRandomFileContent(id: fileContentId);
 
         fileContentBrokerMock
-            .Setup(x => x.GetAllFileContents(false))
-            .Returns(new[] { ToExternalFileContent(fileContent) }.AsQueryable());
+            .Setup(expression: x => x.GetAllFileContents(false))
+            .Returns(value: new[] { ToExternalFileContent(fileContent) }.AsQueryable());
 
         // When
-        FileContent result = fileContentService.Get(fileContentId);
+        FileContent result = fileContentService.Get(id: fileContentId);
 
         // Then
-        result.Should().BeEquivalentTo(fileContent);
-        fileContentBrokerMock.Verify(x => x.GetAllFileContents(false), Times.Once);
+        result.Should().BeEquivalentTo(expectation: fileContent);
+        fileContentBrokerMock.Verify(expression: x => x.GetAllFileContents(false), times: Times.Once);
         fileContentBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-

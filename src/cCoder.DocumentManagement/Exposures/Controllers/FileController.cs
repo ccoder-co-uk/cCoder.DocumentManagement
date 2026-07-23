@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Api.OData;
 using cCoder.Data.Extensions;
 using cCoder.DocumentManagement.Services.Orchestrations;
@@ -24,15 +28,15 @@ public partial class FileController : ODataController
     [HttpGet]
     public IActionResult GetMetadata()
     {
-        bool isExtendedMetaRequest = Request.Query["extend"] == "true";
+        bool isExtendedMetaRequest = Request.Query[key: "extend"] == "true";
 
         return isExtendedMetaRequest
             ? Ok(
-                new cCoder.DocumentManagement.Api.OData.DocumentManagementModelBuilder()
+                value: new cCoder.DocumentManagement.Api.OData.DocumentManagementModelBuilder()
                     .Build()
                     .EDMModel.GetExtendedMetadataForType("DocumentManagement", typeof(LocalFile))
             )
-            : Ok(new MetadataContainer(typeof(LocalFile), true, true));
+            : Ok(value: new MetadataContainer(typeof(LocalFile), true, true));
     }
 
     [HttpGet]
@@ -45,7 +49,7 @@ public partial class FileController : ODataController
         MaxExpansionDepth = 5
     )]
     [ActionName("Get")]
-    public IActionResult GetAll(ODataQueryOptions<LocalFile> queryOptions) => Ok(Service.GetAll());
+    public IActionResult GetAll(ODataQueryOptions<LocalFile> queryOptions) => Ok(value: Service.GetAll());
 
     [HttpGet]
     [AllowAnonymous]
@@ -61,8 +65,8 @@ public partial class FileController : ODataController
     {
         try
         {
-            LocalFile result = Service.Get(key);
-            return result is null ? NotFound() : Ok(result);
+            LocalFile result = Service.Get(id: key);
+            return result is null ? NotFound() : Ok(value: result);
         }
         catch (System.Security.SecurityException)
         {
@@ -82,9 +86,11 @@ public partial class FileController : ODataController
     public async Task<IActionResult> Post([FromBody] LocalFile entity)
     {
         if (!ModelState.IsValid)
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(ModelState);
+        {
+            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
+        }
 
-        return Ok(await Service.AddAsync(entity));
+        return Ok(value: await Service.AddAsync(entity));
     }
 
     [HttpPut]
@@ -99,42 +105,31 @@ public partial class FileController : ODataController
     public async Task<IActionResult> Put([FromRoute] Guid key, [FromBody] LocalFile entity)
     {
         if (!ModelState.IsValid)
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(ModelState);
+        {
+            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
+        }
 
         entity.Id = key;
-        return Ok(await Service.UpdateAsync(entity));
+        return Ok(value: await Service.UpdateAsync(entity));
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
     public async Task<IActionResult> Patch([FromRoute] Guid key, Delta<LocalFile> delta)
     {
-        LocalFile originalEntity = Service.Get(key);
+        LocalFile originalEntity = Service.Get(id: key);
         if (originalEntity == null)
+        {
             return NotFound();
+        }
 
-        delta.Patch(originalEntity);
-        return Ok(await Service.UpdateAsync(originalEntity));
+        delta.Patch(original: originalEntity);
+        return Ok(value: await Service.UpdateAsync(originalEntity));
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete([FromRoute] Guid key)
     {
-        await Service.DeleteAsync(key);
+        await Service.DeleteAsync(id: key);
         return Ok();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

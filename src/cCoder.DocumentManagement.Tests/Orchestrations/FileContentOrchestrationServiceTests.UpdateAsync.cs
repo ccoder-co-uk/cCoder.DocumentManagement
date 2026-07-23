@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -16,27 +20,19 @@ public partial class FileContentOrchestrationServiceTests
     {
         // Given
         FileContent entity = CreateRandomFileContent();
-        fileContentProcessingServiceMock.Setup(x => x.UpdateAsync(entity)).ReturnsAsync(entity);
+        fileContentProcessingServiceMock.Setup(expression: x => x.UpdateAsync(entity)).ReturnsAsync(value: entity);
 
         fileContentEventProcessingServiceMock
-            .Setup(x => x.RaiseFileContentUpdateEventAsync(entity))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFileContentUpdateEventAsync(entity))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        FileContent result = await orchestrationService.UpdateAsync(entity);
+        FileContent result = await orchestrationService.UpdateAsync(entity: entity);
 
         // Then
-        result.Should().BeSameAs(entity);
-        fileContentProcessingServiceMock.Verify(x => x.UpdateAsync(entity), Times.Once);
-        fileContentEventProcessingServiceMock.Verify(x => x.RaiseFileContentUpdateEventAsync(entity), Times.Once);
+        result.Should().BeSameAs(expected: entity);
+        fileContentProcessingServiceMock.Verify(expression: x => x.UpdateAsync(entity), times: Times.Once);
+        fileContentEventProcessingServiceMock.Verify(expression: x => x.RaiseFileContentUpdateEventAsync(entity), times: Times.Once);
     }
 
 }
-
-
-
-
-
-
-
-

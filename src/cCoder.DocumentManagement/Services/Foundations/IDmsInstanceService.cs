@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using File = cCoder.Data.Models.DMS.File;
 using DmsPath = cCoder.DocumentManagement.Models.Path;
 using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
@@ -16,13 +20,3 @@ public interface IDmsInstanceService
     ValueTask CopyAsync(DmsPath oldPath, DmsPath newPath);
     ValueTask MoveAsync(DmsPath oldPath, DmsPath newPath);
 }
-
-
-
-
-
-
-
-
-
-

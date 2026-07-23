@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Net;
 using FluentAssertions;
 using Web.AcceptanceTests.Infrastructure;
@@ -14,13 +18,10 @@ public sealed partial class DmsMiddlewareTests(WebAcceptanceFixture fixture)
 
     private async Task<(int StatusCode, IReadOnlyCollection<string> Headers)> InvokeOptionsAsync()
     {
-        using HttpRequestMessage request = new(HttpMethod.Options, $"{BaseUrl}/test-folder");
-        using HttpResponseMessage response = await Client.SendAsync(request);
+        using HttpRequestMessage request = new(method: HttpMethod.Options, requestUri: $"{BaseUrl}/test-folder");
+        using HttpResponseMessage response = await Client.SendAsync(request: request);
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().Be(HttpStatusCode.NoContent, content);
-        return ((int)response.StatusCode, response.Headers.Select(header => header.Key).ToArray());
+        response.StatusCode.Should().Be(expected: HttpStatusCode.NoContent, because: content);
+        return ((int)response.StatusCode, response.Headers.Select(selector: header => header.Key).ToArray());
     }
 }
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -21,39 +25,31 @@ public partial class FolderRoleEventServiceTests
 
         folderRoleEventBrokerMock
             .Setup(
-                x =>
+                expression: x =>
                     x.RaiseFolderRoleDeleteEventAsync(
                         It.IsAny<EventMessage<cCoder.Data.Models.Security.FolderRole>>()
                     )
             )
-            .Callback<EventMessage<cCoder.Data.Models.Security.FolderRole>>(message => actualMessage = message)
-            .Returns(ValueTask.CompletedTask);
+            .Callback<EventMessage<cCoder.Data.Models.Security.FolderRole>>(action: message => actualMessage = message)
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFolderRoleDeleteEventAsync(entity);
+        await service.RaiseFolderRoleDeleteEventAsync(entity: entity);
 
         // Then
         actualMessage.Should().NotBeNull();
-        actualMessage!.Data.FolderId.Should().Be(entity.FolderId);
-        actualMessage.Data.RoleId.Should().Be(entity.RoleId);
+        actualMessage!.Data.FolderId.Should().Be(expected: entity.FolderId);
+        actualMessage.Data.RoleId.Should().Be(expected: entity.RoleId);
         actualMessage.AuthInfo.Should().NotBeNull();
-        actualMessage.AuthInfo.SSOUserId.Should().Be(CurrentUserId);
+        actualMessage.AuthInfo.SSOUserId.Should().Be(expected: CurrentUserId);
         folderRoleEventBrokerMock.Verify(
-            x =>
+            expression: x =>
                 x.RaiseFolderRoleDeleteEventAsync(
                     It.IsAny<EventMessage<cCoder.Data.Models.Security.FolderRole>>()
                 ),
-            Times.Once
+            times: Times.Once
         );
         folderRoleEventBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

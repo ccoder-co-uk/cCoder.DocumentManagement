@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Net;
 using FluentAssertions;
 using Xunit;
@@ -12,11 +16,11 @@ public sealed partial class WebShellTests
         // Given
 
         // When
-        using HttpResponseMessage response = await Client.GetAsync("/");
+        using HttpResponseMessage response = await Client.GetAsync(requestUri: "/");
 
         // Then
-        response.StatusCode.Should().Be(HttpStatusCode.Redirect);
+        response.StatusCode.Should().Be(expected: HttpStatusCode.Redirect);
         response.Headers.Location.Should().NotBeNull();
-        response.Headers.Location!.OriginalString.Should().Be("/tools/index.html");
+        response.Headers.Location!.OriginalString.Should().Be(expected: "/tools/index.html");
     }
 }

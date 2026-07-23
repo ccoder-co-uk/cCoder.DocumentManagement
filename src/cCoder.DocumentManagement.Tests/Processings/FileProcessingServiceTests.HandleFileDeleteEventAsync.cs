@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using Moq;
 using Xunit;
 
@@ -12,14 +16,14 @@ public partial class FileProcessingServiceTests
         // Given
         cCoder.Data.Models.DMS.File file = CreateRandomFile();
         fileContentServiceMock
-            .Setup(x => x.DeleteAllForFileAsync(file.Id))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.DeleteAllForFileAsync(file.Id))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await fileProcessingService.HandleFileDeleteEventAsync(file);
+        await fileProcessingService.HandleFileDeleteEventAsync(file: file);
 
         // Then
-        fileContentServiceMock.Verify(x => x.DeleteAllForFileAsync(file.Id), Times.Once);
+        fileContentServiceMock.Verify(expression: x => x.DeleteAllForFileAsync(file.Id), times: Times.Once);
         fileContentServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
     }
@@ -30,24 +34,16 @@ public partial class FileProcessingServiceTests
         // Given
         cCoder.Data.Models.DMS.File file = CreateRandomFile();
         fileContentServiceMock
-            .Setup(x => x.DeleteAllForFileAsync(file.Id))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.DeleteAllForFileAsync(file.Id))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await fileProcessingService.HandleFileDeleteEventAsync(file);
+        await fileProcessingService.HandleFileDeleteEventAsync(file: file);
 
         // Then
-        fileContentServiceMock.Verify(x => x.DeleteAllForFileAsync(file.Id), Times.Once);
+        fileContentServiceMock.Verify(expression: x => x.DeleteAllForFileAsync(file.Id), times: Times.Once);
         fileContentServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

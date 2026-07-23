@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -16,23 +20,15 @@ public partial class FolderRoleEventProcessingServiceTests
         // Given
         FolderRole entity = CreateRandomFolderRole();
         folderRoleEventServiceMock
-            .Setup(x => x.RaiseFolderRoleAddEventAsync(entity))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFolderRoleAddEventAsync(entity))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFolderRoleAddEventAsync(entity);
+        await service.RaiseFolderRoleAddEventAsync(entity: entity);
 
         // Then
-        folderRoleEventServiceMock.Verify(x => x.RaiseFolderRoleAddEventAsync(entity), Times.Once);
+        folderRoleEventServiceMock.Verify(expression: x => x.RaiseFolderRoleAddEventAsync(entity), times: Times.Once);
         folderRoleEventServiceMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

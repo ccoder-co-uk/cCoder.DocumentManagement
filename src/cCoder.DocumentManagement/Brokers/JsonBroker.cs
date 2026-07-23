@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using Newtonsoft.Json;
 
 
@@ -12,10 +16,9 @@ public interface IJsonBroker
 
 public class JsonBroker : IJsonBroker
 {
-    public object ParseJson(string json) => JsonConvert.DeserializeObject(json);
+    public object ParseJson(string json) => JsonConvert.DeserializeObject(value: json);
 
-    public T ParseJson<T>(string json) => JsonConvert.DeserializeObject<T>(json);
+    public T ParseJson<T>(string json) => JsonConvert.DeserializeObject<T>(value: json);
 
-    public string Serialize(object value) => JsonConvert.SerializeObject(value);
+    public string Serialize(object value) => JsonConvert.SerializeObject(value: value);
 }
-

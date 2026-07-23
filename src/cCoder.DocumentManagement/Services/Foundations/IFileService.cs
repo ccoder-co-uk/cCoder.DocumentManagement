@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 namespace cCoder.DocumentManagement.Services.Foundations;
 
 using cCoder.DocumentManagement.Models;
@@ -22,10 +26,3 @@ public interface IFileService
     ValueTask DeleteAsync(Guid id);
     ValueTask DeleteAllForAppAsync(IEnumerable<File> items);
 }
-
-
-
-
-
-
-

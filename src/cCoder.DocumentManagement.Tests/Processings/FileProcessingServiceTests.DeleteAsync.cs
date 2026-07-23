@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using Moq;
 using Xunit;
 
@@ -11,18 +15,14 @@ public partial class FileProcessingServiceTests
     {
         // Given
         Guid id = Guid.NewGuid();
-        fileServiceMock.Setup(x => x.DeleteAsync(id)).Returns(ValueTask.CompletedTask);
+        fileServiceMock.Setup(expression: x => x.DeleteAsync(id)).Returns(value: ValueTask.CompletedTask);
 
         // When
-        await fileProcessingService.DeleteAsync(id);
+        await fileProcessingService.DeleteAsync(id: id);
 
         // Then
-        fileServiceMock.Verify(x => x.DeleteAsync(id), Times.Once);
+        fileServiceMock.Verify(expression: x => x.DeleteAsync(id), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -17,24 +21,16 @@ public partial class FileContentProcessingServiceTests
         // Given
         FileContent fileContent = CreateRandomFileContent();
         fileContentServiceMock
-            .Setup(x => x.UpdateAsync(fileContent))
-            .Returns(ValueTask.FromResult(fileContent));
+            .Setup(expression: x => x.UpdateAsync(fileContent))
+            .Returns(value: ValueTask.FromResult(fileContent));
 
         // When
-        FileContent result = await fileContentProcessingService.UpdateAsync(fileContent);
+        FileContent result = await fileContentProcessingService.UpdateAsync(entity: fileContent);
 
         // Then
-        result.Should().BeSameAs(fileContent);
-        fileContentServiceMock.Verify(x => x.UpdateAsync(fileContent), Times.Once);
+        result.Should().BeSameAs(expected: fileContent);
+        fileContentServiceMock.Verify(expression: x => x.UpdateAsync(fileContent), times: Times.Once);
         fileContentServiceMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

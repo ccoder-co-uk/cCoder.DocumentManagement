@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using LocalFile = cCoder.Data.Models.DMS.File;
 
 
@@ -9,11 +13,3 @@ public interface IFileEventService
     ValueTask RaiseFileUpdateEventAsync(LocalFile entity);
     ValueTask RaiseFileDeleteEventAsync(LocalFile entity);
 }
-
-
-
-
-
-
-
-

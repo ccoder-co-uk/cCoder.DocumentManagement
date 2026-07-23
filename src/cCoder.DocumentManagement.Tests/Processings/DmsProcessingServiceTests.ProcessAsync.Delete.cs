@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Moq;
@@ -14,25 +18,25 @@ public partial class DmsProcessingServiceTests
     {
         // Given
         DmsProcessingRequest request = CreateRequest(
-            "DELETE",
-            "/api/dms/folder/file.txt",
-            "?version=4"
+            method: "DELETE",
+            requestPath: "/api/dms/folder/file.txt",
+            queryString: "?version=4"
         );
 
         dmsInstanceServiceMock
-            .Setup(x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 4))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 4))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request);
+        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(204);
-        response.ContentType.Should().Be("application/json");
+        response.StatusCode.Should().Be(expected: 204);
+        response.ContentType.Should().Be(expected: "application/json");
         response.HasBody.Should().BeFalse();
         dmsInstanceServiceMock.Verify(
-            x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 4),
-            Times.Once
+            expression: x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 4),
+            times: Times.Once
         );
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
@@ -41,28 +45,21 @@ public partial class DmsProcessingServiceTests
     public async Task ShouldUseZeroWhenDeleteVersionIsMissing()
     {
         // Given
-        DmsProcessingRequest request = CreateRequest("DELETE", "/api/dms/folder/file.txt");
+        DmsProcessingRequest request = CreateRequest(method: "DELETE", requestPath: "/api/dms/folder/file.txt");
 
         dmsInstanceServiceMock
-            .Setup(x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request);
+        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(204);
+        response.StatusCode.Should().Be(expected: 204);
         dmsInstanceServiceMock.Verify(
-            x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0),
-            Times.Once
+            expression: x => x.DropAsync(It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"), 0),
+            times: Times.Once
         );
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 }
-
-
-
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Api.OData;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Extensions;
@@ -30,20 +34,20 @@ public partial class FolderController : ODataController
         string destination,
         int sourceAppId,
         int destAppId
-    ) => Ok(await Service.CopyAsync(source, destination, sourceAppId, destAppId));
+    ) => Ok(value: await Service.CopyAsync(source, destination, sourceAppId, destAppId));
 
     [HttpGet]
     public IActionResult GetMetadata()
     {
-        bool isExtendedMetaRequest = Request.Query["extend"] == "true";
+        bool isExtendedMetaRequest = Request.Query[key: "extend"] == "true";
 
         return isExtendedMetaRequest
             ? Ok(
-                new cCoder.DocumentManagement.Api.OData.DocumentManagementModelBuilder()
+                value: new cCoder.DocumentManagement.Api.OData.DocumentManagementModelBuilder()
                     .Build()
                     .EDMModel.GetExtendedMetadataForType("DocumentManagement", typeof(Folder))
             )
-            : Ok(new MetadataContainer(typeof(Folder), true, true));
+            : Ok(value: new MetadataContainer(typeof(Folder), true, true));
     }
 
     [HttpGet]
@@ -56,7 +60,7 @@ public partial class FolderController : ODataController
         MaxExpansionDepth = 5
     )]
     [ActionName("Get")]
-    public IActionResult GetAll(ODataQueryOptions<Folder> queryOptions) => Ok(Service.GetAll());
+    public IActionResult GetAll(ODataQueryOptions<Folder> queryOptions) => Ok(value: Service.GetAll());
 
     [HttpGet]
     [AllowAnonymous]
@@ -72,8 +76,8 @@ public partial class FolderController : ODataController
     {
         try
         {
-            Folder result = Service.Get(key);
-            return result is null ? NotFound() : Ok(result);
+            Folder result = Service.Get(id: key);
+            return result is null ? NotFound() : Ok(value: result);
         }
         catch (System.Security.SecurityException)
         {
@@ -93,9 +97,11 @@ public partial class FolderController : ODataController
     public async Task<IActionResult> Post([FromBody] Folder entity)
     {
         if (!ModelState.IsValid)
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(ModelState);
+        {
+            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
+        }
 
-        return Ok(await Service.AddAsync(entity));
+        return Ok(value: await Service.AddAsync(entity));
     }
 
     [HttpPut]
@@ -110,44 +116,31 @@ public partial class FolderController : ODataController
     public async Task<IActionResult> Put([FromRoute] Guid key, [FromBody] Folder entity)
     {
         if (!ModelState.IsValid)
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(ModelState);
+        {
+            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
+        }
 
         entity.Id = key;
-        return Ok(await Service.UpdateAsync(entity));
+        return Ok(value: await Service.UpdateAsync(entity));
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
     public async Task<IActionResult> Patch([FromRoute] Guid key, Delta<Folder> delta)
     {
-        Folder originalEntity = Service.Get(key);
+        Folder originalEntity = Service.Get(id: key);
         if (originalEntity == null)
+        {
             return NotFound();
+        }
 
-        delta.Patch(originalEntity);
-        return Ok(await Service.UpdateAsync(originalEntity));
+        delta.Patch(original: originalEntity);
+        return Ok(value: await Service.UpdateAsync(originalEntity));
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete([FromRoute] Guid key)
     {
-        await Service.DeleteAsync(key);
+        await Service.DeleteAsync(id: key);
         return Ok();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

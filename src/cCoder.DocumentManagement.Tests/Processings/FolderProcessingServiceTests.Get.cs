@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.IO.Compression;
 using System.Security;
 using cCoder.Data;
@@ -23,14 +27,14 @@ public partial class FolderProcessingServiceTests
         // Given
         Folder entity = CreateRandomFolder();
         var id = entity.Id;
-        folderServiceMock.Setup(x => x.Get(id)).Returns(entity);
+        folderServiceMock.Setup(expression: x => x.Get(id)).Returns(value: entity);
 
         // When
-        Folder result = folderProcessingService.Get(id);
+        Folder result = folderProcessingService.Get(id: id);
 
         // Then
-        result.Should().BeSameAs(entity);
-        folderServiceMock.Verify(x => x.Get(id), Times.Once);
+        result.Should().BeSameAs(expected: entity);
+        folderServiceMock.Verify(expression: x => x.Get(id), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
     }
 
@@ -39,15 +43,15 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         App app = CreateRandomAppForTests();
-        DmsPath filePath = new("docs/file.txt");
+        DmsPath filePath = new(path: "docs/file.txt");
 
         // When
-        Action act = () => folderProcessingService.Get(app, filePath);
+        Action act = () => folderProcessingService.Get(app: app, path: filePath);
 
         // Then
         act.Should()
             .Throw<InvalidOperationException>()
-            .WithMessage("To get a file, use file processing operations.");
+            .WithMessage(expectedWildcardPattern: "To get a file, use file processing operations.");
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         fileContentServiceMock.VerifyNoOtherCalls();
@@ -58,15 +62,15 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         App app = CreateRandomAppForTests();
-        DmsPath folderPath = new("docs");
-        folderServiceMock.Setup(x => x.GetByPath(app.Id, folderPath.Lowered, false)).Returns((Folder)null);
+        DmsPath folderPath = new(path: "docs");
+        folderServiceMock.Setup(expression: x => x.GetByPath(app.Id, folderPath.Lowered, false)).Returns(value: (Folder)null);
 
         // When
-        Action act = () => folderProcessingService.Get(app, folderPath);
+        Action act = () => folderProcessingService.Get(app: app, path: folderPath);
 
         // Then
-        act.Should().Throw<SecurityException>().WithMessage("Access Denied!");
-        folderServiceMock.Verify(x => x.GetByPath(app.Id, folderPath.Lowered, false), Times.Once);
+        act.Should().Throw<SecurityException>().WithMessage(expectedWildcardPattern: "Access Denied!");
+        folderServiceMock.Verify(expression: x => x.GetByPath(app.Id, folderPath.Lowered, false), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         fileContentServiceMock.VerifyNoOtherCalls();
@@ -121,42 +125,34 @@ public partial class FolderProcessingServiceTests
         };
 
         folderServiceMock
-            .Setup(x => x.GetByPath(app.Id, rootFolder.Path, false))
-            .Returns(rootFolder);
+            .Setup(expression: x => x.GetByPath(app.Id, rootFolder.Path, false))
+            .Returns(value: rootFolder);
         folderServiceMock
-            .Setup(x => x.GetAll(false))
-            .Returns(new[] { rootFolder, childFolder }.AsQueryable());
+            .Setup(expression: x => x.GetAll(false))
+            .Returns(value: new[] { rootFolder, childFolder }.AsQueryable());
         fileServiceMock
-            .Setup(x => x.GetAll(false))
-            .Returns(new[] { rootFile, childFile }.AsQueryable());
+            .Setup(expression: x => x.GetAll(false))
+            .Returns(value: new[] { rootFile, childFile }.AsQueryable());
         fileContentServiceMock
-            .Setup(x => x.GetAll(false))
-            .Returns(new[] { rootContent, childContent }.AsQueryable());
+            .Setup(expression: x => x.GetAll(false))
+            .Returns(value: new[] { rootContent, childContent }.AsQueryable());
 
         // When
-        DMSResult result = folderProcessingService.Get(app, new DmsPath(rootFolder.Path));
+        DMSResult result = folderProcessingService.Get(app: app, path: new DmsPath(rootFolder.Path));
 
         // Then
-        using ZipArchive zip = new(result.Data, ZipArchiveMode.Read);
-        zip.Entries.Select(entry => entry.FullName)
+        using ZipArchive zip = new(stream: result.Data, mode: ZipArchiveMode.Read);
+        zip.Entries.Select(selector: entry => entry.FullName)
             .Should()
-            .BeEquivalentTo(["docs/", "docs/root.txt", "docs/nested/", "docs/nested/child.txt"]);
+            .BeEquivalentTo(expectation: ["docs/", "docs/root.txt", "docs/nested/", "docs/nested/child.txt"]);
 
-        folderServiceMock.Verify(x => x.GetByPath(app.Id, rootFolder.Path, false), Times.Once);
-        folderServiceMock.Verify(x => x.GetAll(false), Times.Once);
-        fileServiceMock.Verify(x => x.GetAll(false), Times.Once);
-        fileContentServiceMock.Verify(x => x.GetAll(false), Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetByPath(app.Id, rootFolder.Path, false), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetAll(false), times: Times.Once);
+        fileServiceMock.Verify(expression: x => x.GetAll(false), times: Times.Once);
+        fileContentServiceMock.Verify(expression: x => x.GetAll(false), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         fileContentServiceMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

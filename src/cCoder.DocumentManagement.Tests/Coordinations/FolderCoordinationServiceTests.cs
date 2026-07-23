@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Coordinations;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using cCoder.Data.Models.DMS;
@@ -15,11 +19,11 @@ public class FolderCoordinationServiceTests
 
     public FolderCoordinationServiceTests()
     {
-        folderOrchestrationServiceMock = new Mock<IFolderOrchestrationService>(MockBehavior.Strict);
-        fileOrchestrationServiceMock = new Mock<IFileOrchestrationService>(MockBehavior.Strict);
+        folderOrchestrationServiceMock = new Mock<IFolderOrchestrationService>(behavior: MockBehavior.Strict);
+        fileOrchestrationServiceMock = new Mock<IFileOrchestrationService>(behavior: MockBehavior.Strict);
         coordinationService = new FolderCoordinationService(
-            folderOrchestrationServiceMock.Object,
-            fileOrchestrationServiceMock.Object);
+            folderOrchestrationService: folderOrchestrationServiceMock.Object,
+            fileOrchestrationService: fileOrchestrationServiceMock.Object);
     }
 
     [Fact]
@@ -38,8 +42,8 @@ public class FolderCoordinationServiceTests
         };
 
         fileOrchestrationServiceMock
-            .Setup(service => service.GetAll(true))
-            .Returns(new[]
+            .Setup(expression: service => service.GetAll(true))
+            .Returns(value: new[]
             {
                 new File
                 {
@@ -51,8 +55,8 @@ public class FolderCoordinationServiceTests
             }.AsQueryable());
 
         folderOrchestrationServiceMock
-            .Setup(service => service.GetAll(true))
-            .Returns(new[]
+            .Setup(expression: service => service.GetAll(true))
+            .Returns(value: new[]
             {
                 folder,
                 new Folder
@@ -66,28 +70,28 @@ public class FolderCoordinationServiceTests
             }.AsQueryable());
 
         fileOrchestrationServiceMock
-            .Setup(service => service.DeleteAsync(childFileId))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: service => service.DeleteAsync(childFileId))
+            .Returns(value: ValueTask.CompletedTask);
 
         folderOrchestrationServiceMock
-            .Setup(service => service.DeleteAsync(childFolderId))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: service => service.DeleteAsync(childFolderId))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await coordinationService.DeleteFolderAsync(folder);
+        await coordinationService.DeleteFolderAsync(folder: folder);
 
         // Then
-        fileOrchestrationServiceMock.Verify(service => service.GetAll(true), Times.Once);
-        folderOrchestrationServiceMock.Verify(service => service.GetAll(true), Times.Once);
-        fileOrchestrationServiceMock.Verify(service => service.DeleteAsync(childFileId), Times.Once);
-        folderOrchestrationServiceMock.Verify(service => service.DeleteAsync(childFolderId), Times.Once);
+        fileOrchestrationServiceMock.Verify(expression: service => service.GetAll(true), times: Times.Once);
+        folderOrchestrationServiceMock.Verify(expression: service => service.GetAll(true), times: Times.Once);
+        fileOrchestrationServiceMock.Verify(expression: service => service.DeleteAsync(childFileId), times: Times.Once);
+        folderOrchestrationServiceMock.Verify(expression: service => service.DeleteAsync(childFolderId), times: Times.Once);
     }
 
     [Fact]
     public async Task ShouldDoNothingWhenDeleteFolderAsyncWithNullFolder()
     {
         // When
-        await coordinationService.DeleteFolderAsync(null);
+        await coordinationService.DeleteFolderAsync(folder: null);
 
         // Then
         fileOrchestrationServiceMock.VerifyNoOtherCalls();

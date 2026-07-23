@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using FluentAssertions;
 using Moq;
@@ -14,23 +18,19 @@ public partial class DmsInstanceServiceTests
     public void ShouldReturnBrokerResultWhenGetFilesZipped()
     {
         // Given
-        DmsPath firstPath = CreatePath("folder/one.txt");
-        DmsPath secondPath = CreatePath("folder/two.txt");
+        DmsPath firstPath = CreatePath(fullPath: "folder/one.txt");
+        DmsPath secondPath = CreatePath(fullPath: "folder/two.txt");
         DmsPath[] paths = [firstPath, secondPath];
-        DMSResult result = CreateDmsResult("application/zip");
-        dmsInstanceBrokerMock.Setup(x => x.GetFilesZipped(paths)).Returns(result);
+        DMSResult result = CreateDmsResult(contentType: "application/zip");
+        dmsInstanceBrokerMock.Setup(expression: x => x.GetFilesZipped(paths)).Returns(value: result);
 
         // When
-        DMSResult returnedResult = dmsInstanceService.GetFilesZipped(paths);
+        DMSResult returnedResult = dmsInstanceService.GetFilesZipped(paths: paths);
 
         // Then
-        returnedResult.Should().BeSameAs(result);
-        dmsInstanceBrokerMock.Verify(x => x.GetFilesZipped(paths), Times.Once);
+        returnedResult.Should().BeSameAs(expected: result);
+        dmsInstanceBrokerMock.Verify(expression: x => x.GetFilesZipped(paths), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-

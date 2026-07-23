@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Net;
 using FluentAssertions;
 using Web.AcceptanceTests.Infrastructure;
@@ -12,10 +16,10 @@ public sealed partial class WebShellTests(WebAcceptanceFixture fixture)
 
     private async Task<string> GetOkContentAsync(string path)
     {
-        using HttpResponseMessage response = await Client.GetAsync(path);
+        using HttpResponseMessage response = await Client.GetAsync(requestUri: path);
         string content = await response.Content.ReadAsStringAsync();
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK, content);
+        response.StatusCode.Should().Be(expected: HttpStatusCode.OK, because: content);
 
         return content;
     }

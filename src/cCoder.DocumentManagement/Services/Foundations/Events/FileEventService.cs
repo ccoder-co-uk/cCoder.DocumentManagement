@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.Eventing.Models;
@@ -15,10 +19,10 @@ internal class FileEventService(IFileEventBroker fileEventBroker, ICoreAuthInfo 
         EventMessage<FileEntity> message = new()
         {
             AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFile(entity),
+            Data = ToExternalFile(file: entity),
         };
 
-        await fileEventBroker.RaiseFileAddEventAsync(message);
+        await fileEventBroker.RaiseFileAddEventAsync(message: message);
     }
 
     public async ValueTask RaiseFileUpdateEventAsync(LocalFile entity)
@@ -26,10 +30,10 @@ internal class FileEventService(IFileEventBroker fileEventBroker, ICoreAuthInfo 
         EventMessage<FileEntity> message = new()
         {
             AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFile(entity),
+            Data = ToExternalFile(file: entity),
         };
 
-        await fileEventBroker.RaiseFileUpdateEventAsync(message);
+        await fileEventBroker.RaiseFileUpdateEventAsync(message: message);
     }
 
     public async ValueTask RaiseFileDeleteEventAsync(LocalFile entity)
@@ -37,10 +41,10 @@ internal class FileEventService(IFileEventBroker fileEventBroker, ICoreAuthInfo 
         EventMessage<FileEntity> message = new()
         {
             AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFile(entity),
+            Data = ToExternalFile(file: entity),
         };
 
-        await fileEventBroker.RaiseFileDeleteEventAsync(message);
+        await fileEventBroker.RaiseFileDeleteEventAsync(message: message);
     }
 
     private static FileEntity ToExternalFile(LocalFile file) =>
@@ -60,12 +64,3 @@ internal class FileEventService(IFileEventBroker fileEventBroker, ICoreAuthInfo 
                 DeletedOn = file.DeletedOn,
             };
 }
-
-
-
-
-
-
-
-
-

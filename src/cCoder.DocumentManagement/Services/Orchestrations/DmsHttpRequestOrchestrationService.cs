@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -17,21 +21,21 @@ internal class DmsHttpRequestOrchestrationService(
     public async ValueTask<DmsProcessingResponse> ProcessRequestAsync(HttpContext context)
     {
         App app = currentAppResolver.ResolveCurrentApp();
-        DmsProcessingRequest request = BuildRequest(context, app);
+        DmsProcessingRequest request = BuildRequest(context: context, app: app);
 
-        if (IsWebDavRequest(request))
+        if (IsWebDavRequest(request: request))
         {
-            return await webDavProcessingService.ProcessAsync(request);
+            return await webDavProcessingService.ProcessAsync(request: request);
         }
 
         try
         {
-            DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request);
-            return AddDmsDefaultHeaders(response);
+            DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
+            return AddDmsDefaultHeaders(response: response);
         }
         catch (SecurityException)
         {
-            return CreateDmsSecurityResponse(request.Host);
+            return CreateDmsSecurityResponse(host: request.Host);
         }
     }
 
@@ -46,26 +50,26 @@ internal class DmsHttpRequestOrchestrationService(
             ContentType = context.Request.Headers.ContentType.ToString(),
             Body = context.Request.Body,
             Headers = context.Request.Headers.ToDictionary(
-                header => header.Key,
-                header => header.Value.ToArray(),
-                StringComparer.OrdinalIgnoreCase
+                keySelector: header => header.Key,
+                elementSelector: header => header.Value.ToArray(),
+                comparer: StringComparer.OrdinalIgnoreCase
             ),
         };
 
     private static bool IsWebDavRequest(DmsProcessingRequest request) =>
-        request.RequestPath.Contains("/webdav", StringComparison.OrdinalIgnoreCase);
+        request.RequestPath.Contains(value: "/webdav", comparisonType: StringComparison.OrdinalIgnoreCase);
 
     private static DmsProcessingResponse AddDmsDefaultHeaders(DmsProcessingResponse response)
     {
         List<KeyValuePair<string, string>> headers = [.. response.Headers];
-        AddHeaderIfMissing(headers, "Access-Control-Allow-Origin", "*");
+        AddHeaderIfMissing(headers: headers, key: "Access-Control-Allow-Origin", value: "*");
         AddHeaderIfMissing(
-            headers,
-            "Access-Control-Allow-Headers",
-            "access-control-allow-origin,authorization,content-type,x-requested-with"
+            headers: headers,
+            key: "Access-Control-Allow-Headers",
+            value: "access-control-allow-origin,authorization,content-type,x-requested-with"
         );
-        AddHeaderIfMissing(headers, "Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-        AddHeaderIfMissing(headers, "Cache-Control", "max-age=2592000");
+        AddHeaderIfMissing(headers: headers, key: "Access-Control-Allow-Methods", value: "PUT,POST,GET,DELETE,OPTIONS");
+        AddHeaderIfMissing(headers: headers, key: "Cache-Control", value: "max-age=2592000");
 
         return new DmsProcessingResponse
         {
@@ -81,13 +85,13 @@ internal class DmsHttpRequestOrchestrationService(
     {
         List<KeyValuePair<string, string>> headers =
         [
-            new("Access-Control-Allow-Origin", host),
+            new(key:"Access-Control-Allow-Origin", value:host),
             new(
-                "Access-Control-Allow-Headers",
-                "access-control-allow-origin,authorization,content-type,x-requested-with"
+                key:                "Access-Control-Allow-Headers",
+                value:                "access-control-allow-origin,authorization,content-type,x-requested-with"
             ),
-            new("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS"),
-            new("Cache-Control", "max-age=2592000"),
+            new(key:"Access-Control-Allow-Methods", value:"PUT,POST,GET,DELETE,OPTIONS"),
+            new(key:"Cache-Control", value:"max-age=2592000"),
         ];
 
         return new DmsProcessingResponse
@@ -106,22 +110,12 @@ internal class DmsHttpRequestOrchestrationService(
     )
     {
         if (
-            !headers.Any(header =>
+            !headers.Any(predicate: header =>
                 string.Equals(header.Key, key, StringComparison.OrdinalIgnoreCase)
             )
         )
         {
-            headers.Add(new KeyValuePair<string, string>(key, value));
+            headers.Add(item: new KeyValuePair<string, string>(key, value));
         }
     }
 }
-
-
-
-
-
-
-
-
-
-

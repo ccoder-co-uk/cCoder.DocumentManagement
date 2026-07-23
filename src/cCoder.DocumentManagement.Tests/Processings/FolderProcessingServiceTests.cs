@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -28,19 +32,19 @@ public partial class FolderProcessingServiceTests
     private readonly Mock<IFileContentService> fileContentServiceMock = new();
     private readonly Mock<IFileProcessingService> fileProcessingServiceMock = new();
     private readonly Mock<ILogger<FolderProcessingService>> loggerMock = new();
-    private User currentUser = ToLocalUser(TestUsers.WithoutPrivileges());
+    private User currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
     private readonly FolderProcessingService folderProcessingService;
 
     public FolderProcessingServiceTests()
     {
         folderProcessingService = new FolderProcessingService(
-            folderServiceMock.Object,
-            folderRoleServiceMock.Object,
-            roleServiceMock.Object,
-            fileServiceMock.Object,
-            fileContentServiceMock.Object,
-            fileProcessingServiceMock.Object,
-            authorizationBrokerMock.Object
+            service: folderServiceMock.Object,
+            folderRoleService: folderRoleServiceMock.Object,
+            roleService: roleServiceMock.Object,
+            fileService: fileServiceMock.Object,
+            fileContentService: fileContentServiceMock.Object,
+            fileProcessingService: fileProcessingServiceMock.Object,
+            authorizationBroker: authorizationBrokerMock.Object
         );
     }
 
@@ -60,8 +64,8 @@ public partial class FolderProcessingServiceTests
     private static App CreateRandomAppForTests() =>
         Builder<App>
             .CreateNew()
-            .With(x => x.Id = 1)
-            .With(x => x.Name = $"App-{Guid.NewGuid():N}")
+            .With(func: x => x.Id = 1)
+            .With(func: x => x.Name = $"App-{Guid.NewGuid():N}")
             .Build();
 
     private static User ToLocalUser(cCoder.Data.Models.Security.User user) =>
@@ -71,7 +75,7 @@ public partial class FolderProcessingServiceTests
             {
                 Id = user.Id,
                 Roles = user.Roles?
-                    .Select(role => new UserRole
+                    .Select(selector: role => new UserRole
                     {
                         UserId = role.UserId,
                         RoleId = role.RoleId,
@@ -105,7 +109,7 @@ public partial class FolderProcessingServiceTests
                     Id = folder.App.Id,
                     Name = folder.App.Name,
                 },
-                Roles = folder.Roles?.Select(role => new DataFolderRole
+                Roles = folder.Roles?.Select(selector: role => new DataFolderRole
                 {
                     FolderId = role.FolderId,
                     RoleId = role.RoleId,
@@ -120,7 +124,7 @@ public partial class FolderProcessingServiceTests
                             Privs = role.Role.Privs,
                         },
                 }).ToList() ?? [],
-                Files = folder.Files?.Select(file => new DataFile
+                Files = folder.Files?.Select(selector: file => new DataFile
                 {
                     Id = file.Id,
                     FolderId = file.FolderId,
@@ -146,18 +150,3 @@ public partial class FolderProcessingServiceTests
                 }).ToList() ?? [],
             };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

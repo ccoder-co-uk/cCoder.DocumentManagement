@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Models;
@@ -18,10 +22,10 @@ internal class FolderEventService(IFolderEventBroker folderEventBroker, ICoreAut
         EventMessage<DataFolder> message = new()
         {
             AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFolder(entity),
+            Data = ToExternalFolder(folder: entity),
         };
 
-        await folderEventBroker.RaiseFolderAddEventAsync(message);
+        await folderEventBroker.RaiseFolderAddEventAsync(message: message);
     }
 
     public async ValueTask RaiseFolderUpdateEventAsync(Folder entity)
@@ -29,10 +33,10 @@ internal class FolderEventService(IFolderEventBroker folderEventBroker, ICoreAut
         EventMessage<DataFolder> message = new()
         {
             AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFolder(entity),
+            Data = ToExternalFolder(folder: entity),
         };
 
-        await folderEventBroker.RaiseFolderUpdateEventAsync(message);
+        await folderEventBroker.RaiseFolderUpdateEventAsync(message: message);
     }
 
     public async ValueTask RaiseFolderDeleteEventAsync(Folder entity)
@@ -40,10 +44,10 @@ internal class FolderEventService(IFolderEventBroker folderEventBroker, ICoreAut
         EventMessage<DataFolder> message = new()
         {
             AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFolder(entity),
+            Data = ToExternalFolder(folder: entity),
         };
 
-        await folderEventBroker.RaiseFolderDeleteEventAsync(message);
+        await folderEventBroker.RaiseFolderDeleteEventAsync(message: message);
     }
 
     private static DataFolder ToExternalFolder(Folder folder) =>
@@ -59,12 +63,3 @@ internal class FolderEventService(IFolderEventBroker folderEventBroker, ICoreAut
                 DeletedOn = folder.DeletedOn,
             };
 }
-
-
-
-
-
-
-
-
-

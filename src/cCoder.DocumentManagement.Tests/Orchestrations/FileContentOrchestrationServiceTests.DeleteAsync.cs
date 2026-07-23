@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -16,28 +20,20 @@ public partial class FileContentOrchestrationServiceTests
         // Given
         Guid id = Guid.NewGuid();
         FileContent entity = CreateRandomFileContent();
-        fileContentProcessingServiceMock.Setup(x => x.Get(id)).Returns(entity);
-        fileContentProcessingServiceMock.Setup(x => x.DeleteAsync(id)).Returns(ValueTask.CompletedTask);
+        fileContentProcessingServiceMock.Setup(expression: x => x.Get(id)).Returns(value: entity);
+        fileContentProcessingServiceMock.Setup(expression: x => x.DeleteAsync(id)).Returns(value: ValueTask.CompletedTask);
 
         fileContentEventProcessingServiceMock
-            .Setup(x => x.RaiseFileContentDeleteEventAsync(entity))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFileContentDeleteEventAsync(entity))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.DeleteAsync(id);
+        await orchestrationService.DeleteAsync(id: id);
 
         // Then
-        fileContentProcessingServiceMock.Verify(x => x.Get(id), Times.Once);
-        fileContentProcessingServiceMock.Verify(x => x.DeleteAsync(id), Times.Once);
-        fileContentEventProcessingServiceMock.Verify(x => x.RaiseFileContentDeleteEventAsync(entity), Times.Once);
+        fileContentProcessingServiceMock.Verify(expression: x => x.Get(id), times: Times.Once);
+        fileContentProcessingServiceMock.Verify(expression: x => x.DeleteAsync(id), times: Times.Once);
+        fileContentEventProcessingServiceMock.Verify(expression: x => x.RaiseFileContentDeleteEventAsync(entity), times: Times.Once);
     }
 
 }
-
-
-
-
-
-
-
-
