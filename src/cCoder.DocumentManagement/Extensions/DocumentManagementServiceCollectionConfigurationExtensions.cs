@@ -15,9 +15,9 @@ using Microsoft.OpenApi;
 
 namespace cCoder.DocumentManagement;
 
-public static partial class IServiceCollectionExtensions
+public static class DocumentManagementServiceCollectionConfigurationExtensions
 {
-    private static DocumentManagementConfiguration AddConfiguredDocumentManagement(
+    internal static DocumentManagementConfiguration AddConfiguredDocumentManagement(
         this IServiceCollection services,
         Action<IServiceCollection, DocumentManagementConfiguration> configure)
     {
@@ -26,7 +26,7 @@ public static partial class IServiceCollectionExtensions
         return configuration;
     }
 
-    private static DocumentManagementConfiguration AddConfiguredDocumentManagementWeb(
+    internal static DocumentManagementConfiguration AddConfiguredDocumentManagementWeb(
         this IServiceCollection services,
         Action<IServiceCollection, DocumentManagementConfiguration> configure,
         ODataConventionModelBuilder builder = null)

@@ -1616,6 +1616,23 @@
       ]
     },
     {
+      "Name": "cCoder.DocumentManagement.DocumentManagementServiceCollectionConfigurationExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ConfigureDocumentManagementApiModel",
+          "Inputs": [
+            {
+              "Name": "builder",
+              "Type": "Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"
+            }
+          ],
+          "ReturnType": "System.Void"
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.BaselineController",
       "StandardElementType": "Exposure",
       "Properties": [],
@@ -2212,16 +2229,6 @@
               "Name": "configure",
               "Type": "System.Action\u003CcCoder.DocumentManagement.Models.DocumentManagementConfiguration\u003E"
             },
-            {
-              "Name": "builder",
-              "Type": "Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"
-            }
-          ],
-          "ReturnType": "System.Void"
-        },
-        {
-          "Name": "ConfigureDocumentManagementApiModel",
-          "Inputs": [
             {
               "Name": "builder",
               "Type": "Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"
@@ -5711,13 +5718,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Middleware.WebDavMiddleware",
       "LineNumber": 42
-    },
-    {
-      "Code": "STXAPP001",
-      "Description": "Program.cs, IServiceCollectionExtensions.cs, and WebApplicationExtensions.cs must live at the project root.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.IServiceCollectionExtensions",
-      "LineNumber": 18
     },
     {
       "Code": "STXFORMAT001",

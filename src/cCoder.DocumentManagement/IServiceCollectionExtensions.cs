@@ -51,7 +51,7 @@ public static partial class IServiceCollectionExtensions
         Action<DocumentManagementConfiguration> configure = null) =>
         services.AddConfiguredDocumentManagement(configure: (_, configuration) => configure?.Invoke(obj: configuration));
 
-    private static void AddDocumentManagement(this IServiceCollection services)
+    internal static void AddDocumentManagement(this IServiceCollection services)
     {
         services.AddEventingTypes();
         services.AddBrokers();
@@ -61,7 +61,7 @@ public static partial class IServiceCollectionExtensions
         services.AddEventHandlers();
     }
 
-    private static void AddDocumentManagementWeb(this IServiceCollection services, ODataConventionModelBuilder builder = null)
+    internal static void AddDocumentManagementWeb(this IServiceCollection services, ODataConventionModelBuilder builder = null)
     {
         services.AddDocumentManagement();
 
