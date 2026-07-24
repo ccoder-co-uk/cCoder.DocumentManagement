@@ -1704,7 +1704,7 @@
               "Type": "System.Guid"
             },
             {
-              "Name": "delta",
+              "Name": "updatedFileContentDelta",
               "Type": "Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.FileContent\u003E"
             }
           ],
@@ -1784,7 +1784,7 @@
               "Type": "System.Guid"
             },
             {
-              "Name": "delta",
+              "Name": "updatedFileDelta",
               "Type": "Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.File\u003E"
             }
           ],
@@ -1886,7 +1886,7 @@
               "Type": "System.Guid"
             },
             {
-              "Name": "delta",
+              "Name": "updatedFolderDelta",
               "Type": "Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
@@ -5531,13 +5531,6 @@
   ],
   "AnalysisItems": [
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.AuthInfoBroker",
-      "LineNumber": 18
-    },
-    {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
@@ -5550,34 +5543,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.BaselineController",
       "LineNumber": 10
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
-      "LineNumber": 136
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
-      "LineNumber": 134
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 128
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 147
     },
     {
       "Code": "STXAPI002",

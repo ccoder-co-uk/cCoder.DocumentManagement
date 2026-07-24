@@ -51,7 +51,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 =>
         TryCatch(operation: () =>
         {
-            ValidateAllOnGet(ignoreFilters:ignoreFilters );
+            ValidateAllOnGet(ignoreFilters: ignoreFilters);
             return fileBroker.SelectAllFiles(ignoreFilters: ignoreFilters);
         });
 
@@ -59,7 +59,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 =>
         TryCatch(operation: () =>
         {
-            ValidateIdsByFolderIdsOnGet(folderIds:folderIds,ignoreFilters:ignoreFilters );
+            ValidateIdsByFolderIdsOnGet(folderIds: folderIds, ignoreFilters: ignoreFilters);
             return fileBroker.SelectFileIdsByFolderIds(folderIds: folderIds, ignoreFilters: ignoreFilters);
         });
 
@@ -67,7 +67,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 =>
         TryCatch(operation: () =>
         {
-            ValidateWithFolderAndContentsOnGet(fileId:fileId,ignoreFilters:ignoreFilters );
+            ValidateWithFolderAndContentsOnGet(fileId: fileId, ignoreFilters: ignoreFilters);
             return CreateLocalFile(file: fileBroker.SelectFileWithFolderAndContents(fileId: fileId, ignoreFilters: ignoreFilters));
         });
 
@@ -75,7 +75,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 =>
         TryCatch(operation: () =>
         {
-            ValidateWithFolderRolesAndContentsOnGet(fileId:fileId,ignoreFilters:ignoreFilters );
+            ValidateWithFolderRolesAndContentsOnGet(fileId: fileId, ignoreFilters: ignoreFilters);
             return CreateLocalFileWithFolderRoles(file: fileBroker.SelectFileWithFolderRolesAndContents(fileId: fileId, ignoreFilters: ignoreFilters));
         });
 
@@ -83,7 +83,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 =>
         TryCatch(operation: () =>
         {
-            ValidateByPathOnGet(appId:appId,path:path,ignoreFilters:ignoreFilters );
+            ValidateByPathOnGet(appId: appId, path: path, ignoreFilters: ignoreFilters);
             return CreateLocalFile(file: fileBroker.SelectFileByPath(appId: appId, path: path, ignoreFilters: ignoreFilters));
         });
 
@@ -95,7 +95,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 =>
         TryCatch(operation: () =>
         {
-            ValidateByPathWithFolderAndContentsOnGet(appId:appId,path:path,ignoreFilters:ignoreFilters );
+            ValidateByPathWithFolderAndContentsOnGet(appId: appId, path: path, ignoreFilters: ignoreFilters);
             return CreateLocalFile(file: fileBroker.SelectFileByPathWithFolderAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters));
         });
 
@@ -107,7 +107,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 =>
         TryCatch(operation: () =>
         {
-            ValidateByPathWithFolderRolesAndContentsOnGet(appId:appId,path:path,ignoreFilters:ignoreFilters );
+            ValidateByPathWithFolderRolesAndContentsOnGet(appId: appId, path: path, ignoreFilters: ignoreFilters);
             return CreateLocalFileWithFolderRoles(
                 file: fileBroker.SelectFileByPathWithFolderRolesAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters)
             );
@@ -128,7 +128,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 =>
         TryCatch(operation: async () =>
         {
-            ValidateFileOnAdd(file:file);
+            ValidateFileOnAdd(file: file);
             FileEntity newFileEntity = CreateLocalFileEntity(file: file, includeId: false);
 
 
@@ -177,7 +177,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 =>
         TryCatch(operation: async () =>
         {
-            ValidateFileOnUpdate(file:file);
+            ValidateFileOnUpdate(file: file);
             FileEntity updateFileEntity = CreateLocalFileEntity(file: file, includeId: true);
 
 
@@ -195,7 +195,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 =>
         TryCatch(operation: async () =>
         {
-            ValidateForAppFileOnUpdate(file:file);
+            ValidateForAppFileOnUpdate(file: file);
             FileEntity updateFileEntity = CreateLocalFileEntity(file: file, includeId: true);
 
             FileEntity result = await fileBroker.UpdateFileAsync(entity: updateFileEntity);
@@ -261,7 +261,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 =>
         TryCatch(operation: () =>
         {
-            ValidateAllForAppFileOnDelete(items:items);
+            ValidateAllForAppFileOnDelete(items: items);
             return fileBroker.DeleteAllFilesAsync(
                 items: items?.Select(selector: file => CreateLocalFileEntity(file: file, includeId: true)) ?? []);
         });

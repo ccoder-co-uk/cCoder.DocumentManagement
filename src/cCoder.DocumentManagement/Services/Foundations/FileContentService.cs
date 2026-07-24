@@ -52,7 +52,7 @@ internal partial class FileContentService(
 =>
         TryCatch(operation: () =>
         {
-            ValidateAllOnGet(ignoreFilters:ignoreFilters );
+            ValidateAllOnGet(ignoreFilters: ignoreFilters);
             return fileContentBroker.SelectAllFileContents(ignoreFilters: ignoreFilters);
         });
 
@@ -60,7 +60,7 @@ internal partial class FileContentService(
 =>
         TryCatch(operation: () =>
         {
-            ValidateAllForFileOnDelete(fileId:fileId);
+            ValidateAllForFileOnDelete(fileId: fileId);
             return fileContentBroker.DeleteAllFileContentsForFileAsync(fileId: fileId);
         });
 
@@ -68,7 +68,7 @@ internal partial class FileContentService(
 =>
         TryCatch(operation: () =>
         {
-            ValidateAllForFilesOnDelete(fileIds:fileIds);
+            ValidateAllForFilesOnDelete(fileIds: fileIds);
             return fileContentBroker.DeleteAllFileContentsForFilesAsync(fileIds: fileIds);
         });
 
@@ -76,7 +76,7 @@ internal partial class FileContentService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateFileContentOnAdd(newFileContent:newFileContent);
+            ValidateFileContentOnAdd(newFileContent: newFileContent);
             cCoder.Data.Models.DMS.FileContent storageFileContent =
                 CreateFileContent(fileContent: newFileContent, includeId: false);
 
@@ -122,7 +122,7 @@ internal partial class FileContentService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateFileContentOnUpdate(updatedFileContent:updatedFileContent);
+            ValidateFileContentOnUpdate(updatedFileContent: updatedFileContent);
             cCoder.Data.Models.DMS.FileContent updateFileContent = CreateFileContent(fileContent: updatedFileContent, includeId: true);
 
 

@@ -17,27 +17,27 @@ internal partial class CurrentAppResolverProcessingService(
     public App ResolveCurrentApp() =>
         TryCatch(operation: () =>
         {
-        string requestPath = httpContext?.Request.Path.Value ?? string.Empty;
+            string requestPath = httpContext?.Request.Path.Value ?? string.Empty;
 
-        if (
-            requestPath.Contains(value: "/webdav", comparisonType: StringComparison.OrdinalIgnoreCase)
-            && requestPath.Contains(value: "Core/App(", comparisonType: StringComparison.OrdinalIgnoreCase)
-        )
-        {
-            int start = requestPath.IndexOf(value: "Core/App(", comparisonType: StringComparison.OrdinalIgnoreCase) + 9;
-            int end = requestPath.IndexOf(value: ')', startIndex: start);
-
-            if (end > start && int.TryParse(s: requestPath[start..end], result: out int appId))
+            if (
+                requestPath.Contains(value: "/webdav", comparisonType: StringComparison.OrdinalIgnoreCase)
+                && requestPath.Contains(value: "Core/App(", comparisonType: StringComparison.OrdinalIgnoreCase)
+            )
             {
-                return ToResolvedApp(app: appBroker.SelectAppById(appId: appId))
-                    ?? throw new InvalidOperationException(message: $"Unable to resolve app '{appId}'.");
+                int start = requestPath.IndexOf(value: "Core/App(", comparisonType: StringComparison.OrdinalIgnoreCase) + 9;
+                int end = requestPath.IndexOf(value: ')', startIndex: start);
+
+                if (end > start && int.TryParse(s: requestPath[start..end], result: out int appId))
+                {
+                    return ToResolvedApp(app: appBroker.SelectAppById(appId: appId))
+                        ?? throw new InvalidOperationException(message: $"Unable to resolve app '{appId}'.");
+                }
             }
-        }
 
-        string host = httpContext?.Request.Host.Host ?? string.Empty;
+            string host = httpContext?.Request.Host.Host ?? string.Empty;
 
-        return ToResolvedApp(app: appBroker.SelectAppByDomain(domain: host))
-            ?? throw new InvalidOperationException(message: $"Unable to resolve current app for host '{host}'.");
+            return ToResolvedApp(app: appBroker.SelectAppByDomain(domain: host))
+                ?? throw new InvalidOperationException(message: $"Unable to resolve current app for host '{host}'.");
         });
 
     private static App ToResolvedApp(App app) =>
