@@ -2,7 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.Data;
+using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.Eventing.Models;
 using FileEntity = cCoder.Data.Models.DMS.File;
@@ -11,7 +11,7 @@ using LocalFile = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
-internal partial class FileEventService(IFileEventBroker fileEventBroker, ICoreAuthInfo authInfo)
+internal partial class FileEventService(IFileEventBroker fileEventBroker, IAuthInfoBroker authInfoBroker)
     : IFileEventService
 {
     public ValueTask RaiseFileAddEventAsync(LocalFile entity)
@@ -21,7 +21,7 @@ internal partial class FileEventService(IFileEventBroker fileEventBroker, ICoreA
             ValidateInputs(inputs: [entity]);
             EventMessage<FileEntity> message = new()
             {
-                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
                 Data = ToExternalFile(file: entity),
             };
 
@@ -37,7 +37,7 @@ internal partial class FileEventService(IFileEventBroker fileEventBroker, ICoreA
             ValidateInputs(inputs: [entity]);
             EventMessage<FileEntity> message = new()
             {
-                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
                 Data = ToExternalFile(file: entity),
             };
 
@@ -53,7 +53,7 @@ internal partial class FileEventService(IFileEventBroker fileEventBroker, ICoreA
             ValidateInputs(inputs: [entity]);
             EventMessage<FileEntity> message = new()
             {
-                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
                 Data = ToExternalFile(file: entity),
             };
 

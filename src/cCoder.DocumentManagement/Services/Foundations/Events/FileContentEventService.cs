@@ -2,7 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.Data;
+using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -18,7 +18,7 @@ namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
 internal partial class FileContentEventService(
     IFileContentEventBroker fileContentEventBroker,
-    ICoreAuthInfo authInfo
+    IAuthInfoBroker authInfoBroker
 ) : IFileContentEventService
 {
     public ValueTask RaiseFileContentAddEventAsync(FileContent entity)
@@ -28,7 +28,7 @@ internal partial class FileContentEventService(
             ValidateInputs(inputs: [entity]);
             EventMessage<DataFileContent> message = new()
             {
-                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
                 Data = ToExternalFileContent(fileContent: entity),
             };
 
@@ -44,7 +44,7 @@ internal partial class FileContentEventService(
             ValidateInputs(inputs: [entity]);
             EventMessage<DataFileContent> message = new()
             {
-                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
                 Data = ToExternalFileContent(fileContent: entity),
             };
 
@@ -60,7 +60,7 @@ internal partial class FileContentEventService(
             ValidateInputs(inputs: [entity]);
             EventMessage<DataFileContent> message = new()
             {
-                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
                 Data = ToExternalFileContent(fileContent: entity),
             };
 

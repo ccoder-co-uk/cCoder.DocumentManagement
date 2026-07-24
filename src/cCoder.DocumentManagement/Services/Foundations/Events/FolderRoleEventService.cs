@@ -2,7 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.Data;
+using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -16,7 +16,7 @@ namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
 internal partial class FolderRoleEventService(
     IFolderRoleEventBroker folderRoleEventBroker,
-    ICoreAuthInfo authInfo
+    IAuthInfoBroker authInfoBroker
 ) : IFolderRoleEventService
 {
     public ValueTask RaiseFolderRoleAddEventAsync(FolderRole entity)
@@ -26,7 +26,7 @@ internal partial class FolderRoleEventService(
             ValidateInputs(inputs: [entity]);
             EventMessage<DataFolderRole> message = new()
             {
-                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
                 Data = ToExternalFolderRole(folderRole: entity),
             };
 
@@ -42,7 +42,7 @@ internal partial class FolderRoleEventService(
             ValidateInputs(inputs: [entity]);
             EventMessage<DataFolderRole> message = new()
             {
-                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
                 Data = ToExternalFolderRole(folderRole: entity),
             };
 

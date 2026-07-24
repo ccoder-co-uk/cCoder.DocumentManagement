@@ -2,19 +2,18 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Orchestrations;
 
-namespace cCoder.DocumentManagement.Brokers;
+namespace cCoder.DocumentManagement.Exposures;
 
 public interface IDmsInstanceFactory
 {
-    IDms CreateDms();
+    IDms CreateDmsInstance();
 }
 
 internal sealed class DmsInstanceFactory(IDmsOrchestrationService dmsOrchestrationService)
     : IDmsInstanceFactory
 {
-    public IDms CreateDms() =>
+    public IDms CreateDmsInstance() =>
         new Dms(dmsOrchestrationService: dmsOrchestrationService);
 }

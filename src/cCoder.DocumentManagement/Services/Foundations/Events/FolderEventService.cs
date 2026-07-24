@@ -2,7 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.Data;
+using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -14,7 +14,7 @@ using DataFolder = cCoder.Data.Models.DMS.Folder;
 
 namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
-internal partial class FolderEventService(IFolderEventBroker folderEventBroker, ICoreAuthInfo authInfo)
+internal partial class FolderEventService(IFolderEventBroker folderEventBroker, IAuthInfoBroker authInfoBroker)
     : IFolderEventService
 {
     public ValueTask RaiseFolderAddEventAsync(Folder entity)
@@ -24,7 +24,7 @@ internal partial class FolderEventService(IFolderEventBroker folderEventBroker, 
             ValidateInputs(inputs: [entity]);
             EventMessage<DataFolder> message = new()
             {
-                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
                 Data = ToExternalFolder(folder: entity),
             };
 
@@ -40,7 +40,7 @@ internal partial class FolderEventService(IFolderEventBroker folderEventBroker, 
             ValidateInputs(inputs: [entity]);
             EventMessage<DataFolder> message = new()
             {
-                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
                 Data = ToExternalFolder(folder: entity),
             };
 
@@ -56,7 +56,7 @@ internal partial class FolderEventService(IFolderEventBroker folderEventBroker, 
             ValidateInputs(inputs: [entity]);
             EventMessage<DataFolder> message = new()
             {
-                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
                 Data = ToExternalFolder(folder: entity),
             };
 
