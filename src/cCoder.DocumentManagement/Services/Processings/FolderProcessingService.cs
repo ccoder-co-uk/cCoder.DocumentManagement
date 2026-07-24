@@ -127,7 +127,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             ValidateInputs(inputs: [newFolder]);
             if (newFolder.ParentId.HasValue)
             {
-                Folder parent = Get(folderId: newFolder.ParentId.Value);
+                Folder parent = GetValue(folderId: newFolder.ParentId.Value);
 
                 if (parent == null)
                 {
@@ -142,7 +142,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             }
 
 
-            Folder existingFolder = GetAll(ignoreFilters: true)
+            Folder existingFolder = GetAllValue(ignoreFilters: true)
                 .FirstOrDefault(predicate: (Folder folder) => folder.AppId == newFolder.AppId && folder.Path.ToLower() == newFolder.Path.ToLower());
 
 
@@ -158,10 +158,10 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             };
 
 
-            await SaveAppPathAsync(app: app, path: new cCoder.DocumentManagement.Models.Path(path: newFolder.Path));
+            await SaveAppPathValueAsync(app: app, path: new cCoder.DocumentManagement.Models.Path(path: newFolder.Path));
 
 
-            return GetAll(ignoreFilters: true)
+            return GetAllValue(ignoreFilters: true)
                 .FirstOrDefault(predicate: (Folder folder) => folder.AppId == newFolder.AppId && folder.Path.ToLower() == newFolder.Path.ToLower());
 
         });
@@ -184,7 +184,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             newFolder.Path = newFolder.Name;
         }
 
-        Folder existingFolder = GetAll(ignoreFilters: true)
+        Folder existingFolder = GetAllValue(ignoreFilters: true)
             .FirstOrDefault(predicate: folder =>
                 folder.AppId == newFolder.AppId
                 && folder.Path.ToLower() == newFolder.Path.ToLower());
@@ -241,7 +241,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [folder]);
-            Folder dbFolder = GetAll(ignoreFilters: true)
+            Folder dbFolder = GetAllValue(ignoreFilters: true)
     .FirstOrDefault(predicate: (Folder foundFolder) => foundFolder.Id == folder.Id);
 
 
@@ -249,7 +249,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             {
                 string folderPathPrefix = dbFolder.Path + "/";
 
-                Guid[] folderIds = (from foundFolder in GetAll(ignoreFilters: true)
+                Guid[] folderIds = (from foundFolder in GetAllValue(ignoreFilters: true)
                                     where foundFolder.Path == dbFolder.Path || foundFolder.Path.StartsWith(value: folderPathPrefix)
                                     select foundFolder.Id).ToArray();
 
@@ -397,7 +397,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             {
                 try
                 {
-                    Folder savedItem = item.Id == Guid.Empty ? await AddFolderAsync(newFolder: item) : await UpdateFolderAsync(updatedFolder: item);
+                    Folder savedItem = item.Id == Guid.Empty ? await AddFolderValueAsync(newFolder: item) : await UpdateFolderValueAsync(updatedFolder: item);
 
                     results.Add(item: new Result<Folder>
                     {
@@ -468,7 +468,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             ValidateInputs(inputs: [deletedFolder]);
             foreach (Folder item in deletedFolder)
             {
-                await DeleteAsync(folderId: item.Id);
+                await DeleteValueAsync(folderId: item.Id);
             }
 
         });
@@ -949,4 +949,23 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
 
         stream.Write(buffer: array, offset: 0, count: array.Length);
     }
+    private Folder GetValue(Guid folderId) =>
+        Get(folderId: folderId);
+
+    private IQueryable<Folder> GetAllValue(bool ignoreFilters = false) =>
+        GetAll(ignoreFilters: ignoreFilters);
+
+    private ValueTask SaveAppPathValueAsync(
+        App app,
+        cCoder.DocumentManagement.Models.Path path) =>
+        SaveAppPathAsync(app: app, path: path);
+
+    private ValueTask<Folder> AddFolderValueAsync(Folder newFolder) =>
+        AddFolderAsync(newFolder: newFolder);
+
+    private ValueTask<Folder> UpdateFolderValueAsync(Folder updatedFolder) =>
+        UpdateFolderAsync(updatedFolder: updatedFolder);
+
+    private ValueTask DeleteValueAsync(Guid folderId) =>
+        DeleteAsync(folderId: folderId);
 }

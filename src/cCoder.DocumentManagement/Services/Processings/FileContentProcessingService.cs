@@ -69,7 +69,7 @@ internal partial class FileContentProcessingService(IFileContentService service)
             {
                 try
                 {
-                    FileContent savedItem = item.Id == Guid.Empty ? await AddFileContentAsync(newFileContent: item) : await UpdateFileContentAsync(updatedFileContent: item);
+                    FileContent savedItem = item.Id == Guid.Empty ? await AddFileContentValueAsync(newFileContent: item) : await UpdateFileContentValueAsync(updatedFileContent: item);
 
                     results.Add(item: new Result<FileContent>
                     {
@@ -101,8 +101,16 @@ internal partial class FileContentProcessingService(IFileContentService service)
             ValidateInputs(inputs: [deletedFileContent]);
             foreach (FileContent item in deletedFileContent)
             {
-                await DeleteAsync(fileContentId: item.Id);
+                await DeleteValueAsync(fileContentId: item.Id);
             }
 
         });
+    private ValueTask<FileContent> AddFileContentValueAsync(FileContent newFileContent) =>
+        AddFileContentAsync(newFileContent: newFileContent);
+
+    private ValueTask<FileContent> UpdateFileContentValueAsync(FileContent updatedFileContent) =>
+        UpdateFileContentAsync(updatedFileContent: updatedFileContent);
+
+    private ValueTask DeleteValueAsync(Guid fileContentId) =>
+        DeleteAsync(fileContentId: fileContentId);
 }

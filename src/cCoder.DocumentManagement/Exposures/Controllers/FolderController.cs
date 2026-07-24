@@ -20,8 +20,7 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
 public partial class FolderController(
-    IFolderOrchestrationService service,
-    ILogger<FolderController> log
+    IFolderOrchestrationService service
 ) : ODataController
 {
 

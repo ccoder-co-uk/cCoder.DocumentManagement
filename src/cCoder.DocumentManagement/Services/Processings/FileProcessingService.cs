@@ -333,7 +333,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             {
                 try
                 {
-                    cCoder.Data.Models.DMS.File savedItem = item.Id == Guid.Empty ? await AddFileAsync(newFile: item) : await UpdateFileAsync(updatedFile: item);
+                    cCoder.Data.Models.DMS.File savedItem = item.Id == Guid.Empty ? await AddFileValueAsync(newFile: item) : await UpdateFileValueAsync(updatedFile: item);
 
                     results.Add(item: new Result<cCoder.Data.Models.DMS.File>
                     {
@@ -365,7 +365,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             ValidateInputs(inputs: [deletedFile]);
             foreach (cCoder.Data.Models.DMS.File item in deletedFile)
             {
-                await DeleteAsync(fileId: item.Id);
+                await DeleteValueAsync(fileId: item.Id);
             }
 
         });
@@ -709,4 +709,14 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         return memoryStream2.ToArray();
     }
+    private ValueTask<cCoder.Data.Models.DMS.File> AddFileValueAsync(
+        cCoder.Data.Models.DMS.File newFile) =>
+        AddFileAsync(newFile: newFile);
+
+    private ValueTask<cCoder.Data.Models.DMS.File> UpdateFileValueAsync(
+        cCoder.Data.Models.DMS.File updatedFile) =>
+        UpdateFileAsync(updatedFile: updatedFile);
+
+    private ValueTask DeleteValueAsync(Guid fileId) =>
+        DeleteAsync(fileId: fileId);
 }

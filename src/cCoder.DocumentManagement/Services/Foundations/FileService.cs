@@ -23,7 +23,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [fileId]);
-            LocalFile file = GetAll()
+            LocalFile file = GetAllValue()
     .FirstOrDefault(predicate: i => i.Id == fileId);
 
 
@@ -33,7 +33,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
             }
 
 
-            LocalFile unrestrictedFile = GetAll(ignoreFilters: true)
+            LocalFile unrestrictedFile = GetAllValue(ignoreFilters: true)
                 .FirstOrDefault(predicate: i => i.Id == fileId);
 
 
@@ -187,7 +187,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
             );
 
 
-            return await UpdateForAppFileAsync(file: file);
+            return await UpdateForAppFileValueAsync(file: file);
 
         });
 
@@ -229,7 +229,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [fileId]);
-            LocalFile file = GetAll(ignoreFilters: true)
+            LocalFile file = GetAllValue(ignoreFilters: true)
     .FirstOrDefault(predicate: foundFile => foundFile.Id == fileId);
 
 
@@ -385,4 +385,9 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         };
     }
 
+    private IQueryable<LocalFile> GetAllValue(bool ignoreFilters = false) =>
+        GetAll(ignoreFilters: ignoreFilters);
+
+    private ValueTask<LocalFile> UpdateForAppFileValueAsync(LocalFile file) =>
+        UpdateForAppFileAsync(file: file);
 }

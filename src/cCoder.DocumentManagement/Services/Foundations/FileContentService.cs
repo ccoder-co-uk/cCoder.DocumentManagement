@@ -24,7 +24,7 @@ internal partial class FileContentService(
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [fileContentId]);
-            FileContent fileContent = GetAll()
+            FileContent fileContent = GetAllValue()
     .FirstOrDefault(predicate: i => i.Id == fileContentId);
 
 
@@ -34,7 +34,7 @@ internal partial class FileContentService(
             }
 
 
-            FileContent unrestrictedFileContent = GetAll(ignoreFilters: true)
+            FileContent unrestrictedFileContent = GetAllValue(ignoreFilters: true)
                 .FirstOrDefault(predicate: i => i.Id == fileContentId);
 
 
@@ -159,7 +159,7 @@ internal partial class FileContentService(
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [fileContentId]);
-            FileContent fileContent = Get(fileContentId: fileContentId);
+            FileContent fileContent = GetValue(fileContentId: fileContentId);
 
 
             authorizationBroker.Authorize(
@@ -191,4 +191,10 @@ internal partial class FileContentService(
             RawData = fileContent.RawData
         };
     }
+
+    private FileContent GetValue(Guid fileContentId) =>
+        Get(fileContentId: fileContentId);
+
+    private IQueryable<FileContent> GetAllValue(bool ignoreFilters = false) =>
+        GetAll(ignoreFilters: ignoreFilters);
 }

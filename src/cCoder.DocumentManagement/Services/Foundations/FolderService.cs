@@ -22,7 +22,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [folderId]);
-            Folder folder = GetAll()
+            Folder folder = GetAllValue()
     .FirstOrDefault(predicate: i => i.Id == folderId);
 
 
@@ -32,7 +32,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
             }
 
 
-            Folder unrestrictedFolder = GetAll(ignoreFilters: true)
+            Folder unrestrictedFolder = GetAllValue(ignoreFilters: true)
                 .FirstOrDefault(predicate: i => i.Id == folderId);
 
 
@@ -179,7 +179,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
             ValidateInputs(inputs: [updatedFolder]);
             authorizationBroker.Authorize(appId: updatedFolder.AppId, privilege: $"{nameof(Folder)}_update");
 
-            return await UpdateForAppFolderAsync(updatedFolder: updatedFolder);
+            return await UpdateForAppFolderValueAsync(updatedFolder: updatedFolder);
 
         });
 
@@ -214,7 +214,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [folderId]);
-            Folder folder = GetAll(ignoreFilters: true)
+            Folder folder = GetAllValue(ignoreFilters: true)
     .FirstOrDefault(predicate: foundFolder => foundFolder.Id == folderId);
 
 
@@ -433,4 +433,9 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
         return newFolder;
     }
 
+    private IQueryable<Folder> GetAllValue(bool ignoreFilters = false) =>
+        GetAll(ignoreFilters: ignoreFilters);
+
+    private ValueTask<Folder> UpdateForAppFolderValueAsync(Folder updatedFolder) =>
+        UpdateForAppFolderAsync(updatedFolder: updatedFolder);
 }

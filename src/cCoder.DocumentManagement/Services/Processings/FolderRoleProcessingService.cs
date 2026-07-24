@@ -101,7 +101,7 @@ internal partial class FolderRoleProcessingService(IFolderRoleService service, I
                 .ToArray();
 
 
-            cCoder.Data.Models.Security.FolderRole[] existingItems = (from item in GetAll()
+            cCoder.Data.Models.Security.FolderRole[] existingItems = (from item in GetAllValue()
                                                                       where ((ReadOnlySpan<Guid>)leftIds).Contains(value: item.FolderId)
                                                                       select item).ToArray();
 
@@ -117,7 +117,7 @@ internal partial class FolderRoleProcessingService(IFolderRoleService service, I
                 cCoder.Data.Models.Security.FolderRole[] existingGroupItems = existingItems.Where(predicate: (cCoder.Data.Models.Security.FolderRole item) => object.Equals(objA: item.FolderId, objB: group.Key))
                     .ToArray();
 
-                await DeleteAllFolderRoleAsync(deletedFolderRole: existingGroupItems);
+                await DeleteAllFolderRoleValueAsync(deletedFolderRole: existingGroupItems);
 
                 foreach (cCoder.Data.Models.Security.FolderRole item in groupItems)
                 {
@@ -127,7 +127,7 @@ internal partial class FolderRoleProcessingService(IFolderRoleService service, I
                         {
                             Id = $"{item.FolderId}:{item.RoleId}",
                             Success = true,
-                            Item = await AddFolderRoleAsync(newFolderRole: item),
+                            Item = await AddFolderRoleValueAsync(newFolderRole: item),
                             Message = "Added Successfully"
                         });
                     }
@@ -156,7 +156,7 @@ internal partial class FolderRoleProcessingService(IFolderRoleService service, I
             ValidateInputs(inputs: [deletedFolderRole]);
             foreach (cCoder.Data.Models.Security.FolderRole item in deletedFolderRole)
             {
-                await DeleteFolderRoleAsync(deletedFolderRole: item);
+                await DeleteFolderRoleValueAsync(deletedFolderRole: item);
             }
 
         });
@@ -167,4 +167,18 @@ internal partial class FolderRoleProcessingService(IFolderRoleService service, I
             .IgnoreQueryFilters()
             .FirstOrDefault(predicate: (cCoder.Data.Models.Security.Role r) => r.Id == entity.RoleId), folder: folderService.GetAll(ignoreFilters: true)
             .FirstOrDefault(predicate: (Folder u) => u.Id == entity.FolderId));
+    private IQueryable<cCoder.Data.Models.Security.FolderRole> GetAllValue() =>
+        GetAll();
+
+    private ValueTask DeleteAllFolderRoleValueAsync(
+        IEnumerable<cCoder.Data.Models.Security.FolderRole> deletedFolderRole) =>
+        DeleteAllFolderRoleAsync(deletedFolderRole: deletedFolderRole);
+
+    private ValueTask<cCoder.Data.Models.Security.FolderRole> AddFolderRoleValueAsync(
+        cCoder.Data.Models.Security.FolderRole newFolderRole) =>
+        AddFolderRoleAsync(newFolderRole: newFolderRole);
+
+    private ValueTask DeleteFolderRoleValueAsync(
+        cCoder.Data.Models.Security.FolderRole deletedFolderRole) =>
+        DeleteFolderRoleAsync(deletedFolderRole: deletedFolderRole);
 }
