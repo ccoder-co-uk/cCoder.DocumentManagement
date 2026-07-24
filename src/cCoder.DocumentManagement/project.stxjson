@@ -2310,6 +2310,83 @@
       ]
     },
     {
+      "Name": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "CopyDmsPathAsync",
+          "Inputs": [
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DropDmsPathAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "GetDmsPath",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "MoveDmsPathAsync",
+          "Inputs": [
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SaveDmsPathAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure",
       "StandardElementType": "Exposure",
       "Properties": [],
@@ -2394,6 +2471,285 @@
       ]
     },
     {
+      "Name": "cCoder.DocumentManagement.Exposures.FileContentOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "newFileContent",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "AddOrUpdateFileContent",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
+        },
+        {
+          "Name": "DeleteAllForFileAsync",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllForFilesAsync",
+          "Inputs": [
+            {
+              "Name": "fileIds",
+              "Type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "fileContentId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.FileOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetAllFiles",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "GetFileByPathWithFolderAndContents",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "GetFileIdsByFolderIds",
+          "Inputs": [
+            {
+              "Name": "folderIds",
+              "Type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Guid[]"
+        },
+        {
+          "Name": "UpdateFileAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFile",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "UpdateFileForAppAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFile",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "CopyFilePathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SaveFilePathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.FolderOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFolderAsync",
+          "Inputs": [
+            {
+              "Name": "newFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "GetAllFolders",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "GetFolderByPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetFolderByPathWithRoles",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetFolderWithRoles",
+          "Inputs": [
+            {
+              "Name": "folderId",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.FolderRoleOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "newFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+        },
+        {
+          "Name": "DeleteFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.Exposures.Middleware.DMSMiddleware",
       "StandardElementType": "Exposure",
       "Properties": [],
@@ -2432,6 +2788,23 @@
             }
           ],
           "ReturnType": "System.Threading.Tasks.Task"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.RoleOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetAllRoles",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.Role\u003E"
         }
       ]
     },
@@ -4621,6 +4994,26 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
+          "Name": "DeleteAllForFileAsync",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllForFilesAsync",
+          "Inputs": [
+            {
+              "Name": "fileIds",
+              "Type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
           "Name": "DeleteAsync",
           "Inputs": [
             {
@@ -5447,6 +5840,10 @@
       "ToType": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService"
     },
     {
+      "FromType": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService"
+    },
+    {
       "FromType": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure",
       "ToType": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService"
     },
@@ -5457,6 +5854,30 @@
     {
       "FromType": "cCoder.DocumentManagement.Exposures.EventHandlers.DocumentManagementEventHandlers",
       "ToType": "cCoder.DocumentManagement.Services.Foundations.Events.EventHandlerService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.FileContentOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.FileOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.FileService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.FolderOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.FolderRoleOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.RoleOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.RoleService"
     },
     {
       "FromType": "cCoder.DocumentManagement.Models.FolderArchiveData",
@@ -5664,19 +6085,15 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "ToType": "cCoder.DocumentManagement.Services.Foundations.FileContentService"
+      "ToType": "cCoder.DocumentManagement.Exposures.FileContentOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.FolderOperationsExposure"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "ToType": "cCoder.DocumentManagement.Services.Foundations.FileService"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderService"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "ToType": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.FolderEventProcessingService",
@@ -5688,27 +6105,27 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "ToType": "cCoder.DocumentManagement.Services.Foundations.FileContentService"
+      "ToType": "cCoder.DocumentManagement.Exposures.FileContentOperationsExposure"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "ToType": "cCoder.DocumentManagement.Services.Foundations.FileService"
+      "ToType": "cCoder.DocumentManagement.Exposures.FileOperationsExposure"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService"
+      "ToType": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.FolderRoleOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.RoleOperationsExposure"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
       "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderService"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "ToType": "cCoder.DocumentManagement.Services.Foundations.RoleService"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "ToType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
@@ -5736,52 +6153,16 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "ToType": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService"
+      "ToType": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "ToType": "cCoder.DocumentManagement.Services.Foundations.FileService"
+      "ToType": "cCoder.DocumentManagement.Exposures.FileOperationsExposure"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderService"
+      "ToType": "cCoder.DocumentManagement.Exposures.FolderOperationsExposure"
     }
   ],
-  "AnalysisItems": [
-    {
-      "Code": "STX0004",
-      "Description": "A service must not depend on another service at the same layer.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXP001",
-      "Description": "A processing service may use only one foundation service and no higher-level service.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0004",
-      "Description": "A service must not depend on another service at the same layer.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXP001",
-      "Description": "A processing service may use only one foundation service and no higher-level service.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXP001",
-      "Description": "A processing service may use only one foundation service and no higher-level service.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "LineNumber": 23
-    }
-  ]
+  "AnalysisItems": []
 }

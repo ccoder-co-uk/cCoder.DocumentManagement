@@ -7,6 +7,7 @@ using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
+using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Processings;
 using Microsoft.Extensions.Logging;
@@ -37,9 +38,12 @@ public partial class WebDavProcessingServiceTests
         Config config = new() { Settings = new Dictionary<string, string> { [key: "sslPort"] = "443" } };
 
         webDavProcessingService = new WebDavProcessingService(
-            fileService: fileServiceMock.Object,
-            folderService: folderServiceMock.Object,
-            dmsInstanceService: dmsInstanceServiceMock.Object,
+            fileOperationsExposure: new FileOperationsExposure(
+                fileService: fileServiceMock.Object),
+            folderOperationsExposure: new FolderOperationsExposure(
+                folderService: folderServiceMock.Object),
+            dmsInstanceOperationsExposure: new DmsInstanceOperationsExposure(
+                dmsInstanceService: dmsInstanceServiceMock.Object),
             config: config,
             log: loggerMock.Object
         );

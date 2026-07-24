@@ -123,7 +123,7 @@ public partial class FolderProcessingServiceTests
         folderServiceMock.VerifyNoOtherCalls();
         roleServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
-        fileContentServiceMock.VerifyNoOtherCalls();
+        fileContentOperationsExposureMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -223,7 +223,7 @@ public partial class FolderProcessingServiceTests
         authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.AtLeastOnce());
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
-        fileContentServiceMock.VerifyNoOtherCalls();
+        fileContentOperationsExposureMock.VerifyNoOtherCalls();
     }
 
     [Fact]

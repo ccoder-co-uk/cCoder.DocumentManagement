@@ -103,6 +103,13 @@ public static partial class IServiceCollectionExtensions
     private static void AddEventHandlers(this IServiceCollection services)
     {
         services.AddTransient<IDocumentManagementAppExposure, DocumentManagementAppExposure>();
+        services.AddTransient<IDmsInstanceOperationsExposure, DmsInstanceOperationsExposure>();
+        services.AddTransient<IFileContentOperationsExposure, FileContentOperationsExposure>();
+        services.AddTransient<IFileOperationsExposure, FileOperationsExposure>();
+        services.AddTransient<IFilePathOperationsExposure, FilePathOperationsExposure>();
+        services.AddTransient<IFolderOperationsExposure, FolderOperationsExposure>();
+        services.AddTransient<IFolderRoleOperationsExposure, FolderRoleOperationsExposure>();
+        services.AddTransient<IRoleOperationsExposure, RoleOperationsExposure>();
         services.AddTransient<IDocumentManagementPackageManager, DocumentManagementPackageManager>();
         services.AddTransient<IDocumentManagementEventHandlers, DocumentManagementEventHandlers>();
     }

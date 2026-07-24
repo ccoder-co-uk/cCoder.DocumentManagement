@@ -234,6 +234,7 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
 
         return JsonSerializer.Deserialize<ODataEnvelope<DmsFile>>(json: content, options: JsonOptions)!.Value;
     }
+
     private async Task<int> GetFileStatusCodeAsync(Guid id)
     {
         using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}({id})");

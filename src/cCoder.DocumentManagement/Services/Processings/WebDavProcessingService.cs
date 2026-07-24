@@ -7,6 +7,7 @@ using System.Text;
 using System.Xml.Linq;
 using cCoder.Data;
 using cCoder.DocumentManagement.Models;
+using cCoder.DocumentManagement.Exposures;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
@@ -21,9 +22,9 @@ using MemoryStream = System.IO.MemoryStream;
 namespace cCoder.DocumentManagement.Services.Processings;
 
 internal partial class WebDavProcessingService(
-    IFileService fileService,
-    IFolderService folderService,
-    IDmsInstanceService dmsInstanceService,
+    IFileOperationsExposure fileOperationsExposure,
+    IFolderOperationsExposure folderOperationsExposure,
+    IDmsInstanceOperationsExposure dmsInstanceOperationsExposure,
     Config config,
     ILogger<WebDavProcessingService> log
 ) : IWebDavProcessingService
@@ -130,7 +131,7 @@ internal partial class WebDavProcessingService(
                             ? parsedVersion
                             : 0;
 
-                        DmsResult getResult = dmsInstanceService.Get(path: path, version: getVer);
+                        DmsResult getResult = dmsInstanceOperationsExposure.GetDmsPath(path: path, version: getVer);
                         return CreateDmsProcessingResponse(body: getResult.Data, hasBody: true, contentType: getResult.MimeType, statusCode: 200, headers: headers);
                     case "HEAD":
                         return CreateDmsProcessingResponse(
@@ -169,12 +170,12 @@ internal partial class WebDavProcessingService(
                     case "POST":
                     case "PUT":
                         request.Body.Position = 0;
-                        await dmsInstanceService.SaveAsync(path: path, content: request.Body);
+                        await dmsInstanceOperationsExposure.SaveDmsPathAsync(path: path, content: request.Body);
                         request.Body.Position = 0;
                         return CreateDmsProcessingResponse(body: request.Body, hasBody: true, contentType: request.ContentType, statusCode: 201, headers: headers);
                     case "MKCOL":
                         request.Body.Position = 0;
-                        await dmsInstanceService.SaveAsync(path: path, content: request.Body);
+                        await dmsInstanceOperationsExposure.SaveDmsPathAsync(path: path, content: request.Body);
                         return CreateDmsProcessingResponse(
                             body: Stream.Null,
                             hasBody: false,
@@ -183,7 +184,7 @@ internal partial class WebDavProcessingService(
                             headers: headers
                         );
                     case "MOVE":
-                        await dmsInstanceService.MoveAsync(
+                        await dmsInstanceOperationsExposure.MoveDmsPathAsync(
                             oldPath: path,
                             newPath: ResolveDestinationPathDmsProcessingRequest(request: request, appId: appId)
                         );
@@ -195,7 +196,7 @@ internal partial class WebDavProcessingService(
                             headers: headers
                         );
                     case "COPY":
-                        await dmsInstanceService.CopyAsync(
+                        await dmsInstanceOperationsExposure.CopyDmsPathAsync(
                             oldPath: path,
                             newPath: ResolveDestinationPathDmsProcessingRequest(request: request, appId: appId)
                         );
@@ -207,7 +208,7 @@ internal partial class WebDavProcessingService(
                             headers: headers
                         );
                     case "DELETE":
-                        await dmsInstanceService.DropAsync(
+                        await dmsInstanceOperationsExposure.DropDmsPathAsync(
                             path: path,
                             version: int.TryParse(s: TryGetSingleValue(query: query, key: "version"), result: out int deleteVersion)
                                 ? deleteVersion
@@ -297,8 +298,8 @@ internal partial class WebDavProcessingService(
     {
         try
         {
-            LocalFile file = fileService
-                .GetAll()
+            LocalFile file = fileOperationsExposure
+                .GetAllFiles()
                 .FirstOrDefault(predicate: item =>
                     item.Folder.AppId == appId
                     && path.Length > 0
@@ -334,16 +335,16 @@ internal partial class WebDavProcessingService(
     {
         LocalFolder folder =
             path.FullPath != string.Empty
-                ? folderService
-                    .GetAll()
+                ? folderOperationsExposure
+                    .GetAllFolders()
                     .FirstOrDefault(predicate: item => item.AppId == appId && item.Path == path.FullPath)
                 : new LocalFolder
                 {
                     Name = "Root",
                     SubFolders =
                     [
-                        .. folderService
-                            .GetAll()
+                        .. folderOperationsExposure
+                            .GetAllFolders()
                             .Where(predicate:item => item.AppId == appId && item.ParentId == null),
                     ],
                     Files = [],
@@ -358,8 +359,8 @@ internal partial class WebDavProcessingService(
         {
             folders =
             [
-                .. folderService
-                    .GetAll()
+                .. folderOperationsExposure
+                    .GetAllFolders()
                     .Where(predicate:item =>
                         item.AppId == appId
                         && (
@@ -375,8 +376,8 @@ internal partial class WebDavProcessingService(
 
             files =
             [
-                .. fileService
-                    .GetAll()
+                .. fileOperationsExposure
+                    .GetAllFiles()
                     .Where(predicate:item =>
                         item.Folder.AppId == appId
                         && path.Length > 0

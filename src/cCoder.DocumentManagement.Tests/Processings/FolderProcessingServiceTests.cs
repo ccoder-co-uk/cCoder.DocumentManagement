@@ -6,6 +6,7 @@ using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
+using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Processings;
 using FizzWare.NBuilder;
@@ -29,7 +30,7 @@ public partial class FolderProcessingServiceTests
     private readonly Mock<IFolderRoleService> folderRoleServiceMock = new();
     private readonly Mock<IRoleService> roleServiceMock = new();
     private readonly Mock<IFileService> fileServiceMock = new();
-    private readonly Mock<IFileContentService> fileContentServiceMock = new();
+    private readonly Mock<IFileContentOperationsExposure> fileContentOperationsExposureMock = new();
     private readonly Mock<IFileProcessingService> fileProcessingServiceMock = new();
     private readonly Mock<ILogger<FolderProcessingService>> loggerMock = new();
     private User currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
@@ -39,11 +40,15 @@ public partial class FolderProcessingServiceTests
     {
         folderProcessingService = new FolderProcessingService(
             service: folderServiceMock.Object,
-            folderRoleService: folderRoleServiceMock.Object,
-            roleService: roleServiceMock.Object,
-            fileService: fileServiceMock.Object,
-            fileContentService: fileContentServiceMock.Object,
-            fileProcessingService: fileProcessingServiceMock.Object,
+            folderRoleOperationsExposure: new FolderRoleOperationsExposure(
+                folderRoleService: folderRoleServiceMock.Object),
+            roleOperationsExposure: new RoleOperationsExposure(
+                roleService: roleServiceMock.Object),
+            fileOperationsExposure: new FileOperationsExposure(
+                fileService: fileServiceMock.Object),
+            filePathOperationsExposure: new FilePathOperationsExposure(
+                fileProcessingService: fileProcessingServiceMock.Object),
+            fileContentOperationsExposure: fileContentOperationsExposureMock.Object,
             authorizationBroker: authorizationBrokerMock.Object
         );
     }

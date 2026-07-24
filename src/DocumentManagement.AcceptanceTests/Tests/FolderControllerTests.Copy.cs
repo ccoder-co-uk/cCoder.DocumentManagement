@@ -15,8 +15,9 @@ public sealed partial class FolderControllerTests
     public async Task Copy_CopiesFolderBetweenApps()
     {
         // Given
-        SeededFolderContext sourceContext = await SeedCopyDatabase("folder_create", "folder_copy", "folder_delete");
-        SeededFolderContext destinationContext = await SeedCopyDatabase("folder_create", "folder_copy", "folder_delete");
+        string[] privileges = ["folder_create", "folder_copy", "folder_delete"];
+        SeededFolderContext sourceContext = await SeedCopyDatabase(privileges: privileges);
+        SeededFolderContext destinationContext = await SeedCopyDatabase(privileges: privileges);
         string sourceName = Unique(prefix: "SourceFolder");
 
         Folder sourceFolder = await CreateFolderAsync(payload: new

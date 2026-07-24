@@ -82,4 +82,23 @@ public partial class FolderRoleProcessingServiceTests
             Files = [],
             SubFolders = [],
         };
+
+    private static FolderRoleContext CreateFolderRoleContext(
+        Folder folder,
+        Role role) =>
+        new()
+        {
+            Folder = folder,
+            Role = role,
+        };
+
+    private void SetupFolderRoleContext(
+        FolderRole folderRole,
+        FolderRoleContext context) =>
+        contextBrokerMock
+            .Setup(expression: broker =>
+                broker.SelectFolderRoleContext(
+                    folderRole: folderRole,
+                    ignoreFilters: true))
+            .Returns(value: context);
 }

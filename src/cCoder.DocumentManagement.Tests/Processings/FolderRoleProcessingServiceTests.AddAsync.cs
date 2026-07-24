@@ -49,18 +49,9 @@ public partial class FolderRoleProcessingServiceTests
         FolderRole link = new() { FolderId = folder.Id, RoleId = roleToAdd.Id };
         currentUser = user;
 
-        FolderRoleContext context = new()
-        {
-            Folder = folder,
-            Role = roleToAdd,
-        };
+        FolderRoleContext context = CreateFolderRoleContext(folder: folder, role: roleToAdd);
 
-        contextBrokerMock
-            .Setup(expression: broker =>
-                broker.SelectFolderRoleContext(
-                    folderRole: link,
-                    ignoreFilters: true))
-            .Returns(value: context);
+        SetupFolderRoleContext(folderRole: link, context: context);
 
         folderRoleServiceMock.Setup(expression: x => x.AddFolderRoleAsync(newFolderRole: link))
             .ReturnsAsync(value: link);
@@ -95,27 +86,17 @@ public partial class FolderRoleProcessingServiceTests
 
         FolderRole link = new() { FolderId = folder.Id, RoleId = roleToAdd.Id };
 
-        FolderRoleContext context = new()
-        {
-            Folder = folder,
-            Role = roleToAdd,
-        };
+        FolderRoleContext context = CreateFolderRoleContext(folder: folder, role: roleToAdd);
 
-        contextBrokerMock
-            .Setup(expression: broker =>
-                broker.SelectFolderRoleContext(
-                    folderRole: link,
-                    ignoreFilters: true))
-            .Returns(value: context);
+        SetupFolderRoleContext(folderRole: link, context: context);
 
         // When
         Func<Task> action = async () =>
             await folderRoleProcessingService.AddFolderRoleAsync(newFolderRole: link);
 
         // Then
-        await action.Should()
-            .ThrowAsync<DocumentManagementServiceException>()
-            .WithInnerException(innerException: typeof(SecurityException));
-    }
+        var exception = await Assert.ThrowsAsync<DocumentManagementServiceException>(testCode: action);
 
+        Assert.IsType<SecurityException>(@object: exception.InnerException);
+    }
 }

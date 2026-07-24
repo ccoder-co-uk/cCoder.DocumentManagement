@@ -47,7 +47,7 @@ public partial class FolderProcessingServiceTests
 
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
-        fileContentServiceMock.VerifyNoOtherCalls();
+        fileContentOperationsExposureMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -112,7 +112,7 @@ public partial class FolderProcessingServiceTests
         fileServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: false))
             .Returns(value: new[] { nestedFile }.AsQueryable());
 
-        fileContentServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: false))
+        fileContentOperationsExposureMock.Setup(expression: x => x.GetAll(ignoreFilters: false))
             .Returns(value: new[] { nestedContent }.AsQueryable());
 
         // When
@@ -133,9 +133,9 @@ public partial class FolderProcessingServiceTests
         folderServiceMock.Verify(expression: x => x.GetByPath(appId: app.Id, path: folderPath.Lowered, ignoreFilters: false), times: Times.Once);
         folderServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: false), times: Times.Once);
         fileServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: false), times: Times.Once);
-        fileContentServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: false), times: Times.Once);
+        fileContentOperationsExposureMock.Verify(expression: x => x.GetAll(ignoreFilters: false), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
-        fileContentServiceMock.VerifyNoOtherCalls();
+        fileContentOperationsExposureMock.VerifyNoOtherCalls();
     }
 }

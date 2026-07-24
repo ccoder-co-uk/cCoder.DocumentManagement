@@ -16,7 +16,7 @@ public partial class FileProcessingServiceTests
         // Given
         cCoder.Data.Models.DMS.File file = CreateRandomFile();
 
-        fileContentServiceMock
+        fileContentProcessingServiceMock
             .Setup(expression: x => x.DeleteAllForFileAsync(fileId: file.Id))
             .Returns(value: ValueTask.CompletedTask);
 
@@ -24,8 +24,8 @@ public partial class FileProcessingServiceTests
         await fileProcessingService.HandleFileDeleteEventAsync(file: file);
 
         // Then
-        fileContentServiceMock.Verify(expression: x => x.DeleteAllForFileAsync(fileId: file.Id), times: Times.Once);
-        fileContentServiceMock.VerifyNoOtherCalls();
+        fileContentProcessingServiceMock.Verify(expression: x => x.DeleteAllForFileAsync(fileId: file.Id), times: Times.Once);
+        fileContentProcessingServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
     }
 
@@ -35,7 +35,7 @@ public partial class FileProcessingServiceTests
         // Given
         cCoder.Data.Models.DMS.File file = CreateRandomFile();
 
-        fileContentServiceMock
+        fileContentProcessingServiceMock
             .Setup(expression: x => x.DeleteAllForFileAsync(fileId: file.Id))
             .Returns(value: ValueTask.CompletedTask);
 
@@ -43,8 +43,8 @@ public partial class FileProcessingServiceTests
         await fileProcessingService.HandleFileDeleteEventAsync(file: file);
 
         // Then
-        fileContentServiceMock.Verify(expression: x => x.DeleteAllForFileAsync(fileId: file.Id), times: Times.Once);
-        fileContentServiceMock.VerifyNoOtherCalls();
+        fileContentProcessingServiceMock.Verify(expression: x => x.DeleteAllForFileAsync(fileId: file.Id), times: Times.Once);
+        fileContentProcessingServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
     }
 

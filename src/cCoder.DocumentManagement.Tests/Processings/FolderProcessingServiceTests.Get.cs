@@ -59,7 +59,7 @@ public partial class FolderProcessingServiceTests
 
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
-        fileContentServiceMock.VerifyNoOtherCalls();
+        fileContentOperationsExposureMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -83,7 +83,7 @@ public partial class FolderProcessingServiceTests
         folderServiceMock.Verify(expression: x => x.GetByPath(appId: app.Id, path: folderPath.Lowered, ignoreFilters: false), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
-        fileContentServiceMock.VerifyNoOtherCalls();
+        fileContentOperationsExposureMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -146,7 +146,7 @@ public partial class FolderProcessingServiceTests
             .Setup(expression: x => x.GetAll(ignoreFilters: false))
             .Returns(value: new[] { rootFile, childFile }.AsQueryable());
 
-        fileContentServiceMock
+        fileContentOperationsExposureMock
             .Setup(expression: x => x.GetAll(ignoreFilters: false))
             .Returns(value: new[] { rootContent, childContent }.AsQueryable());
 
@@ -163,10 +163,10 @@ public partial class FolderProcessingServiceTests
         folderServiceMock.Verify(expression: x => x.GetByPath(appId: app.Id, path: rootFolder.Path, ignoreFilters: false), times: Times.Once);
         folderServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: false), times: Times.Once);
         fileServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: false), times: Times.Once);
-        fileContentServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: false), times: Times.Once);
+        fileContentOperationsExposureMock.Verify(expression: x => x.GetAll(ignoreFilters: false), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
-        fileContentServiceMock.VerifyNoOtherCalls();
+        fileContentOperationsExposureMock.VerifyNoOtherCalls();
     }
 
 }

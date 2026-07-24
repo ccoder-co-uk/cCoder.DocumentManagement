@@ -5,6 +5,7 @@
 using System.Security;
 using System.Text;
 using cCoder.DocumentManagement.Brokers;
+using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -13,7 +14,12 @@ using cCoder.DocumentManagement.Services.Foundations;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-internal partial class FileProcessingService(IFileService service, IFolderService folderService, IFileContentService fileContentService, IFileContentProcessingService fileContentProcessingService, IAuthorizationBroker authorizationBroker) : IFileProcessingService
+internal partial class FileProcessingService(
+    IFileService service,
+    IFolderOperationsExposure folderOperationsExposure,
+    IFileContentOperationsExposure fileContentOperationsExposure,
+    IAuthorizationBroker authorizationBroker)
+    : IFileProcessingService
 {
     private User GetCurrentUser() =>
         authorizationBroker.GetCurrentUser();
@@ -41,7 +47,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [newFile]);
-            Folder folder = folderService.GetWithRoles(folderId: newFile.FolderId, ignoreFilters: true);
+            Folder folder = folderOperationsExposure.GetFolderWithRoles(folderId: newFile.FolderId, ignoreFilters: true);
 
 
             if (folder == null)
@@ -89,7 +95,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
                 })
                     .ToArray();
 
-                await fileContentProcessingService.AddOrUpdateFileContent(items: contents);
+                await fileContentOperationsExposure.AddOrUpdateFileContent(items: contents);
             }
 
 
@@ -150,7 +156,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
                 Guid originalFolderId = dbVersion.FolderId;
                 dbVersion.Name = updatedFile.Name;
                 dbVersion.FolderId = updatedFile.FolderId;
-                dbVersion.Folder = ((updatedFile.FolderId == originalFolderId) ? dbVersion.Folder : folderService.GetWithRoles(folderId: (Guid)updatedFile.FolderId, ignoreFilters: true));
+                dbVersion.Folder = ((updatedFile.FolderId == originalFolderId) ? dbVersion.Folder : folderOperationsExposure.GetFolderWithRoles(folderId: (Guid)updatedFile.FolderId, ignoreFilters: true));
                 dbVersion.RecomputePath();
             }
 
@@ -175,7 +181,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
                 })
                     .ToArray();
 
-                await fileContentProcessingService.AddOrUpdateFileContent(items: contents);
+                await fileContentOperationsExposure.AddOrUpdateFileContent(items: contents);
             }
 
 
@@ -188,7 +194,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [file]);
-            return fileContentService.DeleteAllForFileAsync(fileId: file.Id);
+            return fileContentOperationsExposure.DeleteAllForFileAsync(fileId: file.Id);
 
         });
 
@@ -309,9 +315,9 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             }
 
 
-            Folder newParent = ((!string.IsNullOrEmpty(value: newPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: appId, path: newPath.ParentPath.Lowered) : null);
+            Folder newParent = ((!string.IsNullOrEmpty(value: newPath.ParentPath.Lowered)) ? folderOperationsExposure.GetFolderByPathWithRoles(appId: appId, path: newPath.ParentPath.Lowered) : null);
 
-            Folder oldParent = ((!string.IsNullOrEmpty(value: oldPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: appId, path: oldPath.ParentPath.Lowered) : null);
+            Folder oldParent = ((!string.IsNullOrEmpty(value: oldPath.ParentPath.Lowered)) ? folderOperationsExposure.GetFolderByPathWithRoles(appId: appId, path: oldPath.ParentPath.Lowered) : null);
 
             bool userIsAdmin = GetCurrentUser()
                 .IsAdminOfApp(appId: appId);
@@ -411,12 +417,12 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
     private async ValueTask SaveFileVersionAsync(cCoder.Data.Models.DMS.File existingFile, byte[] rawBytes)
     {
-        int version = (from fileContent in fileContentProcessingService.GetAll()
+        int version = (from fileContent in fileContentOperationsExposure.GetAll()
                        where fileContent.FileId == existingFile.Id
                        orderby fileContent.Version descending
                        select fileContent.Version).First() + 1;
 
-        await fileContentProcessingService.AddFileContentAsync(newFileContent: new FileContent
+        await fileContentOperationsExposure.AddFileContentAsync(newFileContent: new FileContent
         {
             CreatedBy = GetCurrentUser()
                 .Id,
@@ -444,7 +450,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             Size = GetSizeOf(content: rawBytes)
         });
 
-        await fileContentProcessingService.AddFileContentAsync(newFileContent: new FileContent
+        await fileContentOperationsExposure.AddFileContentAsync(newFileContent: new FileContent
         {
             CreatedBy = GetCurrentUser()
                 .Id,
@@ -478,7 +484,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
     private async ValueTask DropFileVersionAsync(int version, cCoder.Data.Models.DMS.File file)
     {
-        FileContent versionedContent = fileContentProcessingService.GetAll(ignoreFilters: true)
+        FileContent versionedContent = fileContentOperationsExposure.GetAll(ignoreFilters: true)
             .FirstOrDefault(predicate: (FileContent fileContent) => fileContent.FileId == file.Id && fileContent.Version == version);
 
         if (versionedContent == null)
@@ -486,9 +492,9 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             throw new SecurityException(message: "Access Denied!");
         }
 
-        await fileContentProcessingService.DeleteAsync(fileContentId: versionedContent.Id);
+        await fileContentOperationsExposure.DeleteFileContentAsync(fileContentId: versionedContent.Id);
 
-        if (!fileContentProcessingService.GetAll(ignoreFilters: true)
+        if (!fileContentOperationsExposure.GetAll(ignoreFilters: true)
             .Any(predicate: (FileContent fileContent) => fileContent.FileId == file.Id))
         {
             await service.DeleteAsync(fileId: file.Id);
@@ -524,7 +530,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             })
                 .ToArray();
 
-            await fileContentProcessingService.AddOrUpdateFileContent(items: copiedContents);
+            await fileContentOperationsExposure.AddOrUpdateFileContent(items: copiedContents);
             await DropAppPathAsync(appId: appId, path: oldPath);
         }
         else if (!newPath.IsToFile)
@@ -544,8 +550,8 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
     private async ValueTask CopyFileAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath)
     {
-        Folder newParent = ((!string.IsNullOrEmpty(value: newPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: appId, path: newPath.ParentPath.Lowered) : null);
-        Folder oldParent = ((!string.IsNullOrEmpty(value: oldPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: appId, path: oldPath.ParentPath.Lowered) : null);
+        Folder newParent = ((!string.IsNullOrEmpty(value: newPath.ParentPath.Lowered)) ? folderOperationsExposure.GetFolderByPathWithRoles(appId: appId, path: newPath.ParentPath.Lowered) : null);
+        Folder oldParent = ((!string.IsNullOrEmpty(value: oldPath.ParentPath.Lowered)) ? folderOperationsExposure.GetFolderByPathWithRoles(appId: appId, path: oldPath.ParentPath.Lowered) : null);
 
         bool userIsAdmin = GetCurrentUser()
             .IsAdminOfApp(appId: appId);
@@ -594,7 +600,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
                                                 Version = content.Version + latestContentVersion
                                             }).ToArray();
 
-            await fileContentProcessingService.AddOrUpdateFileContent(items: copiedContents);
+            await fileContentOperationsExposure.AddOrUpdateFileContent(items: copiedContents);
             return;
         }
 
@@ -625,7 +631,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
                                                 Version = content.Version
                                             }).ToArray();
 
-        await fileContentProcessingService.AddOrUpdateFileContent(items: copiedFileContents);
+        await fileContentOperationsExposure.AddOrUpdateFileContent(items: copiedFileContents);
     }
 
     private void ConfirmUserCanMoveFilePathFolder(cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath, Folder newParent, Folder oldParent, bool userIsAdmin)
@@ -648,7 +654,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             return null;
         }
 
-        Folder existingFolder = folderService.GetByPathWithRoles(appId: appId, path: folderPath.Lowered);
+        Folder existingFolder = folderOperationsExposure.GetFolderByPathWithRoles(appId: appId, path: folderPath.Lowered);
 
         if (existingFolder == null)
         {
@@ -680,7 +686,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         })
             .ToList() : new List<FolderRole>());
 
-        Folder folder2 = folderService.GetByPath(appId: appId, path: folderPath.Lowered) ?? new Folder
+        Folder folder2 = folderOperationsExposure.GetFolderByPath(appId: appId, path: folderPath.Lowered) ?? new Folder
         {
             Id = Guid.Empty,
             AppId = appId,
@@ -693,7 +699,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         if (folder2.Id == Guid.Empty)
         {
-            folder2 = await folderService.AddFolderAsync(newFolder: folder2);
+            folder2 = await folderOperationsExposure.AddFolderAsync(newFolder: folder2);
         }
 
         return folder2;

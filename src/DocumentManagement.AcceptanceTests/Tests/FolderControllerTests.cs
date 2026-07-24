@@ -233,6 +233,7 @@ public sealed partial class FolderControllerTests(WebAcceptanceFixture fixture)
 
     private Task<SeededFolderContext> SeedCopyDatabase(params string[] privileges) =>
         SeedDatabase(privileges: privileges);
+
     private async Task<int> GetFolderStatusCodeAsync(Guid id)
     {
         using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}({id})");

@@ -57,6 +57,25 @@ internal partial class FileContentProcessingService(IFileContentService service)
 
         });
 
+    public ValueTask DeleteAllForFileAsync(Guid fileId) =>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [fileId]);
+
+            return service.DeleteAllForFileAsync(
+                fileId: fileId);
+        });
+
+    public ValueTask DeleteAllForFilesAsync(
+        IEnumerable<Guid> fileIds) =>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [fileIds]);
+
+            return service.DeleteAllForFilesAsync(
+                fileIds: fileIds.ToArray());
+        });
+
     public ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdateFileContent(IEnumerable<FileContent> items)
 =>
         TryCatch(operation: async () =>

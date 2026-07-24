@@ -21,6 +21,10 @@ public interface IFileContentProcessingService
 
     ValueTask DeleteAsync(Guid fileContentId);
 
+    ValueTask DeleteAllForFileAsync(Guid fileId);
+
+    ValueTask DeleteAllForFilesAsync(IEnumerable<Guid> fileIds);
+
     ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdateFileContent(IEnumerable<FileContent> items);
 
     ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> deletedFileContent);

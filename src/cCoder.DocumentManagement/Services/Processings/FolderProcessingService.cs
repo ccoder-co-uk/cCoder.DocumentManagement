@@ -5,6 +5,7 @@
 using System.IO.Compression;
 using System.Security;
 using cCoder.DocumentManagement.Brokers;
+using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -13,7 +14,15 @@ using cCoder.DocumentManagement.Services.Foundations;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-internal partial class FolderProcessingService(IFolderService service, IFolderRoleService folderRoleService, IRoleService roleService, IFileService fileService, IFileContentService fileContentService, IFileProcessingService fileProcessingService, IAuthorizationBroker authorizationBroker) : IFolderProcessingService
+internal partial class FolderProcessingService(
+    IFolderService service,
+    IFolderRoleOperationsExposure folderRoleOperationsExposure,
+    IRoleOperationsExposure roleOperationsExposure,
+    IFileOperationsExposure fileOperationsExposure,
+    IFilePathOperationsExposure filePathOperationsExposure,
+    IFileContentOperationsExposure fileContentOperationsExposure,
+    IAuthorizationBroker authorizationBroker)
+    : IFolderProcessingService
 {
     private User GetCurrentUser() =>
         authorizationBroker.GetCurrentUser();
@@ -89,7 +98,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
 
                 try
                 {
-                    await fileProcessingService.SaveAppPathAsync(
+                    await filePathOperationsExposure.SaveFilePathAsync(
                         appId: destinationAppId,
                         path: new cCoder.DocumentManagement.Dependencies.Path(
                             path: destinationFolder.Path + "/" + entry.Name),
@@ -254,11 +263,11 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
                                     where foundFolder.Path == dbFolder.Path || foundFolder.Path.StartsWith(value: folderPathPrefix)
                                     select foundFolder.Id).ToArray();
 
-                Guid[] fileIds = fileService.GetIdsByFolderIds(folderIds: folderIds, ignoreFilters: true);
+                Guid[] fileIds = fileOperationsExposure.GetFileIdsByFolderIds(folderIds: folderIds, ignoreFilters: true);
 
                 if (fileIds.Length != 0)
                 {
-                    await fileContentService.DeleteAllForFilesAsync(fileIds: fileIds);
+                    await fileContentOperationsExposure.DeleteAllForFilesAsync(fileIds: fileIds);
                 }
             }
 
@@ -278,7 +287,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
                 {
                     if (path.IsToFile)
                     {
-                        cCoder.Data.Models.DMS.File byPathWithFolderAndContents = fileService.GetByPathWithFolderAndContents(appId: appId, path: path.Lowered);
+                        cCoder.Data.Models.DMS.File byPathWithFolderAndContents = fileOperationsExposure.GetFileByPathWithFolderAndContents(appId: appId, path: path.Lowered);
 
                         if (byPathWithFolderAndContents == null)
                         {
@@ -382,7 +391,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
 
                 if (path.Lowered != destinationPath.ToLower())
                 {
-                    await fileProcessingService.SaveAppPathAsync(appId: appId, path: new cCoder.DocumentManagement.Dependencies.Path(path: destinationPath), content: entryStream);
+                    await filePathOperationsExposure.SaveFilePathAsync(appId: appId, path: new cCoder.DocumentManagement.Dependencies.Path(path: destinationPath), content: entryStream);
                 }
             }
 
@@ -613,11 +622,11 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
 
                 if (authorize)
                 {
-                    await fileService.UpdateFileAsync(updatedFile: file);
+                    await fileOperationsExposure.UpdateFileAsync(updatedFile: file);
                 }
                 else
                 {
-                    await fileService.UpdateForAppFileAsync(updatedFile: file);
+                    await fileOperationsExposure.UpdateFileForAppAsync(updatedFile: file);
                 }
             }
         }
@@ -672,11 +681,11 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
 
                 if (authorize)
                 {
-                    await fileService.UpdateFileAsync(updatedFile: file);
+                    await fileOperationsExposure.UpdateFileAsync(updatedFile: file);
                 }
                 else
                 {
-                    await fileService.UpdateForAppFileAsync(updatedFile: file);
+                    await fileOperationsExposure.UpdateFileForAppAsync(updatedFile: file);
                 }
             }
         }
@@ -687,14 +696,14 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
 
             foreach (FolderRole existingRole in array)
             {
-                await folderRoleService.DeleteFolderRoleAsync(deletedFolderRole: existingRole);
+                await folderRoleOperationsExposure.DeleteFolderRoleAsync(deletedFolderRole: existingRole);
             }
 
             dbVersion.Roles = new List<FolderRole>();
 
             foreach (FolderRole role in updatedFolder.Roles)
             {
-                FolderRole addedRole = await folderRoleService.AddFolderRoleAsync(newFolderRole: new FolderRole
+                FolderRole addedRole = await folderRoleOperationsExposure.AddFolderRoleAsync(newFolderRole: new FolderRole
                 {
                     FolderId = dbVersion.Id,
                     RoleId = role.RoleId,
@@ -770,7 +779,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
         {
             RoleId = folderRole.RoleId
         })
-            .ToList() : (from role in roleService.GetAll(ignoreFilters: true)
+            .ToList() : (from role in roleOperationsExposure.GetAllRoles(ignoreFilters: true)
                          where role.AppId == appId
                          select new FolderRole
                          {
@@ -842,7 +851,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
                 file.FolderId = folder2.Id;
                 file.Folder = folder2;
                 file.RecomputePath();
-                await fileService.UpdateFileAsync(updatedFile: file);
+                await fileOperationsExposure.UpdateFileAsync(updatedFile: file);
             }
         }
 
@@ -882,7 +891,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             throw new SecurityException(message: "Access Denied!");
         }
 
-        cCoder.Data.Models.DMS.File[] sourceFiles = (from file2 in fileService.GetAll(ignoreFilters: true)
+        cCoder.Data.Models.DMS.File[] sourceFiles = (from file2 in fileOperationsExposure.GetAllFiles(ignoreFilters: true)
                                                      where file2.FolderId == sourceFolder.Id
                                                      select file2).ToArray();
 
@@ -890,7 +899,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
 
         foreach (cCoder.Data.Models.DMS.File file in array)
         {
-            await fileProcessingService.CopyAppPathAsync(appId: appId, oldPath: new cCoder.DocumentManagement.Dependencies.Path(path: file.Path), newPath: new cCoder.DocumentManagement.Dependencies.Path(path: destinationFolder.Path + "/" + file.Name));
+            await filePathOperationsExposure.CopyFilePathAsync(appId: appId, oldPath: new cCoder.DocumentManagement.Dependencies.Path(path: file.Path), newPath: new cCoder.DocumentManagement.Dependencies.Path(path: destinationFolder.Path + "/" + file.Name));
         }
 
         Folder[] sourceSubFolders = (from folder2 in service.GetAll()
@@ -914,14 +923,14 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
         Guid[] folderIds = source.Select(selector: (Folder folder) => folder.Id)
             .ToArray();
 
-        cCoder.Data.Models.DMS.File[] source2 = ((folderIds.Length == 0) ? Array.Empty<cCoder.Data.Models.DMS.File>() : (from file in fileService.GetAll(ignoreFilters: ignoreFilters)
+        cCoder.Data.Models.DMS.File[] source2 = ((folderIds.Length == 0) ? Array.Empty<cCoder.Data.Models.DMS.File>() : (from file in fileOperationsExposure.GetAllFiles(ignoreFilters: ignoreFilters)
                                                                                                                          where ((ReadOnlySpan<Guid>)folderIds).Contains(value: file.FolderId)
                                                                                                                          select file).ToArray());
 
         Guid[] fileIds = source2.Select(selector: (cCoder.Data.Models.DMS.File file) => file.Id)
             .ToArray();
 
-        FileContent[] source3 = ((fileIds.Length == 0) ? Array.Empty<FileContent>() : (from fileContent in fileContentService.GetAll(ignoreFilters: ignoreFilters)
+        FileContent[] source3 = ((fileIds.Length == 0) ? Array.Empty<FileContent>() : (from fileContent in fileContentOperationsExposure.GetAll(ignoreFilters: ignoreFilters)
                                                                                        where ((ReadOnlySpan<Guid>)fileIds).Contains(value: fileContent.FileId)
                                                                                        select fileContent).ToArray());
 

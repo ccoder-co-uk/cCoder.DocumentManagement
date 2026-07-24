@@ -163,7 +163,6 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
         }
     }
 
-
     private async Task<int> GetFolderRoleCountAsync()
     {
         using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}/$count");
@@ -194,5 +193,4 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
             folderRole.FolderId == folderId && folderRole.RoleId == roleId
         );
     }
-
 }

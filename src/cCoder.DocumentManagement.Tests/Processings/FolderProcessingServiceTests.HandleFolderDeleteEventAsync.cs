@@ -47,7 +47,7 @@ public partial class FolderProcessingServiceTests
             .Setup(expression: x => x.GetIdsByFolderIds(folderIds: It.Is<Guid[]>(match: ids => ids.Single() == folder.Id), ignoreFilters: true))
             .Returns(value: [file.Id]);
 
-        fileContentServiceMock
+        fileContentOperationsExposureMock
             .Setup(expression: x => x.DeleteAllForFilesAsync(fileIds: It.Is<Guid[]>(match: ids => ids.Single() == file.Id)))
             .Returns(value: ValueTask.CompletedTask);
 
@@ -62,14 +62,14 @@ public partial class FolderProcessingServiceTests
             times: Times.Once
         );
 
-        fileContentServiceMock.Verify(
+        fileContentOperationsExposureMock.Verify(
             expression: x => x.DeleteAllForFilesAsync(fileIds: It.Is<Guid[]>(match: ids => ids.Single() == file.Id)),
             times: Times.Once
         );
 
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
-        fileContentServiceMock.VerifyNoOtherCalls();
+        fileContentOperationsExposureMock.VerifyNoOtherCalls();
         loggerMock.VerifyNoOtherCalls();
     }
 

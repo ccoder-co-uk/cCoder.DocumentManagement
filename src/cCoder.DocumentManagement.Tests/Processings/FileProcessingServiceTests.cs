@@ -6,6 +6,7 @@ using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
+using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Processings;
 using Moq;
@@ -18,7 +19,6 @@ public partial class FileProcessingServiceTests
 {
     private readonly Mock<IFileService> fileServiceMock = new();
     private readonly Mock<IFolderService> folderServiceMock = new();
-    private readonly Mock<IFileContentService> fileContentServiceMock = new();
     private User currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
     private readonly Mock<IAuthorizationBroker> authorizationBrokerMock = new();
     private readonly Mock<IFileContentProcessingService> fileContentProcessingServiceMock = new();
@@ -28,9 +28,10 @@ public partial class FileProcessingServiceTests
     {
         fileProcessingService = new FileProcessingService(
             service: fileServiceMock.Object,
-            folderService: folderServiceMock.Object,
-            fileContentService: fileContentServiceMock.Object,
-            fileContentProcessingService: fileContentProcessingServiceMock.Object,
+            folderOperationsExposure: new FolderOperationsExposure(
+                folderService: folderServiceMock.Object),
+            fileContentOperationsExposure: new FileContentOperationsExposure(
+                fileContentProcessingService: fileContentProcessingServiceMock.Object),
             authorizationBroker: authorizationBrokerMock.Object
         );
     }
