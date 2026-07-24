@@ -1,0 +1,6168 @@
+{
+  "Classes": [
+    {
+      "Name": "cCoder.Data.Models.DMS.DmsModelExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetContent",
+          "Inputs": [
+            {
+              "Name": "file",
+              "Type": "cCoder.Data.Models.DMS.File"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.IO.Stream"
+        },
+        {
+          "Name": "RecomputePath",
+          "Inputs": [
+            {
+              "Name": "file",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Void"
+        },
+        {
+          "Name": "RecomputePaths",
+          "Inputs": [
+            {
+              "Name": "folder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Void"
+        },
+        {
+          "Name": "ToWebDavResponse",
+          "Inputs": [
+            {
+              "Name": "file",
+              "Type": "cCoder.Data.Models.DMS.File"
+            },
+            {
+              "Name": "urlBase",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ns",
+              "Type": "System.Xml.Linq.XNamespace"
+            },
+            {
+              "Name": "requestedProperties",
+              "Type": "System.Collections.Generic.IEnumerable\u003CSystem.String\u003E"
+            }
+          ],
+          "ReturnType": "System.Xml.Linq.XElement"
+        },
+        {
+          "Name": "ToWebDavResponse",
+          "Inputs": [
+            {
+              "Name": "folder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            },
+            {
+              "Name": "urlBase",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ns",
+              "Type": "System.Xml.Linq.XNamespace"
+            },
+            {
+              "Name": "requestedProperties",
+              "Type": "System.Collections.Generic.IEnumerable\u003CSystem.String\u003E"
+            }
+          ],
+          "ReturnType": "System.Xml.Linq.XElement"
+        },
+        {
+          "Name": "UserCan",
+          "Inputs": [
+            {
+              "Name": "file",
+              "Type": "cCoder.Data.Models.DMS.File"
+            },
+            {
+              "Name": "user",
+              "Type": "cCoder.Data.Models.Security.User"
+            },
+            {
+              "Name": "privilege",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        },
+        {
+          "Name": "UserCan",
+          "Inputs": [
+            {
+              "Name": "folder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            },
+            {
+              "Name": "user",
+              "Type": "cCoder.Data.Models.Security.User"
+            },
+            {
+              "Name": "privilege",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Api.OData.BadRequestResult",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Api.OData.CompositePropertyInfo",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Attributes",
+          "Type": "System.Reflection.PropertyAttributes"
+        },
+        {
+          "Name": "CanRead",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "CanWrite",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "DeclaringType",
+          "Type": "System.Type"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "PropertyType",
+          "Type": "System.Type"
+        },
+        {
+          "Name": "ReflectedType",
+          "Type": "System.Type"
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "GetAccessors",
+          "Inputs": [
+            {
+              "Name": "nonPublic",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Reflection.MethodInfo[]"
+        },
+        {
+          "Name": "GetCustomAttributes",
+          "Inputs": [
+            {
+              "Name": "inherit",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Object[]"
+        },
+        {
+          "Name": "GetCustomAttributes",
+          "Inputs": [
+            {
+              "Name": "attributeType",
+              "Type": "System.Type"
+            },
+            {
+              "Name": "inherit",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Object[]"
+        },
+        {
+          "Name": "GetGetMethod",
+          "Inputs": [
+            {
+              "Name": "nonPublic",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Reflection.MethodInfo"
+        },
+        {
+          "Name": "GetIndexParameters",
+          "Inputs": [],
+          "ReturnType": "System.Reflection.ParameterInfo[]"
+        },
+        {
+          "Name": "GetSetMethod",
+          "Inputs": [
+            {
+              "Name": "nonPublic",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Reflection.MethodInfo"
+        },
+        {
+          "Name": "GetValue",
+          "Inputs": [
+            {
+              "Name": "obj",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "invokeAttr",
+              "Type": "System.Reflection.BindingFlags"
+            },
+            {
+              "Name": "binder",
+              "Type": "System.Reflection.Binder"
+            },
+            {
+              "Name": "index",
+              "Type": "System.Object[]"
+            },
+            {
+              "Name": "culture",
+              "Type": "System.Globalization.CultureInfo"
+            }
+          ],
+          "ReturnType": "System.Object"
+        },
+        {
+          "Name": "IsDefined",
+          "Inputs": [
+            {
+              "Name": "attributeType",
+              "Type": "System.Type"
+            },
+            {
+              "Name": "inherit",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        },
+        {
+          "Name": "SetValue",
+          "Inputs": [
+            {
+              "Name": "obj",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "value",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "invokeAttr",
+              "Type": "System.Reflection.BindingFlags"
+            },
+            {
+              "Name": "binder",
+              "Type": "System.Reflection.Binder"
+            },
+            {
+              "Name": "index",
+              "Type": "System.Object[]"
+            },
+            {
+              "Name": "culture",
+              "Type": "System.Globalization.CultureInfo"
+            }
+          ],
+          "ReturnType": "System.Void"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Api.OData.EdmModelExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetExtendedMetadataForType",
+          "Inputs": [
+            {
+              "Name": "model",
+              "Type": "Microsoft.OData.Edm.IEdmModel"
+            },
+            {
+              "Name": "context",
+              "Type": "System.String"
+            },
+            {
+              "Name": "type",
+              "Type": "System.Type"
+            },
+            {
+              "Name": "hasEndpoint",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.OData.ExtendedMetadataContainer"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Api.OData.ModelStateError",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Errors",
+          "Type": "System.String[]"
+        },
+        {
+          "Name": "Key",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Value",
+          "Type": "System.Object"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Api.OData.ODataCollectionExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Api.OData.ODataJsonExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Api.OData.ODataModel",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Context",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Description",
+          "Type": "System.String"
+        },
+        {
+          "Name": "EDMModel",
+          "Type": "Microsoft.OData.Edm.IEdmModel"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Api.OData.ODataTypeExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.AuthInfoBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetCurrentSsoUserId",
+          "Inputs": [],
+          "ReturnType": "System.String"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.AuthorizationBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "Authorize",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32?"
+            },
+            {
+              "Name": "privilege",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void"
+        },
+        {
+          "Name": "GetCurrentUser",
+          "Inputs": [],
+          "ReturnType": "cCoder.Data.Models.Security.User"
+        },
+        {
+          "Name": "IsAdmin",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "userName",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        },
+        {
+          "Name": "IsAdminOfApp",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32?"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "CopyAsync",
+          "Inputs": [
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DropAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "search",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "GetFilesZipped",
+          "Inputs": [
+            {
+              "Name": "paths",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "MoveAsync",
+          "Inputs": [
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SaveAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Search",
+          "Inputs": [
+            {
+              "Name": "needle",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "UnpackAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            },
+            {
+              "Name": "ignoreArchiveRoot",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.Events.EventHubBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ListenToEvent",
+          "Inputs": [
+            {
+              "Name": "eventName",
+              "Type": "System.String"
+            },
+            {
+              "Name": "handler",
+              "Type": "System.Func\u003CTService, T, System.Threading.Tasks.ValueTask\u003E"
+            }
+          ],
+          "ReturnType": "System.Void"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.Events.FileContentEventBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RaiseFileContentAddEventAsync",
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "cCoder.Eventing.Models.EventMessage\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFileContentDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "cCoder.Eventing.Models.EventMessage\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFileContentUpdateEventAsync",
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "cCoder.Eventing.Models.EventMessage\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.Events.FileEventBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RaiseFileAddEventAsync",
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "cCoder.Eventing.Models.EventMessage\u003CcCoder.Data.Models.DMS.File\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFileDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "cCoder.Eventing.Models.EventMessage\u003CcCoder.Data.Models.DMS.File\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFileUpdateEventAsync",
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "cCoder.Eventing.Models.EventMessage\u003CcCoder.Data.Models.DMS.File\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.Events.FolderEventBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RaiseFolderAddEventAsync",
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "cCoder.Eventing.Models.EventMessage\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFolderDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "cCoder.Eventing.Models.EventMessage\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFolderUpdateEventAsync",
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "cCoder.Eventing.Models.EventMessage\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.Events.FolderRoleEventBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RaiseFolderRoleAddEventAsync",
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "cCoder.Eventing.Models.EventMessage\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFolderRoleDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "cCoder.Eventing.Models.EventMessage\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.FolderRoleContextBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "SelectFolderRoleContext",
+          "Inputs": [
+            {
+              "Name": "folderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.FolderRoleContext"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.JsonBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ParseJson",
+          "Inputs": [
+            {
+              "Name": "json",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Object"
+        },
+        {
+          "Name": "ParseJson",
+          "Inputs": [
+            {
+              "Name": "json",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "T"
+        },
+        {
+          "Name": "Serialize",
+          "Inputs": [
+            {
+              "Name": "value",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.String"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.RoleBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddRoleAsync",
+          "Inputs": [
+            {
+              "Name": "newRole",
+              "Type": "cCoder.Data.Models.Security.Role"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.Security.Role\u003E"
+        },
+        {
+          "Name": "DeleteAllRolesAsync",
+          "Inputs": [
+            {
+              "Name": "deletedRole",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.Role\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteRoleAsync",
+          "Inputs": [
+            {
+              "Name": "deletedRole",
+              "Type": "cCoder.Data.Models.Security.Role"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Int32\u003E"
+        },
+        {
+          "Name": "GetAllRoles",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.Role\u003E"
+        },
+        {
+          "Name": "SelectAppId",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.Security.Role"
+            }
+          ],
+          "ReturnType": "System.Int32?"
+        },
+        {
+          "Name": "UpdateRoleAsync",
+          "Inputs": [
+            {
+              "Name": "updatedRole",
+              "Type": "cCoder.Data.Models.Security.Role"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.Security.Role\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.Storage.AppBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "SelectAppByDomain",
+          "Inputs": [
+            {
+              "Name": "domain",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.CMS.App"
+        },
+        {
+          "Name": "SelectAppById",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.CMS.App"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "DeleteAllFilesAsync",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteFileAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Int32\u003E"
+        },
+        {
+          "Name": "InsertFileAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "SelectAllFiles",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "SelectAppId",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Int32?"
+        },
+        {
+          "Name": "SelectFileByPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "SelectFileByPathWithFolderAndContents",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "SelectFileByPathWithFolderRolesAndContents",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "SelectFileIdsByFolderIds",
+          "Inputs": [
+            {
+              "Name": "folderIds",
+              "Type": "System.Guid[]"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Guid[]"
+        },
+        {
+          "Name": "SelectFileWithFolderAndContents",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "SelectFileWithFolderRolesAndContents",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "SelectFilesByContent",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "needle",
+              "Type": "System.Byte[]"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "UpdateFileAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "DeleteAllFileContentsAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFileContent",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllFileContentsForFileAsync",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllFileContentsForFilesAsync",
+          "Inputs": [
+            {
+              "Name": "fileIds",
+              "Type": "System.Guid[]"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFileContent",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Int32\u003E"
+        },
+        {
+          "Name": "InsertFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "newFileContent",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "SelectAllFileContents",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "SelectAppId",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Int32?"
+        },
+        {
+          "Name": "UpdateFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFileContent",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "DeleteAllFoldersAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolder",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllFoldersByAppIdAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteFolderAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Int32\u003E"
+        },
+        {
+          "Name": "InsertFolderAsync",
+          "Inputs": [
+            {
+              "Name": "newFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "SelectAllFolders",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "SelectAppId",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Int32?"
+        },
+        {
+          "Name": "SelectFolderByPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "SelectFolderByPathWithParentAndRoles",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "SelectFolderByPathWithRoles",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "SelectFolderByPathWithRolesAndFilesAndContents",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "SelectFolderByPathWithSubFoldersAndFiles",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "SelectFolderForUpdate",
+          "Inputs": [
+            {
+              "Name": "folderId",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "SelectFolderWithRoles",
+          "Inputs": [
+            {
+              "Name": "folderId",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "UpdateFolderAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "DeleteAllFolderRolesAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolderRole",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Int32\u003E"
+        },
+        {
+          "Name": "InsertFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "newFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+        },
+        {
+          "Name": "SelectAllFolderRoles",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+        },
+        {
+          "Name": "SelectAppId",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Int32?"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.Branching",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.DMSResult",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Data",
+          "Type": "System.IO.Stream"
+        },
+        {
+          "Name": "MimeType",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.DmsProcessingRequest",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "App",
+          "Type": "cCoder.Data.Models.CMS.App"
+        },
+        {
+          "Name": "Body",
+          "Type": "System.IO.Stream"
+        },
+        {
+          "Name": "ContentType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Headers",
+          "Type": "System.Collections.Generic.Dictionary\u003CSystem.String, System.String[]\u003E"
+        },
+        {
+          "Name": "Host",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Method",
+          "Type": "System.String"
+        },
+        {
+          "Name": "QueryString",
+          "Type": "System.String"
+        },
+        {
+          "Name": "RequestPath",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.DmsProcessingResponse",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Body",
+          "Type": "System.IO.Stream"
+        },
+        {
+          "Name": "ContentType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "HasBody",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "Headers",
+          "Type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.KeyValuePair\u003CSystem.String, System.String\u003E\u003E"
+        },
+        {
+          "Name": "StatusCode",
+          "Type": "System.Int32"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.DocumentManagementModelBuilder",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "Build",
+          "Inputs": [],
+          "ReturnType": "cCoder.DocumentManagement.Api.OData.ODataModel"
+        },
+        {
+          "Name": "Configure",
+          "Inputs": [],
+          "ReturnType": "System.Void"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.ExtendedMetadataContainer",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Operations",
+          "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.OData.OperationContainer\u003E"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.MetadataContainer",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Category",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Description",
+          "Type": "System.String"
+        },
+        {
+          "Name": "DisplayName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "HasEndpoint",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsEntity",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsJoinEntity",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsSystemManaged",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsValueType",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Properties",
+          "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.OData.PropertyContainer\u003E"
+        },
+        {
+          "Name": "ServerType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ServerTypeName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Type",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.MetadataContainerSet",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Types",
+          "Type": "cCoder.DocumentManagement.Dependencies.OData.ExtendedMetadataContainer[]"
+        },
+        {
+          "Name": "UriBase",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.ODataCollection\u003CTCollectionType\u003E",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "ODataContext",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Value",
+          "Type": "System.Collections.Generic.IEnumerable\u003CTCollectionType\u003E"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.ODataMetadataProvider",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.ODataModelBuilder",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "Build",
+          "Inputs": [],
+          "ReturnType": "cCoder.DocumentManagement.Api.OData.ODataModel"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.OperationContainer",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Definition",
+          "Type": "System.String"
+        },
+        {
+          "Name": "HttpVerb",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Parameters",
+          "Type": "System.Collections.Generic.IDictionary\u003CSystem.String, System.String\u003E"
+        },
+        {
+          "Name": "Queryable",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "ReturnType",
+          "Type": "cCoder.DocumentManagement.Dependencies.OData.MetadataContainer"
+        },
+        {
+          "Name": "Url",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.PropertyContainer",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Description",
+          "Type": "System.String"
+        },
+        {
+          "Name": "DisplayName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "IsGeneric",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsReadOnly",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsRequired",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsSystemManaged",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsValueType",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ServerType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ServerTypeName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ShortDisplayName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Template",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Type",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.Path",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Depth",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "Empty",
+          "Type": "cCoder.DocumentManagement.Dependencies.Path"
+        },
+        {
+          "Name": "Extension",
+          "Type": "System.String"
+        },
+        {
+          "Name": "FullPath",
+          "Type": "System.String"
+        },
+        {
+          "Name": "IsToFile",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "Length",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "Lowered",
+          "Type": "System.String"
+        },
+        {
+          "Name": "MimeType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ParentPath",
+          "Type": "cCoder.DocumentManagement.Dependencies.Path"
+        },
+        {
+          "Name": "Segments",
+          "Type": "System.String[]"
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "ToString",
+          "Inputs": [],
+          "ReturnType": "System.String"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.Result",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Id",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Message",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Success",
+          "Type": "System.Boolean"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.Result\u003CT\u003E",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Id",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Item",
+          "Type": "T"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.ResultExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ToNew",
+          "Inputs": [
+            {
+              "Name": "result",
+              "Type": "cCoder.DocumentManagement.Dependencies.Result\u003CT\u003E"
+            },
+            {
+              "Name": "item",
+              "Type": "TNew"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.Result\u003CTNew\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.DocumentManagementConfigurationExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "WithEventProviders",
+          "Inputs": [
+            {
+              "Name": "configuration",
+              "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration"
+            },
+            {
+              "Name": "eventProviders",
+              "Type": "cCoder.Eventing.Models.EventProvider[]"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.DocumentManagementServiceCollectionConfigurationExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ConfigureDocumentManagementApiModel",
+          "Inputs": [
+            {
+              "Name": "builder",
+              "Type": "Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"
+            }
+          ],
+          "ReturnType": "System.Void"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.BaselineExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetBaselinePackages",
+          "Inputs": [],
+          "ReturnType": "cCoder.Data.Models.Packaging.Package[]"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.Controllers.BaselineController",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "Get",
+          "Inputs": [],
+          "ReturnType": "IActionResult"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "Delete",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "IActionResult"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "queryOptions",
+              "Type": "Microsoft.AspNetCore.OData.Query.ODataQueryOptions\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "IActionResult"
+        },
+        {
+          "Name": "GetMetadata",
+          "Inputs": [],
+          "ReturnType": "IActionResult"
+        },
+        {
+          "Name": "Post",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "Put",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "PutPatchAsync",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "updatedFileContentDelta",
+              "Type": "Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "Delete",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "IActionResult"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "queryOptions",
+              "Type": "Microsoft.AspNetCore.OData.Query.ODataQueryOptions\u003CcCoder.Data.Models.DMS.File\u003E"
+            }
+          ],
+          "ReturnType": "IActionResult"
+        },
+        {
+          "Name": "GetMetadata",
+          "Inputs": [],
+          "ReturnType": "IActionResult"
+        },
+        {
+          "Name": "Post",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "Put",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "PutPatchAsync",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "updatedFileDelta",
+              "Type": "Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.File\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "Delete",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "IActionResult"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "queryOptions",
+              "Type": "Microsoft.AspNetCore.OData.Query.ODataQueryOptions\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "IActionResult"
+        },
+        {
+          "Name": "GetMetadata",
+          "Inputs": [],
+          "ReturnType": "IActionResult"
+        },
+        {
+          "Name": "Post",
+          "Inputs": [
+            {
+              "Name": "newFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "PostCopyAsync",
+          "Inputs": [
+            {
+              "Name": "source",
+              "Type": "System.String"
+            },
+            {
+              "Name": "destination",
+              "Type": "System.String"
+            },
+            {
+              "Name": "sourceAppId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "destAppId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "Put",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "updatedFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "PutPatchAsync",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "updatedFolderDelta",
+              "Type": "Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "DeleteAll",
+          "Inputs": [
+            {
+              "Name": "deletedFolderRole",
+              "Type": "cCoder.DocumentManagement.Dependencies.OData.ODataCollection\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [],
+          "ReturnType": "IActionResult"
+        },
+        {
+          "Name": "GetMetadata",
+          "Inputs": [],
+          "ReturnType": "IActionResult"
+        },
+        {
+          "Name": "Post",
+          "Inputs": [
+            {
+              "Name": "newFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.Dms",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "CopyAsync",
+          "Inputs": [
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DropAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "search",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "GetFilesZipped",
+          "Inputs": [
+            {
+              "Name": "paths",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "MoveAsync",
+          "Inputs": [
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SaveAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Search",
+          "Inputs": [
+            {
+              "Name": "needle",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "UnpackAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            },
+            {
+              "Name": "ignoreArchiveRoot",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.DmsInstanceFactory",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "CreateDms",
+          "Inputs": [],
+          "ReturnType": "cCoder.DocumentManagement.Exposures.Dms"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "CopyDmsPathAsync",
+          "Inputs": [
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DropDmsPathAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "GetDmsPath",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "MoveDmsPathAsync",
+          "Inputs": [
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SaveDmsPathAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddAsync",
+          "Inputs": [
+            {
+              "Name": "newApp",
+              "Type": "cCoder.Data.Models.CMS.App"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "UpdateAsync",
+          "Inputs": [
+            {
+              "Name": "updatedApp",
+              "Type": "cCoder.Data.Models.CMS.App"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.DocumentManagementPackageManager",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ExportPackage",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "packageName",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.DocumentManagementPackage"
+        },
+        {
+          "Name": "ImportPackageAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "package",
+              "Type": "cCoder.DocumentManagement.Models.DocumentManagementPackage"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.EventHandlers.DocumentManagementEventHandlers",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ListenToAllEvents",
+          "Inputs": [],
+          "ReturnType": "System.Void"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.FileContentOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "newFileContent",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "AddOrUpdateFileContent",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
+        },
+        {
+          "Name": "DeleteAllForFileAsync",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllForFilesAsync",
+          "Inputs": [
+            {
+              "Name": "fileIds",
+              "Type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "fileContentId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.FileOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetAllFiles",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "GetFileByPathWithFolderAndContents",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "GetFileIdsByFolderIds",
+          "Inputs": [
+            {
+              "Name": "folderIds",
+              "Type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Guid[]"
+        },
+        {
+          "Name": "UpdateFileAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFile",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "UpdateFileForAppAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFile",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "CopyFilePathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SaveFilePathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.FolderOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFolderAsync",
+          "Inputs": [
+            {
+              "Name": "newFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "GetAllFolders",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "GetFolderByPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetFolderByPathWithRoles",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetFolderWithRoles",
+          "Inputs": [
+            {
+              "Name": "folderId",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.FolderRoleOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "newFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+        },
+        {
+          "Name": "DeleteFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.Middleware.DMSMiddleware",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "InvokeAsync",
+          "Inputs": [
+            {
+              "Name": "context",
+              "Type": "HttpContext"
+            },
+            {
+              "Name": "dmsHttpRequestOrchestrationService",
+              "Type": "cCoder.DocumentManagement.Services.Orchestrations.IDmsHttpRequestOrchestrationService"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.Middleware.WebDavMiddleware",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "InvokeAsync",
+          "Inputs": [
+            {
+              "Name": "context",
+              "Type": "HttpContext"
+            },
+            {
+              "Name": "dmsHttpRequestOrchestrationService",
+              "Type": "cCoder.DocumentManagement.Services.Orchestrations.IDmsHttpRequestOrchestrationService"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.RoleOperationsExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetAllRoles",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.Role\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Exposures.Setup.UIBaseline",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Packages",
+          "Type": "cCoder.Data.Models.Packaging.Package[]"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.IServiceCollectionExtensions",
+      "StandardElementType": "App",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddDocumentManagementHostedServices",
+          "Inputs": [
+            {
+              "Name": "services",
+              "Type": "IServiceCollection"
+            },
+            {
+              "Name": "configure",
+              "Type": "System.Action\u003CcCoder.DocumentManagement.Models.DocumentManagementConfiguration\u003E"
+            }
+          ],
+          "ReturnType": "System.Void"
+        },
+        {
+          "Name": "AddDocumentManagementWeb",
+          "Inputs": [
+            {
+              "Name": "services",
+              "Type": "IServiceCollection"
+            },
+            {
+              "Name": "configure",
+              "Type": "System.Action\u003CcCoder.DocumentManagement.Models.DocumentManagementConfiguration\u003E"
+            },
+            {
+              "Name": "builder",
+              "Type": "Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"
+            }
+          ],
+          "ReturnType": "System.Void"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.AuditResultByProperty",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "April",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "August",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "December",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "February",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "January",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "July",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "June",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "March",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "May",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "November",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "October",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "Property",
+          "Type": "System.String"
+        },
+        {
+          "Name": "September",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "Total",
+          "Type": "System.Int32"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.AuditResultsByUser",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "April",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "August",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "December",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "February",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "January",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "July",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "June",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "March",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "May",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "November",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "October",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "September",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "Total",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "UserName",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "ConnectionStrings",
+          "Type": "System.Collections.Generic.IDictionary\u003CSystem.String, System.String\u003E"
+        },
+        {
+          "Name": "DebugInfo",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "EventProviders",
+          "Type": "cCoder.Eventing.Models.EventProvider[]"
+        },
+        {
+          "Name": "IncludeLegacyCoreContext",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "LogSQL",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "RootPath",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Services",
+          "Type": "System.Collections.Generic.IDictionary\u003CSystem.String, System.String\u003E"
+        },
+        {
+          "Name": "Settings",
+          "Type": "System.Collections.Generic.IDictionary\u003CSystem.String, System.String\u003E"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.DocumentManagementPackage",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Category",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Description",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Id",
+          "Type": "System.Guid"
+        },
+        {
+          "Name": "Items",
+          "Type": "System.Collections.Generic.ICollection\u003CcCoder.DocumentManagement.Models.DocumentManagementPackageItem\u003E"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "SourceApi",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.DocumentManagementPackageItem",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Data",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Id",
+          "Type": "System.Guid"
+        },
+        {
+          "Name": "Package",
+          "Type": "cCoder.DocumentManagement.Models.DocumentManagementPackage"
+        },
+        {
+          "Name": "PackageId",
+          "Type": "System.Guid"
+        },
+        {
+          "Name": "Type",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.FolderArchiveData",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "FileContentsByFileId",
+          "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "FilesByFolderId",
+          "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "SubFoldersByParentId",
+          "Type": "System.Linq.ILookup\u003CSystem.Guid?, cCoder.Data.Models.DMS.Folder\u003E"
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "\u003CClone\u003E$",
+          "Inputs": [],
+          "ReturnType": "cCoder.DocumentManagement.Models.FolderArchiveData"
+        },
+        {
+          "Name": "Deconstruct",
+          "Inputs": [
+            {
+              "Name": "SubFoldersByParentId",
+              "Type": "System.Linq.ILookup\u003CSystem.Guid?, cCoder.Data.Models.DMS.Folder\u003E"
+            },
+            {
+              "Name": "FilesByFolderId",
+              "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.File\u003E"
+            },
+            {
+              "Name": "FileContentsByFileId",
+              "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Void"
+        },
+        {
+          "Name": "Equals",
+          "Inputs": [
+            {
+              "Name": "obj",
+              "Type": "System.Object?"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        },
+        {
+          "Name": "Equals",
+          "Inputs": [
+            {
+              "Name": "other",
+              "Type": "cCoder.DocumentManagement.Models.FolderArchiveData?"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        },
+        {
+          "Name": "GetHashCode",
+          "Inputs": [],
+          "ReturnType": "System.Int32"
+        },
+        {
+          "Name": "ToString",
+          "Inputs": [],
+          "ReturnType": "System.String"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.FolderRoleContext",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Folder",
+          "Type": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "Role",
+          "Type": "cCoder.Data.Models.Security.Role"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.FolderRoleInfo",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Path",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.MimeType",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "fileExtension",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.Mapping"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService",
+      "StandardElementType": "AggregationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddAppAsync",
+          "Inputs": [
+            {
+              "Name": "newApp",
+              "Type": "cCoder.Data.Models.CMS.App"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "UpdateAppAsync",
+          "Inputs": [
+            {
+              "Name": "updatedApp",
+              "Type": "cCoder.Data.Models.CMS.App"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
+      "StandardElementType": "AggregationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ExportPackage",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "packageName",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.DocumentManagementPackage"
+        },
+        {
+          "Name": "ImportPackageDocumentManagementPackageAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "package",
+              "Type": "cCoder.DocumentManagement.Models.DocumentManagementPackage"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
+      "StandardElementType": "CoordinationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "DeleteFolderAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
+      "StandardElementType": "FoundationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "CopyAsync",
+          "Inputs": [
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DropAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "search",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "GetFilesZipped",
+          "Inputs": [
+            {
+              "Name": "paths",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "MoveAsync",
+          "Inputs": [
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SaveAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Search",
+          "Inputs": [
+            {
+              "Name": "needle",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "UnpackAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            },
+            {
+              "Name": "ignoreArchiveRoot",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Foundations.DocumentManagementMetadataTypeService",
+      "StandardElementType": "FoundationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetKnownMetadata",
+          "Inputs": [],
+          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.OData.MetadataContainerSet\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Foundations.Events.EventHandlerService",
+      "StandardElementType": "FoundationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ListenToAllEvents",
+          "Inputs": [],
+          "ReturnType": "System.Void"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
+      "StandardElementType": "FoundationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RaiseFileContentAddEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFileContentDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFileContentUpdateEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
+      "StandardElementType": "FoundationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RaiseFileAddEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFileDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFileUpdateEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
+      "StandardElementType": "FoundationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RaiseFolderAddEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFolderDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFolderUpdateEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
+      "StandardElementType": "FoundationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RaiseFolderRoleAddEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFolderRoleDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
+      "StandardElementType": "FoundationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "newFileContent",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "DeleteAllForFileAsync",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllForFilesAsync",
+          "Inputs": [
+            {
+              "Name": "fileIds",
+              "Type": "System.Guid[]"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAsync",
+          "Inputs": [
+            {
+              "Name": "fileContentId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "fileContentId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.FileContent"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "UpdateFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFileContent",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Foundations.FileService",
+      "StandardElementType": "FoundationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFileAsync",
+          "Inputs": [
+            {
+              "Name": "file",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "DeleteAllForAppFileAsync",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAsync",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "GetByPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "GetByPathWithFolderAndContents",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "GetByPathWithFolderRolesAndContents",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "GetIdsByFolderIds",
+          "Inputs": [
+            {
+              "Name": "folderIds",
+              "Type": "System.Guid[]"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Guid[]"
+        },
+        {
+          "Name": "GetWithFolderAndContents",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "GetWithFolderRolesAndContents",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "Search",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "needle",
+              "Type": "System.Byte[]"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "UpdateFileAsync",
+          "Inputs": [
+            {
+              "Name": "file",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "UpdateForAppFileAsync",
+          "Inputs": [
+            {
+              "Name": "file",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
+      "StandardElementType": "FoundationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "newFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+        },
+        {
+          "Name": "DeleteFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Foundations.FolderService",
+      "StandardElementType": "FoundationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFolderAsync",
+          "Inputs": [
+            {
+              "Name": "newFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "AddForPathBuildFolderAsync",
+          "Inputs": [
+            {
+              "Name": "newFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "DeleteAllByAppIdAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllForAppFolderAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolder",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAsync",
+          "Inputs": [
+            {
+              "Name": "folderId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "folderId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "GetByPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetByPathWithParentAndRoles",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetByPathWithRoles",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetByPathWithRolesAndFilesAndContents",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetByPathWithSubFoldersAndFiles",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetForUpdate",
+          "Inputs": [
+            {
+              "Name": "folderId",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetWithRoles",
+          "Inputs": [
+            {
+              "Name": "folderId",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "UpdateFolderAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "UpdateForAppFolderAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Foundations.RoleService",
+      "StandardElementType": "FoundationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.Role\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
+      "StandardElementType": "OrchestrationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ProcessRequestAsync",
+          "Inputs": [
+            {
+              "Name": "context",
+              "Type": "HttpContext"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
+      "StandardElementType": "OrchestrationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "CopyAsync",
+          "Inputs": [
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DropAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "search",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "GetFilesZipped",
+          "Inputs": [
+            {
+              "Name": "paths",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "MoveAsync",
+          "Inputs": [
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SaveAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Search",
+          "Inputs": [
+            {
+              "Name": "needle",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "UnpackAsync",
+          "Inputs": [
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            },
+            {
+              "Name": "ignoreArchiveRoot",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
+      "StandardElementType": "OrchestrationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "newFileContent",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "AddOrUpdateFileContent",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
+        },
+        {
+          "Name": "DeleteAllFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFileContent",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAsync",
+          "Inputs": [
+            {
+              "Name": "fileContentId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "fileContentId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.FileContent"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "UpdateFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFileContent",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "StandardElementType": "OrchestrationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFileAsync",
+          "Inputs": [
+            {
+              "Name": "newFile",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "AddOrUpdateFile",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.File\u003E\u003E\u003E"
+        },
+        {
+          "Name": "CopyAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllFileAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFile",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAsync",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DropAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "GetAppPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "GetByPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "HandleFileDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "file",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "MoveAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SaveAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SearchApp",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "needle",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "UpdateFileAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFile",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "StandardElementType": "OrchestrationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFolderAsync",
+          "Inputs": [
+            {
+              "Name": "newFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "AddOrUpdateFolder",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
+        },
+        {
+          "Name": "AddOrUpdateForAppFolderAsync",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
+        },
+        {
+          "Name": "CopyAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "CopyAsync",
+          "Inputs": [
+            {
+              "Name": "source",
+              "Type": "System.String"
+            },
+            {
+              "Name": "destination",
+              "Type": "System.String"
+            },
+            {
+              "Name": "sourceAppId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "destAppId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.List\u003CcCoder.DocumentManagement.Dependencies.Result\u003CSystem.Guid?\u003E\u003E\u003E"
+        },
+        {
+          "Name": "DeleteAllByAppIdAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllFolderAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolder",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAsync",
+          "Inputs": [
+            {
+              "Name": "folderId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DropAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "folderId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "GetAppPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "search",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "GetFilesZippedAppPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "paths",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "HandleFolderDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "folder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "MoveAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SaveAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "UnpackAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            },
+            {
+              "Name": "ignoreArchiveRoot",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "UpdateFolderAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
+      "StandardElementType": "OrchestrationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "newFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+        },
+        {
+          "Name": "AddOrUpdateFolderRole",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.Security.FolderRole\u003E\u003E\u003E"
+        },
+        {
+          "Name": "DeleteAllFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolderRole",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Orchestrations.PackagePayloadMigrationOrchestrationService",
+      "StandardElementType": "OrchestrationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ParseFolderRoleInfos",
+          "Inputs": [
+            {
+              "Name": "data",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.FolderRoleInfo[]"
+        },
+        {
+          "Name": "SerializeFolderRoleInfos",
+          "Inputs": [
+            {
+              "Name": "folderRoleInfos",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.FolderRoleInfo\u003E"
+            }
+          ],
+          "ReturnType": "System.String"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Orchestrations.RoleMigrationOrchestrationService",
+      "StandardElementType": "OrchestrationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetRolesForApp",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.Security.Role[]"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ResolveCurrentApp",
+          "Inputs": [],
+          "ReturnType": "cCoder.Data.Models.CMS.App"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ProcessDmsProcessingRequestAsync",
+          "Inputs": [
+            {
+              "Name": "request",
+              "Type": "cCoder.DocumentManagement.Dependencies.DmsProcessingRequest"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.DocumentManagement.Dependencies.DmsProcessingResponse\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.FileContentEventProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RaiseFileContentAddEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFileContentDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFileContentUpdateEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "newFileContent",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "AddOrUpdateFileContent",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
+        },
+        {
+          "Name": "DeleteAllFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFileContent",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllForFileAsync",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllForFilesAsync",
+          "Inputs": [
+            {
+              "Name": "fileIds",
+              "Type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAsync",
+          "Inputs": [
+            {
+              "Name": "fileContentId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "fileContentId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.FileContent"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "UpdateFileContentAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFileContent",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.FileEventProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RaiseFileAddEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFileDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFileUpdateEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFileAsync",
+          "Inputs": [
+            {
+              "Name": "newFile",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "AddOrUpdateFile",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.File\u003E\u003E\u003E"
+        },
+        {
+          "Name": "CopyAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllFileAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFile",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAsync",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DropAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "fileId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "GetAppPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "version",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "GetByPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "HandleFileDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "file",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "MoveAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SaveAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SearchApp",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "needle",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "UpdateFileAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFile",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.FolderEventProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RaiseFolderAddEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFolderDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFolderUpdateEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFolderAsync",
+          "Inputs": [
+            {
+              "Name": "newFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "AddOrUpdateFolder",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
+        },
+        {
+          "Name": "AddOrUpdateForAppFolderAsync",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
+        },
+        {
+          "Name": "CopyAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "CopyAsync",
+          "Inputs": [
+            {
+              "Name": "source",
+              "Type": "System.String"
+            },
+            {
+              "Name": "destination",
+              "Type": "System.String"
+            },
+            {
+              "Name": "sourceAppId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "destAppId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.List\u003CcCoder.DocumentManagement.Dependencies.Result\u003CSystem.Guid?\u003E\u003E\u003E"
+        },
+        {
+          "Name": "DeleteAllFolderAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolder",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAsync",
+          "Inputs": [
+            {
+              "Name": "folderId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteByAppIdAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DropAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "Get",
+          "Inputs": [
+            {
+              "Name": "folderId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "GetAppPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "search",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "GetFilesZippedAppPath",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "paths",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+        },
+        {
+          "Name": "HandleFolderDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "folder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "MoveAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "SaveAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "UnpackAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "path",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+            },
+            {
+              "Name": "content",
+              "Type": "System.IO.Stream"
+            },
+            {
+              "Name": "ignoreArchiveRoot",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "UpdateFolderAsync",
+          "Inputs": [
+            {
+              "Name": "updatedFolder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RaiseFolderRoleAddEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "RaiseFolderRoleDeleteEventAsync",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "newFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+        },
+        {
+          "Name": "AddOrUpdateFolderRole",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.Security.FolderRole\u003E\u003E\u003E"
+        },
+        {
+          "Name": "DeleteAllFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolderRole",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteFolderRoleAsync",
+          "Inputs": [
+            {
+              "Name": "deletedFolderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.PackagePayloadJsonProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ParseFolderRoleInfo",
+          "Inputs": [
+            {
+              "Name": "data",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.FolderRoleInfo"
+        },
+        {
+          "Name": "ParseFolderRoleInfos",
+          "Inputs": [
+            {
+              "Name": "data",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.FolderRoleInfo[]"
+        },
+        {
+          "Name": "SerializeFolderRoleInfos",
+          "Inputs": [
+            {
+              "Name": "folderRoleInfos",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.FolderRoleInfo\u003E"
+            }
+          ],
+          "ReturnType": "System.String"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.PackagePayloadShapeProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "IsSingleItem",
+          "Inputs": [
+            {
+              "Name": "data",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.RoleMigrationFilterProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "FilterRolesForApp",
+          "Inputs": [
+            {
+              "Name": "roles",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.Role\u003E"
+            },
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.Security.Role[]"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.RoleMigrationRetrievalProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetAllRoles",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.Role\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ProcessDmsProcessingRequestAsync",
+          "Inputs": [
+            {
+              "Name": "request",
+              "Type": "cCoder.DocumentManagement.Dependencies.DmsProcessingRequest"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.DocumentManagement.Dependencies.DmsProcessingResponse\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.WebApplicationExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "StartDocumentManagementHostedServices",
+          "Inputs": [
+            {
+              "Name": "app",
+              "Type": "WebApplication"
+            }
+          ],
+          "ReturnType": "WebApplication"
+        },
+        {
+          "Name": "StartDocumentManagementWeb",
+          "Inputs": [
+            {
+              "Name": "app",
+              "Type": "WebApplication"
+            },
+            {
+              "Name": "log",
+              "Type": "ILogger"
+            }
+          ],
+          "ReturnType": "WebApplication"
+        }
+      ]
+    }
+  ],
+  "Links": [
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker",
+      "ToType": "cCoder.DocumentManagement.Exposures.DmsInstanceFactory"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.Controllers.BaselineController",
+      "ToType": "cCoder.DocumentManagement.Exposures.BaselineExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.Dms",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.DmsInstanceFactory",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.DocumentManagementPackageManager",
+      "ToType": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.EventHandlers.DocumentManagementEventHandlers",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.Events.EventHandlerService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.FileContentOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.FileOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.FileService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.FolderOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.FolderRoleOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.RoleOperationsExposure",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.RoleService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Models.FolderArchiveData",
+      "ToType": "cCoder.DocumentManagement.Models.FolderArchiveData"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.PackagePayloadMigrationOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.RoleMigrationOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
+      "ToType": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.Events.EventHandlerService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Events.EventHubBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
+      "ToType": "cCoder.DocumentManagement.Brokers.AuthInfoBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Events.FileContentEventBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
+      "ToType": "cCoder.DocumentManagement.Brokers.AuthInfoBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Events.FileEventBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
+      "ToType": "cCoder.DocumentManagement.Brokers.AuthInfoBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Events.FolderEventBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
+      "ToType": "cCoder.DocumentManagement.Brokers.AuthInfoBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Events.FolderRoleEventBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
+      "ToType": "cCoder.DocumentManagement.Brokers.AuthorizationBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.FileService",
+      "ToType": "cCoder.DocumentManagement.Brokers.AuthorizationBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.FileService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Storage.FileBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
+      "ToType": "cCoder.DocumentManagement.Brokers.AuthorizationBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.FolderService",
+      "ToType": "cCoder.DocumentManagement.Brokers.AuthorizationBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.FolderService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Foundations.RoleService",
+      "ToType": "cCoder.DocumentManagement.Brokers.RoleBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FileContentEventProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FileEventProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FolderEventProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.PackagePayloadMigrationOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.PackagePayloadJsonProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.PackagePayloadMigrationOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.PackagePayloadShapeProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.RoleMigrationOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.RoleMigrationFilterProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.RoleMigrationOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.RoleMigrationRetrievalProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Storage.AppBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FileContentEventProcessingService",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.FileContentService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FileEventProcessingService",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "ToType": "cCoder.DocumentManagement.Brokers.AuthorizationBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.FileContentOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.FolderOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.FileService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderEventProcessingService",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "ToType": "cCoder.DocumentManagement.Brokers.AuthorizationBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.FileContentOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.FileOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.FolderRoleOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.RoleOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
+      "ToType": "cCoder.DocumentManagement.Brokers.AuthorizationBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
+      "ToType": "cCoder.DocumentManagement.Brokers.FolderRoleContextBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.PackagePayloadJsonProcessingService",
+      "ToType": "cCoder.DocumentManagement.Brokers.JsonBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.RoleMigrationRetrievalProcessingService",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.RoleService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.FileOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
+      "ToType": "cCoder.DocumentManagement.Exposures.FolderOperationsExposure"
+    }
+  ],
+  "AnalysisItems": []
+}

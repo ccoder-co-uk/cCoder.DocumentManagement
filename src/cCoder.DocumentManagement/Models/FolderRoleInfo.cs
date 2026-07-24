@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 namespace cCoder.DocumentManagement.Models;
 
 internal class FolderRoleInfo
@@ -6,4 +10,3 @@ internal class FolderRoleInfo
 
     public string Name { get; set; }
 }
-

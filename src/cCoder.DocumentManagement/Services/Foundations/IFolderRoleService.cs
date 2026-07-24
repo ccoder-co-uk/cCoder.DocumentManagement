@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -9,14 +13,6 @@ namespace cCoder.DocumentManagement.Services.Foundations;
 public interface IFolderRoleService
 {
     IQueryable<FolderRole> GetAll(bool ignoreFilters = false);
-    ValueTask<FolderRole> AddAsync(FolderRole folderRole);
-    ValueTask DeleteAsync(FolderRole folderRole);
+    ValueTask<FolderRole> AddFolderRoleAsync(FolderRole newFolderRole);
+    ValueTask DeleteFolderRoleAsync(FolderRole deletedFolderRole);
 }
-
-
-
-
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -18,22 +22,15 @@ public partial class FolderOrchestrationServiceTests
 
     public FolderOrchestrationServiceTests()
     {
-        folderProcessingServiceMock = new Mock<IFolderProcessingService>(MockBehavior.Strict);
-        folderEventProcessingServiceMock = new Mock<IFolderEventProcessingService>(MockBehavior.Strict);
+        folderProcessingServiceMock = new Mock<IFolderProcessingService>(behavior: MockBehavior.Strict);
+        folderEventProcessingServiceMock = new Mock<IFolderEventProcessingService>(behavior: MockBehavior.Strict);
         orchestrationService = new FolderOrchestrationService(
-            folderProcessingServiceMock.Object,
-            folderEventProcessingServiceMock.Object
+            processingService: folderProcessingServiceMock.Object,
+            eventService: folderEventProcessingServiceMock.Object
         );
     }
 
-    private static Folder CreateRandomFolder() => Builder<Folder>.CreateNew().Build();
+    private static Folder CreateRandomFolder() =>
+        Builder<Folder>.CreateNew()
+                                                                             .Build();
 }
-
-
-
-
-
-
-
-
-

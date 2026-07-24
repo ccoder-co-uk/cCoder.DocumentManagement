@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Api.OData;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Extensions;
@@ -15,35 +19,33 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
-public partial class FolderController : ODataController
+public partial class FolderController(
+    IFolderOrchestrationService service
+) : ODataController
 {
-    protected IFolderOrchestrationService Service { get; }
-
-    public FolderController(IFolderOrchestrationService service, ILogger<FolderController> log)
-    {
-        Service = service;
-    }
 
     [HttpPost]
-    public async Task<IActionResult> CopyAsync(
+    [ActionName("Copy")]
+    public async Task<IActionResult> PostCopyAsync(
         string source,
         string destination,
         int sourceAppId,
         int destAppId
-    ) => Ok(await Service.CopyAsync(source, destination, sourceAppId, destAppId));
+    ) =>
+        Ok(value: await service.CopyAsync(source: source, destination: destination, sourceAppId: sourceAppId, destAppId: destAppId));
 
     [HttpGet]
     public IActionResult GetMetadata()
     {
-        bool isExtendedMetaRequest = Request.Query["extend"] == "true";
+        bool isExtendedMetaRequest = Request.Query[key: "extend"] == "true";
 
         return isExtendedMetaRequest
             ? Ok(
-                new cCoder.DocumentManagement.Api.OData.DocumentManagementModelBuilder()
+                value: new cCoder.DocumentManagement.Dependencies.OData.DocumentManagementModelBuilder()
                     .Build()
-                    .EDMModel.GetExtendedMetadataForType("DocumentManagement", typeof(Folder))
+                    .EDMModel.GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(Folder))
             )
-            : Ok(new MetadataContainer(typeof(Folder), true, true));
+            : Ok(value: new MetadataContainer(type: typeof(Folder), isEntity: true, hasEndpoint: true));
     }
 
     [HttpGet]
@@ -56,7 +58,8 @@ public partial class FolderController : ODataController
         MaxExpansionDepth = 5
     )]
     [ActionName("Get")]
-    public IActionResult GetAll(ODataQueryOptions<Folder> queryOptions) => Ok(Service.GetAll());
+    public IActionResult GetAll(ODataQueryOptions<Folder> queryOptions) =>
+        Ok(value: service.GetAll());
 
     [HttpGet]
     [AllowAnonymous]
@@ -72,8 +75,8 @@ public partial class FolderController : ODataController
     {
         try
         {
-            Folder result = Service.Get(key);
-            return result is null ? NotFound() : Ok(result);
+            Folder result = service.Get(folderId: key);
+            return result is null ? NotFound() : Ok(value: result);
         }
         catch (System.Security.SecurityException)
         {
@@ -90,12 +93,14 @@ public partial class FolderController : ODataController
         MaxAnyAllExpressionDepth = 5,
         MaxExpansionDepth = 5
     )]
-    public async Task<IActionResult> Post([FromBody] Folder entity)
+    public async Task<IActionResult> Post([FromBody] Folder newFolder)
     {
         if (!ModelState.IsValid)
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(ModelState);
+        {
+            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
+        }
 
-        return Ok(await Service.AddAsync(entity));
+        return Ok(value: await service.AddFolderAsync(newFolder: newFolder));
     }
 
     [HttpPut]
@@ -107,47 +112,36 @@ public partial class FolderController : ODataController
         MaxAnyAllExpressionDepth = 5,
         MaxExpansionDepth = 5
     )]
-    public async Task<IActionResult> Put([FromRoute] Guid key, [FromBody] Folder entity)
+    public async Task<IActionResult> Put([FromRoute] Guid key, [FromBody] Folder updatedFolder)
     {
         if (!ModelState.IsValid)
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(ModelState);
+        {
+            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
+        }
 
-        entity.Id = key;
-        return Ok(await Service.UpdateAsync(entity));
+        updatedFolder.Id = key;
+        return Ok(value: await service.UpdateFolderAsync(updatedFolder: updatedFolder));
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
-    public async Task<IActionResult> Patch([FromRoute] Guid key, Delta<Folder> delta)
+    [ActionName("Patch")]
+    public async Task<IActionResult> PutPatchAsync([FromRoute] Guid key, Delta<Folder> updatedFolderDelta)
     {
-        Folder originalEntity = Service.Get(key);
-        if (originalEntity == null)
-            return NotFound();
+        Folder originalEntity = service.Get(folderId: key);
 
-        delta.Patch(originalEntity);
-        return Ok(await Service.UpdateAsync(originalEntity));
+        if (originalEntity == null)
+        {
+            return NotFound();
+        }
+
+        updatedFolderDelta.Patch(original: originalEntity);
+        return Ok(value: await service.UpdateFolderAsync(updatedFolder: originalEntity));
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete([FromRoute] Guid key)
     {
-        await Service.DeleteAsync(key);
+        await service.DeleteAsync(folderId: key);
         return Ok();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

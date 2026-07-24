@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Xunit;
@@ -12,17 +16,21 @@ public partial class WebDavProcessingServiceTests
     {
         // Given
         DmsProcessingRequest request = CreateRequest(
-            "PROPPATCH",
-            "Core/App(7)/DAV/folder/file.txt"
+            method: "PROPPATCH",
+            requestPath: "Core/App(7)/DAV/folder/file.txt"
         );
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request);
-        string xml = ReadBodyText(response.Body);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
+        string xml = ReadBodyText(stream: response.Body);
 
         // Then
-        response.StatusCode.Should().Be(200);
-        xml.Should().Contain("multistatus");
+        response.StatusCode.Should()
+            .Be(expected: 200);
+
+        xml.Should()
+            .Contain(expected: "multistatus");
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
@@ -32,14 +40,18 @@ public partial class WebDavProcessingServiceTests
     public async Task ShouldReturnOkWhenMethodIsLock()
     {
         // Given
-        DmsProcessingRequest request = CreateRequest("LOCK", "Core/App(7)/DAV/folder/file.txt");
+        DmsProcessingRequest request = CreateRequest(method: "LOCK", requestPath: "Core/App(7)/DAV/folder/file.txt");
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(200);
-        response.HasBody.Should().BeFalse();
+        response.StatusCode.Should()
+            .Be(expected: 200);
+
+        response.HasBody.Should()
+            .BeFalse();
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
@@ -49,22 +61,20 @@ public partial class WebDavProcessingServiceTests
     public async Task ShouldReturnNoContentWhenMethodIsUnlock()
     {
         // Given
-        DmsProcessingRequest request = CreateRequest("UNLOCK", "Core/App(7)/DAV/folder/file.txt");
+        DmsProcessingRequest request = CreateRequest(method: "UNLOCK", requestPath: "Core/App(7)/DAV/folder/file.txt");
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(204);
-        response.HasBody.Should().BeFalse();
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
+        response.HasBody.Should()
+            .BeFalse();
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         folderServiceMock.VerifyNoOtherCalls();
     }
 }
-
-
-
-
-
-

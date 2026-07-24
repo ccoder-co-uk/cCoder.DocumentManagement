@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 namespace cCoder.DocumentManagement.Models;
 
 public struct Mapping
@@ -22,6 +26,6 @@ public static class MimeType
     public static Mapping Get(string fileExtension)
     {
         string normalized = (fileExtension ?? string.Empty).ToLowerInvariant();
-        return All.FirstOrDefault(mapping => mapping.FileExtension == normalized);
+        return All.FirstOrDefault(predicate: mapping => mapping.FileExtension == normalized);
     }
 }

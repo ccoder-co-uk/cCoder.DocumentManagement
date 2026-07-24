@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Eventing.Models;
 using FluentAssertions;
 using Moq;
@@ -18,33 +22,38 @@ public partial class FileEventServiceTests
         EventMessage<DataFile> actualMessage = null;
 
         fileEventBrokerMock
-            .Setup(x => x.RaiseFileDeleteEventAsync(It.IsAny<EventMessage<DataFile>>()))
-            .Callback<EventMessage<DataFile>>(message => actualMessage = message)
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFileDeleteEventAsync(message: It.IsAny<EventMessage<DataFile>>()))
+            .Callback<EventMessage<DataFile>>(action: message => actualMessage = message)
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFileDeleteEventAsync(entity);
+        await service.RaiseFileDeleteEventAsync(entity: entity);
 
         // Then
-        actualMessage.Should().NotBeNull();
-        actualMessage!.Data.Id.Should().Be(entity.Id);
-        actualMessage.Data.Name.Should().Be(entity.Name);
-        actualMessage.Data.Path.Should().Be(entity.Path);
-        actualMessage.AuthInfo.Should().NotBeNull();
-        actualMessage.AuthInfo.SSOUserId.Should().Be(CurrentUserId);
+        actualMessage.Should()
+            .NotBeNull();
+
+        actualMessage!.Data.Id.Should()
+            .Be(expected: entity.Id);
+
+        actualMessage.Data.Name.Should()
+            .Be(expected: entity.Name);
+
+        actualMessage.Data.Path.Should()
+            .Be(expected: entity.Path);
+
+        actualMessage.AuthInfo.Should()
+            .NotBeNull();
+
+        actualMessage.AuthInfo.SSOUserId.Should()
+            .Be(expected: CurrentUserId);
+
         fileEventBrokerMock.Verify(
-            x => x.RaiseFileDeleteEventAsync(It.IsAny<EventMessage<DataFile>>()),
-            Times.Once
+            expression: x => x.RaiseFileDeleteEventAsync(message: It.IsAny<EventMessage<DataFile>>()),
+            times: Times.Once
         );
+
         fileEventBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

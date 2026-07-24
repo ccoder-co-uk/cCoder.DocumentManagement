@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Orchestrations;
@@ -5,47 +9,57 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 using DataFile = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Models.Path;
+using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Brokers;
 
-public class DmsInstanceFactoryTests
+public partial class DmsInstanceFactoryTests
 {
     [Fact]
     public void ShouldCreateDmsThatDelegatesSearch()
     {
+        // Given
         IEnumerable<DataFile> expectedFiles = [new() { Id = Guid.NewGuid(), Name = "file.txt" }];
-        var orchestrationServiceMock = new Mock<IDmsOrchestrationService>(MockBehavior.Strict);
-        orchestrationServiceMock.Setup(service => service.Search("needle")).Returns(expectedFiles);
+        var orchestrationServiceMock = new Mock<IDmsOrchestrationService>(behavior: MockBehavior.Strict);
 
-        var factory = new DmsInstanceFactory(orchestrationServiceMock.Object);
+        orchestrationServiceMock.Setup(expression: service => service.Search(needle: "needle"))
+            .Returns(value: expectedFiles);
 
+        var factory = new DmsInstanceFactory(dmsOrchestrationService: orchestrationServiceMock.Object);
+
+        // When
         IDms dms = factory.CreateDms();
-        IEnumerable<DataFile> actualFiles = dms.Search("needle");
+        IEnumerable<DataFile> actualFiles = dms.Search(needle: "needle");
 
-        actualFiles.Should().BeSameAs(expectedFiles);
-        orchestrationServiceMock.Verify(service => service.Search("needle"), Times.Once);
+        // Then
+        actualFiles.Should()
+            .BeSameAs(expected: expectedFiles);
+
+        orchestrationServiceMock.Verify(expression: service => service.Search(needle: "needle"), times: Times.Once);
         orchestrationServiceMock.VerifyNoOtherCalls();
     }
 
     [Fact]
     public async Task ShouldCreateDmsThatDelegatesSaveAsync()
     {
-        var orchestrationServiceMock = new Mock<IDmsOrchestrationService>(MockBehavior.Strict);
-        var path = new DmsPath("content/file.txt");
-        using var content = new MemoryStream([1, 2, 3]);
+        // Given
+        var orchestrationServiceMock = new Mock<IDmsOrchestrationService>(behavior: MockBehavior.Strict);
+        var path = new DmsPath(path: "content/file.txt");
+        using var content = new MemoryStream(buffer: [1, 2, 3]);
 
         orchestrationServiceMock
-            .Setup(service => service.SaveAsync(path, content))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: service => service.SaveAsync(path: path, content: content))
+            .Returns(value: ValueTask.CompletedTask);
 
-        var factory = new DmsInstanceFactory(orchestrationServiceMock.Object);
+        var factory = new DmsInstanceFactory(dmsOrchestrationService: orchestrationServiceMock.Object);
 
         IDms dms = factory.CreateDms();
-        await dms.SaveAsync(path, content);
+        // When
+        await dms.SaveAsync(path: path, content: content);
 
-        orchestrationServiceMock.Verify(service => service.SaveAsync(path, content), Times.Once);
+        // Then
+        orchestrationServiceMock.Verify(expression: service => service.SaveAsync(path: path, content: content), times: Times.Once);
         orchestrationServiceMock.VerifyNoOtherCalls();
     }
 }

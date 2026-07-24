@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Services.Foundations;
 using FizzWare.NBuilder;
@@ -17,24 +21,24 @@ public partial class FileServiceTests
 
     public FileServiceTests()
     {
-        fileBrokerMock = new Mock<IFileBroker>(MockBehavior.Strict);
-        authorizationBrokerMock = new Mock<IAuthorizationBroker>(MockBehavior.Strict);
-        fileService = new FileService(fileBrokerMock.Object, authorizationBrokerMock.Object);
+        fileBrokerMock = new Mock<IFileBroker>(behavior: MockBehavior.Strict);
+        authorizationBrokerMock = new Mock<IAuthorizationBroker>(behavior: MockBehavior.Strict);
+        fileService = new FileService(fileBroker: fileBrokerMock.Object, authorizationBroker: authorizationBrokerMock.Object);
     }
 
     private static FileEntity CreateRandomFile(Guid id = default, Guid folderId = default)
     {
         FileEntity file = Builder<FileEntity>
             .CreateNew()
-            .With(x => x.Id = id == Guid.Empty ? Guid.NewGuid() : id)
-            .With(x => x.FolderId = folderId == Guid.Empty ? Guid.NewGuid() : folderId)
-            .With(x => x.Name = $"File-{Guid.NewGuid():N}")
-            .With(x => x.Description = $"Description-{Guid.NewGuid():N}")
-            .With(x => x.Path = $"/files/{Guid.NewGuid():N}")
-            .With(x => x.MimeType = "application/octet-stream")
-            .With(x => x.CreatedBy = "tester")
-            .With(x => x.Size = "1024")
-            .With(x => x.CreatedOn = DateTimeOffset.UtcNow)
+            .With(func: x => x.Id = id == Guid.Empty ? Guid.NewGuid() : id)
+            .With(func: x => x.FolderId = folderId == Guid.Empty ? Guid.NewGuid() : folderId)
+            .With(func: x => x.Name = $"File-{Guid.NewGuid():N}")
+            .With(func: x => x.Description = $"Description-{Guid.NewGuid():N}")
+            .With(func: x => x.Path = $"/files/{Guid.NewGuid():N}")
+            .With(func: x => x.MimeType = "application/octet-stream")
+            .With(func: x => x.CreatedBy = "tester")
+            .With(func: x => x.Size = "1024")
+            .With(func: x => x.CreatedOn = DateTimeOffset.UtcNow)
             .Build();
 
         return file;
@@ -56,18 +60,3 @@ public partial class FileServiceTests
                 Size = file.Size,
             };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

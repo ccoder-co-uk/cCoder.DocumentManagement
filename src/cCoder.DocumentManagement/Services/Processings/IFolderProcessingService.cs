@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -7,21 +11,21 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 public interface IFolderProcessingService
 {
-    Folder Get(Guid id);
+    Folder Get(Guid folderId);
 
     IQueryable<Folder> GetAll(bool ignoreFilters = false);
 
-    ValueTask<Folder> AddAsync(Folder entity);
+    ValueTask<Folder> AddFolderAsync(Folder newFolder);
 
-    ValueTask<Folder> UpdateAsync(Folder entity);
+    ValueTask<Folder> UpdateFolderAsync(Folder updatedFolder);
 
-    ValueTask DeleteAsync(Guid id);
+    ValueTask DeleteAsync(Guid folderId);
 
-    ValueTask<IEnumerable<Result<Folder>>> AddOrUpdate(IEnumerable<Folder> items);
+    ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateFolder(IEnumerable<Folder> items);
 
-    ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateForAppAsync(IEnumerable<Folder> items);
+    ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateForAppFolderAsync(IEnumerable<Folder> items);
 
-    ValueTask DeleteAllAsync(IEnumerable<Folder> items);
+    ValueTask DeleteAllFolderAsync(IEnumerable<Folder> deletedFolder);
 
     ValueTask DeleteByAppIdAsync(int appId);
 
@@ -29,17 +33,17 @@ public interface IFolderProcessingService
 
     ValueTask HandleFolderDeleteEventAsync(Folder folder);
 
-    DMSResult GetFilesZipped(App app, IEnumerable<cCoder.DocumentManagement.Models.Path> paths);
+    DMSResult GetFilesZippedAppPath(int appId, IEnumerable<cCoder.DocumentManagement.Dependencies.Path> paths);
 
-    DMSResult Get(App app, cCoder.DocumentManagement.Models.Path path, string search = "");
+    DMSResult GetAppPath(int appId, cCoder.DocumentManagement.Dependencies.Path path, string search = "");
 
-    ValueTask UnpackAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content, bool ignoreArchiveRoot = false);
+    ValueTask UnpackAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path path, Stream content, bool ignoreArchiveRoot = false);
 
-    ValueTask SaveAsync(App app, cCoder.DocumentManagement.Models.Path path);
+    ValueTask SaveAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path path);
 
-    ValueTask DropAsync(App app, cCoder.DocumentManagement.Models.Path path);
+    ValueTask DropAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path path);
 
-    ValueTask CopyAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath);
+    ValueTask CopyAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath);
 
-    ValueTask MoveAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath);
+    ValueTask MoveAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath);
 }

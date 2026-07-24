@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -11,25 +15,23 @@ public partial class DmsInstanceServiceTests
     public void ShouldReturnBrokerResultsWhenSearch()
     {
         // Given
-        cCoder.Data.Models.DMS.File firstFile = CreateFileAsync();
-        cCoder.Data.Models.DMS.File secondFile = CreateFileAsync();
+        cCoder.Data.Models.DMS.File firstFile = CreateLocalFileAsync();
+        cCoder.Data.Models.DMS.File secondFile = CreateLocalFileAsync();
         cCoder.Data.Models.DMS.File[] files = [firstFile, secondFile];
-        dmsInstanceBrokerMock.Setup(x => x.Search("term")).Returns(files);
+
+        dmsInstanceBrokerMock.Setup(expression: x => x.Search(needle: "term"))
+            .Returns(value: files);
 
         // When
         IEnumerable<cCoder.Data.Models.DMS.File> returnedFiles =
-            dmsInstanceService.Search("term");
+            dmsInstanceService.Search(needle: "term");
 
         // Then
-        returnedFiles.Should().BeSameAs(files);
-        dmsInstanceBrokerMock.Verify(x => x.Search("term"), Times.Once);
+        returnedFiles.Should()
+            .BeSameAs(expected: files);
+
+        dmsInstanceBrokerMock.Verify(expression: x => x.Search(needle: "term"), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-

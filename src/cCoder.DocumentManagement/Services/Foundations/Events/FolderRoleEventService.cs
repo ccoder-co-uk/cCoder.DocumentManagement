@@ -1,4 +1,8 @@
-using cCoder.Data;
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
+using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -10,32 +14,44 @@ using DataFolderRole = cCoder.Data.Models.Security.FolderRole;
 
 namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
-internal class FolderRoleEventService(
+internal partial class FolderRoleEventService(
     IFolderRoleEventBroker folderRoleEventBroker,
-    ICoreAuthInfo authInfo
+    IAuthInfoBroker authInfoBroker
 ) : IFolderRoleEventService
 {
-    public async ValueTask RaiseFolderRoleAddEventAsync(FolderRole entity)
-    {
-        EventMessage<DataFolderRole> message = new()
+    public ValueTask RaiseFolderRoleAddEventAsync(FolderRole entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFolderRole(entity),
-        };
+            ValidateInputs(inputs: [entity]);
 
-        await folderRoleEventBroker.RaiseFolderRoleAddEventAsync(message);
-    }
+            EventMessage<DataFolderRole> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
+                Data = ToExternalFolderRole(folderRole: entity),
+            };
 
-    public async ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole entity)
-    {
-        EventMessage<DataFolderRole> message = new()
+
+            await folderRoleEventBroker.RaiseFolderRoleAddEventAsync(message: message);
+
+        });
+
+    public ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFolderRole(entity),
-        };
+            ValidateInputs(inputs: [entity]);
 
-        await folderRoleEventBroker.RaiseFolderRoleDeleteEventAsync(message);
-    }
+            EventMessage<DataFolderRole> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
+                Data = ToExternalFolderRole(folderRole: entity),
+            };
+
+
+            await folderRoleEventBroker.RaiseFolderRoleDeleteEventAsync(message: message);
+
+        });
 
     private static DataFolderRole ToExternalFolderRole(FolderRole folderRole) =>
         folderRole == null
@@ -46,12 +62,3 @@ internal class FolderRoleEventService(
                 RoleId = folderRole.RoleId,
             };
 }
-
-
-
-
-
-
-
-
-

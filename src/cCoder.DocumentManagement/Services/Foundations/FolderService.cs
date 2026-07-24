@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Models;
@@ -10,121 +14,242 @@ using LocalFile = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.DocumentManagement.Services.Foundations;
 
-internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker authorizationBroker)
+internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationBroker authorizationBroker)
     : IFolderService
 {
-    public Folder Get(Guid id)
-    {
-        Folder folder = GetAll().FirstOrDefault(i => i.Id == id);
-        if (folder is not null)
-            return folder;
+    public Folder Get(Guid folderId)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [folderId]);
 
-        Folder unrestrictedFolder = GetAll(true).FirstOrDefault(i => i.Id == id);
-        if (unrestrictedFolder is not null)
-            throw new SecurityException("Access Denied!");
+            Folder folder = GetAllValue()
+    .FirstOrDefault(predicate: i => i.Id == folderId);
 
-        return null;
-    }
 
-    public IQueryable<Folder> GetAll(bool ignoreFilters = false) =>
-        folderBroker.GetAllFolders(ignoreFilters);
+            if (folder is not null)
+            {
+                return folder;
+            }
 
-    public Folder GetWithRoles(Guid id, bool ignoreFilters = false) =>
-        CreateFolder(folderBroker.GetFolderWithRoles(id, ignoreFilters));
 
-    public Folder GetForUpdate(Guid id, bool ignoreFilters = false) =>
-        CreateFolderForUpdate(folderBroker.GetFolderForUpdate(id, ignoreFilters));
+            Folder unrestrictedFolder = GetAllValue(ignoreFilters: true)
+                .FirstOrDefault(predicate: i => i.Id == folderId);
 
-    public Folder GetByPath(int appId, string path, bool ignoreFilters = false) =>
-        CreateFolder(folderBroker.GetFolderByPath(appId, path, ignoreFilters));
 
-    public Folder GetByPathWithRoles(int appId, string path, bool ignoreFilters = false) =>
-        CreateFolder(folderBroker.GetFolderByPathWithRoles(appId, path, ignoreFilters));
+            if (unrestrictedFolder is not null)
+            {
+                throw new SecurityException(message: "Access Denied!");
+            }
 
-    public Folder GetByPathWithParentAndRoles(int appId, string path, bool ignoreFilters = false) =>
-        CreateFolderWithParent(folderBroker.GetFolderByPathWithParentAndRoles(appId, path, ignoreFilters));
+
+            return null;
+
+        });
+
+    public IQueryable<Folder> GetAll(bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateAllOnGet(ignoreFilters: ignoreFilters);
+            return folderBroker.SelectAllFolders(ignoreFilters: ignoreFilters);
+        });
+
+    public Folder GetWithRoles(Guid folderId, bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateWithRolesOnGet(folderId: folderId, ignoreFilters: ignoreFilters);
+            return CreateFolder(folder: folderBroker.SelectFolderWithRoles(folderId: folderId, ignoreFilters: ignoreFilters));
+        });
+
+    public Folder GetForUpdate(Guid folderId, bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateForUpdateOnGet(folderId: folderId, ignoreFilters: ignoreFilters);
+            return CreateFolderForUpdate(folder: folderBroker.SelectFolderForUpdate(folderId: folderId, ignoreFilters: ignoreFilters));
+        });
+
+    public Folder GetByPath(int appId, string path, bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateByPathOnGet(appId: appId, path: path, ignoreFilters: ignoreFilters);
+            return CreateFolder(folder: folderBroker.SelectFolderByPath(appId: appId, path: path, ignoreFilters: ignoreFilters));
+        });
+
+    public Folder GetByPathWithRoles(int appId, string path, bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateByPathWithRolesOnGet(appId: appId, path: path, ignoreFilters: ignoreFilters);
+            return CreateFolder(folder: folderBroker.SelectFolderByPathWithRoles(appId: appId, path: path, ignoreFilters: ignoreFilters));
+        });
+
+    public Folder GetByPathWithParentAndRoles(int appId, string path, bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateByPathWithParentAndRolesOnGet(appId: appId, path: path, ignoreFilters: ignoreFilters);
+            return CreateFolderWithParent(folder: folderBroker.SelectFolderByPathWithParentAndRoles(appId: appId, path: path, ignoreFilters: ignoreFilters));
+        });
 
     public Folder GetByPathWithRolesAndFilesAndContents(
         int appId,
         string path,
         bool ignoreFilters = false
-    ) =>
-        CreateFolderWithRolesAndFiles(
-            folderBroker.GetFolderByPathWithRolesAndFilesAndContents(appId, path, ignoreFilters)
-        );
+    )
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateByPathWithRolesAndFilesAndContentsOnGet(appId: appId, path: path, ignoreFilters: ignoreFilters);
+
+            return CreateFolderWithRolesAndFiles(
+                folder: folderBroker.SelectFolderByPathWithRolesAndFilesAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters)
+            );
+        });
 
     public Folder GetByPathWithSubFoldersAndFiles(
         int appId,
         string path,
         bool ignoreFilters = false
-    ) => CreateFolderForMove(folderBroker.GetFolderByPathWithSubFoldersAndFiles(appId, path, ignoreFilters));
-
-    public async ValueTask<Folder> AddAsync(Folder folder)
-    {
-        authorizationBroker.Authorize(folder.AppId, $"{nameof(Folder)}_create");
-        Folder newFolder = CreateStorageFolderForAdd(folder);
-        Folder result = await folderBroker.AddFolderAsync(newFolder);
-        folder.Id = result.Id;
-        folder.AppId = result.AppId;
-        folder.ParentId = result.ParentId;
-        folder.Name = result.Name;
-        folder.Path = result.Path;
-        folder.DeletedOn = result.DeletedOn;
-        return folder;
-    }
-
-    public async ValueTask<Folder> AddForPathBuildAsync(Folder folder)
-    {
-        Folder newFolder = CreateStorageFolderForAdd(folder);
-        Folder result = await folderBroker.AddFolderAsync(newFolder);
-        folder.Id = result.Id;
-        folder.AppId = result.AppId;
-        folder.ParentId = result.ParentId;
-        folder.Name = result.Name;
-        folder.Path = result.Path;
-        folder.DeletedOn = result.DeletedOn;
-        return folder;
-    }
-
-    public async ValueTask<Folder> UpdateAsync(Folder folder)
-    {
-        authorizationBroker.Authorize(folder.AppId, $"{nameof(Folder)}_update");
-        return await UpdateForAppAsync(folder);
-    }
-
-    public async ValueTask<Folder> UpdateForAppAsync(Folder folder)
-    {
-        Folder updateFolder = CreateStorageFolder(folder, includeId: true);
-
-        Folder result = await folderBroker.UpdateFolderAsync(updateFolder);
-        folder.Id = result.Id;
-        folder.AppId = result.AppId;
-        folder.ParentId = result.ParentId;
-        folder.Name = result.Name;
-        folder.Path = result.Path;
-        folder.DeletedOn = result.DeletedOn;
-        return folder;
-    }
-
-    public async ValueTask DeleteAsync(Guid id)
-    {
-        Folder folder = GetAll(ignoreFilters: true).FirstOrDefault(foundFolder => foundFolder.Id == id);
-
-        if (folder is null)
+    )
+=>
+        TryCatch(operation: () =>
         {
-            return;
-        }
+            ValidateByPathWithSubFoldersAndFilesOnGet(appId: appId, path: path, ignoreFilters: ignoreFilters);
+            return CreateFolderForMove(folder: folderBroker.SelectFolderByPathWithSubFoldersAndFiles(appId: appId, path: path, ignoreFilters: ignoreFilters));
+        });
 
-        authorizationBroker.Authorize(folder.AppId, $"{nameof(Folder)}_delete");
-        _ = await folderBroker.DeleteFolderAsync(CreateStorageFolder(folder, includeId: true));
-    }
+    public ValueTask<Folder> AddFolderAsync(Folder newFolder)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateFolderOnAdd(newFolder: newFolder);
+            authorizationBroker.Authorize(appId: newFolder.AppId, privilege: $"{nameof(Folder)}_create");
 
-    public ValueTask DeleteAllForAppAsync(IEnumerable<Folder> folders) =>
-        folderBroker.DeleteAllFoldersAsync(
-            folders?.Select(folder => CreateStorageFolder(folder, includeId: true)) ?? []);
+            Folder storageFolder = CreateStorageFolderForAdd(folder: newFolder);
 
-    public ValueTask DeleteAllByAppIdAsync(int appId) =>
-        folderBroker.DeleteAllFoldersByAppIdAsync(appId);
+            Folder result = await folderBroker.InsertFolderAsync(newFolder: storageFolder);
+
+            newFolder.Id = result.Id;
+
+            newFolder.AppId = result.AppId;
+
+            newFolder.ParentId = result.ParentId;
+
+            newFolder.Name = result.Name;
+
+            newFolder.Path = result.Path;
+
+            newFolder.DeletedOn = result.DeletedOn;
+
+            return newFolder;
+
+        });
+
+    public ValueTask<Folder> AddForPathBuildFolderAsync(Folder newFolder)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateForPathBuildFolderOnAdd(newFolder: newFolder);
+            Folder storageFolder = CreateStorageFolderForAdd(folder: newFolder);
+
+            Folder result = await folderBroker.InsertFolderAsync(newFolder: storageFolder);
+
+            newFolder.Id = result.Id;
+
+            newFolder.AppId = result.AppId;
+
+            newFolder.ParentId = result.ParentId;
+
+            newFolder.Name = result.Name;
+
+            newFolder.Path = result.Path;
+
+            newFolder.DeletedOn = result.DeletedOn;
+
+            return newFolder;
+
+        });
+
+    public ValueTask<Folder> UpdateFolderAsync(Folder updatedFolder)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateFolderOnUpdate(updatedFolder: updatedFolder);
+            authorizationBroker.Authorize(appId: updatedFolder.AppId, privilege: $"{nameof(Folder)}_update");
+
+            return await UpdateForAppFolderValueAsync(updatedFolder: updatedFolder);
+
+        });
+
+    public ValueTask<Folder> UpdateForAppFolderAsync(Folder updatedFolder)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateForAppFolderOnUpdate(updatedFolder: updatedFolder);
+            Folder updateFolder = CreateStorageFolder(folder: updatedFolder, includeId: true);
+
+
+            Folder result = await folderBroker.UpdateFolderAsync(updatedFolder: updateFolder);
+
+            updatedFolder.Id = result.Id;
+
+            updatedFolder.AppId = result.AppId;
+
+            updatedFolder.ParentId = result.ParentId;
+
+            updatedFolder.Name = result.Name;
+
+            updatedFolder.Path = result.Path;
+
+            updatedFolder.DeletedOn = result.DeletedOn;
+
+            return updatedFolder;
+
+        });
+
+    public ValueTask DeleteAsync(Guid folderId)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [folderId]);
+
+            Folder folder = GetAllValue(ignoreFilters: true)
+    .FirstOrDefault(predicate: foundFolder => foundFolder.Id == folderId);
+
+
+            if (folder is null)
+            {
+                return;
+            }
+
+
+            authorizationBroker.Authorize(appId: folder.AppId, privilege: $"{nameof(Folder)}_delete");
+
+            _ = await folderBroker.DeleteFolderAsync(deletedFolder: CreateStorageFolder(folder: folder, includeId: true));
+
+        });
+
+    public ValueTask DeleteAllForAppFolderAsync(IEnumerable<Folder> deletedFolder)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateAllForAppFolderOnDelete(deletedFolder: deletedFolder);
+
+            return folderBroker.DeleteAllFoldersAsync(
+                deletedFolder: deletedFolder?.Select(selector: folder => CreateStorageFolder(folder: folder, includeId: true)) ?? []);
+        });
+
+    public ValueTask DeleteAllByAppIdAsync(int appId)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateAllByAppIdOnDelete(appId: appId);
+            return folderBroker.DeleteAllFoldersByAppIdAsync(appId: appId);
+        });
 
     private static Folder CreateFolder(Folder folder) =>
         folder == null
@@ -137,10 +262,13 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
                 Name = folder.Name,
                 Path = folder.Path,
                 DeletedOn = folder.DeletedOn,
-                App = CreateApp(folder.App),
-                SubFolders = folder.SubFolders?.Select(CreateFolder).ToList(),
-                Files = folder.Files?.Select(CreateFile).ToList(),
-                Roles = folder.Roles?.Select(CreateFolderRole).ToList(),
+                App = CreateApp(app: folder.App),
+                SubFolders = folder.SubFolders?.Select(selector: CreateFolder)
+                                                                              .ToList(),
+                Files = folder.Files?.Select(selector: CreateLocalFile)
+                                                                  .ToList(),
+                Roles = folder.Roles?.Select(selector: CreateFolderRole)
+                                                                        .ToList(),
             };
 
     private static Folder CreateFolderForUpdate(Folder folder) =>
@@ -154,11 +282,14 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
                 Name = folder.Name,
                 Path = folder.Path,
                 DeletedOn = folder.DeletedOn,
-                App = CreateApp(folder.App),
-                Parent = CreateFolder(folder.Parent),
-                SubFolders = folder.SubFolders?.Select(CreateFolder).ToList(),
-                Files = folder.Files?.Select(CreateFile).ToList(),
-                Roles = folder.Roles?.Select(CreateFolderRole).ToList(),
+                App = CreateApp(app: folder.App),
+                Parent = CreateFolder(folder: folder.Parent),
+                SubFolders = folder.SubFolders?.Select(selector: CreateFolder)
+                                                                              .ToList(),
+                Files = folder.Files?.Select(selector: CreateLocalFile)
+                                                                  .ToList(),
+                Roles = folder.Roles?.Select(selector: CreateFolderRole)
+                                                                        .ToList(),
             };
 
     private static Folder CreateFolderWithParent(Folder folder) =>
@@ -172,8 +303,9 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
                 Name = folder.Name,
                 Path = folder.Path,
                 DeletedOn = folder.DeletedOn,
-                Parent = CreateFolder(folder.Parent),
-                Roles = folder.Roles?.Select(CreateFolderRole).ToList(),
+                Parent = CreateFolder(folder: folder.Parent),
+                Roles = folder.Roles?.Select(selector: CreateFolderRole)
+                                                                        .ToList(),
             };
 
     private static Folder CreateFolderForMove(Folder folder) =>
@@ -187,8 +319,10 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
                 Name = folder.Name,
                 Path = folder.Path,
                 DeletedOn = folder.DeletedOn,
-                SubFolders = folder.SubFolders?.Select(CreateFolder).ToList(),
-                Files = folder.Files?.Select(CreateFile).ToList(),
+                SubFolders = folder.SubFolders?.Select(selector: CreateFolder)
+                                                                              .ToList(),
+                Files = folder.Files?.Select(selector: CreateLocalFile)
+                                                                  .ToList(),
             };
 
     private static Folder CreateFolderWithRolesAndFiles(Folder folder) =>
@@ -202,8 +336,8 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
                 Name = folder.Name,
                 Path = folder.Path,
                 DeletedOn = folder.DeletedOn,
-                App = CreateApp(folder.App),
-                Files = folder.Files?.Select(file => new LocalFile
+                App = CreateApp(app: folder.App),
+                Files = folder.Files?.Select(selector: file => new LocalFile
                 {
                     Id = file.Id,
                     FolderId = file.FolderId,
@@ -215,7 +349,7 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
                     Size = file.Size,
                     CreatedOn = file.CreatedOn,
                     DeletedOn = file.DeletedOn,
-                    Contents = file.Contents?.Select(content => new FileContent
+                    Contents = file.Contents?.Select(selector: content => new FileContent
                     {
                         Id = content.Id,
                         FileId = content.FileId,
@@ -225,15 +359,18 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
                         CreatedOn = content.CreatedOn,
                         Version = content.Version,
                         RawData = content.RawData,
-                    }).ToList(),
-                }).ToList(),
-                Roles = folder.Roles?.Select(CreateFolderRole).ToList(),
+                    })
+                      .ToList(),
+                })
+                  .ToList(),
+                Roles = folder.Roles?.Select(selector: CreateFolderRole)
+                                                                        .ToList(),
             };
 
     private static App CreateApp(App app) =>
         app == null ? null : new App { Id = app.Id, Name = app.Name };
 
-    private static LocalFile CreateFile(LocalFile file) =>
+    private static LocalFile CreateLocalFile(LocalFile file) =>
         file == null
             ? null
             : new LocalFile
@@ -287,26 +424,22 @@ internal class FolderService(IFolderBroker folderBroker, IAuthorizationBroker au
 
     private static Folder CreateStorageFolderForAdd(Folder folder)
     {
-        Folder newFolder = CreateStorageFolder(folder, includeId: false);
+        Folder newFolder = CreateStorageFolder(folder: folder, includeId: false);
+
         if (newFolder == null)
         {
             return null;
         }
 
-        newFolder.Roles = folder.Roles?.Select(CreateFolderRole).ToList();
+        newFolder.Roles = folder.Roles?.Select(selector: CreateFolderRole)
+            .ToList();
+
         return newFolder;
     }
 
+    private IQueryable<Folder> GetAllValue(bool ignoreFilters = false) =>
+        GetAll(ignoreFilters: ignoreFilters);
+
+    private ValueTask<Folder> UpdateForAppFolderValueAsync(Folder updatedFolder) =>
+        UpdateForAppFolderAsync(updatedFolder: updatedFolder);
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using FizzWare.NBuilder;
 using Moq;
 using Xunit;
@@ -12,30 +16,30 @@ public partial class FileOrchestrationServiceTests
     {
         // Given
         Guid id = Guid.NewGuid();
+
         cCoder.Data.Models.DMS.File entity =
-            Builder<cCoder.Data.Models.DMS.File>.CreateNew().Build();
+            Builder<cCoder.Data.Models.DMS.File>.CreateNew()
+            .Build();
+
         entity.Id = id;
-        fileProcessingServiceMock.Setup(x => x.GetAll(true)).Returns(new[] { entity }.AsQueryable());
-        fileProcessingServiceMock.Setup(x => x.DeleteAsync(id)).Returns(ValueTask.CompletedTask);
+
+        fileProcessingServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
+            .Returns(value: new[] { entity }.AsQueryable());
+
+        fileProcessingServiceMock.Setup(expression: x => x.DeleteAsync(fileId: id))
+            .Returns(value: ValueTask.CompletedTask);
 
         fileEventProcessingServiceMock
-            .Setup(x => x.RaiseFileDeleteEventAsync(entity))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFileDeleteEventAsync(entity: entity))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.DeleteAsync(id);
+        await orchestrationService.DeleteAsync(fileId: id);
 
         // Then
-        fileProcessingServiceMock.Verify(x => x.GetAll(true), Times.Once);
-        fileProcessingServiceMock.Verify(x => x.DeleteAsync(id), Times.Once);
-        fileEventProcessingServiceMock.Verify(x => x.RaiseFileDeleteEventAsync(entity), Times.Once);
+        fileProcessingServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Once);
+        fileProcessingServiceMock.Verify(expression: x => x.DeleteAsync(fileId: id), times: Times.Once);
+        fileEventProcessingServiceMock.Verify(expression: x => x.RaiseFileDeleteEventAsync(entity: entity), times: Times.Once);
     }
 
 }
-
-
-
-
-
-
-

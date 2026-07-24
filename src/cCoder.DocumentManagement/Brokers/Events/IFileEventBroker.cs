@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Eventing.Models;
 using FileEntity = cCoder.Data.Models.DMS.File;
 
@@ -10,9 +14,3 @@ public interface IFileEventBroker
     ValueTask RaiseFileUpdateEventAsync(EventMessage<FileEntity> message);
     ValueTask RaiseFileDeleteEventAsync(EventMessage<FileEntity> message);
 }
-
-
-
-
-
-

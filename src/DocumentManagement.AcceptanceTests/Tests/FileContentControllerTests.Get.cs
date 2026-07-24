@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Text;
 using cCoder.Data.Models.DMS;
 using FluentAssertions;
@@ -17,7 +21,8 @@ public sealed partial class FileContentControllerTests
         int actualCount = await GetFileContentCountAsync();
 
         // Then
-        actualCount.Should().BeGreaterThanOrEqualTo(0);
+        actualCount.Should()
+            .BeGreaterThanOrEqualTo(expected: 0);
     }
 
     [Fact]
@@ -26,40 +31,41 @@ public sealed partial class FileContentControllerTests
         // Given
 
         // When
-        IReadOnlyList<FileContent> actualFileContents = await GetFileContentsAsync(1);
+        IReadOnlyList<FileContent> actualFileContents = await GetFileContentsAsync(top: 1);
 
         // Then
-        actualFileContents.Should().NotBeNull();
+        actualFileContents.Should()
+            .NotBeNull();
     }
 
     [Fact]
     public async Task Get_ReturnsFileContentById()
     {
         // Given
-        SeededFileContentContext seededContext = await SeedDatabase("filecontent_create", "filecontent_delete");
-        FileContent expectedFileContent = await CreateFileContentAsync(new
+        SeededFileContentContext seededContext = await SeedDatabase(privileges:["filecontent_create","filecontent_delete"]);
+
+        FileContent expectedFileContent = await CreateLocalFileContentAsync(payload: new
         {
             fileId = seededContext.FileId,
             description = "Acceptance content",
             size = "4",
             version = 1,
-            rawData = Convert.ToBase64String(Encoding.UTF8.GetBytes("test")),
+            rawData = Convert.ToBase64String(inArray: Encoding.UTF8.GetBytes(s: "test")),
         });
+
         FileContent actualFileContent;
 
         // When
-        actualFileContent = await GetFileContentAsync(expectedFileContent.Id);
+        actualFileContent = await GetFileContentAsync(id: expectedFileContent.Id);
 
         // Then
-        actualFileContent.Should().NotBeNull();
-        actualFileContent!.Id.Should().Be(expectedFileContent.Id);
+        actualFileContent.Should()
+            .NotBeNull();
 
-        await DeleteFileContentAsync(expectedFileContent.Id);
-        await Teardown(seededContext);
+        actualFileContent!.Id.Should()
+            .Be(expected: expectedFileContent.Id);
+
+        await DeleteFileContentAsync(id: expectedFileContent.Id);
+        await Teardown(seededContext: seededContext);
     }
 }
-
-
-
-
-

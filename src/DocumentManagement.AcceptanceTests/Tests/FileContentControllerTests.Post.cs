@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Text;
 using cCoder.Data.Models.DMS;
 using FluentAssertions;
@@ -12,32 +16,30 @@ public sealed partial class FileContentControllerTests
     public async Task Post_CreatesFileContent()
     {
         // Given
-        SeededFileContentContext seededContext = await SeedDatabase("filecontent_create", "filecontent_delete");
+        SeededFileContentContext seededContext = await SeedDatabase(privileges:["filecontent_create","filecontent_delete"]);
         FileContent expectedFileContent;
         FileContent actualFileContent;
 
         // When
-        expectedFileContent = await CreateFileContentAsync(new
+        expectedFileContent = await CreateLocalFileContentAsync(payload: new
         {
             fileId = seededContext.FileId,
             description = "Acceptance content",
             size = "4",
             version = 1,
-            rawData = Convert.ToBase64String(Encoding.UTF8.GetBytes("test")),
+            rawData = Convert.ToBase64String(inArray: Encoding.UTF8.GetBytes(s: "test")),
         });
 
-        actualFileContent = await GetFileContentAsync(expectedFileContent.Id);
+        actualFileContent = await GetFileContentAsync(id: expectedFileContent.Id);
 
         // Then
-        actualFileContent.Should().NotBeNull();
-        actualFileContent!.Id.Should().Be(expectedFileContent.Id);
+        actualFileContent.Should()
+            .NotBeNull();
 
-        await DeleteFileContentAsync(expectedFileContent.Id);
-        await Teardown(seededContext);
+        actualFileContent!.Id.Should()
+            .Be(expected: expectedFileContent.Id);
+
+        await DeleteFileContentAsync(id: expectedFileContent.Id);
+        await Teardown(seededContext: seededContext);
     }
 }
-
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -18,18 +22,11 @@ public partial class FolderRoleProcessingServiceTests
 
         // When
         Func<Task> act = async () =>
-            await folderRoleProcessingService.AddOrUpdate(new[] { link });
+            await folderRoleProcessingService.AddOrUpdateFolderRole(items: new[] { link });
 
         // Then
-        await act.Should().NotThrowAsync();
+        await act.Should()
+            .NotThrowAsync();
     }
 
 }
-
-
-
-
-
-
-
-

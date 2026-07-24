@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -17,17 +21,21 @@ public partial class FileContentServiceTests
     public async Task ShouldDelegateToBrokerWhenUserIsAuthorizedForUpdateAsync()
     {
         // Given
-        authorizationBrokerMock.Setup(x => x.GetCurrentUser()).Returns(new User { Id = "test-user" });
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(value: new User { Id = "test-user" });
+
         FileContent fileContent = CreateRandomFileContent();
 
         FileContent submitted = null;
 
-        fileContentBrokerMock.Setup(x => x.GetAppId(It.IsAny<DataFileContent>())).Returns((int?)7);
-        authorizationBrokerMock.Setup(x => x.Authorize((int?)7, "FileContent_update"));
+        fileContentBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFileContent>()))
+            .Returns(value: (int?)7);
+
+        authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_update"));
 
         fileContentBrokerMock
-            .Setup(x => x.UpdateFileContentAsync(It.IsAny<DataFileContent>()))
-            .Callback<DataFileContent>(candidate =>
+            .Setup(expression: x => x.UpdateFileContentAsync(updatedFileContent: It.IsAny<DataFileContent>()))
+            .Callback<DataFileContent>(action: candidate =>
                 submitted = new FileContent
                 {
                     Id = candidate.Id,
@@ -40,28 +48,42 @@ public partial class FileContentServiceTests
                     RawData = candidate.RawData,
                 }
             )
-            .ReturnsAsync((DataFileContent value) => value);
+            .ReturnsAsync(valueFunction: (DataFileContent value) => value);
 
         // When
-        FileContent result = await fileContentService.UpdateAsync(fileContent);
+        FileContent result = await fileContentService.UpdateFileContentAsync(updatedFileContent: fileContent);
 
         // Then
-        result.Should().BeSameAs(fileContent);
-        submitted.Should().NotBeNull();
-        submitted.Should().NotBeSameAs(fileContent);
-        result.Should().NotBeSameAs(submitted);
-        submitted.Should().BeEquivalentTo(fileContent);
-        result.Should().BeEquivalentTo(fileContent);
+        result.Should()
+            .BeSameAs(expected: fileContent);
+
+        submitted.Should()
+            .NotBeNull();
+
+        submitted.Should()
+            .NotBeSameAs(unexpected: fileContent);
+
+        result.Should()
+            .NotBeSameAs(unexpected: submitted);
+
+        submitted.Should()
+            .BeEquivalentTo(expectation: fileContent);
+
+        result.Should()
+            .BeEquivalentTo(expectation: fileContent);
+
         fileContentBrokerMock.Verify(
-            x => x.UpdateFileContentAsync(It.IsAny<DataFileContent>()),
-            Times.Once
+            expression: x => x.UpdateFileContentAsync(updatedFileContent: It.IsAny<DataFileContent>()),
+            times: Times.Once
         );
+
         fileContentBrokerMock.Verify(
-            x => x.GetAppId(It.IsAny<DataFileContent>()),
-            Times.AtMostOnce()
+            expression: x => x.SelectAppId(entity: It.IsAny<DataFileContent>()),
+            times: Times.AtMostOnce()
         );
+
         fileContentBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(x => x.Authorize((int?)7, "FileContent_update"), Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_update"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -71,31 +93,29 @@ public partial class FileContentServiceTests
         // Given
         FileContent fileContent = CreateRandomFileContent();
 
-        fileContentBrokerMock.Setup(x => x.GetAppId(It.IsAny<DataFileContent>())).Returns((int?)7);
+        fileContentBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFileContent>()))
+            .Returns(value: (int?)7);
+
         authorizationBrokerMock
-            .Setup(x => x.Authorize((int?)7, "FileContent_update"))
-            .Throws(new SecurityException("Access Denied!"));
+            .Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_update"))
+            .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await fileContentService.UpdateAsync(fileContent);
+        Func<Task> action = async () => await fileContentService.UpdateFileContentAsync(updatedFileContent: fileContent);
 
         // Then
-        await action.Should().ThrowAsync<SecurityException>().WithMessage("Access Denied!");
+        await action.Should()
+            .ThrowAsync<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(SecurityException));
+
         fileContentBrokerMock.Verify(
-            x => x.GetAppId(It.IsAny<DataFileContent>()),
-            Times.AtMostOnce()
+            expression: x => x.SelectAppId(entity: It.IsAny<DataFileContent>()),
+            times: Times.AtMostOnce()
         );
+
         fileContentBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(x => x.Authorize((int?)7, "FileContent_update"), Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_update"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -19,11 +23,11 @@ public partial class FolderRoleServiceTests
 
     public FolderRoleServiceTests()
     {
-        folderRoleBrokerMock = new Mock<IFolderRoleBroker>(MockBehavior.Strict);
-        authorizationBrokerMock = new Mock<IAuthorizationBroker>(MockBehavior.Strict);
+        folderRoleBrokerMock = new Mock<IFolderRoleBroker>(behavior: MockBehavior.Strict);
+        authorizationBrokerMock = new Mock<IAuthorizationBroker>(behavior: MockBehavior.Strict);
         folderRoleService = new FolderRoleService(
-            folderRoleBrokerMock.Object,
-            authorizationBrokerMock.Object
+            folderRoleBroker: folderRoleBrokerMock.Object,
+            authorizationBroker: authorizationBrokerMock.Object
         );
     }
 
@@ -49,17 +53,3 @@ public partial class FolderRoleServiceTests
                 RoleId = folderRole.RoleId,
             };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

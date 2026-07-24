@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using FluentAssertions;
 using cCoder.Data;
 using cCoder.Data.Models.CMS;
@@ -20,7 +24,8 @@ public sealed partial class FileControllerTests
         int actualCount = await GetFileCountAsync();
 
         // Then
-        actualCount.Should().BeGreaterThanOrEqualTo(0);
+        actualCount.Should()
+            .BeGreaterThanOrEqualTo(expected: 0);
     }
 
     [Fact]
@@ -29,19 +34,21 @@ public sealed partial class FileControllerTests
         // Given
 
         // When
-        IReadOnlyList<DmsFile> actualFiles = await GetFilesAsync(1);
+        IReadOnlyList<DmsFile> actualFiles = await GetFilesAsync(top: 1);
 
         // Then
-        actualFiles.Should().NotBeNull();
+        actualFiles.Should()
+            .NotBeNull();
     }
 
     [Fact]
     public async Task Get_ReturnsFileById()
     {
         // Given
-        SeededFileContext seededContext = await SeedDatabase("file_create", "file_delete");
-        string name = Unique("File");
-        DmsFile expectedFile = await CreateFileAsync(new
+        SeededFileContext seededContext = await SeedDatabase(privileges:["file_create","file_delete"]);
+        string name = Unique(prefix: "File");
+
+        DmsFile expectedFile = await CreateLocalFileAsync(payload: new
         {
             folderId = seededContext.FolderId,
             name,
@@ -50,71 +57,77 @@ public sealed partial class FileControllerTests
             mimeType = "text/plain",
             size = "12",
         });
+
         DmsFile actualFile;
 
         // When
-        actualFile = await GetFileAsync(expectedFile.Id);
+        actualFile = await GetFileAsync(id: expectedFile.Id);
 
         // Then
-        actualFile.Should().NotBeNull();
-        actualFile!.Id.Should().Be(expectedFile.Id);
-        actualFile.Name.Should().Be(name);
+        actualFile.Should()
+            .NotBeNull();
 
-        await DeleteFileAsync(expectedFile.Id);
-        await Teardown(seededContext);
+        actualFile!.Id.Should()
+            .Be(expected: expectedFile.Id);
+
+        actualFile.Name.Should()
+            .Be(expected: name);
+
+        await DeleteFileAsync(id: expectedFile.Id);
+        await Teardown(seededContext: seededContext);
     }
 
     [Fact]
     public async Task Get_WithoutReadPrivilege_ReturnsNotFound()
     {
+        // Given
         SeededFileContext seededContext = await SeedDatabase();
 
         using IServiceScope scope = fixture.Factory.Services.CreateScope();
+
         using var core = scope.ServiceProvider
             .GetRequiredService<cCoder.Data.ICoreContextFactory>()
             .CreateCoreContext();
 
-        App hiddenApp = await core.AddAppAsync(new App
+        App hiddenApp = await core.AddAppAsync(app: new App
         {
-            Name = Unique("HiddenApp"),
-            Domain = $"{Unique("hidden")}.local",
+            Name = Unique(prefix: "HiddenApp"),
+            Domain = $"{Unique(prefix: "hidden")}.local",
             DefaultTheme = "Default",
             DefaultCultureId = string.Empty,
-            TenantId = Unique("tenant"),
+            TenantId = Unique(prefix: "tenant"),
             ConfigJson = "{}",
         });
 
-        cCoder.Data.Models.DMS.Folder hiddenFolder = await core.AddFolderAsync(new cCoder.Data.Models.DMS.Folder
+        cCoder.Data.Models.DMS.Folder hiddenFolder = await core.InsertFolderAsync(folder: new cCoder.Data.Models.DMS.Folder
         {
             AppId = hiddenApp.Id,
-            Name = Unique("HiddenFolder"),
-            Path = Unique("hidden-folder").ToLowerInvariant(),
+            Name = Unique(prefix: "HiddenFolder"),
+            Path = Unique(prefix: "hidden-folder")
+            .ToLowerInvariant(),
         });
 
-        DmsFile hiddenFile = await core.AddDmsFileAsync(new DmsFile
+        DmsFile hiddenFile = await core.AddDmsFileAsync(file: new DmsFile
         {
             FolderId = hiddenFolder.Id,
-            Name = Unique("HiddenFile"),
+            Name = Unique(prefix: "HiddenFile"),
             Description = "Hidden file",
-            Path = $"{Unique("hidden")}.txt".ToLowerInvariant(),
+            Path = $"{Unique(prefix: "hidden")}.txt".ToLowerInvariant(),
             MimeType = "text/plain",
             Size = "12",
         });
 
-        DmsFile actualFile = await GetFileAsync(hiddenFile.Id);
+        // When
+        DmsFile actualFile = await GetFileAsync(id: hiddenFile.Id);
 
-        actualFile.Should().BeNull();
+        // Then
+        actualFile.Should()
+            .BeNull();
 
-        core.Remove(hiddenFile);
-        core.Remove(hiddenFolder);
-        core.Remove(hiddenApp);
+        core.Remove(entity: hiddenFile);
+        core.Remove(entity: hiddenFolder);
+        core.Remove(entity: hiddenApp);
         await core.SaveChangesAsync();
-        await Teardown(seededContext);
+        await Teardown(seededContext: seededContext);
     }
 }
-
-
-
-
-
-

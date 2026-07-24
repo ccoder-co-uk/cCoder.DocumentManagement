@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -15,6 +19,7 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         Folder folder = CreateRandomFolder();
+
         cCoder.Data.Models.DMS.File file = new()
         {
             Id = Guid.NewGuid(),
@@ -23,6 +28,7 @@ public partial class FolderProcessingServiceTests
             Name = "file.txt",
             Path = $"{folder.Path}/file.txt",
         };
+
         FileContent content = new()
         {
             Id = Guid.NewGuid(),
@@ -33,40 +39,38 @@ public partial class FolderProcessingServiceTests
             CreatedBy = "test-user",
             CreatedOn = DateTimeOffset.UtcNow,
         };
-        folderServiceMock.Setup(x => x.GetAll(true)).Returns(new[] { folder }.AsQueryable());
+
+        folderServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
+            .Returns(value: new[] { folder }.AsQueryable());
+
         fileServiceMock
-            .Setup(x => x.GetIdsByFolderIds(It.Is<Guid[]>(ids => ids.Single() == folder.Id), true))
-            .Returns([file.Id]);
-        fileContentServiceMock
-            .Setup(x => x.DeleteAllForFilesAsync(It.Is<Guid[]>(ids => ids.Single() == file.Id)))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.GetIdsByFolderIds(folderIds: It.Is<Guid[]>(match: ids => ids.Single() == folder.Id), ignoreFilters: true))
+            .Returns(value: [file.Id]);
+
+        fileContentOperationsExposureMock
+            .Setup(expression: x => x.DeleteAllForFilesAsync(fileIds: It.Is<Guid[]>(match: ids => ids.Single() == file.Id)))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await folderProcessingService.HandleFolderDeleteEventAsync(folder);
+        await folderProcessingService.HandleFolderDeleteEventAsync(folder: folder);
 
         // Then
-        folderServiceMock.Verify(x => x.GetAll(true), Times.Exactly(2));
+        folderServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Exactly(callCount: 2));
+
         fileServiceMock.Verify(
-            x => x.GetIdsByFolderIds(It.Is<Guid[]>(ids => ids.Single() == folder.Id), true),
-            Times.Once
+            expression: x => x.GetIdsByFolderIds(folderIds: It.Is<Guid[]>(match: ids => ids.Single() == folder.Id), ignoreFilters: true),
+            times: Times.Once
         );
-        fileContentServiceMock.Verify(
-            x => x.DeleteAllForFilesAsync(It.Is<Guid[]>(ids => ids.Single() == file.Id)),
-            Times.Once
+
+        fileContentOperationsExposureMock.Verify(
+            expression: x => x.DeleteAllForFilesAsync(fileIds: It.Is<Guid[]>(match: ids => ids.Single() == file.Id)),
+            times: Times.Once
         );
+
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
-        fileContentServiceMock.VerifyNoOtherCalls();
+        fileContentOperationsExposureMock.VerifyNoOtherCalls();
         loggerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-
-

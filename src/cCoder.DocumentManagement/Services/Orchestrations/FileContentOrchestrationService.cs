@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -6,46 +10,80 @@ using cCoder.DocumentManagement.Services.Processings;
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
-internal class FileContentOrchestrationService(IFileContentProcessingService processingService, IFileContentEventProcessingService eventService) : IFileContentOrchestrationService
+internal partial class FileContentOrchestrationService(IFileContentProcessingService processingService, IFileContentEventProcessingService eventService) : IFileContentOrchestrationService
 {
-    public FileContent Get(Guid id)
-    {
-        return processingService.Get(id);
-    }
+    public FileContent Get(Guid fileContentId)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [fileContentId]);
+            return processingService.Get(fileContentId: fileContentId);
+
+        });
 
     public IQueryable<FileContent> GetAll(bool ignoreFilters = false)
-    {
-        return processingService.GetAll(ignoreFilters);
-    }
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [ignoreFilters]);
+            return processingService.GetAll(ignoreFilters: ignoreFilters);
 
-    public async ValueTask<FileContent> AddAsync(FileContent entity)
-    {
-        FileContent result = await processingService.AddAsync(entity);
-        await eventService.RaiseFileContentAddEventAsync(result);
-        return result;
-    }
+        });
 
-    public async ValueTask<FileContent> UpdateAsync(FileContent entity)
-    {
-        FileContent result = await processingService.UpdateAsync(entity);
-        await eventService.RaiseFileContentUpdateEventAsync(result);
-        return result;
-    }
+    public ValueTask<FileContent> AddFileContentAsync(FileContent newFileContent)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [newFileContent]);
+            FileContent result = await processingService.AddFileContentAsync(newFileContent: newFileContent);
 
-    public async ValueTask DeleteAsync(Guid id)
-    {
-        FileContent entity = processingService.Get(id);
-        await eventService.RaiseFileContentDeleteEventAsync(entity);
-        await processingService.DeleteAsync(id);
-    }
+            await eventService.RaiseFileContentAddEventAsync(entity: result);
 
-    public ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdate(IEnumerable<FileContent> items)
-    {
-        return processingService.AddOrUpdate(items);
-    }
+            return result;
 
-    public ValueTask DeleteAllAsync(IEnumerable<FileContent> items)
-    {
-        return processingService.DeleteAllAsync(items);
-    }
+        });
+
+    public ValueTask<FileContent> UpdateFileContentAsync(FileContent updatedFileContent)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [updatedFileContent]);
+            FileContent result = await processingService.UpdateFileContentAsync(updatedFileContent: updatedFileContent);
+
+            await eventService.RaiseFileContentUpdateEventAsync(entity: result);
+
+            return result;
+
+        });
+
+    public ValueTask DeleteAsync(Guid fileContentId)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [fileContentId]);
+            FileContent entity = processingService.Get(fileContentId: fileContentId);
+
+            await eventService.RaiseFileContentDeleteEventAsync(entity: entity);
+
+            await processingService.DeleteAsync(fileContentId: fileContentId);
+
+        });
+
+    public ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdateFileContent(IEnumerable<FileContent> items)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [items]);
+            return processingService.AddOrUpdateFileContent(items: items);
+
+        });
+
+    public ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> deletedFileContent)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [deletedFileContent]);
+            return processingService.DeleteAllFileContentAsync(deletedFileContent: deletedFileContent);
+
+        });
 }

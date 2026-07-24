@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Coordinations;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using cCoder.Data.Models.DMS;
@@ -7,7 +11,7 @@ using File = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.Core.Services.Tests.DMS.Coordinations;
 
-public class FolderCoordinationServiceTests
+public partial class FolderCoordinationServiceTests
 {
     private readonly Mock<IFolderOrchestrationService> folderOrchestrationServiceMock;
     private readonly Mock<IFileOrchestrationService> fileOrchestrationServiceMock;
@@ -15,11 +19,11 @@ public class FolderCoordinationServiceTests
 
     public FolderCoordinationServiceTests()
     {
-        folderOrchestrationServiceMock = new Mock<IFolderOrchestrationService>(MockBehavior.Strict);
-        fileOrchestrationServiceMock = new Mock<IFileOrchestrationService>(MockBehavior.Strict);
+        folderOrchestrationServiceMock = new Mock<IFolderOrchestrationService>(behavior: MockBehavior.Strict);
+        fileOrchestrationServiceMock = new Mock<IFileOrchestrationService>(behavior: MockBehavior.Strict);
         coordinationService = new FolderCoordinationService(
-            folderOrchestrationServiceMock.Object,
-            fileOrchestrationServiceMock.Object);
+            folderOrchestrationService: folderOrchestrationServiceMock.Object,
+            fileOrchestrationService: fileOrchestrationServiceMock.Object);
     }
 
     [Fact]
@@ -29,6 +33,7 @@ public class FolderCoordinationServiceTests
         Guid folderId = Guid.NewGuid();
         Guid childFolderId = Guid.NewGuid();
         Guid childFileId = Guid.NewGuid();
+
         Folder folder = new()
         {
             Id = folderId,
@@ -38,8 +43,8 @@ public class FolderCoordinationServiceTests
         };
 
         fileOrchestrationServiceMock
-            .Setup(service => service.GetAll(true))
-            .Returns(new[]
+            .Setup(expression: service => service.GetAll(ignoreFilters: true))
+            .Returns(value: new[]
             {
                 new File
                 {
@@ -51,8 +56,8 @@ public class FolderCoordinationServiceTests
             }.AsQueryable());
 
         folderOrchestrationServiceMock
-            .Setup(service => service.GetAll(true))
-            .Returns(new[]
+            .Setup(expression: service => service.GetAll(ignoreFilters: true))
+            .Returns(value: new[]
             {
                 folder,
                 new Folder
@@ -66,30 +71,38 @@ public class FolderCoordinationServiceTests
             }.AsQueryable());
 
         fileOrchestrationServiceMock
-            .Setup(service => service.DeleteAsync(childFileId))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: service => service.DeleteAsync(fileId: childFileId))
+            .Returns(value: ValueTask.CompletedTask);
 
         folderOrchestrationServiceMock
-            .Setup(service => service.DeleteAsync(childFolderId))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: service => service.DeleteAsync(folderId: childFolderId))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await coordinationService.DeleteFolderAsync(folder);
+        await coordinationService.DeleteFolderAsync(deletedFolder: folder);
 
         // Then
-        fileOrchestrationServiceMock.Verify(service => service.GetAll(true), Times.Once);
-        folderOrchestrationServiceMock.Verify(service => service.GetAll(true), Times.Once);
-        fileOrchestrationServiceMock.Verify(service => service.DeleteAsync(childFileId), Times.Once);
-        folderOrchestrationServiceMock.Verify(service => service.DeleteAsync(childFolderId), Times.Once);
+        fileOrchestrationServiceMock.Verify(expression: service => service.GetAll(ignoreFilters: true), times: Times.Once);
+        folderOrchestrationServiceMock.Verify(expression: service => service.GetAll(ignoreFilters: true), times: Times.Once);
+        fileOrchestrationServiceMock.Verify(expression: service => service.DeleteAsync(fileId: childFileId), times: Times.Once);
+        folderOrchestrationServiceMock.Verify(expression: service => service.DeleteAsync(folderId: childFolderId), times: Times.Once);
     }
 
     [Fact]
-    public async Task ShouldDoNothingWhenDeleteFolderAsyncWithNullFolder()
+    public async Task ShouldThrowValidationExceptionWhenDeleteFolderAsyncWithNullFolder()
     {
+        // Given
+        Folder deletedFolder = null;
+
         // When
-        await coordinationService.DeleteFolderAsync(null);
+        Func<Task> action = async () =>
+            await coordinationService.DeleteFolderAsync(deletedFolder: deletedFolder);
 
         // Then
+        await action.Should()
+            .ThrowAsync<DocumentManagementValidationException>()
+            .WithInnerException(innerException: typeof(ArgumentNullException));
+
         fileOrchestrationServiceMock.VerifyNoOtherCalls();
         folderOrchestrationServiceMock.VerifyNoOtherCalls();
     }

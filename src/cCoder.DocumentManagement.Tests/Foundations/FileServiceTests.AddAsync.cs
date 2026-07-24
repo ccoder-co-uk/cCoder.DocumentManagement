@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -18,19 +22,23 @@ public partial class FileServiceTests
     public async Task ShouldDelegateToBrokerWhenUserIsAuthorizedForAddAsync()
     {
         // Given
-        authorizationBrokerMock.Setup(x => x.GetCurrentUser()).Returns(new User { Id = "test-user" });
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(value: new User { Id = "test-user" });
+
         FileEntity file = CreateRandomFile();
 
         FileEntity submitted = null;
 
-        fileBrokerMock.Setup(x => x.GetAppId(It.IsAny<DataFile>())).Returns((int?)7);
-        authorizationBrokerMock.Setup(x => x.Authorize((int?)7, "File_create"));
+        fileBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()))
+            .Returns(value: (int?)7);
+
+        authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "File_create"));
 
         fileBrokerMock
-            .Setup(x =>
-                x.AddFileAsync(It.Is<DataFile>(candidate => !ReferenceEquals(candidate, file)))
+            .Setup(expression: x =>
+                x.InsertFileAsync(entity: It.Is<DataFile>(match: candidate => !ReferenceEquals(objA: candidate, objB: file)))
             )
-            .Callback<DataFile>(candidate =>
+            .Callback<DataFile>(action: candidate =>
                 submitted = new FileEntity
                 {
                     Id = candidate.Id,
@@ -44,98 +52,106 @@ public partial class FileServiceTests
                     Size = candidate.Size,
                 }
             )
-            .ReturnsAsync((DataFile value) => value);
+            .ReturnsAsync(valueFunction: (DataFile value) => value);
 
         // When
-        FileEntity result = await fileService.AddAsync(file);
+        FileEntity result = await fileService.AddFileAsync(file: file);
 
         // Then
-        result.Should().BeSameAs(file);
-        submitted.Should().NotBeNull();
-        submitted.Should().NotBeSameAs(file);
-        result.Should().NotBeSameAs(submitted);
+        result.Should()
+            .BeSameAs(expected: file);
+
+        submitted.Should()
+            .NotBeNull();
+
+        submitted.Should()
+            .NotBeSameAs(unexpected: file);
+
+        result.Should()
+            .NotBeSameAs(unexpected: submitted);
 
         submitted
             .Should()
             .BeEquivalentTo(
-                file,
-                options =>
+                expectation: file,
+                config: options =>
                     options
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("CreatedOn")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "CreatedOn")
                         )
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("CreatedBy")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "CreatedBy")
                         )
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("LastUpdated")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "LastUpdated")
                         )
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("LastUpdatedBy")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "LastUpdatedBy")
                         )
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("LastUpdatedOn")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "LastUpdatedOn")
                         )
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("UpdatedBy")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "UpdatedBy")
                         )
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("Created")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "Created")
                         )
-                        .Excluding(candidate => candidate.Id)
+                        .Excluding(expression: candidate => candidate.Id)
             );
 
         result
             .Should()
             .BeEquivalentTo(
-                file,
-                options =>
+                expectation: file,
+                config: options =>
                     options
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("CreatedOn")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "CreatedOn")
                         )
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("CreatedBy")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "CreatedBy")
                         )
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("LastUpdated")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "LastUpdated")
                         )
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("LastUpdatedBy")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "LastUpdatedBy")
                         )
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("LastUpdatedOn")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "LastUpdatedOn")
                         )
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("UpdatedBy")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "UpdatedBy")
                         )
                         .Excluding(
-                            (FluentAssertions.Equivalency.IMemberInfo info) =>
-                                info.Path.EndsWith("Created")
+                            predicate: (FluentAssertions.Equivalency.IMemberInfo info) =>
+                                info.Path.EndsWith(value: "Created")
                         )
-                        .Excluding(candidate => candidate.Id)
+                        .Excluding(expression: candidate => candidate.Id)
             );
 
         fileBrokerMock.Verify(
-            x => x.AddFileAsync(It.Is<DataFile>(candidate => !ReferenceEquals(candidate, file))),
-            Times.Once
+            expression: x => x.InsertFileAsync(entity: It.Is<DataFile>(match: candidate => !ReferenceEquals(objA: candidate, objB: file))),
+            times: Times.Once
         );
-        fileBrokerMock.Verify(x => x.GetAppId(It.IsAny<DataFile>()), Times.AtMostOnce());
+
+        fileBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(x => x.Authorize((int?)7, "File_create"), Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "File_create"), times: Times.Once);
     }
 
     [Fact]
@@ -144,28 +160,24 @@ public partial class FileServiceTests
         // Given
         FileEntity file = CreateRandomFile();
 
-        fileBrokerMock.Setup(x => x.GetAppId(It.IsAny<DataFile>())).Returns((int?)7);
+        fileBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()))
+            .Returns(value: (int?)7);
+
         authorizationBrokerMock
-            .Setup(x => x.Authorize((int?)7, "File_create"))
-            .Throws(new SecurityException("Access Denied!"));
+            .Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "File_create"))
+            .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await fileService.AddAsync(file);
+        Func<Task> action = async () => await fileService.AddFileAsync(file: file);
 
         // Then
-        await action.Should().ThrowAsync<SecurityException>().WithMessage("Access Denied!");
-        fileBrokerMock.Verify(x => x.GetAppId(It.IsAny<DataFile>()), Times.AtMostOnce());
+        await action.Should()
+            .ThrowAsync<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(SecurityException));
+
+        fileBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(x => x.Authorize((int?)7, "File_create"), Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "File_create"), times: Times.Once);
     }
 
 }
-
-
-
-
-
-
-
-
-

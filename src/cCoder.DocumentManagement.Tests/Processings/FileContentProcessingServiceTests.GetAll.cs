@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -16,23 +20,19 @@ public partial class FileContentProcessingServiceTests
     {
         // Given
         IQueryable<FileContent> entities = new[] { CreateRandomFileContent() }.AsQueryable();
-        fileContentServiceMock.Setup(x => x.GetAll()).Returns(entities);
+
+        fileContentServiceMock.Setup(expression: x => x.GetAll())
+            .Returns(value: entities);
 
         // When
         IQueryable<FileContent> result = fileContentProcessingService.GetAll();
 
         // Then
-        result.Should().BeSameAs(entities);
-        fileContentServiceMock.Verify(x => x.GetAll(), Times.Once);
+        result.Should()
+            .BeSameAs(expected: entities);
+
+        fileContentServiceMock.Verify(expression: x => x.GetAll(), times: Times.Once);
         fileContentServiceMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-
