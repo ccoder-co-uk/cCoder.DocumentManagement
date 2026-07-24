@@ -108,6 +108,7 @@ public partial class FolderRoleProcessingServiceTests
                             && item.RoleId == role.Id),
                     ignoreFilters: true),
             times: Times.Once);
+
         folderRoleServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Once);
 
         folderRoleServiceMock.Verify(
