@@ -1595,6 +1595,27 @@
       "Methods": []
     },
     {
+      "Name": "cCoder.DocumentManagement.DocumentManagementConfigurationExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "WithEventProviders",
+          "Inputs": [
+            {
+              "Name": "configuration",
+              "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration"
+            },
+            {
+              "Name": "eventProviders",
+              "Type": "cCoder.Eventing.Models.EventProvider[]"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration"
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.BaselineController",
       "StandardElementType": "Exposure",
       "Properties": [],
@@ -1860,7 +1881,7 @@
               "Type": "System.Guid"
             },
             {
-              "Name": "entity",
+              "Name": "updatedFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -2454,18 +2475,7 @@
           "Type": "System.Collections.Generic.IDictionary\u003CSystem.String, System.String\u003E"
         }
       ],
-      "Methods": [
-        {
-          "Name": "WithEventProviders",
-          "Inputs": [
-            {
-              "Name": "eventProviders",
-              "Type": "cCoder.Eventing.Models.EventProvider[]"
-            }
-          ],
-          "ReturnType": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration"
-        }
-      ]
+      "Methods": []
     },
     {
       "Name": "cCoder.DocumentManagement.Models.DocumentManagementPackage",
@@ -2679,10 +2689,20 @@
           "Type": "T"
         }
       ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.ResultExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
       "Methods": [
         {
           "Name": "ToNew",
           "Inputs": [
+            {
+              "Name": "result",
+              "Type": "cCoder.DocumentManagement.Models.Result\u003CT\u003E"
+            },
             {
               "Name": "item",
               "Type": "TNew"
@@ -5588,13 +5608,6 @@
       "LineNumber": 27
     },
     {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 114
-    },
-    {
       "Code": "STXAPI004",
       "Description": "API controller methods must use HTTP nouns: Get, Post, Put, or Delete.",
       "Severity": "Warning",
@@ -5707,18 +5720,39 @@
       "LineNumber": 18
     },
     {
-      "Code": "STXM001",
-      "Description": "Models must not declare methods.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Models.AuditResultByProperty",
+      "LineNumber": 81
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Models.AuditResultsByUser",
+      "LineNumber": 81
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
       "LineNumber": 30
     },
     {
-      "Code": "STXM001",
-      "Description": "Models must not declare methods.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Models.Result",
+      "LineNumber": 81
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Models.Result\u003CT\u003E",
-      "LineNumber": 45
+      "LineNumber": 81
     },
     {
       "Code": "STXA001",
@@ -5910,11 +5944,11 @@
       "LineNumber": 80
     },
     {
-      "Code": "STX0022",
-      "Description": "Creation method names must include the concrete type they create.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 175
+      "LineNumber": 200
     },
     {
       "Code": "STX0012",
@@ -6085,11 +6119,11 @@
       "LineNumber": 15
     },
     {
-      "Code": "STX0022",
-      "Description": "Creation method names must include the concrete type they create.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 93
+      "LineNumber": 130
     },
     {
       "Code": "STX0007",
@@ -6309,13 +6343,6 @@
       "LineNumber": 385
     },
     {
-      "Code": "STX0022",
-      "Description": "Creation method names must include the concrete type they create.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 412
-    },
-    {
       "Code": "STXFORMAT009",
       "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
@@ -6342,6 +6369,13 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "LineNumber": 712
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 722
     },
     {
       "Code": "STX0004",

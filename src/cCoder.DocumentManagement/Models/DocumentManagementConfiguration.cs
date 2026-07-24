@@ -15,7 +15,7 @@ public class DocumentManagementConfiguration
     public bool LogSQL { get; set; }
     public string RootPath { get; set; }
     public bool IncludeLegacyCoreContext { get; set; }
-    public EventProvider[] EventProviders { get; private set; }
+    public EventProvider[] EventProviders { get; set; }
 
     public DocumentManagementConfiguration()
     {
@@ -27,9 +27,4 @@ public class DocumentManagementConfiguration
         EventProviders = [];
     }
 
-    public DocumentManagementConfiguration WithEventProviders(params EventProvider[] eventProviders)
-    {
-        EventProviders = eventProviders ?? [];
-        return this;
-    }
 }

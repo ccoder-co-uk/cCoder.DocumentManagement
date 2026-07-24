@@ -387,7 +387,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             throw new SecurityException(message: "Access Denied!");
         }
 
-        await CreateLocalFilePathFolderAsync(path: path, rawBytes: rawBytes, folder: folder);
+        await BuildLocalFilePathFolderAsync(path: path, rawBytes: rawBytes, folder: folder);
     }
 
     private async ValueTask SaveFileVersionAsync(cCoder.Data.Models.DMS.File existingFile, byte[] rawBytes)
@@ -409,7 +409,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         });
     }
 
-    private async ValueTask CreateLocalFilePathFolderAsync(cCoder.DocumentManagement.Models.Path path, byte[] rawBytes, Folder folder)
+    private async ValueTask BuildLocalFilePathFolderAsync(cCoder.DocumentManagement.Models.Path path, byte[] rawBytes, Folder folder)
     {
         cCoder.Data.Models.DMS.File fileObject = await service.AddFileAsync(newFile: new cCoder.Data.Models.DMS.File
         {

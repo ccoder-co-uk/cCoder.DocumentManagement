@@ -78,7 +78,7 @@ internal partial class FileContentService(
         {
             ValidateInputs(inputs: [newFileContent]);
             cCoder.Data.Models.DMS.FileContent storageFileContent =
-                CreateLocalFileEntityContent(fileContent: newFileContent, includeId: false);
+                CreateFileContent(fileContent: newFileContent, includeId: false);
 
 
             authorizationBroker.Authorize(
@@ -123,7 +123,7 @@ internal partial class FileContentService(
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [updatedFileContent]);
-            cCoder.Data.Models.DMS.FileContent updateFileContent = CreateLocalFileEntityContent(fileContent: updatedFileContent, includeId: true);
+            cCoder.Data.Models.DMS.FileContent updateFileContent = CreateFileContent(fileContent: updatedFileContent, includeId: true);
 
 
             authorizationBroker.Authorize(
@@ -163,16 +163,16 @@ internal partial class FileContentService(
 
 
             authorizationBroker.Authorize(
-                appId: fileContentBroker.SelectAppId(entity: CreateLocalFileEntityContent(fileContent: fileContent, includeId: true)),
+                appId: fileContentBroker.SelectAppId(entity: CreateFileContent(fileContent: fileContent, includeId: true)),
                 privilege: $"{nameof(FileContent)}_delete"
             );
 
 
-            _ = await fileContentBroker.DeleteFileContentAsync(deletedFileContent: CreateLocalFileEntityContent(fileContent: fileContent, includeId: true));
+            _ = await fileContentBroker.DeleteFileContentAsync(deletedFileContent: CreateFileContent(fileContent: fileContent, includeId: true));
 
         });
 
-    private static cCoder.Data.Models.DMS.FileContent CreateLocalFileEntityContent(FileContent fileContent, bool includeId)
+    private static cCoder.Data.Models.DMS.FileContent CreateFileContent(FileContent fileContent, bool includeId)
     {
         if (fileContent == null)
         {

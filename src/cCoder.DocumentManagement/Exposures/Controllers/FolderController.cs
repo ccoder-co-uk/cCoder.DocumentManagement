@@ -111,15 +111,15 @@ public partial class FolderController(
         MaxAnyAllExpressionDepth = 5,
         MaxExpansionDepth = 5
     )]
-    public async Task<IActionResult> Put([FromRoute] Guid key, [FromBody] Folder entity)
+    public async Task<IActionResult> Put([FromRoute] Guid key, [FromBody] Folder updatedFolder)
     {
         if (!ModelState.IsValid)
         {
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
         }
 
-        entity.Id = key;
-        return Ok(value: await service.UpdateFolderAsync(updatedFolder: entity));
+        updatedFolder.Id = key;
+        return Ok(value: await service.UpdateFolderAsync(updatedFolder: updatedFolder));
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
