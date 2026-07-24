@@ -4448,7 +4448,7 @@
       ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
+      "Name": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
       "StandardElementType": "ProcessingService",
       "Properties": [],
       "Methods": [
@@ -5396,7 +5396,7 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "ToType": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService"
+      "ToType": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
@@ -5451,7 +5451,7 @@
       "ToType": "cCoder.DocumentManagement.Brokers.Storage.AppBroker"
     },
     {
-      "FromType": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
+      "FromType": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
       "ToType": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService"
     },
     {
@@ -5574,11 +5574,25 @@
       "LineNumber": 13
     },
     {
-      "Code": "STXP003",
-      "Description": "A processing service name must identify the entity of its foundation dependency.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
-      "LineNumber": 15
+      "Type": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
+      "LineNumber": 13
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
+      "LineNumber": 91
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
+      "LineNumber": 311
     },
     {
       "Code": "STX0004",

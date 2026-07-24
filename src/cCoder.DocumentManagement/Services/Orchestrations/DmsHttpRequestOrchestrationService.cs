@@ -14,7 +14,7 @@ namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 internal partial class DmsHttpRequestOrchestrationService(
     ICurrentAppResolverProcessingService currentAppResolver,
-    IDmsProcessingService dmsProcessingService,
+    IDmsInstanceProcessingService dmsProcessingService,
     IWebDavProcessingService webDavProcessingService
 ) : IDmsHttpRequestOrchestrationService
 {

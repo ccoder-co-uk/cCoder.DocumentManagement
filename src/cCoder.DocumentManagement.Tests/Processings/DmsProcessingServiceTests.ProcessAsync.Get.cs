@@ -13,7 +13,7 @@ using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
 
-public partial class DmsProcessingServiceTests
+public partial class DmsInstanceProcessingServiceTests
 {
     [Fact]
     public async Task ShouldReturnBodyAndMimeTypeWhenGetReturnsResult()

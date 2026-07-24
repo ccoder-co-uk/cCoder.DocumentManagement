@@ -12,10 +12,10 @@ using MemoryStream = System.IO.MemoryStream;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-internal partial class DmsProcessingService(
+internal partial class DmsInstanceProcessingService(
     IDmsInstanceService dmsInstanceService,
-    ILogger<DmsProcessingService> log
-) : IDmsProcessingService
+    ILogger<DmsInstanceProcessingService> log
+) : IDmsInstanceProcessingService
 {
     public ValueTask<DmsProcessingResponse> ProcessDmsProcessingRequestAsync(DmsProcessingRequest request)
 =>

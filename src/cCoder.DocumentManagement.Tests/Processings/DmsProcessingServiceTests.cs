@@ -15,18 +15,18 @@ using MemoryStream = System.IO.MemoryStream;
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
 
-public partial class DmsProcessingServiceTests
+public partial class DmsInstanceProcessingServiceTests
 {
     private readonly Mock<IDmsInstanceService> dmsInstanceServiceMock;
-    private readonly Mock<ILogger<DmsProcessingService>> loggerMock;
-    private readonly DmsProcessingService dmsProcessingService;
+    private readonly Mock<ILogger<DmsInstanceProcessingService>> loggerMock;
+    private readonly DmsInstanceProcessingService dmsProcessingService;
 
-    public DmsProcessingServiceTests()
+    public DmsInstanceProcessingServiceTests()
     {
         dmsInstanceServiceMock = new Mock<IDmsInstanceService>(behavior: MockBehavior.Strict);
         dmsInstanceServiceMock = new();
         loggerMock = new();
-        dmsProcessingService = new DmsProcessingService(
+        dmsProcessingService = new DmsInstanceProcessingService(
             dmsInstanceService: dmsInstanceServiceMock.Object,
             log: loggerMock.Object
         );

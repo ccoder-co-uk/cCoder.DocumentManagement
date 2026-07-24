@@ -139,7 +139,7 @@ public static partial class IServiceCollectionExtensions
     private static void AddProcessings(this IServiceCollection services)
     {
         services.AddTransient<IFolderCoordinationService, FolderCoordinationService>();
-        services.AddTransient<IDmsProcessingService, DmsProcessingService>();
+        services.AddTransient<IDmsInstanceProcessingService, DmsInstanceProcessingService>();
         services.AddTransient<IFileContentEventProcessingService, FileContentEventProcessingService>();
         services.AddTransient<IFileContentProcessingService, FileContentProcessingService>();
         services.AddTransient<IFileEventProcessingService, FileEventProcessingService>();

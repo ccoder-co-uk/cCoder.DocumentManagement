@@ -68,7 +68,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
     }
 
     [Fact]
-    public async Task ShouldDelegateToDmsProcessingServiceAndAddDefaultHeadersWhenRequestIsDmsForProcessRequestAsync()
+    public async Task ShouldDelegateToDmsInstanceProcessingServiceAndAddDefaultHeadersWhenRequestIsDmsForProcessRequestAsync()
     {
         // Given
         App app = CreateApp();

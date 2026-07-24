@@ -6,7 +6,7 @@ using cCoder.DocumentManagement.Models.Exceptions;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-internal sealed partial class DmsProcessingService
+internal sealed partial class DmsInstanceProcessingService
 {
     private static void TryCatch(Action operation)
     {
