@@ -125,7 +125,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
     public ValueTask<cCoder.Data.Models.DMS.File> UpdateFileAsync(cCoder.Data.Models.DMS.File updatedFile)
 =>
-        TryCatch(operation: (Func<ValueTask<Data.Models.DMS.File>>)(async () =>
+        TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: (object[])[updatedFile]);
             cCoder.Data.Models.DMS.File dbVersion = service.GetWithFolderRolesAndContents(fileId: (Guid)updatedFile.Id, ignoreFilters: true);
@@ -180,7 +180,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
             return service.GetWithFolderAndContents(fileId: savedFile.Id, ignoreFilters: true);
 
-        }));
+        });
 
     public ValueTask HandleFileDeleteEventAsync(cCoder.Data.Models.DMS.File file)
 =>

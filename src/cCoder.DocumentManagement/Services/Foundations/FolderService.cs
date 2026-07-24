@@ -149,7 +149,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 
     public ValueTask<Folder> AddForPathBuildFolderAsync(Folder newFolder)
 =>
-        TryCatch(operation: (Func<ValueTask<Folder>>)(async () =>
+        TryCatch(operation: async () =>
         {
             ValidateForPathBuildFolderOnAdd(newFolder:newFolder);
             Folder storageFolder = CreateStorageFolderForAdd(folder: newFolder);
@@ -170,7 +170,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 
             return newFolder;
 
-        }));
+        });
 
     public ValueTask<Folder> UpdateFolderAsync(Folder updatedFolder)
 =>
