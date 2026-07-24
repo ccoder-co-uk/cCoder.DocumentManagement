@@ -119,7 +119,7 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IFileEventService, FileEventService>();
         services.AddTransient<IFolderEventService, FolderEventService>();
         services.AddTransient<IFolderRoleEventService, FolderRoleEventService>();
-        services.AddTransient<IDocumentManagementCurrentAppResolver, CurrentAppResolver>();
+        services.AddTransient<ICurrentAppResolverProcessingService, CurrentAppResolverProcessingService>();
     }
 
     private static void AddOrchestrations(this IServiceCollection services)

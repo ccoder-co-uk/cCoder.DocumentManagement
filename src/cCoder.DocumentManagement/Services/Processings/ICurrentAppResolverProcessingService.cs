@@ -8,9 +8,9 @@ using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 
 
-namespace cCoder.DocumentManagement.Services;
+namespace cCoder.DocumentManagement.Services.Processings;
 
-public interface IDocumentManagementCurrentAppResolver
+internal interface ICurrentAppResolverProcessingService
 {
     App ResolveCurrentApp();
 }

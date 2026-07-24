@@ -17,14 +17,14 @@ namespace cCoder.Core.Services.Tests.DMS.Orchestrations;
 
 public partial class DmsOrchestrationServiceTests
 {
-    private readonly Mock<IDocumentManagementCurrentAppResolver> currentAppResolverMock;
+    private readonly Mock<ICurrentAppResolverProcessingService> currentAppResolverMock;
     private readonly Mock<IFileProcessingService> fileProcessingServiceMock;
     private readonly Mock<IFolderProcessingService> folderProcessingServiceMock;
     private readonly DmsOrchestrationService orchestrationService;
 
     public DmsOrchestrationServiceTests()
     {
-        currentAppResolverMock = new Mock<IDocumentManagementCurrentAppResolver>(behavior: MockBehavior.Strict);
+        currentAppResolverMock = new Mock<ICurrentAppResolverProcessingService>(behavior: MockBehavior.Strict);
         fileProcessingServiceMock = new Mock<IFileProcessingService>(behavior: MockBehavior.Strict);
         folderProcessingServiceMock = new Mock<IFolderProcessingService>(behavior: MockBehavior.Strict);
         orchestrationService = new DmsOrchestrationService(

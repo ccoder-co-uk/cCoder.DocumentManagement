@@ -18,14 +18,14 @@ namespace cCoder.Core.Services.Tests.DMS.Orchestrations;
 
 public partial class DmsHttpRequestOrchestrationServiceTests
 {
-    private readonly Mock<IDocumentManagementCurrentAppResolver> currentAppResolverMock;
+    private readonly Mock<ICurrentAppResolverProcessingService> currentAppResolverMock;
     private readonly Mock<IDmsProcessingService> dmsProcessingServiceMock;
     private readonly Mock<IWebDavProcessingService> webDavProcessingServiceMock;
     private readonly DmsHttpRequestOrchestrationService orchestrationService;
 
     public DmsHttpRequestOrchestrationServiceTests()
     {
-        currentAppResolverMock = new Mock<IDocumentManagementCurrentAppResolver>(behavior: MockBehavior.Strict);
+        currentAppResolverMock = new Mock<ICurrentAppResolverProcessingService>(behavior: MockBehavior.Strict);
         dmsProcessingServiceMock = new Mock<IDmsProcessingService>(behavior: MockBehavior.Strict);
         webDavProcessingServiceMock = new Mock<IWebDavProcessingService>(behavior: MockBehavior.Strict);
 

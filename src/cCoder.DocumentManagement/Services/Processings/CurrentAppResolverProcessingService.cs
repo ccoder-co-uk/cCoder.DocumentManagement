@@ -7,15 +7,16 @@ using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Services;
 
 
-namespace cCoder.DocumentManagement.Dependencies;
+namespace cCoder.DocumentManagement.Services.Processings;
 
-internal class CurrentAppResolver(
+internal partial class CurrentAppResolverProcessingService(
     IAppBroker appBroker,
     HttpContext httpContext = null
-) : IDocumentManagementCurrentAppResolver
+) : ICurrentAppResolverProcessingService
 {
-    public App ResolveCurrentApp()
-    {
+    public App ResolveCurrentApp() =>
+        TryCatch(operation: () =>
+        {
         string requestPath = httpContext?.Request.Path.Value ?? string.Empty;
 
         if (
@@ -37,7 +38,7 @@ internal class CurrentAppResolver(
 
         return ToResolvedApp(app: appBroker.SelectAppByDomain(domain: host))
             ?? throw new InvalidOperationException(message: $"Unable to resolve current app for host '{host}'.");
-    }
+        });
 
     private static App ToResolvedApp(App app) =>
         app == null

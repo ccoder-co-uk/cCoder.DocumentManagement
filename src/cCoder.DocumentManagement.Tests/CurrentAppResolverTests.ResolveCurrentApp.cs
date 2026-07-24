@@ -2,7 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Services;
+using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Moq;
@@ -26,7 +26,9 @@ public partial class CurrentAppResolverTests
         appBrokerMock.Setup(expression: broker => broker.SelectAppById(appId: 42))
             .Returns(value: dataApp);
 
-        IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
+        ICurrentAppResolverProcessingService resolver = new CurrentAppResolverProcessingService(
+            appBroker: appBrokerMock.Object,
+            httpContext: httpContext);
 
         // When
         App result = resolver.ResolveCurrentApp();
@@ -49,7 +51,9 @@ public partial class CurrentAppResolverTests
         appBrokerMock.Setup(expression: broker => broker.SelectAppById(appId: 42))
             .Returns(value: (DataApp)null);
 
-        IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
+        ICurrentAppResolverProcessingService resolver = new CurrentAppResolverProcessingService(
+            appBroker: appBrokerMock.Object,
+            httpContext: httpContext);
 
         // When
         Action action = () => resolver.ResolveCurrentApp();
@@ -75,7 +79,9 @@ public partial class CurrentAppResolverTests
         appBrokerMock.Setup(expression: broker => broker.SelectAppByDomain(domain: "demo.localhost"))
             .Returns(value: dataApp);
 
-        IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
+        ICurrentAppResolverProcessingService resolver = new CurrentAppResolverProcessingService(
+            appBroker: appBrokerMock.Object,
+            httpContext: httpContext);
 
         // When
         App result = resolver.ResolveCurrentApp();
@@ -98,7 +104,9 @@ public partial class CurrentAppResolverTests
         appBrokerMock.Setup(expression: broker => broker.SelectAppByDomain(domain: "missing.localhost"))
             .Returns(value: (DataApp)null);
 
-        IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
+        ICurrentAppResolverProcessingService resolver = new CurrentAppResolverProcessingService(
+            appBroker: appBrokerMock.Object,
+            httpContext: httpContext);
 
         // When
         Action action = () => resolver.ResolveCurrentApp();

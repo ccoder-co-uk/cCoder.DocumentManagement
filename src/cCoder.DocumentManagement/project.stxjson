@@ -1371,18 +1371,6 @@
       "Methods": []
     },
     {
-      "Name": "cCoder.DocumentManagement.Dependencies.CurrentAppResolver",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "ResolveCurrentApp",
-          "Inputs": [],
-          "ReturnType": "cCoder.Data.Models.CMS.App"
-        }
-      ]
-    },
-    {
       "Name": "cCoder.DocumentManagement.Dependencies.OData.DocumentManagementModelBuilder",
       "StandardElementType": "Dependency",
       "Properties": [],
@@ -4345,6 +4333,18 @@
       ]
     },
     {
+      "Name": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ResolveCurrentApp",
+          "Inputs": [],
+          "ReturnType": "cCoder.Data.Models.CMS.App"
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
       "StandardElementType": "ProcessingService",
       "Properties": [],
@@ -5217,10 +5217,6 @@
       "ToType": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService"
     },
     {
-      "FromType": "cCoder.DocumentManagement.Dependencies.CurrentAppResolver",
-      "ToType": "cCoder.DocumentManagement.Brokers.Storage.AppBroker"
-    },
-    {
       "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
       "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService"
     },
@@ -5342,7 +5338,7 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "ToType": "cCoder.DocumentManagement.Dependencies.CurrentAppResolver"
+      "ToType": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
@@ -5354,7 +5350,7 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "ToType": "cCoder.DocumentManagement.Dependencies.CurrentAppResolver"
+      "ToType": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
@@ -5395,6 +5391,10 @@
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
       "ToType": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Storage.AppBroker"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
@@ -6049,20 +6049,6 @@
       "LineNumber": 12
     },
     {
-      "Code": "STXD001",
-      "Description": "Dependency elements may only be consumed by brokers.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXO001",
-      "Description": "An orchestration must have two or three foundation or processing dependencies and must not mix them.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 15
-    },
-    {
       "Code": "STXFORMAT001",
       "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
@@ -6077,25 +6063,18 @@
       "LineNumber": 15
     },
     {
-      "Code": "STXD001",
-      "Description": "Dependency elements may only be consumed by brokers.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXO001",
-      "Description": "An orchestration must have two or three foundation or processing dependencies and must not mix them.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "LineNumber": 15
-    },
-    {
       "Code": "STXFORMAT004",
       "Description": "Adjacent methods must have exactly one empty line between them.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
       "LineNumber": 146
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
+      "LineNumber": 160
     },
     {
       "Code": "STX0007",
@@ -6138,6 +6117,27 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
       "LineNumber": 13
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService",
+      "LineNumber": 9
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService",
+      "LineNumber": 30
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService",
+      "LineNumber": 58
     },
     {
       "Code": "STX0007",

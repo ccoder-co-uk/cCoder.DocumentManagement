@@ -13,7 +13,7 @@ using cCoder.DocumentManagement.Services.Processings;
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 internal partial class DmsHttpRequestOrchestrationService(
-    IDocumentManagementCurrentAppResolver currentAppResolver,
+    ICurrentAppResolverProcessingService currentAppResolver,
     IDmsProcessingService dmsProcessingService,
     IWebDavProcessingService webDavProcessingService
 ) : IDmsHttpRequestOrchestrationService

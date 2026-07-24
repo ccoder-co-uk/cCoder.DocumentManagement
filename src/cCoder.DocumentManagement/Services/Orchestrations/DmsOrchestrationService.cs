@@ -13,7 +13,7 @@ using LocalPath = cCoder.DocumentManagement.Models.Path;
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 internal partial class DmsOrchestrationService(
-    IDocumentManagementCurrentAppResolver currentAppResolver,
+    ICurrentAppResolverProcessingService currentAppResolver,
     IFileProcessingService fileProcessingService,
     IFolderProcessingService folderProcessingService
 ) : IDmsOrchestrationService
