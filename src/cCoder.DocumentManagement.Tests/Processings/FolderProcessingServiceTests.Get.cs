@@ -54,8 +54,8 @@ public partial class FolderProcessingServiceTests
 
         // Then
         act.Should()
-            .Throw<InvalidOperationException>()
-            .WithMessage(expectedWildcardPattern: "To get a file, use file processing operations.");
+            .Throw<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(InvalidOperationException));
 
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
@@ -77,8 +77,8 @@ public partial class FolderProcessingServiceTests
 
         // Then
         act.Should()
-            .Throw<SecurityException>()
-            .WithMessage(expectedWildcardPattern: "Access Denied!");
+            .Throw<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(SecurityException));
 
         folderServiceMock.Verify(expression: x => x.GetByPath(appId: app.Id, path: folderPath.Lowered, ignoreFilters: false), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();

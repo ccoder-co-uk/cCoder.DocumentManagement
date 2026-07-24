@@ -89,13 +89,20 @@ public partial class FolderCoordinationServiceTests
     }
 
     [Fact]
-    public async Task ShouldDoNothingWhenDeleteFolderAsyncWithNullFolder()
+    public async Task ShouldThrowValidationExceptionWhenDeleteFolderAsyncWithNullFolder()
     {
-        // When
         // Given
-        await coordinationService.DeleteFolderAsync(deletedFolder: null);
+        Folder deletedFolder = null;
+
+        // When
+        Func<Task> action = async () =>
+            await coordinationService.DeleteFolderAsync(deletedFolder: deletedFolder);
 
         // Then
+        await action.Should()
+            .ThrowAsync<DocumentManagementValidationException>()
+            .WithInnerException(innerException: typeof(ArgumentNullException));
+
         fileOrchestrationServiceMock.VerifyNoOtherCalls();
         folderOrchestrationServiceMock.VerifyNoOtherCalls();
     }

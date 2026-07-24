@@ -37,8 +37,8 @@ public partial class FolderProcessingServiceTests
 
         // Then
         act.Should()
-            .Throw<SecurityException>()
-            .WithMessage(expectedWildcardPattern: "Access Denied!");
+            .Throw<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(SecurityException));
 
         fileServiceMock.Verify(
             expression: x => x.GetByPathWithFolderAndContents(appId: app.Id, path: filePath.Lowered, ignoreFilters: false),

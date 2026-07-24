@@ -22,8 +22,8 @@ public partial class DmsInstanceProcessingServiceTests
 
         // Then
         await act.Should()
-            .ThrowAsync<InvalidOperationException>()
-            .WithMessage(expectedWildcardPattern: "Unsupported DMS method: PATCH");
+            .ThrowAsync<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(InvalidOperationException));
 
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }

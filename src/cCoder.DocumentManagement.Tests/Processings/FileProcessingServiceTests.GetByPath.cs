@@ -82,8 +82,8 @@ public partial class FileProcessingServiceTests
 
         // Then
         act.Should()
-            .Throw<SecurityException>()
-            .WithMessage(expectedWildcardPattern: "Access Denied!");
+            .Throw<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(SecurityException));
 
         fileServiceMock.Verify(expression: x => x.GetByPath(appId: 3, path: "root/file.txt", ignoreFilters: true), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();

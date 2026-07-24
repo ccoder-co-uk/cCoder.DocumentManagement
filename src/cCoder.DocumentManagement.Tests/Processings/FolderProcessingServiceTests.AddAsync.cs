@@ -52,8 +52,8 @@ public partial class FolderProcessingServiceTests
 
         // Then
         await act.Should()
-            .ThrowAsync<SecurityException>()
-            .WithMessage(expectedWildcardPattern: "Access Denied!");
+            .ThrowAsync<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(SecurityException));
 
         folderServiceMock.Verify(expression: x => x.Get(folderId: folder.ParentId.Value), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();

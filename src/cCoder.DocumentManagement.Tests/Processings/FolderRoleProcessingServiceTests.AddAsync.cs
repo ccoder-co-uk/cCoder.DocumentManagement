@@ -137,11 +137,13 @@ public partial class FolderRoleProcessingServiceTests
             .Returns(value: new[] { folder }.AsQueryable());
 
         // When
-        await Assert.ThrowsAsync<SecurityException>(testCode: async () =>
-            await folderRoleProcessingService.AddFolderRoleAsync(newFolderRole: link)
-        );
+        Func<Task> action = async () =>
+            await folderRoleProcessingService.AddFolderRoleAsync(newFolderRole: link);
 
         // Then
+        await action.Should()
+            .ThrowAsync<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(SecurityException));
     }
 
 }

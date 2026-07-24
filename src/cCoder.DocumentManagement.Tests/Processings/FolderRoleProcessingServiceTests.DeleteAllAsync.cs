@@ -25,8 +25,13 @@ public partial class FolderRoleProcessingServiceTests
             await folderRoleProcessingService.DeleteAllFolderRoleAsync(deletedFolderRole: new[] { link });
 
         // Then
-        await act.Should()
-            .ThrowAsync<System.Security.SecurityException>();
+        var exception = await act.Should()
+            .ThrowAsync<DocumentManagementServiceException>();
+
+        exception.Which.InnerException.Should()
+            .BeOfType<DocumentManagementServiceException>()
+            .Which.InnerException.Should()
+            .BeOfType<System.Security.SecurityException>();
     }
 
 }

@@ -156,13 +156,15 @@ public partial class FolderRoleProcessingServiceTests
             .Returns(value: new[] { link }.AsQueryable());
 
         // When
-        await Assert.ThrowsAsync<SecurityException>(testCode: async () =>
+        Func<Task> action = async () =>
             await folderRoleProcessingService.DeleteFolderRoleAsync(
                 deletedFolderRole: new FolderRole { FolderId = folder.Id, RoleId = role.Id }
-            )
-        );
+            );
 
         // Then
+        await action.Should()
+            .ThrowAsync<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(SecurityException));
     }
 
 }

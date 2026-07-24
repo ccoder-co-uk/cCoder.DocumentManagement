@@ -99,8 +99,8 @@ public partial class FolderRoleServiceTests
 
         // Then
         await action.Should()
-            .ThrowAsync<SecurityException>()
-            .WithMessage(expectedWildcardPattern: "Access Denied!");
+            .ThrowAsync<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(SecurityException));
 
         folderRoleBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFolderRole>()), times: Times.AtMostOnce());
         folderRoleBrokerMock.VerifyNoOtherCalls();

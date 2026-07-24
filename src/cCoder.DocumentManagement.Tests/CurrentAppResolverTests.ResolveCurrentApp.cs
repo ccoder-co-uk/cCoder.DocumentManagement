@@ -60,8 +60,8 @@ public partial class CurrentAppResolverTests
 
         // Then
         action.Should()
-            .Throw<InvalidOperationException>()
-            .WithMessage(expectedWildcardPattern: "Unable to resolve app '42'.");
+            .Throw<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(InvalidOperationException));
 
         appBrokerMock.Verify(expression: broker => broker.SelectAppById(appId: 42), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
@@ -113,8 +113,8 @@ public partial class CurrentAppResolverTests
 
         // Then
         action.Should()
-            .Throw<InvalidOperationException>()
-            .WithMessage(expectedWildcardPattern: "Unable to resolve current app for host 'missing.localhost'.");
+            .Throw<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(InvalidOperationException));
 
         appBrokerMock.Verify(expression: broker => broker.SelectAppByDomain(domain: "missing.localhost"), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();

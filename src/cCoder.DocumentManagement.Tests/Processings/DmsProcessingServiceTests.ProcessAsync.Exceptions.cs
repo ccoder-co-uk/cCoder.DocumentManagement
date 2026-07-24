@@ -29,8 +29,8 @@ public partial class DmsInstanceProcessingServiceTests
 
         // Then
         await act.Should()
-            .ThrowAsync<SecurityException>()
-            .WithMessage(expectedWildcardPattern: "Access Denied!");
+            .ThrowAsync<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(SecurityException));
 
         dmsInstanceServiceMock.Verify(
             expression: x => x.DropAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0),
@@ -57,8 +57,8 @@ public partial class DmsInstanceProcessingServiceTests
 
         // Then
         await act.Should()
-            .ThrowAsync<InvalidOperationException>()
-            .WithMessage(expectedWildcardPattern: "Boom");
+            .ThrowAsync<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(InvalidOperationException));
 
         dmsInstanceServiceMock.Verify(
             expression: x => x.Get(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0, search: string.Empty),

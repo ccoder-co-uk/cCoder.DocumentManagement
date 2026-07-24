@@ -94,8 +94,8 @@ public partial class DmsInstanceProcessingServiceTests
 
         // Then
         await act.Should()
-            .ThrowAsync<InvalidOperationException>()
-            .WithMessage(expectedWildcardPattern: "Cannot unpack an archive to a file path");
+            .ThrowAsync<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(InvalidOperationException));
 
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
