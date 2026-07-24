@@ -19,13 +19,13 @@ internal partial class FileContentService(
     IAuthorizationBroker authorizationBroker
 ) : IFileContentService
 {
-    public FileContent Get(Guid id)
+    public FileContent Get(Guid fileContentId)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id]);
+            ValidateInputs(inputs: [fileContentId]);
             FileContent fileContent = GetAll()
-    .FirstOrDefault(predicate: i => i.Id == id);
+    .FirstOrDefault(predicate: i => i.Id == fileContentId);
 
 
             if (fileContent is not null)
@@ -35,7 +35,7 @@ internal partial class FileContentService(
 
 
             FileContent unrestrictedFileContent = GetAll(ignoreFilters: true)
-                .FirstOrDefault(predicate: i => i.Id == id);
+                .FirstOrDefault(predicate: i => i.Id == fileContentId);
 
 
             if (unrestrictedFileContent is not null)
@@ -72,16 +72,17 @@ internal partial class FileContentService(
             return fileContentBroker.DeleteAllFileContentsForFilesAsync(fileIds: fileIds);
         });
 
-    public ValueTask<FileContent> AddFileContentAsync(FileContent fileContent)
+    public ValueTask<FileContent> AddFileContentAsync(FileContent newFileContent)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [fileContent]);
-            cCoder.Data.Models.DMS.FileContent newFileContent = CreateStorageFileContent(fileContent: fileContent, includeId: false);
+            ValidateInputs(inputs: [newFileContent]);
+            cCoder.Data.Models.DMS.FileContent storageFileContent =
+                CreateStorageFileContent(fileContent: newFileContent, includeId: false);
 
 
             authorizationBroker.Authorize(
-                appId: fileContentBroker.GetAppId(entity: newFileContent),
+                appId: fileContentBroker.GetAppId(entity: storageFileContent),
                 privilege: $"{nameof(FileContent)}_create"
             );
 
@@ -90,39 +91,39 @@ internal partial class FileContentService(
 
             DateTimeOffset now = DateTimeOffset.UtcNow;
 
-            newFileContent.CreatedOn = now;
+            storageFileContent.CreatedOn = now;
 
-            newFileContent.CreatedBy = currentUserId;
+            storageFileContent.CreatedBy = currentUserId;
 
 
-            FileContent result = await fileContentBroker.InsertFileContentAsync(entity: newFileContent);
+            FileContent result = await fileContentBroker.InsertFileContentAsync(newFileContent: storageFileContent);
 
-            fileContent.Id = result.Id;
+            newFileContent.Id = result.Id;
 
-            fileContent.FileId = result.FileId;
+            newFileContent.FileId = result.FileId;
 
-            fileContent.Description = result.Description;
+            newFileContent.Description = result.Description;
 
-            fileContent.Size = result.Size;
+            newFileContent.Size = result.Size;
 
-            fileContent.CreatedBy = result.CreatedBy;
+            newFileContent.CreatedBy = result.CreatedBy;
 
-            fileContent.CreatedOn = result.CreatedOn;
+            newFileContent.CreatedOn = result.CreatedOn;
 
-            fileContent.Version = result.Version;
+            newFileContent.Version = result.Version;
 
-            fileContent.RawData = result.RawData;
+            newFileContent.RawData = result.RawData;
 
-            return fileContent;
+            return newFileContent;
 
         });
 
-    public ValueTask<FileContent> UpdateFileContentAsync(FileContent fileContent)
+    public ValueTask<FileContent> UpdateFileContentAsync(FileContent updatedFileContent)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [fileContent]);
-            cCoder.Data.Models.DMS.FileContent updateFileContent = CreateStorageFileContent(fileContent: fileContent, includeId: true);
+            ValidateInputs(inputs: [updatedFileContent]);
+            cCoder.Data.Models.DMS.FileContent updateFileContent = CreateStorageFileContent(fileContent: updatedFileContent, includeId: true);
 
 
             authorizationBroker.Authorize(
@@ -131,34 +132,34 @@ internal partial class FileContentService(
             );
 
 
-            FileContent result = await fileContentBroker.UpdateFileContentAsync(entity: updateFileContent);
+            FileContent result = await fileContentBroker.UpdateFileContentAsync(updatedFileContent: updateFileContent);
 
-            fileContent.Id = result.Id;
+            updatedFileContent.Id = result.Id;
 
-            fileContent.FileId = result.FileId;
+            updatedFileContent.FileId = result.FileId;
 
-            fileContent.Description = result.Description;
+            updatedFileContent.Description = result.Description;
 
-            fileContent.Size = result.Size;
+            updatedFileContent.Size = result.Size;
 
-            fileContent.CreatedBy = result.CreatedBy;
+            updatedFileContent.CreatedBy = result.CreatedBy;
 
-            fileContent.CreatedOn = result.CreatedOn;
+            updatedFileContent.CreatedOn = result.CreatedOn;
 
-            fileContent.Version = result.Version;
+            updatedFileContent.Version = result.Version;
 
-            fileContent.RawData = result.RawData;
+            updatedFileContent.RawData = result.RawData;
 
-            return fileContent;
+            return updatedFileContent;
 
         });
 
-    public ValueTask DeleteAsync(Guid id)
+    public ValueTask DeleteAsync(Guid fileContentId)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [id]);
-            FileContent fileContent = Get(id: id);
+            ValidateInputs(inputs: [fileContentId]);
+            FileContent fileContent = Get(fileContentId: fileContentId);
 
 
             authorizationBroker.Authorize(
@@ -167,7 +168,7 @@ internal partial class FileContentService(
             );
 
 
-            _ = await fileContentBroker.DeleteFileContentAsync(entity: CreateStorageFileContent(fileContent: fileContent, includeId: true));
+            _ = await fileContentBroker.DeleteFileContentAsync(deletedFileContent: CreateStorageFileContent(fileContent: fileContent, includeId: true));
 
         });
 

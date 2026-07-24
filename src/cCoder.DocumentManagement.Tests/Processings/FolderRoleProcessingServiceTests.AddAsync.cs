@@ -74,15 +74,15 @@ public partial class FolderRoleProcessingServiceTests
         folderServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
             .Returns(value: new[] { folder }.AsQueryable());
 
-        folderRoleServiceMock.Setup(expression: x => x.AddFolderRoleAsync(folderRole: link))
+        folderRoleServiceMock.Setup(expression: x => x.AddFolderRoleAsync(newFolderRole: link))
             .ReturnsAsync(value: link);
 
         // When
-        FolderRole result = await folderRoleProcessingService.AddFolderRoleAsync(entity: link);
+        FolderRole result = await folderRoleProcessingService.AddFolderRoleAsync(newFolderRole: link);
 
         // Then
         Assert.Same(expected: link, actual: result);
-        folderRoleServiceMock.Verify(expression: x => x.AddFolderRoleAsync(folderRole: link), times: Times.Once);
+        folderRoleServiceMock.Verify(expression: x => x.AddFolderRoleAsync(newFolderRole: link), times: Times.Once);
     }
 
     [Fact]
@@ -138,7 +138,7 @@ public partial class FolderRoleProcessingServiceTests
 
         // When
         await Assert.ThrowsAsync<SecurityException>(testCode: async () =>
-            await folderRoleProcessingService.AddFolderRoleAsync(entity: link)
+            await folderRoleProcessingService.AddFolderRoleAsync(newFolderRole: link)
         );
 
         // Then

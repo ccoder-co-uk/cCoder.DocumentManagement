@@ -13,11 +13,11 @@ public interface IFolderRoleOrchestrationService
 {
     IQueryable<FolderRole> GetAll(bool ignoreFilters = false);
 
-    ValueTask<FolderRole> AddFolderRoleAsync(FolderRole entity);
+    ValueTask<FolderRole> AddFolderRoleAsync(FolderRole newFolderRole);
 
-    ValueTask DeleteFolderRoleAsync(FolderRole entity);
+    ValueTask DeleteFolderRoleAsync(FolderRole deletedFolderRole);
 
     ValueTask<IEnumerable<Result<FolderRole>>> AddOrUpdateFolderRole(IEnumerable<FolderRole> items);
 
-    ValueTask DeleteAllFolderRoleAsync(IEnumerable<FolderRole> items);
+    ValueTask DeleteAllFolderRoleAsync(IEnumerable<FolderRole> deletedFolderRole);
 }

@@ -21,10 +21,10 @@ public partial class FileContentOrchestrationServiceTests
         Guid id = Guid.NewGuid();
         FileContent entity = CreateRandomFileContent();
 
-        fileContentProcessingServiceMock.Setup(expression: x => x.Get(id: id))
+        fileContentProcessingServiceMock.Setup(expression: x => x.Get(fileContentId: id))
             .Returns(value: entity);
 
-        fileContentProcessingServiceMock.Setup(expression: x => x.DeleteAsync(id: id))
+        fileContentProcessingServiceMock.Setup(expression: x => x.DeleteAsync(fileContentId: id))
             .Returns(value: ValueTask.CompletedTask);
 
         fileContentEventProcessingServiceMock
@@ -32,11 +32,11 @@ public partial class FileContentOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.DeleteAsync(id: id);
+        await orchestrationService.DeleteAsync(fileContentId: id);
 
         // Then
-        fileContentProcessingServiceMock.Verify(expression: x => x.Get(id: id), times: Times.Once);
-        fileContentProcessingServiceMock.Verify(expression: x => x.DeleteAsync(id: id), times: Times.Once);
+        fileContentProcessingServiceMock.Verify(expression: x => x.Get(fileContentId: id), times: Times.Once);
+        fileContentProcessingServiceMock.Verify(expression: x => x.DeleteAsync(fileContentId: id), times: Times.Once);
         fileContentEventProcessingServiceMock.Verify(expression: x => x.RaiseFileContentDeleteEventAsync(entity: entity), times: Times.Once);
     }
 

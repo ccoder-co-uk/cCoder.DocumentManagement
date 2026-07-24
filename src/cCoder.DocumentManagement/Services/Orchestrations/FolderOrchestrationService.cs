@@ -12,12 +12,12 @@ namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 internal partial class FolderOrchestrationService(IFolderProcessingService processingService, IFolderEventProcessingService eventService) : IFolderOrchestrationService
 {
-    public Folder Get(Guid id)
+    public Folder Get(Guid folderId)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id]);
-            return processingService.Get(id: id);
+            ValidateInputs(inputs: [folderId]);
+            return processingService.Get(folderId: folderId);
 
         });
 
@@ -30,12 +30,12 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public ValueTask<Folder> AddFolderAsync(Folder entity)
+    public ValueTask<Folder> AddFolderAsync(Folder newFolder)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
-            Folder result = await processingService.AddFolderAsync(entity: entity);
+            ValidateInputs(inputs: [newFolder]);
+            Folder result = await processingService.AddFolderAsync(newFolder: newFolder);
 
             await eventService.RaiseFolderAddEventAsync(entity: result);
 
@@ -43,12 +43,12 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public ValueTask<Folder> UpdateFolderAsync(Folder entity)
+    public ValueTask<Folder> UpdateFolderAsync(Folder updatedFolder)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
-            Folder result = await processingService.UpdateFolderAsync(entity: entity);
+            ValidateInputs(inputs: [updatedFolder]);
+            Folder result = await processingService.UpdateFolderAsync(updatedFolder: updatedFolder);
 
             await eventService.RaiseFolderUpdateEventAsync(entity: result);
 
@@ -56,13 +56,13 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public ValueTask DeleteAsync(Guid id)
+    public ValueTask DeleteAsync(Guid folderId)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [id]);
+            ValidateInputs(inputs: [folderId]);
             Folder entity = processingService.GetAll(ignoreFilters: true)
-    .FirstOrDefault(predicate: folder => folder.Id == id);
+    .FirstOrDefault(predicate: folder => folder.Id == folderId);
 
 
             if (entity == null)
@@ -73,7 +73,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
             await eventService.RaiseFolderDeleteEventAsync(entity: entity);
 
-            await processingService.DeleteAsync(id: id);
+            await processingService.DeleteAsync(folderId: folderId);
 
         });
 
@@ -95,12 +95,12 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public ValueTask DeleteAllFolderAsync(IEnumerable<Folder> items)
+    public ValueTask DeleteAllFolderAsync(IEnumerable<Folder> deletedFolder)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [items]);
-            return processingService.DeleteAllFolderAsync(items: items);
+            ValidateInputs(inputs: [deletedFolder]);
+            return processingService.DeleteAllFolderAsync(deletedFolder: deletedFolder);
 
         });
 

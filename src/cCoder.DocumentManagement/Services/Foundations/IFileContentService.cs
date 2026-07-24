@@ -12,11 +12,11 @@ namespace cCoder.DocumentManagement.Services.Foundations;
 
 public interface IFileContentService
 {
-    FileContent Get(Guid id);
+    FileContent Get(Guid fileContentId);
     IQueryable<FileContent> GetAll(bool ignoreFilters = false);
     ValueTask DeleteAllForFileAsync(Guid fileId);
     ValueTask DeleteAllForFilesAsync(Guid[] fileIds);
-    ValueTask<FileContent> AddFileContentAsync(FileContent fileContent);
-    ValueTask<FileContent> UpdateFileContentAsync(FileContent fileContent);
-    ValueTask DeleteAsync(Guid id);
+    ValueTask<FileContent> AddFileContentAsync(FileContent newFileContent);
+    ValueTask<FileContent> UpdateFileContentAsync(FileContent updatedFileContent);
+    ValueTask DeleteAsync(Guid fileContentId);
 }

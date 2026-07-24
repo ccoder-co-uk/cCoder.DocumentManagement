@@ -11,17 +11,17 @@ namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 public interface IFileContentOrchestrationService
 {
-    FileContent Get(Guid id);
+    FileContent Get(Guid fileContentId);
 
     IQueryable<FileContent> GetAll(bool ignoreFilters = false);
 
-    ValueTask<FileContent> AddFileContentAsync(FileContent entity);
+    ValueTask<FileContent> AddFileContentAsync(FileContent newFileContent);
 
-    ValueTask<FileContent> UpdateFileContentAsync(FileContent entity);
+    ValueTask<FileContent> UpdateFileContentAsync(FileContent updatedFileContent);
 
-    ValueTask DeleteAsync(Guid id);
+    ValueTask DeleteAsync(Guid fileContentId);
 
     ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdateFileContent(IEnumerable<FileContent> items);
 
-    ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> items);
+    ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> deletedFileContent);
 }

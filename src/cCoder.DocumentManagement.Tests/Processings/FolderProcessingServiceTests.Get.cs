@@ -28,17 +28,17 @@ public partial class FolderProcessingServiceTests
         Folder entity = CreateRandomFolder();
         var id = entity.Id;
 
-        folderServiceMock.Setup(expression: x => x.Get(id: id))
+        folderServiceMock.Setup(expression: x => x.Get(folderId: id))
             .Returns(value: entity);
 
         // When
-        Folder result = folderProcessingService.Get(id: id);
+        Folder result = folderProcessingService.Get(folderId: id);
 
         // Then
         result.Should()
             .BeSameAs(expected: entity);
 
-        folderServiceMock.Verify(expression: x => x.Get(id: id), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.Get(folderId: id), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
     }
 

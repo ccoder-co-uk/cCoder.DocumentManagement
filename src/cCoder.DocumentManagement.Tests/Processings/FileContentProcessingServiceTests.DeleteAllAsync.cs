@@ -21,14 +21,14 @@ public partial class FileContentProcessingServiceTests
         FileContent fileContent = CreateRandomFileContent();
 
         fileContentServiceMock
-            .Setup(expression: x => x.DeleteAsync(id: fileContent.Id))
+            .Setup(expression: x => x.DeleteAsync(fileContentId: fileContent.Id))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await fileContentProcessingService.DeleteAllFileContentAsync(items: new[] { fileContent });
+        await fileContentProcessingService.DeleteAllFileContentAsync(deletedFileContent: new[] { fileContent });
 
         // Then
-        fileContentServiceMock.Verify(expression: x => x.DeleteAsync(id: fileContent.Id), times: Times.Once);
+        fileContentServiceMock.Verify(expression: x => x.DeleteAsync(fileContentId: fileContent.Id), times: Times.Once);
         fileContentServiceMock.VerifyNoOtherCalls();
     }
 

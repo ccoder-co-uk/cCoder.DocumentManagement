@@ -37,17 +37,17 @@ public partial class FileContentServiceTests
         authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_delete"));
 
         fileContentBrokerMock
-            .Setup(expression: x => x.DeleteFileContentAsync(entity: It.IsAny<DataFileContent>()))
+            .Setup(expression: x => x.DeleteFileContentAsync(deletedFileContent: It.IsAny<DataFileContent>()))
             .ReturnsAsync(value: 1);
 
         // When
-        await fileContentService.DeleteAsync(id: fileContentId);
+        await fileContentService.DeleteAsync(fileContentId: fileContentId);
 
         // Then
         fileContentBrokerMock.Verify(expression: x => x.SelectAllFileContents(ignoreFilters: false), times: Times.Once);
 
         fileContentBrokerMock.Verify(
-            expression: x => x.DeleteFileContentAsync(entity: It.Is<DataFileContent>(match: candidate => candidate.Id == fileContent.Id)),
+            expression: x => x.DeleteFileContentAsync(deletedFileContent: It.Is<DataFileContent>(match: candidate => candidate.Id == fileContent.Id)),
             times: Times.Once
         );
 
@@ -80,7 +80,7 @@ public partial class FileContentServiceTests
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await fileContentService.DeleteAsync(id: fileContentId);
+        Func<Task> action = async () => await fileContentService.DeleteAsync(fileContentId: fileContentId);
 
         // Then
         await action.Should()

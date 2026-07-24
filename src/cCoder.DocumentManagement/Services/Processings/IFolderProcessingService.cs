@@ -11,21 +11,21 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 public interface IFolderProcessingService
 {
-    Folder Get(Guid id);
+    Folder Get(Guid folderId);
 
     IQueryable<Folder> GetAll(bool ignoreFilters = false);
 
-    ValueTask<Folder> AddFolderAsync(Folder entity);
+    ValueTask<Folder> AddFolderAsync(Folder newFolder);
 
-    ValueTask<Folder> UpdateFolderAsync(Folder entity);
+    ValueTask<Folder> UpdateFolderAsync(Folder updatedFolder);
 
-    ValueTask DeleteAsync(Guid id);
+    ValueTask DeleteAsync(Guid folderId);
 
     ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateFolder(IEnumerable<Folder> items);
 
     ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateForAppFolderAsync(IEnumerable<Folder> items);
 
-    ValueTask DeleteAllFolderAsync(IEnumerable<Folder> items);
+    ValueTask DeleteAllFolderAsync(IEnumerable<Folder> deletedFolder);
 
     ValueTask DeleteByAppIdAsync(int appId);
 

@@ -12,25 +12,25 @@ namespace cCoder.DocumentManagement.Services.Orchestrations;
 internal partial class AppOrchestrationService(IFolderOrchestrationService folderOrchestrationService)
     : IAppOrchestrationService
 {
-    public ValueTask AddAppAsync(App app)
+    public ValueTask AddAppAsync(App newApp)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [app]);
-            StampFoldersApp(app: app);
+            ValidateInputs(inputs: [newApp]);
+            StampFoldersApp(app: newApp);
 
-            _ = await folderOrchestrationService.AddOrUpdateForAppFolderAsync(items: app.Folders ?? []);
+            _ = await folderOrchestrationService.AddOrUpdateForAppFolderAsync(items: newApp.Folders ?? []);
 
         });
 
-    public ValueTask UpdateAppAsync(App app)
+    public ValueTask UpdateAppAsync(App updatedApp)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [app]);
-            StampFoldersApp(app: app);
+            ValidateInputs(inputs: [updatedApp]);
+            StampFoldersApp(app: updatedApp);
 
-            _ = await folderOrchestrationService.AddOrUpdateForAppFolderAsync(items: app.Folders ?? []);
+            _ = await folderOrchestrationService.AddOrUpdateForAppFolderAsync(items: updatedApp.Folders ?? []);
 
         });
 

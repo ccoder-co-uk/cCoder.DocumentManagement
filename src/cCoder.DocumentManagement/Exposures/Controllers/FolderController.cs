@@ -78,7 +78,7 @@ public partial class FolderController : ODataController
     {
         try
         {
-            Folder result = Service.Get(id: key);
+            Folder result = Service.Get(folderId: key);
             return result is null ? NotFound() : Ok(value: result);
         }
         catch (System.Security.SecurityException)
@@ -96,14 +96,14 @@ public partial class FolderController : ODataController
         MaxAnyAllExpressionDepth = 5,
         MaxExpansionDepth = 5
     )]
-    public async Task<IActionResult> Post([FromBody] Folder entity)
+    public async Task<IActionResult> Post([FromBody] Folder newFolder)
     {
         if (!ModelState.IsValid)
         {
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
         }
 
-        return Ok(value: await Service.AddFolderAsync(entity: entity));
+        return Ok(value: await Service.AddFolderAsync(newFolder: newFolder));
     }
 
     [HttpPut]
@@ -123,13 +123,13 @@ public partial class FolderController : ODataController
         }
 
         entity.Id = key;
-        return Ok(value: await Service.UpdateFolderAsync(entity: entity));
+        return Ok(value: await Service.UpdateFolderAsync(updatedFolder: entity));
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
     public async Task<IActionResult> Patch([FromRoute] Guid key, Delta<Folder> delta)
     {
-        Folder originalEntity = Service.Get(id: key);
+        Folder originalEntity = Service.Get(folderId: key);
 
         if (originalEntity == null)
         {
@@ -137,13 +137,13 @@ public partial class FolderController : ODataController
         }
 
         delta.Patch(original: originalEntity);
-        return Ok(value: await Service.UpdateFolderAsync(entity: originalEntity));
+        return Ok(value: await Service.UpdateFolderAsync(updatedFolder: originalEntity));
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete([FromRoute] Guid key)
     {
-        await Service.DeleteAsync(id: key);
+        await Service.DeleteAsync(folderId: key);
         return Ok();
     }
 }

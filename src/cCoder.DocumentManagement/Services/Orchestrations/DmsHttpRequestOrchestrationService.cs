@@ -37,7 +37,7 @@ internal partial class DmsHttpRequestOrchestrationService(
             try
             {
                 DmsProcessingResponse response = await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
-                return AddDmsDefaultHeaders(response: response);
+                return AddDmsDefaultHeadersDmsProcessingResponse(newDmsProcessingResponse: response);
             }
             catch (SecurityException)
             {
@@ -66,9 +66,9 @@ internal partial class DmsHttpRequestOrchestrationService(
     private static bool IsWebDavRequestDmsProcessingRequest(DmsProcessingRequest request) =>
         request.RequestPath.Contains(value: "/webdav", comparisonType: StringComparison.OrdinalIgnoreCase);
 
-    private static DmsProcessingResponse AddDmsDefaultHeaders(DmsProcessingResponse response)
+    private static DmsProcessingResponse AddDmsDefaultHeadersDmsProcessingResponse(DmsProcessingResponse newDmsProcessingResponse)
     {
-        List<KeyValuePair<string, string>> headers = [.. response.Headers];
+        List<KeyValuePair<string, string>> headers = [.. newDmsProcessingResponse.Headers];
         AddHeaderIfMissing(headers: headers, key: "Access-Control-Allow-Origin", value: "*");
 
         AddHeaderIfMissing(
@@ -82,10 +82,10 @@ internal partial class DmsHttpRequestOrchestrationService(
 
         return new DmsProcessingResponse
         {
-            Body = response.Body,
-            ContentType = response.ContentType,
-            StatusCode = response.StatusCode,
-            HasBody = response.HasBody,
+            Body = newDmsProcessingResponse.Body,
+            ContentType = newDmsProcessingResponse.ContentType,
+            StatusCode = newDmsProcessingResponse.StatusCode,
+            HasBody = newDmsProcessingResponse.HasBody,
             Headers = headers,
         };
     }

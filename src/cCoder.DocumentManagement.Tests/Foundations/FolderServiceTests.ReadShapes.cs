@@ -54,11 +54,11 @@ public partial class FolderServiceTests
             ],
         };
 
-        folderBrokerMock.Setup(expression: x => x.SelectFolderForUpdate(id: folderId, ignoreFilters: true))
+        folderBrokerMock.Setup(expression: x => x.SelectFolderForUpdate(folderId: folderId, ignoreFilters: true))
             .Returns(value: dataFolder);
 
         // When
-        LocalFolder result = folderService.GetForUpdate(id: folderId, ignoreFilters: true);
+        LocalFolder result = folderService.GetForUpdate(folderId: folderId, ignoreFilters: true);
 
         // Then
         result.Should()
@@ -88,7 +88,7 @@ public partial class FolderServiceTests
         result.Roles.Single().RoleId.Should()
             .Be(expected: roleId);
 
-        folderBrokerMock.Verify(expression: x => x.SelectFolderForUpdate(id: folderId, ignoreFilters: true), times: Times.Once);
+        folderBrokerMock.Verify(expression: x => x.SelectFolderForUpdate(folderId: folderId, ignoreFilters: true), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }

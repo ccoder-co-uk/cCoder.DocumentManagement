@@ -50,7 +50,7 @@ public partial class FolderProcessingServiceTests
             .Setup(expression: x => x.GetByPathWithRoles(appId: app.Id, path: folder.Path, ignoreFilters: false))
             .Returns(value: folder);
 
-        folderServiceMock.Setup(expression: x => x.DeleteAsync(id: folder.Id))
+        folderServiceMock.Setup(expression: x => x.DeleteAsync(folderId: folder.Id))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
@@ -58,7 +58,7 @@ public partial class FolderProcessingServiceTests
 
         // Then
         folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: folder.Path, ignoreFilters: false), times: Times.Once);
-        folderServiceMock.Verify(expression: x => x.DeleteAsync(id: folder.Id), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.DeleteAsync(folderId: folder.Id), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();

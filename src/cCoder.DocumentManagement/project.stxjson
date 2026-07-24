@@ -975,7 +975,7 @@
           "Name": "AddRoleAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "newRole",
               "Type": "cCoder.Data.Models.Security.Role"
             }
           ],
@@ -985,7 +985,7 @@
           "Name": "DeleteAllRolesAsync",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedRole",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.Role\u003E"
             }
           ],
@@ -995,7 +995,7 @@
           "Name": "DeleteRoleAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "deletedRole",
               "Type": "cCoder.Data.Models.Security.Role"
             }
           ],
@@ -1025,7 +1025,7 @@
           "Name": "UpdateRoleAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "updatedRole",
               "Type": "cCoder.Data.Models.Security.Role"
             }
           ],
@@ -1187,7 +1187,7 @@
           "Name": "SelectFileWithFolderAndContents",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileId",
               "Type": "System.Guid"
             },
             {
@@ -1201,7 +1201,7 @@
           "Name": "SelectFileWithFolderRolesAndContents",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileId",
               "Type": "System.Guid"
             },
             {
@@ -1246,7 +1246,7 @@
           "Name": "DeleteAllFileContentsAsync",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedFileContent",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
             }
           ],
@@ -1276,7 +1276,7 @@
           "Name": "DeleteFileContentAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "deletedFileContent",
               "Type": "cCoder.Data.Models.DMS.FileContent"
             }
           ],
@@ -1296,7 +1296,7 @@
           "Name": "InsertFileContentAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "newFileContent",
               "Type": "cCoder.Data.Models.DMS.FileContent"
             }
           ],
@@ -1316,7 +1316,7 @@
           "Name": "UpdateFileContentAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "updatedFileContent",
               "Type": "cCoder.Data.Models.DMS.FileContent"
             }
           ],
@@ -1333,7 +1333,7 @@
           "Name": "DeleteAllFoldersAsync",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedFolder",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
@@ -1353,7 +1353,7 @@
           "Name": "DeleteFolderAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "deletedFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -1373,7 +1373,7 @@
           "Name": "InsertFolderAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "newFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -1483,7 +1483,7 @@
           "Name": "SelectFolderForUpdate",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "folderId",
               "Type": "System.Guid"
             },
             {
@@ -1497,7 +1497,7 @@
           "Name": "SelectFolderWithRoles",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "folderId",
               "Type": "System.Guid"
             },
             {
@@ -1511,7 +1511,7 @@
           "Name": "UpdateFolderAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "updatedFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -1528,7 +1528,7 @@
           "Name": "DeleteAllFolderRolesAsync",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedFolderRole",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
             }
           ],
@@ -1538,7 +1538,7 @@
           "Name": "DeleteFolderRoleAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "deletedFolderRole",
               "Type": "cCoder.Data.Models.Security.FolderRole"
             }
           ],
@@ -1558,7 +1558,7 @@
           "Name": "InsertFolderRoleAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "newFolderRole",
               "Type": "cCoder.Data.Models.Security.FolderRole"
             }
           ],
@@ -1828,7 +1828,7 @@
           "Name": "Post",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "newFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -1859,7 +1859,7 @@
           "Name": "DeleteAll",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedFolderRole",
               "Type": "cCoder.DocumentManagement.Models.ODataCollection\u003CcCoder.Data.Models.Security.FolderRole\u003E"
             }
           ],
@@ -1879,7 +1879,7 @@
           "Name": "Post",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "newFolderRole",
               "Type": "cCoder.Data.Models.Security.FolderRole"
             }
           ],
@@ -2015,7 +2015,7 @@
           "Name": "AddAsync",
           "Inputs": [
             {
-              "Name": "app",
+              "Name": "newApp",
               "Type": "cCoder.Data.Models.CMS.App"
             }
           ],
@@ -2035,7 +2035,7 @@
           "Name": "UpdateAsync",
           "Inputs": [
             {
-              "Name": "app",
+              "Name": "updatedApp",
               "Type": "cCoder.Data.Models.CMS.App"
             }
           ],
@@ -2718,7 +2718,7 @@
           "Name": "DeleteFolderAsync",
           "Inputs": [
             {
-              "Name": "folder",
+              "Name": "deletedFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -3028,7 +3028,7 @@
           "Name": "AddFileContentAsync",
           "Inputs": [
             {
-              "Name": "fileContent",
+              "Name": "newFileContent",
               "Type": "cCoder.Data.Models.DMS.FileContent"
             }
           ],
@@ -3058,7 +3058,7 @@
           "Name": "DeleteAsync",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileContentId",
               "Type": "System.Guid"
             }
           ],
@@ -3068,7 +3068,7 @@
           "Name": "Get",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileContentId",
               "Type": "System.Guid"
             }
           ],
@@ -3088,7 +3088,7 @@
           "Name": "UpdateFileContentAsync",
           "Inputs": [
             {
-              "Name": "fileContent",
+              "Name": "updatedFileContent",
               "Type": "cCoder.Data.Models.DMS.FileContent"
             }
           ],
@@ -3125,7 +3125,7 @@
           "Name": "DeleteAsync",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileId",
               "Type": "System.Guid"
             }
           ],
@@ -3135,7 +3135,7 @@
           "Name": "Get",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileId",
               "Type": "System.Guid"
             }
           ],
@@ -3223,7 +3223,7 @@
           "Name": "GetWithFolderAndContents",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileId",
               "Type": "System.Guid"
             },
             {
@@ -3237,7 +3237,7 @@
           "Name": "GetWithFolderRolesAndContents",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileId",
               "Type": "System.Guid"
             },
             {
@@ -3292,7 +3292,7 @@
           "Name": "AddFolderRoleAsync",
           "Inputs": [
             {
-              "Name": "folderRole",
+              "Name": "newFolderRole",
               "Type": "cCoder.Data.Models.Security.FolderRole"
             }
           ],
@@ -3302,7 +3302,7 @@
           "Name": "DeleteFolderRoleAsync",
           "Inputs": [
             {
-              "Name": "folderRole",
+              "Name": "deletedFolderRole",
               "Type": "cCoder.Data.Models.Security.FolderRole"
             }
           ],
@@ -3329,7 +3329,7 @@
           "Name": "AddFolderAsync",
           "Inputs": [
             {
-              "Name": "folder",
+              "Name": "newFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -3339,7 +3339,7 @@
           "Name": "AddForPathBuildFolderAsync",
           "Inputs": [
             {
-              "Name": "folder",
+              "Name": "newFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -3359,7 +3359,7 @@
           "Name": "DeleteAllForAppFolderAsync",
           "Inputs": [
             {
-              "Name": "folders",
+              "Name": "deletedFolder",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
@@ -3369,7 +3369,7 @@
           "Name": "DeleteAsync",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "folderId",
               "Type": "System.Guid"
             }
           ],
@@ -3379,7 +3379,7 @@
           "Name": "Get",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "folderId",
               "Type": "System.Guid"
             }
           ],
@@ -3489,7 +3489,7 @@
           "Name": "GetForUpdate",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "folderId",
               "Type": "System.Guid"
             },
             {
@@ -3503,7 +3503,7 @@
           "Name": "GetWithRoles",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "folderId",
               "Type": "System.Guid"
             },
             {
@@ -3517,7 +3517,7 @@
           "Name": "UpdateFolderAsync",
           "Inputs": [
             {
-              "Name": "folder",
+              "Name": "updatedFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -3527,7 +3527,7 @@
           "Name": "UpdateForAppFolderAsync",
           "Inputs": [
             {
-              "Name": "folder",
+              "Name": "updatedFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -3561,7 +3561,7 @@
           "Name": "AddAppAsync",
           "Inputs": [
             {
-              "Name": "app",
+              "Name": "newApp",
               "Type": "cCoder.Data.Models.CMS.App"
             }
           ],
@@ -3581,7 +3581,7 @@
           "Name": "UpdateAppAsync",
           "Inputs": [
             {
-              "Name": "app",
+              "Name": "updatedApp",
               "Type": "cCoder.Data.Models.CMS.App"
             }
           ],
@@ -3734,7 +3734,7 @@
           "Name": "AddFileContentAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "newFileContent",
               "Type": "cCoder.Data.Models.DMS.FileContent"
             }
           ],
@@ -3754,7 +3754,7 @@
           "Name": "DeleteAllFileContentAsync",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedFileContent",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
             }
           ],
@@ -3764,7 +3764,7 @@
           "Name": "DeleteAsync",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileContentId",
               "Type": "System.Guid"
             }
           ],
@@ -3774,7 +3774,7 @@
           "Name": "Get",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileContentId",
               "Type": "System.Guid"
             }
           ],
@@ -3794,7 +3794,7 @@
           "Name": "UpdateFileContentAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "updatedFileContent",
               "Type": "cCoder.Data.Models.DMS.FileContent"
             }
           ],
@@ -3811,7 +3811,7 @@
           "Name": "AddFileAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "newFile",
               "Type": "cCoder.Data.Models.DMS.File"
             }
           ],
@@ -3849,7 +3849,7 @@
           "Name": "DeleteAllFileAsync",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedFile",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
             }
           ],
@@ -3859,7 +3859,7 @@
           "Name": "DeleteAsync",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileId",
               "Type": "System.Guid"
             }
           ],
@@ -3887,7 +3887,7 @@
           "Name": "Get",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileId",
               "Type": "System.Guid"
             }
           ],
@@ -3999,7 +3999,7 @@
           "Name": "UpdateFileAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "updatedFile",
               "Type": "cCoder.Data.Models.DMS.File"
             }
           ],
@@ -4016,7 +4016,7 @@
           "Name": "AddFolderAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "newFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -4096,7 +4096,7 @@
           "Name": "DeleteAllFolderAsync",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedFolder",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
@@ -4106,7 +4106,7 @@
           "Name": "DeleteAsync",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "folderId",
               "Type": "System.Guid"
             }
           ],
@@ -4130,7 +4130,7 @@
           "Name": "Get",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "folderId",
               "Type": "System.Guid"
             }
           ],
@@ -4246,7 +4246,7 @@
           "Name": "UpdateFolderAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "updatedFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -4263,7 +4263,7 @@
           "Name": "AddFolderRoleAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "newFolderRole",
               "Type": "cCoder.Data.Models.Security.FolderRole"
             }
           ],
@@ -4283,7 +4283,7 @@
           "Name": "DeleteAllFolderRoleAsync",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedFolderRole",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
             }
           ],
@@ -4293,7 +4293,7 @@
           "Name": "DeleteFolderRoleAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "deletedFolderRole",
               "Type": "cCoder.Data.Models.Security.FolderRole"
             }
           ],
@@ -4374,7 +4374,7 @@
           "Name": "AddFileContentAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "newFileContent",
               "Type": "cCoder.Data.Models.DMS.FileContent"
             }
           ],
@@ -4394,7 +4394,7 @@
           "Name": "DeleteAllFileContentAsync",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedFileContent",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
             }
           ],
@@ -4404,7 +4404,7 @@
           "Name": "DeleteAsync",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileContentId",
               "Type": "System.Guid"
             }
           ],
@@ -4414,7 +4414,7 @@
           "Name": "Get",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileContentId",
               "Type": "System.Guid"
             }
           ],
@@ -4434,7 +4434,7 @@
           "Name": "UpdateFileContentAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "updatedFileContent",
               "Type": "cCoder.Data.Models.DMS.FileContent"
             }
           ],
@@ -4526,7 +4526,7 @@
           "Name": "DeleteAllFileAsync",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedFile",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
             }
           ],
@@ -4536,7 +4536,7 @@
           "Name": "DeleteAsync",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileId",
               "Type": "System.Guid"
             }
           ],
@@ -4564,7 +4564,7 @@
           "Name": "Get",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "fileId",
               "Type": "System.Guid"
             }
           ],
@@ -4676,7 +4676,7 @@
           "Name": "UpdateFileAsync",
           "Inputs": [
             {
-              "Name": "newFile",
+              "Name": "updatedFile",
               "Type": "cCoder.Data.Models.DMS.File"
             }
           ],
@@ -4800,7 +4800,7 @@
           "Name": "DeleteAllFolderAsync",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedFolder",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
@@ -4810,7 +4810,7 @@
           "Name": "DeleteAsync",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "folderId",
               "Type": "System.Guid"
             }
           ],
@@ -4844,7 +4844,7 @@
           "Name": "Get",
           "Inputs": [
             {
-              "Name": "id",
+              "Name": "folderId",
               "Type": "System.Guid"
             }
           ],
@@ -4960,7 +4960,7 @@
           "Name": "UpdateFolderAsync",
           "Inputs": [
             {
-              "Name": "folder",
+              "Name": "updatedFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
             }
           ],
@@ -5077,7 +5077,7 @@
           "Name": "AddFolderRoleAsync",
           "Inputs": [
             {
-              "Name": "entity",
+              "Name": "newFolderRole",
               "Type": "cCoder.Data.Models.Security.FolderRole"
             }
           ],
@@ -5097,7 +5097,7 @@
           "Name": "DeleteAllFolderRoleAsync",
           "Inputs": [
             {
-              "Name": "items",
+              "Name": "deletedFolderRole",
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
             }
           ],
@@ -5107,7 +5107,7 @@
           "Name": "DeleteFolderRoleAsync",
           "Inputs": [
             {
-              "Name": "link",
+              "Name": "deletedFolderRole",
               "Type": "cCoder.Data.Models.Security.FolderRole"
             }
           ],
@@ -5582,34 +5582,6 @@
       "LineNumber": 27
     },
     {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.RoleBroker",
-      "LineNumber": 32
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.RoleBroker",
-      "LineNumber": 40
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.RoleBroker",
-      "LineNumber": 48
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.RoleBroker",
-      "LineNumber": 55
-    },
-    {
       "Code": "STXB002",
       "Description": "A broker must not contain branching logic.",
       "Severity": "Warning",
@@ -5659,25 +5631,11 @@
       "LineNumber": 86
     },
     {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 98
-    },
-    {
       "Code": "STXB002",
       "Description": "A broker must not contain branching logic.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
       "LineNumber": 102
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 112
     },
     {
       "Code": "STXB002",
@@ -5706,34 +5664,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
       "LineNumber": 31
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
-      "LineNumber": 36
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
-      "LineNumber": 44
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
-      "LineNumber": 52
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
-      "LineNumber": 59
     },
     {
       "Code": "STXB002",
@@ -5778,25 +5708,11 @@
       "LineNumber": 37
     },
     {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 47
-    },
-    {
       "Code": "STXB002",
       "Description": "A broker must not contain branching logic.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
       "LineNumber": 51
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 61
     },
     {
       "Code": "STXB002",
@@ -5841,27 +5757,6 @@
       "LineNumber": 140
     },
     {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 150
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 158
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 166
-    },
-    {
       "Code": "STXB002",
       "Description": "A broker must not contain branching logic.",
       "Severity": "Warning",
@@ -5874,13 +5769,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
       "LineNumber": 180
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 189
     },
     {
       "Code": "STXB002",
@@ -5902,27 +5790,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker",
       "LineNumber": 28
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker",
-      "LineNumber": 33
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker",
-      "LineNumber": 41
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker",
-      "LineNumber": 48
     },
     {
       "Code": "STXB002",
@@ -5988,13 +5855,6 @@
       "LineNumber": 31
     },
     {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 99
-    },
-    {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
@@ -6021,34 +5881,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
       "LineNumber": 19
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
-      "LineNumber": 41
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
-      "LineNumber": 52
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure",
-      "LineNumber": 18
     },
     {
       "Code": "STXFORMAT004",
@@ -6310,13 +6142,6 @@
       "LineNumber": 78
     },
     {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
-      "LineNumber": 14
-    },
-    {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
@@ -6471,13 +6296,6 @@
       "LineNumber": 17
     },
     {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 22
-    },
-    {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
@@ -6499,32 +6317,25 @@
       "LineNumber": 37
     },
     {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 75
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 120
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 156
+      "LineNumber": 80
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 161
+      "LineNumber": 162
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
+      "LineNumber": 194
     },
     {
       "Code": "STX0012",
@@ -6539,13 +6350,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
       "LineNumber": 18
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 21
     },
     {
       "Code": "STX0005",
@@ -6569,20 +6373,6 @@
       "LineNumber": 36
     },
     {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 66
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 74
-    },
-    {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
@@ -6602,13 +6392,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
       "LineNumber": 190
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 227
     },
     {
       "Code": "STX0005",
@@ -6667,25 +6450,32 @@
       "LineNumber": 15
     },
     {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 28
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 52
+      "LineNumber": 33
     },
     {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 57
+      "LineNumber": 58
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
+      "LineNumber": 81
+    },
+    {
+      "Code": "STX0010",
+      "Description": "Every public service method must enter through a local TryCatch operation.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
+      "LineNumber": 17
     },
     {
       "Code": "STX0012",
@@ -6700,13 +6490,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 17
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 20
     },
     {
       "Code": "STX0005",
@@ -6730,46 +6513,11 @@
       "LineNumber": 35
     },
     {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 57
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 65
-    },
-    {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 106
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 123
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 150
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 175
     },
     {
       "Code": "STX0005",
@@ -6779,20 +6527,6 @@
       "LineNumber": 182
     },
     {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 186
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 212
-    },
-    {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
@@ -6805,13 +6539,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 217
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 233
     },
     {
       "Code": "STXFORMAT008",
@@ -6826,6 +6553,13 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 369
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
+      "LineNumber": 436
     },
     {
       "Code": "STX0012",
@@ -6856,32 +6590,11 @@
       "LineNumber": 12
     },
     {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 26
-    },
-    {
       "Code": "STXO001",
       "Description": "An orchestration must have two or three foundation or processing dependencies and must not mix them.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
       "LineNumber": 15
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 69
     },
     {
       "Code": "STX0022",
@@ -6919,74 +6632,11 @@
       "LineNumber": 13
     },
     {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 33
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 46
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 59
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 81
-    },
-    {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
       "LineNumber": 13
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 33
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 46
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 59
     },
     {
       "Code": "STXFORMAT008",
@@ -6996,46 +6646,11 @@
       "LineNumber": 64
     },
     {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 89
-    },
-    {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
       "LineNumber": 13
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 33
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 46
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 59
     },
     {
       "Code": "STXFORMAT008",
@@ -7045,39 +6660,11 @@
       "LineNumber": 64
     },
     {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 98
-    },
-    {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
       "LineNumber": 13
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 24
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 37
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 57
     },
     {
       "Code": "STX0007",
@@ -7115,34 +6702,6 @@
       "LineNumber": 13
     },
     {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 33
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 42
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 51
-    },
-    {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
@@ -7155,13 +6714,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
       "LineNumber": 72
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 97
     },
     {
       "Code": "STXFORMAT003",
@@ -7192,6 +6744,13 @@
       "LineNumber": 16
     },
     {
+      "Code": "STX0010",
+      "Description": "Every public service method must enter through a local TryCatch operation.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 16
+    },
+    {
       "Code": "STXP001",
       "Description": "A processing service may use only one foundation service and no higher-level service.",
       "Severity": "Warning",
@@ -7206,123 +6765,95 @@
       "LineNumber": 18
     },
     {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 20
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 116
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 125
-    },
-    {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 197
+      "LineNumber": 198
     },
     {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 225
+      "LineNumber": 226
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 235
+      "LineNumber": 236
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 262
+      "LineNumber": 263
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 278
+      "LineNumber": 279
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 293
+      "LineNumber": 294
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 334
+      "LineNumber": 335
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 334
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 359
+      "LineNumber": 335
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 364
+      "LineNumber": 365
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 366
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 371
+      "LineNumber": 367
     },
     {
       "Code": "STX0022",
       "Description": "Creation method names must include the concrete type they create.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 381
+      "LineNumber": 382
     },
     {
       "Code": "STX0022",
       "Description": "Creation method names must include the concrete type they create.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 410
+      "LineNumber": 411
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 711
     },
     {
       "Code": "STX0004",
@@ -7351,13 +6882,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
       "LineNumber": 20
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 22
     },
     {
       "Code": "STXFORMAT003",
@@ -7393,27 +6917,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
       "LineNumber": 163
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 194
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 212
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 230
     },
     {
       "Code": "STX0005",
@@ -7458,13 +6961,6 @@
       "LineNumber": 399
     },
     {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 463
-    },
-    {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
@@ -7491,27 +6987,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
       "LineNumber": 521
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 535
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 648
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 914
     },
     {
       "Code": "STX0004",
@@ -7612,20 +7087,6 @@
       "LineNumber": 18
     },
     {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 29
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 67
-    },
-    {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
@@ -7652,13 +7113,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "LineNumber": 129
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 151
     },
     {
       "Code": "STXFORMAT003",

@@ -12,17 +12,17 @@ namespace cCoder.DocumentManagement.Brokers.Storage;
 public interface IFolderBroker
 {
     IQueryable<Folder> SelectAllFolders(bool ignoreFilters);
-    Folder SelectFolderWithRoles(Guid id, bool ignoreFilters);
-    Folder SelectFolderForUpdate(Guid id, bool ignoreFilters);
+    Folder SelectFolderWithRoles(Guid folderId, bool ignoreFilters);
+    Folder SelectFolderForUpdate(Guid folderId, bool ignoreFilters);
     Folder SelectFolderByPath(int appId, string path, bool ignoreFilters);
     Folder SelectFolderByPathWithRoles(int appId, string path, bool ignoreFilters);
     Folder SelectFolderByPathWithParentAndRoles(int appId, string path, bool ignoreFilters);
     Folder SelectFolderByPathWithRolesAndFilesAndContents(int appId, string path, bool ignoreFilters);
     Folder SelectFolderByPathWithSubFoldersAndFiles(int appId, string path, bool ignoreFilters);
-    ValueTask<Folder> InsertFolderAsync(Folder entity);
-    ValueTask<Folder> UpdateFolderAsync(Folder entity);
-    ValueTask<int> DeleteFolderAsync(Folder entity);
-    ValueTask DeleteAllFoldersAsync(IEnumerable<Folder> items);
+    ValueTask<Folder> InsertFolderAsync(Folder newFolder);
+    ValueTask<Folder> UpdateFolderAsync(Folder updatedFolder);
+    ValueTask<int> DeleteFolderAsync(Folder deletedFolder);
+    ValueTask DeleteAllFoldersAsync(IEnumerable<Folder> deletedFolder);
     ValueTask DeleteAllFoldersByAppIdAsync(int appId);
     int? GetAppId(Folder entity);
 }
@@ -44,7 +44,7 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
             .AsSplitQuery();
     }
 
-    public Folder SelectFolderWithRoles(Guid id, bool ignoreFilters)
+    public Folder SelectFolderWithRoles(Guid folderId, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -55,10 +55,10 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
         return query
             .Include(navigationPropertyPath: folder => folder.Roles)
                 .ThenInclude(navigationPropertyPath: folderRole => folderRole.Role)
-            .FirstOrDefault(predicate: folder => folder.Id == id);
+            .FirstOrDefault(predicate: folder => folder.Id == folderId);
     }
 
-    public Folder SelectFolderForUpdate(Guid id, bool ignoreFilters)
+    public Folder SelectFolderForUpdate(Guid folderId, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -74,7 +74,7 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
             .Include(navigationPropertyPath: folder => folder.Roles)
                 .ThenInclude(navigationPropertyPath: folderRole => folderRole.Role)
             .AsSplitQuery()
-            .FirstOrDefault(predicate: folder => folder.Id == id);
+            .FirstOrDefault(predicate: folder => folder.Id == folderId);
     }
 
     public Folder SelectFolderByPath(int appId, string path, bool ignoreFilters)
@@ -147,30 +147,30 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
             .FirstOrDefault(predicate: folder => folder.AppId == appId && folder.Path == path);
     }
 
-    public async ValueTask<Folder> InsertFolderAsync(Folder entity)
+    public async ValueTask<Folder> InsertFolderAsync(Folder newFolder)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        Folder result = (await coreDataContext.Folders.AddAsync(entity: entity)).Entity;
+        Folder result = (await coreDataContext.Folders.AddAsync(entity: newFolder)).Entity;
         _ = await coreDataContext.SaveChangesAsync();
         return result;
     }
 
-    public async ValueTask<Folder> UpdateFolderAsync(Folder entity)
+    public async ValueTask<Folder> UpdateFolderAsync(Folder updatedFolder)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        Folder result = coreDataContext.Folders.Update(entity: entity).Entity;
+        Folder result = coreDataContext.Folders.Update(entity: updatedFolder).Entity;
         _ = await coreDataContext.SaveChangesAsync();
         return result;
     }
 
-    public async ValueTask<int> DeleteFolderAsync(Folder entity)
+    public async ValueTask<int> DeleteFolderAsync(Folder deletedFolder)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
         Folder folder = await coreDataContext.Folders
             .IgnoreQueryFilters()
             .Include(navigationPropertyPath: foundFolder => foundFolder.Roles)
-            .FirstOrDefaultAsync(predicate: foundFolder => foundFolder.Id == entity.Id);
+            .FirstOrDefaultAsync(predicate: foundFolder => foundFolder.Id == deletedFolder.Id);
 
         if (folder is null)
         {
@@ -186,15 +186,15 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
         return await coreDataContext.SaveChangesAsync();
     }
 
-    public async ValueTask DeleteAllFoldersAsync(IEnumerable<Folder> items)
+    public async ValueTask DeleteAllFoldersAsync(IEnumerable<Folder> deletedFolder)
     {
-        if (items == null || !items.Any())
+        if (deletedFolder == null || !deletedFolder.Any())
         {
             return;
         }
 
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        Guid[] folderIds = [.. items.Select(selector: folder => folder.Id)];
+        Guid[] folderIds = [.. deletedFolder.Select(selector: folder => folder.Id)];
 
         Folder[] folders = await coreDataContext.Folders
             .IgnoreQueryFilters()

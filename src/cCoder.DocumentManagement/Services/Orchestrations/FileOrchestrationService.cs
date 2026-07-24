@@ -12,12 +12,12 @@ namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 internal partial class FileOrchestrationService(IFileProcessingService processingService, IFileEventProcessingService eventService) : IFileOrchestrationService
 {
-    public cCoder.Data.Models.DMS.File Get(Guid id)
+    public cCoder.Data.Models.DMS.File Get(Guid fileId)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id]);
-            return processingService.Get(id: id);
+            ValidateInputs(inputs: [fileId]);
+            return processingService.Get(fileId: fileId);
 
         });
 
@@ -30,12 +30,12 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 
         });
 
-    public ValueTask<cCoder.Data.Models.DMS.File> AddFileAsync(cCoder.Data.Models.DMS.File entity)
+    public ValueTask<cCoder.Data.Models.DMS.File> AddFileAsync(cCoder.Data.Models.DMS.File newFile)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
-            cCoder.Data.Models.DMS.File result = await processingService.AddFileAsync(entity: entity);
+            ValidateInputs(inputs: [newFile]);
+            cCoder.Data.Models.DMS.File result = await processingService.AddFileAsync(newFile: newFile);
 
             await eventService.RaiseFileAddEventAsync(entity: result);
 
@@ -43,12 +43,12 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 
         });
 
-    public ValueTask<cCoder.Data.Models.DMS.File> UpdateFileAsync(cCoder.Data.Models.DMS.File entity)
+    public ValueTask<cCoder.Data.Models.DMS.File> UpdateFileAsync(cCoder.Data.Models.DMS.File updatedFile)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
-            cCoder.Data.Models.DMS.File result = await processingService.UpdateFileAsync(entity: entity);
+            ValidateInputs(inputs: [updatedFile]);
+            cCoder.Data.Models.DMS.File result = await processingService.UpdateFileAsync(updatedFile: updatedFile);
 
             await eventService.RaiseFileUpdateEventAsync(entity: result);
 
@@ -56,13 +56,13 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 
         });
 
-    public ValueTask DeleteAsync(Guid id)
+    public ValueTask DeleteAsync(Guid fileId)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [id]);
+            ValidateInputs(inputs: [fileId]);
             cCoder.Data.Models.DMS.File entity = processingService.GetAll(ignoreFilters: true)
-    .FirstOrDefault(predicate: file => file.Id == id);
+    .FirstOrDefault(predicate: file => file.Id == fileId);
 
 
             if (entity == null)
@@ -73,7 +73,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 
             await eventService.RaiseFileDeleteEventAsync(entity: entity);
 
-            await processingService.DeleteAsync(id: id);
+            await processingService.DeleteAsync(fileId: fileId);
 
         });
 
@@ -86,12 +86,12 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 
         });
 
-    public ValueTask DeleteAllFileAsync(IEnumerable<cCoder.Data.Models.DMS.File> items)
+    public ValueTask DeleteAllFileAsync(IEnumerable<cCoder.Data.Models.DMS.File> deletedFile)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [items]);
-            return processingService.DeleteAllFileAsync(items: items);
+            ValidateInputs(inputs: [deletedFile]);
+            return processingService.DeleteAllFileAsync(deletedFile: deletedFile);
 
         });
 

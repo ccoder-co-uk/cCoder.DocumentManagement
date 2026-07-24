@@ -24,7 +24,7 @@ public partial class FileServiceTests
             .Returns(value: new[] { ToExternalFile(file: file) }.AsQueryable());
 
         // When
-        FileEntity result = fileService.Get(id: fileId);
+        FileEntity result = fileService.Get(fileId: fileId);
 
         // Then
         result.Should()

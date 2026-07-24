@@ -17,13 +17,13 @@ namespace cCoder.DocumentManagement.Services.Foundations;
 internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationBroker authorizationBroker)
     : IFolderService
 {
-    public Folder Get(Guid id)
+    public Folder Get(Guid folderId)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id]);
+            ValidateInputs(inputs: [folderId]);
             Folder folder = GetAll()
-    .FirstOrDefault(predicate: i => i.Id == id);
+    .FirstOrDefault(predicate: i => i.Id == folderId);
 
 
             if (folder is not null)
@@ -33,7 +33,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 
 
             Folder unrestrictedFolder = GetAll(ignoreFilters: true)
-                .FirstOrDefault(predicate: i => i.Id == id);
+                .FirstOrDefault(predicate: i => i.Id == folderId);
 
 
             if (unrestrictedFolder is not null)
@@ -54,20 +54,20 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
             return folderBroker.SelectAllFolders(ignoreFilters: ignoreFilters);
         });
 
-    public Folder GetWithRoles(Guid id, bool ignoreFilters = false)
+    public Folder GetWithRoles(Guid folderId, bool ignoreFilters = false)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id, ignoreFilters]);
-            return CreateFolder(folder: folderBroker.SelectFolderWithRoles(id: id, ignoreFilters: ignoreFilters));
+            ValidateInputs(inputs: [folderId, ignoreFilters]);
+            return CreateFolder(folder: folderBroker.SelectFolderWithRoles(folderId: folderId, ignoreFilters: ignoreFilters));
         });
 
-    public Folder GetForUpdate(Guid id, bool ignoreFilters = false)
+    public Folder GetForUpdate(Guid folderId, bool ignoreFilters = false)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id, ignoreFilters]);
-            return CreateFolderForUpdate(folder: folderBroker.SelectFolderForUpdate(id: id, ignoreFilters: ignoreFilters));
+            ValidateInputs(inputs: [folderId, ignoreFilters]);
+            return CreateFolderForUpdate(folder: folderBroker.SelectFolderForUpdate(folderId: folderId, ignoreFilters: ignoreFilters));
         });
 
     public Folder GetByPath(int appId, string path, bool ignoreFilters = false)
@@ -120,102 +120,102 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
             return CreateFolderForMove(folder: folderBroker.SelectFolderByPathWithSubFoldersAndFiles(appId: appId, path: path, ignoreFilters: ignoreFilters));
         });
 
-    public ValueTask<Folder> AddFolderAsync(Folder folder)
+    public ValueTask<Folder> AddFolderAsync(Folder newFolder)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [folder]);
-            authorizationBroker.Authorize(appId: folder.AppId, privilege: $"{nameof(Folder)}_create");
+            ValidateInputs(inputs: [newFolder]);
+            authorizationBroker.Authorize(appId: newFolder.AppId, privilege: $"{nameof(Folder)}_create");
 
-            Folder newFolder = CreateStorageFolderForAdd(folder: folder);
+            Folder storageFolder = CreateStorageFolderForAdd(folder: newFolder);
 
-            Folder result = await folderBroker.InsertFolderAsync(entity: newFolder);
+            Folder result = await folderBroker.InsertFolderAsync(newFolder: storageFolder);
 
-            folder.Id = result.Id;
+            newFolder.Id = result.Id;
 
-            folder.AppId = result.AppId;
+            newFolder.AppId = result.AppId;
 
-            folder.ParentId = result.ParentId;
+            newFolder.ParentId = result.ParentId;
 
-            folder.Name = result.Name;
+            newFolder.Name = result.Name;
 
-            folder.Path = result.Path;
+            newFolder.Path = result.Path;
 
-            folder.DeletedOn = result.DeletedOn;
+            newFolder.DeletedOn = result.DeletedOn;
 
-            return folder;
+            return newFolder;
 
         });
 
-    public ValueTask<Folder> AddForPathBuildFolderAsync(Folder folder)
+    public ValueTask<Folder> AddForPathBuildFolderAsync(Folder newFolder)
+=>
+        TryCatch(operation: (Func<ValueTask<Folder>>)(async () =>
+        {
+            ValidateInputs(inputs: (object[])[newFolder]);
+            Folder storageFolder = CreateStorageFolderForAdd(folder: newFolder);
+
+            Folder result = await folderBroker.InsertFolderAsync(newFolder: storageFolder);
+
+            newFolder.Id = result.Id;
+
+            newFolder.AppId = result.AppId;
+
+            newFolder.ParentId = result.ParentId;
+
+            newFolder.Name = result.Name;
+
+            newFolder.Path = result.Path;
+
+            newFolder.DeletedOn = result.DeletedOn;
+
+            return newFolder;
+
+        }));
+
+    public ValueTask<Folder> UpdateFolderAsync(Folder updatedFolder)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [folder]);
-            Folder newFolder = CreateStorageFolderForAdd(folder: folder);
+            ValidateInputs(inputs: [updatedFolder]);
+            authorizationBroker.Authorize(appId: updatedFolder.AppId, privilege: $"{nameof(Folder)}_update");
 
-            Folder result = await folderBroker.InsertFolderAsync(entity: newFolder);
-
-            folder.Id = result.Id;
-
-            folder.AppId = result.AppId;
-
-            folder.ParentId = result.ParentId;
-
-            folder.Name = result.Name;
-
-            folder.Path = result.Path;
-
-            folder.DeletedOn = result.DeletedOn;
-
-            return folder;
+            return await UpdateForAppFolderAsync(updatedFolder: updatedFolder);
 
         });
 
-    public ValueTask<Folder> UpdateFolderAsync(Folder folder)
+    public ValueTask<Folder> UpdateForAppFolderAsync(Folder updatedFolder)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [folder]);
-            authorizationBroker.Authorize(appId: folder.AppId, privilege: $"{nameof(Folder)}_update");
+            ValidateInputs(inputs: [updatedFolder]);
+            Folder updateFolder = CreateStorageFolder(folder: updatedFolder, includeId: true);
 
-            return await UpdateForAppFolderAsync(folder: folder);
+
+            Folder result = await folderBroker.UpdateFolderAsync(updatedFolder: updateFolder);
+
+            updatedFolder.Id = result.Id;
+
+            updatedFolder.AppId = result.AppId;
+
+            updatedFolder.ParentId = result.ParentId;
+
+            updatedFolder.Name = result.Name;
+
+            updatedFolder.Path = result.Path;
+
+            updatedFolder.DeletedOn = result.DeletedOn;
+
+            return updatedFolder;
 
         });
 
-    public ValueTask<Folder> UpdateForAppFolderAsync(Folder folder)
+    public ValueTask DeleteAsync(Guid folderId)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [folder]);
-            Folder updateFolder = CreateStorageFolder(folder: folder, includeId: true);
-
-
-            Folder result = await folderBroker.UpdateFolderAsync(entity: updateFolder);
-
-            folder.Id = result.Id;
-
-            folder.AppId = result.AppId;
-
-            folder.ParentId = result.ParentId;
-
-            folder.Name = result.Name;
-
-            folder.Path = result.Path;
-
-            folder.DeletedOn = result.DeletedOn;
-
-            return folder;
-
-        });
-
-    public ValueTask DeleteAsync(Guid id)
-=>
-        TryCatch(operation: async () =>
-        {
-            ValidateInputs(inputs: [id]);
+            ValidateInputs(inputs: [folderId]);
             Folder folder = GetAll(ignoreFilters: true)
-    .FirstOrDefault(predicate: foundFolder => foundFolder.Id == id);
+    .FirstOrDefault(predicate: foundFolder => foundFolder.Id == folderId);
 
 
             if (folder is null)
@@ -226,17 +226,17 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 
             authorizationBroker.Authorize(appId: folder.AppId, privilege: $"{nameof(Folder)}_delete");
 
-            _ = await folderBroker.DeleteFolderAsync(entity: CreateStorageFolder(folder: folder, includeId: true));
+            _ = await folderBroker.DeleteFolderAsync(deletedFolder: CreateStorageFolder(folder: folder, includeId: true));
 
         });
 
-    public ValueTask DeleteAllForAppFolderAsync(IEnumerable<Folder> folders)
+    public ValueTask DeleteAllForAppFolderAsync(IEnumerable<Folder> deletedFolder)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [folders]);
+            ValidateInputs(inputs: [deletedFolder]);
             return folderBroker.DeleteAllFoldersAsync(
-                items: folders?.Select(selector: folder => CreateStorageFolder(folder: folder, includeId: true)) ?? []);
+                deletedFolder: deletedFolder?.Select(selector: folder => CreateStorageFolder(folder: folder, includeId: true)) ?? []);
         });
 
     public ValueTask DeleteAllByAppIdAsync(int appId)

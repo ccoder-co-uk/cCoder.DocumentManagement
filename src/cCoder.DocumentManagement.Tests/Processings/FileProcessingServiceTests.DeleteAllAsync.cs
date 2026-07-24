@@ -16,14 +16,14 @@ public partial class FileProcessingServiceTests
         // Given
         cCoder.Data.Models.DMS.File file = CreateRandomFile();
 
-        fileServiceMock.Setup(expression: x => x.DeleteAsync(id: file.Id))
+        fileServiceMock.Setup(expression: x => x.DeleteAsync(fileId: file.Id))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await fileProcessingService.DeleteAllFileAsync(items: new[] { file });
+        await fileProcessingService.DeleteAllFileAsync(deletedFile: new[] { file });
 
         // Then
-        fileServiceMock.Verify(expression: x => x.DeleteAsync(id: file.Id), times: Times.Once);
+        fileServiceMock.Verify(expression: x => x.DeleteAsync(fileId: file.Id), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();
     }
 

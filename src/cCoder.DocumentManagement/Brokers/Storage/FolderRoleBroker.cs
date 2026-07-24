@@ -12,9 +12,9 @@ namespace cCoder.DocumentManagement.Brokers.Storage;
 public interface IFolderRoleBroker
 {
     IQueryable<FolderRole> SelectAllFolderRoles(bool ignoreFilters);
-    ValueTask<FolderRole> InsertFolderRoleAsync(FolderRole entity);
-    ValueTask<int> DeleteFolderRoleAsync(FolderRole entity);
-    ValueTask DeleteAllFolderRolesAsync(IEnumerable<FolderRole> items);
+    ValueTask<FolderRole> InsertFolderRoleAsync(FolderRole newFolderRole);
+    ValueTask<int> DeleteFolderRoleAsync(FolderRole deletedFolderRole);
+    ValueTask DeleteAllFolderRolesAsync(IEnumerable<FolderRole> deletedFolderRole);
     int? GetAppId(FolderRole entity);
 }
 
@@ -30,30 +30,30 @@ internal sealed class FolderRoleBroker(ICoreContextFactory coreContextFactory) :
             : coreDataContext.FolderRoles;
     }
 
-    public async ValueTask<FolderRole> InsertFolderRoleAsync(FolderRole entity)
+    public async ValueTask<FolderRole> InsertFolderRoleAsync(FolderRole newFolderRole)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        FolderRole result = (await coreDataContext.FolderRoles.AddAsync(entity: entity)).Entity;
+        FolderRole result = (await coreDataContext.FolderRoles.AddAsync(entity: newFolderRole)).Entity;
         _ = await coreDataContext.SaveChangesAsync();
         return result;
     }
 
-    public async ValueTask<int> DeleteFolderRoleAsync(FolderRole entity)
+    public async ValueTask<int> DeleteFolderRoleAsync(FolderRole deletedFolderRole)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        coreDataContext.FolderRoles.Remove(entity: entity);
+        coreDataContext.FolderRoles.Remove(entity: deletedFolderRole);
         return await coreDataContext.SaveChangesAsync();
     }
 
-    public async ValueTask DeleteAllFolderRolesAsync(IEnumerable<FolderRole> items)
+    public async ValueTask DeleteAllFolderRolesAsync(IEnumerable<FolderRole> deletedFolderRole)
     {
-        if (items == null || !items.Any())
+        if (deletedFolderRole == null || !deletedFolderRole.Any())
         {
             return;
         }
 
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        coreDataContext.FolderRoles.RemoveRange(entities: items);
+        coreDataContext.FolderRoles.RemoveRange(entities: deletedFolderRole);
         _ = await coreDataContext.SaveChangesAsync();
     }
 

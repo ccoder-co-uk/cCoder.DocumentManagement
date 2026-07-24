@@ -26,7 +26,7 @@ public partial class FileOrchestrationServiceTests
         fileProcessingServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
             .Returns(value: new[] { entity }.AsQueryable());
 
-        fileProcessingServiceMock.Setup(expression: x => x.DeleteAsync(id: id))
+        fileProcessingServiceMock.Setup(expression: x => x.DeleteAsync(fileId: id))
             .Returns(value: ValueTask.CompletedTask);
 
         fileEventProcessingServiceMock
@@ -34,11 +34,11 @@ public partial class FileOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.DeleteAsync(id: id);
+        await orchestrationService.DeleteAsync(fileId: id);
 
         // Then
         fileProcessingServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Once);
-        fileProcessingServiceMock.Verify(expression: x => x.DeleteAsync(id: id), times: Times.Once);
+        fileProcessingServiceMock.Verify(expression: x => x.DeleteAsync(fileId: id), times: Times.Once);
         fileEventProcessingServiceMock.Verify(expression: x => x.RaiseFileDeleteEventAsync(entity: entity), times: Times.Once);
     }
 

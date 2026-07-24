@@ -11,18 +11,18 @@ internal partial class FolderCoordinationService(
     IFolderOrchestrationService folderOrchestrationService,
     IFileOrchestrationService fileOrchestrationService) : IFolderCoordinationService
 {
-    public ValueTask DeleteFolderAsync(Folder folder)
+    public ValueTask DeleteFolderAsync(Folder deletedFolder)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [folder]);
-            if (folder == null)
+            ValidateInputs(inputs: [deletedFolder]);
+            if (deletedFolder == null)
             {
                 return;
             }
 
 
-            Guid folderId = folder.Id;
+            Guid folderId = deletedFolder.Id;
 
 
             Guid[] childFileIds =
@@ -39,13 +39,13 @@ internal partial class FolderCoordinationService(
 
             foreach (Guid childFileId in childFileIds)
             {
-                await fileOrchestrationService.DeleteAsync(id: childFileId);
+                await fileOrchestrationService.DeleteAsync(fileId: childFileId);
             }
 
 
             foreach (Guid childFolderId in childFolderIds)
             {
-                await folderOrchestrationService.DeleteAsync(id: childFolderId);
+                await folderOrchestrationService.DeleteAsync(folderId: childFolderId);
             }
 
         });

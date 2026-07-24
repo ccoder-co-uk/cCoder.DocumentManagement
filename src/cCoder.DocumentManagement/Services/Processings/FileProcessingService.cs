@@ -17,12 +17,12 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 {
     private User User => authorizationBroker.GetCurrentUser();
 
-    public cCoder.Data.Models.DMS.File Get(Guid id)
+    public cCoder.Data.Models.DMS.File Get(Guid fileId)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id]);
-            return service.Get(id: id);
+            ValidateInputs(inputs: [fileId]);
+            return service.Get(fileId: fileId);
 
         });
 
@@ -40,7 +40,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [newFile]);
-            Folder folder = folderService.GetWithRoles(id: newFile.FolderId, ignoreFilters: true);
+            Folder folder = folderService.GetWithRoles(folderId: newFile.FolderId, ignoreFilters: true);
 
 
             if (folder == null)
@@ -60,7 +60,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             string fileName = (string.IsNullOrWhiteSpace(value: newFile.Name) ? new cCoder.DocumentManagement.Models.Path(path: relativePath).Name : newFile.Name);
 
 
-            cCoder.Data.Models.DMS.File createdFile = await service.AddFileAsync(entity: new cCoder.Data.Models.DMS.File
+            cCoder.Data.Models.DMS.File createdFile = await service.AddFileAsync(newFile: new cCoder.Data.Models.DMS.File
             {
                 FolderId = folder.Id,
                 Folder = folder,
@@ -91,7 +91,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             }
 
 
-            return service.GetWithFolderAndContents(id: createdFile.Id, ignoreFilters: true);
+            return service.GetWithFolderAndContents(fileId: createdFile.Id, ignoreFilters: true);
 
         });
 
@@ -113,21 +113,21 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         });
 
-    public ValueTask DeleteAsync(Guid id)
+    public ValueTask DeleteAsync(Guid fileId)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id]);
-            return service.DeleteAsync(id: id);
+            ValidateInputs(inputs: [fileId]);
+            return service.DeleteAsync(fileId: fileId);
 
         });
 
-    public ValueTask<cCoder.Data.Models.DMS.File> UpdateFileAsync(cCoder.Data.Models.DMS.File newFile)
+    public ValueTask<cCoder.Data.Models.DMS.File> UpdateFileAsync(cCoder.Data.Models.DMS.File updatedFile)
 =>
-        TryCatch(operation: async () =>
+        TryCatch(operation: (Func<ValueTask<Data.Models.DMS.File>>)(async () =>
         {
-            ValidateInputs(inputs: [newFile]);
-            cCoder.Data.Models.DMS.File dbVersion = service.GetWithFolderRolesAndContents(id: newFile.Id, ignoreFilters: true);
+            ValidateInputs(inputs: (object[])[updatedFile]);
+            cCoder.Data.Models.DMS.File dbVersion = service.GetWithFolderRolesAndContents(fileId: (Guid)updatedFile.Id, ignoreFilters: true);
 
 
             if (dbVersion == null || !dbVersion.UserCan(user: User, privilege: "file_update"))
@@ -136,33 +136,34 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             }
 
 
-            dbVersion.Description = newFile.Description;
+            dbVersion.Description = updatedFile.Description;
 
-            dbVersion.Size = newFile.Size;
+            dbVersion.Size = updatedFile.Size;
 
-            dbVersion.MimeType = newFile.MimeType;
+            dbVersion.MimeType = updatedFile.MimeType;
 
 
-            if (dbVersion.Name != newFile.Name || dbVersion.FolderId != newFile.FolderId)
+            if (dbVersion.Name != updatedFile.Name || dbVersion.FolderId != updatedFile.FolderId)
             {
                 Guid originalFolderId = dbVersion.FolderId;
-                dbVersion.Name = newFile.Name;
-                dbVersion.FolderId = newFile.FolderId;
-                dbVersion.Folder = ((newFile.FolderId == originalFolderId) ? dbVersion.Folder : folderService.GetWithRoles(id: newFile.FolderId, ignoreFilters: true));
+                dbVersion.Name = updatedFile.Name;
+                dbVersion.FolderId = updatedFile.FolderId;
+                dbVersion.Folder = ((updatedFile.FolderId == originalFolderId) ? dbVersion.Folder : folderService.GetWithRoles(folderId: (Guid)updatedFile.FolderId, ignoreFilters: true));
                 dbVersion.RecomputePath();
             }
 
 
-            cCoder.Data.Models.DMS.File updatedFile = await service.UpdateFileAsync(entity: dbVersion);
+            cCoder.Data.Models.DMS.File savedFile =
+                await service.UpdateFileAsync(updatedFile: dbVersion);
 
 
-            if (newFile.Contents != null && newFile.Contents.Any())
+            if (savedFile.Contents != null && savedFile.Contents.Any())
             {
-                FileContent[] contents = newFile.Contents.Select(selector: (FileContent content) => new FileContent
+                FileContent[] contents = savedFile.Contents.Select(selector: (FileContent content) => new FileContent
                 {
                     Id = content.Id,
-                    FileId = updatedFile.Id,
-                    File = updatedFile,
+                    FileId = savedFile.Id,
+                    File = savedFile,
                     Description = content.Description,
                     Size = content.Size,
                     CreatedBy = content.CreatedBy,
@@ -176,9 +177,9 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             }
 
 
-            return service.GetWithFolderAndContents(id: updatedFile.Id, ignoreFilters: true);
+            return service.GetWithFolderAndContents(fileId: savedFile.Id, ignoreFilters: true);
 
-        });
+        }));
 
     public ValueTask HandleFileDeleteEventAsync(cCoder.Data.Models.DMS.File file)
 =>
@@ -244,7 +245,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
                 }
                 else
                 {
-                    await UpdateFileAppFolderAsync(app: app, existingFile: existingFile, rawBytes: rawBytes, folder: folder);
+                    await UpdateFileAppFolderAsync(updatedApp: app, existingFile: existingFile, rawBytes: rawBytes, folder: folder);
                 }
             }
             else
@@ -331,7 +332,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             {
                 try
                 {
-                    cCoder.Data.Models.DMS.File savedItem = item.Id == Guid.Empty ? await AddFileAsync(newFile: item) : await UpdateFileAsync(newFile: item);
+                    cCoder.Data.Models.DMS.File savedItem = item.Id == Guid.Empty ? await AddFileAsync(newFile: item) : await UpdateFileAsync(updatedFile: item);
 
                     results.Add(item: new Result<cCoder.Data.Models.DMS.File>
                     {
@@ -356,21 +357,21 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         });
 
-    public ValueTask DeleteAllFileAsync(IEnumerable<cCoder.Data.Models.DMS.File> items)
+    public ValueTask DeleteAllFileAsync(IEnumerable<cCoder.Data.Models.DMS.File> deletedFile)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [items]);
-            foreach (cCoder.Data.Models.DMS.File item in items)
+            ValidateInputs(inputs: [deletedFile]);
+            foreach (cCoder.Data.Models.DMS.File item in deletedFile)
             {
-                await DeleteAsync(id: item.Id);
+                await DeleteAsync(fileId: item.Id);
             }
 
         });
 
-    private async ValueTask UpdateFileAppFolderAsync(App app, cCoder.Data.Models.DMS.File existingFile, byte[] rawBytes, Folder folder)
+    private async ValueTask UpdateFileAppFolderAsync(App updatedApp, cCoder.Data.Models.DMS.File existingFile, byte[] rawBytes, Folder folder)
     {
-        if (!User.IsAdminOfApp(appId: app.Id) && !folder.UserCan(user: User, privilege: "file_update"))
+        if (!User.IsAdminOfApp(appId: updatedApp.Id) && !folder.UserCan(user: User, privilege: "file_update"))
         {
             throw new SecurityException(message: "Access Denied!");
         }
@@ -395,7 +396,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
                        orderby fileContent.Version descending
                        select fileContent.Version).First() + 1;
 
-        await fileContentProcessingService.AddFileContentAsync(entity: new FileContent
+        await fileContentProcessingService.AddFileContentAsync(newFileContent: new FileContent
         {
             CreatedBy = User.Id,
             CreatedOn = DateTimeOffset.UtcNow,
@@ -409,7 +410,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
     private async ValueTask CreateFilePathFolderAsync(cCoder.DocumentManagement.Models.Path path, byte[] rawBytes, Folder folder)
     {
-        cCoder.Data.Models.DMS.File fileObject = await service.AddFileAsync(entity: new cCoder.Data.Models.DMS.File
+        cCoder.Data.Models.DMS.File fileObject = await service.AddFileAsync(newFile: new cCoder.Data.Models.DMS.File
         {
             CreatedBy = User.Id,
             CreatedOn = DateTimeOffset.UtcNow,
@@ -421,7 +422,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             Size = GetSizeOf(content: rawBytes)
         });
 
-        await fileContentProcessingService.AddFileContentAsync(entity: new FileContent
+        await fileContentProcessingService.AddFileContentAsync(newFileContent: new FileContent
         {
             CreatedBy = User.Id,
             CreatedOn = DateTimeOffset.UtcNow,
@@ -448,7 +449,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         }
         else
         {
-            await service.DeleteAsync(id: file.Id);
+            await service.DeleteAsync(fileId: file.Id);
         }
     }
 
@@ -462,12 +463,12 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             throw new SecurityException(message: "Access Denied!");
         }
 
-        await fileContentProcessingService.DeleteAsync(id: versionedContent.Id);
+        await fileContentProcessingService.DeleteAsync(fileContentId: versionedContent.Id);
 
         if (!fileContentProcessingService.GetAll(ignoreFilters: true)
             .Any(predicate: (FileContent fileContent) => fileContent.FileId == file.Id))
         {
-            await service.DeleteAsync(id: file.Id);
+            await service.DeleteAsync(fileId: file.Id);
         }
     }
 
@@ -514,7 +515,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             sourceFile.Folder = newParent;
             sourceFile.Name = newPath.Name;
             sourceFile.Path = (newParent.Path + "/" + newPath.Name).ToLower();
-            await service.UpdateFileAsync(entity: sourceFile);
+            await service.UpdateFileAsync(updatedFile: sourceFile);
         }
     }
 
@@ -572,7 +573,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             return;
         }
 
-        cCoder.Data.Models.DMS.File copiedFile = await service.AddFileAsync(entity: new cCoder.Data.Models.DMS.File
+        cCoder.Data.Models.DMS.File copiedFile = await service.AddFileAsync(newFile: new cCoder.Data.Models.DMS.File
         {
             CreatedBy = sourceFile.CreatedBy,
             CreatedOn = sourceFile.CreatedOn,
@@ -663,7 +664,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         if (folder2.Id == Guid.Empty)
         {
-            folder2 = await folderService.AddFolderAsync(folder: folder2);
+            folder2 = await folderService.AddFolderAsync(newFolder: folder2);
         }
 
         return folder2;

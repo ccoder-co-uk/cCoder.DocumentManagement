@@ -32,7 +32,7 @@ public partial class FolderServiceTests
 
         folderBrokerMock
             .Setup(expression: x =>
-                x.InsertFolderAsync(entity: It.Is<DataFolder>(match: candidate => !ReferenceEquals(objA: candidate, objB: folder)))
+                x.InsertFolderAsync(newFolder: It.Is<DataFolder>(match: candidate => !ReferenceEquals(objA: candidate, objB: folder)))
             )
             .Callback<DataFolder>(action: candidate =>
                 submitted = new Folder
@@ -48,7 +48,7 @@ public partial class FolderServiceTests
             .ReturnsAsync(valueFunction: (DataFolder value) => value);
 
         // When
-        Folder result = await folderService.AddFolderAsync(folder: folder);
+        Folder result = await folderService.AddFolderAsync(newFolder: folder);
 
         // Then
         result.Should()
@@ -72,7 +72,7 @@ public partial class FolderServiceTests
             .BeEquivalentTo(expectation: folder, config: options => options.Excluding(expression: candidate => candidate.Id));
 
         folderBrokerMock.Verify(
-            expression: x => x.InsertFolderAsync(entity: It.Is<DataFolder>(match: candidate => !ReferenceEquals(objA: candidate, objB: folder))),
+            expression: x => x.InsertFolderAsync(newFolder: It.Is<DataFolder>(match: candidate => !ReferenceEquals(objA: candidate, objB: folder))),
             times: Times.Once
         );
 
@@ -93,7 +93,7 @@ public partial class FolderServiceTests
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await folderService.AddFolderAsync(folder: folder);
+        Func<Task> action = async () => await folderService.AddFolderAsync(newFolder: folder);
 
         // Then
         await action.Should()

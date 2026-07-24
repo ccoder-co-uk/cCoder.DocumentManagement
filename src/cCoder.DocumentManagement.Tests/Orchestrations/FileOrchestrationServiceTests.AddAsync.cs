@@ -20,7 +20,7 @@ public partial class FileOrchestrationServiceTests
             Builder<cCoder.Data.Models.DMS.File>.CreateNew()
             .Build();
 
-        fileProcessingServiceMock.Setup(expression: x => x.AddFileAsync(entity: entity))
+        fileProcessingServiceMock.Setup(expression: x => x.AddFileAsync(newFile: entity))
             .ReturnsAsync(value: entity);
 
         fileEventProcessingServiceMock
@@ -28,13 +28,13 @@ public partial class FileOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        cCoder.Data.Models.DMS.File result = await orchestrationService.AddFileAsync(entity: entity);
+        cCoder.Data.Models.DMS.File result = await orchestrationService.AddFileAsync(newFile: entity);
 
         // Then
         result.Should()
             .BeSameAs(expected: entity);
 
-        fileProcessingServiceMock.Verify(expression: x => x.AddFileAsync(entity: entity), times: Times.Once);
+        fileProcessingServiceMock.Verify(expression: x => x.AddFileAsync(newFile: entity), times: Times.Once);
         fileEventProcessingServiceMock.Verify(expression: x => x.RaiseFileAddEventAsync(entity: entity), times: Times.Once);
     }
 

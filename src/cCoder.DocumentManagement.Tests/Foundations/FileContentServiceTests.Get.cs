@@ -27,7 +27,7 @@ public partial class FileContentServiceTests
             .Returns(value: new[] { ToExternalFileContent(fileContent: fileContent) }.AsQueryable());
 
         // When
-        FileContent result = fileContentService.Get(id: fileContentId);
+        FileContent result = fileContentService.Get(fileContentId: fileContentId);
 
         // Then
         result.Should()

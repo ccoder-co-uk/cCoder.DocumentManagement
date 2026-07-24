@@ -36,7 +36,7 @@ public partial class FileContentServiceTests
         fileContentBrokerMock
             .Setup(expression: x =>
                 x.InsertFileContentAsync(
-                    entity: It.Is<DataFileContent>(match: candidate => !ReferenceEquals(objA: candidate, objB: fileContent))
+                    newFileContent: It.Is<DataFileContent>(match: candidate => !ReferenceEquals(objA: candidate, objB: fileContent))
                 )
             )
             .Callback<DataFileContent>(action: candidate =>
@@ -55,7 +55,7 @@ public partial class FileContentServiceTests
             .ReturnsAsync(valueFunction: (DataFileContent value) => value);
 
         // When
-        FileContent result = await fileContentService.AddFileContentAsync(fileContent: fileContent);
+        FileContent result = await fileContentService.AddFileContentAsync(newFileContent: fileContent);
 
         // Then
         result.Should()
@@ -147,7 +147,7 @@ public partial class FileContentServiceTests
         fileContentBrokerMock.Verify(
             expression: x =>
                 x.InsertFileContentAsync(
-                    entity: It.Is<DataFileContent>(match: candidate => !ReferenceEquals(objA: candidate, objB: fileContent))
+                    newFileContent: It.Is<DataFileContent>(match: candidate => !ReferenceEquals(objA: candidate, objB: fileContent))
                 ),
             times: Times.Once
         );
@@ -175,7 +175,7 @@ public partial class FileContentServiceTests
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await fileContentService.AddFileContentAsync(fileContent: fileContent);
+        Func<Task> action = async () => await fileContentService.AddFileContentAsync(newFileContent: fileContent);
 
         // Then
         await action.Should()

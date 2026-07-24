@@ -17,17 +17,17 @@ public partial class FileProcessingServiceTests
         // Given
         cCoder.Data.Models.DMS.File file = CreateRandomFile();
 
-        fileServiceMock.Setup(expression: x => x.Get(id: file.Id))
+        fileServiceMock.Setup(expression: x => x.Get(fileId: file.Id))
             .Returns(value: file);
 
         // When
-        cCoder.Data.Models.DMS.File result = fileProcessingService.Get(id: file.Id);
+        cCoder.Data.Models.DMS.File result = fileProcessingService.Get(fileId: file.Id);
 
         // Then
         result.Should()
             .BeSameAs(expected: file);
 
-        fileServiceMock.Verify(expression: x => x.Get(id: file.Id), times: Times.Once);
+        fileServiceMock.Verify(expression: x => x.Get(fileId: file.Id), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();
     }
 

@@ -21,12 +21,12 @@ internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingServi
 
         });
 
-    public ValueTask<FolderRole> AddFolderRoleAsync(FolderRole entity)
+    public ValueTask<FolderRole> AddFolderRoleAsync(FolderRole newFolderRole)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
-            FolderRole result = await processingService.AddFolderRoleAsync(entity: entity);
+            ValidateInputs(inputs: [newFolderRole]);
+            FolderRole result = await processingService.AddFolderRoleAsync(newFolderRole: newFolderRole);
 
             await eventService.RaiseFolderRoleAddEventAsync(entity: result);
 
@@ -34,14 +34,14 @@ internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingServi
 
         });
 
-    public ValueTask DeleteFolderRoleAsync(FolderRole entity)
+    public ValueTask DeleteFolderRoleAsync(FolderRole deletedFolderRole)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
-            await eventService.RaiseFolderRoleDeleteEventAsync(entity: entity);
+            ValidateInputs(inputs: [deletedFolderRole]);
+            await eventService.RaiseFolderRoleDeleteEventAsync(entity: deletedFolderRole);
 
-            await processingService.DeleteFolderRoleAsync(entity: entity);
+            await processingService.DeleteFolderRoleAsync(deletedFolderRole: deletedFolderRole);
 
         });
 
@@ -54,12 +54,12 @@ internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingServi
 
         });
 
-    public ValueTask DeleteAllFolderRoleAsync(IEnumerable<FolderRole> items)
+    public ValueTask DeleteAllFolderRoleAsync(IEnumerable<FolderRole> deletedFolderRole)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [items]);
-            return processingService.DeleteAllFolderRoleAsync(items: items);
+            ValidateInputs(inputs: [deletedFolderRole]);
+            return processingService.DeleteAllFolderRoleAsync(deletedFolderRole: deletedFolderRole);
 
         });
 }

@@ -57,12 +57,12 @@ internal partial class EventHandlerService(IEventHubBroker eventHubBroker) : IEv
     void ListenToAppAddEvents() =>
         eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
             eventName: "app_add",
-            handler: (service, app) => service.AddAppAsync(app: app));
+            handler: (service, app) => service.AddAppAsync(newApp: app));
 
     void ListenToAppUpdateEvents() =>
         eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
             eventName: "app_update",
-            handler: (service, app) => service.UpdateAppAsync(app: app));
+            handler: (service, app) => service.UpdateAppAsync(updatedApp: app));
 
     void ListenToAppDeleteEvents() =>
         eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
@@ -72,7 +72,7 @@ internal partial class EventHandlerService(IEventHubBroker eventHubBroker) : IEv
     void ListenToFolderDeleteEvents() =>
         eventHubBroker.ListenToEvent<DataFolder, IFolderCoordinationService>(
             eventName: "folder_delete",
-            handler: (service, folder) => service.DeleteFolderAsync(folder: folder));
+            handler: (service, folder) => service.DeleteFolderAsync(deletedFolder: folder));
 
     void ListenToFileDeleteEvents() =>
         eventHubBroker.ListenToEvent<DmsFile, IFileOrchestrationService>(

@@ -27,7 +27,7 @@ public partial class FolderServiceTests
             .Returns(value: new[] { ToExternalFolder(folder: folder) }.AsQueryable());
 
         // When
-        Folder result = folderService.Get(id: folderId);
+        Folder result = folderService.Get(folderId: folderId);
 
         // Then
         result.Should()

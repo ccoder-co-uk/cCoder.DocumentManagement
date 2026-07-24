@@ -56,7 +56,7 @@ public class AppOrchestrationServiceTests
             .Returns(value: ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Models.Result<Folder>>>(result: []));
 
         // When
-        await service.AddAppAsync(app: app);
+        await service.AddAppAsync(newApp: app);
 
         // Then
         folderOrchestrationServiceMock.VerifyAll();

@@ -12,12 +12,12 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 internal partial class FileContentProcessingService(IFileContentService service) : IFileContentProcessingService
 {
-    public FileContent Get(Guid id)
+    public FileContent Get(Guid fileContentId)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id]);
-            return service.Get(id: id);
+            ValidateInputs(inputs: [fileContentId]);
+            return service.Get(fileContentId: fileContentId);
 
         });
 
@@ -30,30 +30,30 @@ internal partial class FileContentProcessingService(IFileContentService service)
 
         });
 
-    public ValueTask<FileContent> AddFileContentAsync(FileContent entity)
+    public ValueTask<FileContent> AddFileContentAsync(FileContent newFileContent)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [entity]);
-            return service.AddFileContentAsync(fileContent: entity);
+            ValidateInputs(inputs: [newFileContent]);
+            return service.AddFileContentAsync(newFileContent: newFileContent);
 
         });
 
-    public ValueTask<FileContent> UpdateFileContentAsync(FileContent entity)
+    public ValueTask<FileContent> UpdateFileContentAsync(FileContent updatedFileContent)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [entity]);
-            return service.UpdateFileContentAsync(fileContent: entity);
+            ValidateInputs(inputs: [updatedFileContent]);
+            return service.UpdateFileContentAsync(updatedFileContent: updatedFileContent);
 
         });
 
-    public ValueTask DeleteAsync(Guid id)
+    public ValueTask DeleteAsync(Guid fileContentId)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id]);
-            return service.DeleteAsync(id: id);
+            ValidateInputs(inputs: [fileContentId]);
+            return service.DeleteAsync(fileContentId: fileContentId);
 
         });
 
@@ -69,7 +69,7 @@ internal partial class FileContentProcessingService(IFileContentService service)
             {
                 try
                 {
-                    FileContent savedItem = item.Id == Guid.Empty ? await AddFileContentAsync(entity: item) : await UpdateFileContentAsync(entity: item);
+                    FileContent savedItem = item.Id == Guid.Empty ? await AddFileContentAsync(newFileContent: item) : await UpdateFileContentAsync(updatedFileContent: item);
 
                     results.Add(item: new Result<FileContent>
                     {
@@ -94,14 +94,14 @@ internal partial class FileContentProcessingService(IFileContentService service)
 
         });
 
-    public ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> items)
+    public ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> deletedFileContent)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [items]);
-            foreach (FileContent item in items)
+            ValidateInputs(inputs: [deletedFileContent]);
+            foreach (FileContent item in deletedFileContent)
             {
-                await DeleteAsync(id: item.Id);
+                await DeleteAsync(fileContentId: item.Id);
             }
 
         });

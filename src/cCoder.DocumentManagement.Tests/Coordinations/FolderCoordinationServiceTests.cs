@@ -71,28 +71,28 @@ public class FolderCoordinationServiceTests
             }.AsQueryable());
 
         fileOrchestrationServiceMock
-            .Setup(expression: service => service.DeleteAsync(id: childFileId))
+            .Setup(expression: service => service.DeleteAsync(fileId: childFileId))
             .Returns(value: ValueTask.CompletedTask);
 
         folderOrchestrationServiceMock
-            .Setup(expression: service => service.DeleteAsync(id: childFolderId))
+            .Setup(expression: service => service.DeleteAsync(folderId: childFolderId))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await coordinationService.DeleteFolderAsync(folder: folder);
+        await coordinationService.DeleteFolderAsync(deletedFolder: folder);
 
         // Then
         fileOrchestrationServiceMock.Verify(expression: service => service.GetAll(ignoreFilters: true), times: Times.Once);
         folderOrchestrationServiceMock.Verify(expression: service => service.GetAll(ignoreFilters: true), times: Times.Once);
-        fileOrchestrationServiceMock.Verify(expression: service => service.DeleteAsync(id: childFileId), times: Times.Once);
-        folderOrchestrationServiceMock.Verify(expression: service => service.DeleteAsync(id: childFolderId), times: Times.Once);
+        fileOrchestrationServiceMock.Verify(expression: service => service.DeleteAsync(fileId: childFileId), times: Times.Once);
+        folderOrchestrationServiceMock.Verify(expression: service => service.DeleteAsync(folderId: childFolderId), times: Times.Once);
     }
 
     [Fact]
     public async Task ShouldDoNothingWhenDeleteFolderAsyncWithNullFolder()
     {
         // When
-        await coordinationService.DeleteFolderAsync(folder: null);
+        await coordinationService.DeleteFolderAsync(deletedFolder: null);
 
         // Then
         fileOrchestrationServiceMock.VerifyNoOtherCalls();

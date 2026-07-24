@@ -25,7 +25,7 @@ public partial class FolderOrchestrationServiceTests
         folderProcessingServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
             .Returns(value: new[] { entity }.AsQueryable());
 
-        folderProcessingServiceMock.Setup(expression: x => x.DeleteAsync(id: id))
+        folderProcessingServiceMock.Setup(expression: x => x.DeleteAsync(folderId: id))
             .Returns(value: ValueTask.CompletedTask);
 
         folderEventProcessingServiceMock
@@ -33,11 +33,11 @@ public partial class FolderOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.DeleteAsync(id: id);
+        await orchestrationService.DeleteAsync(folderId: id);
 
         // Then
         folderProcessingServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Once);
-        folderProcessingServiceMock.Verify(expression: x => x.DeleteAsync(id: id), times: Times.Once);
+        folderProcessingServiceMock.Verify(expression: x => x.DeleteAsync(folderId: id), times: Times.Once);
         folderEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderDeleteEventAsync(entity: entity), times: Times.Once);
     }
 

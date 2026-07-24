@@ -33,7 +33,7 @@ public partial class FolderRoleServiceTests
         folderRoleBrokerMock
             .Setup(expression: x =>
                 x.InsertFolderRoleAsync(
-                    entity: It.Is<DataFolderRole>(match: candidate =>
+                    newFolderRole: It.Is<DataFolderRole>(match: candidate =>
                         candidate.FolderId == folderRole.FolderId && candidate.RoleId == folderRole.RoleId
                     )
                 )
@@ -44,7 +44,7 @@ public partial class FolderRoleServiceTests
             .ReturnsAsync(valueFunction: (DataFolderRole value) => value);
 
         // When
-        FolderRole result = await folderRoleService.AddFolderRoleAsync(folderRole: folderRole);
+        FolderRole result = await folderRoleService.AddFolderRoleAsync(newFolderRole: folderRole);
 
         // Then
         result.Should()
@@ -68,7 +68,7 @@ public partial class FolderRoleServiceTests
         folderRoleBrokerMock.Verify(
             expression: x =>
                 x.InsertFolderRoleAsync(
-                    entity: It.Is<DataFolderRole>(match: candidate =>
+                    newFolderRole: It.Is<DataFolderRole>(match: candidate =>
                         candidate.FolderId == folderRole.FolderId && candidate.RoleId == folderRole.RoleId
                     )
                 ),
@@ -95,7 +95,7 @@ public partial class FolderRoleServiceTests
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await folderRoleService.AddFolderRoleAsync(folderRole: folderRole);
+        Func<Task> action = async () => await folderRoleService.AddFolderRoleAsync(newFolderRole: folderRole);
 
         // Then
         await action.Should()

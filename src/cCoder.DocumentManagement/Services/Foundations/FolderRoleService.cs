@@ -25,42 +25,43 @@ internal partial class FolderRoleService(
             return folderRoleBroker.SelectAllFolderRoles(ignoreFilters: ignoreFilters);
         });
 
-    public ValueTask<FolderRole> AddFolderRoleAsync(FolderRole folderRole)
+    public ValueTask<FolderRole> AddFolderRoleAsync(FolderRole newFolderRole)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [folderRole]);
-            cCoder.Data.Models.Security.FolderRole newFolderRole = CreateStorageFolderRole(folderRole: folderRole);
+            ValidateInputs(inputs: [newFolderRole]);
+            cCoder.Data.Models.Security.FolderRole storageFolderRole =
+                CreateStorageFolderRole(folderRole: newFolderRole);
 
 
             authorizationBroker.Authorize(
-                appId: folderRoleBroker.GetAppId(entity: newFolderRole),
+                appId: folderRoleBroker.GetAppId(entity: storageFolderRole),
                 privilege: $"{nameof(FolderRole)}_create"
             );
 
 
-            FolderRole result = await folderRoleBroker.InsertFolderRoleAsync(entity: newFolderRole);
+            FolderRole result = await folderRoleBroker.InsertFolderRoleAsync(newFolderRole: storageFolderRole);
 
-            folderRole.FolderId = result.FolderId;
+            newFolderRole.FolderId = result.FolderId;
 
-            folderRole.RoleId = result.RoleId;
+            newFolderRole.RoleId = result.RoleId;
 
-            return folderRole;
+            return newFolderRole;
 
         });
 
-    public ValueTask DeleteFolderRoleAsync(FolderRole folderRole)
+    public ValueTask DeleteFolderRoleAsync(FolderRole deletedFolderRole)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [folderRole]);
+            ValidateInputs(inputs: [deletedFolderRole]);
             authorizationBroker.Authorize(
-    appId: folderRoleBroker.GetAppId(entity: CreateStorageFolderRole(folderRole: folderRole)),
+    appId: folderRoleBroker.GetAppId(entity: CreateStorageFolderRole(folderRole: deletedFolderRole)),
     privilege: $"{nameof(FolderRole)}_delete"
 );
 
 
-            _ = await folderRoleBroker.DeleteFolderRoleAsync(entity: CreateStorageFolderRole(folderRole: folderRole));
+            _ = await folderRoleBroker.DeleteFolderRoleAsync(deletedFolderRole: CreateStorageFolderRole(folderRole: deletedFolderRole));
 
         });
 

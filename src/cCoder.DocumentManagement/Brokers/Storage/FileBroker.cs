@@ -16,8 +16,8 @@ public interface IFileBroker
     FileEntity SelectFileByPath(int appId, string path, bool ignoreFilters);
     FileEntity SelectFileByPathWithFolderAndContents(int appId, string path, bool ignoreFilters);
     FileEntity SelectFileByPathWithFolderRolesAndContents(int appId, string path, bool ignoreFilters);
-    FileEntity SelectFileWithFolderAndContents(Guid id, bool ignoreFilters);
-    FileEntity SelectFileWithFolderRolesAndContents(Guid id, bool ignoreFilters);
+    FileEntity SelectFileWithFolderAndContents(Guid fileId, bool ignoreFilters);
+    FileEntity SelectFileWithFolderRolesAndContents(Guid fileId, bool ignoreFilters);
     IQueryable<FileEntity> SelectFilesByContent(int appId, byte[] needle);
     ValueTask<FileEntity> InsertFileAsync(FileEntity entity);
     ValueTask<FileEntity> UpdateFileAsync(FileEntity entity);
@@ -95,7 +95,7 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
             .FirstOrDefault(predicate: file => file.Folder.AppId == appId && file.Path.ToLower() == path.ToLower());
     }
 
-    public FileEntity SelectFileWithFolderAndContents(Guid id, bool ignoreFilters)
+    public FileEntity SelectFileWithFolderAndContents(Guid fileId, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -106,10 +106,10 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
         return query
             .Include(navigationPropertyPath: file => file.Folder)
             .Include(navigationPropertyPath: file => file.Contents)
-            .FirstOrDefault(predicate: file => file.Id == id);
+            .FirstOrDefault(predicate: file => file.Id == fileId);
     }
 
-    public FileEntity SelectFileWithFolderRolesAndContents(Guid id, bool ignoreFilters)
+    public FileEntity SelectFileWithFolderRolesAndContents(Guid fileId, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -122,7 +122,7 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
             .Include(navigationPropertyPath: file => file.Folder)
                 .ThenInclude(navigationPropertyPath: folder => folder.Roles)
                     .ThenInclude(navigationPropertyPath: folderRole => folderRole.Role)
-            .FirstOrDefault(predicate: file => file.Id == id);
+            .FirstOrDefault(predicate: file => file.Id == fileId);
     }
 
     public IQueryable<FileEntity> SelectFilesByContent(int appId, byte[] needle)

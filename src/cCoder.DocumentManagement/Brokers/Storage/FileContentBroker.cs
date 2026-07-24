@@ -14,10 +14,10 @@ public interface IFileContentBroker
     IQueryable<FileContent> SelectAllFileContents(bool ignoreFilters);
     ValueTask DeleteAllFileContentsForFileAsync(Guid fileId);
     ValueTask DeleteAllFileContentsForFilesAsync(Guid[] fileIds);
-    ValueTask<FileContent> InsertFileContentAsync(FileContent entity);
-    ValueTask<FileContent> UpdateFileContentAsync(FileContent entity);
-    ValueTask<int> DeleteFileContentAsync(FileContent entity);
-    ValueTask DeleteAllFileContentsAsync(IEnumerable<FileContent> items);
+    ValueTask<FileContent> InsertFileContentAsync(FileContent newFileContent);
+    ValueTask<FileContent> UpdateFileContentAsync(FileContent updatedFileContent);
+    ValueTask<int> DeleteFileContentAsync(FileContent deletedFileContent);
+    ValueTask DeleteAllFileContentsAsync(IEnumerable<FileContent> deletedFileContent);
     int? GetAppId(FileContent entity);
 }
 
@@ -33,38 +33,38 @@ internal sealed class FileContentBroker(ICoreContextFactory coreContextFactory) 
             : coreDataContext.FileContents;
     }
 
-    public async ValueTask<FileContent> InsertFileContentAsync(FileContent entity)
+    public async ValueTask<FileContent> InsertFileContentAsync(FileContent newFileContent)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        FileContent result = (await coreDataContext.FileContents.AddAsync(entity: entity)).Entity;
+        FileContent result = (await coreDataContext.FileContents.AddAsync(entity: newFileContent)).Entity;
         _ = await coreDataContext.SaveChangesAsync();
         return result;
     }
 
-    public async ValueTask<FileContent> UpdateFileContentAsync(FileContent entity)
+    public async ValueTask<FileContent> UpdateFileContentAsync(FileContent updatedFileContent)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        FileContent result = coreDataContext.FileContents.Update(entity: entity).Entity;
+        FileContent result = coreDataContext.FileContents.Update(entity: updatedFileContent).Entity;
         _ = await coreDataContext.SaveChangesAsync();
         return result;
     }
 
-    public async ValueTask<int> DeleteFileContentAsync(FileContent entity)
+    public async ValueTask<int> DeleteFileContentAsync(FileContent deletedFileContent)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        coreDataContext.FileContents.Remove(entity: entity);
+        coreDataContext.FileContents.Remove(entity: deletedFileContent);
         return await coreDataContext.SaveChangesAsync();
     }
 
-    public async ValueTask DeleteAllFileContentsAsync(IEnumerable<FileContent> items)
+    public async ValueTask DeleteAllFileContentsAsync(IEnumerable<FileContent> deletedFileContent)
     {
-        if (items == null || !items.Any())
+        if (deletedFileContent == null || !deletedFileContent.Any())
         {
             return;
         }
 
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        coreDataContext.FileContents.RemoveRange(entities: items);
+        coreDataContext.FileContents.RemoveRange(entities: deletedFileContent);
         _ = await coreDataContext.SaveChangesAsync();
     }
 

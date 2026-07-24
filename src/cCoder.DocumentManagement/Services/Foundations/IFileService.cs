@@ -11,18 +11,18 @@ using cCoder.Data.Models.Security;
 
 public interface IFileService
 {
-    File Get(Guid id);
+    File Get(Guid fileId);
     Guid[] GetIdsByFolderIds(Guid[] folderIds, bool ignoreFilters = false);
-    File GetWithFolderAndContents(Guid id, bool ignoreFilters = false);
-    File GetWithFolderRolesAndContents(Guid id, bool ignoreFilters = false);
+    File GetWithFolderAndContents(Guid fileId, bool ignoreFilters = false);
+    File GetWithFolderRolesAndContents(Guid fileId, bool ignoreFilters = false);
     File GetByPath(int appId, string path, bool ignoreFilters = false);
     File GetByPathWithFolderAndContents(int appId, string path, bool ignoreFilters = false);
     File GetByPathWithFolderRolesAndContents(int appId, string path, bool ignoreFilters = false);
     IQueryable<File> Search(int appId, byte[] needle);
     IQueryable<File> GetAll(bool ignoreFilters = false);
-    ValueTask<File> AddFileAsync(File entity);
-    ValueTask<File> UpdateFileAsync(File entity);
-    ValueTask<File> UpdateForAppFileAsync(File entity);
-    ValueTask DeleteAsync(Guid id);
-    ValueTask DeleteAllForAppFileAsync(IEnumerable<File> items);
+    ValueTask<File> AddFileAsync(File newFile);
+    ValueTask<File> UpdateFileAsync(File updatedFile);
+    ValueTask<File> UpdateForAppFileAsync(File updatedFile);
+    ValueTask DeleteAsync(Guid fileId);
+    ValueTask DeleteAllForAppFileAsync(IEnumerable<File> deletedFile);
 }

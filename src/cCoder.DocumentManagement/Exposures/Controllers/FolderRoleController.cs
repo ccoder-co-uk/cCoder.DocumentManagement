@@ -38,25 +38,25 @@ public class FolderRoleController : ODataController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] FolderRole entity)
+    public async Task<IActionResult> Post([FromBody] FolderRole newFolderRole)
     {
         if (!base.ModelState.IsValid)
         {
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: base.ModelState);
         }
 
-        return Ok(value: await Service.AddFolderRoleAsync(entity: entity));
+        return Ok(value: await Service.AddFolderRoleAsync(newFolderRole: newFolderRole));
     }
 
     [HttpPost]
-    public async Task<IActionResult> DeleteAll([FromBody] ODataCollection<FolderRole> items)
+    public async Task<IActionResult> DeleteAll([FromBody] ODataCollection<FolderRole> deletedFolderRole)
     {
         if (!base.ModelState.IsValid)
         {
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: base.ModelState);
         }
 
-        await Service.DeleteAllFolderRoleAsync(items: items.Value);
+        await Service.DeleteAllFolderRoleAsync(deletedFolderRole: deletedFolderRole.Value);
         return Ok();
     }
 }

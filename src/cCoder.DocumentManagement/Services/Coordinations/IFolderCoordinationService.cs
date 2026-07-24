@@ -8,5 +8,5 @@ namespace cCoder.DocumentManagement.Services.Coordinations;
 
 public interface IFolderCoordinationService
 {
-    ValueTask DeleteFolderAsync(Folder folder);
+    ValueTask DeleteFolderAsync(Folder deletedFolder);
 }

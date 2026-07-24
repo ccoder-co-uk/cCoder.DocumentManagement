@@ -30,17 +30,17 @@ public partial class FolderServiceTests
 
         authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_delete"));
 
-        folderBrokerMock.Setup(expression: x => x.DeleteFolderAsync(entity: It.IsAny<DataFolder>()))
+        folderBrokerMock.Setup(expression: x => x.DeleteFolderAsync(deletedFolder: It.IsAny<DataFolder>()))
             .ReturnsAsync(value: 1);
 
         // When
-        await folderService.DeleteAsync(id: folderId);
+        await folderService.DeleteAsync(folderId: folderId);
 
         // Then
         folderBrokerMock.Verify(expression: x => x.SelectAllFolders(ignoreFilters: true), times: Times.Once);
 
         folderBrokerMock.Verify(
-            expression: x => x.DeleteFolderAsync(entity: It.Is<DataFolder>(match: candidate => candidate.Id == folder.Id)),
+            expression: x => x.DeleteFolderAsync(deletedFolder: It.Is<DataFolder>(match: candidate => candidate.Id == folder.Id)),
             times: Times.Once
         );
 
@@ -65,7 +65,7 @@ public partial class FolderServiceTests
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await folderService.DeleteAsync(id: folderId);
+        Func<Task> action = async () => await folderService.DeleteAsync(folderId: folderId);
 
         // Then
         await action.Should()

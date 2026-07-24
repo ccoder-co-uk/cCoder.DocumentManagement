@@ -79,12 +79,12 @@ public partial class FolderRoleProcessingServiceTests
         folderRoleServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
             .Returns(value: new[] { link }.AsQueryable());
 
-        folderRoleServiceMock.Setup(expression: x => x.DeleteFolderRoleAsync(folderRole: link))
+        folderRoleServiceMock.Setup(expression: x => x.DeleteFolderRoleAsync(deletedFolderRole: link))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         await folderRoleProcessingService.DeleteFolderRoleAsync(
-            link: new FolderRole { FolderId = folder.Id, RoleId = role.Id }
+            deletedFolderRole: new FolderRole { FolderId = folder.Id, RoleId = role.Id }
         );
 
         // Then
@@ -94,7 +94,7 @@ public partial class FolderRoleProcessingServiceTests
         folderRoleServiceMock.Verify(
             expression: x =>
                 x.DeleteFolderRoleAsync(
-                    folderRole: It.Is<FolderRole>(match: item => item.RoleId == role.Id && item.FolderId == folder.Id)
+                    deletedFolderRole: It.Is<FolderRole>(match: item => item.RoleId == role.Id && item.FolderId == folder.Id)
                 ),
             times: Times.Once
         );
@@ -158,7 +158,7 @@ public partial class FolderRoleProcessingServiceTests
         // When
         await Assert.ThrowsAsync<SecurityException>(testCode: async () =>
             await folderRoleProcessingService.DeleteFolderRoleAsync(
-                link: new FolderRole { FolderId = folder.Id, RoleId = role.Id }
+                deletedFolderRole: new FolderRole { FolderId = folder.Id, RoleId = role.Id }
             )
         );
 

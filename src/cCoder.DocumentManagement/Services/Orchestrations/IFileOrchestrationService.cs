@@ -11,18 +11,18 @@ namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 public interface IFileOrchestrationService
 {
-    cCoder.Data.Models.DMS.File Get(Guid id);
+    cCoder.Data.Models.DMS.File Get(Guid fileId);
 
     IQueryable<cCoder.Data.Models.DMS.File> GetAll(bool ignoreFilters = false);
 
-    ValueTask<cCoder.Data.Models.DMS.File> AddFileAsync(cCoder.Data.Models.DMS.File entity);
+    ValueTask<cCoder.Data.Models.DMS.File> AddFileAsync(cCoder.Data.Models.DMS.File newFile);
 
-    ValueTask<cCoder.Data.Models.DMS.File> UpdateFileAsync(cCoder.Data.Models.DMS.File entity);
+    ValueTask<cCoder.Data.Models.DMS.File> UpdateFileAsync(cCoder.Data.Models.DMS.File updatedFile);
 
-    ValueTask DeleteAsync(Guid id);
+    ValueTask DeleteAsync(Guid fileId);
     ValueTask<IEnumerable<Result<cCoder.Data.Models.DMS.File>>> AddOrUpdateFile(IEnumerable<cCoder.Data.Models.DMS.File> items);
 
-    ValueTask DeleteAllFileAsync(IEnumerable<cCoder.Data.Models.DMS.File> items);
+    ValueTask DeleteAllFileAsync(IEnumerable<cCoder.Data.Models.DMS.File> deletedFile);
 
     cCoder.Data.Models.DMS.File GetByPath(int appId, string path);
 

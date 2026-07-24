@@ -96,7 +96,7 @@ public partial class FileContentController : ODataController
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
         }
 
-        return Ok(value: await Service.AddFileContentAsync(entity: entity));
+        return Ok(value: await Service.AddFileContentAsync(newFileContent: entity));
     }
 
     [HttpPut]
@@ -116,13 +116,13 @@ public partial class FileContentController : ODataController
         }
 
         entity.Id = key;
-        return Ok(value: await Service.UpdateFileContentAsync(entity: entity));
+        return Ok(value: await Service.UpdateFileContentAsync(updatedFileContent: entity));
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
     public async Task<IActionResult> Patch([FromRoute] Guid key, Delta<LocalFileContent> delta)
     {
-        LocalFileContent originalEntity = Service.Get(id: key);
+        LocalFileContent originalEntity = Service.Get(fileContentId: key);
 
         if (originalEntity == null)
         {
@@ -130,13 +130,13 @@ public partial class FileContentController : ODataController
         }
 
         delta.Patch(original: originalEntity);
-        return Ok(value: await Service.UpdateFileContentAsync(entity: originalEntity));
+        return Ok(value: await Service.UpdateFileContentAsync(updatedFileContent: originalEntity));
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete([FromRoute] Guid key)
     {
-        await Service.DeleteAsync(id: key);
+        await Service.DeleteAsync(fileContentId: key);
         return Ok();
     }
 }

@@ -12,12 +12,12 @@ namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 internal partial class FileContentOrchestrationService(IFileContentProcessingService processingService, IFileContentEventProcessingService eventService) : IFileContentOrchestrationService
 {
-    public FileContent Get(Guid id)
+    public FileContent Get(Guid fileContentId)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id]);
-            return processingService.Get(id: id);
+            ValidateInputs(inputs: [fileContentId]);
+            return processingService.Get(fileContentId: fileContentId);
 
         });
 
@@ -30,12 +30,12 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
 
         });
 
-    public ValueTask<FileContent> AddFileContentAsync(FileContent entity)
+    public ValueTask<FileContent> AddFileContentAsync(FileContent newFileContent)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
-            FileContent result = await processingService.AddFileContentAsync(entity: entity);
+            ValidateInputs(inputs: [newFileContent]);
+            FileContent result = await processingService.AddFileContentAsync(newFileContent: newFileContent);
 
             await eventService.RaiseFileContentAddEventAsync(entity: result);
 
@@ -43,12 +43,12 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
 
         });
 
-    public ValueTask<FileContent> UpdateFileContentAsync(FileContent entity)
+    public ValueTask<FileContent> UpdateFileContentAsync(FileContent updatedFileContent)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
-            FileContent result = await processingService.UpdateFileContentAsync(entity: entity);
+            ValidateInputs(inputs: [updatedFileContent]);
+            FileContent result = await processingService.UpdateFileContentAsync(updatedFileContent: updatedFileContent);
 
             await eventService.RaiseFileContentUpdateEventAsync(entity: result);
 
@@ -56,16 +56,16 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
 
         });
 
-    public ValueTask DeleteAsync(Guid id)
+    public ValueTask DeleteAsync(Guid fileContentId)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [id]);
-            FileContent entity = processingService.Get(id: id);
+            ValidateInputs(inputs: [fileContentId]);
+            FileContent entity = processingService.Get(fileContentId: fileContentId);
 
             await eventService.RaiseFileContentDeleteEventAsync(entity: entity);
 
-            await processingService.DeleteAsync(id: id);
+            await processingService.DeleteAsync(fileContentId: fileContentId);
 
         });
 
@@ -78,12 +78,12 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
 
         });
 
-    public ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> items)
+    public ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> deletedFileContent)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [items]);
-            return processingService.DeleteAllFileContentAsync(items: items);
+            ValidateInputs(inputs: [deletedFileContent]);
+            return processingService.DeleteAllFileContentAsync(deletedFileContent: deletedFileContent);
 
         });
 }

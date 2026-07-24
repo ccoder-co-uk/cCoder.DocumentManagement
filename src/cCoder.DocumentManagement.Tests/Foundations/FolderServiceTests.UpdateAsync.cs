@@ -31,7 +31,7 @@ public partial class FolderServiceTests
         authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_update"));
 
         folderBrokerMock
-            .Setup(expression: x => x.UpdateFolderAsync(entity: It.IsAny<DataFolder>()))
+            .Setup(expression: x => x.UpdateFolderAsync(updatedFolder: It.IsAny<DataFolder>()))
             .Callback<DataFolder>(action: candidate =>
                 submitted = new Folder
                 {
@@ -46,7 +46,7 @@ public partial class FolderServiceTests
             .ReturnsAsync(valueFunction: (DataFolder value) => value);
 
         // When
-        Folder result = await folderService.UpdateFolderAsync(folder: folder);
+        Folder result = await folderService.UpdateFolderAsync(updatedFolder: folder);
 
         // Then
         result.Should()
@@ -67,7 +67,7 @@ public partial class FolderServiceTests
         result.Should()
             .BeEquivalentTo(expectation: folder);
 
-        folderBrokerMock.Verify(expression: x => x.UpdateFolderAsync(entity: It.IsAny<DataFolder>()), times: Times.Once);
+        folderBrokerMock.Verify(expression: x => x.UpdateFolderAsync(updatedFolder: It.IsAny<DataFolder>()), times: Times.Once);
         folderBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_update"), times: Times.Once);
@@ -85,7 +85,7 @@ public partial class FolderServiceTests
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await folderService.UpdateFolderAsync(folder: folder);
+        Func<Task> action = async () => await folderService.UpdateFolderAsync(updatedFolder: folder);
 
         // Then
         await action.Should()

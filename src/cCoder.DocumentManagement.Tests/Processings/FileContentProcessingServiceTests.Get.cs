@@ -22,17 +22,17 @@ public partial class FileContentProcessingServiceTests
         FileContent entity = CreateRandomFileContent();
         var id = entity.Id;
 
-        fileContentServiceMock.Setup(expression: x => x.Get(id: id))
+        fileContentServiceMock.Setup(expression: x => x.Get(fileContentId: id))
             .Returns(value: entity);
 
         // When
-        FileContent result = fileContentProcessingService.Get(id: id);
+        FileContent result = fileContentProcessingService.Get(fileContentId: id);
 
         // Then
         result.Should()
             .BeSameAs(expected: entity);
 
-        fileContentServiceMock.Verify(expression: x => x.Get(id: id), times: Times.Once);
+        fileContentServiceMock.Verify(expression: x => x.Get(fileContentId: id), times: Times.Once);
         fileContentServiceMock.VerifyNoOtherCalls();
     }
 

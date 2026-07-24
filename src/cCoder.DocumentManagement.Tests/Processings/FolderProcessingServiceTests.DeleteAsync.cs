@@ -41,18 +41,18 @@ public partial class FolderProcessingServiceTests
         currentUser = user;
         Folder folder = CreateRandomFolder();
 
-        folderServiceMock.Setup(expression: x => x.GetWithRoles(id: folder.Id, ignoreFilters: true))
+        folderServiceMock.Setup(expression: x => x.GetWithRoles(folderId: folder.Id, ignoreFilters: true))
             .Returns(value: folder);
 
-        folderServiceMock.Setup(expression: x => x.DeleteAsync(id: folder.Id))
+        folderServiceMock.Setup(expression: x => x.DeleteAsync(folderId: folder.Id))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await folderProcessingService.DeleteAsync(id: folder.Id);
+        await folderProcessingService.DeleteAsync(folderId: folder.Id);
 
         // Then
-        folderServiceMock.Verify(expression: x => x.GetWithRoles(id: folder.Id, ignoreFilters: true), times: Times.Once);
-        folderServiceMock.Verify(expression: x => x.DeleteAsync(id: folder.Id), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetWithRoles(folderId: folder.Id, ignoreFilters: true), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.DeleteAsync(folderId: folder.Id), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         loggerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.AtLeastOnce);
@@ -83,18 +83,18 @@ public partial class FolderProcessingServiceTests
         Folder folder = CreateRandomFolder();
         currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
 
-        folderServiceMock.Setup(expression: x => x.GetWithRoles(id: folder.Id, ignoreFilters: true))
+        folderServiceMock.Setup(expression: x => x.GetWithRoles(folderId: folder.Id, ignoreFilters: true))
             .Returns(value: folder);
 
         // When
-        Func<Task> act = async () => await folderProcessingService.DeleteAsync(id: folder.Id);
+        Func<Task> act = async () => await folderProcessingService.DeleteAsync(folderId: folder.Id);
 
         // Then
         await act.Should()
             .ThrowAsync<SecurityException>()
             .WithMessage(expectedWildcardPattern: "Access Denied!");
 
-        folderServiceMock.Verify(expression: x => x.GetWithRoles(id: folder.Id, ignoreFilters: true), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.GetWithRoles(folderId: folder.Id, ignoreFilters: true), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         loggerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.AtLeastOnce);

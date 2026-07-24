@@ -41,7 +41,7 @@ public partial class FileServiceTests
             .ReturnsAsync(value: 1);
 
         // When
-        await fileService.DeleteAsync(id: fileId);
+        await fileService.DeleteAsync(fileId: fileId);
 
         // Then
         fileBrokerMock.Verify(expression: x => x.SelectAllFiles(ignoreFilters: true), times: Times.Once);
@@ -76,7 +76,7 @@ public partial class FileServiceTests
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await fileService.DeleteAsync(id: fileId);
+        Func<Task> action = async () => await fileService.DeleteAsync(fileId: fileId);
 
         // Then
         await action.Should()

@@ -18,13 +18,13 @@ namespace cCoder.DocumentManagement.Services.Foundations;
 internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker authorizationBroker)
     : IFileService
 {
-    public LocalFile Get(Guid id)
+    public LocalFile Get(Guid fileId)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id]);
+            ValidateInputs(inputs: [fileId]);
             LocalFile file = GetAll()
-    .FirstOrDefault(predicate: i => i.Id == id);
+    .FirstOrDefault(predicate: i => i.Id == fileId);
 
 
             if (file is not null)
@@ -34,7 +34,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 
 
             LocalFile unrestrictedFile = GetAll(ignoreFilters: true)
-                .FirstOrDefault(predicate: i => i.Id == id);
+                .FirstOrDefault(predicate: i => i.Id == fileId);
 
 
             if (unrestrictedFile is not null)
@@ -63,20 +63,20 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
             return fileBroker.GetFileIdsByFolderIds(folderIds: folderIds, ignoreFilters: ignoreFilters);
         });
 
-    public LocalFile GetWithFolderAndContents(Guid id, bool ignoreFilters = false)
+    public LocalFile GetWithFolderAndContents(Guid fileId, bool ignoreFilters = false)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id, ignoreFilters]);
-            return CreateFile(file: fileBroker.SelectFileWithFolderAndContents(id: id, ignoreFilters: ignoreFilters));
+            ValidateInputs(inputs: [fileId, ignoreFilters]);
+            return CreateFile(file: fileBroker.SelectFileWithFolderAndContents(fileId: fileId, ignoreFilters: ignoreFilters));
         });
 
-    public LocalFile GetWithFolderRolesAndContents(Guid id, bool ignoreFilters = false)
+    public LocalFile GetWithFolderRolesAndContents(Guid fileId, bool ignoreFilters = false)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [id, ignoreFilters]);
-            return CreateFileWithFolderRoles(file: fileBroker.SelectFileWithFolderRolesAndContents(id: id, ignoreFilters: ignoreFilters));
+            ValidateInputs(inputs: [fileId, ignoreFilters]);
+            return CreateFileWithFolderRoles(file: fileBroker.SelectFileWithFolderRolesAndContents(fileId: fileId, ignoreFilters: ignoreFilters));
         });
 
     public LocalFile GetByPath(int appId, string path, bool ignoreFilters = false)
@@ -224,13 +224,13 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 
         });
 
-    public ValueTask DeleteAsync(Guid id)
+    public ValueTask DeleteAsync(Guid fileId)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [id]);
+            ValidateInputs(inputs: [fileId]);
             LocalFile file = GetAll(ignoreFilters: true)
-    .FirstOrDefault(predicate: foundFile => foundFile.Id == id);
+    .FirstOrDefault(predicate: foundFile => foundFile.Id == fileId);
 
 
             if (file is null)
