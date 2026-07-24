@@ -9,5 +9,5 @@ namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 public interface IDmsHttpRequestOrchestrationService
 {
-    ValueTask<DmsProcessingResponse> ProcessRequestAsync(HttpContext context);
+    ValueTask ProcessRequestAsync(HttpContext context);
 }

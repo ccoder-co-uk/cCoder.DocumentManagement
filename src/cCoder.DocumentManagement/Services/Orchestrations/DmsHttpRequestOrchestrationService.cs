@@ -18,7 +18,7 @@ internal partial class DmsHttpRequestOrchestrationService(
     IWebDavProcessingService webDavProcessingService
 ) : IDmsHttpRequestOrchestrationService
 {
-    public ValueTask<DmsProcessingResponse> ProcessRequestAsync(HttpContext context)
+    public ValueTask ProcessRequestAsync(HttpContext context)
 =>
         TryCatch(operation: async () =>
         {
@@ -26,25 +26,57 @@ internal partial class DmsHttpRequestOrchestrationService(
             App app = currentAppResolver.ResolveCurrentApp();
 
             DmsProcessingRequest request = BuildRequestApp(context: context, app: app);
+            DmsProcessingResponse response;
 
 
             if (IsWebDavRequestDmsProcessingRequest(request: request))
             {
-                return await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
+                response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
             }
-
-
-            try
+            else
             {
-                DmsProcessingResponse response = await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
-                return AddDmsDefaultHeadersDmsProcessingResponse(newDmsProcessingResponse: response);
-            }
-            catch (SecurityException)
-            {
-                return CreateDmsProcessingResponseForSecurity(host: request.Host);
+                try
+                {
+                    DmsProcessingResponse processedResponse =
+                        await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
+
+                    response = AddDmsDefaultHeadersDmsProcessingResponse(
+                        newDmsProcessingResponse: processedResponse);
+                }
+                catch (SecurityException)
+                {
+                    response = CreateDmsProcessingResponseForSecurity(host: request.Host);
+                }
             }
 
+            await WriteDmsProcessingResponseAsync(context: context, response: response);
         });
+
+    private static async ValueTask WriteDmsProcessingResponseAsync(
+        HttpContext context,
+        DmsProcessingResponse response)
+    {
+        foreach (KeyValuePair<string, string> header in response.Headers)
+        {
+            if (!context.Response.Headers.ContainsKey(key: header.Key))
+            {
+                context.Response.Headers.Append(key: header.Key, value: header.Value);
+            }
+        }
+
+        context.Response.ContentType = response.ContentType;
+        context.Response.StatusCode = response.StatusCode;
+
+        if (response.HasBody)
+        {
+            context.Response.Headers.Append(
+                key: "Content-Length",
+                value: response.Body.Length.ToString());
+
+            await response.Body.CopyToAsync(destination: context.Response.Body);
+            response.Body.Close();
+        }
+    }
 
     private static DmsProcessingRequest BuildRequestApp(HttpContext context, App app) =>
         new()

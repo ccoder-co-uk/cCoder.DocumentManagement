@@ -56,43 +56,24 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         Dictionary<string, string[]> headers = null
     )
     {
-        Mock<HttpRequest> requestMock = new();
-        Mock<HttpContext> contextMock = new();
-        HeaderDictionary headerDictionary = [];
+        DefaultHttpContext context = new();
+        context.Request.Method = method;
+        context.Request.Path = new PathString(value: path);
+        context.Request.Host = new HostString(value: host);
+        context.Request.QueryString = new QueryString(value: queryString);
+        context.Request.Body = new MemoryStream(buffer: body ?? []);
+        context.Request.ContentType = contentType;
+        context.Response.Body = new MemoryStream();
 
         if (headers != null)
         {
             foreach ((string key, string[] values) in headers)
             {
-                headerDictionary.Append(key: key, value: values);
+                context.Request.Headers.Append(key: key, value: values);
             }
         }
 
-        requestMock.SetupGet(expression: x => x.Method)
-            .Returns(value: method);
-
-        requestMock.SetupGet(expression: x => x.Path)
-            .Returns(value: new PathString(value: path));
-
-        requestMock.SetupGet(expression: x => x.Host)
-            .Returns(value: new HostString(value: host));
-
-        requestMock.SetupGet(expression: x => x.QueryString)
-            .Returns(value: new QueryString(value: queryString));
-
-        requestMock.SetupGet(expression: x => x.Body)
-            .Returns(value: new MemoryStream(buffer: body ?? []));
-
-        requestMock.SetupGet(expression: x => x.Headers)
-            .Returns(value: headerDictionary);
-
-        requestMock.SetupGet(expression: x => x.ContentType)
-            .Returns(value: contentType);
-
-        contextMock.SetupGet(expression: x => x.Request)
-            .Returns(value: requestMock.Object);
-
-        return contextMock.Object;
+        return context;
     }
 
     private static DmsProcessingResponse CreateResponse(

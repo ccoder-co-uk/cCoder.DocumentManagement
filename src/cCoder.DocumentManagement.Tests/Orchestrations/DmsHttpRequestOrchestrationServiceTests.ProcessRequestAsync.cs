@@ -46,13 +46,14 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             .ReturnsAsync(value: response);
 
         // When
-        DmsProcessingResponse returnedResponse = await orchestrationService.ProcessRequestAsync(
-            context: context
-        );
+        await orchestrationService.ProcessRequestAsync(context: context);
 
         // Then
-        returnedResponse.Should()
-            .BeSameAs(expected: response);
+        context.Response.StatusCode.Should()
+            .Be(expected: response.StatusCode);
+
+        context.Response.ContentType.Should()
+            .Be(expected: response.ContentType);
 
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
 
@@ -100,20 +101,19 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             .ReturnsAsync(value: response);
 
         // When
-        DmsProcessingResponse returnedResponse = await orchestrationService.ProcessRequestAsync(
-            context: context
-        );
+        await orchestrationService.ProcessRequestAsync(context: context);
 
         // Then
-        returnedResponse.StatusCode.Should()
+        context.Response.StatusCode.Should()
             .Be(expected: 200);
 
-        returnedResponse
-            .Headers.Should()
-            .Contain(predicate: header => header.Key == "Access-Control-Allow-Origin" && header.Value == "*");
+        context.Response.Headers["Access-Control-Allow-Origin"].ToString()
+            .Should()
+            .Be(expected: "*");
 
-        returnedResponse.Headers.Should()
-            .Contain(predicate: header => header.Key == "Cache-Control");
+        context.Response.Headers.ContainsKey(key: "Cache-Control")
+            .Should()
+            .BeTrue();
 
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
 
@@ -149,21 +149,16 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             .ReturnsAsync(value: response);
 
         // When
-        DmsProcessingResponse returnedResponse = await orchestrationService.ProcessRequestAsync(
-            context: context
-        );
+        await orchestrationService.ProcessRequestAsync(context: context);
 
         // Then
-        returnedResponse
-            .Headers.Count(predicate: header => header.Key == "Access-Control-Allow-Origin")
+        context.Response.Headers["Access-Control-Allow-Origin"].Count
             .Should()
             .Be(expected: 1);
 
-        returnedResponse
-            .Headers.Should()
-            .Contain(predicate: header =>
-                header.Key == "Access-Control-Allow-Origin" && header.Value == "custom-origin"
-            );
+        context.Response.Headers["Access-Control-Allow-Origin"].ToString()
+            .Should()
+            .Be(expected: "custom-origin");
 
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
 
@@ -192,22 +187,18 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             .ThrowsAsync(exception: new SecurityException(message: "Denied"));
 
         // When
-        DmsProcessingResponse returnedResponse = await orchestrationService.ProcessRequestAsync(
-            context: context
-        );
+        await orchestrationService.ProcessRequestAsync(context: context);
 
         // Then
-        returnedResponse.StatusCode.Should()
+        context.Response.StatusCode.Should()
             .Be(expected: 204);
 
-        returnedResponse.ContentType.Should()
+        context.Response.ContentType.Should()
             .Be(expected: "application/json");
 
-        returnedResponse
-            .Headers.Should()
-            .Contain(predicate: header =>
-                header.Key == "Access-Control-Allow-Origin" && header.Value == "tenant.test"
-            );
+        context.Response.Headers["Access-Control-Allow-Origin"].ToString()
+            .Should()
+            .Be(expected: "tenant.test");
 
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
 

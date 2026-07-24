@@ -10,7 +10,7 @@ using cCoder.Data.Models.Security;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-internal interface ICurrentAppResolverProcessingService
+public interface ICurrentAppResolverProcessingService
 {
     App ResolveCurrentApp();
 }

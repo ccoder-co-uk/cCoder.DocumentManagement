@@ -3696,7 +3696,7 @@
               "Type": "HttpContext"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.DocumentManagement.Models.DmsProcessingResponse\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask"
         }
       ]
     },
@@ -5657,74 +5657,18 @@
       "LineNumber": 22
     },
     {
-      "Code": "STXE005",
-      "Description": "An exposure must not sequence multiple routine calls.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Middleware.DMSMiddleware",
-      "LineNumber": 18
+      "LineNumber": 22
     },
     {
-      "Code": "STXE005",
-      "Description": "An exposure must not sequence multiple routine calls.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Middleware.DMSMiddleware",
-      "LineNumber": 29
-    },
-    {
-      "Code": "STXE002",
-      "Description": "An exposure must not contain loops.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Middleware.DMSMiddleware",
-      "LineNumber": 31
-    },
-    {
-      "Code": "STXE001",
-      "Description": "An exposure must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Middleware.DMSMiddleware",
-      "LineNumber": 33
-    },
-    {
-      "Code": "STXE001",
-      "Description": "An exposure must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Middleware.DMSMiddleware",
-      "LineNumber": 42
-    },
-    {
-      "Code": "STXE005",
-      "Description": "An exposure must not sequence multiple routine calls.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Middleware.WebDavMiddleware",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STXE005",
-      "Description": "An exposure must not sequence multiple routine calls.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Middleware.WebDavMiddleware",
-      "LineNumber": 29
-    },
-    {
-      "Code": "STXE002",
-      "Description": "An exposure must not contain loops.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Middleware.WebDavMiddleware",
-      "LineNumber": 31
-    },
-    {
-      "Code": "STXE001",
-      "Description": "An exposure must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Middleware.WebDavMiddleware",
-      "LineNumber": 33
-    },
-    {
-      "Code": "STXE001",
-      "Description": "An exposure must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Middleware.WebDavMiddleware",
-      "LineNumber": 42
+      "LineNumber": 22
     },
     {
       "Code": "STXFORMAT001",
@@ -6081,7 +6025,7 @@
       "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 130
+      "LineNumber": 162
     },
     {
       "Code": "STX0007",
