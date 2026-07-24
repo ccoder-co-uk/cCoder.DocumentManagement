@@ -2508,6 +2508,24 @@
       "Methods": []
     },
     {
+      "Name": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
       "Name": "cCoder.DocumentManagement.Models.FolderRoleInfo",
       "StandardElementType": "Model",
       "Properties": [
@@ -5459,25 +5477,11 @@
       "LineNumber": 15
     },
     {
-      "Code": "STXSTRUCT001",
-      "Description": "The source file must live in the standard folder for its element type.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.ExtendedMetadataContainer",
-      "LineNumber": 135
-    },
-    {
       "Code": "STX0001",
       "Description": "The type is not a valid Standard element type.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Api.OData.MetadataContainer",
       "LineNumber": 21
-    },
-    {
-      "Code": "STXSTRUCT001",
-      "Description": "The source file must live in the standard folder for its element type.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.MetadataContainerSet",
-      "LineNumber": 11
     },
     {
       "Code": "STXM003",
@@ -5499,13 +5503,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Api.OData.ModelStateError",
       "LineNumber": 176
-    },
-    {
-      "Code": "STXSTRUCT001",
-      "Description": "The source file must live in the standard folder for its element type.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.ODataModel",
-      "LineNumber": 10
     },
     {
       "Code": "STXM002",
@@ -5534,20 +5531,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Api.OData.ODataModelBuilder",
       "LineNumber": 11
-    },
-    {
-      "Code": "STXSTRUCT001",
-      "Description": "The source file must live in the standard folder for its element type.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.OperationContainer",
-      "LineNumber": 162
-    },
-    {
-      "Code": "STXSTRUCT001",
-      "Description": "The source file must live in the standard folder for its element type.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.PropertyContainer",
-      "LineNumber": 145
     },
     {
       "Code": "STXB002",
@@ -5585,60 +5568,11 @@
       "LineNumber": 25
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker",
-      "LineNumber": 66
-    },
-    {
       "Code": "STXB006",
       "Description": "A broker must only depend on an external dependency or exposure.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.DmsInstanceFactory",
       "LineNumber": 15
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.DmsInstanceFactory",
-      "LineNumber": 20
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Events.FileContentEventBroker",
-      "LineNumber": 22
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Events.FileEventBroker",
-      "LineNumber": 22
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Events.FolderEventBroker",
-      "LineNumber": 22
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Events.FolderRoleEventBroker",
-      "LineNumber": 19
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.JsonBroker",
-      "LineNumber": 27
     },
     {
       "Code": "STXB002",
@@ -5767,13 +5701,6 @@
       "LineNumber": 175
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 186
-    },
-    {
       "Code": "STXB002",
       "Description": "A broker must not contain branching logic.",
       "Severity": "Warning",
@@ -5842,13 +5769,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
       "LineNumber": 112
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
-      "LineNumber": 126
     },
     {
       "Code": "STXB002",
@@ -5977,13 +5897,6 @@
       "LineNumber": 249
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 253
-    },
-    {
       "Code": "STXB002",
       "Description": "A broker must not contain branching logic.",
       "Severity": "Warning",
@@ -6024,13 +5937,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker",
       "LineNumber": 60
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker",
-      "LineNumber": 71
     },
     {
       "Code": "STXAPI001",
@@ -6292,13 +6198,6 @@
       "LineNumber": 22
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingRequest",
-      "LineNumber": 24
-    },
-    {
       "Code": "STXM002",
       "Description": "Model properties must not declare default values.",
       "Severity": "Warning",
@@ -6325,13 +6224,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Models.DmsProcessingResponse",
       "LineNumber": 13
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingResponse",
-      "LineNumber": 14
     },
     {
       "Code": "STXM002",
@@ -6397,57 +6289,8 @@
       "LineNumber": 45
     },
     {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "LineNumber": 17
-    },
-    {
       "Code": "STXA001",
       "Description": "An aggregation service may have any number of dependencies, but they must share the same service variation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
       "LineNumber": 17
@@ -6460,53 +6303,18 @@
       "LineNumber": 24
     },
     {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
-      "LineNumber": 10
+      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
+      "LineNumber": 29
     },
     {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
-      "LineNumber": 10
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
-      "LineNumber": 10
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
-      "LineNumber": 10
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
-      "LineNumber": 10
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
-      "LineNumber": 10
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
-      "LineNumber": 10
+      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
+      "LineNumber": 78
     },
     {
       "Code": "STX0021",
@@ -6516,18 +6324,18 @@
       "LineNumber": 14
     },
     {
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
+      "LineNumber": 19
+    },
+    {
       "Code": "STX0001",
       "Description": "The type is not a valid Standard element type.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.CurrentAppResolver",
       "LineNumber": 11
-    },
-    {
-      "Code": "STX0003",
-      "Description": "A service containing only pass-through methods is redundant and should be retired.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
-      "LineNumber": 13
     },
     {
       "Code": "STX0007",
@@ -6537,34 +6345,6 @@
       "LineNumber": 13
     },
     {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
-      "LineNumber": 13
-    },
-    {
       "Code": "STX0012",
       "Description": "Business-operation validation methods must evaluate their rules through a validation collector.",
       "Severity": "Warning",
@@ -6579,167 +6359,6 @@
       "LineNumber": 13
     },
     {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DocumentManagementMetadataTypeService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DocumentManagementMetadataTypeService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DocumentManagementMetadataTypeService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DocumentManagementMetadataTypeService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DocumentManagementMetadataTypeService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DocumentManagementMetadataTypeService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXFORMAT002",
-      "Description": "Expression-bodied method implementations must start on the line after the =\u003E token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DocumentManagementMetadataTypeService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.EventHandlerService",
-      "LineNumber": 21
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.EventHandlerService",
-      "LineNumber": 21
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.EventHandlerService",
-      "LineNumber": 21
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.EventHandlerService",
-      "LineNumber": 21
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.EventHandlerService",
-      "LineNumber": 21
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.EventHandlerService",
-      "LineNumber": 21
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
-      "LineNumber": 19
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
-      "LineNumber": 19
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
-      "LineNumber": 19
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
-      "LineNumber": 19
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
-      "LineNumber": 19
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
-      "LineNumber": 19
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
-      "LineNumber": 19
-    },
-    {
       "Code": "STXF002",
       "Description": "A foundation service may only depend on brokers, exposures, or nothing.",
       "Severity": "Warning",
@@ -6747,53 +6366,25 @@
       "LineNumber": 19
     },
     {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
-      "LineNumber": 14
+      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
+      "LineNumber": 29
     },
     {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
-      "LineNumber": 14
+      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
+      "LineNumber": 45
     },
     {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
-      "LineNumber": 14
+      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
+      "LineNumber": 61
     },
     {
       "Code": "STXF002",
@@ -6803,53 +6394,25 @@
       "LineNumber": 14
     },
     {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
-      "LineNumber": 17
+      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
+      "LineNumber": 22
     },
     {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
-      "LineNumber": 17
+      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
+      "LineNumber": 38
     },
     {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
-      "LineNumber": 17
+      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
+      "LineNumber": 54
     },
     {
       "Code": "STXF002",
@@ -6859,53 +6422,25 @@
       "LineNumber": 17
     },
     {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
-      "LineNumber": 17
+      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
+      "LineNumber": 25
     },
     {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
-      "LineNumber": 17
+      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
+      "LineNumber": 41
     },
     {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
-      "LineNumber": 17
+      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
+      "LineNumber": 57
     },
     {
       "Code": "STXF002",
@@ -6915,32 +6450,18 @@
       "LineNumber": 17
     },
     {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 17
+      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
+      "LineNumber": 27
     },
     {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 17
+      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
+      "LineNumber": 43
     },
     {
       "Code": "STX0012",
@@ -6952,27 +6473,6 @@
     {
       "Code": "STX0023",
       "Description": "Each business operation must call its operation-specific validation method.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
       "LineNumber": 17
@@ -6989,84 +6489,63 @@
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 24
+      "LineNumber": 27
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
+      "LineNumber": 27
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 32
+      "LineNumber": 37
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 52
+      "LineNumber": 75
     },
     {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 52
+      "LineNumber": 75
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 78
+      "LineNumber": 120
     },
     {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 78
+      "LineNumber": 120
     },
     {
       "Code": "STX0017",
       "Description": "Identifier parameters must be named for their type, for example studentId.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 99
+      "LineNumber": 156
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 101
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 18
+      "LineNumber": 161
     },
     {
       "Code": "STX0012",
@@ -7078,27 +6557,6 @@
     {
       "Code": "STX0023",
       "Description": "Each business operation must call its operation-specific validation method.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
       "LineNumber": 18
@@ -7115,98 +6573,105 @@
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 23
+      "LineNumber": 26
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
+      "LineNumber": 26
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 31
+      "LineNumber": 36
     },
     {
       "Code": "STX0017",
       "Description": "Identifier parameters must be named for their type, for example studentId.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 48
+      "LineNumber": 66
     },
     {
       "Code": "STX0017",
       "Description": "Identifier parameters must be named for their type, for example studentId.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 51
+      "LineNumber": 74
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
+      "LineNumber": 111
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
+      "LineNumber": 121
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 116
+      "LineNumber": 190
     },
     {
       "Code": "STX0017",
       "Description": "Identifier parameters must be named for their type, for example studentId.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 136
+      "LineNumber": 227
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 138
+      "LineNumber": 232
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
+      "LineNumber": 232
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
+      "LineNumber": 265
     },
     {
       "Code": "STX0022",
       "Description": "Creation method names must include the concrete type they create.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 166
+      "LineNumber": 269
     },
     {
       "Code": "STX0022",
       "Description": "Creation method names must include the concrete type they create.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 186
+      "LineNumber": 289
     },
     {
       "Code": "STX0022",
       "Description": "Creation method names must include the concrete type they create.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 263
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 15
+      "LineNumber": 366
     },
     {
       "Code": "STX0012",
@@ -7223,81 +6688,39 @@
       "LineNumber": 15
     },
     {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 15
-    },
-    {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 23
+      "LineNumber": 28
     },
     {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 23
+      "LineNumber": 28
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 38
+      "LineNumber": 52
     },
     {
       "Code": "STX0021",
       "Description": "delete model parameters must use the deleted prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 38
+      "LineNumber": 52
     },
     {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 17
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
+      "LineNumber": 57
     },
     {
       "Code": "STX0012",
@@ -7309,27 +6732,6 @@
     {
       "Code": "STX0023",
       "Description": "Each business operation must call its operation-specific validation method.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 17
@@ -7346,161 +6748,154 @@
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 22
+      "LineNumber": 25
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
+      "LineNumber": 25
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 30
+      "LineNumber": 35
     },
     {
       "Code": "STX0017",
       "Description": "Identifier parameters must be named for their type, for example studentId.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 44
+      "LineNumber": 57
     },
     {
       "Code": "STX0017",
       "Description": "Identifier parameters must be named for their type, for example studentId.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 47
+      "LineNumber": 65
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
+      "LineNumber": 106
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 75
+      "LineNumber": 123
     },
     {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 75
+      "LineNumber": 123
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 89
+      "LineNumber": 150
     },
     {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 89
+      "LineNumber": 150
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 102
+      "LineNumber": 175
     },
     {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 102
+      "LineNumber": 175
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 105
+      "LineNumber": 182
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 108
+      "LineNumber": 186
     },
     {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 108
+      "LineNumber": 186
     },
     {
       "Code": "STX0017",
       "Description": "Identifier parameters must be named for their type, for example studentId.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 122
+      "LineNumber": 212
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 124
+      "LineNumber": 217
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
+      "LineNumber": 217
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 136
+      "LineNumber": 233
     },
     {
       "Code": "STX0021",
       "Description": "delete model parameters must use the deleted prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 136
+      "LineNumber": 233
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
+      "LineNumber": 238
     },
     {
       "Code": "STX0022",
       "Description": "Creation method names must include the concrete type they create.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 262
-    },
-    {
-      "Code": "STX0003",
-      "Description": "A service containing only pass-through methods is redundant and should be retired.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.RoleService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.RoleService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.RoleService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.RoleService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.RoleService",
-      "LineNumber": 11
+      "LineNumber": 369
     },
     {
       "Code": "STX0012",
@@ -7517,27 +6912,6 @@
       "LineNumber": 11
     },
     {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.RoleService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.RoleService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.RoleService",
-      "LineNumber": 11
-    },
-    {
       "Code": "STX0004",
       "Description": "A service must not depend on another service at the same layer.",
       "Severity": "Warning",
@@ -7545,55 +6919,6 @@
       "LineNumber": 12
     },
     {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 12
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 12
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 12
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 12
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 12
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 12
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 12
-    },
-    {
       "Code": "STXO001",
       "Description": "An orchestration must have two or three foundation or processing dependencies and must not mix them.",
       "Severity": "Warning",
@@ -7619,63 +6944,14 @@
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 21
+      "LineNumber": 26
     },
     {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 21
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 15
+      "LineNumber": 26
     },
     {
       "Code": "STXO001",
@@ -7689,67 +6965,18 @@
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 62
+      "LineNumber": 69
     },
     {
       "Code": "STX0022",
       "Description": "Creation method names must include the concrete type they create.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "LineNumber": 86
+      "LineNumber": 93
     },
     {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
       "LineNumber": 15
@@ -7766,60 +6993,11 @@
       "Description": "Adjacent methods must have exactly one empty line between them.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "LineNumber": 106
+      "LineNumber": 146
     },
     {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
       "LineNumber": 13
@@ -7836,35 +7014,14 @@
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 25
+      "LineNumber": 33
     },
     {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 25
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 32
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 32
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 39
+      "LineNumber": 33
     },
     {
       "Code": "STX0018",
@@ -7874,71 +7031,43 @@
       "LineNumber": 46
     },
     {
+      "Code": "STX0020",
+      "Description": "update model parameters must use the updated prefix.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
+      "LineNumber": 46
+    },
+    {
+      "Code": "STX0017",
+      "Description": "Identifier parameters must be named for their type, for example studentId.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
+      "LineNumber": 59
+    },
+    {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 51
+      "LineNumber": 72
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
+      "LineNumber": 81
     },
     {
       "Code": "STX0021",
       "Description": "delete model parameters must use the deleted prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 51
+      "LineNumber": 81
     },
     {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
       "LineNumber": 13
@@ -7955,431 +7084,298 @@
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 25
+      "LineNumber": 33
     },
     {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 25
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 32
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 32
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 39
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 53
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 58
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 58
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 73
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 78
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 83
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 88
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 93
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 98
-    },
-    {
-      "Code": "STX0007",
-      "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 25
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 25
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 32
-    },
-    {
-      "Code": "STX0020",
-      "Description": "update model parameters must use the updated prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 32
-    },
-    {
-      "Code": "STX0017",
-      "Description": "Identifier parameters must be named for their type, for example studentId.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 39
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 53
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 58
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 63
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 63
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 83
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 88
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 93
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 98
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 103
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 108
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 113
-    },
-    {
-      "Code": "STX0007",
-      "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 20
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 20
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 27
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 27
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
       "LineNumber": 33
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 46
+    },
+    {
+      "Code": "STX0020",
+      "Description": "update model parameters must use the updated prefix.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 46
+    },
+    {
+      "Code": "STX0017",
+      "Description": "Identifier parameters must be named for their type, for example studentId.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 59
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 64
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 80
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 89
+    },
+    {
+      "Code": "STX0021",
+      "Description": "delete model parameters must use the deleted prefix.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 89
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 116
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 125
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 134
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 143
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 152
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
+      "LineNumber": 161
+    },
+    {
+      "Code": "STX0007",
+      "Description": "A service public API must use one model contract or primitive types.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 13
+    },
+    {
+      "Code": "STX0017",
+      "Description": "Identifier parameters must be named for their type, for example studentId.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 15
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 33
+    },
+    {
+      "Code": "STX0019",
+      "Description": "create model parameters must use the new prefix.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 33
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 46
+    },
+    {
+      "Code": "STX0020",
+      "Description": "update model parameters must use the updated prefix.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 46
+    },
+    {
+      "Code": "STX0017",
+      "Description": "Identifier parameters must be named for their type, for example studentId.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 59
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 64
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 80
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 89
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 98
+    },
+    {
+      "Code": "STX0021",
+      "Description": "delete model parameters must use the deleted prefix.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 98
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 134
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 143
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 152
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 161
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 170
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 179
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
+      "LineNumber": 188
+    },
+    {
+      "Code": "STX0007",
+      "Description": "A service public API must use one model contract or primitive types.",
+      "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 38
+      "LineNumber": 13
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
+      "LineNumber": 24
+    },
+    {
+      "Code": "STX0019",
+      "Description": "create model parameters must use the new prefix.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
+      "LineNumber": 24
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
+      "LineNumber": 37
     },
     {
       "Code": "STX0021",
       "Description": "delete model parameters must use the deleted prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 38
+      "LineNumber": 37
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
+      "LineNumber": 48
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
+      "LineNumber": 57
+    },
+    {
+      "Code": "STX0021",
+      "Description": "delete model parameters must use the deleted prefix.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
+      "LineNumber": 57
     },
     {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
       "LineNumber": 15
@@ -8399,120 +7395,22 @@
       "LineNumber": 20
     },
     {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
+      "LineNumber": 25
+    },
+    {
       "Code": "STX0022",
       "Description": "Creation method names must include the concrete type they create.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
-      "LineNumber": 256
-    },
-    {
-      "Code": "STX0003",
-      "Description": "A service containing only pass-through methods is redundant and should be retired.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentEventProcessingService",
-      "LineNumber": 14
+      "LineNumber": 262
     },
     {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
       "LineNumber": 13
@@ -8529,133 +7427,84 @@
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 25
+      "LineNumber": 33
     },
     {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 25
+      "LineNumber": 33
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 30
+      "LineNumber": 42
     },
     {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 30
+      "LineNumber": 42
     },
     {
       "Code": "STX0017",
       "Description": "Identifier parameters must be named for their type, for example studentId.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 35
+      "LineNumber": 51
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 40
+      "LineNumber": 60
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 48
+      "LineNumber": 72
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 48
+      "LineNumber": 72
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 71
+      "LineNumber": 97
     },
     {
       "Code": "STX0021",
       "Description": "delete model parameters must use the deleted prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 71
+      "LineNumber": 97
+    },
+    {
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
+      "LineNumber": 102
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 75
-    },
-    {
-      "Code": "STX0003",
-      "Description": "A service containing only pass-through methods is redundant and should be retired.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileEventProcessingService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileEventProcessingService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileEventProcessingService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileEventProcessingService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileEventProcessingService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileEventProcessingService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileEventProcessingService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileEventProcessingService",
-      "LineNumber": 11
+      "LineNumber": 104
     },
     {
       "Code": "STX0004",
@@ -8667,55 +7516,6 @@
     {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "LineNumber": 16
@@ -8746,60 +7546,39 @@
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 30
+      "LineNumber": 38
     },
     {
       "Code": "STX0017",
       "Description": "Identifier parameters must be named for their type, for example studentId.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 91
+      "LineNumber": 116
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 96
+      "LineNumber": 125
     },
     {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 96
+      "LineNumber": 125
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 147
+      "LineNumber": 192
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 168
-    },
-    {
-      "Code": "STXFORMAT006",
-      "Description": "A single multiline method call must be expressed as an expression-bodied method.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 168
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 174
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "LineNumber": 197
@@ -8809,35 +7588,42 @@
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 208
+      "LineNumber": 220
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 225
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 218
+      "LineNumber": 230
+    },
+    {
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 235
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 242
+      "LineNumber": 257
     },
     {
-      "Code": "STX0005",
-      "Description": "A public service method must not call another public method on the same service.",
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 250
-    },
-    {
-      "Code": "STX0005",
-      "Description": "A public service method must not call another public method on the same service.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 250
+      "LineNumber": 262
     },
     {
       "Code": "STX0018",
@@ -8845,97 +7631,97 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "LineNumber": 273
+    },
+    {
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 278
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 288
+    },
+    {
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 293
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 322
+    },
+    {
+      "Code": "STX0005",
+      "Description": "A public service method must not call another public method on the same service.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 334
+    },
+    {
+      "Code": "STX0005",
+      "Description": "A public service method must not call another public method on the same service.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 334
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 359
     },
     {
       "Code": "STX0021",
       "Description": "delete model parameters must use the deleted prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 273
+      "LineNumber": 359
+    },
+    {
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 364
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 277
+      "LineNumber": 366
     },
     {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 281
+      "LineNumber": 371
     },
     {
       "Code": "STX0022",
       "Description": "Creation method names must include the concrete type they create.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 291
+      "LineNumber": 381
     },
     {
       "Code": "STX0022",
       "Description": "Creation method names must include the concrete type they create.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 320
-    },
-    {
-      "Code": "STX0003",
-      "Description": "A service containing only pass-through methods is redundant and should be retired.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderEventProcessingService",
-      "LineNumber": 14
+      "LineNumber": 410
     },
     {
       "Code": "STX0004",
@@ -8947,55 +7733,6 @@
     {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
       "LineNumber": 16
@@ -9026,196 +7763,238 @@
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 99
+      "LineNumber": 122
+    },
+    {
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 127
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 103
+      "LineNumber": 129
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 117
+      "LineNumber": 144
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 130
+      "LineNumber": 160
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 132
+      "LineNumber": 163
     },
     {
       "Code": "STX0017",
       "Description": "Identifier parameters must be named for their type, for example studentId.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 162
+      "LineNumber": 194
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 174
+      "LineNumber": 212
     },
     {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 174
+      "LineNumber": 212
     },
     {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 186
+      "LineNumber": 230
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 196
+      "LineNumber": 243
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 243
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 203
+      "LineNumber": 251
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 216
+      "LineNumber": 265
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 256
+      "LineNumber": 311
+    },
+    {
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 316
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 285
+      "LineNumber": 350
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 313
+      "LineNumber": 387
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 321
+      "LineNumber": 399
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 321
+      "LineNumber": 399
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 344
+      "LineNumber": 424
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 377
+      "LineNumber": 463
     },
     {
       "Code": "STX0021",
       "Description": "delete model parameters must use the deleted prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 377
+      "LineNumber": 463
+    },
+    {
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 468
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 381
+      "LineNumber": 470
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 388
+      "LineNumber": 483
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 393
+      "LineNumber": 492
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 398
+      "LineNumber": 501
+    },
+    {
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 506
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 408
+      "LineNumber": 516
+    },
+    {
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 521
     },
     {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 420
+      "LineNumber": 535
     },
     {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 533
+      "LineNumber": 648
     },
     {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 799
+      "LineNumber": 914
     },
     {
       "Code": "STX0004",
@@ -9295,113 +8074,8 @@
       "LineNumber": 18
     },
     {
-      "Code": "STX0003",
-      "Description": "A service containing only pass-through methods is redundant and should be retired.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
-      "LineNumber": 14
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
-      "LineNumber": 14
-    },
-    {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "LineNumber": 16
@@ -9425,46 +8099,39 @@
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 25
+      "LineNumber": 29
     },
     {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 25
+      "LineNumber": 29
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 52
+      "LineNumber": 67
     },
     {
       "Code": "STX0021",
       "Description": "delete model parameters must use the deleted prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 52
+      "LineNumber": 67
+    },
+    {
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
+      "LineNumber": 72
     },
     {
       "Code": "STX0018",
       "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 68
-    },
-    {
-      "Code": "STX0005",
-      "Description": "A public service method must not call another public method on the same service.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 76
-    },
-    {
-      "Code": "STX0005",
-      "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "LineNumber": 90
@@ -9474,81 +8141,53 @@
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 100
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 120
-    },
-    {
-      "Code": "STX0021",
-      "Description": "delete model parameters must use the deleted prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 120
+      "LineNumber": 103
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 124
+      "LineNumber": 119
+    },
+    {
+      "Code": "STX0005",
+      "Description": "A public service method must not call another public method on the same service.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
+      "LineNumber": 129
+    },
+    {
+      "Code": "STX0018",
+      "Description": "Service method names must include each model type they operate on.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
+      "LineNumber": 151
+    },
+    {
+      "Code": "STX0021",
+      "Description": "delete model parameters must use the deleted prefix.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
+      "LineNumber": 151
+    },
+    {
+      "Code": "STXFORMAT003",
+      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
+      "LineNumber": 156
+    },
+    {
+      "Code": "STX0005",
+      "Description": "A public service method must not call another public method on the same service.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
+      "LineNumber": 158
     },
     {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "LineNumber": 23
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "LineNumber": 23
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "LineNumber": 23
-    },
-    {
-      "Code": "STX0010",
-      "Description": "Every public service method must enter through a local TryCatch operation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "LineNumber": 23
-    },
-    {
-      "Code": "STX0011",
-      "Description": "Every service input must be validated inside TryCatch before business work.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "LineNumber": 23
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "LineNumber": 23
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "LineNumber": 23
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
       "LineNumber": 23
@@ -9572,7 +8211,7 @@
       "Description": "Creation method names must include the concrete type they create.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "LineNumber": 471
+      "LineNumber": 486
     }
   ]
 }

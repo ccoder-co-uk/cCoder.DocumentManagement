@@ -12,65 +12,71 @@ using MemoryStream = System.IO.MemoryStream;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-internal class DmsProcessingService(
+internal partial class DmsProcessingService(
     IDmsInstanceService dmsInstanceService,
     ILogger<DmsProcessingService> log
 ) : IDmsProcessingService
 {
-    public async ValueTask<DmsProcessingResponse> ProcessAsync(DmsProcessingRequest request)
-    {
-        string path = request.RequestPath[
-            (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
-        ];
-
-        Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
-
-        try
+    public ValueTask<DmsProcessingResponse> ProcessAsync(DmsProcessingRequest request)
+=>
+        TryCatch(operation: async () =>
         {
-            switch (request.Method)
+            ValidateInputs(inputs: [request]);
+            string path = request.RequestPath[
+    (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
+];
+
+
+            Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
+
+
+            try
             {
-                case "OPTIONS":
-                    log.LogInformation(message: $"DMS({request.App.Id}) OPTIONS {path}");
-                    return await HandleOptionsRequestAsync(request: request);
-                case "GET":
-                    log.LogInformation(message: $"DMS({request.App.Id}) Get {path}");
-                    return await HandleGetRequestAsync(request: request);
-                case "POST":
-                    log.LogInformation(message: $"DMS({request.App.Id}) POST {path}");
-                    return await HandlePostRequestAsync(request: request);
-                case "PUT":
-                    log.LogInformation(message: $"DMS({request.App.Id}) PUT {path}");
-                    return await HandlePutRequestAsync(request: request);
-                case "DELETE":
-                    log.LogInformation(message: $"DMS({request.App.Id}) DELETE {path}");
-                    return await HandleDeleteRequestAsync(request: request);
-                default:
-                    throw new InvalidOperationException(
-                        message: $"Unsupported DMS method: {request.Method}"
-                    );
+                switch (request.Method)
+                {
+                    case "OPTIONS":
+                        log.LogInformation(message: $"DMS({request.App.Id}) OPTIONS {path}");
+                        return await HandleOptionsRequestAsync(request: request);
+                    case "GET":
+                        log.LogInformation(message: $"DMS({request.App.Id}) Get {path}");
+                        return await HandleGetRequestAsync(request: request);
+                    case "POST":
+                        log.LogInformation(message: $"DMS({request.App.Id}) POST {path}");
+                        return await HandlePostRequestAsync(request: request);
+                    case "PUT":
+                        log.LogInformation(message: $"DMS({request.App.Id}) PUT {path}");
+                        return await HandlePutRequestAsync(request: request);
+                    case "DELETE":
+                        log.LogInformation(message: $"DMS({request.App.Id}) DELETE {path}");
+                        return await HandleDeleteRequestAsync(request: request);
+                    default:
+                        throw new InvalidOperationException(
+                            message: $"Unsupported DMS method: {request.Method}"
+                        );
+                }
             }
-        }
-        catch (SecurityException ex)
-        {
-            log.LogError(
-                message: $"An unhandled exception occurred whilst processing a DMS request to app on domain {request.App?.Domain ?? "Unknown"} ..."
-            );
+            catch (SecurityException ex)
+            {
+                log.LogError(
+                    message: $"An unhandled exception occurred whilst processing a DMS request to app on domain {request.App?.Domain ?? "Unknown"} ..."
+                );
 
-            log.LogError(message: $"Request details - Path: {path}, Query: {request.QueryString}");
-            log.LogError(message: ex.Message);
-            throw;
-        }
-        catch (Exception ex)
-        {
-            log.LogError(
-                message: $"An unhandled exception occurred whilst processing a DMS request to app on domain {request.App?.Domain ?? "Unknown"} ..."
-            );
+                log.LogError(message: $"Request details - Path: {path}, Query: {request.QueryString}");
+                log.LogError(message: ex.Message);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                log.LogError(
+                    message: $"An unhandled exception occurred whilst processing a DMS request to app on domain {request.App?.Domain ?? "Unknown"} ..."
+                );
 
-            log.LogError(message: $"Request details - Path: {path}, Query: {request.QueryString}");
-            log.LogError(message: ex.Message);
-            throw;
-        }
-    }
+                log.LogError(message: $"Request details - Path: {path}, Query: {request.QueryString}");
+                log.LogError(message: ex.Message);
+                throw;
+            }
+
+        });
 
     private async ValueTask<DmsProcessingResponse> HandleDeleteRequestAsync(DmsProcessingRequest request)
     {

@@ -14,99 +14,162 @@ using LocalFile = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.DocumentManagement.Services.Foundations;
 
-internal class FileContentService(
+internal partial class FileContentService(
     IFileContentBroker fileContentBroker,
     IAuthorizationBroker authorizationBroker
 ) : IFileContentService
 {
     public FileContent Get(Guid id)
-    {
-        FileContent fileContent = GetAll()
-            .FirstOrDefault(predicate: i => i.Id == id);
-
-        if (fileContent is not null)
+=>
+        TryCatch(operation: () =>
         {
+            ValidateInputs(inputs: [id]);
+            FileContent fileContent = GetAll()
+    .FirstOrDefault(predicate: i => i.Id == id);
+
+
+            if (fileContent is not null)
+            {
+                return fileContent;
+            }
+
+
+            FileContent unrestrictedFileContent = GetAll(ignoreFilters: true)
+                .FirstOrDefault(predicate: i => i.Id == id);
+
+
+            if (unrestrictedFileContent is not null)
+            {
+                throw new SecurityException(message: "Access Denied!");
+            }
+
+
+            return null;
+
+        });
+
+    public IQueryable<FileContent> GetAll(bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [ignoreFilters]);
+            return fileContentBroker.SelectAllFileContents(ignoreFilters: ignoreFilters);
+        });
+
+    public ValueTask DeleteAllForFileAsync(Guid fileId)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [fileId]);
+            return fileContentBroker.DeleteAllFileContentsForFileAsync(fileId: fileId);
+        });
+
+    public ValueTask DeleteAllForFilesAsync(Guid[] fileIds)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [fileIds]);
+            return fileContentBroker.DeleteAllFileContentsForFilesAsync(fileIds: fileIds);
+        });
+
+    public ValueTask<FileContent> AddAsync(FileContent fileContent)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [fileContent]);
+            cCoder.Data.Models.DMS.FileContent newFileContent = CreateStorageFileContent(fileContent: fileContent, includeId: false);
+
+
+            authorizationBroker.Authorize(
+                appId: fileContentBroker.GetAppId(entity: newFileContent),
+                privilege: $"{nameof(FileContent)}_create"
+            );
+
+
+            string currentUserId = authorizationBroker.GetCurrentUser().Id;
+
+            DateTimeOffset now = DateTimeOffset.UtcNow;
+
+            newFileContent.CreatedOn = now;
+
+            newFileContent.CreatedBy = currentUserId;
+
+
+            FileContent result = await fileContentBroker.InsertFileContentAsync(entity: newFileContent);
+
+            fileContent.Id = result.Id;
+
+            fileContent.FileId = result.FileId;
+
+            fileContent.Description = result.Description;
+
+            fileContent.Size = result.Size;
+
+            fileContent.CreatedBy = result.CreatedBy;
+
+            fileContent.CreatedOn = result.CreatedOn;
+
+            fileContent.Version = result.Version;
+
+            fileContent.RawData = result.RawData;
+
             return fileContent;
-        }
 
-        FileContent unrestrictedFileContent = GetAll(ignoreFilters: true)
-            .FirstOrDefault(predicate: i => i.Id == id);
+        });
 
-        if (unrestrictedFileContent is not null)
+    public ValueTask<FileContent> UpdateAsync(FileContent fileContent)
+=>
+        TryCatch(operation: async () =>
         {
-            throw new SecurityException(message: "Access Denied!");
-        }
+            ValidateInputs(inputs: [fileContent]);
+            cCoder.Data.Models.DMS.FileContent updateFileContent = CreateStorageFileContent(fileContent: fileContent, includeId: true);
 
-        return null;
-    }
 
-    public IQueryable<FileContent> GetAll(bool ignoreFilters = false) =>
-        fileContentBroker.SelectAllFileContents(ignoreFilters: ignoreFilters);
+            authorizationBroker.Authorize(
+                appId: fileContentBroker.GetAppId(entity: updateFileContent),
+                privilege: $"{nameof(FileContent)}_update"
+            );
 
-    public ValueTask DeleteAllForFileAsync(Guid fileId) =>
-        fileContentBroker.DeleteAllFileContentsForFileAsync(fileId: fileId);
 
-    public ValueTask DeleteAllForFilesAsync(Guid[] fileIds) =>
-        fileContentBroker.DeleteAllFileContentsForFilesAsync(fileIds: fileIds);
+            FileContent result = await fileContentBroker.UpdateFileContentAsync(entity: updateFileContent);
 
-    public async ValueTask<FileContent> AddAsync(FileContent fileContent)
-    {
-        cCoder.Data.Models.DMS.FileContent newFileContent = CreateStorageFileContent(fileContent: fileContent, includeId: false);
+            fileContent.Id = result.Id;
 
-        authorizationBroker.Authorize(
-            appId: fileContentBroker.GetAppId(entity: newFileContent),
-            privilege: $"{nameof(FileContent)}_create"
-        );
+            fileContent.FileId = result.FileId;
 
-        string currentUserId = authorizationBroker.GetCurrentUser().Id;
-        DateTimeOffset now = DateTimeOffset.UtcNow;
-        newFileContent.CreatedOn = now;
-        newFileContent.CreatedBy = currentUserId;
+            fileContent.Description = result.Description;
 
-        FileContent result = await fileContentBroker.InsertFileContentAsync(entity: newFileContent);
-        fileContent.Id = result.Id;
-        fileContent.FileId = result.FileId;
-        fileContent.Description = result.Description;
-        fileContent.Size = result.Size;
-        fileContent.CreatedBy = result.CreatedBy;
-        fileContent.CreatedOn = result.CreatedOn;
-        fileContent.Version = result.Version;
-        fileContent.RawData = result.RawData;
-        return fileContent;
-    }
+            fileContent.Size = result.Size;
 
-    public async ValueTask<FileContent> UpdateAsync(FileContent fileContent)
-    {
-        cCoder.Data.Models.DMS.FileContent updateFileContent = CreateStorageFileContent(fileContent: fileContent, includeId: true);
+            fileContent.CreatedBy = result.CreatedBy;
 
-        authorizationBroker.Authorize(
-            appId: fileContentBroker.GetAppId(entity: updateFileContent),
-            privilege: $"{nameof(FileContent)}_update"
-        );
+            fileContent.CreatedOn = result.CreatedOn;
 
-        FileContent result = await fileContentBroker.UpdateFileContentAsync(entity: updateFileContent);
-        fileContent.Id = result.Id;
-        fileContent.FileId = result.FileId;
-        fileContent.Description = result.Description;
-        fileContent.Size = result.Size;
-        fileContent.CreatedBy = result.CreatedBy;
-        fileContent.CreatedOn = result.CreatedOn;
-        fileContent.Version = result.Version;
-        fileContent.RawData = result.RawData;
-        return fileContent;
-    }
+            fileContent.Version = result.Version;
 
-    public async ValueTask DeleteAsync(Guid id)
-    {
-        FileContent fileContent = Get(id: id);
+            fileContent.RawData = result.RawData;
 
-        authorizationBroker.Authorize(
-            appId: fileContentBroker.GetAppId(entity: CreateStorageFileContent(fileContent: fileContent, includeId: true)),
-            privilege: $"{nameof(FileContent)}_delete"
-        );
+            return fileContent;
 
-        _ = await fileContentBroker.DeleteFileContentAsync(entity: CreateStorageFileContent(fileContent: fileContent, includeId: true));
-    }
+        });
+
+    public ValueTask DeleteAsync(Guid id)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [id]);
+            FileContent fileContent = Get(id: id);
+
+
+            authorizationBroker.Authorize(
+                appId: fileContentBroker.GetAppId(entity: CreateStorageFileContent(fileContent: fileContent, includeId: true)),
+                privilege: $"{nameof(FileContent)}_delete"
+            );
+
+
+            _ = await fileContentBroker.DeleteFileContentAsync(entity: CreateStorageFileContent(fileContent: fileContent, includeId: true));
+
+        });
 
     private static cCoder.Data.Models.DMS.FileContent CreateStorageFileContent(FileContent fileContent, bool includeId)
     {

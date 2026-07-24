@@ -13,270 +13,360 @@ using cCoder.DocumentManagement.Services.Foundations;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-internal class FileProcessingService(IFileService service, IFolderService folderService, IFileContentService fileContentService, IFileContentProcessingService fileContentProcessingService, IAuthorizationBroker authorizationBroker) : IFileProcessingService
+internal partial class FileProcessingService(IFileService service, IFolderService folderService, IFileContentService fileContentService, IFileContentProcessingService fileContentProcessingService, IAuthorizationBroker authorizationBroker) : IFileProcessingService
 {
     private User User => authorizationBroker.GetCurrentUser();
 
     public cCoder.Data.Models.DMS.File Get(Guid id)
-    {
-        return service.Get(id: id);
-    }
-
-    public IQueryable<cCoder.Data.Models.DMS.File> GetAll(bool ignoreFilters = false)
-    {
-        return service.GetAll(ignoreFilters: ignoreFilters);
-    }
-
-    public async ValueTask<cCoder.Data.Models.DMS.File> AddAsync(cCoder.Data.Models.DMS.File newFile)
-    {
-        Folder folder = folderService.GetWithRoles(id: newFile.FolderId, ignoreFilters: true);
-
-        if (folder == null)
+=>
+        TryCatch(operation: () =>
         {
-            throw new SecurityException(message: "Access Denied!");
-        }
+            ValidateInputs(inputs: [id]);
+            return service.Get(id: id);
 
-        if (!User.IsAdminOfApp(appId: folder.AppId) && !folder.UserCan(user: User, privilege: "file_create"))
-        {
-            throw new SecurityException(message: "Access Denied!");
-        }
-
-        string relativePath = (string.IsNullOrWhiteSpace(value: newFile.Path) ? newFile.Name : newFile.Path);
-        string fileName = (string.IsNullOrWhiteSpace(value: newFile.Name) ? new cCoder.DocumentManagement.Models.Path(path: relativePath).Name : newFile.Name);
-
-        cCoder.Data.Models.DMS.File createdFile = await service.AddAsync(entity: new cCoder.Data.Models.DMS.File
-        {
-            FolderId = folder.Id,
-            Folder = folder,
-            Name = fileName,
-            Description = newFile.Description,
-            Path = (folder.Path + "/" + relativePath).Trim(trimChar: '/')
-            .ToLowerInvariant(),
-            MimeType = newFile.MimeType,
-            Size = newFile.Size
         });
 
-        if (newFile.Contents != null && newFile.Contents.Any())
+    public IQueryable<cCoder.Data.Models.DMS.File> GetAll(bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
         {
-            FileContent[] contents = newFile.Contents.Select(selector: (FileContent content) => new FileContent
+            ValidateInputs(inputs: [ignoreFilters]);
+            return service.GetAll(ignoreFilters: ignoreFilters);
+
+        });
+
+    public ValueTask<cCoder.Data.Models.DMS.File> AddAsync(cCoder.Data.Models.DMS.File newFile)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [newFile]);
+            Folder folder = folderService.GetWithRoles(id: newFile.FolderId, ignoreFilters: true);
+
+
+            if (folder == null)
             {
-                Id = content.Id,
-                FileId = createdFile.Id,
-                File = createdFile,
-                Description = content.Description,
-                Size = content.Size,
-                Version = content.Version,
-                RawData = content.RawData
-            })
-                .ToArray();
+                throw new SecurityException(message: "Access Denied!");
+            }
 
-            await fileContentProcessingService.AddOrUpdate(items: contents);
-        }
 
-        return service.GetWithFolderAndContents(id: createdFile.Id, ignoreFilters: true);
-    }
+            if (!User.IsAdminOfApp(appId: folder.AppId) && !folder.UserCan(user: User, privilege: "file_create"))
+            {
+                throw new SecurityException(message: "Access Denied!");
+            }
+
+
+            string relativePath = (string.IsNullOrWhiteSpace(value: newFile.Path) ? newFile.Name : newFile.Path);
+
+            string fileName = (string.IsNullOrWhiteSpace(value: newFile.Name) ? new cCoder.DocumentManagement.Models.Path(path: relativePath).Name : newFile.Name);
+
+
+            cCoder.Data.Models.DMS.File createdFile = await service.AddAsync(entity: new cCoder.Data.Models.DMS.File
+            {
+                FolderId = folder.Id,
+                Folder = folder,
+                Name = fileName,
+                Description = newFile.Description,
+                Path = (folder.Path + "/" + relativePath).Trim(trimChar: '/')
+                .ToLowerInvariant(),
+                MimeType = newFile.MimeType,
+                Size = newFile.Size
+            });
+
+
+            if (newFile.Contents != null && newFile.Contents.Any())
+            {
+                FileContent[] contents = newFile.Contents.Select(selector: (FileContent content) => new FileContent
+                {
+                    Id = content.Id,
+                    FileId = createdFile.Id,
+                    File = createdFile,
+                    Description = content.Description,
+                    Size = content.Size,
+                    Version = content.Version,
+                    RawData = content.RawData
+                })
+                    .ToArray();
+
+                await fileContentProcessingService.AddOrUpdate(items: contents);
+            }
+
+
+            return service.GetWithFolderAndContents(id: createdFile.Id, ignoreFilters: true);
+
+        });
 
     public cCoder.Data.Models.DMS.File GetByPath(int appId, string path)
-    {
-        cCoder.Data.Models.DMS.File byPath = service.GetByPath(appId: appId, path: path, ignoreFilters: true);
-
-        if (byPath != null)
+=>
+        TryCatch(operation: () =>
         {
-            return byPath;
-        }
+            ValidateInputs(inputs: [appId, path]);
+            cCoder.Data.Models.DMS.File byPath = service.GetByPath(appId: appId, path: path, ignoreFilters: true);
 
-        throw new SecurityException(message: "Access Denied!");
-    }
+
+            if (byPath != null)
+            {
+                return byPath;
+            }
+
+
+            throw new SecurityException(message: "Access Denied!");
+
+        });
 
     public ValueTask DeleteAsync(Guid id)
-    {
-        return service.DeleteAsync(id: id);
-    }
-
-    public async ValueTask<cCoder.Data.Models.DMS.File> UpdateAsync(cCoder.Data.Models.DMS.File newFile)
-    {
-        cCoder.Data.Models.DMS.File dbVersion = service.GetWithFolderRolesAndContents(id: newFile.Id, ignoreFilters: true);
-
-        if (dbVersion == null || !dbVersion.UserCan(user: User, privilege: "file_update"))
+=>
+        TryCatch(operation: () =>
         {
-            throw new SecurityException(message: "Access Denied!");
-        }
+            ValidateInputs(inputs: [id]);
+            return service.DeleteAsync(id: id);
 
-        dbVersion.Description = newFile.Description;
-        dbVersion.Size = newFile.Size;
-        dbVersion.MimeType = newFile.MimeType;
+        });
 
-        if (dbVersion.Name != newFile.Name || dbVersion.FolderId != newFile.FolderId)
+    public ValueTask<cCoder.Data.Models.DMS.File> UpdateAsync(cCoder.Data.Models.DMS.File newFile)
+=>
+        TryCatch(operation: async () =>
         {
-            Guid originalFolderId = dbVersion.FolderId;
-            dbVersion.Name = newFile.Name;
-            dbVersion.FolderId = newFile.FolderId;
-            dbVersion.Folder = ((newFile.FolderId == originalFolderId) ? dbVersion.Folder : folderService.GetWithRoles(id: newFile.FolderId, ignoreFilters: true));
-            dbVersion.RecomputePath();
-        }
+            ValidateInputs(inputs: [newFile]);
+            cCoder.Data.Models.DMS.File dbVersion = service.GetWithFolderRolesAndContents(id: newFile.Id, ignoreFilters: true);
 
-        cCoder.Data.Models.DMS.File updatedFile = await service.UpdateAsync(entity: dbVersion);
 
-        if (newFile.Contents != null && newFile.Contents.Any())
-        {
-            FileContent[] contents = newFile.Contents.Select(selector: (FileContent content) => new FileContent
+            if (dbVersion == null || !dbVersion.UserCan(user: User, privilege: "file_update"))
             {
-                Id = content.Id,
-                FileId = updatedFile.Id,
-                File = updatedFile,
-                Description = content.Description,
-                Size = content.Size,
-                CreatedBy = content.CreatedBy,
-                CreatedOn = content.CreatedOn,
-                Version = content.Version,
-                RawData = content.RawData
-            })
-                .ToArray();
+                throw new SecurityException(message: "Access Denied!");
+            }
 
-            await fileContentProcessingService.AddOrUpdate(items: contents);
-        }
 
-        return service.GetWithFolderAndContents(id: updatedFile.Id, ignoreFilters: true);
-    }
+            dbVersion.Description = newFile.Description;
+
+            dbVersion.Size = newFile.Size;
+
+            dbVersion.MimeType = newFile.MimeType;
+
+
+            if (dbVersion.Name != newFile.Name || dbVersion.FolderId != newFile.FolderId)
+            {
+                Guid originalFolderId = dbVersion.FolderId;
+                dbVersion.Name = newFile.Name;
+                dbVersion.FolderId = newFile.FolderId;
+                dbVersion.Folder = ((newFile.FolderId == originalFolderId) ? dbVersion.Folder : folderService.GetWithRoles(id: newFile.FolderId, ignoreFilters: true));
+                dbVersion.RecomputePath();
+            }
+
+
+            cCoder.Data.Models.DMS.File updatedFile = await service.UpdateAsync(entity: dbVersion);
+
+
+            if (newFile.Contents != null && newFile.Contents.Any())
+            {
+                FileContent[] contents = newFile.Contents.Select(selector: (FileContent content) => new FileContent
+                {
+                    Id = content.Id,
+                    FileId = updatedFile.Id,
+                    File = updatedFile,
+                    Description = content.Description,
+                    Size = content.Size,
+                    CreatedBy = content.CreatedBy,
+                    CreatedOn = content.CreatedOn,
+                    Version = content.Version,
+                    RawData = content.RawData
+                })
+                    .ToArray();
+
+                await fileContentProcessingService.AddOrUpdate(items: contents);
+            }
+
+
+            return service.GetWithFolderAndContents(id: updatedFile.Id, ignoreFilters: true);
+
+        });
 
     public ValueTask HandleFileDeleteEventAsync(cCoder.Data.Models.DMS.File file)
-    {
-        return fileContentService.DeleteAllForFileAsync(fileId: file.Id);
-    }
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [file]);
+            return fileContentService.DeleteAllForFileAsync(fileId: file.Id);
+
+        });
 
     public DMSResult Get(App app, cCoder.DocumentManagement.Models.Path path, int version = 0)
-    {
-        if (!path.IsToFile)
+=>
+        TryCatch(operation: () =>
         {
-            throw new InvalidOperationException(message: "To get a folder archive, use folder processing operations.");
-        }
+            ValidateInputs(inputs: [app, path, version]);
+            if (!path.IsToFile)
+            {
+                throw new InvalidOperationException(message: "To get a folder archive, use folder processing operations.");
+            }
 
-        cCoder.Data.Models.DMS.File byPathWithFolderAndContents = service.GetByPathWithFolderAndContents(appId: app.Id, path: path.Lowered);
 
-        if (byPathWithFolderAndContents == null)
-        {
-            throw new SecurityException(message: "Access Denied!");
-        }
+            cCoder.Data.Models.DMS.File byPathWithFolderAndContents = service.GetByPathWithFolderAndContents(appId: app.Id, path: path.Lowered);
 
-        return new DMSResult
-        {
-            MimeType = byPathWithFolderAndContents.MimeType,
-            Data = byPathWithFolderAndContents.GetContent(version: version)
-        };
-    }
+
+            if (byPathWithFolderAndContents == null)
+            {
+                throw new SecurityException(message: "Access Denied!");
+            }
+
+
+            return new DMSResult
+            {
+                MimeType = byPathWithFolderAndContents.MimeType,
+                Data = byPathWithFolderAndContents.GetContent(version: version)
+            };
+
+        });
 
     public IEnumerable<cCoder.Data.Models.DMS.File> Search(App app, string needle)
-    {
-        return service.Search(appId: app.Id, needle: Encoding.UTF8.GetBytes(s: needle))
-            .AsEnumerable();
-    }
-
-    public async ValueTask SaveAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content = null)
-    {
-        if (path.IsToFile)
+=>
+        TryCatch(operation: () =>
         {
-            cCoder.Data.Models.DMS.File existingFile = service.GetByPath(appId: app.Id, path: path.Lowered);
-            byte[] rawBytes = ReadAllBytes(content: content);
-            Folder folder = await BuildPathAsync(app: app, folderPath: path.ParentPath);
+            ValidateInputs(inputs: [app, needle]);
+            return service.Search(appId: app.Id, needle: Encoding.UTF8.GetBytes(s: needle))
+    .AsEnumerable();
 
-            if (existingFile == null)
+        });
+
+    public ValueTask SaveAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content = null)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [app, path, content]);
+            if (path.IsToFile)
             {
-                await CreateNewFileAsync(app: app, path: path, rawBytes: rawBytes, folder: folder);
+                cCoder.Data.Models.DMS.File existingFile = service.GetByPath(appId: app.Id, path: path.Lowered);
+                byte[] rawBytes = ReadAllBytes(content: content);
+                Folder folder = await BuildPathAsync(app: app, folderPath: path.ParentPath);
+
+                if (existingFile == null)
+                {
+                    await CreateNewFileAsync(app: app, path: path, rawBytes: rawBytes, folder: folder);
+                }
+                else
+                {
+                    await UpdateFileAsync(app: app, existingFile: existingFile, rawBytes: rawBytes, folder: folder);
+                }
             }
             else
             {
-                await UpdateFileAsync(app: app, existingFile: existingFile, rawBytes: rawBytes, folder: folder);
+                await BuildPathAsync(app: app, folderPath: path);
             }
-        }
-        else
+
+        });
+
+    public ValueTask DropAsync(App app, cCoder.DocumentManagement.Models.Path path, int version = 0)
+=>
+        TryCatch(operation: async () =>
         {
-            await BuildPathAsync(app: app, folderPath: path);
-        }
-    }
-
-    public async ValueTask DropAsync(App app, cCoder.DocumentManagement.Models.Path path, int version = 0)
-    {
-        if (path.IsToFile)
-        {
-            await DropFileAsync(app: app, path: path, version: version);
-            return;
-        }
-
-        throw new InvalidOperationException(message: "To delete a folder, use folder processing operations.");
-    }
-
-    public async ValueTask CopyAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
-    {
-        if (!oldPath.IsToFile)
-        {
-            throw new InvalidOperationException(message: "To copy a folder, use folder processing operations.");
-        }
-
-        await CopyFileAsync(app: app, oldPath: oldPath, newPath: newPath);
-    }
-
-    public async ValueTask MoveAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
-    {
-        if (!oldPath.IsToFile)
-        {
-            throw new InvalidOperationException(message: "To move a folder, use folder processing operations.");
-        }
-
-        Folder newParent = ((!string.IsNullOrEmpty(value: newPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: app.Id, path: newPath.ParentPath.Lowered) : null);
-        Folder oldParent = ((!string.IsNullOrEmpty(value: oldPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: app.Id, path: oldPath.ParentPath.Lowered) : null);
-        bool userIsAdmin = User.IsAdminOfApp(appId: app.Id);
-
-        if (newParent == null && !newPath.IsToFile)
-        {
-            newParent = await BuildPathAsync(app: app, folderPath: newPath);
-        }
-
-        if (newParent == null && newPath.IsToFile)
-        {
-            newParent = await BuildPathAsync(app: app, folderPath: newPath.ParentPath);
-        }
-
-        await MoveFileAsync(app: app, oldPath: oldPath, newPath: newPath, newParent: newParent, oldParent: oldParent, userIsAdmin: userIsAdmin);
-    }
-
-    public async ValueTask<IEnumerable<Result<cCoder.Data.Models.DMS.File>>> AddOrUpdate(IEnumerable<cCoder.Data.Models.DMS.File> items)
-    {
-        List<Result<cCoder.Data.Models.DMS.File>> results = new List<Result<cCoder.Data.Models.DMS.File>>();
-
-        foreach (cCoder.Data.Models.DMS.File item in items)
-        {
-            try
+            ValidateInputs(inputs: [app, path, version]);
+            if (path.IsToFile)
             {
-                cCoder.Data.Models.DMS.File savedItem = item.Id == Guid.Empty ? await AddAsync(newFile: item) : await UpdateAsync(newFile: item);
-
-                results.Add(item: new Result<cCoder.Data.Models.DMS.File>
-                {
-                    Success = true,
-                    Item = savedItem,
-                    Message = item.Id == Guid.Empty ? "Added Successfully" : "Updated Successfully"
-                });
+                await DropFileAsync(app: app, path: path, version: version);
+                return;
             }
-            catch (Exception ex)
-            {
-                results.Add(item: new Result<cCoder.Data.Models.DMS.File>
-                {
-                    Success = false,
-                    Item = item,
-                    Message = ex.Message
-                });
-            }
-        }
 
-        return results;
-    }
 
-    public async ValueTask DeleteAllAsync(IEnumerable<cCoder.Data.Models.DMS.File> items)
-    {
-        foreach (cCoder.Data.Models.DMS.File item in items)
+            throw new InvalidOperationException(message: "To delete a folder, use folder processing operations.");
+
+        });
+
+    public ValueTask CopyAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+=>
+        TryCatch(operation: async () =>
         {
-            await DeleteAsync(id: item.Id);
-        }
-    }
+            ValidateInputs(inputs: [app, oldPath, newPath]);
+            if (!oldPath.IsToFile)
+            {
+                throw new InvalidOperationException(message: "To copy a folder, use folder processing operations.");
+            }
+
+
+            await CopyFileAsync(app: app, oldPath: oldPath, newPath: newPath);
+
+        });
+
+    public ValueTask MoveAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [app, oldPath, newPath]);
+            if (!oldPath.IsToFile)
+            {
+                throw new InvalidOperationException(message: "To move a folder, use folder processing operations.");
+            }
+
+
+            Folder newParent = ((!string.IsNullOrEmpty(value: newPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: app.Id, path: newPath.ParentPath.Lowered) : null);
+
+            Folder oldParent = ((!string.IsNullOrEmpty(value: oldPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: app.Id, path: oldPath.ParentPath.Lowered) : null);
+
+            bool userIsAdmin = User.IsAdminOfApp(appId: app.Id);
+
+
+            if (newParent == null && !newPath.IsToFile)
+            {
+                newParent = await BuildPathAsync(app: app, folderPath: newPath);
+            }
+
+
+            if (newParent == null && newPath.IsToFile)
+            {
+                newParent = await BuildPathAsync(app: app, folderPath: newPath.ParentPath);
+            }
+
+
+            await MoveFileAsync(app: app, oldPath: oldPath, newPath: newPath, newParent: newParent, oldParent: oldParent, userIsAdmin: userIsAdmin);
+
+        });
+
+    public ValueTask<IEnumerable<Result<cCoder.Data.Models.DMS.File>>> AddOrUpdate(IEnumerable<cCoder.Data.Models.DMS.File> items)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [items]);
+            List<Result<cCoder.Data.Models.DMS.File>> results = new List<Result<cCoder.Data.Models.DMS.File>>();
+
+
+            foreach (cCoder.Data.Models.DMS.File item in items)
+            {
+                try
+                {
+                    cCoder.Data.Models.DMS.File savedItem = item.Id == Guid.Empty ? await AddAsync(newFile: item) : await UpdateAsync(newFile: item);
+
+                    results.Add(item: new Result<cCoder.Data.Models.DMS.File>
+                    {
+                        Success = true,
+                        Item = savedItem,
+                        Message = item.Id == Guid.Empty ? "Added Successfully" : "Updated Successfully"
+                    });
+                }
+                catch (Exception ex)
+                {
+                    results.Add(item: new Result<cCoder.Data.Models.DMS.File>
+                    {
+                        Success = false,
+                        Item = item,
+                        Message = ex.Message
+                    });
+                }
+            }
+
+
+            return (IEnumerable<Result<cCoder.Data.Models.DMS.File>>)results;
+
+        });
+
+    public ValueTask DeleteAllAsync(IEnumerable<cCoder.Data.Models.DMS.File> items)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [items]);
+            foreach (cCoder.Data.Models.DMS.File item in items)
+            {
+                await DeleteAsync(id: item.Id);
+            }
+
+        });
 
     private async ValueTask UpdateFileAsync(App app, cCoder.Data.Models.DMS.File existingFile, byte[] rawBytes, Folder folder)
     {

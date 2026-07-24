@@ -12,32 +12,39 @@ using cCoder.DocumentManagement.Services.Processings;
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
-internal class DmsHttpRequestOrchestrationService(
+internal partial class DmsHttpRequestOrchestrationService(
     IDocumentManagementCurrentAppResolver currentAppResolver,
     IDmsProcessingService dmsProcessingService,
     IWebDavProcessingService webDavProcessingService
 ) : IDmsHttpRequestOrchestrationService
 {
-    public async ValueTask<DmsProcessingResponse> ProcessRequestAsync(HttpContext context)
-    {
-        App app = currentAppResolver.ResolveCurrentApp();
-        DmsProcessingRequest request = BuildRequest(context: context, app: app);
+    public ValueTask<DmsProcessingResponse> ProcessRequestAsync(HttpContext context)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [context]);
+            App app = currentAppResolver.ResolveCurrentApp();
 
-        if (IsWebDavRequest(request: request))
-        {
-            return await webDavProcessingService.ProcessAsync(request: request);
-        }
+            DmsProcessingRequest request = BuildRequest(context: context, app: app);
 
-        try
-        {
-            DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
-            return AddDmsDefaultHeaders(response: response);
-        }
-        catch (SecurityException)
-        {
-            return CreateDmsSecurityResponse(host: request.Host);
-        }
-    }
+
+            if (IsWebDavRequest(request: request))
+            {
+                return await webDavProcessingService.ProcessAsync(request: request);
+            }
+
+
+            try
+            {
+                DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
+                return AddDmsDefaultHeaders(response: response);
+            }
+            catch (SecurityException)
+            {
+                return CreateDmsSecurityResponse(host: request.Host);
+            }
+
+        });
 
     private static DmsProcessingRequest BuildRequest(HttpContext context, App app) =>
         new()

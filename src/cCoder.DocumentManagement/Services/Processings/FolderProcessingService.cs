@@ -13,125 +13,157 @@ using cCoder.DocumentManagement.Services.Foundations;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-internal class FolderProcessingService(IFolderService service, IFolderRoleService folderRoleService, IRoleService roleService, IFileService fileService, IFileContentService fileContentService, IFileProcessingService fileProcessingService, IAuthorizationBroker authorizationBroker) : IFolderProcessingService
+internal partial class FolderProcessingService(IFolderService service, IFolderRoleService folderRoleService, IRoleService roleService, IFileService fileService, IFileContentService fileContentService, IFileProcessingService fileProcessingService, IAuthorizationBroker authorizationBroker) : IFolderProcessingService
 {
     private sealed record FolderArchiveData(ILookup<Guid?, Folder> SubFoldersByParentId, ILookup<Guid, cCoder.Data.Models.DMS.File> FilesByFolderId, ILookup<Guid, FileContent> FileContentsByFileId);
 
     private User User => authorizationBroker.GetCurrentUser();
 
     public Folder Get(Guid id)
-    {
-        return service.Get(id: id);
-    }
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [id]);
+            return service.Get(id: id);
+
+        });
 
     public IQueryable<Folder> GetAll(bool ignoreFilters = false)
-    {
-        return service.GetAll(ignoreFilters: ignoreFilters);
-    }
-
-    public async ValueTask<List<Result<Guid?>>> CopyAsync(string source, string destination, int sourceAppId, int destAppId)
-    {
-        Folder sourceFolder = service.GetByPathWithRolesAndFilesAndContents(appId: sourceAppId, path: source.ToLower(), ignoreFilters: true);
-        Folder destinationFolder = service.GetByPathWithRolesAndFilesAndContents(appId: destAppId, path: destination.ToLower(), ignoreFilters: true);
-
-        if (sourceFolder == null)
+=>
+        TryCatch(operation: () =>
         {
-            throw new InvalidOperationException(message: "Source folder doesn't exist.");
-        }
+            ValidateInputs(inputs: [ignoreFilters]);
+            return service.GetAll(ignoreFilters: ignoreFilters);
 
-        if ((!sourceFolder.UserCan(user: User, privilege: "file_update") || !sourceFolder.UserCan(user: User, privilege: "file_create")) && !User.IsAdminOfApp(appId: destAppId))
+        });
+
+    public ValueTask<List<Result<Guid?>>> CopyAsync(string source, string destination, int sourceAppId, int destAppId)
+=>
+        TryCatch(operation: async () =>
         {
-            throw new SecurityException(message: "Access Denied!");
-        }
+            ValidateInputs(inputs: [source, destination, sourceAppId, destAppId]);
+            Folder sourceFolder = service.GetByPathWithRolesAndFilesAndContents(appId: sourceAppId, path: source.ToLower(), ignoreFilters: true);
 
-        if (destinationFolder == null)
-        {
-            throw new InvalidOperationException(message: "Destination folder doesn't exist.");
-        }
+            Folder destinationFolder = service.GetByPathWithRolesAndFilesAndContents(appId: destAppId, path: destination.ToLower(), ignoreFilters: true);
 
-        if ((!destinationFolder.UserCan(user: User, privilege: "file_update") || !destinationFolder.UserCan(user: User, privilege: "file_create")) && !User.IsAdminOfApp(appId: destAppId))
-        {
-            throw new SecurityException(message: "Access Denied!");
-        }
 
-        App destinationApp = new App
-        {
-            Id = destAppId
-        };
-
-        cCoder.Data.Models.DMS.File[] sourceFiles = sourceFolder.Files?.ToArray() ?? Array.Empty<cCoder.Data.Models.DMS.File>();
-        List<Result<Guid?>> results = new List<Result<Guid?>>();
-        cCoder.Data.Models.DMS.File[] array = sourceFiles;
-
-        foreach (cCoder.Data.Models.DMS.File entry in array)
-        {
-            using MemoryStream sourceStream = new MemoryStream(buffer: entry.Contents.OrderBy(keySelector: (FileContent k) => k.Version)
-                .FirstOrDefault().RawData);
-
-            try
+            if (sourceFolder == null)
             {
-                await fileProcessingService.SaveAsync(app: destinationApp, path: new cCoder.DocumentManagement.Models.Path(path: destinationFolder.Path + "/" + entry.Name), content: sourceStream);
-
-                results.Add(item: new Result<Guid?>
-                {
-                    Item = entry.Id,
-                    Success = true,
-                    Id = entry.Id.ToString()
-                });
+                throw new InvalidOperationException(message: "Source folder doesn't exist.");
             }
-            catch (Exception ex)
-            {
-                Exception ex2 = ex;
 
-                results.Add(item: new Result<Guid?>
-                {
-                    Item = null,
-                    Success = false,
-                    Id = entry.Id.ToString(),
-                    Message = ex2.Message
-                });
-            }
-        }
 
-        return results;
-    }
-
-    public async ValueTask<Folder> AddAsync(Folder newFolder)
-    {
-        if (newFolder.ParentId.HasValue)
-        {
-            Folder parent = Get(id: newFolder.ParentId.Value);
-
-            if (parent == null)
+            if ((!sourceFolder.UserCan(user: User, privilege: "file_update") || !sourceFolder.UserCan(user: User, privilege: "file_create")) && !User.IsAdminOfApp(appId: destAppId))
             {
                 throw new SecurityException(message: "Access Denied!");
             }
 
-            newFolder.Path = parent.Path + "/" + newFolder.Name;
-        }
-        else
+
+            if (destinationFolder == null)
+            {
+                throw new InvalidOperationException(message: "Destination folder doesn't exist.");
+            }
+
+
+            if ((!destinationFolder.UserCan(user: User, privilege: "file_update") || !destinationFolder.UserCan(user: User, privilege: "file_create")) && !User.IsAdminOfApp(appId: destAppId))
+            {
+                throw new SecurityException(message: "Access Denied!");
+            }
+
+
+            App destinationApp = new App
+            {
+                Id = destAppId
+            };
+
+
+            cCoder.Data.Models.DMS.File[] sourceFiles = sourceFolder.Files?.ToArray() ?? Array.Empty<cCoder.Data.Models.DMS.File>();
+
+            List<Result<Guid?>> results = new List<Result<Guid?>>();
+
+            cCoder.Data.Models.DMS.File[] array = sourceFiles;
+
+
+            foreach (cCoder.Data.Models.DMS.File entry in array)
+            {
+                using MemoryStream sourceStream = new MemoryStream(buffer: entry.Contents.OrderBy(keySelector: (FileContent k) => k.Version)
+                    .FirstOrDefault().RawData);
+
+                try
+                {
+                    await fileProcessingService.SaveAsync(app: destinationApp, path: new cCoder.DocumentManagement.Models.Path(path: destinationFolder.Path + "/" + entry.Name), content: sourceStream);
+
+                    results.Add(item: new Result<Guid?>
+                    {
+                        Item = entry.Id,
+                        Success = true,
+                        Id = entry.Id.ToString()
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Exception ex2 = ex;
+
+                    results.Add(item: new Result<Guid?>
+                    {
+                        Item = null,
+                        Success = false,
+                        Id = entry.Id.ToString(),
+                        Message = ex2.Message
+                    });
+                }
+            }
+
+
+            return results;
+
+        });
+
+    public ValueTask<Folder> AddAsync(Folder newFolder)
+=>
+        TryCatch(operation: async () =>
         {
-            newFolder.Path = newFolder.Name;
-        }
+            ValidateInputs(inputs: [newFolder]);
+            if (newFolder.ParentId.HasValue)
+            {
+                Folder parent = Get(id: newFolder.ParentId.Value);
 
-        Folder existingFolder = GetAll(ignoreFilters: true)
-            .FirstOrDefault(predicate: (Folder folder) => folder.AppId == newFolder.AppId && folder.Path.ToLower() == newFolder.Path.ToLower());
+                if (parent == null)
+                {
+                    throw new SecurityException(message: "Access Denied!");
+                }
 
-        if (existingFolder != null)
-        {
-            return existingFolder;
-        }
+                newFolder.Path = parent.Path + "/" + newFolder.Name;
+            }
+            else
+            {
+                newFolder.Path = newFolder.Name;
+            }
 
-        App app = new App
-        {
-            Id = newFolder.AppId
-        };
 
-        await SaveAsync(app: app, path: new cCoder.DocumentManagement.Models.Path(path: newFolder.Path));
+            Folder existingFolder = GetAll(ignoreFilters: true)
+                .FirstOrDefault(predicate: (Folder folder) => folder.AppId == newFolder.AppId && folder.Path.ToLower() == newFolder.Path.ToLower());
 
-        return GetAll(ignoreFilters: true)
-            .FirstOrDefault(predicate: (Folder folder) => folder.AppId == newFolder.AppId && folder.Path.ToLower() == newFolder.Path.ToLower());
-    }
+
+            if (existingFolder != null)
+            {
+                return existingFolder;
+            }
+
+
+            App app = new App
+            {
+                Id = newFolder.AppId
+            };
+
+
+            await SaveAsync(app: app, path: new cCoder.DocumentManagement.Models.Path(path: newFolder.Path));
+
+
+            return GetAll(ignoreFilters: true)
+                .FirstOrDefault(predicate: (Folder folder) => folder.AppId == newFolder.AppId && folder.Path.ToLower() == newFolder.Path.ToLower());
+
+        });
 
     private async ValueTask<Folder> AddForAppAsync(Folder newFolder)
     {
@@ -159,29 +191,41 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         return existingFolder ?? await service.AddForPathBuildAsync(folder: newFolder);
     }
 
-    public async ValueTask DeleteAsync(Guid id)
-    {
-        Folder folder = service.GetWithRoles(id: id, ignoreFilters: true);
-
-        if (folder == null || (!User.IsAdminOfApp(appId: folder.AppId) && !folder.UserCan(user: User, privilege: "folder_delete")))
+    public ValueTask DeleteAsync(Guid id)
+=>
+        TryCatch(operation: async () =>
         {
+            ValidateInputs(inputs: [id]);
+            Folder folder = service.GetWithRoles(id: id, ignoreFilters: true);
+
+
+            if (folder == null || (!User.IsAdminOfApp(appId: folder.AppId) && !folder.UserCan(user: User, privilege: "folder_delete")))
+            {
+                throw new SecurityException(message: "Access Denied!");
+            }
+
+
+            await service.DeleteAsync(id: id);
+
+        });
+
+    public ValueTask<Folder> UpdateAsync(Folder folder)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [folder]);
+            Folder dbVersion = service.GetForUpdate(id: folder.Id, ignoreFilters: true);
+
+
+            if (dbVersion != null && (User.IsAdminOfApp(appId: dbVersion.AppId) || dbVersion.UserCan(user: User, privilege: "folder_update")))
+            {
+                return await UpdateInternalAsync(dbVersion: dbVersion, folder: folder, authorize: true);
+            }
+
+
             throw new SecurityException(message: "Access Denied!");
-        }
 
-        await service.DeleteAsync(id: id);
-    }
-
-    public async ValueTask<Folder> UpdateAsync(Folder folder)
-    {
-        Folder dbVersion = service.GetForUpdate(id: folder.Id, ignoreFilters: true);
-
-        if (dbVersion != null && (User.IsAdminOfApp(appId: dbVersion.AppId) || dbVersion.UserCan(user: User, privilege: "folder_update")))
-        {
-            return await UpdateInternalAsync(dbVersion: dbVersion, folder: folder, authorize: true);
-        }
-
-        throw new SecurityException(message: "Access Denied!");
-    }
+        });
 
     private async ValueTask<Folder> UpdateForAppAsync(Folder folder)
     {
@@ -191,231 +235,302 @@ internal class FolderProcessingService(IFolderService service, IFolderRoleServic
         return await UpdateInternalAsync(dbVersion: dbVersion, folder: folder, authorize: false);
     }
 
-    public async ValueTask HandleFolderDeleteEventAsync(Folder folder)
-    {
-        Folder dbFolder = GetAll(ignoreFilters: true)
-            .FirstOrDefault(predicate: (Folder foundFolder) => foundFolder.Id == folder.Id);
-
-        if (dbFolder != null)
+    public ValueTask HandleFolderDeleteEventAsync(Folder folder)
+=>
+        TryCatch(operation: async () =>
         {
-            string folderPathPrefix = dbFolder.Path + "/";
+            ValidateInputs(inputs: [folder]);
+            Folder dbFolder = GetAll(ignoreFilters: true)
+    .FirstOrDefault(predicate: (Folder foundFolder) => foundFolder.Id == folder.Id);
 
-            Guid[] folderIds = (from foundFolder in GetAll(ignoreFilters: true)
-                                where foundFolder.Path == dbFolder.Path || foundFolder.Path.StartsWith(value: folderPathPrefix)
-                                select foundFolder.Id).ToArray();
 
-            Guid[] fileIds = fileService.GetIdsByFolderIds(folderIds: folderIds, ignoreFilters: true);
-
-            if (fileIds.Length != 0)
+            if (dbFolder != null)
             {
-                await fileContentService.DeleteAllForFilesAsync(fileIds: fileIds);
+                string folderPathPrefix = dbFolder.Path + "/";
+
+                Guid[] folderIds = (from foundFolder in GetAll(ignoreFilters: true)
+                                    where foundFolder.Path == dbFolder.Path || foundFolder.Path.StartsWith(value: folderPathPrefix)
+                                    select foundFolder.Id).ToArray();
+
+                Guid[] fileIds = fileService.GetIdsByFolderIds(folderIds: folderIds, ignoreFilters: true);
+
+                if (fileIds.Length != 0)
+                {
+                    await fileContentService.DeleteAllForFilesAsync(fileIds: fileIds);
+                }
             }
-        }
-    }
+
+        });
 
     public DMSResult GetFilesZipped(App app, IEnumerable<cCoder.DocumentManagement.Models.Path> paths)
-    {
-        using MemoryStream memoryStream = new MemoryStream();
-
-        using (ZipArchive zip = new ZipArchive(stream: memoryStream, mode: ZipArchiveMode.Create))
+=>
+        TryCatch(operation: () =>
         {
-            foreach (cCoder.DocumentManagement.Models.Path path in paths)
-            {
-                if (path.IsToFile)
-                {
-                    cCoder.Data.Models.DMS.File byPathWithFolderAndContents = fileService.GetByPathWithFolderAndContents(appId: app.Id, path: path.Lowered);
+            ValidateInputs(inputs: [app, paths]);
+            using MemoryStream memoryStream = new MemoryStream();
 
-                    if (byPathWithFolderAndContents == null)
+
+            using (ZipArchive zip = new ZipArchive(stream: memoryStream, mode: ZipArchiveMode.Create))
+            {
+                foreach (cCoder.DocumentManagement.Models.Path path in paths)
+                {
+                    if (path.IsToFile)
+                    {
+                        cCoder.Data.Models.DMS.File byPathWithFolderAndContents = fileService.GetByPathWithFolderAndContents(appId: app.Id, path: path.Lowered);
+
+                        if (byPathWithFolderAndContents == null)
+                        {
+                            throw new SecurityException(message: "Access Denied!");
+                        }
+
+                        AddFileToZip(zip: zip, file: byPathWithFolderAndContents, fileContents: byPathWithFolderAndContents.Contents);
+                        continue;
+                    }
+
+                    Folder byPath = service.GetByPath(appId: app.Id, path: path.Lowered);
+
+                    if (byPath == null)
                     {
                         throw new SecurityException(message: "Access Denied!");
                     }
 
-                    AddFileToZip(zip: zip, file: byPathWithFolderAndContents, fileContents: byPathWithFolderAndContents.Contents);
-                    continue;
+                    FolderArchiveData folderArchiveData = LoadFolderArchiveData(appId: app.Id, rootPath: byPath.Path, ignoreFilters: false);
+                    AddFolderToZip(zip: zip, folder: byPath, subFoldersByParentId: folderArchiveData.SubFoldersByParentId, filesByFolderId: folderArchiveData.FilesByFolderId, fileContentsByFileId: folderArchiveData.FileContentsByFileId);
                 }
-
-                Folder byPath = service.GetByPath(appId: app.Id, path: path.Lowered);
-
-                if (byPath == null)
-                {
-                    throw new SecurityException(message: "Access Denied!");
-                }
-
-                FolderArchiveData folderArchiveData = LoadFolderArchiveData(appId: app.Id, rootPath: byPath.Path, ignoreFilters: false);
-                AddFolderToZip(zip: zip, folder: byPath, subFoldersByParentId: folderArchiveData.SubFoldersByParentId, filesByFolderId: folderArchiveData.FilesByFolderId, fileContentsByFileId: folderArchiveData.FileContentsByFileId);
             }
-        }
 
-        return new DMSResult
-        {
-            MimeType = "application/zip",
-            Data = new MemoryStream(buffer: memoryStream.ToArray())
-        };
-    }
+
+            return new DMSResult
+            {
+                MimeType = "application/zip",
+                Data = new MemoryStream(buffer: memoryStream.ToArray())
+            };
+
+        });
 
     public DMSResult Get(App app, cCoder.DocumentManagement.Models.Path path, string search = "")
-    {
-        if (path.IsToFile)
+=>
+        TryCatch(operation: () =>
         {
-            throw new InvalidOperationException(message: "To get a file, use file processing operations.");
-        }
-
-        Folder byPath = service.GetByPath(appId: app.Id, path: path.Lowered);
-
-        if (byPath == null)
-        {
-            throw new SecurityException(message: "Access Denied!");
-        }
-
-        FolderArchiveData folderArchiveData = LoadFolderArchiveData(appId: app.Id, rootPath: byPath.Path, ignoreFilters: false);
-        using MemoryStream memoryStream = new MemoryStream();
-
-        using (ZipArchive zip = new ZipArchive(stream: memoryStream, mode: ZipArchiveMode.Create))
-        {
-            AddFolderToZip(zip: zip, folder: byPath, subFoldersByParentId: folderArchiveData.SubFoldersByParentId, filesByFolderId: folderArchiveData.FilesByFolderId, fileContentsByFileId: folderArchiveData.FileContentsByFileId, prefix: null, search: search);
-        }
-
-        return new DMSResult
-        {
-            MimeType = "application/zip",
-            Data = new MemoryStream(buffer: memoryStream.ToArray())
-        };
-    }
-
-    public async ValueTask UnpackAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content, bool ignoreArchiveRoot = false)
-    {
-        Folder folder = await BuildPathAsync(app: app, folderPath: path);
-
-        if (!User.IsAdminOfApp(appId: app.Id) && !folder.UserCan(user: User, privilege: "file_create"))
-        {
-            throw new SecurityException(message: "Access Denied!");
-        }
-
-        using ZipArchive archive = new ZipArchive(stream: content, mode: ZipArchiveMode.Read);
-
-        ZipArchiveEntry rootEntry = archive.Entries.OrderBy(keySelector: (ZipArchiveEntry zipArchiveEntry) => zipArchiveEntry.FullName.Split(separator: '/').Length)
-            .First();
-
-        string ignoreSegment = rootEntry.FullName;
-
-        foreach (ZipArchiveEntry entry in archive.Entries)
-        {
-            using Stream entryStream = entry.Open();
-            string destinationPath = (ignoreArchiveRoot ? (path.FullPath + "/" + entry.FullName).Replace(oldValue: ignoreSegment, newValue: "") : (path.FullPath + "/" + entry.FullName));
-
-            if (path.Lowered != destinationPath.ToLower())
+            ValidateInputs(inputs: [app, path, search]);
+            if (path.IsToFile)
             {
-                await fileProcessingService.SaveAsync(app: app, path: new cCoder.DocumentManagement.Models.Path(path: destinationPath), content: entryStream);
+                throw new InvalidOperationException(message: "To get a file, use file processing operations.");
             }
-        }
-    }
 
-    public async ValueTask<IEnumerable<Result<Folder>>> AddOrUpdate(IEnumerable<Folder> items)
-    {
-        List<Result<Folder>> results = new List<Result<Folder>>();
 
-        foreach (Folder item in items)
-        {
-            try
+            Folder byPath = service.GetByPath(appId: app.Id, path: path.Lowered);
+
+
+            if (byPath == null)
             {
-                Folder savedItem = item.Id == Guid.Empty ? await AddAsync(newFolder: item) : await UpdateAsync(folder: item);
+                throw new SecurityException(message: "Access Denied!");
+            }
 
-                results.Add(item: new Result<Folder>
+
+            FolderArchiveData folderArchiveData = LoadFolderArchiveData(appId: app.Id, rootPath: byPath.Path, ignoreFilters: false);
+
+            using MemoryStream memoryStream = new MemoryStream();
+
+
+            using (ZipArchive zip = new ZipArchive(stream: memoryStream, mode: ZipArchiveMode.Create))
+            {
+                AddFolderToZip(zip: zip, folder: byPath, subFoldersByParentId: folderArchiveData.SubFoldersByParentId, filesByFolderId: folderArchiveData.FilesByFolderId, fileContentsByFileId: folderArchiveData.FileContentsByFileId, prefix: null, search: search);
+            }
+
+
+            return new DMSResult
+            {
+                MimeType = "application/zip",
+                Data = new MemoryStream(buffer: memoryStream.ToArray())
+            };
+
+        });
+
+    public ValueTask UnpackAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content, bool ignoreArchiveRoot = false)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [app, path, content, ignoreArchiveRoot]);
+            Folder folder = await BuildPathAsync(app: app, folderPath: path);
+
+
+            if (!User.IsAdminOfApp(appId: app.Id) && !folder.UserCan(user: User, privilege: "file_create"))
+            {
+                throw new SecurityException(message: "Access Denied!");
+            }
+
+
+            using ZipArchive archive = new ZipArchive(stream: content, mode: ZipArchiveMode.Read);
+
+
+            ZipArchiveEntry rootEntry = archive.Entries.OrderBy(keySelector: (ZipArchiveEntry zipArchiveEntry) => zipArchiveEntry.FullName.Split(separator: '/').Length)
+                .First();
+
+
+            string ignoreSegment = rootEntry.FullName;
+
+
+            foreach (ZipArchiveEntry entry in archive.Entries)
+            {
+                using Stream entryStream = entry.Open();
+                string destinationPath = (ignoreArchiveRoot ? (path.FullPath + "/" + entry.FullName).Replace(oldValue: ignoreSegment, newValue: "") : (path.FullPath + "/" + entry.FullName));
+
+                if (path.Lowered != destinationPath.ToLower())
                 {
-                    Success = true,
-                    Item = savedItem,
-                    Message = item.Id == Guid.Empty ? "Added Successfully" : "Updated Successfully"
-                });
+                    await fileProcessingService.SaveAsync(app: app, path: new cCoder.DocumentManagement.Models.Path(path: destinationPath), content: entryStream);
+                }
             }
-            catch (Exception ex)
+
+        });
+
+    public ValueTask<IEnumerable<Result<Folder>>> AddOrUpdate(IEnumerable<Folder> items)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [items]);
+            List<Result<Folder>> results = new List<Result<Folder>>();
+
+
+            foreach (Folder item in items)
             {
-                results.Add(item: new Result<Folder>
+                try
                 {
-                    Success = false,
-                    Item = item,
-                    Message = ex.Message
-                });
+                    Folder savedItem = item.Id == Guid.Empty ? await AddAsync(newFolder: item) : await UpdateAsync(folder: item);
+
+                    results.Add(item: new Result<Folder>
+                    {
+                        Success = true,
+                        Item = savedItem,
+                        Message = item.Id == Guid.Empty ? "Added Successfully" : "Updated Successfully"
+                    });
+                }
+                catch (Exception ex)
+                {
+                    results.Add(item: new Result<Folder>
+                    {
+                        Success = false,
+                        Item = item,
+                        Message = ex.Message
+                    });
+                }
             }
-        }
 
-        return results;
-    }
 
-    public async ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateForAppAsync(IEnumerable<Folder> items)
-    {
-        List<Result<Folder>> results = new List<Result<Folder>>();
+            return (IEnumerable<Result<Folder>>)results;
 
-        foreach (Folder item in items)
+        });
+
+    public ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateForAppAsync(IEnumerable<Folder> items)
+=>
+        TryCatch(operation: async () =>
         {
-            try
+            ValidateInputs(inputs: [items]);
+            List<Result<Folder>> results = new List<Result<Folder>>();
+
+
+            foreach (Folder item in items)
             {
-                Folder savedItem = item.Id == Guid.Empty
-                    ? await AddForAppAsync(newFolder: item)
-                    : await UpdateForAppAsync(folder: item);
-
-                results.Add(item: new Result<Folder>
+                try
                 {
-                    Success = true,
-                    Item = savedItem,
-                    Message = item.Id == Guid.Empty ? "Added Successfully" : "Updated Successfully"
-                });
+                    Folder savedItem = item.Id == Guid.Empty
+                        ? await AddForAppAsync(newFolder: item)
+                        : await UpdateForAppAsync(folder: item);
+
+                    results.Add(item: new Result<Folder>
+                    {
+                        Success = true,
+                        Item = savedItem,
+                        Message = item.Id == Guid.Empty ? "Added Successfully" : "Updated Successfully"
+                    });
+                }
+                catch (Exception ex)
+                {
+                    results.Add(item: new Result<Folder>
+                    {
+                        Success = false,
+                        Item = item,
+                        Message = ex.Message
+                    });
+                }
             }
-            catch (Exception ex)
+
+
+            return (IEnumerable<Result<Folder>>)results;
+
+        });
+
+    public ValueTask DeleteAllAsync(IEnumerable<Folder> items)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [items]);
+            foreach (Folder item in items)
             {
-                results.Add(item: new Result<Folder>
-                {
-                    Success = false,
-                    Item = item,
-                    Message = ex.Message
-                });
+                await DeleteAsync(id: item.Id);
             }
-        }
 
-        return results;
-    }
+        });
 
-    public async ValueTask DeleteAllAsync(IEnumerable<Folder> items)
-    {
-        foreach (Folder item in items)
+    public ValueTask DeleteByAppIdAsync(int appId)
+=>
+        TryCatch(operation: () =>
         {
-            await DeleteAsync(id: item.Id);
-        }
-    }
+            ValidateInputs(inputs: [appId]);
+            return service.DeleteAllByAppIdAsync(appId: appId);
+        });
 
-    public ValueTask DeleteByAppIdAsync(int appId) =>
-        service.DeleteAllByAppIdAsync(appId: appId);
-
-    public async ValueTask SaveAsync(App app, cCoder.DocumentManagement.Models.Path path)
-    {
-        await BuildPathAsync(app: app, folderPath: path);
-    }
-
-    public async ValueTask DropAsync(App app, cCoder.DocumentManagement.Models.Path path)
-    {
-        await DropFolderAsync(app: app, path: path);
-    }
-
-    public async ValueTask CopyAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
-    {
-        if (oldPath.IsToFile)
+    public ValueTask SaveAsync(App app, cCoder.DocumentManagement.Models.Path path)
+=>
+        TryCatch(operation: async () =>
         {
-            throw new InvalidOperationException(message: "To copy a file, use file processing operations.");
-        }
+            ValidateInputs(inputs: [app, path]);
+            await BuildPathAsync(app: app, folderPath: path);
 
-        await CopyFolderAsync(app: app, oldPath: oldPath, newPath: newPath);
-    }
+        });
 
-    public async ValueTask MoveAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
-    {
-        if (oldPath.IsToFile)
+    public ValueTask DropAsync(App app, cCoder.DocumentManagement.Models.Path path)
+=>
+        TryCatch(operation: async () =>
         {
-            throw new InvalidOperationException(message: "To move a file, use file processing operations.");
-        }
+            ValidateInputs(inputs: [app, path]);
+            await DropFolderAsync(app: app, path: path);
 
-        Folder newParent = ((!string.IsNullOrEmpty(value: newPath.ParentPath.Lowered)) ? service.GetByPath(appId: app.Id, path: newPath.ParentPath.Lowered) : null);
-        cCoder.DocumentManagement.Models.Path resolvedNewPath = new cCoder.DocumentManagement.Models.Path(path: (newParent != null) ? (newParent.Path + "/" + newPath.Name) : newPath.Name);
-        await MoveFolderAsync(app: app, oldPath: oldPath, newPath: resolvedNewPath);
-    }
+        });
+
+    public ValueTask CopyAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [app, oldPath, newPath]);
+            if (oldPath.IsToFile)
+            {
+                throw new InvalidOperationException(message: "To copy a file, use file processing operations.");
+            }
+
+
+            await CopyFolderAsync(app: app, oldPath: oldPath, newPath: newPath);
+
+        });
+
+    public ValueTask MoveAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [app, oldPath, newPath]);
+            if (oldPath.IsToFile)
+            {
+                throw new InvalidOperationException(message: "To move a file, use file processing operations.");
+            }
+
+
+            Folder newParent = ((!string.IsNullOrEmpty(value: newPath.ParentPath.Lowered)) ? service.GetByPath(appId: app.Id, path: newPath.ParentPath.Lowered) : null);
+
+            cCoder.DocumentManagement.Models.Path resolvedNewPath = new cCoder.DocumentManagement.Models.Path(path: (newParent != null) ? (newParent.Path + "/" + newPath.Name) : newPath.Name);
+
+            await MoveFolderAsync(app: app, oldPath: oldPath, newPath: resolvedNewPath);
+
+        });
 
     private async ValueTask<Folder> UpdateInternalAsync(Folder dbVersion, Folder folder, bool authorize)
     {

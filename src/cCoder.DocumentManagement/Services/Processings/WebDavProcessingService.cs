@@ -20,7 +20,7 @@ using MemoryStream = System.IO.MemoryStream;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-internal class WebDavProcessingService(
+internal partial class WebDavProcessingService(
     IFileService fileService,
     IFolderService folderService,
     IDmsInstanceService dmsInstanceService,
@@ -28,60 +28,74 @@ internal class WebDavProcessingService(
     ILogger<WebDavProcessingService> log
 ) : IWebDavProcessingService
 {
-    public async ValueTask<DmsProcessingResponse> ProcessAsync(DmsProcessingRequest request)
-    {
-        int appId = ExtractAppId(requestPath: request.RequestPath);
-
-        LocalPath path = new(
-            path: WebUtility
-                .UrlDecode(encodedValue: NormalizeRequestPath(requestPath: request.RequestPath, appId: appId))
-                .TrimStart(trimChar: '/')
-                .TrimEnd(trimChar: '/')
-        );
-
-        string requestText = await ReadRequestBodyTextAsync(body: request.Body);
-
-        log.LogDebug(message: $"HTTP {request.Method.ToUpperInvariant()} - {path} \n {requestText}");
-
-        XNamespace ns = "DAV:";
-        App app = request.App;
-        Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
-
-        string sslPort = config.Settings.TryGetValue(key: "sslPort", value: out string configuredSslPort)
-            ? configuredSslPort
-            : "443";
-
-        string urlBase = $"https://{app.Domain}:{sslPort}/Api/";
-
-        List<KeyValuePair<string, string>> headers =
-        [
-            new KeyValuePair<string, string>(key:"Host", value:urlBase + "DAV/"),
-        ];
-
-        if (!request.Headers.ContainsKey(key: "Authorization"))
+    public ValueTask<DmsProcessingResponse> ProcessAsync(DmsProcessingRequest request)
+=>
+        TryCatch(operation: async () =>
         {
-            headers.Add(
-                item: new KeyValuePair<string, string>(key: "WWW-Authenticate", value: "Basic realm=\"server\"")
+            ValidateInputs(inputs: [request]);
+            int appId = ExtractAppId(requestPath: request.RequestPath);
+
+
+            LocalPath path = new(
+                path: WebUtility
+                    .UrlDecode(encodedValue: NormalizeRequestPath(requestPath: request.RequestPath, appId: appId))
+                    .TrimStart(trimChar: '/')
+                    .TrimEnd(trimChar: '/')
             );
 
-            headers.Add(item: new KeyValuePair<string, string>(key: "Connection", value: "close"));
 
-            return CreateResponse(
-                body: EncodeText(content: string.Empty),
-                hasBody: true,
-                contentType: "text/xml; charset=\"utf-8\"",
-                statusCode: 401,
-                headers: headers
-            );
-        }
+            string requestText = await ReadRequestBodyTextAsync(body: request.Body);
 
-        try
-        {
-            switch (request.Method.ToUpperInvariant())
+
+            log.LogDebug(message: $"HTTP {request.Method.ToUpperInvariant()} - {path} \n {requestText}");
+
+
+            XNamespace ns = "DAV:";
+
+            App app = request.App;
+
+            Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
+
+
+            string sslPort = config.Settings.TryGetValue(key: "sslPort", value: out string configuredSslPort)
+                ? configuredSslPort
+                : "443";
+
+
+            string urlBase = $"https://{app.Domain}:{sslPort}/Api/";
+
+
+            List<KeyValuePair<string, string>> headers =
+            [
+                new KeyValuePair<string, string>(key:"Host", value:urlBase + "DAV/"),
+            ];
+
+
+            if (!request.Headers.ContainsKey(key: "Authorization"))
             {
-                case "OPTIONS":
-                    headers.AddRange(collection: [
-                        new KeyValuePair<string, string>(
+                headers.Add(
+                    item: new KeyValuePair<string, string>(key: "WWW-Authenticate", value: "Basic realm=\"server\"")
+                );
+
+                headers.Add(item: new KeyValuePair<string, string>(key: "Connection", value: "close"));
+
+                return CreateResponse(
+                    body: EncodeText(content: string.Empty),
+                    hasBody: true,
+                    contentType: "text/xml; charset=\"utf-8\"",
+                    statusCode: 401,
+                    headers: headers
+                );
+            }
+
+
+            try
+            {
+                switch (request.Method.ToUpperInvariant())
+                {
+                    case "OPTIONS":
+                        headers.AddRange(collection: [
+                            new KeyValuePair<string, string>(
                             key:                            "Access-Control-Allow-Origin",
                             value:                            request.Host
                         ),
@@ -99,154 +113,155 @@ internal class WebDavProcessingService(
                         ),
                         new KeyValuePair<string, string>(key:"DAV", value:"1, 2"),
                         new KeyValuePair<string, string>(key:"MS-Author-Via", value:"DAV"),
-                    ]);
+                        ]);
 
-                    return CreateResponse(
-                        body: Stream.Null,
-                        hasBody: false,
-                        contentType: "text/xml; charset=\"utf-8\"",
-                        statusCode: 204,
-                        headers: headers
-                    );
-                case "GET":
-                    int getVer = int.TryParse(
-                        s: TryGetSingleValue(query: query, key: "version"),
-                        result: out int parsedVersion
-                    )
-                        ? parsedVersion
-                        : 0;
+                        return CreateResponse(
+                            body: Stream.Null,
+                            hasBody: false,
+                            contentType: "text/xml; charset=\"utf-8\"",
+                            statusCode: 204,
+                            headers: headers
+                        );
+                    case "GET":
+                        int getVer = int.TryParse(
+                            s: TryGetSingleValue(query: query, key: "version"),
+                            result: out int parsedVersion
+                        )
+                            ? parsedVersion
+                            : 0;
 
-                    DmsResult getResult = dmsInstanceService.Get(path: path, version: getVer);
-                    return CreateResponse(body: getResult.Data, hasBody: true, contentType: getResult.MimeType, statusCode: 200, headers: headers);
-                case "HEAD":
-                    return CreateResponse(
-                        body: Stream.Null,
-                        hasBody: false,
-                        contentType: "text/xml; charset=\"utf-8\"",
-                        statusCode: 204,
-                        headers: headers
-                    );
-                case "PROPFIND":
-                    string propFindBody = PropFind(request: request, appId: appId, path: path, requestText: requestText, ns: ns, urlBase: urlBase);
-                    return CreateResponse(
-                        body: EncodeText(content: propFindBody),
-                        hasBody: !string.IsNullOrEmpty(value: propFindBody),
-                        contentType: "text/xml; charset=\"utf-8\"",
-                        statusCode: !string.IsNullOrEmpty(value: propFindBody) ? 207 : 404,
-                        headers: headers
-                    );
-                case "PROPPATCH":
-                    string responseXmlElement = SerializeXml(
-                        element: new XElement(
-                        name: ns + "multistatus",
-                        content: [
-                            new XAttribute(name:XNamespace.Xmlns + "D", value:"DAV:"),
+                        DmsResult getResult = dmsInstanceService.Get(path: path, version: getVer);
+                        return CreateResponse(body: getResult.Data, hasBody: true, contentType: getResult.MimeType, statusCode: 200, headers: headers);
+                    case "HEAD":
+                        return CreateResponse(
+                            body: Stream.Null,
+                            hasBody: false,
+                            contentType: "text/xml; charset=\"utf-8\"",
+                            statusCode: 204,
+                            headers: headers
+                        );
+                    case "PROPFIND":
+                        string propFindBody = PropFind(request: request, appId: appId, path: path, requestText: requestText, ns: ns, urlBase: urlBase);
+                        return CreateResponse(
+                            body: EncodeText(content: propFindBody),
+                            hasBody: !string.IsNullOrEmpty(value: propFindBody),
+                            contentType: "text/xml; charset=\"utf-8\"",
+                            statusCode: !string.IsNullOrEmpty(value: propFindBody) ? 207 : 404,
+                            headers: headers
+                        );
+                    case "PROPPATCH":
+                        string responseXmlElement = SerializeXml(
+                            element: new XElement(
+                            name: ns + "multistatus",
+                            content: [
+                                new XAttribute(name:XNamespace.Xmlns + "D", value:"DAV:"),
                             new XAttribute(name:XNamespace.Xmlns + "Z", value:"urn:schemas-microsoft-com:"),
-                        ])
-                    );
+                            ])
+                        );
 
-                    return CreateResponse(
-                        body: EncodeText(content: responseXmlElement),
-                        hasBody: true,
-                        contentType: "text/xml; charset=\"utf-8\"",
-                        statusCode: 200,
-                        headers: headers
-                    );
-                case "POST":
-                case "PUT":
-                    request.Body.Position = 0;
-                    await dmsInstanceService.SaveAsync(path: path, content: request.Body);
-                    request.Body.Position = 0;
-                    return CreateResponse(body: request.Body, hasBody: true, contentType: request.ContentType, statusCode: 201, headers: headers);
-                case "MKCOL":
-                    request.Body.Position = 0;
-                    await dmsInstanceService.SaveAsync(path: path, content: request.Body);
-                    return CreateResponse(
-                        body: Stream.Null,
-                        hasBody: false,
-                        contentType: "text/xml; charset=\"utf-8\"",
-                        statusCode: 204,
-                        headers: headers
-                    );
-                case "MOVE":
-                    await dmsInstanceService.MoveAsync(
-                        oldPath: path,
-                        newPath: ResolveDestinationPath(request: request, appId: appId)
-                    );
-                    return CreateResponse(
-                        body: Stream.Null,
-                        hasBody: false,
-                        contentType: "text/xml; charset=\"utf-8\"",
-                        statusCode: 204,
-                        headers: headers
-                    );
-                case "COPY":
-                    await dmsInstanceService.CopyAsync(
-                        oldPath: path,
-                        newPath: ResolveDestinationPath(request: request, appId: appId)
-                    );
-                    return CreateResponse(
-                        body: Stream.Null,
-                        hasBody: false,
-                        contentType: "text/xml; charset=\"utf-8\"",
-                        statusCode: 204,
-                        headers: headers
-                    );
-                case "DELETE":
-                    await dmsInstanceService.DropAsync(
-                        path: path,
-                        version: int.TryParse(s: TryGetSingleValue(query: query, key: "version"), result: out int deleteVersion)
-                            ? deleteVersion
-                            : 0
-                    );
-                    return CreateResponse(
-                        body: Stream.Null,
-                        hasBody: false,
-                        contentType: "text/xml; charset=\"utf-8\"",
-                        statusCode: 204,
-                        headers: headers
-                    );
-                case "LOCK":
-                    return CreateResponse(
-                        body: Stream.Null,
-                        hasBody: false,
-                        contentType: "text/xml; charset=\"utf-8\"",
-                        statusCode: 200,
-                        headers: headers
-                    );
-                case "UNLOCK":
-                    return CreateResponse(
-                        body: Stream.Null,
-                        hasBody: false,
-                        contentType: "text/xml; charset=\"utf-8\"",
-                        statusCode: 204,
-                        headers: headers
-                    );
-                default:
-                    throw new InvalidOperationException(
-                        message: $"Unsupported WebDAV method: {request.Method}"
-                    );
+                        return CreateResponse(
+                            body: EncodeText(content: responseXmlElement),
+                            hasBody: true,
+                            contentType: "text/xml; charset=\"utf-8\"",
+                            statusCode: 200,
+                            headers: headers
+                        );
+                    case "POST":
+                    case "PUT":
+                        request.Body.Position = 0;
+                        await dmsInstanceService.SaveAsync(path: path, content: request.Body);
+                        request.Body.Position = 0;
+                        return CreateResponse(body: request.Body, hasBody: true, contentType: request.ContentType, statusCode: 201, headers: headers);
+                    case "MKCOL":
+                        request.Body.Position = 0;
+                        await dmsInstanceService.SaveAsync(path: path, content: request.Body);
+                        return CreateResponse(
+                            body: Stream.Null,
+                            hasBody: false,
+                            contentType: "text/xml; charset=\"utf-8\"",
+                            statusCode: 204,
+                            headers: headers
+                        );
+                    case "MOVE":
+                        await dmsInstanceService.MoveAsync(
+                            oldPath: path,
+                            newPath: ResolveDestinationPath(request: request, appId: appId)
+                        );
+                        return CreateResponse(
+                            body: Stream.Null,
+                            hasBody: false,
+                            contentType: "text/xml; charset=\"utf-8\"",
+                            statusCode: 204,
+                            headers: headers
+                        );
+                    case "COPY":
+                        await dmsInstanceService.CopyAsync(
+                            oldPath: path,
+                            newPath: ResolveDestinationPath(request: request, appId: appId)
+                        );
+                        return CreateResponse(
+                            body: Stream.Null,
+                            hasBody: false,
+                            contentType: "text/xml; charset=\"utf-8\"",
+                            statusCode: 204,
+                            headers: headers
+                        );
+                    case "DELETE":
+                        await dmsInstanceService.DropAsync(
+                            path: path,
+                            version: int.TryParse(s: TryGetSingleValue(query: query, key: "version"), result: out int deleteVersion)
+                                ? deleteVersion
+                                : 0
+                        );
+                        return CreateResponse(
+                            body: Stream.Null,
+                            hasBody: false,
+                            contentType: "text/xml; charset=\"utf-8\"",
+                            statusCode: 204,
+                            headers: headers
+                        );
+                    case "LOCK":
+                        return CreateResponse(
+                            body: Stream.Null,
+                            hasBody: false,
+                            contentType: "text/xml; charset=\"utf-8\"",
+                            statusCode: 200,
+                            headers: headers
+                        );
+                    case "UNLOCK":
+                        return CreateResponse(
+                            body: Stream.Null,
+                            hasBody: false,
+                            contentType: "text/xml; charset=\"utf-8\"",
+                            statusCode: 204,
+                            headers: headers
+                        );
+                    default:
+                        throw new InvalidOperationException(
+                            message: $"Unsupported WebDAV method: {request.Method}"
+                        );
+                }
             }
-        }
-        catch (System.Security.SecurityException)
-        {
-            headers.Add(
-                item: new KeyValuePair<string, string>(key: "WWW-Authenticate", value: "Basic realm=\"server\"")
-            );
+            catch (System.Security.SecurityException)
+            {
+                headers.Add(
+                    item: new KeyValuePair<string, string>(key: "WWW-Authenticate", value: "Basic realm=\"server\"")
+                );
 
-            return CreateResponse(body: Stream.Null, hasBody: false, contentType: "text/xml; charset=\"utf-8\"", statusCode: 204, headers: headers);
-        }
-        catch (Exception ex)
-        {
-            return CreateResponse(
-                body: EncodeText(content: ex.Message),
-                hasBody: true,
-                contentType: "text/xml; charset=\"utf-8\"",
-                statusCode: 200,
-                headers: headers
-            );
-        }
-    }
+                return CreateResponse(body: Stream.Null, hasBody: false, contentType: "text/xml; charset=\"utf-8\"", statusCode: 204, headers: headers);
+            }
+            catch (Exception ex)
+            {
+                return CreateResponse(
+                    body: EncodeText(content: ex.Message),
+                    hasBody: true,
+                    contentType: "text/xml; charset=\"utf-8\"",
+                    statusCode: 200,
+                    headers: headers
+                );
+            }
+
+        });
 
     private string PropFind(
         DmsProcessingRequest request,

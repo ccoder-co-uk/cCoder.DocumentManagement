@@ -14,41 +14,56 @@ using DataFolder = cCoder.Data.Models.DMS.Folder;
 
 namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
-internal class FolderEventService(IFolderEventBroker folderEventBroker, ICoreAuthInfo authInfo)
+internal partial class FolderEventService(IFolderEventBroker folderEventBroker, ICoreAuthInfo authInfo)
     : IFolderEventService
 {
-    public async ValueTask RaiseFolderAddEventAsync(Folder entity)
-    {
-        EventMessage<DataFolder> message = new()
+    public ValueTask RaiseFolderAddEventAsync(Folder entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFolder(folder: entity),
-        };
+            ValidateInputs(inputs: [entity]);
+            EventMessage<DataFolder> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                Data = ToExternalFolder(folder: entity),
+            };
 
-        await folderEventBroker.RaiseFolderAddEventAsync(message: message);
-    }
 
-    public async ValueTask RaiseFolderUpdateEventAsync(Folder entity)
-    {
-        EventMessage<DataFolder> message = new()
+            await folderEventBroker.RaiseFolderAddEventAsync(message: message);
+
+        });
+
+    public ValueTask RaiseFolderUpdateEventAsync(Folder entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFolder(folder: entity),
-        };
+            ValidateInputs(inputs: [entity]);
+            EventMessage<DataFolder> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                Data = ToExternalFolder(folder: entity),
+            };
 
-        await folderEventBroker.RaiseFolderUpdateEventAsync(message: message);
-    }
 
-    public async ValueTask RaiseFolderDeleteEventAsync(Folder entity)
-    {
-        EventMessage<DataFolder> message = new()
+            await folderEventBroker.RaiseFolderUpdateEventAsync(message: message);
+
+        });
+
+    public ValueTask RaiseFolderDeleteEventAsync(Folder entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFolder(folder: entity),
-        };
+            ValidateInputs(inputs: [entity]);
+            EventMessage<DataFolder> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                Data = ToExternalFolder(folder: entity),
+            };
 
-        await folderEventBroker.RaiseFolderDeleteEventAsync(message: message);
-    }
+
+            await folderEventBroker.RaiseFolderDeleteEventAsync(message: message);
+
+        });
 
     private static DataFolder ToExternalFolder(Folder folder) =>
         folder == null

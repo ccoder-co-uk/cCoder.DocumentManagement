@@ -8,8 +8,13 @@ using IRoleBroker = cCoder.DocumentManagement.Brokers.IRoleBroker;
 
 namespace cCoder.DocumentManagement.Services.Foundations;
 
-internal class RoleService(IRoleBroker roleBroker) : IRoleService
+internal partial class RoleService(IRoleBroker roleBroker) : IRoleService
 {
-    public IQueryable<Role> GetAll(bool ignoreFilters = false) =>
-        roleBroker.GetAllRoles(ignoreFilters: ignoreFilters);
+    public IQueryable<Role> GetAll(bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [ignoreFilters]);
+            return roleBroker.GetAllRoles(ignoreFilters: ignoreFilters);
+        });
 }

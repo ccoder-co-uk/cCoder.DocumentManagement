@@ -15,153 +15,256 @@ using LocalFile = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.DocumentManagement.Services.Foundations;
 
-internal class FileService(IFileBroker fileBroker, IAuthorizationBroker authorizationBroker)
+internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker authorizationBroker)
     : IFileService
 {
     public LocalFile Get(Guid id)
-    {
-        LocalFile file = GetAll()
-            .FirstOrDefault(predicate: i => i.Id == id);
-
-        if (file is not null)
+=>
+        TryCatch(operation: () =>
         {
-            return file;
-        }
+            ValidateInputs(inputs: [id]);
+            LocalFile file = GetAll()
+    .FirstOrDefault(predicate: i => i.Id == id);
 
-        LocalFile unrestrictedFile = GetAll(ignoreFilters: true)
-            .FirstOrDefault(predicate: i => i.Id == id);
 
-        if (unrestrictedFile is not null)
+            if (file is not null)
+            {
+                return file;
+            }
+
+
+            LocalFile unrestrictedFile = GetAll(ignoreFilters: true)
+                .FirstOrDefault(predicate: i => i.Id == id);
+
+
+            if (unrestrictedFile is not null)
+            {
+                throw new SecurityException(message: "Access Denied!");
+            }
+
+
+            return null;
+
+        });
+
+    public IQueryable<LocalFile> GetAll(bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
         {
-            throw new SecurityException(message: "Access Denied!");
-        }
+            ValidateInputs(inputs: [ignoreFilters]);
+            return fileBroker.SelectAllFiles(ignoreFilters: ignoreFilters);
+        });
 
-        return null;
-    }
+    public Guid[] GetIdsByFolderIds(Guid[] folderIds, bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [folderIds, ignoreFilters]);
+            return fileBroker.GetFileIdsByFolderIds(folderIds: folderIds, ignoreFilters: ignoreFilters);
+        });
 
-    public IQueryable<LocalFile> GetAll(bool ignoreFilters = false) =>
-        fileBroker.SelectAllFiles(ignoreFilters: ignoreFilters);
+    public LocalFile GetWithFolderAndContents(Guid id, bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [id, ignoreFilters]);
+            return CreateFile(file: fileBroker.SelectFileWithFolderAndContents(id: id, ignoreFilters: ignoreFilters));
+        });
 
-    public Guid[] GetIdsByFolderIds(Guid[] folderIds, bool ignoreFilters = false) =>
-        fileBroker.GetFileIdsByFolderIds(folderIds: folderIds, ignoreFilters: ignoreFilters);
+    public LocalFile GetWithFolderRolesAndContents(Guid id, bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [id, ignoreFilters]);
+            return CreateFileWithFolderRoles(file: fileBroker.SelectFileWithFolderRolesAndContents(id: id, ignoreFilters: ignoreFilters));
+        });
 
-    public LocalFile GetWithFolderAndContents(Guid id, bool ignoreFilters = false) =>
-        CreateFile(file: fileBroker.SelectFileWithFolderAndContents(id: id, ignoreFilters: ignoreFilters));
-
-    public LocalFile GetWithFolderRolesAndContents(Guid id, bool ignoreFilters = false) =>
-        CreateFileWithFolderRoles(file: fileBroker.SelectFileWithFolderRolesAndContents(id: id, ignoreFilters: ignoreFilters));
-
-    public LocalFile GetByPath(int appId, string path, bool ignoreFilters = false) =>
-        CreateFile(file: fileBroker.SelectFileByPath(appId: appId, path: path, ignoreFilters: ignoreFilters));
+    public LocalFile GetByPath(int appId, string path, bool ignoreFilters = false)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [appId, path, ignoreFilters]);
+            return CreateFile(file: fileBroker.SelectFileByPath(appId: appId, path: path, ignoreFilters: ignoreFilters));
+        });
 
     public LocalFile GetByPathWithFolderAndContents(
         int appId,
         string path,
         bool ignoreFilters = false
-    ) =>
-        CreateFile(file: fileBroker.SelectFileByPathWithFolderAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters));
+    )
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [appId, path, ignoreFilters]);
+            return CreateFile(file: fileBroker.SelectFileByPathWithFolderAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters));
+        });
 
     public LocalFile GetByPathWithFolderRolesAndContents(
         int appId,
         string path,
         bool ignoreFilters = false
-    ) =>
-        CreateFileWithFolderRoles(
-            file: fileBroker.SelectFileByPathWithFolderRolesAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters)
-        );
-
-    public IQueryable<LocalFile> Search(int appId, byte[] needle) =>
-        fileBroker.SelectFilesByContent(appId: appId, needle: needle)
-                                                            .AsEnumerable()
-                                                                           .Select(selector: CreateFile)
-                                                                                                        .AsQueryable();
-
-    public async ValueTask<LocalFile> AddAsync(LocalFile file)
-    {
-        FileEntity newFileEntity = CreateStorageFile(file: file, includeId: false);
-
-        authorizationBroker.Authorize(
-            appId: fileBroker.GetAppId(entity: newFileEntity),
-            privilege: $"{nameof(cCoder.Data.Models.DMS.File)}_create"
-        );
-
-        string currentUserId = authorizationBroker.GetCurrentUser().Id;
-        DateTimeOffset now = DateTimeOffset.UtcNow;
-        newFileEntity.CreatedOn = now;
-        newFileEntity.CreatedBy = currentUserId;
-
-        FileEntity result = await fileBroker.InsertFileAsync(entity: newFileEntity);
-        file.Id = result.Id;
-        file.FolderId = result.FolderId;
-        file.Name = result.Name;
-        file.Description = result.Description;
-        file.Path = result.Path;
-        file.MimeType = result.MimeType;
-        file.CreatedBy = result.CreatedBy;
-        file.Size = result.Size;
-        file.CreatedOn = result.CreatedOn;
-        file.DeletedOn = result.DeletedOn;
-        return file;
-    }
-
-    public async ValueTask<LocalFile> UpdateAsync(LocalFile file)
-    {
-        FileEntity updateFileEntity = CreateStorageFile(file: file, includeId: true);
-
-        authorizationBroker.Authorize(
-            appId: fileBroker.GetAppId(entity: updateFileEntity),
-            privilege: $"{nameof(cCoder.Data.Models.DMS.File)}_update"
-        );
-
-        return await UpdateForAppAsync(file: file);
-    }
-
-    public async ValueTask<LocalFile> UpdateForAppAsync(LocalFile file)
-    {
-        FileEntity updateFileEntity = CreateStorageFile(file: file, includeId: true);
-        FileEntity result = await fileBroker.UpdateFileAsync(entity: updateFileEntity);
-        file.Id = result.Id;
-        file.FolderId = result.FolderId;
-        file.Name = result.Name;
-        file.Description = result.Description;
-        file.Path = result.Path;
-        file.MimeType = result.MimeType;
-        file.CreatedBy = result.CreatedBy;
-        file.Size = result.Size;
-        file.CreatedOn = result.CreatedOn;
-        file.DeletedOn = result.DeletedOn;
-        return file;
-    }
-
-    public async ValueTask DeleteAsync(Guid id)
-    {
-        LocalFile file = GetAll(ignoreFilters: true)
-            .FirstOrDefault(predicate: foundFile => foundFile.Id == id);
-
-        if (file is null)
+    )
+=>
+        TryCatch(operation: () =>
         {
-            return;
-        }
+            ValidateInputs(inputs: [appId, path, ignoreFilters]);
+            return CreateFileWithFolderRoles(
+                file: fileBroker.SelectFileByPathWithFolderRolesAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters)
+            );
+        });
 
-        authorizationBroker.Authorize(
-            appId: fileBroker.GetAppId(entity: new FileEntity
+    public IQueryable<LocalFile> Search(int appId, byte[] needle)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [appId, needle]);
+            return fileBroker.SelectFilesByContent(appId: appId, needle: needle)
+                                                                .AsEnumerable()
+                                                                               .Select(selector: CreateFile)
+                                                                                                            .AsQueryable();
+        });
+
+    public ValueTask<LocalFile> AddAsync(LocalFile file)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [file]);
+            FileEntity newFileEntity = CreateStorageFile(file: file, includeId: false);
+
+
+            authorizationBroker.Authorize(
+                appId: fileBroker.GetAppId(entity: newFileEntity),
+                privilege: $"{nameof(cCoder.Data.Models.DMS.File)}_create"
+            );
+
+
+            string currentUserId = authorizationBroker.GetCurrentUser().Id;
+
+            DateTimeOffset now = DateTimeOffset.UtcNow;
+
+            newFileEntity.CreatedOn = now;
+
+            newFileEntity.CreatedBy = currentUserId;
+
+
+            FileEntity result = await fileBroker.InsertFileAsync(entity: newFileEntity);
+
+            file.Id = result.Id;
+
+            file.FolderId = result.FolderId;
+
+            file.Name = result.Name;
+
+            file.Description = result.Description;
+
+            file.Path = result.Path;
+
+            file.MimeType = result.MimeType;
+
+            file.CreatedBy = result.CreatedBy;
+
+            file.Size = result.Size;
+
+            file.CreatedOn = result.CreatedOn;
+
+            file.DeletedOn = result.DeletedOn;
+
+            return file;
+
+        });
+
+    public ValueTask<LocalFile> UpdateAsync(LocalFile file)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [file]);
+            FileEntity updateFileEntity = CreateStorageFile(file: file, includeId: true);
+
+
+            authorizationBroker.Authorize(
+                appId: fileBroker.GetAppId(entity: updateFileEntity),
+                privilege: $"{nameof(cCoder.Data.Models.DMS.File)}_update"
+            );
+
+
+            return await UpdateForAppAsync(file: file);
+
+        });
+
+    public ValueTask<LocalFile> UpdateForAppAsync(LocalFile file)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [file]);
+            FileEntity updateFileEntity = CreateStorageFile(file: file, includeId: true);
+
+            FileEntity result = await fileBroker.UpdateFileAsync(entity: updateFileEntity);
+
+            file.Id = result.Id;
+
+            file.FolderId = result.FolderId;
+
+            file.Name = result.Name;
+
+            file.Description = result.Description;
+
+            file.Path = result.Path;
+
+            file.MimeType = result.MimeType;
+
+            file.CreatedBy = result.CreatedBy;
+
+            file.Size = result.Size;
+
+            file.CreatedOn = result.CreatedOn;
+
+            file.DeletedOn = result.DeletedOn;
+
+            return file;
+
+        });
+
+    public ValueTask DeleteAsync(Guid id)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [id]);
+            LocalFile file = GetAll(ignoreFilters: true)
+    .FirstOrDefault(predicate: foundFile => foundFile.Id == id);
+
+
+            if (file is null)
+            {
+                return;
+            }
+
+
+            authorizationBroker.Authorize(
+                appId: fileBroker.GetAppId(entity: new FileEntity
+                {
+                    Id = file.Id,
+                    FolderId = file.FolderId,
+                }),
+                privilege: $"file_delete"
+            );
+
+
+            _ = await fileBroker.DeleteFileAsync(entity: new FileEntity
             {
                 Id = file.Id,
                 FolderId = file.FolderId,
-            }),
-            privilege: $"file_delete"
-        );
+            });
 
-        _ = await fileBroker.DeleteFileAsync(entity: new FileEntity
-        {
-            Id = file.Id,
-            FolderId = file.FolderId,
         });
-    }
 
-    public ValueTask DeleteAllForAppAsync(IEnumerable<LocalFile> items) =>
-        fileBroker.DeleteAllFilesAsync(
-            items: items?.Select(selector: file => CreateStorageFile(file: file, includeId: true)) ?? []);
+    public ValueTask DeleteAllForAppAsync(IEnumerable<LocalFile> items)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [items]);
+            return fileBroker.DeleteAllFilesAsync(
+                items: items?.Select(selector: file => CreateStorageFile(file: file, includeId: true)) ?? []);
+        });
 
     private static LocalFile CreateFile(FileEntity file) =>
         file == null

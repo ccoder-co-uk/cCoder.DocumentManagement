@@ -10,11 +10,15 @@ using FolderRole = cCoder.Data.Models.Security.FolderRole;
 
 namespace cCoder.DocumentManagement.Services.Foundations;
 
-internal sealed class DocumentManagementMetadataTypeService : IDocumentManagementMetadataTypeService
+internal sealed partial class DocumentManagementMetadataTypeService : IDocumentManagementMetadataTypeService
 {
-    public IEnumerable<MetadataContainerSet> GetKnownMetadata() =>
-    [
-        new MetadataContainerSet
+    public IEnumerable<MetadataContainerSet> GetKnownMetadata()
+=>
+        TryCatch(operation: IEnumerable<MetadataContainerSet> () =>
+        {
+
+            return [
+            new MetadataContainerSet
         {
             Name = "DocumentManagement",
             UriBase = "DocumentManagement",
@@ -26,7 +30,8 @@ internal sealed class DocumentManagementMetadataTypeService : IDocumentManagemen
                 Entity<FolderRole>(),
             ],
         },
-    ];
+        ];
+        });
 
     private static ExtendedMetadataContainer Entity<T>() =>
         new(type: typeof(T), isEntity: true, hasEndpoint: true)

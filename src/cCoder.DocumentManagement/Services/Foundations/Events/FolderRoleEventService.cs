@@ -14,32 +14,42 @@ using DataFolderRole = cCoder.Data.Models.Security.FolderRole;
 
 namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
-internal class FolderRoleEventService(
+internal partial class FolderRoleEventService(
     IFolderRoleEventBroker folderRoleEventBroker,
     ICoreAuthInfo authInfo
 ) : IFolderRoleEventService
 {
-    public async ValueTask RaiseFolderRoleAddEventAsync(FolderRole entity)
-    {
-        EventMessage<DataFolderRole> message = new()
+    public ValueTask RaiseFolderRoleAddEventAsync(FolderRole entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFolderRole(folderRole: entity),
-        };
+            ValidateInputs(inputs: [entity]);
+            EventMessage<DataFolderRole> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                Data = ToExternalFolderRole(folderRole: entity),
+            };
 
-        await folderRoleEventBroker.RaiseFolderRoleAddEventAsync(message: message);
-    }
 
-    public async ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole entity)
-    {
-        EventMessage<DataFolderRole> message = new()
+            await folderRoleEventBroker.RaiseFolderRoleAddEventAsync(message: message);
+
+        });
+
+    public ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFolderRole(folderRole: entity),
-        };
+            ValidateInputs(inputs: [entity]);
+            EventMessage<DataFolderRole> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                Data = ToExternalFolderRole(folderRole: entity),
+            };
 
-        await folderRoleEventBroker.RaiseFolderRoleDeleteEventAsync(message: message);
-    }
+
+            await folderRoleEventBroker.RaiseFolderRoleDeleteEventAsync(message: message);
+
+        });
 
     private static DataFolderRole ToExternalFolderRole(FolderRole folderRole) =>
         folderRole == null

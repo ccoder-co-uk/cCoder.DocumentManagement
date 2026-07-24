@@ -9,23 +9,38 @@ using cCoder.Data.Models.Security;
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
-internal class AppOrchestrationService(IFolderOrchestrationService folderOrchestrationService)
+internal partial class AppOrchestrationService(IFolderOrchestrationService folderOrchestrationService)
     : IAppOrchestrationService
 {
-    public async ValueTask AddAsync(App app)
-    {
-        StampFolders(app: app);
-        _ = await folderOrchestrationService.AddOrUpdateForAppAsync(items: app.Folders ?? []);
-    }
+    public ValueTask AddAsync(App app)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [app]);
+            StampFolders(app: app);
 
-    public async ValueTask UpdateAsync(App app)
-    {
-        StampFolders(app: app);
-        _ = await folderOrchestrationService.AddOrUpdateForAppAsync(items: app.Folders ?? []);
-    }
+            _ = await folderOrchestrationService.AddOrUpdateForAppAsync(items: app.Folders ?? []);
 
-    public ValueTask DeleteAsync(int appId) =>
-        folderOrchestrationService.DeleteAllByAppIdAsync(appId: appId);
+        });
+
+    public ValueTask UpdateAsync(App app)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [app]);
+            StampFolders(app: app);
+
+            _ = await folderOrchestrationService.AddOrUpdateForAppAsync(items: app.Folders ?? []);
+
+        });
+
+    public ValueTask DeleteAsync(int appId)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [appId]);
+            return folderOrchestrationService.DeleteAllByAppIdAsync(appId: appId);
+        });
 
     private static void StampFolders(App app)
     {

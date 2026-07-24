@@ -16,43 +16,58 @@ using LocalFile = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
-internal class FileContentEventService(
+internal partial class FileContentEventService(
     IFileContentEventBroker fileContentEventBroker,
     ICoreAuthInfo authInfo
 ) : IFileContentEventService
 {
-    public async ValueTask RaiseFileContentAddEventAsync(FileContent entity)
-    {
-        EventMessage<DataFileContent> message = new()
+    public ValueTask RaiseFileContentAddEventAsync(FileContent entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFileContent(fileContent: entity),
-        };
+            ValidateInputs(inputs: [entity]);
+            EventMessage<DataFileContent> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                Data = ToExternalFileContent(fileContent: entity),
+            };
 
-        await fileContentEventBroker.RaiseFileContentAddEventAsync(message: message);
-    }
 
-    public async ValueTask RaiseFileContentUpdateEventAsync(FileContent entity)
-    {
-        EventMessage<DataFileContent> message = new()
+            await fileContentEventBroker.RaiseFileContentAddEventAsync(message: message);
+
+        });
+
+    public ValueTask RaiseFileContentUpdateEventAsync(FileContent entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFileContent(fileContent: entity),
-        };
+            ValidateInputs(inputs: [entity]);
+            EventMessage<DataFileContent> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                Data = ToExternalFileContent(fileContent: entity),
+            };
 
-        await fileContentEventBroker.RaiseFileContentUpdateEventAsync(message: message);
-    }
 
-    public async ValueTask RaiseFileContentDeleteEventAsync(FileContent entity)
-    {
-        EventMessage<DataFileContent> message = new()
+            await fileContentEventBroker.RaiseFileContentUpdateEventAsync(message: message);
+
+        });
+
+    public ValueTask RaiseFileContentDeleteEventAsync(FileContent entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFileContent(fileContent: entity),
-        };
+            ValidateInputs(inputs: [entity]);
+            EventMessage<DataFileContent> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
+                Data = ToExternalFileContent(fileContent: entity),
+            };
 
-        await fileContentEventBroker.RaiseFileContentDeleteEventAsync(message: message);
-    }
+
+            await fileContentEventBroker.RaiseFileContentDeleteEventAsync(message: message);
+
+        });
 
     private static DataFileContent ToExternalFileContent(FileContent fileContent) =>
         fileContent == null

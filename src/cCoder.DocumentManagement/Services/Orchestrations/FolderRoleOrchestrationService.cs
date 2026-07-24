@@ -10,33 +10,56 @@ using cCoder.DocumentManagement.Services.Processings;
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
-internal class FolderRoleOrchestrationService(IFolderRoleProcessingService processingService, IFolderRoleEventProcessingService eventService) : IFolderRoleOrchestrationService
+internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingService processingService, IFolderRoleEventProcessingService eventService) : IFolderRoleOrchestrationService
 {
     public IQueryable<FolderRole> GetAll(bool ignoreFilters = false)
-    {
-        return processingService.GetAll(ignoreFilters: ignoreFilters);
-    }
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [ignoreFilters]);
+            return processingService.GetAll(ignoreFilters: ignoreFilters);
 
-    public async ValueTask<FolderRole> AddAsync(FolderRole entity)
-    {
-        FolderRole result = await processingService.AddAsync(entity: entity);
-        await eventService.RaiseFolderRoleAddEventAsync(entity: result);
-        return result;
-    }
+        });
 
-    public async ValueTask DeleteAsync(FolderRole entity)
-    {
-        await eventService.RaiseFolderRoleDeleteEventAsync(entity: entity);
-        await processingService.DeleteAsync(entity: entity);
-    }
+    public ValueTask<FolderRole> AddAsync(FolderRole entity)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [entity]);
+            FolderRole result = await processingService.AddAsync(entity: entity);
+
+            await eventService.RaiseFolderRoleAddEventAsync(entity: result);
+
+            return result;
+
+        });
+
+    public ValueTask DeleteAsync(FolderRole entity)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [entity]);
+            await eventService.RaiseFolderRoleDeleteEventAsync(entity: entity);
+
+            await processingService.DeleteAsync(entity: entity);
+
+        });
 
     public ValueTask<IEnumerable<Result<FolderRole>>> AddOrUpdate(IEnumerable<FolderRole> items)
-    {
-        return processingService.AddOrUpdate(items: items);
-    }
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [items]);
+            return processingService.AddOrUpdate(items: items);
+
+        });
 
     public ValueTask DeleteAllAsync(IEnumerable<FolderRole> items)
-    {
-        return processingService.DeleteAllAsync(items: items);
-    }
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [items]);
+            return processingService.DeleteAllAsync(items: items);
+
+        });
 }

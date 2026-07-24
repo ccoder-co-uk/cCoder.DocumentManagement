@@ -18,13 +18,18 @@ using DmsFile = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
-internal class EventHandlerService(IEventHubBroker eventHubBroker) : IEventHandlerService
+internal partial class EventHandlerService(IEventHubBroker eventHubBroker) : IEventHandlerService
 {
     public void ListenToAllEvents()
-    {
-        ListenToFileSystemEvents();
-        ListenToPackageEvents();
-    }
+=>
+        TryCatch(operation: () =>
+        {
+
+            ListenToFileSystemEvents();
+
+            ListenToPackageEvents();
+
+        });
 
     void ListenToFileSystemEvents()
     {

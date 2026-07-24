@@ -10,69 +10,99 @@ using cCoder.DocumentManagement.Services.Foundations;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-internal class FileContentProcessingService(IFileContentService service) : IFileContentProcessingService
+internal partial class FileContentProcessingService(IFileContentService service) : IFileContentProcessingService
 {
     public FileContent Get(Guid id)
-    {
-        return service.Get(id: id);
-    }
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [id]);
+            return service.Get(id: id);
+
+        });
 
     public IQueryable<FileContent> GetAll(bool ignoreFilters = false)
-    {
-        return service.GetAll(ignoreFilters: ignoreFilters);
-    }
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [ignoreFilters]);
+            return service.GetAll(ignoreFilters: ignoreFilters);
+
+        });
 
     public ValueTask<FileContent> AddAsync(FileContent entity)
-    {
-        return service.AddAsync(fileContent: entity);
-    }
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [entity]);
+            return service.AddAsync(fileContent: entity);
+
+        });
 
     public ValueTask<FileContent> UpdateAsync(FileContent entity)
-    {
-        return service.UpdateAsync(fileContent: entity);
-    }
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [entity]);
+            return service.UpdateAsync(fileContent: entity);
+
+        });
 
     public ValueTask DeleteAsync(Guid id)
-    {
-        return service.DeleteAsync(id: id);
-    }
-
-    public async ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdate(IEnumerable<FileContent> items)
-    {
-        List<Result<FileContent>> results = new List<Result<FileContent>>();
-
-        foreach (FileContent item in items)
+=>
+        TryCatch(operation: () =>
         {
-            try
-            {
-                FileContent savedItem = item.Id == Guid.Empty ? await AddAsync(entity: item) : await UpdateAsync(entity: item);
+            ValidateInputs(inputs: [id]);
+            return service.DeleteAsync(id: id);
 
-                results.Add(item: new Result<FileContent>
-                {
-                    Success = true,
-                    Item = savedItem,
-                    Message = item.Id == Guid.Empty ? "Added Successfully" : "Updated Successfully"
-                });
-            }
-            catch (Exception ex)
-            {
-                results.Add(item: new Result<FileContent>
-                {
-                    Success = false,
-                    Item = item,
-                    Message = ex.Message
-                });
-            }
-        }
+        });
 
-        return results;
-    }
-
-    public async ValueTask DeleteAllAsync(IEnumerable<FileContent> items)
-    {
-        foreach (FileContent item in items)
+    public ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdate(IEnumerable<FileContent> items)
+=>
+        TryCatch(operation: async () =>
         {
-            await DeleteAsync(id: item.Id);
-        }
-    }
+            ValidateInputs(inputs: [items]);
+            List<Result<FileContent>> results = new List<Result<FileContent>>();
+
+
+            foreach (FileContent item in items)
+            {
+                try
+                {
+                    FileContent savedItem = item.Id == Guid.Empty ? await AddAsync(entity: item) : await UpdateAsync(entity: item);
+
+                    results.Add(item: new Result<FileContent>
+                    {
+                        Success = true,
+                        Item = savedItem,
+                        Message = item.Id == Guid.Empty ? "Added Successfully" : "Updated Successfully"
+                    });
+                }
+                catch (Exception ex)
+                {
+                    results.Add(item: new Result<FileContent>
+                    {
+                        Success = false,
+                        Item = item,
+                        Message = ex.Message
+                    });
+                }
+            }
+
+
+            return (IEnumerable<Result<FileContent>>)results;
+
+        });
+
+    public ValueTask DeleteAllAsync(IEnumerable<FileContent> items)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [items]);
+            foreach (FileContent item in items)
+            {
+                await DeleteAsync(id: item.Id);
+            }
+
+        });
 }
