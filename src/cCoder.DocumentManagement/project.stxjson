@@ -1604,6 +1604,61 @@
       "Methods": []
     },
     {
+      "Name": "cCoder.DocumentManagement.Dependencies.Result",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Id",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Message",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Success",
+          "Type": "System.Boolean"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.Result\u003CT\u003E",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Id",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Item",
+          "Type": "T"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.ResultExtensions",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ToNew",
+          "Inputs": [
+            {
+              "Name": "result",
+              "Type": "cCoder.DocumentManagement.Dependencies.Result\u003CT\u003E"
+            },
+            {
+              "Name": "item",
+              "Type": "TNew"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.Result\u003CTNew\u003E"
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.DocumentManagementConfigurationExtensions",
       "StandardElementType": "Dependency",
       "Properties": [],
@@ -2756,61 +2811,6 @@
       ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Models.Result",
-      "StandardElementType": "Model",
-      "Properties": [
-        {
-          "Name": "Id",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Message",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Success",
-          "Type": "System.Boolean"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Models.Result\u003CT\u003E",
-      "StandardElementType": "Model",
-      "Properties": [
-        {
-          "Name": "Id",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Item",
-          "Type": "T"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Models.ResultExtensions",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "ToNew",
-          "Inputs": [
-            {
-              "Name": "result",
-              "Type": "cCoder.DocumentManagement.Models.Result\u003CT\u003E"
-            },
-            {
-              "Name": "item",
-              "Type": "TNew"
-            }
-          ],
-          "ReturnType": "cCoder.DocumentManagement.Models.Result\u003CTNew\u003E"
-        }
-      ]
-    },
-    {
       "Name": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService",
       "StandardElementType": "AggregationService",
       "Properties": [],
@@ -3872,7 +3872,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllFileContentAsync",
@@ -3949,7 +3949,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.File\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.File\u003E\u003E\u003E"
         },
         {
           "Name": "CopyAppPathAsync",
@@ -4154,7 +4154,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
         },
         {
           "Name": "AddOrUpdateForAppFolderAsync",
@@ -4164,7 +4164,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
         },
         {
           "Name": "CopyAppPathAsync",
@@ -4204,7 +4204,7 @@
               "Type": "System.Int32"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.List\u003CcCoder.DocumentManagement.Models.Result\u003CSystem.Guid?\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.List\u003CcCoder.DocumentManagement.Dependencies.Result\u003CSystem.Guid?\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllByAppIdAsync",
@@ -4401,7 +4401,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.Security.FolderRole\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.Security.FolderRole\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllFolderRoleAsync",
@@ -4524,7 +4524,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllFileContentAsync",
@@ -4638,7 +4638,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.File\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.File\u003E\u003E\u003E"
         },
         {
           "Name": "CopyAppPathAsync",
@@ -4880,7 +4880,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
         },
         {
           "Name": "AddOrUpdateForAppFolderAsync",
@@ -4890,7 +4890,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
         },
         {
           "Name": "CopyAppPathAsync",
@@ -4930,7 +4930,7 @@
               "Type": "System.Int32"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.List\u003CcCoder.DocumentManagement.Models.Result\u003CSystem.Guid?\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.List\u003CcCoder.DocumentManagement.Dependencies.Result\u003CSystem.Guid?\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllFolderAsync",
@@ -5154,7 +5154,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.Security.FolderRole\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.Security.FolderRole\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllFolderRoleAsync",
@@ -5577,13 +5577,6 @@
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0007",
-      "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
       "LineNumber": 13
     },
@@ -5592,13 +5585,6 @@
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0007",
-      "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
       "LineNumber": 13
     },
     {
@@ -5616,13 +5602,6 @@
       "LineNumber": 15
     },
     {
-      "Code": "STX0007",
-      "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 13
-    },
-    {
       "Code": "STX0004",
       "Description": "A service must not depend on another service at the same layer.",
       "Severity": "Warning",
@@ -5662,13 +5641,6 @@
       "Description": "A processing service may use only one foundation service and no higher-level service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0007",
-      "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "LineNumber": 16
     },
     {
