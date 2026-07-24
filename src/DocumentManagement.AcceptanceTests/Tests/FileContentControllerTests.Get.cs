@@ -42,7 +42,7 @@ public sealed partial class FileContentControllerTests
     public async Task Get_ReturnsFileContentById()
     {
         // Given
-        SeededFileContentContext seededContext = await SeedDatabase("filecontent_create", "filecontent_delete");
+        SeededFileContentContext seededContext = await SeedDatabase(privileges:["filecontent_create","filecontent_delete"]);
 
         FileContent expectedFileContent = await CreateLocalFileContentAsync(payload: new
         {

@@ -45,7 +45,7 @@ public sealed partial class FileControllerTests
     public async Task Get_ReturnsFileById()
     {
         // Given
-        SeededFileContext seededContext = await SeedDatabase("file_create", "file_delete");
+        SeededFileContext seededContext = await SeedDatabase(privileges:["file_create","file_delete"]);
         string name = Unique(prefix: "File");
 
         DmsFile expectedFile = await CreateLocalFileAsync(payload: new
@@ -80,6 +80,7 @@ public sealed partial class FileControllerTests
     [Fact]
     public async Task Get_WithoutReadPrivilege_ReturnsNotFound()
     {
+        // Given
         SeededFileContext seededContext = await SeedDatabase();
 
         using IServiceScope scope = fixture.Factory.Services.CreateScope();
@@ -116,8 +117,10 @@ public sealed partial class FileControllerTests
             Size = "12",
         });
 
+        // When
         DmsFile actualFile = await GetFileAsync(id: hiddenFile.Id);
 
+        // Then
         actualFile.Should()
             .BeNull();
 

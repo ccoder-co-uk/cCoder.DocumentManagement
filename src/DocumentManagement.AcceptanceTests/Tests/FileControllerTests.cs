@@ -18,7 +18,7 @@ using DmsFile = cCoder.Data.Models.DMS.File;
 using Microsoft.EntityFrameworkCore;
 namespace Web.AcceptanceTests.Tests.DocumentManagement;
 
-[Collection(WebAcceptanceCollection.Name)]
+[Collection(name: WebAcceptanceCollection.Name)]
 public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
 {
     private const int AppId = 1;

@@ -15,7 +15,7 @@ public sealed partial class FileControllerTests
     public async Task Delete_RemovesFile()
     {
         // Given
-        SeededFileContext seededContext = await SeedDatabase("file_create", "file_delete");
+        SeededFileContext seededContext = await SeedDatabase(privileges:["file_create","file_delete"]);
 
         DmsFile createdFile = await CreateLocalFileAsync(payload: new
         {

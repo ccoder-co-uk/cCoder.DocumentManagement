@@ -15,7 +15,7 @@ public sealed partial class FolderControllerTests
     public async Task Delete_RemovesFolder()
     {
         // Given
-        SeededFolderContext seededContext = await SeedDatabase("folder_create", "folder_delete");
+        SeededFolderContext seededContext = await SeedDatabase(privileges:["folder_create","folder_delete"]);
 
         Folder createdFolder = await CreateFolderAsync(payload: new
         {

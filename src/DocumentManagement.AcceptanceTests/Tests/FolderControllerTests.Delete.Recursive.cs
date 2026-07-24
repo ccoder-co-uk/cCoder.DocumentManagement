@@ -20,7 +20,7 @@ public sealed partial class FolderControllerTests
     public async Task Delete_RemovesChildFoldersFilesAndContents()
     {
         // Given
-        SeededFolderContext seededContext = await SeedDatabase("folder_delete", "file_delete");
+        SeededFolderContext seededContext = await SeedDatabase(privileges:["folder_delete","file_delete"]);
         Guid rootFolderId;
         Guid childFolderId;
         Guid fileId;

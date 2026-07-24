@@ -15,7 +15,7 @@ public sealed partial class FileContentControllerTests
     public async Task Delete_RemovesFileContent()
     {
         // Given
-        SeededFileContentContext seededContext = await SeedDatabase("filecontent_create", "filecontent_delete");
+        SeededFileContentContext seededContext = await SeedDatabase(privileges:["filecontent_create","filecontent_delete"]);
 
         FileContent createdFileContent = await CreateLocalFileContentAsync(payload: new
         {

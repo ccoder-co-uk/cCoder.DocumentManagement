@@ -24,6 +24,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public void GetFilesZipped_ShouldDelegateToFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
         ExternalPath[] paths = [new(path: "/folder/")];
         DMSResult expected = new();
@@ -43,8 +44,10 @@ public partial class DmsOrchestrationServiceTests
             )
             .Returns(valueFunction: () => expected);
 
+        // When
         DMSResult result = orchestrationService.GetFilesZipped(paths: paths);
 
+        // Then
         result.Should()
             .BeSameAs(expected: expected);
 
@@ -66,6 +69,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public void Get_WhenPathIsFile_ShouldUseFileProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
         ExternalPath path = new(path: "/file.txt");
         DMSResult expected = new();
@@ -83,8 +87,10 @@ public partial class DmsOrchestrationServiceTests
             )
             .Returns(valueFunction: () => expected);
 
+        // When
         DMSResult result = orchestrationService.Get(path: path, version: 2);
 
+        // Then
         result.Should()
             .BeSameAs(expected: expected);
 
@@ -102,6 +108,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public void Get_WhenPathIsFolder_ShouldUseFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
         ExternalPath path = new(path: "/folder/");
         DMSResult expected = new();
@@ -119,8 +126,10 @@ public partial class DmsOrchestrationServiceTests
             )
             .Returns(valueFunction: () => expected);
 
+        // When
         DMSResult result = orchestrationService.Get(path: path, search: "needle");
 
+        // Then
         result.Should()
             .BeSameAs(expected: expected);
 
@@ -138,6 +147,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public void Search_ShouldReturnFileProcessingResults()
     {
+        // Given
         var app = CreateRandomApp();
         LocalFile[] files = [new() { Id = Guid.NewGuid(), Name = "file.txt", Path = "file.txt" }];
 
@@ -148,8 +158,10 @@ public partial class DmsOrchestrationServiceTests
             .Setup(expression: x => x.SearchApp(app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name), needle: "needle"))
             .Returns(value: files);
 
+        // When
         IEnumerable<DataFile> result = orchestrationService.Search(needle: "needle");
 
+        // Then
         result.Should()
             .ContainSingle();
 
@@ -171,6 +183,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public async Task UnpackAsync_ShouldDelegateToFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
         ExternalPath path = new(path: "/folder/");
         using MemoryStream stream = new();
@@ -189,8 +202,10 @@ public partial class DmsOrchestrationServiceTests
             )
             .Returns(value: ValueTask.CompletedTask);
 
+        // When
         await orchestrationService.UnpackAsync(path: path, content: stream, ignoreArchiveRoot: true);
 
+        // Then
         folderProcessingServiceMock.Verify(
             expression: x =>
                 x.UnpackAppPathAsync(
@@ -206,6 +221,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public async Task SaveAsync_WhenPathIsFile_ShouldUseFileProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
         ExternalPath path = new(path: "/file.txt");
         using MemoryStream stream = new();
@@ -223,8 +239,10 @@ public partial class DmsOrchestrationServiceTests
             )
             .Returns(value: ValueTask.CompletedTask);
 
+        // When
         await orchestrationService.SaveAsync(path: path, content: stream);
 
+        // Then
         fileProcessingServiceMock.Verify(
             expression: x =>
                 x.SaveAppPathAsync(
@@ -239,6 +257,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public async Task SaveAsync_WhenPathIsFolder_ShouldUseFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
         ExternalPath path = new(path: "/folder/");
 
@@ -254,8 +273,10 @@ public partial class DmsOrchestrationServiceTests
             )
             .Returns(value: ValueTask.CompletedTask);
 
+        // When
         await orchestrationService.SaveAsync(path: path);
 
+        // Then
         folderProcessingServiceMock.Verify(
             expression: x =>
                 x.SaveAppPathAsync(
@@ -269,6 +290,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public async Task DropAsync_WhenPathIsFile_ShouldUseFileProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
         ExternalPath path = new(path: "/file.txt");
 
@@ -285,8 +307,10 @@ public partial class DmsOrchestrationServiceTests
             )
             .Returns(value: ValueTask.CompletedTask);
 
+        // When
         await orchestrationService.DropAsync(path: path, version: 2);
 
+        // Then
         fileProcessingServiceMock.Verify(
             expression: x =>
                 x.DropAppPathAsync(
@@ -301,6 +325,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public async Task DropAsync_WhenPathIsFolder_ShouldUseFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
         ExternalPath path = new(path: "/folder/");
 
@@ -316,8 +341,10 @@ public partial class DmsOrchestrationServiceTests
             )
             .Returns(value: ValueTask.CompletedTask);
 
+        // When
         await orchestrationService.DropAsync(path: path);
 
+        // Then
         folderProcessingServiceMock.Verify(
             expression: x =>
                 x.DropAppPathAsync(
@@ -331,6 +358,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public async Task CopyAsync_WhenPathIsFile_ShouldUseFileProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
         ExternalPath oldPath = new(path: "/file.txt");
         ExternalPath newPath = new(path: "/copy.txt");
@@ -348,8 +376,10 @@ public partial class DmsOrchestrationServiceTests
             )
             .Returns(value: ValueTask.CompletedTask);
 
+        // When
         await orchestrationService.CopyAsync(oldPath: oldPath, newPath: newPath);
 
+        // Then
         fileProcessingServiceMock.Verify(
             expression: x =>
                 x.CopyAppPathAsync(
@@ -364,6 +394,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public async Task CopyAsync_WhenPathIsFolder_ShouldUseFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
         ExternalPath oldPath = new(path: "/folder/");
         ExternalPath newPath = new(path: "/copy/");
@@ -381,8 +412,10 @@ public partial class DmsOrchestrationServiceTests
             )
             .Returns(value: ValueTask.CompletedTask);
 
+        // When
         await orchestrationService.CopyAsync(oldPath: oldPath, newPath: newPath);
 
+        // Then
         folderProcessingServiceMock.Verify(
             expression: x =>
                 x.CopyAppPathAsync(
@@ -397,6 +430,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public async Task MoveAsync_WhenPathIsFile_ShouldUseFileProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
         ExternalPath oldPath = new(path: "/file.txt");
         ExternalPath newPath = new(path: "/moved.txt");
@@ -414,8 +448,10 @@ public partial class DmsOrchestrationServiceTests
             )
             .Returns(value: ValueTask.CompletedTask);
 
+        // When
         await orchestrationService.MoveAsync(oldPath: oldPath, newPath: newPath);
 
+        // Then
         fileProcessingServiceMock.Verify(
             expression: x =>
                 x.MoveAppPathAsync(
@@ -430,6 +466,7 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public async Task MoveAsync_WhenPathIsFolder_ShouldUseFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
         ExternalPath oldPath = new(path: "/folder/");
         ExternalPath newPath = new(path: "/moved/");
@@ -447,8 +484,10 @@ public partial class DmsOrchestrationServiceTests
             )
             .Returns(value: ValueTask.CompletedTask);
 
+        // When
         await orchestrationService.MoveAsync(oldPath: oldPath, newPath: newPath);
 
+        // Then
         folderProcessingServiceMock.Verify(
             expression: x =>
                 x.MoveAppPathAsync(

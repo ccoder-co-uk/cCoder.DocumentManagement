@@ -18,7 +18,7 @@ using DmsFile = cCoder.Data.Models.DMS.File;
 using Microsoft.EntityFrameworkCore;
 namespace Web.AcceptanceTests.Tests.DocumentManagement;
 
-[Collection(WebAcceptanceCollection.Name)]
+[Collection(name: WebAcceptanceCollection.Name)]
 public sealed partial class FolderControllerTests(WebAcceptanceFixture fixture)
 {
     private const int AppId = 1;
@@ -231,9 +231,8 @@ public sealed partial class FolderControllerTests(WebAcceptanceFixture fixture)
         return (int)response.StatusCode;
     }
 
-    private async Task<SeededFolderContext> SeedCopyDatabase(params string[] privileges)
-        =>
-        await SeedDatabase(privileges: privileges);
+    private Task<SeededFolderContext> SeedCopyDatabase(params string[] privileges) =>
+        SeedDatabase(privileges: privileges);
     private async Task<int> GetFolderStatusCodeAsync(Guid id)
     {
         using HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}({id})");

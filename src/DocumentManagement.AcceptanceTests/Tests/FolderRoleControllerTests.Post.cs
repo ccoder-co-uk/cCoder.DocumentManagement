@@ -15,7 +15,7 @@ public sealed partial class FolderRoleControllerTests
     public async Task Post_CreatesFolderRole()
     {
         // Given
-        SeededFolderRoleContext seededContext = await SeedDatabase(includeFolderRole: false, "app_admin", "folder_read", "folderrole_create", "folderrole_delete");
+        SeededFolderRoleContext seededContext = await SeedDatabase(includeFolderRole: false,privileges:["app_admin","folder_read","folderrole_create","folderrole_delete"]);
         FolderRole actualFolderRole;
 
         // When

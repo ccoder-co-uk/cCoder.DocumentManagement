@@ -18,6 +18,7 @@ public partial class CurrentAppResolverTests
     [Fact]
     public void ShouldResolveCurrentAppByIdForWebDavCoreAppPath()
     {
+        // Given
         DataApp dataApp = CreateRandomDataApp(id: 42, domain: "ignored.test");
         DefaultHttpContext httpContext = new();
         httpContext.Request.Path = "/webdav/Core/App(42)/Files";
@@ -27,8 +28,10 @@ public partial class CurrentAppResolverTests
 
         IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
 
+        // When
         App result = resolver.ResolveCurrentApp();
 
+        // Then
         result.Should()
             .BeEquivalentTo(expectation: CreateExpectedApp(app: dataApp));
 
@@ -39,6 +42,7 @@ public partial class CurrentAppResolverTests
     [Fact]
     public void ShouldThrowWhenWebDavCoreAppPathIdCannotBeResolved()
     {
+        // Given
         DefaultHttpContext httpContext = new();
         httpContext.Request.Path = "/webdav/Core/App(42)/Files";
 
@@ -47,8 +51,10 @@ public partial class CurrentAppResolverTests
 
         IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
 
+        // When
         Action action = () => resolver.ResolveCurrentApp();
 
+        // Then
         action.Should()
             .Throw<InvalidOperationException>()
             .WithMessage(expectedWildcardPattern: "Unable to resolve app '42'.");
@@ -60,6 +66,7 @@ public partial class CurrentAppResolverTests
     [Fact]
     public void ShouldResolveCurrentAppByHostWhenRequestIsNotWebDavCoreAppPath()
     {
+        // Given
         DataApp dataApp = CreateRandomDataApp(domain: "demo.localhost");
         DefaultHttpContext httpContext = new();
         httpContext.Request.Host = new HostString(value: "demo.localhost");
@@ -70,8 +77,10 @@ public partial class CurrentAppResolverTests
 
         IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
 
+        // When
         App result = resolver.ResolveCurrentApp();
 
+        // Then
         result.Should()
             .BeEquivalentTo(expectation: CreateExpectedApp(app: dataApp));
 
@@ -82,6 +91,7 @@ public partial class CurrentAppResolverTests
     [Fact]
     public void ShouldThrowWhenHostCannotBeResolved()
     {
+        // Given
         DefaultHttpContext httpContext = new();
         httpContext.Request.Host = new HostString(value: "missing.localhost");
 
@@ -90,8 +100,10 @@ public partial class CurrentAppResolverTests
 
         IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBroker: appBrokerMock.Object, httpContext: httpContext);
 
+        // When
         Action action = () => resolver.ResolveCurrentApp();
 
+        // Then
         action.Should()
             .Throw<InvalidOperationException>()
             .WithMessage(expectedWildcardPattern: "Unable to resolve current app for host 'missing.localhost'.");

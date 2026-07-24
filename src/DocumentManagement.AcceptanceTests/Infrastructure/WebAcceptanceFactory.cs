@@ -37,7 +37,7 @@ internal sealed class WebAcceptanceFactory(AcceptanceSettings settings)
             ]);
         });
 
-        builder.ConfigureTestServices(services =>
+        builder.ConfigureTestServices(servicesConfiguration: services =>
         {
             services.RemoveAll<ICoreContextFactory>();
             services.RemoveAll<ISecurityDbContextFactory>();
@@ -59,8 +59,8 @@ internal sealed class WebAcceptanceFactory(AcceptanceSettings settings)
                 });
 
             services.AddSingleton<ISecurityDbContextFactory>(
-                _ => new MSSQLSecurityDbContextFactory(settings.SsoConnectionString)
-            );
+                implementationFactory: _ => new MSSQLSecurityDbContextFactory(
+                    connectionString: settings.SsoConnectionString));
 
             services.AddCoreData(connectionString: settings.CoreConnectionString);
         });

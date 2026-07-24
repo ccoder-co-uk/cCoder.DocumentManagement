@@ -104,7 +104,6 @@ public partial class FolderProcessingServiceTests
     [Fact]
     public async Task ShouldSaveAndReturnCreatedFolderWhenAddAsync()
     {
-        // Then
         // Given
         authorizationBrokerMock
             .Setup(expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))
@@ -161,9 +160,7 @@ public partial class FolderProcessingServiceTests
     [Fact]
     public async Task ShouldSaveUsingParentPathWhenAddAsync()
     {
-        // When
 
-        // Then
         // Given
         authorizationBrokerMock
             .Setup(expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))

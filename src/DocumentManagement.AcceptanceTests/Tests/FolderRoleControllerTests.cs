@@ -18,7 +18,7 @@ using Xunit;
 using Microsoft.EntityFrameworkCore;
 namespace Web.AcceptanceTests.Tests.DocumentManagement;
 
-[Collection(WebAcceptanceCollection.Name)]
+[Collection(name: WebAcceptanceCollection.Name)]
 public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixture)
 {
     private HttpClient Client { get; } = fixture.Client;

@@ -187,25 +187,11 @@
   "Links": [],
   "AnalysisItems": [
     {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "Apps.Shared.Models.Config",
-      "LineNumber": 9
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "Apps.Shared.Models.Config",
-      "LineNumber": 10
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "Apps.Shared.Models.Config",
-      "LineNumber": 11
+      "LineNumber": 21
     },
     {
       "Code": "STXAPP005",

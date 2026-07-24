@@ -18,9 +18,7 @@ public partial class FolderProcessingServiceTests
     [Fact]
     public async Task ShouldUpdateFolderWhenUserIsAppAdminForUpdateAsync()
     {
-        // When
 
-        // Then
         // Given
         authorizationBrokerMock
             .Setup(expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))
@@ -102,9 +100,7 @@ public partial class FolderProcessingServiceTests
     [Fact]
     public async Task ShouldThrowSecurityExceptionWhenUserCannotUpdateFolderForUpdateAsync()
     {
-        // When
 
-        // Then
         // Given
         authorizationBrokerMock
             .Setup(expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))

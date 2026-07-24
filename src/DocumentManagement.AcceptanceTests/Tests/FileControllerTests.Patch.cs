@@ -15,7 +15,7 @@ public sealed partial class FileControllerTests
     public async Task Patch_UpdatesFile()
     {
         // Given
-        SeededFileContext seededContext = await SeedDatabase("file_create", "file_update", "file_delete");
+        SeededFileContext seededContext = await SeedDatabase(privileges:["file_create","file_update","file_delete"]);
 
         DmsFile createdFile = await CreateLocalFileAsync(payload: new
         {

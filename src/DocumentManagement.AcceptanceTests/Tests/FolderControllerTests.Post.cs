@@ -15,7 +15,7 @@ public sealed partial class FolderControllerTests
     public async Task Post_CreatesFolder()
     {
         // Given
-        SeededFolderContext seededContext = await SeedDatabase("folder_create", "folder_delete");
+        SeededFolderContext seededContext = await SeedDatabase(privileges:["folder_create","folder_delete"]);
         string name = Unique(prefix: "Folder");
         Folder expectedFolder;
         Folder actualFolder;

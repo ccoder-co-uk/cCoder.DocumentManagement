@@ -15,7 +15,7 @@ public sealed partial class FolderControllerTests
     public async Task Put_UpdatesFolder()
     {
         // Given
-        SeededFolderContext seededContext = await SeedDatabase("folder_create", "folder_update", "folder_delete");
+        SeededFolderContext seededContext = await SeedDatabase(privileges:["folder_create","folder_update","folder_delete"]);
 
         Folder createdFolder = await CreateFolderAsync(payload: new
         {

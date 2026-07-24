@@ -11,7 +11,7 @@ using File = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.Core.Services.Tests.DMS.Coordinations;
 
-public class FolderCoordinationServiceTests
+public partial class FolderCoordinationServiceTests
 {
     private readonly Mock<IFolderOrchestrationService> folderOrchestrationServiceMock;
     private readonly Mock<IFileOrchestrationService> fileOrchestrationServiceMock;
@@ -92,6 +92,7 @@ public class FolderCoordinationServiceTests
     public async Task ShouldDoNothingWhenDeleteFolderAsyncWithNullFolder()
     {
         // When
+        // Given
         await coordinationService.DeleteFolderAsync(deletedFolder: null);
 
         // Then

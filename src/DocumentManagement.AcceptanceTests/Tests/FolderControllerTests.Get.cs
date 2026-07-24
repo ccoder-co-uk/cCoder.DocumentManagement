@@ -45,7 +45,7 @@ public sealed partial class FolderControllerTests
     public async Task Get_ReturnsFolderById()
     {
         // Given
-        SeededFolderContext seededContext = await SeedDatabase("folder_create", "folder_delete");
+        SeededFolderContext seededContext = await SeedDatabase(privileges:["folder_create","folder_delete"]);
         string name = Unique(prefix: "Folder");
 
         Folder expectedFolder = await CreateFolderAsync(payload: new
@@ -77,6 +77,7 @@ public sealed partial class FolderControllerTests
     [Fact]
     public async Task Get_WithoutReadPrivilege_ReturnsNotFound()
     {
+        // Given
         SeededFolderContext seededContext = await SeedDatabase();
 
         using IServiceScope scope = fixture.Factory.Services.CreateScope();
@@ -103,8 +104,10 @@ public sealed partial class FolderControllerTests
             .ToLowerInvariant(),
         });
 
+        // When
         Folder actualFolder = await GetFolderAsync(id: hiddenFolder.Id);
 
+        // Then
         actualFolder.Should()
             .BeNull();
 

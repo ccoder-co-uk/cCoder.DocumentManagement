@@ -16,7 +16,7 @@ public sealed partial class FileContentControllerTests
     public async Task Put_UpdatesFileContent()
     {
         // Given
-        SeededFileContentContext seededContext = await SeedDatabase("filecontent_create", "filecontent_update", "filecontent_delete");
+        SeededFileContentContext seededContext = await SeedDatabase(privileges:["filecontent_create","filecontent_update","filecontent_delete"]);
 
         FileContent createdFileContent = await CreateLocalFileContentAsync(payload: new
         {

@@ -10,7 +10,7 @@ using Xunit;
 
 namespace cCoder.Core.Services.Tests.DMS.Orchestrations;
 
-public class AppOrchestrationServiceTests
+public partial class AppOrchestrationServiceTests
 {
     private readonly Mock<IFolderOrchestrationService> folderOrchestrationServiceMock;
     private readonly AppOrchestrationService service;
