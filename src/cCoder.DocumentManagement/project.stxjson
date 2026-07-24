@@ -5531,13 +5531,6 @@
   ],
   "AnalysisItems": [
     {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 177
-    },
-    {
       "Code": "STXAPI001",
       "Description": "An API controller must have exactly one business dependency.",
       "Severity": "Warning",
@@ -5559,46 +5552,11 @@
       "LineNumber": 17
     },
     {
-      "Code": "STXFORMAT004",
-      "Description": "Adjacent methods must have exactly one empty line between them.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STXFORMAT004",
-      "Description": "Adjacent methods must have exactly one empty line between them.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure",
-      "LineNumber": 20
-    },
-    {
       "Code": "STXA001",
       "Description": "An aggregation service may have any number of dependencies, but they must share the same service variation.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
       "LineNumber": 17
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "LineNumber": 29
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "LineNumber": 78
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
-      "LineNumber": 19
     },
     {
       "Code": "STX0007",
@@ -5608,186 +5566,11 @@
       "LineNumber": 13
     },
     {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
-      "LineNumber": 29
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
-      "LineNumber": 45
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileContentEventService",
-      "LineNumber": 61
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
-      "LineNumber": 22
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
-      "LineNumber": 38
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FileEventService",
-      "LineNumber": 54
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
-      "LineNumber": 25
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
-      "LineNumber": 41
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderEventService",
-      "LineNumber": 57
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
-      "LineNumber": 27
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.FolderRoleEventService",
-      "LineNumber": 43
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 27
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 80
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 26
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 111
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 121
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 232
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 265
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 33
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 58
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 25
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 106
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 217
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 238
-    },
-    {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
       "LineNumber": 15
-    },
-    {
-      "Code": "STXFORMAT004",
-      "Description": "Adjacent methods must have exactly one empty line between them.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "LineNumber": 146
     },
     {
       "Code": "STX0007",
@@ -5804,25 +5587,11 @@
       "LineNumber": 13
     },
     {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 64
-    },
-    {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
       "LineNumber": 13
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 64
     },
     {
       "Code": "STX0007",
@@ -5846,13 +5615,6 @@
       "LineNumber": 15
     },
     {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
-      "LineNumber": 25
-    },
-    {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
@@ -5860,20 +5622,6 @@
       "LineNumber": 13
     },
     {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 102
-    },
-    {
-      "Code": "STXFORMAT004",
-      "Description": "Adjacent methods must have exactly one empty line between them.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 108
-    },
-    {
       "Code": "STX0004",
       "Description": "A service must not depend on another service at the same layer.",
       "Severity": "Warning",
@@ -5893,111 +5641,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "LineNumber": 16
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 53
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 199
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 227
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 237
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 264
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 280
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 295
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 305
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 366
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 375
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 385
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 527
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 641
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 641
-    },
-    {
-      "Code": "STXFORMAT004",
-      "Description": "Adjacent methods must have exactly one empty line between them.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 712
     },
     {
       "Code": "STX0004",
@@ -6021,132 +5664,6 @@
       "LineNumber": 16
     },
     {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 55
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 67
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 126
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 201
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 219
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 242
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 315
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 357
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 467
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 505
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 520
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 749
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 749
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 795
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 795
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 853
-    },
-    {
-      "Code": "STXFORMAT009",
-      "Description": "Every method chained from an invocation result must begin on a new line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 853
-    },
-    {
-      "Code": "STXFORMAT004",
-      "Description": "Adjacent methods must have exactly one empty line between them.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 950
-    },
-    {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
@@ -6159,27 +5676,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "LineNumber": 16
-    },
-    {
-      "Code": "STXFORMAT008",
-      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 73
-    },
-    {
-      "Code": "STXFORMAT003",
-      "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 157
-    },
-    {
-      "Code": "STXFORMAT004",
-      "Description": "Adjacent methods must have exactly one empty line between them.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 170
     },
     {
       "Code": "STX0007",

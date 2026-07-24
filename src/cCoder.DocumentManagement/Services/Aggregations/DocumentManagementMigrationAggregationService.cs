@@ -26,6 +26,7 @@ internal partial class DocumentManagementMigrationAggregationService(
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [appId, package]);
+
             if (package.Items is null || package.Items.Count == 0)
             {
                 return;
@@ -75,6 +76,7 @@ internal partial class DocumentManagementMigrationAggregationService(
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [appId, packageName]);
+
             var package = packageName == "FolderRoles"
     ? ExportFolderRoles(appId: appId)
     : new Data.Models.Packaging.Package(name: packageName) { Items = [] };

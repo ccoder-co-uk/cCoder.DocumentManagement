@@ -23,6 +23,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [fileId]);
+
             LocalFile file = GetAllValue()
     .FirstOrDefault(predicate: i => i.Id == fileId);
 
@@ -108,6 +109,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: () =>
         {
             ValidateByPathWithFolderRolesAndContentsOnGet(appId: appId, path: path, ignoreFilters: ignoreFilters);
+
             return CreateLocalFileWithFolderRoles(
                 file: fileBroker.SelectFileByPathWithFolderRolesAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters)
             );
@@ -118,6 +120,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [appId, needle]);
+
             return fileBroker.SelectFilesByContent(appId: appId, needle: needle)
                                                                 .AsEnumerable()
                                                                                .Select(selector: CreateLocalFile)
@@ -229,6 +232,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [fileId]);
+
             LocalFile file = GetAllValue(ignoreFilters: true)
     .FirstOrDefault(predicate: foundFile => foundFile.Id == fileId);
 
@@ -262,6 +266,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: () =>
         {
             ValidateAllForAppFileOnDelete(items: items);
+
             return fileBroker.DeleteAllFilesAsync(
                 items: items?.Select(selector: file => CreateLocalFileEntity(file: file, includeId: true)) ?? []);
         });

@@ -22,6 +22,7 @@ internal partial class FolderEventService(IFolderEventBroker folderEventBroker, 
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
+
             EventMessage<DataFolder> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
@@ -38,6 +39,7 @@ internal partial class FolderEventService(IFolderEventBroker folderEventBroker, 
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
+
             EventMessage<DataFolder> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
@@ -54,6 +56,7 @@ internal partial class FolderEventService(IFolderEventBroker folderEventBroker, 
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
+
             EventMessage<DataFolder> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },

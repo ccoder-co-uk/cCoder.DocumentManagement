@@ -22,6 +22,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [folderId]);
+
             Folder folder = GetAllValue()
     .FirstOrDefault(predicate: i => i.Id == folderId);
 
@@ -103,6 +104,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
         TryCatch(operation: () =>
         {
             ValidateByPathWithRolesAndFilesAndContentsOnGet(appId: appId, path: path, ignoreFilters: ignoreFilters);
+
             return CreateFolderWithRolesAndFiles(
                 folder: folderBroker.SelectFolderByPathWithRolesAndFilesAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters)
             );
@@ -214,6 +216,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [folderId]);
+
             Folder folder = GetAllValue(ignoreFilters: true)
     .FirstOrDefault(predicate: foundFolder => foundFolder.Id == folderId);
 
@@ -235,6 +238,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
         TryCatch(operation: () =>
         {
             ValidateAllForAppFolderOnDelete(deletedFolder: deletedFolder);
+
             return folderBroker.DeleteAllFoldersAsync(
                 deletedFolder: deletedFolder?.Select(selector: folder => CreateStorageFolder(folder: folder, includeId: true)) ?? []);
         });

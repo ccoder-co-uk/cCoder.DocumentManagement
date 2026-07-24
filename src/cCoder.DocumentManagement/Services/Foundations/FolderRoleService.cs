@@ -30,6 +30,7 @@ internal partial class FolderRoleService(
         TryCatch(operation: async () =>
         {
             ValidateFolderRoleOnAdd(newFolderRole: newFolderRole);
+
             cCoder.Data.Models.Security.FolderRole storageFolderRole =
                 CreateStorageFolderRole(folderRole: newFolderRole);
 
@@ -55,6 +56,7 @@ internal partial class FolderRoleService(
         TryCatch(operation: async () =>
         {
             ValidateFolderRoleOnDelete(deletedFolderRole: deletedFolderRole);
+
             authorizationBroker.Authorize(
     appId: folderRoleBroker.SelectAppId(entity: CreateStorageFolderRole(folderRole: deletedFolderRole)),
     privilege: $"{nameof(FolderRole)}_delete"

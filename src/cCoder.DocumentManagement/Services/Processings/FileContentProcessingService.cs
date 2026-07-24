@@ -99,12 +99,14 @@ internal partial class FileContentProcessingService(IFileContentService service)
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [deletedFileContent]);
+
             foreach (FileContent item in deletedFileContent)
             {
                 await DeleteValueAsync(fileContentId: item.Id);
             }
 
         });
+
     private ValueTask<FileContent> AddFileContentValueAsync(FileContent newFileContent) =>
         AddFileContentAsync(newFileContent: newFileContent);
 

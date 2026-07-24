@@ -70,6 +70,7 @@ internal partial class FolderRoleProcessingService(IFolderRoleService service, I
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [deletedFolderRole]);
+
             Folder folder = folderService.GetAll(ignoreFilters: true)
     .FirstOrDefault(predicate: (Folder u) => u.Id == deletedFolderRole.FolderId);
 
@@ -154,6 +155,7 @@ internal partial class FolderRoleProcessingService(IFolderRoleService service, I
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [deletedFolderRole]);
+
             foreach (cCoder.Data.Models.Security.FolderRole item in deletedFolderRole)
             {
                 await DeleteFolderRoleValueAsync(deletedFolderRole: item);
@@ -167,6 +169,7 @@ internal partial class FolderRoleProcessingService(IFolderRoleService service, I
             .IgnoreQueryFilters()
             .FirstOrDefault(predicate: (cCoder.Data.Models.Security.Role r) => r.Id == entity.RoleId), folder: folderService.GetAll(ignoreFilters: true)
             .FirstOrDefault(predicate: (Folder u) => u.Id == entity.FolderId));
+
     private IQueryable<cCoder.Data.Models.Security.FolderRole> GetAllValue() =>
         GetAll();
 

@@ -19,6 +19,7 @@ internal partial class FileEventService(IFileEventBroker fileEventBroker, IAuthI
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
+
             EventMessage<FileEntity> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
@@ -35,6 +36,7 @@ internal partial class FileEventService(IFileEventBroker fileEventBroker, IAuthI
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
+
             EventMessage<FileEntity> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
@@ -51,6 +53,7 @@ internal partial class FileEventService(IFileEventBroker fileEventBroker, IAuthI
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
+
             EventMessage<FileEntity> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },

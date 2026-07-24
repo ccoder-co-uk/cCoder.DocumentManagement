@@ -61,6 +61,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [folderId]);
+
             Folder entity = processingService.GetAll(ignoreFilters: true)
     .FirstOrDefault(predicate: folder => folder.Id == folderId);
 

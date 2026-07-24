@@ -174,6 +174,7 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
     public async ValueTask DeleteAllFoldersAsync(IEnumerable<Folder> deletedFolder)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
         Guid[] folderIds =
         [
             .. (deletedFolder ?? [])

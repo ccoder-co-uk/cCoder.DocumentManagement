@@ -24,6 +24,7 @@ internal partial class FileContentService(
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [fileContentId]);
+
             FileContent fileContent = GetAllValue()
     .FirstOrDefault(predicate: i => i.Id == fileContentId);
 
@@ -77,6 +78,7 @@ internal partial class FileContentService(
         TryCatch(operation: async () =>
         {
             ValidateFileContentOnAdd(newFileContent: newFileContent);
+
             cCoder.Data.Models.DMS.FileContent storageFileContent =
                 CreateFileContent(fileContent: newFileContent, includeId: false);
 

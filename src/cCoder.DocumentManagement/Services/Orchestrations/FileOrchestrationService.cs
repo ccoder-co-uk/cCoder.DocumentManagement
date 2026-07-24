@@ -61,6 +61,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [fileId]);
+
             cCoder.Data.Models.DMS.File entity = processingService.GetAll(ignoreFilters: true)
     .FirstOrDefault(predicate: file => file.Id == fileId);
 

@@ -24,6 +24,7 @@ internal partial class FolderRoleEventService(
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
+
             EventMessage<DataFolderRole> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
@@ -40,6 +41,7 @@ internal partial class FolderRoleEventService(
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
+
             EventMessage<DataFolderRole> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },

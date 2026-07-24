@@ -52,7 +52,8 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             }
 
 
-            if ((!sourceFolder.UserCan(user: GetCurrentUser(), privilege: "file_update") || !sourceFolder.UserCan(user: GetCurrentUser(), privilege: "file_create")) && !GetCurrentUser().IsAdminOfApp(appId: destAppId))
+            if ((!sourceFolder.UserCan(user: GetCurrentUser(), privilege: "file_update") || !sourceFolder.UserCan(user: GetCurrentUser(), privilege: "file_create")) && !GetCurrentUser()
+                .IsAdminOfApp(appId: destAppId))
             {
                 throw new SecurityException(message: "Access Denied!");
             }
@@ -64,7 +65,8 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             }
 
 
-            if ((!destinationFolder.UserCan(user: GetCurrentUser(), privilege: "file_update") || !destinationFolder.UserCan(user: GetCurrentUser(), privilege: "file_create")) && !GetCurrentUser().IsAdminOfApp(appId: destAppId))
+            if ((!destinationFolder.UserCan(user: GetCurrentUser(), privilege: "file_update") || !destinationFolder.UserCan(user: GetCurrentUser(), privilege: "file_create")) && !GetCurrentUser()
+                .IsAdminOfApp(appId: destAppId))
             {
                 throw new SecurityException(message: "Access Denied!");
             }
@@ -123,6 +125,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [newFolder]);
+
             if (newFolder.ParentId.HasValue)
             {
                 Folder parent = GetValue(folderId: newFolder.ParentId.Value);
@@ -198,7 +201,8 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             Folder folder = service.GetWithRoles(folderId: folderId, ignoreFilters: true);
 
 
-            if (folder == null || (!GetCurrentUser().IsAdminOfApp(appId: folder.AppId) && !folder.UserCan(user: GetCurrentUser(), privilege: "folder_delete")))
+            if (folder == null || (!GetCurrentUser()
+                .IsAdminOfApp(appId: folder.AppId) && !folder.UserCan(user: GetCurrentUser(), privilege: "folder_delete")))
             {
                 throw new SecurityException(message: "Access Denied!");
             }
@@ -216,7 +220,8 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             Folder dbVersion = service.GetForUpdate(folderId: updatedFolder.Id, ignoreFilters: true);
 
 
-            if (dbVersion != null && (GetCurrentUser().IsAdminOfApp(appId: dbVersion.AppId) || dbVersion.UserCan(user: GetCurrentUser(), privilege: "folder_update")))
+            if (dbVersion != null && (GetCurrentUser()
+                .IsAdminOfApp(appId: dbVersion.AppId) || dbVersion.UserCan(user: GetCurrentUser(), privilege: "folder_update")))
             {
                 return await UpdateInternalFolderAsync(updatedFolder: dbVersion, folder: updatedFolder, authorize: true);
             }
@@ -239,6 +244,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [folder]);
+
             Folder dbFolder = GetAllValue(ignoreFilters: true)
     .FirstOrDefault(predicate: (Folder foundFolder) => foundFolder.Id == folder.Id);
 
@@ -312,6 +318,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [app, path, search]);
+
             if (path.IsToFile)
             {
                 throw new InvalidOperationException(message: "To get a file, use file processing operations.");
@@ -354,7 +361,8 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
             Folder folder = await BuildPathAppAsync(app: app, folderPath: path);
 
 
-            if (!GetCurrentUser().IsAdminOfApp(appId: app.Id) && !folder.UserCan(user: GetCurrentUser(), privilege: "file_create"))
+            if (!GetCurrentUser()
+                .IsAdminOfApp(appId: app.Id) && !folder.UserCan(user: GetCurrentUser(), privilege: "file_create"))
             {
                 throw new SecurityException(message: "Access Denied!");
             }
@@ -464,6 +472,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [deletedFolder]);
+
             foreach (Folder item in deletedFolder)
             {
                 await DeleteValueAsync(folderId: item.Id);
@@ -502,6 +511,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [app, oldPath, newPath]);
+
             if (oldPath.IsToFile)
             {
                 throw new InvalidOperationException(message: "To copy a file, use file processing operations.");
@@ -517,6 +527,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [app, oldPath, newPath]);
+
             if (oldPath.IsToFile)
             {
                 throw new InvalidOperationException(message: "To move a file, use file processing operations.");
@@ -746,7 +757,11 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
     {
         Folder folder = ((folderPath.ParentPath.Depth <= 0) ? null : (await BuildPathAppAsync(app: app, folderPath: folderPath.ParentPath)));
         Folder parentFolder = folder;
-        bool userCanCreateInApp = GetCurrentUser().IsAdminOfApp(appId: app.Id) && GetCurrentUser().Can(appId: app.Id, operation: "folder_create");
+
+        bool userCanCreateInApp = GetCurrentUser()
+            .IsAdminOfApp(appId: app.Id) && GetCurrentUser()
+            .Can(appId: app.Id, operation: "folder_create");
+
         bool userCanCreateFolderInParentFolder = parentFolder?.UserCan(user: GetCurrentUser(), privilege: "folder_create") ?? false;
 
         if (!userCanCreateInApp && !userCanCreateFolderInParentFolder)
@@ -792,7 +807,10 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
         Folder folder = (string.IsNullOrEmpty(value: newPath.ParentPath.Lowered) ? null : (await BuildPathAppAsync(app: app, folderPath: newPath.ParentPath)));
         Folder newParent = folder;
         Folder oldParent = ((!string.IsNullOrEmpty(value: oldPath.ParentPath.Lowered)) ? service.GetByPathWithRoles(appId: app.Id, path: oldPath.ParentPath.Lowered) : null);
-        bool userIsAdmin = GetCurrentUser().IsAdminOfApp(appId: app.Id) && GetCurrentUser().Can(appId: app.Id, operation: "folder_update");
+
+        bool userIsAdmin = GetCurrentUser()
+            .IsAdminOfApp(appId: app.Id) && GetCurrentUser()
+            .Can(appId: app.Id, operation: "folder_update");
 
         if (!userIsAdmin && !(oldParent?.UserCan(user: GetCurrentUser(), privilege: "folder_update") ?? false))
         {
@@ -850,7 +868,10 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
         }
 
         Folder oldParent = sourceFolder.Parent;
-        bool userIsAdmin = GetCurrentUser().IsAdminOfApp(appId: app.Id) && GetCurrentUser().Can(appId: app.Id, operation: "folder_update");
+
+        bool userIsAdmin = GetCurrentUser()
+            .IsAdminOfApp(appId: app.Id) && GetCurrentUser()
+            .Can(appId: app.Id, operation: "folder_update");
 
         if (!userIsAdmin && !(oldParent?.UserCan(user: GetCurrentUser(), privilege: "folder_update") ?? false))
         {
@@ -947,6 +968,7 @@ internal partial class FolderProcessingService(IFolderService service, IFolderRo
 
         stream.Write(buffer: array, offset: 0, count: array.Length);
     }
+
     private Folder GetValue(Guid folderId) =>
         Get(folderId: folderId);
 

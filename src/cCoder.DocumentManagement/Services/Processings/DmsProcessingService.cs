@@ -22,6 +22,7 @@ internal partial class DmsProcessingService(
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [request]);
+
             string path = request.RequestPath[
     (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
 ];
