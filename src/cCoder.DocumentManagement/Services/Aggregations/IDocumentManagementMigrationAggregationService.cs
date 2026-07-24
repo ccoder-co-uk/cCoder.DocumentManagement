@@ -12,7 +12,7 @@ namespace cCoder.DocumentManagement.Services.Aggregations;
 
 public interface IDocumentManagementMigrationAggregationService
 {
-    ValueTask ImportPackageAsync(int appId, DocumentManagementPackage package);
+    ValueTask ImportPackageDocumentManagementPackageAsync(int appId, DocumentManagementPackage package);
 
     DocumentManagementPackage ExportPackage(int appId, string packageName);
 }

@@ -21,15 +21,15 @@ public partial class FileContentProcessingServiceTests
         FileContent fileContent = CreateRandomFileContent();
 
         fileContentServiceMock
-            .Setup(expression: x => x.AddAsync(fileContent: fileContent))
+            .Setup(expression: x => x.AddFileContentAsync(fileContent: fileContent))
             .Returns(value: ValueTask.FromResult(result: fileContent));
 
         // When
-        FileContent result = await fileContentProcessingService.AddAsync(entity: fileContent);
+        FileContent result = await fileContentProcessingService.AddFileContentAsync(entity: fileContent);
 
         // Then
         Assert.Same(expected: fileContent, actual: result);
-        fileContentServiceMock.Verify(expression: x => x.AddAsync(fileContent: fileContent), times: Times.Once);
+        fileContentServiceMock.Verify(expression: x => x.AddFileContentAsync(fileContent: fileContent), times: Times.Once);
         fileContentServiceMock.VerifyNoOtherCalls();
     }
 

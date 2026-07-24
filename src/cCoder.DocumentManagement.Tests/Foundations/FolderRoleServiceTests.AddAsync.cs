@@ -44,7 +44,7 @@ public partial class FolderRoleServiceTests
             .ReturnsAsync(valueFunction: (DataFolderRole value) => value);
 
         // When
-        FolderRole result = await folderRoleService.AddAsync(folderRole: folderRole);
+        FolderRole result = await folderRoleService.AddFolderRoleAsync(folderRole: folderRole);
 
         // Then
         result.Should()
@@ -95,7 +95,7 @@ public partial class FolderRoleServiceTests
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await folderRoleService.AddAsync(folderRole: folderRole);
+        Func<Task> action = async () => await folderRoleService.AddFolderRoleAsync(folderRole: folderRole);
 
         // Then
         await action.Should()

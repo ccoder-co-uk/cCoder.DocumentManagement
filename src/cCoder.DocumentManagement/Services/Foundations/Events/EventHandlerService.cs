@@ -57,12 +57,12 @@ internal partial class EventHandlerService(IEventHubBroker eventHubBroker) : IEv
     void ListenToAppAddEvents() =>
         eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
             eventName: "app_add",
-            handler: (service, app) => service.AddAsync(app: app));
+            handler: (service, app) => service.AddAppAsync(app: app));
 
     void ListenToAppUpdateEvents() =>
         eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
             eventName: "app_update",
-            handler: (service, app) => service.UpdateAsync(app: app));
+            handler: (service, app) => service.UpdateAppAsync(app: app));
 
     void ListenToAppDeleteEvents() =>
         eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
@@ -82,7 +82,7 @@ internal partial class EventHandlerService(IEventHubBroker eventHubBroker) : IEv
     void ListenToPackageImportEvents() =>
         eventHubBroker.ListenToEvent<(int appId, Package package), IDocumentManagementMigrationAggregationService>(
             eventName: "package_import",
-            handler: (service, args) => service.ImportPackageAsync(appId: args.appId, package: ToLocalPackage(package: args.package)));
+            handler: (service, args) => service.ImportPackageDocumentManagementPackageAsync(appId: args.appId, package: ToLocalPackage(package: args.package)));
 
     static DocumentManagementPackage ToLocalPackage(Package package) =>
         package == null ? null : new DocumentManagementPackage(name: package.Name)

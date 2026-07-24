@@ -2694,7 +2694,7 @@
           "ReturnType": "cCoder.DocumentManagement.Models.DocumentManagementPackage"
         },
         {
-          "Name": "ImportPackageAsync",
+          "Name": "ImportPackageDocumentManagementPackageAsync",
           "Inputs": [
             {
               "Name": "appId",
@@ -3025,7 +3025,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddFileContentAsync",
           "Inputs": [
             {
               "Name": "fileContent",
@@ -3085,7 +3085,7 @@
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
         },
         {
-          "Name": "UpdateAsync",
+          "Name": "UpdateFileContentAsync",
           "Inputs": [
             {
               "Name": "fileContent",
@@ -3102,7 +3102,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddFileAsync",
           "Inputs": [
             {
               "Name": "file",
@@ -3112,7 +3112,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
-          "Name": "DeleteAllForAppAsync",
+          "Name": "DeleteAllForAppFileAsync",
           "Inputs": [
             {
               "Name": "items",
@@ -3262,7 +3262,7 @@
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
-          "Name": "UpdateAsync",
+          "Name": "UpdateFileAsync",
           "Inputs": [
             {
               "Name": "file",
@@ -3272,7 +3272,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
-          "Name": "UpdateForAppAsync",
+          "Name": "UpdateForAppFileAsync",
           "Inputs": [
             {
               "Name": "file",
@@ -3289,7 +3289,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddFolderRoleAsync",
           "Inputs": [
             {
               "Name": "folderRole",
@@ -3299,7 +3299,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.Security.FolderRole\u003E"
         },
         {
-          "Name": "DeleteAsync",
+          "Name": "DeleteFolderRoleAsync",
           "Inputs": [
             {
               "Name": "folderRole",
@@ -3326,7 +3326,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddFolderAsync",
           "Inputs": [
             {
               "Name": "folder",
@@ -3336,7 +3336,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
         },
         {
-          "Name": "AddForPathBuildAsync",
+          "Name": "AddForPathBuildFolderAsync",
           "Inputs": [
             {
               "Name": "folder",
@@ -3356,7 +3356,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "DeleteAllForAppAsync",
+          "Name": "DeleteAllForAppFolderAsync",
           "Inputs": [
             {
               "Name": "folders",
@@ -3514,7 +3514,7 @@
           "ReturnType": "cCoder.Data.Models.DMS.Folder"
         },
         {
-          "Name": "UpdateAsync",
+          "Name": "UpdateFolderAsync",
           "Inputs": [
             {
               "Name": "folder",
@@ -3524,7 +3524,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
         },
         {
-          "Name": "UpdateForAppAsync",
+          "Name": "UpdateForAppFolderAsync",
           "Inputs": [
             {
               "Name": "folder",
@@ -3558,7 +3558,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddAppAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -3578,7 +3578,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "UpdateAsync",
+          "Name": "UpdateAppAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -3731,7 +3731,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddFileContentAsync",
           "Inputs": [
             {
               "Name": "entity",
@@ -3741,7 +3741,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.FileContent\u003E"
         },
         {
-          "Name": "AddOrUpdate",
+          "Name": "AddOrUpdateFileContent",
           "Inputs": [
             {
               "Name": "items",
@@ -3751,7 +3751,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
         },
         {
-          "Name": "DeleteAllAsync",
+          "Name": "DeleteAllFileContentAsync",
           "Inputs": [
             {
               "Name": "items",
@@ -3791,7 +3791,7 @@
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
         },
         {
-          "Name": "UpdateAsync",
+          "Name": "UpdateFileContentAsync",
           "Inputs": [
             {
               "Name": "entity",
@@ -3808,7 +3808,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddFileAsync",
           "Inputs": [
             {
               "Name": "entity",
@@ -3818,7 +3818,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
-          "Name": "AddOrUpdate",
+          "Name": "AddOrUpdateFile",
           "Inputs": [
             {
               "Name": "items",
@@ -3828,7 +3828,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.File\u003E\u003E\u003E"
         },
         {
-          "Name": "CopyAsync",
+          "Name": "CopyAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -3846,7 +3846,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "DeleteAllAsync",
+          "Name": "DeleteAllFileAsync",
           "Inputs": [
             {
               "Name": "items",
@@ -3866,7 +3866,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "DropAsync",
+          "Name": "DropAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -3894,7 +3894,17 @@
           "ReturnType": "cCoder.Data.Models.DMS.File"
         },
         {
-          "Name": "Get",
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "GetAppPath",
           "Inputs": [
             {
               "Name": "app",
@@ -3910,16 +3920,6 @@
             }
           ],
           "ReturnType": "cCoder.DocumentManagement.Models.DMSResult"
-        },
-        {
-          "Name": "GetAll",
-          "Inputs": [
-            {
-              "Name": "ignoreFilters",
-              "Type": "System.Boolean"
-            }
-          ],
-          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
           "Name": "GetByPath",
@@ -3946,7 +3946,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "MoveAsync",
+          "Name": "MoveAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -3964,7 +3964,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "SaveAsync",
+          "Name": "SaveAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -3982,7 +3982,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "Search",
+          "Name": "SearchApp",
           "Inputs": [
             {
               "Name": "app",
@@ -3996,7 +3996,7 @@
           "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
-          "Name": "UpdateAsync",
+          "Name": "UpdateFileAsync",
           "Inputs": [
             {
               "Name": "entity",
@@ -4013,7 +4013,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddFolderAsync",
           "Inputs": [
             {
               "Name": "entity",
@@ -4023,7 +4023,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
         },
         {
-          "Name": "AddOrUpdate",
+          "Name": "AddOrUpdateFolder",
           "Inputs": [
             {
               "Name": "items",
@@ -4033,7 +4033,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
         },
         {
-          "Name": "AddOrUpdateForAppAsync",
+          "Name": "AddOrUpdateForAppFolderAsync",
           "Inputs": [
             {
               "Name": "items",
@@ -4041,6 +4041,24 @@
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
+        },
+        {
+          "Name": "CopyAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "app",
+              "Type": "cCoder.Data.Models.CMS.App"
+            },
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Models.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Models.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
           "Name": "CopyAsync",
@@ -4065,39 +4083,21 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.List\u003CcCoder.DocumentManagement.Models.Result\u003CSystem.Guid?\u003E\u003E\u003E"
         },
         {
-          "Name": "CopyAsync",
-          "Inputs": [
-            {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
-            },
-            {
-              "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
-            },
-            {
-              "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "DeleteAllAsync",
-          "Inputs": [
-            {
-              "Name": "items",
-              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
           "Name": "DeleteAllByAppIdAsync",
           "Inputs": [
             {
               "Name": "appId",
               "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAllFolderAsync",
+          "Inputs": [
+            {
+              "Name": "items",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -4113,7 +4113,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "DropAsync",
+          "Name": "DropAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -4137,7 +4137,17 @@
           "ReturnType": "cCoder.Data.Models.DMS.Folder"
         },
         {
-          "Name": "Get",
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "GetAppPath",
           "Inputs": [
             {
               "Name": "app",
@@ -4155,17 +4165,7 @@
           "ReturnType": "cCoder.DocumentManagement.Models.DMSResult"
         },
         {
-          "Name": "GetAll",
-          "Inputs": [
-            {
-              "Name": "ignoreFilters",
-              "Type": "System.Boolean"
-            }
-          ],
-          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
-        },
-        {
-          "Name": "GetFilesZipped",
+          "Name": "GetFilesZippedAppPath",
           "Inputs": [
             {
               "Name": "app",
@@ -4189,7 +4189,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "MoveAsync",
+          "Name": "MoveAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -4207,7 +4207,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "SaveAsync",
+          "Name": "SaveAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -4221,7 +4221,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "UnpackAsync",
+          "Name": "UnpackAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -4243,7 +4243,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "UpdateAsync",
+          "Name": "UpdateFolderAsync",
           "Inputs": [
             {
               "Name": "entity",
@@ -4260,7 +4260,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddFolderRoleAsync",
           "Inputs": [
             {
               "Name": "entity",
@@ -4270,7 +4270,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.Security.FolderRole\u003E"
         },
         {
-          "Name": "AddOrUpdate",
+          "Name": "AddOrUpdateFolderRole",
           "Inputs": [
             {
               "Name": "items",
@@ -4280,7 +4280,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.Security.FolderRole\u003E\u003E\u003E"
         },
         {
-          "Name": "DeleteAllAsync",
+          "Name": "DeleteAllFolderRoleAsync",
           "Inputs": [
             {
               "Name": "items",
@@ -4290,7 +4290,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "DeleteAsync",
+          "Name": "DeleteFolderRoleAsync",
           "Inputs": [
             {
               "Name": "entity",
@@ -4317,7 +4317,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "ProcessAsync",
+          "Name": "ProcessDmsProcessingRequestAsync",
           "Inputs": [
             {
               "Name": "request",
@@ -4371,7 +4371,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddFileContentAsync",
           "Inputs": [
             {
               "Name": "entity",
@@ -4381,7 +4381,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.FileContent\u003E"
         },
         {
-          "Name": "AddOrUpdate",
+          "Name": "AddOrUpdateFileContent",
           "Inputs": [
             {
               "Name": "items",
@@ -4391,7 +4391,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
         },
         {
-          "Name": "DeleteAllAsync",
+          "Name": "DeleteAllFileContentAsync",
           "Inputs": [
             {
               "Name": "items",
@@ -4431,7 +4431,7 @@
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
         },
         {
-          "Name": "UpdateAsync",
+          "Name": "UpdateFileContentAsync",
           "Inputs": [
             {
               "Name": "entity",
@@ -4485,7 +4485,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddFileAsync",
           "Inputs": [
             {
               "Name": "newFile",
@@ -4495,7 +4495,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
-          "Name": "AddOrUpdate",
+          "Name": "AddOrUpdateFile",
           "Inputs": [
             {
               "Name": "items",
@@ -4505,7 +4505,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.File\u003E\u003E\u003E"
         },
         {
-          "Name": "CopyAsync",
+          "Name": "CopyAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -4523,7 +4523,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "DeleteAllAsync",
+          "Name": "DeleteAllFileAsync",
           "Inputs": [
             {
               "Name": "items",
@@ -4543,7 +4543,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "DropAsync",
+          "Name": "DropAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -4571,7 +4571,17 @@
           "ReturnType": "cCoder.Data.Models.DMS.File"
         },
         {
-          "Name": "Get",
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "GetAppPath",
           "Inputs": [
             {
               "Name": "app",
@@ -4587,16 +4597,6 @@
             }
           ],
           "ReturnType": "cCoder.DocumentManagement.Models.DMSResult"
-        },
-        {
-          "Name": "GetAll",
-          "Inputs": [
-            {
-              "Name": "ignoreFilters",
-              "Type": "System.Boolean"
-            }
-          ],
-          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
           "Name": "GetByPath",
@@ -4623,7 +4623,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "MoveAsync",
+          "Name": "MoveAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -4641,7 +4641,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "SaveAsync",
+          "Name": "SaveAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -4659,7 +4659,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "Search",
+          "Name": "SearchApp",
           "Inputs": [
             {
               "Name": "app",
@@ -4673,7 +4673,7 @@
           "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
-          "Name": "UpdateAsync",
+          "Name": "UpdateFileAsync",
           "Inputs": [
             {
               "Name": "newFile",
@@ -4727,7 +4727,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddFolderAsync",
           "Inputs": [
             {
               "Name": "newFolder",
@@ -4737,7 +4737,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.DMS.Folder\u003E"
         },
         {
-          "Name": "AddOrUpdate",
+          "Name": "AddOrUpdateFolder",
           "Inputs": [
             {
               "Name": "items",
@@ -4747,7 +4747,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
         },
         {
-          "Name": "AddOrUpdateForAppAsync",
+          "Name": "AddOrUpdateForAppFolderAsync",
           "Inputs": [
             {
               "Name": "items",
@@ -4755,6 +4755,24 @@
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
+        },
+        {
+          "Name": "CopyAppPathAsync",
+          "Inputs": [
+            {
+              "Name": "app",
+              "Type": "cCoder.Data.Models.CMS.App"
+            },
+            {
+              "Name": "oldPath",
+              "Type": "cCoder.DocumentManagement.Models.Path"
+            },
+            {
+              "Name": "newPath",
+              "Type": "cCoder.DocumentManagement.Models.Path"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
           "Name": "CopyAsync",
@@ -4779,25 +4797,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.List\u003CcCoder.DocumentManagement.Models.Result\u003CSystem.Guid?\u003E\u003E\u003E"
         },
         {
-          "Name": "CopyAsync",
-          "Inputs": [
-            {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
-            },
-            {
-              "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
-            },
-            {
-              "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "DeleteAllAsync",
+          "Name": "DeleteAllFolderAsync",
           "Inputs": [
             {
               "Name": "items",
@@ -4827,7 +4827,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "DropAsync",
+          "Name": "DropAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -4851,7 +4851,17 @@
           "ReturnType": "cCoder.Data.Models.DMS.Folder"
         },
         {
-          "Name": "Get",
+          "Name": "GetAll",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "GetAppPath",
           "Inputs": [
             {
               "Name": "app",
@@ -4869,17 +4879,7 @@
           "ReturnType": "cCoder.DocumentManagement.Models.DMSResult"
         },
         {
-          "Name": "GetAll",
-          "Inputs": [
-            {
-              "Name": "ignoreFilters",
-              "Type": "System.Boolean"
-            }
-          ],
-          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
-        },
-        {
-          "Name": "GetFilesZipped",
+          "Name": "GetFilesZippedAppPath",
           "Inputs": [
             {
               "Name": "app",
@@ -4903,7 +4903,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "MoveAsync",
+          "Name": "MoveAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -4921,7 +4921,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "SaveAsync",
+          "Name": "SaveAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -4935,7 +4935,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "UnpackAsync",
+          "Name": "UnpackAppPathAsync",
           "Inputs": [
             {
               "Name": "app",
@@ -4957,7 +4957,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "UpdateAsync",
+          "Name": "UpdateFolderAsync",
           "Inputs": [
             {
               "Name": "folder",
@@ -5074,7 +5074,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "AddAsync",
+          "Name": "AddFolderRoleAsync",
           "Inputs": [
             {
               "Name": "entity",
@@ -5084,7 +5084,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.Security.FolderRole\u003E"
         },
         {
-          "Name": "AddOrUpdate",
+          "Name": "AddOrUpdateFolderRole",
           "Inputs": [
             {
               "Name": "items",
@@ -5094,7 +5094,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.Security.FolderRole\u003E\u003E\u003E"
         },
         {
-          "Name": "DeleteAllAsync",
+          "Name": "DeleteAllFolderRoleAsync",
           "Inputs": [
             {
               "Name": "items",
@@ -5104,7 +5104,7 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "DeleteAsync",
+          "Name": "DeleteFolderRoleAsync",
           "Inputs": [
             {
               "Name": "link",
@@ -5131,7 +5131,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "ProcessAsync",
+          "Name": "ProcessDmsProcessingRequestAsync",
           "Inputs": [
             {
               "Name": "request",
@@ -6296,13 +6296,6 @@
       "LineNumber": 17
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "LineNumber": 24
-    },
-    {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
@@ -6506,25 +6499,11 @@
       "LineNumber": 37
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 75
-    },
-    {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
       "LineNumber": 75
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 120
     },
     {
       "Code": "STX0020",
@@ -6688,25 +6667,11 @@
       "LineNumber": 15
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 28
-    },
-    {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
       "LineNumber": 28
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 52
     },
     {
       "Code": "STX0021",
@@ -6786,8 +6751,8 @@
       "LineNumber": 106
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
+      "Code": "STX0019",
+      "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 123
@@ -6797,28 +6762,7 @@
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 123
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 150
-    },
-    {
-      "Code": "STX0019",
-      "Description": "create model parameters must use the new prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 150
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 175
     },
     {
       "Code": "STX0020",
@@ -6833,13 +6777,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 182
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 186
     },
     {
       "Code": "STX0020",
@@ -6868,13 +6805,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 217
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 233
     },
     {
       "Code": "STX0021",
@@ -6926,25 +6856,11 @@
       "LineNumber": 12
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 15
-    },
-    {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
       "LineNumber": 15
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 26
     },
     {
       "Code": "STX0020",
@@ -7010,25 +6926,11 @@
       "LineNumber": 15
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 33
-    },
-    {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
       "LineNumber": 33
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 46
     },
     {
       "Code": "STX0020",
@@ -7043,20 +6945,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
       "LineNumber": 59
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 72
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService",
-      "LineNumber": 81
     },
     {
       "Code": "STX0021",
@@ -7080,25 +6968,11 @@
       "LineNumber": 15
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 33
-    },
-    {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
       "LineNumber": 33
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 46
     },
     {
       "Code": "STX0020",
@@ -7122,67 +6996,11 @@
       "LineNumber": 64
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 80
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 89
-    },
-    {
       "Code": "STX0021",
       "Description": "delete model parameters must use the deleted prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
       "LineNumber": 89
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 116
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 125
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 134
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 143
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 152
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 161
     },
     {
       "Code": "STX0007",
@@ -7199,25 +7017,11 @@
       "LineNumber": 15
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 33
-    },
-    {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
       "LineNumber": 33
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 46
     },
     {
       "Code": "STX0020",
@@ -7241,81 +7045,11 @@
       "LineNumber": 64
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 80
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 89
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 98
-    },
-    {
       "Code": "STX0021",
       "Description": "delete model parameters must use the deleted prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
       "LineNumber": 98
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 134
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 143
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 152
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 161
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 170
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 179
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 188
     },
     {
       "Code": "STX0007",
@@ -7325,13 +7059,6 @@
       "LineNumber": 13
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 24
-    },
-    {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
@@ -7339,32 +7066,11 @@
       "LineNumber": 24
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 37
-    },
-    {
       "Code": "STX0021",
       "Description": "delete model parameters must use the deleted prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
       "LineNumber": 37
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 48
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService",
-      "LineNumber": 57
     },
     {
       "Code": "STX0021",
@@ -7386,13 +7092,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
       "LineNumber": 15
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
-      "LineNumber": 20
     },
     {
       "Code": "STXFORMAT008",
@@ -7423,25 +7122,11 @@
       "LineNumber": 15
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 33
-    },
-    {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
       "LineNumber": 33
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 42
     },
     {
       "Code": "STX0020",
@@ -7458,13 +7143,6 @@
       "LineNumber": 51
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 60
-    },
-    {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
@@ -7477,13 +7155,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
       "LineNumber": 72
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 97
     },
     {
       "Code": "STX0021",
@@ -7542,25 +7213,11 @@
       "LineNumber": 20
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 38
-    },
-    {
       "Code": "STX0017",
       "Description": "Identifier parameters must be named for their type, for example studentId.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "LineNumber": 116
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 125
     },
     {
       "Code": "STX0020",
@@ -7570,25 +7227,11 @@
       "LineNumber": 125
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 192
-    },
-    {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "LineNumber": 197
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 220
     },
     {
       "Code": "STXFORMAT008",
@@ -7598,25 +7241,11 @@
       "LineNumber": 225
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 230
-    },
-    {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "LineNumber": 235
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 257
     },
     {
       "Code": "STXFORMAT003",
@@ -7626,25 +7255,11 @@
       "LineNumber": 262
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 273
-    },
-    {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "LineNumber": 278
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 288
     },
     {
       "Code": "STXFORMAT003",
@@ -7654,13 +7269,6 @@
       "LineNumber": 293
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 322
-    },
-    {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
@@ -7673,13 +7281,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "LineNumber": 334
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 359
     },
     {
       "Code": "STX0021",
@@ -7759,13 +7360,6 @@
       "LineNumber": 22
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 122
-    },
-    {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
@@ -7808,13 +7402,6 @@
       "LineNumber": 194
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 212
-    },
-    {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
@@ -7850,20 +7437,6 @@
       "LineNumber": 251
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 265
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 311
-    },
-    {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
@@ -7871,20 +7444,6 @@
       "LineNumber": 316
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 350
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 387
-    },
-    {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
@@ -7897,20 +7456,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
       "LineNumber": 399
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 424
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 463
     },
     {
       "Code": "STX0021",
@@ -7934,39 +7479,11 @@
       "LineNumber": 470
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 483
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 492
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 501
-    },
-    {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
       "LineNumber": 506
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 516
     },
     {
       "Code": "STXFORMAT003",
@@ -8095,25 +7612,11 @@
       "LineNumber": 18
     },
     {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 29
-    },
-    {
       "Code": "STX0019",
       "Description": "create model parameters must use the new prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "LineNumber": 29
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 67
     },
     {
       "Code": "STX0021",
@@ -8128,13 +7631,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "LineNumber": 72
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 90
     },
     {
       "Code": "STX0005",
@@ -8156,13 +7652,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "LineNumber": 129
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 151
     },
     {
       "Code": "STX0021",
@@ -8198,13 +7687,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
       "LineNumber": 23
-    },
-    {
-      "Code": "STX0018",
-      "Description": "Service method names must include each model type they operate on.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "LineNumber": 31
     },
     {
       "Code": "STX0022",

@@ -55,7 +55,7 @@ public partial class FileContentServiceTests
             .ReturnsAsync(valueFunction: (DataFileContent value) => value);
 
         // When
-        FileContent result = await fileContentService.AddAsync(fileContent: fileContent);
+        FileContent result = await fileContentService.AddFileContentAsync(fileContent: fileContent);
 
         // Then
         result.Should()
@@ -175,7 +175,7 @@ public partial class FileContentServiceTests
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await fileContentService.AddAsync(fileContent: fileContent);
+        Func<Task> action = async () => await fileContentService.AddFileContentAsync(fileContent: fileContent);
 
         // Then
         await action.Should()

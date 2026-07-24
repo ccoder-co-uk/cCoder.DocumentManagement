@@ -13,11 +13,11 @@ public interface IFolderRoleProcessingService
 {
     IQueryable<FolderRole> GetAll(bool ignoreFilters = false);
 
-    ValueTask<FolderRole> AddAsync(FolderRole entity);
+    ValueTask<FolderRole> AddFolderRoleAsync(FolderRole entity);
 
-    ValueTask DeleteAsync(FolderRole entity);
+    ValueTask DeleteFolderRoleAsync(FolderRole entity);
 
-    ValueTask<IEnumerable<Result<FolderRole>>> AddOrUpdate(IEnumerable<FolderRole> items);
+    ValueTask<IEnumerable<Result<FolderRole>>> AddOrUpdateFolderRole(IEnumerable<FolderRole> items);
 
-    ValueTask DeleteAllAsync(IEnumerable<FolderRole> items);
+    ValueTask DeleteAllFolderRoleAsync(IEnumerable<FolderRole> items);
 }

@@ -16,7 +16,7 @@ internal class DocumentManagementPackageManager(
 ) : IDocumentManagementPackageManager
 {
     public ValueTask ImportPackageAsync(int appId, DocumentManagementPackage package) =>
-        documentManagementMigrationAggregationService.ImportPackageAsync(appId: appId, package: package);
+        documentManagementMigrationAggregationService.ImportPackageDocumentManagementPackageAsync(appId: appId, package: package);
 
     public DocumentManagementPackage ExportPackage(int appId, string packageName) =>
         documentManagementMigrationAggregationService.ExportPackage(appId: appId, packageName: packageName);

@@ -51,7 +51,7 @@ public partial class FileProcessingServiceTests
             .Returns(value: folder);
 
         fileServiceMock
-            .Setup(expression: x => x.AddAsync(entity: It.IsAny<cCoder.Data.Models.DMS.File>()))
+            .Setup(expression: x => x.AddFileAsync(entity: It.IsAny<cCoder.Data.Models.DMS.File>()))
             .ReturnsAsync(value: createdFile);
 
         fileServiceMock
@@ -59,13 +59,13 @@ public partial class FileProcessingServiceTests
             .Returns(value: createdFile);
 
         // When
-        cCoder.Data.Models.DMS.File result = await fileProcessingService.AddAsync(newFile: file);
+        cCoder.Data.Models.DMS.File result = await fileProcessingService.AddFileAsync(newFile: file);
 
         // Then
         result.Should()
             .BeEquivalentTo(expectation: createdFile);
 
-        fileServiceMock.Verify(expression: x => x.AddAsync(entity: It.IsAny<cCoder.Data.Models.DMS.File>()), times: Times.Once);
+        fileServiceMock.Verify(expression: x => x.AddFileAsync(entity: It.IsAny<cCoder.Data.Models.DMS.File>()), times: Times.Once);
         fileServiceMock.Verify(expression: x => x.GetWithFolderAndContents(id: createdFile.Id, ignoreFilters: true), times: Times.Once);
         folderServiceMock.Verify(expression: x => x.GetWithRoles(id: folderId, ignoreFilters: true), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();

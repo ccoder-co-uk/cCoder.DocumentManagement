@@ -35,7 +35,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         });
 
-    public ValueTask<cCoder.Data.Models.DMS.File> AddAsync(cCoder.Data.Models.DMS.File newFile)
+    public ValueTask<cCoder.Data.Models.DMS.File> AddFileAsync(cCoder.Data.Models.DMS.File newFile)
 =>
         TryCatch(operation: async () =>
         {
@@ -60,7 +60,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             string fileName = (string.IsNullOrWhiteSpace(value: newFile.Name) ? new cCoder.DocumentManagement.Models.Path(path: relativePath).Name : newFile.Name);
 
 
-            cCoder.Data.Models.DMS.File createdFile = await service.AddAsync(entity: new cCoder.Data.Models.DMS.File
+            cCoder.Data.Models.DMS.File createdFile = await service.AddFileAsync(entity: new cCoder.Data.Models.DMS.File
             {
                 FolderId = folder.Id,
                 Folder = folder,
@@ -87,7 +87,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
                 })
                     .ToArray();
 
-                await fileContentProcessingService.AddOrUpdate(items: contents);
+                await fileContentProcessingService.AddOrUpdateFileContent(items: contents);
             }
 
 
@@ -122,7 +122,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         });
 
-    public ValueTask<cCoder.Data.Models.DMS.File> UpdateAsync(cCoder.Data.Models.DMS.File newFile)
+    public ValueTask<cCoder.Data.Models.DMS.File> UpdateFileAsync(cCoder.Data.Models.DMS.File newFile)
 =>
         TryCatch(operation: async () =>
         {
@@ -153,7 +153,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             }
 
 
-            cCoder.Data.Models.DMS.File updatedFile = await service.UpdateAsync(entity: dbVersion);
+            cCoder.Data.Models.DMS.File updatedFile = await service.UpdateFileAsync(entity: dbVersion);
 
 
             if (newFile.Contents != null && newFile.Contents.Any())
@@ -172,7 +172,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
                 })
                     .ToArray();
 
-                await fileContentProcessingService.AddOrUpdate(items: contents);
+                await fileContentProcessingService.AddOrUpdateFileContent(items: contents);
             }
 
 
@@ -189,7 +189,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         });
 
-    public DMSResult Get(App app, cCoder.DocumentManagement.Models.Path path, int version = 0)
+    public DMSResult GetAppPath(App app, cCoder.DocumentManagement.Models.Path path, int version = 0)
 =>
         TryCatch(operation: () =>
         {
@@ -217,7 +217,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         });
 
-    public IEnumerable<cCoder.Data.Models.DMS.File> Search(App app, string needle)
+    public IEnumerable<cCoder.Data.Models.DMS.File> SearchApp(App app, string needle)
 =>
         TryCatch(operation: () =>
         {
@@ -227,7 +227,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         });
 
-    public ValueTask SaveAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content = null)
+    public ValueTask SaveAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content = null)
 =>
         TryCatch(operation: async () =>
         {
@@ -236,32 +236,32 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             {
                 cCoder.Data.Models.DMS.File existingFile = service.GetByPath(appId: app.Id, path: path.Lowered);
                 byte[] rawBytes = ReadAllBytes(content: content);
-                Folder folder = await BuildPathAsync(app: app, folderPath: path.ParentPath);
+                Folder folder = await BuildPathAppAsync(app: app, folderPath: path.ParentPath);
 
                 if (existingFile == null)
                 {
-                    await CreateNewFileAsync(app: app, path: path, rawBytes: rawBytes, folder: folder);
+                    await CreateNewFileAppPathFolderAsync(app: app, path: path, rawBytes: rawBytes, folder: folder);
                 }
                 else
                 {
-                    await UpdateFileAsync(app: app, existingFile: existingFile, rawBytes: rawBytes, folder: folder);
+                    await UpdateFileAppFolderAsync(app: app, existingFile: existingFile, rawBytes: rawBytes, folder: folder);
                 }
             }
             else
             {
-                await BuildPathAsync(app: app, folderPath: path);
+                await BuildPathAppAsync(app: app, folderPath: path);
             }
 
         });
 
-    public ValueTask DropAsync(App app, cCoder.DocumentManagement.Models.Path path, int version = 0)
+    public ValueTask DropAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path, int version = 0)
 =>
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [app, path, version]);
             if (path.IsToFile)
             {
-                await DropFileAsync(app: app, path: path, version: version);
+                await DropFileAppPathAsync(app: app, path: path, version: version);
                 return;
             }
 
@@ -270,7 +270,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         });
 
-    public ValueTask CopyAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+    public ValueTask CopyAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
 =>
         TryCatch(operation: async () =>
         {
@@ -281,11 +281,11 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             }
 
 
-            await CopyFileAsync(app: app, oldPath: oldPath, newPath: newPath);
+            await CopyFileAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
 
         });
 
-    public ValueTask MoveAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+    public ValueTask MoveAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
 =>
         TryCatch(operation: async () =>
         {
@@ -305,21 +305,21 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
             if (newParent == null && !newPath.IsToFile)
             {
-                newParent = await BuildPathAsync(app: app, folderPath: newPath);
+                newParent = await BuildPathAppAsync(app: app, folderPath: newPath);
             }
 
 
             if (newParent == null && newPath.IsToFile)
             {
-                newParent = await BuildPathAsync(app: app, folderPath: newPath.ParentPath);
+                newParent = await BuildPathAppAsync(app: app, folderPath: newPath.ParentPath);
             }
 
 
-            await MoveFileAsync(app: app, oldPath: oldPath, newPath: newPath, newParent: newParent, oldParent: oldParent, userIsAdmin: userIsAdmin);
+            await MoveFileAppPathFolderAsync(app: app, oldPath: oldPath, newPath: newPath, newParent: newParent, oldParent: oldParent, userIsAdmin: userIsAdmin);
 
         });
 
-    public ValueTask<IEnumerable<Result<cCoder.Data.Models.DMS.File>>> AddOrUpdate(IEnumerable<cCoder.Data.Models.DMS.File> items)
+    public ValueTask<IEnumerable<Result<cCoder.Data.Models.DMS.File>>> AddOrUpdateFile(IEnumerable<cCoder.Data.Models.DMS.File> items)
 =>
         TryCatch(operation: async () =>
         {
@@ -331,7 +331,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             {
                 try
                 {
-                    cCoder.Data.Models.DMS.File savedItem = item.Id == Guid.Empty ? await AddAsync(newFile: item) : await UpdateAsync(newFile: item);
+                    cCoder.Data.Models.DMS.File savedItem = item.Id == Guid.Empty ? await AddFileAsync(newFile: item) : await UpdateFileAsync(newFile: item);
 
                     results.Add(item: new Result<cCoder.Data.Models.DMS.File>
                     {
@@ -356,7 +356,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         });
 
-    public ValueTask DeleteAllAsync(IEnumerable<cCoder.Data.Models.DMS.File> items)
+    public ValueTask DeleteAllFileAsync(IEnumerable<cCoder.Data.Models.DMS.File> items)
 =>
         TryCatch(operation: async () =>
         {
@@ -368,7 +368,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         });
 
-    private async ValueTask UpdateFileAsync(App app, cCoder.Data.Models.DMS.File existingFile, byte[] rawBytes, Folder folder)
+    private async ValueTask UpdateFileAppFolderAsync(App app, cCoder.Data.Models.DMS.File existingFile, byte[] rawBytes, Folder folder)
     {
         if (!User.IsAdminOfApp(appId: app.Id) && !folder.UserCan(user: User, privilege: "file_update"))
         {
@@ -378,14 +378,14 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         await SaveFileVersionAsync(existingFile: existingFile, rawBytes: rawBytes);
     }
 
-    private async ValueTask CreateNewFileAsync(App app, cCoder.DocumentManagement.Models.Path path, byte[] rawBytes, Folder folder)
+    private async ValueTask CreateNewFileAppPathFolderAsync(App app, cCoder.DocumentManagement.Models.Path path, byte[] rawBytes, Folder folder)
     {
         if (!User.IsAdminOfApp(appId: app.Id) && !folder.UserCan(user: User, privilege: "file_create"))
         {
             throw new SecurityException(message: "Access Denied!");
         }
 
-        await CreateFileAsync(path: path, rawBytes: rawBytes, folder: folder);
+        await CreateFilePathFolderAsync(path: path, rawBytes: rawBytes, folder: folder);
     }
 
     private async ValueTask SaveFileVersionAsync(cCoder.Data.Models.DMS.File existingFile, byte[] rawBytes)
@@ -395,7 +395,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
                        orderby fileContent.Version descending
                        select fileContent.Version).First() + 1;
 
-        await fileContentProcessingService.AddAsync(entity: new FileContent
+        await fileContentProcessingService.AddFileContentAsync(entity: new FileContent
         {
             CreatedBy = User.Id,
             CreatedOn = DateTimeOffset.UtcNow,
@@ -407,9 +407,9 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         });
     }
 
-    private async ValueTask CreateFileAsync(cCoder.DocumentManagement.Models.Path path, byte[] rawBytes, Folder folder)
+    private async ValueTask CreateFilePathFolderAsync(cCoder.DocumentManagement.Models.Path path, byte[] rawBytes, Folder folder)
     {
-        cCoder.Data.Models.DMS.File fileObject = await service.AddAsync(entity: new cCoder.Data.Models.DMS.File
+        cCoder.Data.Models.DMS.File fileObject = await service.AddFileAsync(entity: new cCoder.Data.Models.DMS.File
         {
             CreatedBy = User.Id,
             CreatedOn = DateTimeOffset.UtcNow,
@@ -421,7 +421,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             Size = GetSizeOf(content: rawBytes)
         });
 
-        await fileContentProcessingService.AddAsync(entity: new FileContent
+        await fileContentProcessingService.AddFileContentAsync(entity: new FileContent
         {
             CreatedBy = User.Id,
             CreatedOn = DateTimeOffset.UtcNow,
@@ -433,7 +433,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         });
     }
 
-    private async ValueTask DropFileAsync(App app, cCoder.DocumentManagement.Models.Path path, int version)
+    private async ValueTask DropFileAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path, int version)
     {
         cCoder.Data.Models.DMS.File file = service.GetByPathWithFolderRolesAndContents(appId: app.Id, path: path.Lowered, ignoreFilters: true);
 
@@ -471,9 +471,9 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         }
     }
 
-    private async ValueTask MoveFileAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath, Folder newParent, Folder oldParent, bool userIsAdmin)
+    private async ValueTask MoveFileAppPathFolderAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath, Folder newParent, Folder oldParent, bool userIsAdmin)
     {
-        ConfirmUserCanMoveFile(oldPath: oldPath, newPath: newPath, newParent: newParent, oldParent: oldParent, userIsAdmin: userIsAdmin);
+        ConfirmUserCanMoveFilePathFolder(oldPath: oldPath, newPath: newPath, newParent: newParent, oldParent: oldParent, userIsAdmin: userIsAdmin);
         cCoder.Data.Models.DMS.File sourceFile = service.GetByPathWithFolderRolesAndContents(appId: app.Id, path: oldPath.Lowered, ignoreFilters: true);
 
         if (sourceFile == null)
@@ -500,13 +500,13 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             })
                 .ToArray();
 
-            await fileContentProcessingService.AddOrUpdate(items: copiedContents);
-            await DropAsync(app: app, path: oldPath);
+            await fileContentProcessingService.AddOrUpdateFileContent(items: copiedContents);
+            await DropAppPathAsync(app: app, path: oldPath);
         }
         else if (!newPath.IsToFile)
         {
-            Folder newPathFolder = await BuildPathAsync(app: app, folderPath: newPath);
-            await MoveFileAsync(app: app, oldPath: oldPath, newPath: new cCoder.DocumentManagement.Models.Path(path: newPathFolder.Path + "/" + oldPath.Name), newParent: newPathFolder, oldParent: oldParent, userIsAdmin: userIsAdmin);
+            Folder newPathFolder = await BuildPathAppAsync(app: app, folderPath: newPath);
+            await MoveFileAppPathFolderAsync(app: app, oldPath: oldPath, newPath: new cCoder.DocumentManagement.Models.Path(path: newPathFolder.Path + "/" + oldPath.Name), newParent: newPathFolder, oldParent: oldParent, userIsAdmin: userIsAdmin);
         }
         else
         {
@@ -514,11 +514,11 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             sourceFile.Folder = newParent;
             sourceFile.Name = newPath.Name;
             sourceFile.Path = (newParent.Path + "/" + newPath.Name).ToLower();
-            await service.UpdateAsync(entity: sourceFile);
+            await service.UpdateFileAsync(entity: sourceFile);
         }
     }
 
-    private async ValueTask CopyFileAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+    private async ValueTask CopyFileAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
     {
         Folder newParent = ((!string.IsNullOrEmpty(value: newPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: app.Id, path: newPath.ParentPath.Lowered) : null);
         Folder oldParent = ((!string.IsNullOrEmpty(value: oldPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: app.Id, path: oldPath.ParentPath.Lowered) : null);
@@ -526,15 +526,15 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         if (newParent == null && !newPath.IsToFile)
         {
-            newParent = await BuildPathAsync(app: app, folderPath: newPath);
+            newParent = await BuildPathAppAsync(app: app, folderPath: newPath);
         }
 
         if (newParent == null && newPath.IsToFile)
         {
-            newParent = await BuildPathAsync(app: app, folderPath: newPath.ParentPath);
+            newParent = await BuildPathAppAsync(app: app, folderPath: newPath.ParentPath);
         }
 
-        ConfirmUserCanMoveFile(oldPath: oldPath, newPath: newPath, newParent: newParent, oldParent: oldParent, userIsAdmin: userIsAdmin);
+        ConfirmUserCanMoveFilePathFolder(oldPath: oldPath, newPath: newPath, newParent: newParent, oldParent: oldParent, userIsAdmin: userIsAdmin);
         cCoder.Data.Models.DMS.File sourceFile = service.GetByPathWithFolderRolesAndContents(appId: app.Id, path: oldPath.Lowered, ignoreFilters: true);
 
         if (sourceFile == null)
@@ -544,7 +544,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         if (!newPath.IsToFile)
         {
-            await CopyFileAsync(app: app, oldPath: oldPath, newPath: new cCoder.DocumentManagement.Models.Path(path: (await BuildPathAsync(app: app, folderPath: newPath)).Path + "/" + oldPath.Name));
+            await CopyFileAppPathAsync(app: app, oldPath: oldPath, newPath: new cCoder.DocumentManagement.Models.Path(path: (await BuildPathAppAsync(app: app, folderPath: newPath)).Path + "/" + oldPath.Name));
             return;
         }
 
@@ -568,11 +568,11 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
                                                 Version = content.Version + latestContentVersion
                                             }).ToArray();
 
-            await fileContentProcessingService.AddOrUpdate(items: copiedContents);
+            await fileContentProcessingService.AddOrUpdateFileContent(items: copiedContents);
             return;
         }
 
-        cCoder.Data.Models.DMS.File copiedFile = await service.AddAsync(entity: new cCoder.Data.Models.DMS.File
+        cCoder.Data.Models.DMS.File copiedFile = await service.AddFileAsync(entity: new cCoder.Data.Models.DMS.File
         {
             CreatedBy = sourceFile.CreatedBy,
             CreatedOn = sourceFile.CreatedOn,
@@ -599,10 +599,10 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
                                                 Version = content.Version
                                             }).ToArray();
 
-        await fileContentProcessingService.AddOrUpdate(items: copiedFileContents);
+        await fileContentProcessingService.AddOrUpdateFileContent(items: copiedFileContents);
     }
 
-    private void ConfirmUserCanMoveFile(cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath, Folder newParent, Folder oldParent, bool userIsAdmin)
+    private void ConfirmUserCanMoveFilePathFolder(cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath, Folder newParent, Folder oldParent, bool userIsAdmin)
     {
         if (!userIsAdmin && !(oldParent?.UserCan(user: User, privilege: "file_update") ?? false))
         {
@@ -615,7 +615,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         }
     }
 
-    private async ValueTask<Folder> BuildPathAsync(App app, cCoder.DocumentManagement.Models.Path folderPath)
+    private async ValueTask<Folder> BuildPathAppAsync(App app, cCoder.DocumentManagement.Models.Path folderPath)
     {
         if (folderPath.Length <= 0)
         {
@@ -626,15 +626,15 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         if (existingFolder == null)
         {
-            existingFolder = await CreateFolderAsync(app: app, folderPath: folderPath);
+            existingFolder = await CreateFolderAppPathAsync(app: app, folderPath: folderPath);
         }
 
         return existingFolder;
     }
 
-    private async ValueTask<Folder> CreateFolderAsync(App app, cCoder.DocumentManagement.Models.Path folderPath)
+    private async ValueTask<Folder> CreateFolderAppPathAsync(App app, cCoder.DocumentManagement.Models.Path folderPath)
     {
-        Folder folder = ((folderPath.ParentPath.Depth <= 0) ? null : (await BuildPathAsync(app: app, folderPath: folderPath.ParentPath)));
+        Folder folder = ((folderPath.ParentPath.Depth <= 0) ? null : (await BuildPathAppAsync(app: app, folderPath: folderPath.ParentPath)));
         Folder parentFolder = folder;
         bool userCanCreateInApp = User.IsAdminOfApp(appId: app.Id) && User.Can(appId: app.Id, operation: "folder_create");
         bool userCanCreateFolderInParentFolder = parentFolder?.UserCan(user: User, privilege: "folder_create") ?? false;
@@ -663,7 +663,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         if (folder2.Id == Guid.Empty)
         {
-            folder2 = await folderService.AddAsync(folder: folder2);
+            folder2 = await folderService.AddFolderAsync(folder: folder2);
         }
 
         return folder2;

@@ -18,7 +18,7 @@ public partial class DmsProcessingServiceTests
         DmsProcessingRequest request = CreateRequest(method: "PATCH", requestPath: "/api/dms/folder/file.txt");
 
         // When
-        Func<Task> act = async () => await dmsProcessingService.ProcessAsync(request: request);
+        Func<Task> act = async () => await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         await act.Should()

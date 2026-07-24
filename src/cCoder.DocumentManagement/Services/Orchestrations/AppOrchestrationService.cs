@@ -12,25 +12,25 @@ namespace cCoder.DocumentManagement.Services.Orchestrations;
 internal partial class AppOrchestrationService(IFolderOrchestrationService folderOrchestrationService)
     : IAppOrchestrationService
 {
-    public ValueTask AddAsync(App app)
+    public ValueTask AddAppAsync(App app)
 =>
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [app]);
-            StampFolders(app: app);
+            StampFoldersApp(app: app);
 
-            _ = await folderOrchestrationService.AddOrUpdateForAppAsync(items: app.Folders ?? []);
+            _ = await folderOrchestrationService.AddOrUpdateForAppFolderAsync(items: app.Folders ?? []);
 
         });
 
-    public ValueTask UpdateAsync(App app)
+    public ValueTask UpdateAppAsync(App app)
 =>
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [app]);
-            StampFolders(app: app);
+            StampFoldersApp(app: app);
 
-            _ = await folderOrchestrationService.AddOrUpdateForAppAsync(items: app.Folders ?? []);
+            _ = await folderOrchestrationService.AddOrUpdateForAppFolderAsync(items: app.Folders ?? []);
 
         });
 
@@ -42,7 +42,7 @@ internal partial class AppOrchestrationService(IFolderOrchestrationService folde
             return folderOrchestrationService.DeleteAllByAppIdAsync(appId: appId);
         });
 
-    private static void StampFolders(App app)
+    private static void StampFoldersApp(App app)
     {
         foreach (Folder folder in app.Folders ?? [])
         {

@@ -30,21 +30,21 @@ internal partial class FileContentProcessingService(IFileContentService service)
 
         });
 
-    public ValueTask<FileContent> AddAsync(FileContent entity)
+    public ValueTask<FileContent> AddFileContentAsync(FileContent entity)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [entity]);
-            return service.AddAsync(fileContent: entity);
+            return service.AddFileContentAsync(fileContent: entity);
 
         });
 
-    public ValueTask<FileContent> UpdateAsync(FileContent entity)
+    public ValueTask<FileContent> UpdateFileContentAsync(FileContent entity)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [entity]);
-            return service.UpdateAsync(fileContent: entity);
+            return service.UpdateFileContentAsync(fileContent: entity);
 
         });
 
@@ -57,7 +57,7 @@ internal partial class FileContentProcessingService(IFileContentService service)
 
         });
 
-    public ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdate(IEnumerable<FileContent> items)
+    public ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdateFileContent(IEnumerable<FileContent> items)
 =>
         TryCatch(operation: async () =>
         {
@@ -69,7 +69,7 @@ internal partial class FileContentProcessingService(IFileContentService service)
             {
                 try
                 {
-                    FileContent savedItem = item.Id == Guid.Empty ? await AddAsync(entity: item) : await UpdateAsync(entity: item);
+                    FileContent savedItem = item.Id == Guid.Empty ? await AddFileContentAsync(entity: item) : await UpdateFileContentAsync(entity: item);
 
                     results.Add(item: new Result<FileContent>
                     {
@@ -94,7 +94,7 @@ internal partial class FileContentProcessingService(IFileContentService service)
 
         });
 
-    public ValueTask DeleteAllAsync(IEnumerable<FileContent> items)
+    public ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> items)
 =>
         TryCatch(operation: async () =>
         {

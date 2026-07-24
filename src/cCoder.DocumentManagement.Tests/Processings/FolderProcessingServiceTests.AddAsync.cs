@@ -48,7 +48,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: (Folder)null!);
 
         // When
-        Func<Task> act = async () => await folderProcessingService.AddAsync(newFolder: folder);
+        Func<Task> act = async () => await folderProcessingService.AddFolderAsync(newFolder: folder);
 
         // Then
         await act.Should()
@@ -90,7 +90,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: new[] { existingFolder }.AsQueryable());
 
         // When
-        Folder result = await folderProcessingService.AddAsync(newFolder: newFolder);
+        Folder result = await folderProcessingService.AddFolderAsync(newFolder: newFolder);
 
         // Then
         result.Should()
@@ -143,10 +143,10 @@ public partial class FolderProcessingServiceTests
             .Returns(value: (Folder)null);
 
         folderServiceMock
-            .Setup(expression: x => x.AddForPathBuildAsync(folder: It.IsAny<Folder>()))
+            .Setup(expression: x => x.AddForPathBuildFolderAsync(folder: It.IsAny<Folder>()))
             .ReturnsAsync(value: createdFolder);
         // When
-        Folder result = await folderProcessingService.AddAsync(newFolder: folder);
+        Folder result = await folderProcessingService.AddFolderAsync(newFolder: folder);
 
         // Then
         result.Should()
@@ -154,7 +154,7 @@ public partial class FolderProcessingServiceTests
 
         folderServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Exactly(callCount: 2));
         folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "child", ignoreFilters: true), times: Times.Once);
-        folderServiceMock.Verify(expression: x => x.AddForPathBuildAsync(folder: It.IsAny<Folder>()), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.AddForPathBuildFolderAsync(folder: It.IsAny<Folder>()), times: Times.Once);
         loggerMock.VerifyNoOtherCalls();
     }
 
@@ -221,10 +221,10 @@ public partial class FolderProcessingServiceTests
             .Returns(value: (Folder)null);
 
         folderServiceMock
-            .Setup(expression: x => x.AddForPathBuildAsync(folder: It.IsAny<Folder>()))
+            .Setup(expression: x => x.AddForPathBuildFolderAsync(folder: It.IsAny<Folder>()))
             .ReturnsAsync(value: createdFolder);
         // When
-        Folder result = await folderProcessingService.AddAsync(newFolder: folder);
+        Folder result = await folderProcessingService.AddFolderAsync(newFolder: folder);
 
         // Then
         result.Should()
@@ -234,7 +234,7 @@ public partial class FolderProcessingServiceTests
         folderServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Exactly(callCount: 2));
         folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "parent/child", ignoreFilters: true), times: Times.Once);
         folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "parent", ignoreFilters: true), times: Times.Once);
-        folderServiceMock.Verify(expression: x => x.AddForPathBuildAsync(folder: It.IsAny<Folder>()), times: Times.Exactly(callCount: 2));
+        folderServiceMock.Verify(expression: x => x.AddForPathBuildFolderAsync(folder: It.IsAny<Folder>()), times: Times.Exactly(callCount: 2));
         loggerMock.VerifyNoOtherCalls();
     }
 

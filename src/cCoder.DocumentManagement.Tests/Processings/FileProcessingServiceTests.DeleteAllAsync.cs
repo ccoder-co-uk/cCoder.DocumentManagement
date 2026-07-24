@@ -20,7 +20,7 @@ public partial class FileProcessingServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await fileProcessingService.DeleteAllAsync(items: new[] { file });
+        await fileProcessingService.DeleteAllFileAsync(items: new[] { file });
 
         // Then
         fileServiceMock.Verify(expression: x => x.DeleteAsync(id: file.Id), times: Times.Once);

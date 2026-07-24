@@ -20,7 +20,7 @@ public partial class FolderRoleOrchestrationServiceTests
         // Given
         FolderRole folderRole = CreateRandomFolderRole();
 
-        folderRoleProcessingServiceMock.Setup(expression: x => x.DeleteAsync(entity: folderRole))
+        folderRoleProcessingServiceMock.Setup(expression: x => x.DeleteFolderRoleAsync(entity: folderRole))
             .Returns(value: ValueTask.CompletedTask);
 
         folderRoleEventProcessingServiceMock
@@ -28,10 +28,10 @@ public partial class FolderRoleOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.DeleteAsync(entity: folderRole);
+        await orchestrationService.DeleteFolderRoleAsync(entity: folderRole);
 
         // Then
-        folderRoleProcessingServiceMock.Verify(expression: x => x.DeleteAsync(entity: folderRole), times: Times.Once);
+        folderRoleProcessingServiceMock.Verify(expression: x => x.DeleteFolderRoleAsync(entity: folderRole), times: Times.Once);
         folderRoleEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderRoleDeleteEventAsync(entity: folderRole), times: Times.Once);
     }
 

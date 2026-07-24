@@ -25,7 +25,7 @@ public partial class FileContentProcessingServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await fileContentProcessingService.DeleteAllAsync(items: new[] { fileContent });
+        await fileContentProcessingService.DeleteAllFileContentAsync(items: new[] { fileContent });
 
         // Then
         fileContentServiceMock.Verify(expression: x => x.DeleteAsync(id: fileContent.Id), times: Times.Once);

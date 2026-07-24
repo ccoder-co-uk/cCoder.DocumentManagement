@@ -30,12 +30,12 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public ValueTask<Folder> AddAsync(Folder entity)
+    public ValueTask<Folder> AddFolderAsync(Folder entity)
 =>
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
-            Folder result = await processingService.AddAsync(entity: entity);
+            Folder result = await processingService.AddFolderAsync(entity: entity);
 
             await eventService.RaiseFolderAddEventAsync(entity: result);
 
@@ -43,12 +43,12 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public ValueTask<Folder> UpdateAsync(Folder entity)
+    public ValueTask<Folder> UpdateFolderAsync(Folder entity)
 =>
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
-            Folder result = await processingService.UpdateAsync(entity: entity);
+            Folder result = await processingService.UpdateFolderAsync(entity: entity);
 
             await eventService.RaiseFolderUpdateEventAsync(entity: result);
 
@@ -77,30 +77,30 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public ValueTask<IEnumerable<Result<Folder>>> AddOrUpdate(IEnumerable<Folder> items)
+    public ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateFolder(IEnumerable<Folder> items)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [items]);
-            return processingService.AddOrUpdate(items: items);
+            return processingService.AddOrUpdateFolder(items: items);
 
         });
 
-    public ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateForAppAsync(IEnumerable<Folder> items)
+    public ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateForAppFolderAsync(IEnumerable<Folder> items)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [items]);
-            return processingService.AddOrUpdateForAppAsync(items: items);
+            return processingService.AddOrUpdateForAppFolderAsync(items: items);
 
         });
 
-    public ValueTask DeleteAllAsync(IEnumerable<Folder> items)
+    public ValueTask DeleteAllFolderAsync(IEnumerable<Folder> items)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [items]);
-            return processingService.DeleteAllAsync(items: items);
+            return processingService.DeleteAllFolderAsync(items: items);
 
         });
 
@@ -131,66 +131,66 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public DMSResult GetFilesZipped(App app, IEnumerable<cCoder.DocumentManagement.Models.Path> paths)
+    public DMSResult GetFilesZippedAppPath(App app, IEnumerable<cCoder.DocumentManagement.Models.Path> paths)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [app, paths]);
-            return processingService.GetFilesZipped(app: app, paths: paths);
+            return processingService.GetFilesZippedAppPath(app: app, paths: paths);
 
         });
 
-    public DMSResult Get(App app, cCoder.DocumentManagement.Models.Path path, string search = "")
+    public DMSResult GetAppPath(App app, cCoder.DocumentManagement.Models.Path path, string search = "")
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [app, path, search]);
-            return processingService.Get(app: app, path: path, search: search);
+            return processingService.GetAppPath(app: app, path: path, search: search);
 
         });
 
-    public ValueTask UnpackAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content, bool ignoreArchiveRoot = false)
+    public ValueTask UnpackAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content, bool ignoreArchiveRoot = false)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [app, path, content, ignoreArchiveRoot]);
-            return processingService.UnpackAsync(app: app, path: path, content: content, ignoreArchiveRoot: ignoreArchiveRoot);
+            return processingService.UnpackAppPathAsync(app: app, path: path, content: content, ignoreArchiveRoot: ignoreArchiveRoot);
 
         });
 
-    public ValueTask SaveAsync(App app, cCoder.DocumentManagement.Models.Path path)
+    public ValueTask SaveAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [app, path]);
-            return processingService.SaveAsync(app: app, path: path);
+            return processingService.SaveAppPathAsync(app: app, path: path);
 
         });
 
-    public ValueTask DropAsync(App app, cCoder.DocumentManagement.Models.Path path)
+    public ValueTask DropAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [app, path]);
-            return processingService.DropAsync(app: app, path: path);
+            return processingService.DropAppPathAsync(app: app, path: path);
 
         });
 
-    public ValueTask CopyAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+    public ValueTask CopyAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [app, oldPath, newPath]);
-            return processingService.CopyAsync(app: app, oldPath: oldPath, newPath: newPath);
+            return processingService.CopyAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
 
         });
 
-    public ValueTask MoveAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+    public ValueTask MoveAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [app, oldPath, newPath]);
-            return processingService.MoveAsync(app: app, oldPath: oldPath, newPath: newPath);
+            return processingService.MoveAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
 
         });
 }

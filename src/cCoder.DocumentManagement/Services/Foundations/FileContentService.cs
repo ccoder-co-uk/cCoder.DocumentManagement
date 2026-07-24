@@ -72,7 +72,7 @@ internal partial class FileContentService(
             return fileContentBroker.DeleteAllFileContentsForFilesAsync(fileIds: fileIds);
         });
 
-    public ValueTask<FileContent> AddAsync(FileContent fileContent)
+    public ValueTask<FileContent> AddFileContentAsync(FileContent fileContent)
 =>
         TryCatch(operation: async () =>
         {
@@ -117,7 +117,7 @@ internal partial class FileContentService(
 
         });
 
-    public ValueTask<FileContent> UpdateAsync(FileContent fileContent)
+    public ValueTask<FileContent> UpdateFileContentAsync(FileContent fileContent)
 =>
         TryCatch(operation: async () =>
         {

@@ -21,7 +21,7 @@ public partial class WebDavProcessingServiceTests
         );
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
         string xml = ReadBodyText(stream: response.Body);
 
         // Then
@@ -43,7 +43,7 @@ public partial class WebDavProcessingServiceTests
         DmsProcessingRequest request = CreateRequest(method: "LOCK", requestPath: "Core/App(7)/DAV/folder/file.txt");
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         response.StatusCode.Should()
@@ -64,7 +64,7 @@ public partial class WebDavProcessingServiceTests
         DmsProcessingRequest request = CreateRequest(method: "UNLOCK", requestPath: "Core/App(7)/DAV/folder/file.txt");
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         response.StatusCode.Should()

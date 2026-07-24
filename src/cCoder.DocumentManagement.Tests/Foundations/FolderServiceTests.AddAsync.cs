@@ -48,7 +48,7 @@ public partial class FolderServiceTests
             .ReturnsAsync(valueFunction: (DataFolder value) => value);
 
         // When
-        Folder result = await folderService.AddAsync(folder: folder);
+        Folder result = await folderService.AddFolderAsync(folder: folder);
 
         // Then
         result.Should()
@@ -93,7 +93,7 @@ public partial class FolderServiceTests
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await folderService.AddAsync(folder: folder);
+        Func<Task> action = async () => await folderService.AddFolderAsync(folder: folder);
 
         // Then
         await action.Should()

@@ -25,7 +25,7 @@ public partial class WebDavProcessingServiceTests
             .Throws(exception: new SecurityException(message: "Denied"));
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         response.StatusCode.Should()
@@ -45,7 +45,7 @@ public partial class WebDavProcessingServiceTests
         DmsProcessingRequest request = CreateRequest(method: "TRACE", requestPath: "Core/App(7)/DAV/folder/file.txt");
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
         string body = ReadBodyText(stream: response.Body);
 
         // Then

@@ -25,18 +25,18 @@ internal partial class DmsHttpRequestOrchestrationService(
             ValidateInputs(inputs: [context]);
             App app = currentAppResolver.ResolveCurrentApp();
 
-            DmsProcessingRequest request = BuildRequest(context: context, app: app);
+            DmsProcessingRequest request = BuildRequestApp(context: context, app: app);
 
 
-            if (IsWebDavRequest(request: request))
+            if (IsWebDavRequestDmsProcessingRequest(request: request))
             {
-                return await webDavProcessingService.ProcessAsync(request: request);
+                return await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
             }
 
 
             try
             {
-                DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
+                DmsProcessingResponse response = await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
                 return AddDmsDefaultHeaders(response: response);
             }
             catch (SecurityException)
@@ -46,7 +46,7 @@ internal partial class DmsHttpRequestOrchestrationService(
 
         });
 
-    private static DmsProcessingRequest BuildRequest(HttpContext context, App app) =>
+    private static DmsProcessingRequest BuildRequestApp(HttpContext context, App app) =>
         new()
         {
             App = app,
@@ -63,7 +63,7 @@ internal partial class DmsHttpRequestOrchestrationService(
             ),
         };
 
-    private static bool IsWebDavRequest(DmsProcessingRequest request) =>
+    private static bool IsWebDavRequestDmsProcessingRequest(DmsProcessingRequest request) =>
         request.RequestPath.Contains(value: "/webdav", comparisonType: StringComparison.OrdinalIgnoreCase);
 
     private static DmsProcessingResponse AddDmsDefaultHeaders(DmsProcessingResponse response)

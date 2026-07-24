@@ -22,7 +22,7 @@ public partial class FolderRoleProcessingServiceTests
 
         // When
         Func<Task> act = async () =>
-            await folderRoleProcessingService.DeleteAllAsync(items: new[] { link });
+            await folderRoleProcessingService.DeleteAllFolderRoleAsync(items: new[] { link });
 
         // Then
         await act.Should()

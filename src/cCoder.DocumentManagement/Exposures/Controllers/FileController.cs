@@ -91,7 +91,7 @@ public partial class FileController : ODataController
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
         }
 
-        return Ok(value: await Service.AddAsync(entity: entity));
+        return Ok(value: await Service.AddFileAsync(entity: entity));
     }
 
     [HttpPut]
@@ -111,7 +111,7 @@ public partial class FileController : ODataController
         }
 
         entity.Id = key;
-        return Ok(value: await Service.UpdateAsync(entity: entity));
+        return Ok(value: await Service.UpdateFileAsync(entity: entity));
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
@@ -125,7 +125,7 @@ public partial class FileController : ODataController
         }
 
         delta.Patch(original: originalEntity);
-        return Ok(value: await Service.UpdateAsync(entity: originalEntity));
+        return Ok(value: await Service.UpdateFileAsync(entity: originalEntity));
     }
 
     [HttpDelete]

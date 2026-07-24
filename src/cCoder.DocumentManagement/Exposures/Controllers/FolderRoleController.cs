@@ -45,7 +45,7 @@ public class FolderRoleController : ODataController
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: base.ModelState);
         }
 
-        return Ok(value: await Service.AddAsync(entity: entity));
+        return Ok(value: await Service.AddFolderRoleAsync(entity: entity));
     }
 
     [HttpPost]
@@ -56,7 +56,7 @@ public class FolderRoleController : ODataController
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: base.ModelState);
         }
 
-        await Service.DeleteAllAsync(items: items.Value);
+        await Service.DeleteAllFolderRoleAsync(items: items.Value);
         return Ok();
     }
 }

@@ -21,11 +21,11 @@ public interface IFolderService
     Folder GetByPathWithRolesAndFilesAndContents(int appId, string path, bool ignoreFilters = false);
     Folder GetByPathWithSubFoldersAndFiles(int appId, string path, bool ignoreFilters = false);
     IQueryable<Folder> GetAll(bool ignoreFilters = false);
-    ValueTask<Folder> AddForPathBuildAsync(Folder folder);
-    ValueTask<Folder> AddAsync(Folder folder);
-    ValueTask<Folder> UpdateAsync(Folder folder);
-    ValueTask<Folder> UpdateForAppAsync(Folder folder);
+    ValueTask<Folder> AddForPathBuildFolderAsync(Folder folder);
+    ValueTask<Folder> AddFolderAsync(Folder folder);
+    ValueTask<Folder> UpdateFolderAsync(Folder folder);
+    ValueTask<Folder> UpdateForAppFolderAsync(Folder folder);
     ValueTask DeleteAsync(Guid id);
-    ValueTask DeleteAllForAppAsync(IEnumerable<Folder> folders);
+    ValueTask DeleteAllForAppFolderAsync(IEnumerable<Folder> folders);
     ValueTask DeleteAllByAppIdAsync(int appId);
 }

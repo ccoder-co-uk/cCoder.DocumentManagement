@@ -52,11 +52,11 @@ public class AppOrchestrationServiceTests
         };
 
         folderOrchestrationServiceMock
-            .Setup(expression: x => x.AddOrUpdateForAppAsync(items: It.Is<IEnumerable<Folder>>(match: folders => folders.All(predicate: folder => folder.AppId == 7))))
+            .Setup(expression: x => x.AddOrUpdateForAppFolderAsync(items: It.Is<IEnumerable<Folder>>(match: folders => folders.All(predicate: folder => folder.AppId == 7))))
             .Returns(value: ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Models.Result<Folder>>>(result: []));
 
         // When
-        await service.AddAsync(app: app);
+        await service.AddAppAsync(app: app);
 
         // Then
         folderOrchestrationServiceMock.VerifyAll();

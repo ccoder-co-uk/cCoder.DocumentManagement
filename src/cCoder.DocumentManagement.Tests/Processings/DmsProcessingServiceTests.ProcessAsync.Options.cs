@@ -18,7 +18,7 @@ public partial class DmsProcessingServiceTests
         DmsProcessingRequest request = CreateRequest(method: "OPTIONS", requestPath: "/api/dms/folder");
 
         // When
-        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         response.StatusCode.Should()

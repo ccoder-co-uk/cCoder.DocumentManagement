@@ -54,7 +54,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await folderProcessingService.DropAsync(app: app, path: new DmsPath(path: folder.Path));
+        await folderProcessingService.DropAppPathAsync(app: app, path: new DmsPath(path: folder.Path));
 
         // Then
         folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: folder.Path, ignoreFilters: false), times: Times.Once);
@@ -81,7 +81,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: (Folder)null);
 
         // When
-        Func<Task> act = async () => await folderProcessingService.DropAsync(app: app, path: path);
+        Func<Task> act = async () => await folderProcessingService.DropAppPathAsync(app: app, path: path);
 
         // Then
         await act.Should()

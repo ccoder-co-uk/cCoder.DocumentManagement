@@ -25,7 +25,7 @@ internal partial class DmsOrchestrationService(
             ValidateInputs(inputs: [paths]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
 
-            return folderProcessingService.GetFilesZipped(app: app, paths: paths);
+            return folderProcessingService.GetFilesZippedAppPath(app: app, paths: paths);
 
         });
 
@@ -38,8 +38,8 @@ internal partial class DmsOrchestrationService(
 
 
             return path.IsToFile
-                ? fileProcessingService.Get(app: app, path: path, version: version)
-                : folderProcessingService.Get(app: app, path: path, search: search);
+                ? fileProcessingService.GetAppPath(app: app, path: path, version: version)
+                : folderProcessingService.GetAppPath(app: app, path: path, search: search);
 
         });
 
@@ -51,7 +51,7 @@ internal partial class DmsOrchestrationService(
             LocalApp app = currentAppResolver.ResolveCurrentApp();
 
 
-            return fileProcessingService.Search(app: app, needle: needle)
+            return fileProcessingService.SearchApp(app: app, needle: needle)
                 .Select(selector: ToExternalFile)
                 .ToArray();
 
@@ -64,7 +64,7 @@ internal partial class DmsOrchestrationService(
             ValidateInputs(inputs: [path, content, ignoreArchiveRoot]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
 
-            await folderProcessingService.UnpackAsync(app: app, path: path, content: content, ignoreArchiveRoot: ignoreArchiveRoot);
+            await folderProcessingService.UnpackAppPathAsync(app: app, path: path, content: content, ignoreArchiveRoot: ignoreArchiveRoot);
 
         });
 
@@ -78,11 +78,11 @@ internal partial class DmsOrchestrationService(
 
             if (path.IsToFile)
             {
-                await fileProcessingService.SaveAsync(app: app, path: path, content: content);
+                await fileProcessingService.SaveAppPathAsync(app: app, path: path, content: content);
             }
             else
             {
-                await folderProcessingService.SaveAsync(app: app, path: path);
+                await folderProcessingService.SaveAppPathAsync(app: app, path: path);
             }
 
         });
@@ -97,11 +97,11 @@ internal partial class DmsOrchestrationService(
 
             if (path.IsToFile)
             {
-                await fileProcessingService.DropAsync(app: app, path: path, version: version);
+                await fileProcessingService.DropAppPathAsync(app: app, path: path, version: version);
             }
             else
             {
-                await folderProcessingService.DropAsync(app: app, path: path);
+                await folderProcessingService.DropAppPathAsync(app: app, path: path);
             }
 
         });
@@ -116,11 +116,11 @@ internal partial class DmsOrchestrationService(
 
             if (oldPath.IsToFile)
             {
-                await fileProcessingService.CopyAsync(app: app, oldPath: oldPath, newPath: newPath);
+                await fileProcessingService.CopyAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
             }
             else
             {
-                await folderProcessingService.CopyAsync(app: app, oldPath: oldPath, newPath: newPath);
+                await folderProcessingService.CopyAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
             }
 
         });
@@ -135,11 +135,11 @@ internal partial class DmsOrchestrationService(
 
             if (oldPath.IsToFile)
             {
-                await fileProcessingService.MoveAsync(app: app, oldPath: oldPath, newPath: newPath);
+                await fileProcessingService.MoveAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
             }
             else
             {
-                await folderProcessingService.MoveAsync(app: app, oldPath: oldPath, newPath: newPath);
+                await folderProcessingService.MoveAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
             }
 
         });

@@ -40,7 +40,7 @@ public partial class WebDavProcessingServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         response.StatusCode.Should()
@@ -85,7 +85,7 @@ public partial class WebDavProcessingServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         response.StatusCode.Should()

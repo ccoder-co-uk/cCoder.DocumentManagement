@@ -22,7 +22,7 @@ public partial class FolderRoleProcessingServiceTests
 
         // When
         Func<Task> act = async () =>
-            await folderRoleProcessingService.AddOrUpdate(items: new[] { link });
+            await folderRoleProcessingService.AddOrUpdateFolderRole(items: new[] { link });
 
         // Then
         await act.Should()

@@ -20,14 +20,14 @@ public partial class FileContentOrchestrationServiceTests
         // Given
         FileContent[] entities = [CreateRandomFileContent()];
 
-        fileContentProcessingServiceMock.Setup(expression: x => x.DeleteAllAsync(items: entities))
+        fileContentProcessingServiceMock.Setup(expression: x => x.DeleteAllFileContentAsync(items: entities))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.DeleteAllAsync(items: entities);
+        await orchestrationService.DeleteAllFileContentAsync(items: entities);
 
         // Then
-        fileContentProcessingServiceMock.Verify(expression: x => x.DeleteAllAsync(items: entities), times: Times.Once);
+        fileContentProcessingServiceMock.Verify(expression: x => x.DeleteAllFileContentAsync(items: entities), times: Times.Once);
         fileContentProcessingServiceMock.VerifyNoOtherCalls();
         fileContentEventProcessingServiceMock.VerifyNoOtherCalls();
     }

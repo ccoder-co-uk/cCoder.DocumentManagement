@@ -33,7 +33,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: (DmsFile)null);
 
         // When
-        Action act = () => folderProcessingService.GetFilesZipped(app: app, paths: [filePath]);
+        Action act = () => folderProcessingService.GetFilesZippedAppPath(app: app, paths: [filePath]);
 
         // Then
         act.Should()
@@ -116,7 +116,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: new[] { nestedContent }.AsQueryable());
 
         // When
-        DMSResult result = folderProcessingService.GetFilesZipped(app: app, paths: [directFilePath, folderPath]);
+        DMSResult result = folderProcessingService.GetFilesZippedAppPath(app: app, paths: [directFilePath, folderPath]);
 
         // Then
         using ZipArchive zip = new(stream: result.Data, mode: ZipArchiveMode.Read);

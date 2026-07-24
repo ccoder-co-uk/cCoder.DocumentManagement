@@ -15,13 +15,13 @@ public interface IFileContentProcessingService
 
     IQueryable<FileContent> GetAll(bool ignoreFilters = false);
 
-    ValueTask<FileContent> AddAsync(FileContent entity);
+    ValueTask<FileContent> AddFileContentAsync(FileContent entity);
 
-    ValueTask<FileContent> UpdateAsync(FileContent entity);
+    ValueTask<FileContent> UpdateFileContentAsync(FileContent entity);
 
     ValueTask DeleteAsync(Guid id);
 
-    ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdate(IEnumerable<FileContent> items);
+    ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdateFileContent(IEnumerable<FileContent> items);
 
-    ValueTask DeleteAllAsync(IEnumerable<FileContent> items);
+    ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> items);
 }

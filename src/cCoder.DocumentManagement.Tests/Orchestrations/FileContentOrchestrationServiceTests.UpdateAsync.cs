@@ -21,7 +21,7 @@ public partial class FileContentOrchestrationServiceTests
         // Given
         FileContent entity = CreateRandomFileContent();
 
-        fileContentProcessingServiceMock.Setup(expression: x => x.UpdateAsync(entity: entity))
+        fileContentProcessingServiceMock.Setup(expression: x => x.UpdateFileContentAsync(entity: entity))
             .ReturnsAsync(value: entity);
 
         fileContentEventProcessingServiceMock
@@ -29,13 +29,13 @@ public partial class FileContentOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        FileContent result = await orchestrationService.UpdateAsync(entity: entity);
+        FileContent result = await orchestrationService.UpdateFileContentAsync(entity: entity);
 
         // Then
         result.Should()
             .BeSameAs(expected: entity);
 
-        fileContentProcessingServiceMock.Verify(expression: x => x.UpdateAsync(entity: entity), times: Times.Once);
+        fileContentProcessingServiceMock.Verify(expression: x => x.UpdateFileContentAsync(entity: entity), times: Times.Once);
         fileContentEventProcessingServiceMock.Verify(expression: x => x.RaiseFileContentUpdateEventAsync(entity: entity), times: Times.Once);
     }
 

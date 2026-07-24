@@ -55,7 +55,7 @@ public partial class FileServiceTests
             .ReturnsAsync(valueFunction: (DataFile value) => value);
 
         // When
-        FileEntity result = await fileService.AddAsync(file: file);
+        FileEntity result = await fileService.AddFileAsync(file: file);
 
         // Then
         result.Should()
@@ -168,7 +168,7 @@ public partial class FileServiceTests
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> action = async () => await fileService.AddAsync(file: file);
+        Func<Task> action = async () => await fileService.AddFileAsync(file: file);
 
         // Then
         await action.Should()

@@ -11,7 +11,7 @@ namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 public interface IAppOrchestrationService
 {
-    ValueTask AddAsync(App app);
-    ValueTask UpdateAsync(App app);
+    ValueTask AddAppAsync(App app);
+    ValueTask UpdateAppAsync(App app);
     ValueTask DeleteAsync(int appId);
 }

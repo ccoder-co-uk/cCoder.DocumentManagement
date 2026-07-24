@@ -30,12 +30,12 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
 
         });
 
-    public ValueTask<FileContent> AddAsync(FileContent entity)
+    public ValueTask<FileContent> AddFileContentAsync(FileContent entity)
 =>
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
-            FileContent result = await processingService.AddAsync(entity: entity);
+            FileContent result = await processingService.AddFileContentAsync(entity: entity);
 
             await eventService.RaiseFileContentAddEventAsync(entity: result);
 
@@ -43,12 +43,12 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
 
         });
 
-    public ValueTask<FileContent> UpdateAsync(FileContent entity)
+    public ValueTask<FileContent> UpdateFileContentAsync(FileContent entity)
 =>
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
-            FileContent result = await processingService.UpdateAsync(entity: entity);
+            FileContent result = await processingService.UpdateFileContentAsync(entity: entity);
 
             await eventService.RaiseFileContentUpdateEventAsync(entity: result);
 
@@ -69,21 +69,21 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
 
         });
 
-    public ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdate(IEnumerable<FileContent> items)
+    public ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdateFileContent(IEnumerable<FileContent> items)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [items]);
-            return processingService.AddOrUpdate(items: items);
+            return processingService.AddOrUpdateFileContent(items: items);
 
         });
 
-    public ValueTask DeleteAllAsync(IEnumerable<FileContent> items)
+    public ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> items)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [items]);
-            return processingService.DeleteAllAsync(items: items);
+            return processingService.DeleteAllFileContentAsync(items: items);
 
         });
 }

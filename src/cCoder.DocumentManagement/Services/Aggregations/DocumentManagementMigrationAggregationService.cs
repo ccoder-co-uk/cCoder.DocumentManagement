@@ -21,7 +21,7 @@ internal partial class DocumentManagementMigrationAggregationService(
     IJsonBroker jsonBroker
 ) : IDocumentManagementMigrationAggregationService
 {
-    public ValueTask ImportPackageAsync(int appId, DocumentManagementPackage package)
+    public ValueTask ImportPackageDocumentManagementPackageAsync(int appId, DocumentManagementPackage package)
 =>
         TryCatch(operation: async () =>
         {
@@ -65,7 +65,7 @@ internal partial class DocumentManagementMigrationAggregationService(
                     }
                 }
 
-                _ = await folderRoleOrchestrationService.AddOrUpdate(items: folderRolesToAdd);
+                _ = await folderRoleOrchestrationService.AddOrUpdateFolderRole(items: folderRolesToAdd);
             }
 
         });

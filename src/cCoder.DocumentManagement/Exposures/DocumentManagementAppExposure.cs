@@ -14,9 +14,9 @@ internal class DocumentManagementAppExposure(IAppOrchestrationService appOrchest
     : IDocumentManagementAppExposure
 {
     public ValueTask AddAsync(App app) =>
-        appOrchestrationService.AddAsync(app: app);
+        appOrchestrationService.AddAppAsync(app: app);
     public ValueTask UpdateAsync(App app) =>
-        appOrchestrationService.UpdateAsync(app: app);
+        appOrchestrationService.UpdateAppAsync(app: app);
     public ValueTask DeleteAsync(int appId) =>
         appOrchestrationService.DeleteAsync(appId: appId);
 }

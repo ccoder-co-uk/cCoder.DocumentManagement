@@ -79,18 +79,18 @@ public partial class FolderProcessingServiceTests
             .Returns(value: new[] { appRole }.AsQueryable());
 
         folderServiceMock
-            .Setup(expression: x => x.AddForPathBuildAsync(folder: It.Is<Folder>(match: f => f.Path == "docs" && f.ParentId == null)))
+            .Setup(expression: x => x.AddForPathBuildFolderAsync(folder: It.Is<Folder>(match: f => f.Path == "docs" && f.ParentId == null)))
             .ReturnsAsync(value: createdRoot);
 
         folderServiceMock
             .Setup(expression: x =>
-                x.AddForPathBuildAsync(folder: It.Is<Folder>(match: f => f.Path == "docs/nested"))
+                x.AddForPathBuildFolderAsync(folder: It.Is<Folder>(match: f => f.Path == "docs/nested"))
             )
             .Callback<Folder>(action: folder => submittedChild = folder)
             .ReturnsAsync(value: createdChild);
 
         // When
-        await folderProcessingService.SaveAsync(app: app, path: path);
+        await folderProcessingService.SaveAppPathAsync(app: app, path: path);
 
         // Then
         folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs/nested", ignoreFilters: true), times: Times.Once);
@@ -98,12 +98,12 @@ public partial class FolderProcessingServiceTests
         roleServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Once);
 
         folderServiceMock.Verify(
-            expression: x => x.AddForPathBuildAsync(folder: It.Is<Folder>(match: f => f.Path == "docs" && f.ParentId == null)),
+            expression: x => x.AddForPathBuildFolderAsync(folder: It.Is<Folder>(match: f => f.Path == "docs" && f.ParentId == null)),
             times: Times.Once
         );
 
         folderServiceMock.Verify(
-            expression: x => x.AddForPathBuildAsync(folder: It.Is<Folder>(match: f => f.Path == "docs/nested")),
+            expression: x => x.AddForPathBuildFolderAsync(folder: It.Is<Folder>(match: f => f.Path == "docs/nested")),
             times: Times.Once
         );
 
@@ -192,7 +192,7 @@ public partial class FolderProcessingServiceTests
 
         folderServiceMock
             .Setup(expression: x =>
-                x.AddForPathBuildAsync(
+                x.AddForPathBuildFolderAsync(
                     folder: It.Is<Folder>(match: f =>
                         f.Path == "docs/nested"
                         && f.ParentId == parentFolder.Id
@@ -202,7 +202,7 @@ public partial class FolderProcessingServiceTests
             .ReturnsAsync(value: createdChild);
 
         // When
-        await folderProcessingService.SaveAsync(app: app, path: path);
+        await folderProcessingService.SaveAppPathAsync(app: app, path: path);
 
         // Then
         folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs/nested", ignoreFilters: true), times: Times.Once);
@@ -211,7 +211,7 @@ public partial class FolderProcessingServiceTests
 
         folderServiceMock.Verify(
             expression: x =>
-                x.AddForPathBuildAsync(
+                x.AddForPathBuildFolderAsync(
                     folder: It.Is<Folder>(match: f =>
                         f.Path == "docs/nested"
                         && f.ParentId == parentFolder.Id
@@ -243,7 +243,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: (Folder)null);
 
         // When
-        Func<Task> act = async () => await folderProcessingService.SaveAsync(app: app, path: path);
+        Func<Task> act = async () => await folderProcessingService.SaveAppPathAsync(app: app, path: path);
 
         // Then
         await act.Should()

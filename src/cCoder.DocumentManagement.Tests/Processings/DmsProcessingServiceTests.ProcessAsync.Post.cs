@@ -34,7 +34,7 @@ public partial class DmsProcessingServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         response.StatusCode.Should()
@@ -66,7 +66,7 @@ public partial class DmsProcessingServiceTests
         );
 
         // When
-        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         response.StatusCode.Should()
@@ -90,7 +90,7 @@ public partial class DmsProcessingServiceTests
         );
 
         // When
-        Func<Task> act = async () => await dmsProcessingService.ProcessAsync(request: request);
+        Func<Task> act = async () => await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         await act.Should()
@@ -127,7 +127,7 @@ public partial class DmsProcessingServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         response.StatusCode.Should()
@@ -178,7 +178,7 @@ public partial class DmsProcessingServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         response.StatusCode.Should()

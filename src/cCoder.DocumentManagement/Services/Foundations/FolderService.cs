@@ -120,7 +120,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
             return CreateFolderForMove(folder: folderBroker.SelectFolderByPathWithSubFoldersAndFiles(appId: appId, path: path, ignoreFilters: ignoreFilters));
         });
 
-    public ValueTask<Folder> AddAsync(Folder folder)
+    public ValueTask<Folder> AddFolderAsync(Folder folder)
 =>
         TryCatch(operation: async () =>
         {
@@ -147,7 +147,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 
         });
 
-    public ValueTask<Folder> AddForPathBuildAsync(Folder folder)
+    public ValueTask<Folder> AddForPathBuildFolderAsync(Folder folder)
 =>
         TryCatch(operation: async () =>
         {
@@ -172,18 +172,18 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 
         });
 
-    public ValueTask<Folder> UpdateAsync(Folder folder)
+    public ValueTask<Folder> UpdateFolderAsync(Folder folder)
 =>
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [folder]);
             authorizationBroker.Authorize(appId: folder.AppId, privilege: $"{nameof(Folder)}_update");
 
-            return await UpdateForAppAsync(folder: folder);
+            return await UpdateForAppFolderAsync(folder: folder);
 
         });
 
-    public ValueTask<Folder> UpdateForAppAsync(Folder folder)
+    public ValueTask<Folder> UpdateForAppFolderAsync(Folder folder)
 =>
         TryCatch(operation: async () =>
         {
@@ -230,7 +230,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 
         });
 
-    public ValueTask DeleteAllForAppAsync(IEnumerable<Folder> folders)
+    public ValueTask DeleteAllForAppFolderAsync(IEnumerable<Folder> folders)
 =>
         TryCatch(operation: () =>
         {

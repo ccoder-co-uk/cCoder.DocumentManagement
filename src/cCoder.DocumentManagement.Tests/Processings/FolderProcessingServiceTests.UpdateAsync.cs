@@ -66,10 +66,10 @@ public partial class FolderProcessingServiceTests
         folderServiceMock.Setup(expression: x => x.GetAll())
             .Returns(value: new[] { dbFolder }.AsQueryable());
 
-        folderServiceMock.Setup(expression: x => x.UpdateAsync(folder: It.IsAny<Folder>()))
+        folderServiceMock.Setup(expression: x => x.UpdateFolderAsync(folder: It.IsAny<Folder>()))
             .ReturnsAsync(valueFunction: (Folder item) => item);
         // When
-        Folder result = await folderProcessingService.UpdateAsync(folder: folder);
+        Folder result = await folderProcessingService.UpdateFolderAsync(folder: folder);
 
         // Then
         result.Should()
@@ -92,7 +92,7 @@ public partial class FolderProcessingServiceTests
 
         folderServiceMock.Verify(expression: x => x.GetForUpdate(id: folder.Id, ignoreFilters: true), times: Times.Once);
         folderServiceMock.Verify(expression: x => x.GetAll(), times: Times.Once);
-        folderServiceMock.Verify(expression: x => x.UpdateAsync(folder: It.IsAny<Folder>()), times: Times.Once);
+        folderServiceMock.Verify(expression: x => x.UpdateFolderAsync(folder: It.IsAny<Folder>()), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
         loggerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
@@ -147,7 +147,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: dbFolder);
 
         // When
-        Func<Task> act = async () => await folderProcessingService.UpdateAsync(folder: folder);
+        Func<Task> act = async () => await folderProcessingService.UpdateFolderAsync(folder: folder);
 
         // Then
         await act.Should()

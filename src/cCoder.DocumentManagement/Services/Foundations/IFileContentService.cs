@@ -16,7 +16,7 @@ public interface IFileContentService
     IQueryable<FileContent> GetAll(bool ignoreFilters = false);
     ValueTask DeleteAllForFileAsync(Guid fileId);
     ValueTask DeleteAllForFilesAsync(Guid[] fileIds);
-    ValueTask<FileContent> AddAsync(FileContent fileContent);
-    ValueTask<FileContent> UpdateAsync(FileContent fileContent);
+    ValueTask<FileContent> AddFileContentAsync(FileContent fileContent);
+    ValueTask<FileContent> UpdateFileContentAsync(FileContent fileContent);
     ValueTask DeleteAsync(Guid id);
 }

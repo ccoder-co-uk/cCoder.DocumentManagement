@@ -21,12 +21,12 @@ internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingServi
 
         });
 
-    public ValueTask<FolderRole> AddAsync(FolderRole entity)
+    public ValueTask<FolderRole> AddFolderRoleAsync(FolderRole entity)
 =>
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
-            FolderRole result = await processingService.AddAsync(entity: entity);
+            FolderRole result = await processingService.AddFolderRoleAsync(entity: entity);
 
             await eventService.RaiseFolderRoleAddEventAsync(entity: result);
 
@@ -34,32 +34,32 @@ internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingServi
 
         });
 
-    public ValueTask DeleteAsync(FolderRole entity)
+    public ValueTask DeleteFolderRoleAsync(FolderRole entity)
 =>
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [entity]);
             await eventService.RaiseFolderRoleDeleteEventAsync(entity: entity);
 
-            await processingService.DeleteAsync(entity: entity);
+            await processingService.DeleteFolderRoleAsync(entity: entity);
 
         });
 
-    public ValueTask<IEnumerable<Result<FolderRole>>> AddOrUpdate(IEnumerable<FolderRole> items)
+    public ValueTask<IEnumerable<Result<FolderRole>>> AddOrUpdateFolderRole(IEnumerable<FolderRole> items)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [items]);
-            return processingService.AddOrUpdate(items: items);
+            return processingService.AddOrUpdateFolderRole(items: items);
 
         });
 
-    public ValueTask DeleteAllAsync(IEnumerable<FolderRole> items)
+    public ValueTask DeleteAllFolderRoleAsync(IEnumerable<FolderRole> items)
 =>
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [items]);
-            return processingService.DeleteAllAsync(items: items);
+            return processingService.DeleteAllFolderRoleAsync(items: items);
 
         });
 }

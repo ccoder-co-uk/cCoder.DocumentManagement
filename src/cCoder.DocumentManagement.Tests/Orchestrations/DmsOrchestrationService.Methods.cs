@@ -33,7 +33,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock
             .Setup(expression: x =>
-                x.GetFilesZipped(
+                x.GetFilesZippedAppPath(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     paths: It.Is<IEnumerable<LocalPath>>(match: items =>
                         items.Select(selector: item => item.FullPath)
@@ -52,7 +52,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock.Verify(
             expression: x =>
-                x.GetFilesZipped(
+                x.GetFilesZippedAppPath(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     paths: It.Is<IEnumerable<LocalPath>>(match: items =>
                         items.Select(selector: item => item.FullPath)
@@ -75,7 +75,7 @@ public partial class DmsOrchestrationServiceTests
 
         fileProcessingServiceMock
             .Setup(expression: x =>
-                x.Get(
+                x.GetAppPath(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
                     version: 2
@@ -90,7 +90,7 @@ public partial class DmsOrchestrationServiceTests
 
         fileProcessingServiceMock.Verify(
             expression: x =>
-                x.Get(
+                x.GetAppPath(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
                     version: 2
@@ -111,7 +111,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock
             .Setup(expression: x =>
-                x.Get(
+                x.GetAppPath(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
                     search: "needle"
@@ -126,7 +126,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock.Verify(
             expression: x =>
-                x.Get(
+                x.GetAppPath(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
                     search: "needle"
@@ -145,7 +145,7 @@ public partial class DmsOrchestrationServiceTests
             .Returns(value: app);
 
         fileProcessingServiceMock
-            .Setup(expression: x => x.Search(app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name), needle: "needle"))
+            .Setup(expression: x => x.SearchApp(app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name), needle: "needle"))
             .Returns(value: files);
 
         IEnumerable<DataFile> result = orchestrationService.Search(needle: "needle");
@@ -163,7 +163,7 @@ public partial class DmsOrchestrationServiceTests
             .Be(expected: files[0].Path);
 
         fileProcessingServiceMock.Verify(
-            expression: x => x.Search(app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name), needle: "needle"),
+            expression: x => x.SearchApp(app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name), needle: "needle"),
             times: Times.Once
         );
     }
@@ -180,7 +180,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock
             .Setup(expression: x =>
-                x.UnpackAsync(
+                x.UnpackAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
                     content: stream,
@@ -193,7 +193,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock.Verify(
             expression: x =>
-                x.UnpackAsync(
+                x.UnpackAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
                     content: stream,
@@ -215,7 +215,7 @@ public partial class DmsOrchestrationServiceTests
 
         fileProcessingServiceMock
             .Setup(expression: x =>
-                x.SaveAsync(
+                x.SaveAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
                     content: stream
@@ -227,7 +227,7 @@ public partial class DmsOrchestrationServiceTests
 
         fileProcessingServiceMock.Verify(
             expression: x =>
-                x.SaveAsync(
+                x.SaveAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
                     content: stream
@@ -247,7 +247,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock
             .Setup(expression: x =>
-                x.SaveAsync(
+                x.SaveAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath)
                 )
@@ -258,7 +258,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock.Verify(
             expression: x =>
-                x.SaveAsync(
+                x.SaveAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath)
                 ),
@@ -277,7 +277,7 @@ public partial class DmsOrchestrationServiceTests
 
         fileProcessingServiceMock
             .Setup(expression: x =>
-                x.DropAsync(
+                x.DropAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
                     version: 2
@@ -289,7 +289,7 @@ public partial class DmsOrchestrationServiceTests
 
         fileProcessingServiceMock.Verify(
             expression: x =>
-                x.DropAsync(
+                x.DropAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
                     version: 2
@@ -309,7 +309,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock
             .Setup(expression: x =>
-                x.DropAsync(
+                x.DropAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath)
                 )
@@ -320,7 +320,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock.Verify(
             expression: x =>
-                x.DropAsync(
+                x.DropAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath)
                 ),
@@ -340,7 +340,7 @@ public partial class DmsOrchestrationServiceTests
 
         fileProcessingServiceMock
             .Setup(expression: x =>
-                x.CopyAsync(
+                x.CopyAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
                     newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
@@ -352,7 +352,7 @@ public partial class DmsOrchestrationServiceTests
 
         fileProcessingServiceMock.Verify(
             expression: x =>
-                x.CopyAsync(
+                x.CopyAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
                     newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
@@ -373,7 +373,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock
             .Setup(expression: x =>
-                x.CopyAsync(
+                x.CopyAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
                     newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
@@ -385,7 +385,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock.Verify(
             expression: x =>
-                x.CopyAsync(
+                x.CopyAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
                     newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
@@ -406,7 +406,7 @@ public partial class DmsOrchestrationServiceTests
 
         fileProcessingServiceMock
             .Setup(expression: x =>
-                x.MoveAsync(
+                x.MoveAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
                     newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
@@ -418,7 +418,7 @@ public partial class DmsOrchestrationServiceTests
 
         fileProcessingServiceMock.Verify(
             expression: x =>
-                x.MoveAsync(
+                x.MoveAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
                     newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
@@ -439,7 +439,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock
             .Setup(expression: x =>
-                x.MoveAsync(
+                x.MoveAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
                     newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
@@ -451,7 +451,7 @@ public partial class DmsOrchestrationServiceTests
 
         folderProcessingServiceMock.Verify(
             expression: x =>
-                x.MoveAsync(
+                x.MoveAppPathAsync(
                     app: It.Is<App>(match: a => a.Id == app.Id && a.Name == app.Name),
                     oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
                     newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)

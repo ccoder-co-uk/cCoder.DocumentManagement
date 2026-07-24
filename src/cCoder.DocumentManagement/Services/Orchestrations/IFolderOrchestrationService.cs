@@ -15,16 +15,16 @@ public interface IFolderOrchestrationService
 
     IQueryable<Folder> GetAll(bool ignoreFilters = false);
 
-    ValueTask<Folder> AddAsync(Folder entity);
+    ValueTask<Folder> AddFolderAsync(Folder entity);
 
-    ValueTask<Folder> UpdateAsync(Folder entity);
+    ValueTask<Folder> UpdateFolderAsync(Folder entity);
 
     ValueTask DeleteAsync(Guid id);
-    ValueTask<IEnumerable<Result<Folder>>> AddOrUpdate(IEnumerable<Folder> items);
+    ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateFolder(IEnumerable<Folder> items);
 
-    ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateForAppAsync(IEnumerable<Folder> items);
+    ValueTask<IEnumerable<Result<Folder>>> AddOrUpdateForAppFolderAsync(IEnumerable<Folder> items);
 
-    ValueTask DeleteAllAsync(IEnumerable<Folder> items);
+    ValueTask DeleteAllFolderAsync(IEnumerable<Folder> items);
 
     ValueTask DeleteAllByAppIdAsync(int appId);
 
@@ -32,17 +32,17 @@ public interface IFolderOrchestrationService
 
     ValueTask HandleFolderDeleteEventAsync(Folder folder);
 
-    DMSResult GetFilesZipped(App app, IEnumerable<cCoder.DocumentManagement.Models.Path> paths);
+    DMSResult GetFilesZippedAppPath(App app, IEnumerable<cCoder.DocumentManagement.Models.Path> paths);
 
-    DMSResult Get(App app, cCoder.DocumentManagement.Models.Path path, string search = "");
+    DMSResult GetAppPath(App app, cCoder.DocumentManagement.Models.Path path, string search = "");
 
-    ValueTask UnpackAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content, bool ignoreArchiveRoot = false);
+    ValueTask UnpackAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content, bool ignoreArchiveRoot = false);
 
-    ValueTask SaveAsync(App app, cCoder.DocumentManagement.Models.Path path);
+    ValueTask SaveAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path);
 
-    ValueTask DropAsync(App app, cCoder.DocumentManagement.Models.Path path);
+    ValueTask DropAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path);
 
-    ValueTask CopyAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath);
+    ValueTask CopyAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath);
 
-    ValueTask MoveAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath);
+    ValueTask MoveAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath);
 }

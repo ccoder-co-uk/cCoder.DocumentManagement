@@ -25,7 +25,7 @@ public partial class DmsProcessingServiceTests
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
-        Func<Task> act = async () => await dmsProcessingService.ProcessAsync(request: request);
+        Func<Task> act = async () => await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         await act.Should()
@@ -53,7 +53,7 @@ public partial class DmsProcessingServiceTests
             .Throws(exception: new InvalidOperationException(message: "Boom"));
 
         // When
-        Func<Task> act = async () => await dmsProcessingService.ProcessAsync(request: request);
+        Func<Task> act = async () => await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
         await act.Should()

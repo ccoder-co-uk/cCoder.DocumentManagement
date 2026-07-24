@@ -21,7 +21,7 @@ public partial class FolderOrchestrationServiceTests
         // Given
         Folder entity = CreateRandomFolder();
 
-        folderProcessingServiceMock.Setup(expression: x => x.AddAsync(entity: entity))
+        folderProcessingServiceMock.Setup(expression: x => x.AddFolderAsync(entity: entity))
             .ReturnsAsync(value: entity);
 
         folderEventProcessingServiceMock
@@ -29,13 +29,13 @@ public partial class FolderOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        Folder result = await orchestrationService.AddAsync(entity: entity);
+        Folder result = await orchestrationService.AddFolderAsync(entity: entity);
 
         // Then
         result.Should()
             .BeSameAs(expected: entity);
 
-        folderProcessingServiceMock.Verify(expression: x => x.AddAsync(entity: entity), times: Times.Once);
+        folderProcessingServiceMock.Verify(expression: x => x.AddFolderAsync(entity: entity), times: Times.Once);
         folderEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderAddEventAsync(entity: entity), times: Times.Once);
     }
 

@@ -13,6 +13,6 @@ namespace cCoder.DocumentManagement.Services.Foundations;
 public interface IFolderRoleService
 {
     IQueryable<FolderRole> GetAll(bool ignoreFilters = false);
-    ValueTask<FolderRole> AddAsync(FolderRole folderRole);
-    ValueTask DeleteAsync(FolderRole folderRole);
+    ValueTask<FolderRole> AddFolderRoleAsync(FolderRole folderRole);
+    ValueTask DeleteFolderRoleAsync(FolderRole folderRole);
 }

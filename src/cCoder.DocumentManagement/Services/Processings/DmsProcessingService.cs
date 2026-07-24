@@ -17,7 +17,7 @@ internal partial class DmsProcessingService(
     ILogger<DmsProcessingService> log
 ) : IDmsProcessingService
 {
-    public ValueTask<DmsProcessingResponse> ProcessAsync(DmsProcessingRequest request)
+    public ValueTask<DmsProcessingResponse> ProcessDmsProcessingRequestAsync(DmsProcessingRequest request)
 =>
         TryCatch(operation: async () =>
         {
@@ -36,19 +36,19 @@ internal partial class DmsProcessingService(
                 {
                     case "OPTIONS":
                         log.LogInformation(message: $"DMS({request.App.Id}) OPTIONS {path}");
-                        return await HandleOptionsRequestAsync(request: request);
+                        return await HandleOptionsRequestDmsProcessingRequestAsync(request: request);
                     case "GET":
                         log.LogInformation(message: $"DMS({request.App.Id}) Get {path}");
-                        return await HandleGetRequestAsync(request: request);
+                        return await HandleGetRequestDmsProcessingRequestAsync(request: request);
                     case "POST":
                         log.LogInformation(message: $"DMS({request.App.Id}) POST {path}");
-                        return await HandlePostRequestAsync(request: request);
+                        return await HandlePostRequestDmsProcessingRequestAsync(request: request);
                     case "PUT":
                         log.LogInformation(message: $"DMS({request.App.Id}) PUT {path}");
-                        return await HandlePutRequestAsync(request: request);
+                        return await HandlePutRequestDmsProcessingRequestAsync(request: request);
                     case "DELETE":
                         log.LogInformation(message: $"DMS({request.App.Id}) DELETE {path}");
-                        return await HandleDeleteRequestAsync(request: request);
+                        return await HandleDeleteRequestDmsProcessingRequestAsync(request: request);
                     default:
                         throw new InvalidOperationException(
                             message: $"Unsupported DMS method: {request.Method}"
@@ -78,7 +78,7 @@ internal partial class DmsProcessingService(
 
         });
 
-    private async ValueTask<DmsProcessingResponse> HandleDeleteRequestAsync(DmsProcessingRequest request)
+    private async ValueTask<DmsProcessingResponse> HandleDeleteRequestDmsProcessingRequestAsync(DmsProcessingRequest request)
     {
         string path = request.RequestPath[
             (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
@@ -90,12 +90,12 @@ internal partial class DmsProcessingService(
         return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
     }
 
-    private async ValueTask<DmsProcessingResponse> HandleOptionsRequestAsync(
+    private async ValueTask<DmsProcessingResponse> HandleOptionsRequestDmsProcessingRequestAsync(
         DmsProcessingRequest request
     ) =>
         CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
 
-    private async ValueTask<DmsProcessingResponse> HandleGetRequestAsync(DmsProcessingRequest request)
+    private async ValueTask<DmsProcessingResponse> HandleGetRequestDmsProcessingRequestAsync(DmsProcessingRequest request)
     {
         string path = request.RequestPath[
             (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
@@ -130,7 +130,7 @@ internal partial class DmsProcessingService(
             : CreateResponse(body: Stream.Null, hasBody: false, contentType: "plain/text", statusCode: 204);
     }
 
-    private async ValueTask<DmsProcessingResponse> HandlePostRequestAsync(DmsProcessingRequest request)
+    private async ValueTask<DmsProcessingResponse> HandlePostRequestDmsProcessingRequestAsync(DmsProcessingRequest request)
     {
         string path = request.RequestPath[
             (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..
@@ -175,7 +175,7 @@ internal partial class DmsProcessingService(
         return await SaveOrUnpackAsync(path: path, query: query, memoryStream: memoryStream);
     }
 
-    private async ValueTask<DmsProcessingResponse> HandlePutRequestAsync(DmsProcessingRequest request)
+    private async ValueTask<DmsProcessingResponse> HandlePutRequestDmsProcessingRequestAsync(DmsProcessingRequest request)
     {
         string path = request.RequestPath[
             (request.RequestPath.IndexOf(value: "/dms/", comparisonType: StringComparison.CurrentCultureIgnoreCase) + 5)..

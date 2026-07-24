@@ -28,7 +28,7 @@ internal partial class WebDavProcessingService(
     ILogger<WebDavProcessingService> log
 ) : IWebDavProcessingService
 {
-    public ValueTask<DmsProcessingResponse> ProcessAsync(DmsProcessingRequest request)
+    public ValueTask<DmsProcessingResponse> ProcessDmsProcessingRequestAsync(DmsProcessingRequest request)
 =>
         TryCatch(operation: async () =>
         {
@@ -141,7 +141,7 @@ internal partial class WebDavProcessingService(
                             headers: headers
                         );
                     case "PROPFIND":
-                        string propFindBody = PropFind(request: request, appId: appId, path: path, requestText: requestText, ns: ns, urlBase: urlBase);
+                        string propFindBody = PropFindDmsProcessingRequest(request: request, appId: appId, path: path, requestText: requestText, ns: ns, urlBase: urlBase);
                         return CreateResponse(
                             body: EncodeText(content: propFindBody),
                             hasBody: !string.IsNullOrEmpty(value: propFindBody),
@@ -185,7 +185,7 @@ internal partial class WebDavProcessingService(
                     case "MOVE":
                         await dmsInstanceService.MoveAsync(
                             oldPath: path,
-                            newPath: ResolveDestinationPath(request: request, appId: appId)
+                            newPath: ResolveDestinationPathDmsProcessingRequest(request: request, appId: appId)
                         );
                         return CreateResponse(
                             body: Stream.Null,
@@ -197,7 +197,7 @@ internal partial class WebDavProcessingService(
                     case "COPY":
                         await dmsInstanceService.CopyAsync(
                             oldPath: path,
-                            newPath: ResolveDestinationPath(request: request, appId: appId)
+                            newPath: ResolveDestinationPathDmsProcessingRequest(request: request, appId: appId)
                         );
                         return CreateResponse(
                             body: Stream.Null,
@@ -263,7 +263,7 @@ internal partial class WebDavProcessingService(
 
         });
 
-    private string PropFind(
+    private string PropFindDmsProcessingRequest(
         DmsProcessingRequest request,
         int appId,
         LocalPath path,
@@ -283,7 +283,7 @@ internal partial class WebDavProcessingService(
             .Select(selector: node => ((XElement)node).Name.LocalName);
 
         return !path.IsToFile
-            ? PropFindFolder(request: request, appId: appId, path: path, ns: ns, urlBase: urlBase, requestedProperties: requestedProperties)
+            ? PropFindFolderDmsProcessingRequest(request: request, appId: appId, path: path, ns: ns, urlBase: urlBase, requestedProperties: requestedProperties)
             : PropFindFile(appId: appId, path: path, ns: ns, urlBase: urlBase, requestedProperties: requestedProperties);
     }
 
@@ -323,7 +323,7 @@ internal partial class WebDavProcessingService(
         }
     }
 
-    private string PropFindFolder(
+    private string PropFindFolderDmsProcessingRequest(
         DmsProcessingRequest request,
         int appId,
         LocalPath path,
@@ -354,7 +354,7 @@ internal partial class WebDavProcessingService(
         List<LocalFolder> folders = [];
         List<LocalFile> files = [];
 
-        if (int.TryParse(s: GetHeaderValue(request: request, key: "Depth"), result: out int depth) && depth > 0)
+        if (int.TryParse(s: GetHeaderValueDmsProcessingRequest(request: request, key: "Depth"), result: out int depth) && depth > 0)
         {
             folders =
             [
@@ -404,9 +404,9 @@ internal partial class WebDavProcessingService(
         ));
     }
 
-    private static LocalPath ResolveDestinationPath(DmsProcessingRequest request, int appId)
+    private static LocalPath ResolveDestinationPathDmsProcessingRequest(DmsProcessingRequest request, int appId)
     {
-        string destination = WebUtility.UrlDecode(encodedValue: GetHeaderValue(request: request, key: "Destination"));
+        string destination = WebUtility.UrlDecode(encodedValue: GetHeaderValueDmsProcessingRequest(request: request, key: "Destination"));
         string marker = $"Core/App({appId})/DAV/";
         int markerIndex = destination.IndexOf(value: marker, comparisonType: StringComparison.OrdinalIgnoreCase);
 
@@ -502,7 +502,7 @@ internal partial class WebDavProcessingService(
     private static string TryGetSingleValue(Dictionary<string, string[]> query, string key) =>
         query.TryGetValue(key: key, value: out string[] values) ? values.FirstOrDefault() : null;
 
-    private static string GetHeaderValue(DmsProcessingRequest request, string key) =>
+    private static string GetHeaderValueDmsProcessingRequest(DmsProcessingRequest request, string key) =>
         request.Headers.TryGetValue(key: key, value: out string[] values)
             ? values.FirstOrDefault() ?? string.Empty
             : string.Empty;

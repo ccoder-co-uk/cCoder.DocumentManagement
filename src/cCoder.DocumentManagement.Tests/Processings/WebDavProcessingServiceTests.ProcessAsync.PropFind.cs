@@ -37,7 +37,7 @@ public partial class WebDavProcessingServiceTests
             .Returns(value: new[] { file }.AsQueryable());
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
         string xml = ReadBodyText(stream: response.Body);
 
         // Then
@@ -83,7 +83,7 @@ public partial class WebDavProcessingServiceTests
             .AsQueryable());
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request: request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
         string xml = ReadBodyText(stream: response.Body);
 
         // Then

@@ -103,7 +103,7 @@ public partial class FolderController : ODataController
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
         }
 
-        return Ok(value: await Service.AddAsync(entity: entity));
+        return Ok(value: await Service.AddFolderAsync(entity: entity));
     }
 
     [HttpPut]
@@ -123,7 +123,7 @@ public partial class FolderController : ODataController
         }
 
         entity.Id = key;
-        return Ok(value: await Service.UpdateAsync(entity: entity));
+        return Ok(value: await Service.UpdateFolderAsync(entity: entity));
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
@@ -137,7 +137,7 @@ public partial class FolderController : ODataController
         }
 
         delta.Patch(original: originalEntity);
-        return Ok(value: await Service.UpdateAsync(entity: originalEntity));
+        return Ok(value: await Service.UpdateFolderAsync(entity: originalEntity));
     }
 
     [HttpDelete]

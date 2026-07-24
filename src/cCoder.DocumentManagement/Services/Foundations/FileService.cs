@@ -124,7 +124,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
                                                                                                             .AsQueryable();
         });
 
-    public ValueTask<LocalFile> AddAsync(LocalFile file)
+    public ValueTask<LocalFile> AddFileAsync(LocalFile file)
 =>
         TryCatch(operation: async () =>
         {
@@ -173,7 +173,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 
         });
 
-    public ValueTask<LocalFile> UpdateAsync(LocalFile file)
+    public ValueTask<LocalFile> UpdateFileAsync(LocalFile file)
 =>
         TryCatch(operation: async () =>
         {
@@ -187,11 +187,11 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
             );
 
 
-            return await UpdateForAppAsync(file: file);
+            return await UpdateForAppFileAsync(file: file);
 
         });
 
-    public ValueTask<LocalFile> UpdateForAppAsync(LocalFile file)
+    public ValueTask<LocalFile> UpdateForAppFileAsync(LocalFile file)
 =>
         TryCatch(operation: async () =>
         {
@@ -257,7 +257,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 
         });
 
-    public ValueTask DeleteAllForAppAsync(IEnumerable<LocalFile> items)
+    public ValueTask DeleteAllForAppFileAsync(IEnumerable<LocalFile> items)
 =>
         TryCatch(operation: () =>
         {

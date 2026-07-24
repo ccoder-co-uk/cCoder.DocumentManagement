@@ -33,7 +33,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await folderProcessingService.DeleteAllAsync(items: new[] { folder });
+        await folderProcessingService.DeleteAllFolderAsync(items: new[] { folder });
 
         // Then
         folderServiceMock.Verify(expression: x => x.GetWithRoles(id: folder.Id, ignoreFilters: true), times: Times.Once);

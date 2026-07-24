@@ -25,7 +25,7 @@ internal partial class FolderRoleService(
             return folderRoleBroker.SelectAllFolderRoles(ignoreFilters: ignoreFilters);
         });
 
-    public ValueTask<FolderRole> AddAsync(FolderRole folderRole)
+    public ValueTask<FolderRole> AddFolderRoleAsync(FolderRole folderRole)
 =>
         TryCatch(operation: async () =>
         {
@@ -49,7 +49,7 @@ internal partial class FolderRoleService(
 
         });
 
-    public ValueTask DeleteAsync(FolderRole folderRole)
+    public ValueTask DeleteFolderRoleAsync(FolderRole folderRole)
 =>
         TryCatch(operation: async () =>
         {

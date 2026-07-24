@@ -20,9 +20,9 @@ public interface IFileService
     File GetByPathWithFolderRolesAndContents(int appId, string path, bool ignoreFilters = false);
     IQueryable<File> Search(int appId, byte[] needle);
     IQueryable<File> GetAll(bool ignoreFilters = false);
-    ValueTask<File> AddAsync(File entity);
-    ValueTask<File> UpdateAsync(File entity);
-    ValueTask<File> UpdateForAppAsync(File entity);
+    ValueTask<File> AddFileAsync(File entity);
+    ValueTask<File> UpdateFileAsync(File entity);
+    ValueTask<File> UpdateForAppFileAsync(File entity);
     ValueTask DeleteAsync(Guid id);
-    ValueTask DeleteAllForAppAsync(IEnumerable<File> items);
+    ValueTask DeleteAllForAppFileAsync(IEnumerable<File> items);
 }
