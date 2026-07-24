@@ -25,7 +25,8 @@ public partial class FolderController(
 {
 
     [HttpPost]
-    public async Task<IActionResult> CopyAsync(
+    [ActionName("Copy")]
+    public async Task<IActionResult> PostCopyAsync(
         string source,
         string destination,
         int sourceAppId,
@@ -123,7 +124,8 @@ public partial class FolderController(
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
-    public async Task<IActionResult> Patch([FromRoute] Guid key, Delta<Folder> delta)
+    [ActionName("Patch")]
+    public async Task<IActionResult> PutPatchAsync([FromRoute] Guid key, Delta<Folder> updatedFolderDelta)
     {
         Folder originalEntity = service.Get(folderId: key);
 
@@ -132,7 +134,7 @@ public partial class FolderController(
             return NotFound();
         }
 
-        delta.Patch(original: originalEntity);
+        updatedFolderDelta.Patch(original: originalEntity);
         return Ok(value: await service.UpdateFolderAsync(updatedFolder: originalEntity));
     }
 

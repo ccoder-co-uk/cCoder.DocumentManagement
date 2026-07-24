@@ -1673,20 +1673,6 @@
           "ReturnType": "IActionResult"
         },
         {
-          "Name": "Patch",
-          "Inputs": [
-            {
-              "Name": "key",
-              "Type": "System.Guid"
-            },
-            {
-              "Name": "delta",
-              "Type": "Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.FileContent\u003E"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
-        },
-        {
           "Name": "Post",
           "Inputs": [
             {
@@ -1706,6 +1692,20 @@
             {
               "Name": "entity",
               "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "PutPatchAsync",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "delta",
+              "Type": "Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.FileContent\u003E"
             }
           ],
           "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
@@ -1753,20 +1753,6 @@
           "ReturnType": "IActionResult"
         },
         {
-          "Name": "Patch",
-          "Inputs": [
-            {
-              "Name": "key",
-              "Type": "System.Guid"
-            },
-            {
-              "Name": "delta",
-              "Type": "Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.File\u003E"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
-        },
-        {
           "Name": "Post",
           "Inputs": [
             {
@@ -1789,6 +1775,20 @@
             }
           ],
           "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "PutPatchAsync",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "delta",
+              "Type": "Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.File\u003E"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
         }
       ]
     },
@@ -1797,28 +1797,6 @@
       "StandardElementType": "Exposure",
       "Properties": [],
       "Methods": [
-        {
-          "Name": "CopyAsync",
-          "Inputs": [
-            {
-              "Name": "source",
-              "Type": "System.String"
-            },
-            {
-              "Name": "destination",
-              "Type": "System.String"
-            },
-            {
-              "Name": "sourceAppId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "destAppId",
-              "Type": "System.Int32"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
-        },
         {
           "Name": "Delete",
           "Inputs": [
@@ -1855,25 +1833,33 @@
           "ReturnType": "IActionResult"
         },
         {
-          "Name": "Patch",
-          "Inputs": [
-            {
-              "Name": "key",
-              "Type": "System.Guid"
-            },
-            {
-              "Name": "delta",
-              "Type": "Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.Folder\u003E"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
-        },
-        {
           "Name": "Post",
           "Inputs": [
             {
               "Name": "newFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "PostCopyAsync",
+          "Inputs": [
+            {
+              "Name": "source",
+              "Type": "System.String"
+            },
+            {
+              "Name": "destination",
+              "Type": "System.String"
+            },
+            {
+              "Name": "sourceAppId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "destAppId",
+              "Type": "System.Int32"
             }
           ],
           "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
@@ -1888,6 +1874,20 @@
             {
               "Name": "updatedFolder",
               "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
+        },
+        {
+          "Name": "PutPatchAsync",
+          "Inputs": [
+            {
+              "Name": "key",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "delta",
+              "Type": "Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
           "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
@@ -5552,32 +5552,32 @@
       "LineNumber": 10
     },
     {
-      "Code": "STXAPI004",
-      "Description": "API controller methods must use HTTP nouns: Get, Post, Put, or Delete.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
-      "LineNumber": 115
+      "LineNumber": 136
     },
     {
-      "Code": "STXAPI004",
-      "Description": "API controller methods must use HTTP nouns: Get, Post, Put, or Delete.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
-      "LineNumber": 113
+      "LineNumber": 134
     },
     {
-      "Code": "STXAPI004",
-      "Description": "API controller methods must use HTTP nouns: Get, Post, Put, or Delete.",
+      "Code": "STX0020",
+      "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 27
+      "LineNumber": 128
     },
     {
-      "Code": "STXAPI004",
-      "Description": "API controller methods must use HTTP nouns: Get, Post, Put, or Delete.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 125
+      "LineNumber": 147
     },
     {
       "Code": "STXAPI002",

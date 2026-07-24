@@ -111,7 +111,8 @@ public partial class FileController(
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
-    public async Task<IActionResult> Patch([FromRoute] Guid key, Delta<LocalFile> delta)
+    [ActionName("Patch")]
+    public async Task<IActionResult> PutPatchAsync([FromRoute] Guid key, Delta<LocalFile> updatedFileDelta)
     {
         LocalFile originalEntity = service.Get(fileId: key);
 
@@ -120,7 +121,7 @@ public partial class FileController(
             return NotFound();
         }
 
-        delta.Patch(original: originalEntity);
+        updatedFileDelta.Patch(original: originalEntity);
         return Ok(value: await service.UpdateFileAsync(updatedFile: originalEntity));
     }
 
