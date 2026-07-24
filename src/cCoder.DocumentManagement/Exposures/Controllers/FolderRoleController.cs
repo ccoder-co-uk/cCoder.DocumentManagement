@@ -3,11 +3,11 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Api.OData;
-using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services.Orchestrations;
+using cCoder.DocumentManagement.Dependencies.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
@@ -20,10 +20,12 @@ public class FolderRoleController(
 {
 
     [HttpGet]
-    public IActionResult GetMetadata()
-    {
-        return Ok(value: new MetadataContainer(type: typeof(FolderRole), isEntity: true, hasEndpoint: true));
-    }
+    public IActionResult GetMetadata() =>
+        Ok(
+            value: ODataMetadataProvider.GetMetadata(
+                type: typeof(FolderRole),
+                isEntity: true,
+                hasEndpoint: true));
 
     [HttpGet]
     [EnableQuery(AllowedArithmeticOperators = AllowedArithmeticOperators.All, AllowedFunctions = AllowedFunctions.AllFunctions, AllowedLogicalOperators = AllowedLogicalOperators.All, AllowedQueryOptions = AllowedQueryOptions.All, MaxAnyAllExpressionDepth = 3, MaxExpansionDepth = 3)]

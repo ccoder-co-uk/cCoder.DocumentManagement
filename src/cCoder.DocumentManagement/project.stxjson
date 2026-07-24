@@ -1477,6 +1477,27 @@
       "Methods": []
     },
     {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.ODataCollection\u003CTCollectionType\u003E",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "ODataContext",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Value",
+          "Type": "System.Collections.Generic.IEnumerable\u003CTCollectionType\u003E"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.ODataMetadataProvider",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
       "Name": "cCoder.DocumentManagement.Dependencies.OData.ODataModelBuilder",
       "StandardElementType": "Dependency",
       "Properties": [],
@@ -1916,7 +1937,7 @@
           "Inputs": [
             {
               "Name": "deletedFolderRole",
-              "Type": "cCoder.DocumentManagement.Models.ODataCollection\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+              "Type": "cCoder.DocumentManagement.Dependencies.OData.ODataCollection\u003CcCoder.Data.Models.Security.FolderRole\u003E"
             }
           ],
           "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
@@ -2676,21 +2697,6 @@
           "ReturnType": "cCoder.DocumentManagement.Models.Mapping"
         }
       ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Models.ODataCollection\u003CTCollectionType\u003E",
-      "StandardElementType": "Model",
-      "Properties": [
-        {
-          "Name": "ODataContext",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Value",
-          "Type": "System.Collections.Generic.IEnumerable\u003CTCollectionType\u003E"
-        }
-      ],
-      "Methods": []
     },
     {
       "Name": "cCoder.DocumentManagement.Models.Path",
@@ -5546,13 +5552,6 @@
     }
   ],
   "AnalysisItems": [
-    {
-      "Code": "STXAPI002",
-      "Description": "An API controller must expose a single model contract.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
-      "LineNumber": 17
-    },
     {
       "Code": "STXA001",
       "Description": "An aggregation service may have any number of dependencies, but they must share the same service variation.",
