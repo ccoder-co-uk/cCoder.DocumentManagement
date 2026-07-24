@@ -50,7 +50,7 @@ public partial class FolderProcessingServiceTests
         DmsPath filePath = new(path: "docs/file.txt");
 
         // When
-        Action act = () => folderProcessingService.GetAppPath(app: app, path: filePath);
+        Action act = () => folderProcessingService.GetAppPath(appId: app.Id, path: filePath);
 
         // Then
         act.Should()
@@ -73,7 +73,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: (Folder)null);
 
         // When
-        Action act = () => folderProcessingService.GetAppPath(app: app, path: folderPath);
+        Action act = () => folderProcessingService.GetAppPath(appId: app.Id, path: folderPath);
 
         // Then
         act.Should()
@@ -151,7 +151,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: new[] { rootContent, childContent }.AsQueryable());
 
         // When
-        DMSResult result = folderProcessingService.GetAppPath(app: app, path: new DmsPath(path: rootFolder.Path));
+        DMSResult result = folderProcessingService.GetAppPath(appId: app.Id, path: new DmsPath(path: rootFolder.Path));
 
         // Then
         using ZipArchive zip = new(stream: result.Data, mode: ZipArchiveMode.Read);

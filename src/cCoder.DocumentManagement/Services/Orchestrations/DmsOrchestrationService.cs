@@ -25,7 +25,7 @@ internal partial class DmsOrchestrationService(
             ValidateInputs(inputs: [paths]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
 
-            return folderProcessingService.GetFilesZippedAppPath(app: app, paths: paths);
+            return folderProcessingService.GetFilesZippedAppPath(appId: app.Id, paths: paths);
 
         });
 
@@ -38,8 +38,8 @@ internal partial class DmsOrchestrationService(
 
 
             return path.IsToFile
-                ? fileProcessingService.GetAppPath(app: app, path: path, version: version)
-                : folderProcessingService.GetAppPath(app: app, path: path, search: search);
+                ? fileProcessingService.GetAppPath(appId: app.Id, path: path, version: version)
+                : folderProcessingService.GetAppPath(appId: app.Id, path: path, search: search);
 
         });
 
@@ -51,7 +51,7 @@ internal partial class DmsOrchestrationService(
             LocalApp app = currentAppResolver.ResolveCurrentApp();
 
 
-            return fileProcessingService.SearchApp(app: app, needle: needle)
+            return fileProcessingService.SearchApp(appId: app.Id, needle: needle)
                 .Select(selector: ToExternalFile)
                 .ToArray();
 
@@ -64,7 +64,7 @@ internal partial class DmsOrchestrationService(
             ValidateInputs(inputs: [path, content, ignoreArchiveRoot]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
 
-            await folderProcessingService.UnpackAppPathAsync(app: app, path: path, content: content, ignoreArchiveRoot: ignoreArchiveRoot);
+            await folderProcessingService.UnpackAppPathAsync(appId: app.Id, path: path, content: content, ignoreArchiveRoot: ignoreArchiveRoot);
 
         });
 
@@ -72,17 +72,17 @@ internal partial class DmsOrchestrationService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [path, content]);
+            ValidateInputs(inputs: [path]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
 
 
             if (path.IsToFile)
             {
-                await fileProcessingService.SaveAppPathAsync(app: app, path: path, content: content);
+                await fileProcessingService.SaveAppPathAsync(appId: app.Id, path: path, content: content);
             }
             else
             {
-                await folderProcessingService.SaveAppPathAsync(app: app, path: path);
+                await folderProcessingService.SaveAppPathAsync(appId: app.Id, path: path);
             }
 
         });
@@ -97,11 +97,11 @@ internal partial class DmsOrchestrationService(
 
             if (path.IsToFile)
             {
-                await fileProcessingService.DropAppPathAsync(app: app, path: path, version: version);
+                await fileProcessingService.DropAppPathAsync(appId: app.Id, path: path, version: version);
             }
             else
             {
-                await folderProcessingService.DropAppPathAsync(app: app, path: path);
+                await folderProcessingService.DropAppPathAsync(appId: app.Id, path: path);
             }
 
         });
@@ -116,11 +116,11 @@ internal partial class DmsOrchestrationService(
 
             if (oldPath.IsToFile)
             {
-                await fileProcessingService.CopyAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
+                await fileProcessingService.CopyAppPathAsync(appId: app.Id, oldPath: oldPath, newPath: newPath);
             }
             else
             {
-                await folderProcessingService.CopyAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
+                await folderProcessingService.CopyAppPathAsync(appId: app.Id, oldPath: oldPath, newPath: newPath);
             }
 
         });
@@ -135,11 +135,11 @@ internal partial class DmsOrchestrationService(
 
             if (oldPath.IsToFile)
             {
-                await fileProcessingService.MoveAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
+                await fileProcessingService.MoveAppPathAsync(appId: app.Id, oldPath: oldPath, newPath: newPath);
             }
             else
             {
-                await folderProcessingService.MoveAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
+                await folderProcessingService.MoveAppPathAsync(appId: app.Id, oldPath: oldPath, newPath: newPath);
             }
 
         });

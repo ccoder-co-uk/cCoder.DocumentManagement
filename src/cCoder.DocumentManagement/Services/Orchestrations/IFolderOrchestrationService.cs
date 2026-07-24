@@ -32,17 +32,17 @@ public interface IFolderOrchestrationService
 
     ValueTask HandleFolderDeleteEventAsync(Folder folder);
 
-    DMSResult GetFilesZippedAppPath(App app, IEnumerable<cCoder.DocumentManagement.Dependencies.Path> paths);
+    DMSResult GetFilesZippedAppPath(int appId, IEnumerable<cCoder.DocumentManagement.Dependencies.Path> paths);
 
-    DMSResult GetAppPath(App app, cCoder.DocumentManagement.Dependencies.Path path, string search = "");
+    DMSResult GetAppPath(int appId, cCoder.DocumentManagement.Dependencies.Path path, string search = "");
 
-    ValueTask UnpackAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path path, Stream content, bool ignoreArchiveRoot = false);
+    ValueTask UnpackAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path path, Stream content, bool ignoreArchiveRoot = false);
 
-    ValueTask SaveAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path path);
+    ValueTask SaveAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path path);
 
-    ValueTask DropAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path path);
+    ValueTask DropAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path path);
 
-    ValueTask CopyAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath);
+    ValueTask CopyAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath);
 
-    ValueTask MoveAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath);
+    ValueTask MoveAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath);
 }

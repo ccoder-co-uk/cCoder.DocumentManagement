@@ -90,7 +90,7 @@ public partial class FolderProcessingServiceTests
             .ReturnsAsync(value: createdChild);
 
         // When
-        await folderProcessingService.SaveAppPathAsync(app: app, path: path);
+        await folderProcessingService.SaveAppPathAsync(appId: app.Id, path: path);
 
         // Then
         folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs/nested", ignoreFilters: true), times: Times.Once);
@@ -202,7 +202,7 @@ public partial class FolderProcessingServiceTests
             .ReturnsAsync(value: createdChild);
 
         // When
-        await folderProcessingService.SaveAppPathAsync(app: app, path: path);
+        await folderProcessingService.SaveAppPathAsync(appId: app.Id, path: path);
 
         // Then
         folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs/nested", ignoreFilters: true), times: Times.Once);
@@ -243,7 +243,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: (Folder)null);
 
         // When
-        Func<Task> act = async () => await folderProcessingService.SaveAppPathAsync(app: app, path: path);
+        Func<Task> act = async () => await folderProcessingService.SaveAppPathAsync(appId: app.Id, path: path);
 
         // Then
         await act.Should()

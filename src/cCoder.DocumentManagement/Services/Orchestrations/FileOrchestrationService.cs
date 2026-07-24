@@ -114,57 +114,57 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 
         });
 
-    public DMSResult GetAppPath(App app, cCoder.DocumentManagement.Dependencies.Path path, int version = 0)
+    public DMSResult GetAppPath(int appId, cCoder.DocumentManagement.Dependencies.Path path, int version = 0)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [app, path, version]);
-            return processingService.GetAppPath(app: app, path: path, version: version);
+            ValidateInputs(inputs: [appId, path, version]);
+            return processingService.GetAppPath(appId: appId, path: path, version: version);
 
         });
 
-    public IEnumerable<cCoder.Data.Models.DMS.File> SearchApp(App app, string needle)
+    public IEnumerable<cCoder.Data.Models.DMS.File> SearchApp(int appId, string needle)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [app, needle]);
-            return processingService.SearchApp(app: app, needle: needle);
+            ValidateInputs(inputs: [appId, needle]);
+            return processingService.SearchApp(appId: appId, needle: needle);
 
         });
 
-    public ValueTask SaveAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path path, Stream content = null)
+    public ValueTask SaveAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path path, Stream content = null)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [app, path, content]);
-            return processingService.SaveAppPathAsync(app: app, path: path, content: content);
+            ValidateInputs(inputs: [appId, path, content]);
+            return processingService.SaveAppPathAsync(appId: appId, path: path, content: content);
 
         });
 
-    public ValueTask DropAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path path, int version = 0)
+    public ValueTask DropAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path path, int version = 0)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [app, path, version]);
-            return processingService.DropAppPathAsync(app: app, path: path, version: version);
+            ValidateInputs(inputs: [appId, path, version]);
+            return processingService.DropAppPathAsync(appId: appId, path: path, version: version);
 
         });
 
-    public ValueTask CopyAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath)
+    public ValueTask CopyAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [app, oldPath, newPath]);
-            return processingService.CopyAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
+            ValidateInputs(inputs: [appId, oldPath, newPath]);
+            return processingService.CopyAppPathAsync(appId: appId, oldPath: oldPath, newPath: newPath);
 
         });
 
-    public ValueTask MoveAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath)
+    public ValueTask MoveAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [app, oldPath, newPath]);
-            return processingService.MoveAppPathAsync(app: app, oldPath: oldPath, newPath: newPath);
+            ValidateInputs(inputs: [appId, oldPath, newPath]);
+            return processingService.MoveAppPathAsync(appId: appId, oldPath: oldPath, newPath: newPath);
 
         });
 }

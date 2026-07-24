@@ -3955,8 +3955,8 @@
           "Name": "CopyAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "oldPath",
@@ -3993,8 +3993,8 @@
           "Name": "DropAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -4031,8 +4031,8 @@
           "Name": "GetAppPath",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -4073,8 +4073,8 @@
           "Name": "MoveAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "oldPath",
@@ -4091,8 +4091,8 @@
           "Name": "SaveAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -4109,8 +4109,8 @@
           "Name": "SearchApp",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "needle",
@@ -4170,8 +4170,8 @@
           "Name": "CopyAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "oldPath",
@@ -4240,8 +4240,8 @@
           "Name": "DropAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -4274,8 +4274,8 @@
           "Name": "GetAppPath",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -4292,8 +4292,8 @@
           "Name": "GetFilesZippedAppPath",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "paths",
@@ -4316,8 +4316,8 @@
           "Name": "MoveAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "oldPath",
@@ -4334,8 +4334,8 @@
           "Name": "SaveAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -4348,8 +4348,8 @@
           "Name": "UnpackAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -4644,8 +4644,8 @@
           "Name": "CopyAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "oldPath",
@@ -4682,8 +4682,8 @@
           "Name": "DropAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -4720,8 +4720,8 @@
           "Name": "GetAppPath",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -4762,8 +4762,8 @@
           "Name": "MoveAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "oldPath",
@@ -4780,8 +4780,8 @@
           "Name": "SaveAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -4798,8 +4798,8 @@
           "Name": "SearchApp",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "needle",
@@ -4896,8 +4896,8 @@
           "Name": "CopyAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "oldPath",
@@ -4966,8 +4966,8 @@
           "Name": "DropAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -5000,8 +5000,8 @@
           "Name": "GetAppPath",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -5018,8 +5018,8 @@
           "Name": "GetFilesZippedAppPath",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "paths",
@@ -5042,8 +5042,8 @@
           "Name": "MoveAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "oldPath",
@@ -5060,8 +5060,8 @@
           "Name": "SaveAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -5074,8 +5074,8 @@
           "Name": "UnpackAppPathAsync",
           "Inputs": [
             {
-              "Name": "app",
-              "Type": "cCoder.Data.Models.CMS.App"
+              "Name": "appId",
+              "Type": "System.Int32"
             },
             {
               "Name": "path",
@@ -5560,50 +5560,15 @@
       "LineNumber": 17
     },
     {
-      "Code": "STX0007",
-      "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FileOrchestrationService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0007",
-      "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService",
-      "LineNumber": 13
-    },
-    {
       "Code": "STXFORMAT001",
       "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
-      "LineNumber": 91
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
-      "LineNumber": 311
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
+      "LineNumber": 161
     },
     {
       "Code": "STX0004",
       "Description": "A service must not depend on another service at the same layer.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0007",
-      "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "LineNumber": 16
@@ -5618,13 +5583,6 @@
     {
       "Code": "STX0004",
       "Description": "A service must not depend on another service at the same layer.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STX0007",
-      "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
       "LineNumber": 16
