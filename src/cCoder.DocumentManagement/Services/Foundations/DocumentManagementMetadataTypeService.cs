@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Api.OData;
+using cCoder.DocumentManagement.Dependencies.OData;
 using cCoder.Data.Models.DMS;
 using DmsFile = cCoder.Data.Models.DMS.File;
 using FolderRole = cCoder.Data.Models.Security.FolderRole;

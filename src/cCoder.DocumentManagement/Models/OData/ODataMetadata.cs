@@ -5,8 +5,9 @@
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using cCoder.DocumentManagement.Api.OData;
 
-namespace cCoder.DocumentManagement.Api.OData;
+namespace cCoder.DocumentManagement.Dependencies.OData;
 
 public class MetadataContainerSet
 {

@@ -6,11 +6,12 @@ using System.Linq.Expressions;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Models;
+using cCoder.DocumentManagement.Api.OData;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using FileModel = cCoder.Data.Models.DMS.File;
 
-namespace cCoder.DocumentManagement.Api.OData;
+namespace cCoder.DocumentManagement.Dependencies.OData;
 
 internal class DocumentManagementModelBuilder : ODataModelBuilder
 {

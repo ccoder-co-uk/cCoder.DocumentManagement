@@ -293,23 +293,6 @@
       ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Api.OData.DocumentManagementModelBuilder",
-      "StandardElementType": "Unknown",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "Build",
-          "Inputs": [],
-          "ReturnType": "cCoder.DocumentManagement.Api.OData.ODataModel"
-        },
-        {
-          "Name": "Configure",
-          "Inputs": [],
-          "ReturnType": "System.Void"
-        }
-      ]
-    },
-    {
       "Name": "cCoder.DocumentManagement.Api.OData.EdmModelExtensions",
       "StandardElementType": "Dependency",
       "Properties": [],
@@ -334,98 +317,9 @@
               "Type": "System.Boolean"
             }
           ],
-          "ReturnType": "cCoder.DocumentManagement.Api.OData.ExtendedMetadataContainer"
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.OData.ExtendedMetadataContainer"
         }
       ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Api.OData.ExtendedMetadataContainer",
-      "StandardElementType": "Model",
-      "Properties": [
-        {
-          "Name": "Operations",
-          "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Api.OData.OperationContainer\u003E"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Api.OData.MetadataContainer",
-      "StandardElementType": "Unknown",
-      "Properties": [
-        {
-          "Name": "Category",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Description",
-          "Type": "System.String"
-        },
-        {
-          "Name": "DisplayName",
-          "Type": "System.String"
-        },
-        {
-          "Name": "HasEndpoint",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsEntity",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsJoinEntity",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsSystemManaged",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsValueType",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "Name",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Properties",
-          "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Api.OData.PropertyContainer\u003E"
-        },
-        {
-          "Name": "ServerType",
-          "Type": "System.String"
-        },
-        {
-          "Name": "ServerTypeName",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Type",
-          "Type": "System.String"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Api.OData.MetadataContainerSet",
-      "StandardElementType": "Model",
-      "Properties": [
-        {
-          "Name": "Name",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Types",
-          "Type": "cCoder.DocumentManagement.Api.OData.ExtendedMetadataContainer[]"
-        },
-        {
-          "Name": "UriBase",
-          "Type": "System.String"
-        }
-      ],
-      "Methods": []
     },
     {
       "Name": "cCoder.DocumentManagement.Api.OData.ModelStateError",
@@ -478,115 +372,9 @@
       "Methods": []
     },
     {
-      "Name": "cCoder.DocumentManagement.Api.OData.ODataModelBuilder",
-      "StandardElementType": "Unknown",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "Build",
-          "Inputs": [],
-          "ReturnType": "cCoder.DocumentManagement.Api.OData.ODataModel"
-        }
-      ]
-    },
-    {
       "Name": "cCoder.DocumentManagement.Api.OData.ODataTypeExtensions",
       "StandardElementType": "Dependency",
       "Properties": [],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Api.OData.OperationContainer",
-      "StandardElementType": "Model",
-      "Properties": [
-        {
-          "Name": "Definition",
-          "Type": "System.String"
-        },
-        {
-          "Name": "HttpVerb",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Name",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Parameters",
-          "Type": "System.Collections.Generic.IDictionary\u003CSystem.String, System.String\u003E"
-        },
-        {
-          "Name": "Queryable",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "ReturnType",
-          "Type": "cCoder.DocumentManagement.Api.OData.MetadataContainer"
-        },
-        {
-          "Name": "Url",
-          "Type": "System.String"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Api.OData.PropertyContainer",
-      "StandardElementType": "Model",
-      "Properties": [
-        {
-          "Name": "Description",
-          "Type": "System.String"
-        },
-        {
-          "Name": "DisplayName",
-          "Type": "System.String"
-        },
-        {
-          "Name": "IsGeneric",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsReadOnly",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsRequired",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsSystemManaged",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsValueType",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "Name",
-          "Type": "System.String"
-        },
-        {
-          "Name": "ServerType",
-          "Type": "System.String"
-        },
-        {
-          "Name": "ServerTypeName",
-          "Type": "System.String"
-        },
-        {
-          "Name": "ShortDisplayName",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Template",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Type",
-          "Type": "System.String"
-        }
-      ],
       "Methods": []
     },
     {
@@ -1580,6 +1368,230 @@
       "Name": "cCoder.DocumentManagement.Dependencies.Branching",
       "StandardElementType": "Dependency",
       "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.CurrentAppResolver",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ResolveCurrentApp",
+          "Inputs": [],
+          "ReturnType": "cCoder.Data.Models.CMS.App"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.DocumentManagementModelBuilder",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "Build",
+          "Inputs": [],
+          "ReturnType": "cCoder.DocumentManagement.Api.OData.ODataModel"
+        },
+        {
+          "Name": "Configure",
+          "Inputs": [],
+          "ReturnType": "System.Void"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.ExtendedMetadataContainer",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Operations",
+          "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.OData.OperationContainer\u003E"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.MetadataContainer",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Category",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Description",
+          "Type": "System.String"
+        },
+        {
+          "Name": "DisplayName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "HasEndpoint",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsEntity",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsJoinEntity",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsSystemManaged",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsValueType",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Properties",
+          "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.OData.PropertyContainer\u003E"
+        },
+        {
+          "Name": "ServerType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ServerTypeName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Type",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.MetadataContainerSet",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Types",
+          "Type": "cCoder.DocumentManagement.Dependencies.OData.ExtendedMetadataContainer[]"
+        },
+        {
+          "Name": "UriBase",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.ODataModelBuilder",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "Build",
+          "Inputs": [],
+          "ReturnType": "cCoder.DocumentManagement.Api.OData.ODataModel"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.OperationContainer",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Definition",
+          "Type": "System.String"
+        },
+        {
+          "Name": "HttpVerb",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Parameters",
+          "Type": "System.Collections.Generic.IDictionary\u003CSystem.String, System.String\u003E"
+        },
+        {
+          "Name": "Queryable",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "ReturnType",
+          "Type": "cCoder.DocumentManagement.Dependencies.OData.MetadataContainer"
+        },
+        {
+          "Name": "Url",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.OData.PropertyContainer",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Description",
+          "Type": "System.String"
+        },
+        {
+          "Name": "DisplayName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "IsGeneric",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsReadOnly",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsRequired",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsSystemManaged",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsValueType",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ServerType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ServerTypeName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ShortDisplayName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Template",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Type",
+          "Type": "System.String"
+        }
+      ],
       "Methods": []
     },
     {
@@ -2733,18 +2745,6 @@
       ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Services.CurrentAppResolver",
-      "StandardElementType": "Unknown",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "ResolveCurrentApp",
-          "Inputs": [],
-          "ReturnType": "cCoder.Data.Models.CMS.App"
-        }
-      ]
-    },
-    {
       "Name": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
       "StandardElementType": "FoundationService",
       "Properties": [],
@@ -2871,7 +2871,7 @@
         {
           "Name": "GetKnownMetadata",
           "Inputs": [],
-          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Api.OData.MetadataContainerSet\u003E"
+          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.OData.MetadataContainerSet\u003E"
         }
       ]
     },
@@ -5190,6 +5190,10 @@
       "ToType": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService"
     },
     {
+      "FromType": "cCoder.DocumentManagement.Dependencies.CurrentAppResolver",
+      "ToType": "cCoder.DocumentManagement.Brokers.Storage.AppBroker"
+    },
+    {
       "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
       "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService"
     },
@@ -5244,10 +5248,6 @@
     {
       "FromType": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
       "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Services.CurrentAppResolver",
-      "ToType": "cCoder.DocumentManagement.Brokers.Storage.AppBroker"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
@@ -5315,7 +5315,7 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
-      "ToType": "cCoder.DocumentManagement.Services.CurrentAppResolver"
+      "ToType": "cCoder.DocumentManagement.Dependencies.CurrentAppResolver"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
@@ -5327,7 +5327,7 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
-      "ToType": "cCoder.DocumentManagement.Services.CurrentAppResolver"
+      "ToType": "cCoder.DocumentManagement.Dependencies.CurrentAppResolver"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
@@ -5476,32 +5476,11 @@
   ],
   "AnalysisItems": [
     {
-      "Code": "STX0001",
-      "Description": "The type is not a valid Standard element type.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.DocumentManagementModelBuilder",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0001",
-      "Description": "The type is not a valid Standard element type.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.MetadataContainer",
-      "LineNumber": 20
-    },
-    {
-      "Code": "STXSTRUCT001",
-      "Description": "The source file must live in the standard folder for its element type.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Api.OData.ModelStateError",
-      "LineNumber": 174
-    },
-    {
-      "Code": "STX0001",
-      "Description": "The type is not a valid Standard element type.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.ODataModelBuilder",
-      "LineNumber": 11
+      "LineNumber": 12
     },
     {
       "Code": "STXFORMAT001",
@@ -5581,11 +5560,25 @@
       "LineNumber": 115
     },
     {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
+      "LineNumber": 135
+    },
+    {
       "Code": "STXAPI004",
       "Description": "API controller methods must use HTTP nouns: Get, Post, Put, or Delete.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
       "LineNumber": 113
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
+      "LineNumber": 133
     },
     {
       "Code": "STXAPI004",
@@ -5607,6 +5600,13 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
       "LineNumber": 125
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "LineNumber": 145
     },
     {
       "Code": "STXAPI002",
@@ -5704,7 +5704,7 @@
       "Description": "Program.cs, IServiceCollectionExtensions.cs, and WebApplicationExtensions.cs must live at the project root.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.IServiceCollectionExtensions",
-      "LineNumber": 17
+      "LineNumber": 18
     },
     {
       "Code": "STXM001",
@@ -5749,13 +5749,6 @@
       "LineNumber": 19
     },
     {
-      "Code": "STX0001",
-      "Description": "The type is not a valid Standard element type.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.CurrentAppResolver",
-      "LineNumber": 11
-    },
-    {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
@@ -5775,6 +5768,13 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
       "LineNumber": 13
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.DocumentManagementMetadataTypeService",
+      "LineNumber": 42
     },
     {
       "Code": "STXF002",
@@ -6071,6 +6071,13 @@
       "LineNumber": 12
     },
     {
+      "Code": "STXD001",
+      "Description": "Dependency elements may only be consumed by brokers.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
+      "LineNumber": 15
+    },
+    {
       "Code": "STXO001",
       "Description": "An orchestration must have two or three foundation or processing dependencies and must not mix them.",
       "Severity": "Warning",
@@ -6087,6 +6094,13 @@
     {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
+      "LineNumber": 15
+    },
+    {
+      "Code": "STXD001",
+      "Description": "Dependency elements may only be consumed by brokers.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Orchestrations.DmsOrchestrationService",
       "LineNumber": 15

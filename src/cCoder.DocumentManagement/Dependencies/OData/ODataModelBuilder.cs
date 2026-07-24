@@ -4,9 +4,10 @@
 
 using System.Linq.Expressions;
 using cCoder.DocumentManagement.Models;
+using cCoder.DocumentManagement.Api.OData;
 using Microsoft.OData.ModelBuilder;
 
-namespace cCoder.DocumentManagement.Api.OData;
+namespace cCoder.DocumentManagement.Dependencies.OData;
 
 public abstract class ODataModelBuilder
 {

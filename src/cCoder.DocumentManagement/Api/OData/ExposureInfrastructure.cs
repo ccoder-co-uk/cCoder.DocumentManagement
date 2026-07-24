@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Api.OData;
+using cCoder.DocumentManagement.Dependencies.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.OData.Edm;
@@ -171,10 +172,4 @@ namespace cCoder.DocumentManagement.Api.OData
                 .ToJsonForOdata();
     }
 
-    public sealed class ModelStateError
-    {
-        public string Key { get; set; }
-        public object Value { get; set; }
-        public string[] Errors { get; set; }
-    }
 }

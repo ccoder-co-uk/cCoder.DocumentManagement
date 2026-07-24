@@ -40,7 +40,7 @@ public partial class FolderController(
 
         return isExtendedMetaRequest
             ? Ok(
-                value: new cCoder.DocumentManagement.Api.OData.DocumentManagementModelBuilder()
+                value: new cCoder.DocumentManagement.Dependencies.OData.DocumentManagementModelBuilder()
                     .Build()
                     .EDMModel.GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(Folder))
             )

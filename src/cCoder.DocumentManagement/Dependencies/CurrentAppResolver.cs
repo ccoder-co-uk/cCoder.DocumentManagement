@@ -4,9 +4,10 @@
 
 using cCoder.Data.Models.CMS;
 using cCoder.DocumentManagement.Brokers.Storage;
+using cCoder.DocumentManagement.Services;
 
 
-namespace cCoder.DocumentManagement.Services;
+namespace cCoder.DocumentManagement.Dependencies;
 
 internal class CurrentAppResolver(
     IAppBroker appBroker,

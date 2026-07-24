@@ -9,6 +9,8 @@ using cCoder.DocumentManagement.Api.OData;
 using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Brokers.Storage;
+using cCoder.DocumentManagement.Dependencies;
+using cCoder.DocumentManagement.Dependencies.OData;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Exposures.EventHandlers;
 using cCoder.DocumentManagement.Models;

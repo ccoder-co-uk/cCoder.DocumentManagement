@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Api.OData;
+using cCoder.DocumentManagement.Dependencies.OData;
 using cCoder.DocumentManagement.Models;
 using cCoder.Eventing;
 using Microsoft.AspNetCore.OData;
