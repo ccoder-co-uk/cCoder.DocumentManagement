@@ -55,17 +55,17 @@ internal partial class EventHandlerService(IEventHubBroker eventHubBroker) : IEv
         ListenToPackageImportEvents();
 
     void ListenToAppAddEvents() =>
-        eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
+        eventHubBroker.ListenToEvent<App, IAppAggregationService>(
             eventName: "app_add",
             handler: (service, app) => service.AddAppAsync(newApp: app));
 
     void ListenToAppUpdateEvents() =>
-        eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
+        eventHubBroker.ListenToEvent<App, IAppAggregationService>(
             eventName: "app_update",
             handler: (service, app) => service.UpdateAppAsync(updatedApp: app));
 
     void ListenToAppDeleteEvents() =>
-        eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
+        eventHubBroker.ListenToEvent<App, IAppAggregationService>(
             eventName: "app_delete",
             handler: (service, app) => service.DeleteAsync(appId: app.Id));
 

@@ -7,9 +7,9 @@ using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 
-namespace cCoder.DocumentManagement.Services.Orchestrations;
+namespace cCoder.DocumentManagement.Services.Aggregations;
 
-public interface IAppOrchestrationService
+public interface IAppAggregationService
 {
     ValueTask AddAppAsync(App newApp);
     ValueTask UpdateAppAsync(App updatedApp);

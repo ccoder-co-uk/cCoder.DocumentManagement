@@ -15,8 +15,6 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 internal partial class FolderProcessingService(IFolderService service, IFolderRoleService folderRoleService, IRoleService roleService, IFileService fileService, IFileContentService fileContentService, IFileProcessingService fileProcessingService, IAuthorizationBroker authorizationBroker) : IFolderProcessingService
 {
-    private sealed record FolderArchiveData(ILookup<Guid?, Folder> SubFoldersByParentId, ILookup<Guid, cCoder.Data.Models.DMS.File> FilesByFolderId, ILookup<Guid, FileContent> FileContentsByFileId);
-
     private User GetCurrentUser() =>
         authorizationBroker.GetCurrentUser();
 

@@ -6,11 +6,12 @@ using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
+using cCoder.DocumentManagement.Services.Orchestrations;
 
-namespace cCoder.DocumentManagement.Services.Orchestrations;
+namespace cCoder.DocumentManagement.Services.Aggregations;
 
-internal partial class AppOrchestrationService(IFolderOrchestrationService folderOrchestrationService)
-    : IAppOrchestrationService
+internal partial class AppAggregationService(IFolderOrchestrationService folderOrchestrationService)
+    : IAppAggregationService
 {
     public ValueTask AddAppAsync(App newApp)
 =>

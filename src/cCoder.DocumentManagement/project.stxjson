@@ -2549,6 +2549,79 @@
       "Methods": []
     },
     {
+      "Name": "cCoder.DocumentManagement.Models.FolderArchiveData",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "FileContentsByFileId",
+          "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "FilesByFolderId",
+          "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "SubFoldersByParentId",
+          "Type": "System.Linq.ILookup\u003CSystem.Guid?, cCoder.Data.Models.DMS.Folder\u003E"
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "\u003CClone\u003E$",
+          "Inputs": [],
+          "ReturnType": "cCoder.DocumentManagement.Models.FolderArchiveData"
+        },
+        {
+          "Name": "Deconstruct",
+          "Inputs": [
+            {
+              "Name": "SubFoldersByParentId",
+              "Type": "System.Linq.ILookup\u003CSystem.Guid?, cCoder.Data.Models.DMS.Folder\u003E"
+            },
+            {
+              "Name": "FilesByFolderId",
+              "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.File\u003E"
+            },
+            {
+              "Name": "FileContentsByFileId",
+              "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.FileContent\u003E"
+            }
+          ],
+          "ReturnType": "System.Void"
+        },
+        {
+          "Name": "Equals",
+          "Inputs": [
+            {
+              "Name": "obj",
+              "Type": "System.Object?"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        },
+        {
+          "Name": "Equals",
+          "Inputs": [
+            {
+              "Name": "other",
+              "Type": "cCoder.DocumentManagement.Models.FolderArchiveData?"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        },
+        {
+          "Name": "GetHashCode",
+          "Inputs": [],
+          "ReturnType": "System.Int32"
+        },
+        {
+          "Name": "ToString",
+          "Inputs": [],
+          "ReturnType": "System.String"
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.Models.FolderRoleInfo",
       "StandardElementType": "Model",
       "Properties": [
@@ -2704,6 +2777,43 @@
             }
           ],
           "ReturnType": "cCoder.DocumentManagement.Models.Result\u003CTNew\u003E"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService",
+      "StandardElementType": "AggregationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddAppAsync",
+          "Inputs": [
+            {
+              "Name": "newApp",
+              "Type": "cCoder.Data.Models.CMS.App"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "DeleteAsync",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
+        },
+        {
+          "Name": "UpdateAppAsync",
+          "Inputs": [
+            {
+              "Name": "updatedApp",
+              "Type": "cCoder.Data.Models.CMS.App"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.ValueTask"
         }
       ]
     },
@@ -3570,43 +3680,6 @@
             }
           ],
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.Role\u003E"
-        }
-      ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "StandardElementType": "OrchestrationService",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "AddAppAsync",
-          "Inputs": [
-            {
-              "Name": "newApp",
-              "Type": "cCoder.Data.Models.CMS.App"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "DeleteAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "UpdateAppAsync",
-          "Inputs": [
-            {
-              "Name": "updatedApp",
-              "Type": "cCoder.Data.Models.CMS.App"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
         }
       ]
     },
@@ -5002,79 +5075,6 @@
       ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "StandardElementType": "ProcessingService",
-      "Properties": [
-        {
-          "Name": "FileContentsByFileId",
-          "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.FileContent\u003E"
-        },
-        {
-          "Name": "FilesByFolderId",
-          "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.File\u003E"
-        },
-        {
-          "Name": "SubFoldersByParentId",
-          "Type": "System.Linq.ILookup\u003CSystem.Guid?, cCoder.Data.Models.DMS.Folder\u003E"
-        }
-      ],
-      "Methods": [
-        {
-          "Name": "\u003CClone\u003E$",
-          "Inputs": [],
-          "ReturnType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData"
-        },
-        {
-          "Name": "Deconstruct",
-          "Inputs": [
-            {
-              "Name": "SubFoldersByParentId",
-              "Type": "System.Linq.ILookup\u003CSystem.Guid?, cCoder.Data.Models.DMS.Folder\u003E"
-            },
-            {
-              "Name": "FilesByFolderId",
-              "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.File\u003E"
-            },
-            {
-              "Name": "FileContentsByFileId",
-              "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.FileContent\u003E"
-            }
-          ],
-          "ReturnType": "System.Void"
-        },
-        {
-          "Name": "Equals",
-          "Inputs": [
-            {
-              "Name": "obj",
-              "Type": "System.Object?"
-            }
-          ],
-          "ReturnType": "System.Boolean"
-        },
-        {
-          "Name": "Equals",
-          "Inputs": [
-            {
-              "Name": "other",
-              "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData?"
-            }
-          ],
-          "ReturnType": "System.Boolean"
-        },
-        {
-          "Name": "GetHashCode",
-          "Inputs": [],
-          "ReturnType": "System.Int32"
-        },
-        {
-          "Name": "ToString",
-          "Inputs": [],
-          "ReturnType": "System.String"
-        }
-      ]
-    },
-    {
       "Name": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
       "StandardElementType": "ProcessingService",
       "Properties": [],
@@ -5238,7 +5238,7 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure",
-      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService"
+      "ToType": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService"
     },
     {
       "FromType": "cCoder.DocumentManagement.Exposures.DocumentManagementPackageManager",
@@ -5247,6 +5247,14 @@
     {
       "FromType": "cCoder.DocumentManagement.Exposures.EventHandlers.DocumentManagementEventHandlers",
       "ToType": "cCoder.DocumentManagement.Services.Foundations.Events.EventHandlerService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Models.FolderArchiveData",
+      "ToType": "cCoder.DocumentManagement.Models.FolderArchiveData"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
@@ -5331,10 +5339,6 @@
     {
       "FromType": "cCoder.DocumentManagement.Services.Foundations.RoleService",
       "ToType": "cCoder.DocumentManagement.Brokers.RoleBroker"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.DmsHttpRequestOrchestrationService",
@@ -5463,10 +5467,6 @@
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
       "ToType": "cCoder.DocumentManagement.Services.Processings.FileProcessingService"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "ToType": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.FolderRoleEventProcessingService",
@@ -5650,6 +5650,13 @@
       "LineNumber": 20
     },
     {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure",
+      "LineNumber": 22
+    },
+    {
       "Code": "STXE005",
       "Description": "An exposure must not sequence multiple routine calls.",
       "Severity": "Warning",
@@ -5744,6 +5751,13 @@
       "Code": "STXFORMAT001",
       "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Models.FolderArchiveData",
+      "LineNumber": 12
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Models.Result",
       "LineNumber": 81
     },
@@ -5753,6 +5767,27 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Models.Result\u003CT\u003E",
       "LineNumber": 81
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService",
+      "LineNumber": 13
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService",
+      "LineNumber": 53
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService",
+      "LineNumber": 91
     },
     {
       "Code": "STXA001",
@@ -5802,6 +5837,13 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.DocumentManagementMetadataTypeService",
       "LineNumber": 42
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.Events.EventHandlerService",
+      "LineNumber": 108
     },
     {
       "Code": "STXF002",
@@ -6033,20 +6075,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 238
-    },
-    {
-      "Code": "STX0004",
-      "Description": "A service must not depend on another service at the same layer.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 12
-    },
-    {
-      "Code": "STXO001",
-      "Description": "An orchestration must have two or three foundation or processing dependencies and must not mix them.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Orchestrations.AppOrchestrationService",
-      "LineNumber": 12
     },
     {
       "Code": "STXFORMAT001",
@@ -6347,203 +6375,133 @@
       "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 57
+      "LineNumber": 55
     },
     {
       "Code": "STXFORMAT009",
       "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 69
+      "LineNumber": 67
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 128
+      "LineNumber": 126
     },
     {
       "Code": "STXFORMAT009",
       "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 203
+      "LineNumber": 201
     },
     {
       "Code": "STXFORMAT009",
       "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 221
+      "LineNumber": 219
     },
     {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 244
+      "LineNumber": 242
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 317
+      "LineNumber": 315
     },
     {
       "Code": "STXFORMAT009",
       "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 359
+      "LineNumber": 357
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 469
+      "LineNumber": 467
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 507
+      "LineNumber": 505
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 522
+      "LineNumber": 520
     },
     {
       "Code": "STXFORMAT009",
       "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 751
+      "LineNumber": 749
     },
     {
       "Code": "STXFORMAT009",
       "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 751
+      "LineNumber": 749
     },
     {
       "Code": "STXFORMAT009",
       "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 797
+      "LineNumber": 795
     },
     {
       "Code": "STXFORMAT009",
       "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 797
+      "LineNumber": 795
     },
     {
       "Code": "STXFORMAT009",
       "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 855
+      "LineNumber": 853
     },
     {
       "Code": "STXFORMAT009",
       "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 855
+      "LineNumber": 853
     },
     {
       "Code": "STXFORMAT004",
       "Description": "Adjacent methods must have exactly one empty line between them.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 952
+      "LineNumber": 950
     },
     {
-      "Code": "STX0004",
-      "Description": "A service must not depend on another service at the same layer.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STX0007",
-      "Description": "A service public API must use one model contract or primitive types.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STX0008",
-      "Description": "A service must declare its validations in a Validations partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STX0009",
-      "Description": "A service must declare TryCatch handling in an Exceptions partial.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STX0014",
-      "Description": "A service contract must be named after its implementation with an I prefix.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STX0015",
-      "Description": "Every public service method must be declared by its local interface.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STXEX001",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve validation exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STXEX002",
-      "Description": "Every TryCatch overload must classify, wrap, and preserve dependency exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STXEX003",
-      "Description": "Every TryCatch overload must wrap and preserve unclassified exceptions.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STXP001",
-      "Description": "A processing service may use only one foundation service and no higher-level service.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STXP002",
-      "Description": "A processing service name must contain the Processing identifier.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "LineNumber": 18
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 969
     },
     {
       "Code": "STX0007",

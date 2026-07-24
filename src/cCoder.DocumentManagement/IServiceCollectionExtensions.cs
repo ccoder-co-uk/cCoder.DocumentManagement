@@ -124,7 +124,7 @@ public static partial class IServiceCollectionExtensions
 
     private static void AddOrchestrations(this IServiceCollection services)
     {
-        services.AddTransient<IAppOrchestrationService, AppOrchestrationService>();
+        services.AddTransient<IAppAggregationService, AppAggregationService>();
         services.AddTransient<IDocumentManagementMigrationAggregationService, DocumentManagementMigrationAggregationService>();
         services.AddTransient<IDmsOrchestrationService, DmsOrchestrationService>();
         services.AddTransient<IDmsHttpRequestOrchestrationService, DmsHttpRequestOrchestrationService>();

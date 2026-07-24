@@ -4,21 +4,22 @@
 
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
+using cCoder.DocumentManagement.Services.Aggregations;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using Moq;
 using Xunit;
 
-namespace cCoder.Core.Services.Tests.DMS.Orchestrations;
+namespace cCoder.Core.Services.Tests.DMS.Aggregations;
 
-public partial class AppOrchestrationServiceTests
+public partial class AppAggregationServiceTests
 {
     private readonly Mock<IFolderOrchestrationService> folderOrchestrationServiceMock;
-    private readonly AppOrchestrationService service;
+    private readonly AppAggregationService service;
 
-    public AppOrchestrationServiceTests()
+    public AppAggregationServiceTests()
     {
         folderOrchestrationServiceMock = new Mock<IFolderOrchestrationService>(behavior: MockBehavior.Strict);
-        service = new AppOrchestrationService(folderOrchestrationService: folderOrchestrationServiceMock.Object);
+        service = new AppAggregationService(folderOrchestrationService: folderOrchestrationServiceMock.Object);
     }
 
     [Fact]

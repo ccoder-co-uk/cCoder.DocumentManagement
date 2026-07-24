@@ -4,9 +4,9 @@
 
 using cCoder.DocumentManagement.Models.Exceptions;
 
-namespace cCoder.DocumentManagement.Services.Orchestrations;
+namespace cCoder.DocumentManagement.Services.Aggregations;
 
-internal sealed partial class AppOrchestrationService
+internal sealed partial class AppAggregationService
 {
     private static void TryCatch(Action operation)
     {
