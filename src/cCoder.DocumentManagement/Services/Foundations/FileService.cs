@@ -60,7 +60,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [folderIds, ignoreFilters]);
-            return fileBroker.GetFileIdsByFolderIds(folderIds: folderIds, ignoreFilters: ignoreFilters);
+            return fileBroker.SelectFileIdsByFolderIds(folderIds: folderIds, ignoreFilters: ignoreFilters);
         });
 
     public LocalFile GetWithFolderAndContents(Guid fileId, bool ignoreFilters = false)
@@ -133,7 +133,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 
 
             authorizationBroker.Authorize(
-                appId: fileBroker.GetAppId(entity: newFileEntity),
+                appId: fileBroker.SelectAppId(entity: newFileEntity),
                 privilege: $"{nameof(cCoder.Data.Models.DMS.File)}_create"
             );
 
@@ -182,7 +182,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 
 
             authorizationBroker.Authorize(
-                appId: fileBroker.GetAppId(entity: updateFileEntity),
+                appId: fileBroker.SelectAppId(entity: updateFileEntity),
                 privilege: $"{nameof(cCoder.Data.Models.DMS.File)}_update"
             );
 
@@ -240,7 +240,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
 
 
             authorizationBroker.Authorize(
-                appId: fileBroker.GetAppId(entity: new FileEntity
+                appId: fileBroker.SelectAppId(entity: new FileEntity
                 {
                     Id = file.Id,
                     FolderId = file.FolderId,

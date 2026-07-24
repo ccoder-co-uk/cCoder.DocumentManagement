@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using System.Security;
+using cCoder.DocumentManagement.Dependencies;
 using cCoder.Data;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.Security;
@@ -58,10 +59,15 @@ internal class AuthorizationBroker(ICoreContextFactory coreContextFactory) : IAu
     {
         LocalUser user = GetCurrentUser();
 
-        if (user == null || !(HasAppAdminPrivilege(user: user, appId: appId) || HasPrivilege(user: user, appId: appId, privilege: privilege)))
-        {
-            throw new SecurityException(message: "Access Denied!");
-        }
+        Branching.ThrowWhen(
+            condition: user == null
+                || !(HasAppAdminPrivilege(user: user, appId: appId)
+                    || HasPrivilege(
+                        user: user,
+                        appId: appId,
+                        privilege: privilege)),
+            createException: () =>
+                new SecurityException(message: "Access Denied!"));
     }
 
     private static bool HasPrivilege(LocalUser user, int? appId, string privilege)
@@ -79,55 +85,43 @@ internal class AuthorizationBroker(ICoreContextFactory coreContextFactory) : IAu
         appId.HasValue
         && (user.Roles?.Any(predicate: role => role.Role.AppId == appId.Value && role.Role.Allows(user: user, privilege: "app_admin")) ?? false);
 
-    private static LocalUser ToLocalUser(DataUser user)
-    {
-        if (user == null)
-        {
-            return null;
-        }
+    private static LocalUser ToLocalUser(DataUser user) =>
+        Branching.MapOrDefault(
+            input: user,
+            mapper: foundUser =>
+                new LocalUser
+                {
+                    Id = foundUser.Id,
+                    DefaultCultureId = foundUser.DefaultCultureId,
+                    DisplayName = foundUser.DisplayName,
+                    Email = foundUser.Email,
+                    IsActive = foundUser.IsActive,
+                    DefaultCulture = foundUser.DefaultCulture,
+                    Roles = foundUser.Roles?.Select(selector: ToLocalUserRole)
+                        .ToList(),
+                });
 
-        return new LocalUser
-        {
-            Id = user.Id,
-            DefaultCultureId = user.DefaultCultureId,
-            DisplayName = user.DisplayName,
-            Email = user.Email,
-            IsActive = user.IsActive,
-            DefaultCulture = user.DefaultCulture,
-            Roles = user.Roles?.Select(selector: ToLocalUserRole)
-            .ToList(),
-        };
-    }
+    private static LocalUserRole ToLocalUserRole(DataUserRole userRole) =>
+        Branching.MapOrDefault(
+            input: userRole,
+            mapper: foundUserRole =>
+                new LocalUserRole
+                {
+                    UserId = foundUserRole.UserId,
+                    RoleId = foundUserRole.RoleId,
+                    Role = ToLocalRole(role: foundUserRole.Role),
+                });
 
-    private static LocalUserRole ToLocalUserRole(DataUserRole userRole)
-    {
-        if (userRole == null)
-        {
-            return null;
-        }
-
-        return new LocalUserRole
-        {
-            UserId = userRole.UserId,
-            RoleId = userRole.RoleId,
-            Role = ToLocalRole(role: userRole.Role),
-        };
-    }
-
-    private static LocalRole ToLocalRole(DataRole role)
-    {
-        if (role == null)
-        {
-            return null;
-        }
-
-        return new LocalRole
-        {
-            Id = role.Id,
-            AppId = role.AppId,
-            Name = role.Name,
-            Description = role.Description,
-            Privs = role.Privs,
-        };
-    }
+    private static LocalRole ToLocalRole(DataRole role) =>
+        Branching.MapOrDefault(
+            input: role,
+            mapper: foundRole =>
+                new LocalRole
+                {
+                    Id = foundRole.Id,
+                    AppId = foundRole.AppId,
+                    Name = foundRole.Name,
+                    Description = foundRole.Description,
+                    Privs = foundRole.Privs,
+                });
 }

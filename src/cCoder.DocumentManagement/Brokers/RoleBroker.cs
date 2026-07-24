@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.Data;
+using cCoder.DocumentManagement.Dependencies;
 using cCoder.Data.Models.Security;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +16,7 @@ public interface IRoleBroker
     ValueTask<Role> UpdateRoleAsync(Role updatedRole);
     ValueTask<int> DeleteRoleAsync(Role deletedRole);
     ValueTask DeleteAllRolesAsync(IEnumerable<Role> deletedRole);
-    int? GetAppId(Role entity);
+    int? SelectAppId(Role entity);
 }
 
 internal class RoleBroker(ICoreContextFactory coreContextFactory) : IRoleBroker
@@ -24,9 +25,7 @@ internal class RoleBroker(ICoreContextFactory coreContextFactory) : IRoleBroker
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        return ignoreFilters
-            ? coreDataContext.Roles.IgnoreQueryFilters()
-            : coreDataContext.Roles;
+        return Branching.ApplyQueryFilters(query: coreDataContext.Roles, ignoreFilters: ignoreFilters);
     }
 
     public async ValueTask<Role> AddRoleAsync(Role newRole)
@@ -54,16 +53,11 @@ internal class RoleBroker(ICoreContextFactory coreContextFactory) : IRoleBroker
 
     public async ValueTask DeleteAllRolesAsync(IEnumerable<Role> deletedRole)
     {
-        if (deletedRole == null || !deletedRole.Any())
-        {
-            return;
-        }
-
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        coreDataContext.Roles.RemoveRange(entities: deletedRole);
+        coreDataContext.Roles.RemoveRange(entities: deletedRole ?? []);
         _ = await coreDataContext.SaveChangesAsync();
     }
 
-    public int? GetAppId(Role entity) =>
+    public int? SelectAppId(Role entity) =>
         entity.AppId;
 }

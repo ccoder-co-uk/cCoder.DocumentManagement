@@ -35,7 +35,7 @@ internal partial class FolderRoleService(
 
 
             authorizationBroker.Authorize(
-                appId: folderRoleBroker.GetAppId(entity: storageFolderRole),
+                appId: folderRoleBroker.SelectAppId(entity: storageFolderRole),
                 privilege: $"{nameof(FolderRole)}_create"
             );
 
@@ -56,7 +56,7 @@ internal partial class FolderRoleService(
         {
             ValidateInputs(inputs: [deletedFolderRole]);
             authorizationBroker.Authorize(
-    appId: folderRoleBroker.GetAppId(entity: CreateStorageFolderRole(folderRole: deletedFolderRole)),
+    appId: folderRoleBroker.SelectAppId(entity: CreateStorageFolderRole(folderRole: deletedFolderRole)),
     privilege: $"{nameof(FolderRole)}_delete"
 );
 

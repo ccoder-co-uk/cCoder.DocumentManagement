@@ -1012,7 +1012,7 @@
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.Role\u003E"
         },
         {
-          "Name": "GetAppId",
+          "Name": "SelectAppId",
           "Inputs": [
             {
               "Name": "entity",
@@ -1086,30 +1086,6 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Int32\u003E"
         },
         {
-          "Name": "GetAppId",
-          "Inputs": [
-            {
-              "Name": "entity",
-              "Type": "cCoder.Data.Models.DMS.File"
-            }
-          ],
-          "ReturnType": "System.Int32?"
-        },
-        {
-          "Name": "GetFileIdsByFolderIds",
-          "Inputs": [
-            {
-              "Name": "folderIds",
-              "Type": "System.Guid[]"
-            },
-            {
-              "Name": "ignoreFilters",
-              "Type": "System.Boolean"
-            }
-          ],
-          "ReturnType": "System.Guid[]"
-        },
-        {
           "Name": "InsertFileAsync",
           "Inputs": [
             {
@@ -1128,6 +1104,16 @@
             }
           ],
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "SelectAppId",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.File"
+            }
+          ],
+          "ReturnType": "System.Int32?"
         },
         {
           "Name": "SelectFileByPath",
@@ -1182,6 +1168,20 @@
             }
           ],
           "ReturnType": "cCoder.Data.Models.DMS.File"
+        },
+        {
+          "Name": "SelectFileIdsByFolderIds",
+          "Inputs": [
+            {
+              "Name": "folderIds",
+              "Type": "System.Guid[]"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Guid[]"
         },
         {
           "Name": "SelectFileWithFolderAndContents",
@@ -1283,16 +1283,6 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Int32\u003E"
         },
         {
-          "Name": "GetAppId",
-          "Inputs": [
-            {
-              "Name": "entity",
-              "Type": "cCoder.Data.Models.DMS.FileContent"
-            }
-          ],
-          "ReturnType": "System.Int32?"
-        },
-        {
           "Name": "InsertFileContentAsync",
           "Inputs": [
             {
@@ -1311,6 +1301,16 @@
             }
           ],
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
+        },
+        {
+          "Name": "SelectAppId",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.FileContent"
+            }
+          ],
+          "ReturnType": "System.Int32?"
         },
         {
           "Name": "UpdateFileContentAsync",
@@ -1360,16 +1360,6 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Int32\u003E"
         },
         {
-          "Name": "GetAppId",
-          "Inputs": [
-            {
-              "Name": "entity",
-              "Type": "cCoder.Data.Models.DMS.Folder"
-            }
-          ],
-          "ReturnType": "System.Int32?"
-        },
-        {
           "Name": "InsertFolderAsync",
           "Inputs": [
             {
@@ -1388,6 +1378,16 @@
             }
           ],
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
+        },
+        {
+          "Name": "SelectAppId",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Int32?"
         },
         {
           "Name": "SelectFolderByPath",
@@ -1545,16 +1545,6 @@
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Int32\u003E"
         },
         {
-          "Name": "GetAppId",
-          "Inputs": [
-            {
-              "Name": "entity",
-              "Type": "cCoder.Data.Models.Security.FolderRole"
-            }
-          ],
-          "ReturnType": "System.Int32?"
-        },
-        {
           "Name": "InsertFolderRoleAsync",
           "Inputs": [
             {
@@ -1573,8 +1563,24 @@
             }
           ],
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+        },
+        {
+          "Name": "SelectAppId",
+          "Inputs": [
+            {
+              "Name": "entity",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            }
+          ],
+          "ReturnType": "System.Int32?"
         }
       ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.Branching",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
     },
     {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.BaselineController",
@@ -5477,13 +5483,6 @@
       "LineNumber": 15
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.ExtendedMetadataContainer",
-      "LineNumber": 170
-    },
-    {
       "Code": "STX0001",
       "Description": "The type is not a valid Standard element type.",
       "Severity": "Warning",
@@ -5491,32 +5490,11 @@
       "LineNumber": 20
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.MetadataContainerSet",
-      "LineNumber": 170
-    },
-    {
       "Code": "STXSTRUCT001",
       "Description": "The source file must live in the standard folder for its element type.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Api.OData.ModelStateError",
       "LineNumber": 174
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.ModelStateError",
-      "LineNumber": 180
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.ODataModel",
-      "LineNumber": 21
     },
     {
       "Code": "STX0001",
@@ -5529,43 +5507,8 @@
       "Code": "STXFORMAT001",
       "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.OperationContainer",
-      "LineNumber": 170
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.PropertyContainer",
-      "LineNumber": 170
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.AuthorizationBroker",
-      "LineNumber": 61
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.AuthorizationBroker",
-      "LineNumber": 84
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.AuthorizationBroker",
-      "LineNumber": 104
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.AuthorizationBroker",
-      "LineNumber": 119
+      "LineNumber": 127
     },
     {
       "Code": "STXB006",
@@ -5582,235 +5525,46 @@
       "LineNumber": 15
     },
     {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.RoleBroker",
-      "LineNumber": 27
+      "LineNumber": 63
     },
     {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.RoleBroker",
-      "LineNumber": 57
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 36
+      "LineNumber": 168
     },
     {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 45
-    },
-    {
-      "Code": "STXB007",
-      "Description": "Storage broker methods must use SQL nouns: Select, Insert, Update, or Delete.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 54
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 58
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 72
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 86
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 102
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 116
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 165
-    },
-    {
-      "Code": "STXB007",
-      "Description": "Storage broker methods must use SQL nouns: Select, Insert, Update, or Delete.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
-      "LineNumber": 175
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
-      "LineNumber": 31
+      "LineNumber": 107
     },
     {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
-      "LineNumber": 61
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
-      "LineNumber": 80
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
-      "LineNumber": 91
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
-      "LineNumber": 103
-    },
-    {
-      "Code": "STXB007",
-      "Description": "Storage broker methods must use SQL nouns: Select, Insert, Update, or Delete.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
-      "LineNumber": 112
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
+      "Code": "STXFORMAT008",
+      "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 37
+      "LineNumber": 177
     },
     {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 51
+      "LineNumber": 237
     },
     {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
+      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker",
       "LineNumber": 65
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 84
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 95
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 109
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 124
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 140
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 175
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 180
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 191
-    },
-    {
-      "Code": "STXB007",
-      "Description": "Storage broker methods must use SQL nouns: Select, Insert, Update, or Delete.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
-      "LineNumber": 249
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker",
-      "LineNumber": 28
-    },
-    {
-      "Code": "STXB002",
-      "Description": "A broker must not contain branching logic.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker",
-      "LineNumber": 50
-    },
-    {
-      "Code": "STXB007",
-      "Description": "Storage broker methods must use SQL nouns: Select, Insert, Update, or Delete.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker",
-      "LineNumber": 60
     },
     {
       "Code": "STXAPI001",
@@ -5827,25 +5581,11 @@
       "LineNumber": 115
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
-      "LineNumber": 135
-    },
-    {
       "Code": "STXAPI004",
       "Description": "API controller methods must use HTTP nouns: Get, Post, Put, or Delete.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
       "LineNumber": 113
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
-      "LineNumber": 133
     },
     {
       "Code": "STXAPI004",
@@ -5869,25 +5609,11 @@
       "LineNumber": 125
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 145
-    },
-    {
       "Code": "STXAPI002",
       "Description": "An API controller must expose a single model contract.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
       "LineNumber": 17
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
-      "LineNumber": 58
     },
     {
       "Code": "STXFORMAT004",
@@ -5981,39 +5707,11 @@
       "LineNumber": 17
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingRequest",
-      "LineNumber": 34
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingResponse",
-      "LineNumber": 21
-    },
-    {
       "Code": "STXM001",
       "Description": "Models must not declare methods.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
       "LineNumber": 30
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
-      "LineNumber": 35
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.Path",
-      "LineNumber": 57
     },
     {
       "Code": "STXM001",
@@ -6219,13 +5917,6 @@
       "LineNumber": 175
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 200
-    },
-    {
       "Code": "STX0012",
       "Description": "Business-operation validation methods must evaluate their rules through a validation collector.",
       "Severity": "Warning",
@@ -6275,13 +5966,6 @@
       "LineNumber": 265
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 393
-    },
-    {
       "Code": "STX0012",
       "Description": "Business-operation validation methods must evaluate their rules through a validation collector.",
       "Severity": "Warning",
@@ -6308,13 +5992,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
       "LineNumber": 58
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 81
     },
     {
       "Code": "STX0010",
@@ -6364,13 +6041,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 238
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 441
     },
     {
       "Code": "STX0012",
@@ -6520,13 +6190,6 @@
       "LineNumber": 108
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileContentProcessingService",
-      "LineNumber": 116
-    },
-    {
       "Code": "STX0004",
       "Description": "A service must not depend on another service at the same layer.",
       "Severity": "Warning",
@@ -6665,13 +6328,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
       "LineNumber": 712
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 722
     },
     {
       "Code": "STX0004",
@@ -6821,13 +6477,6 @@
       "LineNumber": 952
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 971
-    },
-    {
       "Code": "STX0004",
       "Description": "A service must not depend on another service at the same layer.",
       "Severity": "Warning",
@@ -6905,13 +6554,6 @@
       "LineNumber": 18
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
-      "LineNumber": 971
-    },
-    {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
@@ -6945,13 +6587,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "LineNumber": 170
-    },
-    {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 184
     },
     {
       "Code": "STX0007",

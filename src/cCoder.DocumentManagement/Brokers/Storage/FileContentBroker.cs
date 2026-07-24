@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.Data;
+using cCoder.DocumentManagement.Dependencies;
 using cCoder.Data.Models.DMS;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,7 @@ public interface IFileContentBroker
     ValueTask<FileContent> UpdateFileContentAsync(FileContent updatedFileContent);
     ValueTask<int> DeleteFileContentAsync(FileContent deletedFileContent);
     ValueTask DeleteAllFileContentsAsync(IEnumerable<FileContent> deletedFileContent);
-    int? GetAppId(FileContent entity);
+    int? SelectAppId(FileContent entity);
 }
 
 internal sealed class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileContentBroker
@@ -28,9 +29,7 @@ internal sealed class FileContentBroker(ICoreContextFactory coreContextFactory) 
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        return ignoreFilters
-            ? coreDataContext.FileContents.IgnoreQueryFilters()
-            : coreDataContext.FileContents;
+        return Branching.ApplyQueryFilters(query: coreDataContext.FileContents, ignoreFilters: ignoreFilters);
     }
 
     public async ValueTask<FileContent> InsertFileContentAsync(FileContent newFileContent)
@@ -58,13 +57,8 @@ internal sealed class FileContentBroker(ICoreContextFactory coreContextFactory) 
 
     public async ValueTask DeleteAllFileContentsAsync(IEnumerable<FileContent> deletedFileContent)
     {
-        if (deletedFileContent == null || !deletedFileContent.Any())
-        {
-            return;
-        }
-
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        coreDataContext.FileContents.RemoveRange(entities: deletedFileContent);
+        coreDataContext.FileContents.RemoveRange(entities: deletedFileContent ?? []);
         _ = await coreDataContext.SaveChangesAsync();
     }
 
@@ -77,21 +71,13 @@ internal sealed class FileContentBroker(ICoreContextFactory coreContextFactory) 
             .Where(predicate: fileContent => fileContent.FileId == fileId)
             .ToList();
 
-        if (items.Count == 0)
-        {
-            return;
-        }
-
         coreDataContext.FileContents.RemoveRange(entities: items);
         _ = await coreDataContext.SaveChangesAsync();
     }
 
     public async ValueTask DeleteAllFileContentsForFilesAsync(Guid[] fileIds)
     {
-        if (fileIds == null || fileIds.Length == 0)
-        {
-            return;
-        }
+        fileIds ??= [];
 
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
@@ -100,16 +86,11 @@ internal sealed class FileContentBroker(ICoreContextFactory coreContextFactory) 
             .Where(predicate: fileContent => fileIds.Contains(value: fileContent.FileId))
             .ToList();
 
-        if (items.Count == 0)
-        {
-            return;
-        }
-
         coreDataContext.FileContents.RemoveRange(entities: items);
         _ = await coreDataContext.SaveChangesAsync();
     }
 
-    public int? GetAppId(FileContent entity)
+    public int? SelectAppId(FileContent entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 

@@ -28,7 +28,7 @@ public partial class FileContentServiceTests
 
         FileContent submitted = null;
 
-        fileContentBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFileContent>()))
+        fileContentBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFileContent>()))
             .Returns(value: (int?)7);
 
         authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_create"));
@@ -153,7 +153,7 @@ public partial class FileContentServiceTests
         );
 
         fileContentBrokerMock.Verify(
-            expression: x => x.GetAppId(entity: It.IsAny<DataFileContent>()),
+            expression: x => x.SelectAppId(entity: It.IsAny<DataFileContent>()),
             times: Times.AtMostOnce()
         );
 
@@ -167,7 +167,7 @@ public partial class FileContentServiceTests
         // Given
         FileContent fileContent = CreateRandomFileContent();
 
-        fileContentBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFileContent>()))
+        fileContentBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFileContent>()))
             .Returns(value: (int?)7);
 
         authorizationBrokerMock
@@ -183,7 +183,7 @@ public partial class FileContentServiceTests
             .WithMessage(expectedWildcardPattern: "Access Denied!");
 
         fileContentBrokerMock.Verify(
-            expression: x => x.GetAppId(entity: It.IsAny<DataFileContent>()),
+            expression: x => x.SelectAppId(entity: It.IsAny<DataFileContent>()),
             times: Times.AtMostOnce()
         );
 

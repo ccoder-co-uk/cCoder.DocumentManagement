@@ -25,7 +25,7 @@ public partial class FolderServiceTests
 
         Folder submitted = null;
 
-        folderBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFolder>()))
+        folderBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFolder>()))
             .Returns(value: (int?)7);
 
         authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_update"));
@@ -68,7 +68,7 @@ public partial class FolderServiceTests
             .BeEquivalentTo(expectation: folder);
 
         folderBrokerMock.Verify(expression: x => x.UpdateFolderAsync(updatedFolder: It.IsAny<DataFolder>()), times: Times.Once);
-        folderBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
+        folderBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_update"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
@@ -92,7 +92,7 @@ public partial class FolderServiceTests
             .ThrowAsync<SecurityException>()
             .WithMessage(expectedWildcardPattern: "Access Denied!");
 
-        folderBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
+        folderBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_update"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();

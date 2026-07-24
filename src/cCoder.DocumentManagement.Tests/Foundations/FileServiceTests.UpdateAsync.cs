@@ -29,7 +29,7 @@ public partial class FileServiceTests
 
         FileEntity submitted = null;
 
-        fileBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFile>()))
+        fileBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()))
             .Returns(value: (int?)7);
 
         authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "File_update"));
@@ -75,7 +75,7 @@ public partial class FileServiceTests
             .BeEquivalentTo(expectation: file);
 
         fileBrokerMock.Verify(expression: x => x.UpdateFileAsync(entity: It.IsAny<DataFile>()), times: Times.Once);
-        fileBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
+        fileBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "File_update"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
@@ -87,7 +87,7 @@ public partial class FileServiceTests
         // Given
         FileEntity file = CreateRandomFile();
 
-        fileBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFile>()))
+        fileBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()))
             .Returns(value: (int?)7);
 
         authorizationBrokerMock
@@ -102,7 +102,7 @@ public partial class FileServiceTests
             .ThrowAsync<SecurityException>()
             .WithMessage(expectedWildcardPattern: "Access Denied!");
 
-        fileBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
+        fileBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "File_update"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();

@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.Data;
+using cCoder.DocumentManagement.Dependencies;
 using cCoder.Data.Models.Security;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +16,7 @@ public interface IFolderRoleBroker
     ValueTask<FolderRole> InsertFolderRoleAsync(FolderRole newFolderRole);
     ValueTask<int> DeleteFolderRoleAsync(FolderRole deletedFolderRole);
     ValueTask DeleteAllFolderRolesAsync(IEnumerable<FolderRole> deletedFolderRole);
-    int? GetAppId(FolderRole entity);
+    int? SelectAppId(FolderRole entity);
 }
 
 internal sealed class FolderRoleBroker(ICoreContextFactory coreContextFactory) : IFolderRoleBroker
@@ -25,9 +26,7 @@ internal sealed class FolderRoleBroker(ICoreContextFactory coreContextFactory) :
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        return ignoreFilters
-            ? coreDataContext.FolderRoles.IgnoreQueryFilters()
-            : coreDataContext.FolderRoles;
+        return Branching.ApplyQueryFilters(query: coreDataContext.FolderRoles, ignoreFilters: ignoreFilters);
     }
 
     public async ValueTask<FolderRole> InsertFolderRoleAsync(FolderRole newFolderRole)
@@ -47,17 +46,12 @@ internal sealed class FolderRoleBroker(ICoreContextFactory coreContextFactory) :
 
     public async ValueTask DeleteAllFolderRolesAsync(IEnumerable<FolderRole> deletedFolderRole)
     {
-        if (deletedFolderRole == null || !deletedFolderRole.Any())
-        {
-            return;
-        }
-
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        coreDataContext.FolderRoles.RemoveRange(entities: deletedFolderRole);
+        coreDataContext.FolderRoles.RemoveRange(entities: deletedFolderRole ?? []);
         _ = await coreDataContext.SaveChangesAsync();
     }
 
-    public int? GetAppId(FolderRole entity)
+    public int? SelectAppId(FolderRole entity)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 

@@ -25,7 +25,7 @@ public partial class FolderRoleServiceTests
 
         FolderRole submitted = null;
 
-        folderRoleBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFolderRole>()))
+        folderRoleBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFolderRole>()))
             .Returns(value: (int?)7);
 
         authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "FolderRole_create"));
@@ -75,7 +75,7 @@ public partial class FolderRoleServiceTests
             times: Times.Once
         );
 
-        folderRoleBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFolderRole>()), times: Times.AtMostOnce());
+        folderRoleBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFolderRole>()), times: Times.AtMostOnce());
         folderRoleBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "FolderRole_create"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
@@ -87,7 +87,7 @@ public partial class FolderRoleServiceTests
         // Given
         FolderRole folderRole = CreateRandomFolderRole();
 
-        folderRoleBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFolderRole>()))
+        folderRoleBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFolderRole>()))
             .Returns(value: (int?)7);
 
         authorizationBrokerMock
@@ -102,7 +102,7 @@ public partial class FolderRoleServiceTests
             .ThrowAsync<SecurityException>()
             .WithMessage(expectedWildcardPattern: "Access Denied!");
 
-        folderRoleBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFolderRole>()), times: Times.AtMostOnce());
+        folderRoleBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFolderRole>()), times: Times.AtMostOnce());
         folderRoleBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "FolderRole_create"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();

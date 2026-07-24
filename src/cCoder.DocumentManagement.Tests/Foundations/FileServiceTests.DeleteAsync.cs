@@ -32,7 +32,7 @@ public partial class FileServiceTests
             .Setup(expression: x => x.SelectAllFiles(ignoreFilters: true))
             .Returns(value: new[] { ToExternalFile(file: file) }.AsQueryable());
 
-        fileBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFile>()))
+        fileBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()))
             .Returns(value: (int?)7);
 
         authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "file_delete"));
@@ -51,7 +51,7 @@ public partial class FileServiceTests
             times: Times.Once
         );
 
-        fileBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
+        fileBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "file_delete"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
@@ -68,7 +68,7 @@ public partial class FileServiceTests
             .Setup(expression: x => x.SelectAllFiles(ignoreFilters: true))
             .Returns(value: new[] { ToExternalFile(file: file) }.AsQueryable());
 
-        fileBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFile>()))
+        fileBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()))
             .Returns(value: (int?)7);
 
         authorizationBrokerMock
@@ -84,7 +84,7 @@ public partial class FileServiceTests
             .WithMessage(expectedWildcardPattern: "Access Denied!");
 
         fileBrokerMock.Verify(expression: x => x.SelectAllFiles(ignoreFilters: true), times: Times.Once);
-        fileBrokerMock.Verify(expression: x => x.GetAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
+        fileBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "file_delete"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();

@@ -82,7 +82,7 @@ internal partial class FileContentService(
 
 
             authorizationBroker.Authorize(
-                appId: fileContentBroker.GetAppId(entity: storageFileContent),
+                appId: fileContentBroker.SelectAppId(entity: storageFileContent),
                 privilege: $"{nameof(FileContent)}_create"
             );
 
@@ -127,7 +127,7 @@ internal partial class FileContentService(
 
 
             authorizationBroker.Authorize(
-                appId: fileContentBroker.GetAppId(entity: updateFileContent),
+                appId: fileContentBroker.SelectAppId(entity: updateFileContent),
                 privilege: $"{nameof(FileContent)}_update"
             );
 
@@ -163,7 +163,7 @@ internal partial class FileContentService(
 
 
             authorizationBroker.Authorize(
-                appId: fileContentBroker.GetAppId(entity: CreateLocalFileEntityContent(fileContent: fileContent, includeId: true)),
+                appId: fileContentBroker.SelectAppId(entity: CreateLocalFileEntityContent(fileContent: fileContent, includeId: true)),
                 privilege: $"{nameof(FileContent)}_delete"
             );
 

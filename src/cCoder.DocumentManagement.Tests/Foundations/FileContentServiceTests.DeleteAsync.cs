@@ -31,7 +31,7 @@ public partial class FileContentServiceTests
             .Setup(expression: x => x.SelectAllFileContents(ignoreFilters: false))
             .Returns(value: new[] { ToExternalFileContent(fileContent: fileContent) }.AsQueryable());
 
-        fileContentBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFileContent>()))
+        fileContentBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFileContent>()))
             .Returns(value: (int?)7);
 
         authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_delete"));
@@ -52,7 +52,7 @@ public partial class FileContentServiceTests
         );
 
         fileContentBrokerMock.Verify(
-            expression: x => x.GetAppId(entity: It.IsAny<DataFileContent>()),
+            expression: x => x.SelectAppId(entity: It.IsAny<DataFileContent>()),
             times: Times.AtMostOnce()
         );
 
@@ -72,7 +72,7 @@ public partial class FileContentServiceTests
             .Setup(expression: x => x.SelectAllFileContents(ignoreFilters: false))
             .Returns(value: new[] { ToExternalFileContent(fileContent: fileContent) }.AsQueryable());
 
-        fileContentBrokerMock.Setup(expression: x => x.GetAppId(entity: It.IsAny<DataFileContent>()))
+        fileContentBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFileContent>()))
             .Returns(value: (int?)7);
 
         authorizationBrokerMock
@@ -90,7 +90,7 @@ public partial class FileContentServiceTests
         fileContentBrokerMock.Verify(expression: x => x.SelectAllFileContents(ignoreFilters: false), times: Times.Once);
 
         fileContentBrokerMock.Verify(
-            expression: x => x.GetAppId(entity: It.IsAny<DataFileContent>()),
+            expression: x => x.SelectAppId(entity: It.IsAny<DataFileContent>()),
             times: Times.AtMostOnce()
         );
 
