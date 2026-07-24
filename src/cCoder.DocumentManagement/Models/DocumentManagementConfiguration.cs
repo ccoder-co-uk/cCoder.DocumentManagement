@@ -8,14 +8,24 @@ namespace cCoder.DocumentManagement.Models;
 
 public class DocumentManagementConfiguration
 {
-    public IDictionary<string, string> ConnectionStrings { get; set; } = new Dictionary<string, string>();
-    public IDictionary<string, string> Settings { get; set; } = new Dictionary<string, string>();
-    public IDictionary<string, string> Services { get; set; } = new Dictionary<string, string>();
+    public IDictionary<string, string> ConnectionStrings { get; set; }
+    public IDictionary<string, string> Settings { get; set; }
+    public IDictionary<string, string> Services { get; set; }
     public bool DebugInfo { get; set; }
     public bool LogSQL { get; set; }
-    public string RootPath { get; set; } = "Api/DocumentManagement";
-    public bool IncludeLegacyCoreContext { get; set; } = true;
-    public EventProvider[] EventProviders { get; private set; } = [];
+    public string RootPath { get; set; }
+    public bool IncludeLegacyCoreContext { get; set; }
+    public EventProvider[] EventProviders { get; private set; }
+
+    public DocumentManagementConfiguration()
+    {
+        ConnectionStrings = new Dictionary<string, string>();
+        Settings = new Dictionary<string, string>();
+        Services = new Dictionary<string, string>();
+        RootPath = "Api/DocumentManagement";
+        IncludeLegacyCoreContext = true;
+        EventProviders = [];
+    }
 
     public DocumentManagementConfiguration WithEventProviders(params EventProvider[] eventProviders)
     {

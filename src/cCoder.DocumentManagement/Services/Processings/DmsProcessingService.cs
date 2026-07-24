@@ -87,13 +87,13 @@ internal partial class DmsProcessingService(
         Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
         _ = int.TryParse(s: TryGetSingleValue(query: query, key: "version"), result: out int deleteVersion);
         await dmsInstanceService.DropAsync(path: new LocalPath(path: path), version: deleteVersion);
-        return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
+        return CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
     }
 
     private async ValueTask<DmsProcessingResponse> HandleOptionsRequestDmsProcessingRequestAsync(
         DmsProcessingRequest request
     ) =>
-        CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
+        CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
 
     private async ValueTask<DmsProcessingResponse> HandleGetRequestDmsProcessingRequestAsync(DmsProcessingRequest request)
     {
@@ -121,13 +121,13 @@ internal partial class DmsProcessingService(
                 : dmsInstanceService.Get(path: new LocalPath(path: path), version: version, search: search);
 
         return result != null
-            ? CreateResponse(
+            ? CreateDmsProcessingResponse(
                 body: result.Data,
                 hasBody: true,
                 contentType: download ? "application/octet-stream" : result.MimeType,
                 statusCode: 200
             )
-            : CreateResponse(body: Stream.Null, hasBody: false, contentType: "plain/text", statusCode: 204);
+            : CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "plain/text", statusCode: 204);
     }
 
     private async ValueTask<DmsProcessingResponse> HandlePostRequestDmsProcessingRequestAsync(DmsProcessingRequest request)
@@ -154,7 +154,7 @@ internal partial class DmsProcessingService(
                 );
             }
 
-            return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
+            return CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
         }
 
         if (query.ContainsKey(key: "moveTo"))
@@ -169,7 +169,7 @@ internal partial class DmsProcessingService(
                 );
             }
 
-            return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
+            return CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
         }
 
         return await SaveOrUnpackAsync(path: path, query: query, memoryStream: memoryStream);
@@ -199,7 +199,7 @@ internal partial class DmsProcessingService(
                 );
             }
 
-            return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
+            return CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
         }
 
         if (query.ContainsKey(key: "moveTo"))
@@ -214,7 +214,7 @@ internal partial class DmsProcessingService(
                 );
             }
 
-            return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
+            return CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
         }
 
         return await SaveOrUnpackAsync(path: path, query: query, memoryStream: memoryStream);
@@ -256,10 +256,10 @@ internal partial class DmsProcessingService(
             await dmsInstanceService.SaveAsync(path: destinationPath, content: memoryStream);
         }
 
-        return CreateResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
+        return CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
     }
 
-    private static DmsProcessingResponse CreateResponse(
+    private static DmsProcessingResponse CreateDmsProcessingResponse(
         Stream body,
         bool hasBody,
         string contentType,

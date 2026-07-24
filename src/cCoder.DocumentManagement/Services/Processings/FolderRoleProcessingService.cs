@@ -15,7 +15,8 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 internal partial class FolderRoleProcessingService(IFolderRoleService service, IRoleBroker roleBroker, IFolderService folderService, IAuthorizationBroker authorizationBroker) : IFolderRoleProcessingService
 {
-    private cCoder.Data.Models.Security.User User => authorizationBroker.GetCurrentUser();
+    private cCoder.Data.Models.Security.User GetCurrentUser() =>
+        authorizationBroker.GetCurrentUser();
 
     public IQueryable<cCoder.Data.Models.Security.FolderRole> GetAll(bool ignoreFilters = false)
 =>
@@ -39,7 +40,7 @@ internal partial class FolderRoleProcessingService(IFolderRoleService service, I
 
             bool flag = role != null && folder != null;
 
-            Func<Folder, cCoder.Data.Models.Security.Role, bool> func = (Folder currentFolder, cCoder.Data.Models.Security.Role currentRole) => currentFolder.UserCan(user: User, privilege: "folderrole_create");
+            Func<Folder, cCoder.Data.Models.Security.Role, bool> func = (Folder currentFolder, cCoder.Data.Models.Security.Role currentRole) => currentFolder.UserCan(user: GetCurrentUser(), privilege: "folderrole_create");
 
 
             if (flag && func(arg1: folder, arg2: role))
@@ -77,7 +78,7 @@ internal partial class FolderRoleProcessingService(IFolderRoleService service, I
                 .FirstOrDefault(predicate: (cCoder.Data.Models.Security.FolderRole ur) => ur.RoleId == deletedFolderRole.RoleId && ur.FolderId == deletedFolderRole.FolderId);
 
 
-            if (dbVersion == null || folder == null || !folder.UserCan(user: User, privilege: "folderrole_delete"))
+            if (dbVersion == null || folder == null || !folder.UserCan(user: GetCurrentUser(), privilege: "folderrole_delete"))
             {
                 throw new SecurityException(message: "Access Denied!");
             }

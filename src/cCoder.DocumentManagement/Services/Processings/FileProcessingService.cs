@@ -15,7 +15,8 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 internal partial class FileProcessingService(IFileService service, IFolderService folderService, IFileContentService fileContentService, IFileContentProcessingService fileContentProcessingService, IAuthorizationBroker authorizationBroker) : IFileProcessingService
 {
-    private User User => authorizationBroker.GetCurrentUser();
+    private User GetCurrentUser() =>
+        authorizationBroker.GetCurrentUser();
 
     public cCoder.Data.Models.DMS.File Get(Guid fileId)
 =>
@@ -49,7 +50,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             }
 
 
-            if (!User.IsAdminOfApp(appId: folder.AppId) && !folder.UserCan(user: User, privilege: "file_create"))
+            if (!GetCurrentUser().IsAdminOfApp(appId: folder.AppId) && !folder.UserCan(user: GetCurrentUser(), privilege: "file_create"))
             {
                 throw new SecurityException(message: "Access Denied!");
             }
@@ -130,7 +131,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
             cCoder.Data.Models.DMS.File dbVersion = service.GetWithFolderRolesAndContents(fileId: (Guid)updatedFile.Id, ignoreFilters: true);
 
 
-            if (dbVersion == null || !dbVersion.UserCan(user: User, privilege: "file_update"))
+            if (dbVersion == null || !dbVersion.UserCan(user: GetCurrentUser(), privilege: "file_update"))
             {
                 throw new SecurityException(message: "Access Denied!");
             }
@@ -241,7 +242,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
                 if (existingFile == null)
                 {
-                    await CreateNewFileAppPathFolderAsync(app: app, path: path, rawBytes: rawBytes, folder: folder);
+                    await BuildNewFileAppPathFolderAsync(app: app, path: path, rawBytes: rawBytes, folder: folder);
                 }
                 else
                 {
@@ -301,7 +302,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
             Folder oldParent = ((!string.IsNullOrEmpty(value: oldPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: app.Id, path: oldPath.ParentPath.Lowered) : null);
 
-            bool userIsAdmin = User.IsAdminOfApp(appId: app.Id);
+            bool userIsAdmin = GetCurrentUser().IsAdminOfApp(appId: app.Id);
 
 
             if (newParent == null && !newPath.IsToFile)
@@ -371,7 +372,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
     private async ValueTask UpdateFileAppFolderAsync(App updatedApp, cCoder.Data.Models.DMS.File existingFile, byte[] rawBytes, Folder folder)
     {
-        if (!User.IsAdminOfApp(appId: updatedApp.Id) && !folder.UserCan(user: User, privilege: "file_update"))
+        if (!GetCurrentUser().IsAdminOfApp(appId: updatedApp.Id) && !folder.UserCan(user: GetCurrentUser(), privilege: "file_update"))
         {
             throw new SecurityException(message: "Access Denied!");
         }
@@ -379,14 +380,14 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         await SaveFileVersionAsync(existingFile: existingFile, rawBytes: rawBytes);
     }
 
-    private async ValueTask CreateNewFileAppPathFolderAsync(App app, cCoder.DocumentManagement.Models.Path path, byte[] rawBytes, Folder folder)
+    private async ValueTask BuildNewFileAppPathFolderAsync(App app, cCoder.DocumentManagement.Models.Path path, byte[] rawBytes, Folder folder)
     {
-        if (!User.IsAdminOfApp(appId: app.Id) && !folder.UserCan(user: User, privilege: "file_create"))
+        if (!GetCurrentUser().IsAdminOfApp(appId: app.Id) && !folder.UserCan(user: GetCurrentUser(), privilege: "file_create"))
         {
             throw new SecurityException(message: "Access Denied!");
         }
 
-        await CreateFilePathFolderAsync(path: path, rawBytes: rawBytes, folder: folder);
+        await CreateLocalFilePathFolderAsync(path: path, rawBytes: rawBytes, folder: folder);
     }
 
     private async ValueTask SaveFileVersionAsync(cCoder.Data.Models.DMS.File existingFile, byte[] rawBytes)
@@ -398,7 +399,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         await fileContentProcessingService.AddFileContentAsync(newFileContent: new FileContent
         {
-            CreatedBy = User.Id,
+            CreatedBy = GetCurrentUser().Id,
             CreatedOn = DateTimeOffset.UtcNow,
             FileId = existingFile.Id,
             Version = version,
@@ -408,11 +409,11 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
         });
     }
 
-    private async ValueTask CreateFilePathFolderAsync(cCoder.DocumentManagement.Models.Path path, byte[] rawBytes, Folder folder)
+    private async ValueTask CreateLocalFilePathFolderAsync(cCoder.DocumentManagement.Models.Path path, byte[] rawBytes, Folder folder)
     {
         cCoder.Data.Models.DMS.File fileObject = await service.AddFileAsync(newFile: new cCoder.Data.Models.DMS.File
         {
-            CreatedBy = User.Id,
+            CreatedBy = GetCurrentUser().Id,
             CreatedOn = DateTimeOffset.UtcNow,
             Name = path.Name,
             Path = path.Lowered,
@@ -424,7 +425,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
         await fileContentProcessingService.AddFileContentAsync(newFileContent: new FileContent
         {
-            CreatedBy = User.Id,
+            CreatedBy = GetCurrentUser().Id,
             CreatedOn = DateTimeOffset.UtcNow,
             FileId = fileObject.Id,
             File = fileObject,
@@ -438,7 +439,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
     {
         cCoder.Data.Models.DMS.File file = service.GetByPathWithFolderRolesAndContents(appId: app.Id, path: path.Lowered, ignoreFilters: true);
 
-        if (file == null || !file.UserCan(user: User, privilege: "file_delete"))
+        if (file == null || !file.UserCan(user: GetCurrentUser(), privilege: "file_delete"))
         {
             throw new SecurityException(message: "Access Denied!");
         }
@@ -523,7 +524,7 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
     {
         Folder newParent = ((!string.IsNullOrEmpty(value: newPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: app.Id, path: newPath.ParentPath.Lowered) : null);
         Folder oldParent = ((!string.IsNullOrEmpty(value: oldPath.ParentPath.Lowered)) ? folderService.GetByPathWithRoles(appId: app.Id, path: oldPath.ParentPath.Lowered) : null);
-        bool userIsAdmin = User.IsAdminOfApp(appId: app.Id);
+        bool userIsAdmin = GetCurrentUser().IsAdminOfApp(appId: app.Id);
 
         if (newParent == null && !newPath.IsToFile)
         {
@@ -605,12 +606,12 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
 
     private void ConfirmUserCanMoveFilePathFolder(cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath, Folder newParent, Folder oldParent, bool userIsAdmin)
     {
-        if (!userIsAdmin && !(oldParent?.UserCan(user: User, privilege: "file_update") ?? false))
+        if (!userIsAdmin && !(oldParent?.UserCan(user: GetCurrentUser(), privilege: "file_update") ?? false))
         {
             throw new SecurityException(message: "Access Denied!");
         }
 
-        if (!userIsAdmin && !(newParent?.UserCan(user: User, privilege: "file_update") ?? false))
+        if (!userIsAdmin && !(newParent?.UserCan(user: GetCurrentUser(), privilege: "file_update") ?? false))
         {
             throw new SecurityException(message: "Access Denied!");
         }
@@ -637,8 +638,8 @@ internal partial class FileProcessingService(IFileService service, IFolderServic
     {
         Folder folder = ((folderPath.ParentPath.Depth <= 0) ? null : (await BuildPathAppAsync(app: app, folderPath: folderPath.ParentPath)));
         Folder parentFolder = folder;
-        bool userCanCreateInApp = User.IsAdminOfApp(appId: app.Id) && User.Can(appId: app.Id, operation: "folder_create");
-        bool userCanCreateFolderInParentFolder = parentFolder?.UserCan(user: User, privilege: "folder_create") ?? false;
+        bool userCanCreateInApp = GetCurrentUser().IsAdminOfApp(appId: app.Id) && GetCurrentUser().Can(appId: app.Id, operation: "folder_create");
+        bool userCanCreateFolderInParentFolder = parentFolder?.UserCan(user: GetCurrentUser(), privilege: "folder_create") ?? false;
 
         if (!userCanCreateInApp && !userCanCreateFolderInParentFolder)
         {

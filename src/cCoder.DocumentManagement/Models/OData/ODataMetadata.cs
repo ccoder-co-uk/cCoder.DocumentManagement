@@ -10,7 +10,6 @@ namespace cCoder.DocumentManagement.Api.OData;
 
 public class MetadataContainerSet
 {
-    [Required]
     public string Name { get; set; }
 
     public string UriBase { get; set; }

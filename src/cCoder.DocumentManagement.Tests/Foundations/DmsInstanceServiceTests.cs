@@ -30,7 +30,7 @@ public partial class DmsInstanceServiceTests
     private static DMSResult CreateDmsResult(string contentType = "application/json") =>
         new() { MimeType = contentType, Data = new MemoryStream(buffer: [1, 2, 3]) };
 
-    private static cCoder.Data.Models.DMS.File CreateFileAsync() =>
+    private static cCoder.Data.Models.DMS.File CreateLocalFileAsync() =>
         new()
         {
             Id = Guid.NewGuid(),

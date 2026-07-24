@@ -15,8 +15,8 @@ public partial class DmsInstanceServiceTests
     public void ShouldReturnBrokerResultsWhenSearch()
     {
         // Given
-        cCoder.Data.Models.DMS.File firstFile = CreateFileAsync();
-        cCoder.Data.Models.DMS.File secondFile = CreateFileAsync();
+        cCoder.Data.Models.DMS.File firstFile = CreateLocalFileAsync();
+        cCoder.Data.Models.DMS.File secondFile = CreateLocalFileAsync();
         cCoder.Data.Models.DMS.File[] files = [firstFile, secondFile];
 
         dmsInstanceBrokerMock.Setup(expression: x => x.Search(needle: "term"))

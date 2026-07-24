@@ -14,14 +14,11 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
-public class FolderRoleController : ODataController
+public class FolderRoleController(
+    IFolderRoleOrchestrationService service,
+    ILogger<FolderRoleController> log
+) : ODataController
 {
-    protected IFolderRoleOrchestrationService Service { get; }
-
-    public FolderRoleController(IFolderRoleOrchestrationService service, ILogger<FolderRoleController> log)
-    {
-        Service = service;
-    }
 
     [HttpGet]
     public IActionResult GetMetadata()
@@ -34,7 +31,7 @@ public class FolderRoleController : ODataController
     [ActionName("Get")]
     public IActionResult GetAll()
     {
-        return Ok(value: Service.GetAll());
+        return Ok(value: service.GetAll());
     }
 
     [HttpPost]
@@ -45,7 +42,7 @@ public class FolderRoleController : ODataController
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: base.ModelState);
         }
 
-        return Ok(value: await Service.AddFolderRoleAsync(newFolderRole: newFolderRole));
+        return Ok(value: await service.AddFolderRoleAsync(newFolderRole: newFolderRole));
     }
 
     [HttpPost]
@@ -56,7 +53,7 @@ public class FolderRoleController : ODataController
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: base.ModelState);
         }
 
-        await Service.DeleteAllFolderRoleAsync(deletedFolderRole: deletedFolderRole.Value);
+        await service.DeleteAllFolderRoleAsync(deletedFolderRole: deletedFolderRole.Value);
         return Ok();
     }
 }

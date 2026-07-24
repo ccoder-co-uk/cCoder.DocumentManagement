@@ -21,7 +21,7 @@ public sealed partial class FileControllerTests
         DmsFile actualFile;
 
         // When
-        expectedFile = await CreateFileAsync(payload: new
+        expectedFile = await CreateLocalFileAsync(payload: new
         {
             folderId = seededContext.FolderId,
             name,

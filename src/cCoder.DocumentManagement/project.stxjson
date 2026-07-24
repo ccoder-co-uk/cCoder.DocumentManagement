@@ -5477,18 +5477,25 @@
       "LineNumber": 15
     },
     {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Api.OData.ExtendedMetadataContainer",
+      "LineNumber": 170
+    },
+    {
       "Code": "STX0001",
       "Description": "The type is not a valid Standard element type.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Api.OData.MetadataContainer",
-      "LineNumber": 21
+      "LineNumber": 20
     },
     {
-      "Code": "STXM003",
-      "Description": "Model properties must not use framework validation attributes or the required modifier; validation belongs in service collectors.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Api.OData.MetadataContainerSet",
-      "LineNumber": 13
+      "LineNumber": 170
     },
     {
       "Code": "STXSTRUCT001",
@@ -5498,32 +5505,18 @@
       "LineNumber": 174
     },
     {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Api.OData.ModelStateError",
-      "LineNumber": 176
+      "LineNumber": 180
     },
     {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Api.OData.ODataModel",
-      "LineNumber": 12
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.ODataModel",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Api.OData.ODataModel",
-      "LineNumber": 14
+      "LineNumber": 21
     },
     {
       "Code": "STX0001",
@@ -5531,6 +5524,20 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Api.OData.ODataModelBuilder",
       "LineNumber": 11
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Api.OData.OperationContainer",
+      "LineNumber": 170
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Api.OData.PropertyContainer",
+      "LineNumber": 170
     },
     {
       "Code": "STXB002",
@@ -5813,60 +5820,60 @@
       "LineNumber": 10
     },
     {
-      "Code": "STX0002",
-      "Description": "Properties may only be declared on models.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
-      "LineNumber": 21
-    },
-    {
       "Code": "STXAPI004",
       "Description": "API controller methods must use HTTP nouns: Get, Post, Put, or Delete.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
-      "LineNumber": 122
+      "LineNumber": 116
     },
     {
-      "Code": "STX0002",
-      "Description": "Properties may only be declared on models.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
-      "LineNumber": 21
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
+      "LineNumber": 136
     },
     {
       "Code": "STXAPI004",
       "Description": "API controller methods must use HTTP nouns: Get, Post, Put, or Delete.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
-      "LineNumber": 117
+      "LineNumber": 114
     },
     {
-      "Code": "STX0002",
-      "Description": "Properties may only be declared on models.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 24
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
+      "LineNumber": 134
     },
     {
       "Code": "STXAPI004",
       "Description": "API controller methods must use HTTP nouns: Get, Post, Put, or Delete.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 31
+      "LineNumber": 28
     },
     {
       "Code": "STX0020",
       "Description": "update model parameters must use the updated prefix.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 118
+      "LineNumber": 115
     },
     {
       "Code": "STXAPI004",
       "Description": "API controller methods must use HTTP nouns: Get, Post, Put, or Delete.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 129
+      "LineNumber": 126
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "LineNumber": 146
     },
     {
       "Code": "STXAPI002",
@@ -5876,11 +5883,11 @@
       "LineNumber": 17
     },
     {
-      "Code": "STX0002",
-      "Description": "Properties may only be declared on models.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
-      "LineNumber": 19
+      "LineNumber": 59
     },
     {
       "Code": "STXFORMAT004",
@@ -5974,144 +5981,39 @@
       "LineNumber": 17
     },
     {
-      "Code": "STXM003",
-      "Description": "Model properties must not use framework validation attributes or the required modifier; validation belongs in service collectors.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Models.DmsProcessingRequest",
-      "LineNumber": 15
+      "LineNumber": 34
     },
     {
-      "Code": "STXM003",
-      "Description": "Model properties must not use framework validation attributes or the required modifier; validation belongs in service collectors.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingRequest",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXM003",
-      "Description": "Model properties must not use framework validation attributes or the required modifier; validation belongs in service collectors.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingRequest",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXM003",
-      "Description": "Model properties must not use framework validation attributes or the required modifier; validation belongs in service collectors.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingRequest",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingRequest",
-      "LineNumber": 19
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingRequest",
-      "LineNumber": 20
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingRequest",
+      "Type": "cCoder.DocumentManagement.Models.DmsProcessingResponse",
       "LineNumber": 21
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingRequest",
-      "LineNumber": 22
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingResponse",
-      "LineNumber": 9
-    },
-    {
-      "Code": "STXM003",
-      "Description": "Model properties must not use framework validation attributes or the required modifier; validation belongs in service collectors.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingResponse",
-      "LineNumber": 10
-    },
-    {
-      "Code": "STXM003",
-      "Description": "Model properties must not use framework validation attributes or the required modifier; validation belongs in service collectors.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingResponse",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DmsProcessingResponse",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
-      "LineNumber": 12
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
-      "LineNumber": 18
     },
     {
       "Code": "STXM001",
       "Description": "Models must not declare methods.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
-      "LineNumber": 20
+      "LineNumber": 30
     },
     {
-      "Code": "STXM002",
-      "Description": "Model properties must not declare default values.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
+      "LineNumber": 35
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Models.Path",
-      "LineNumber": 9
+      "LineNumber": 57
     },
     {
       "Code": "STXM001",
@@ -6331,6 +6233,13 @@
       "LineNumber": 162
     },
     {
+      "Code": "STX0022",
+      "Description": "Creation method names must include the concrete type they create.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
+      "LineNumber": 175
+    },
+    {
       "Code": "STXFORMAT001",
       "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
@@ -6413,27 +6322,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
       "LineNumber": 265
-    },
-    {
-      "Code": "STX0022",
-      "Description": "Creation method names must include the concrete type they create.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 269
-    },
-    {
-      "Code": "STX0022",
-      "Description": "Creation method names must include the concrete type they create.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 289
-    },
-    {
-      "Code": "STX0022",
-      "Description": "Creation method names must include the concrete type they create.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 366
     },
     {
       "Code": "STX0012",
@@ -6546,13 +6434,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 238
-    },
-    {
-      "Code": "STX0022",
-      "Description": "Creation method names must include the concrete type they create.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 369
     },
     {
       "Code": "STXFORMAT001",
@@ -6688,13 +6569,6 @@
       "LineNumber": 25
     },
     {
-      "Code": "STX0022",
-      "Description": "Creation method names must include the concrete type they create.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.DmsProcessingService",
-      "LineNumber": 262
-    },
-    {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
@@ -6758,102 +6632,137 @@
       "LineNumber": 16
     },
     {
-      "Code": "STX0002",
-      "Description": "Properties may only be declared on models.",
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 18
+      "LineNumber": 53
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 198
+      "LineNumber": 199
     },
     {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 226
+      "LineNumber": 227
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 236
+      "LineNumber": 237
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 263
+      "LineNumber": 264
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 279
+      "LineNumber": 280
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 294
+      "LineNumber": 295
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 305
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 335
+      "LineNumber": 336
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 335
+      "LineNumber": 336
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 365
+      "LineNumber": 366
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 367
+      "LineNumber": 368
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 375
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 385
     },
     {
       "Code": "STX0022",
       "Description": "Creation method names must include the concrete type they create.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 382
+      "LineNumber": 412
     },
     {
-      "Code": "STX0022",
-      "Description": "Creation method names must include the concrete type they create.",
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 411
+      "LineNumber": 527
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 641
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
+      "LineNumber": 641
     },
     {
       "Code": "STXFORMAT001",
       "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FileProcessingService",
-      "LineNumber": 711
+      "LineNumber": 712
     },
     {
       "Code": "STX0004",
@@ -6877,116 +6786,193 @@
       "LineNumber": 16
     },
     {
-      "Code": "STX0002",
-      "Description": "Properties may only be declared on models.",
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 20
+      "LineNumber": 57
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 69
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 127
+      "LineNumber": 128
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 129
+      "LineNumber": 130
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 144
+      "LineNumber": 145
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 160
+      "LineNumber": 161
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 163
+      "LineNumber": 164
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 203
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 221
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 243
+      "LineNumber": 244
     },
     {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 243
+      "LineNumber": 244
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 251
+      "LineNumber": 252
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 316
+      "LineNumber": 317
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 359
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 399
+      "LineNumber": 400
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 399
+      "LineNumber": 400
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 468
+      "LineNumber": 469
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 470
+      "LineNumber": 471
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 506
+      "LineNumber": 507
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 521
+      "LineNumber": 522
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 751
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 751
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 797
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 797
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 855
+    },
+    {
+      "Code": "STXFORMAT009",
+      "Description": "Every method chained from an invocation result must begin on a new line.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 855
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
+      "LineNumber": 952
     },
     {
       "Code": "STX0004",
@@ -7066,6 +7052,13 @@
       "LineNumber": 18
     },
     {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.FolderArchiveData",
+      "LineNumber": 952
+    },
+    {
       "Code": "STX0007",
       "Description": "A service public API must use one model contract or primitive types.",
       "Severity": "Warning",
@@ -7078,55 +7071,55 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "LineNumber": 16
-    },
-    {
-      "Code": "STX0002",
-      "Description": "Properties may only be declared on models.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 18
     },
     {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 72
+      "LineNumber": 73
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 103
+      "LineNumber": 104
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 119
+      "LineNumber": 120
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 129
+      "LineNumber": 130
     },
     {
       "Code": "STXFORMAT003",
       "Description": "Control-flow blocks must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 156
+      "LineNumber": 157
     },
     {
       "Code": "STX0005",
       "Description": "A public service method must not call another public method on the same service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "LineNumber": 158
+      "LineNumber": 159
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
+      "LineNumber": 170
     },
     {
       "Code": "STX0007",
@@ -7141,13 +7134,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
       "LineNumber": 23
-    },
-    {
-      "Code": "STX0022",
-      "Description": "Creation method names must include the concrete type they create.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
-      "LineNumber": 486
     }
   ]
 }

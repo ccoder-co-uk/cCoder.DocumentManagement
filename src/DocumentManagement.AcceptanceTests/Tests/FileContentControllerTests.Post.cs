@@ -21,7 +21,7 @@ public sealed partial class FileContentControllerTests
         FileContent actualFileContent;
 
         // When
-        expectedFileContent = await CreateFileContentAsync(payload: new
+        expectedFileContent = await CreateLocalFileContentAsync(payload: new
         {
             fileId = seededContext.FileId,
             description = "Acceptance content",

@@ -12,13 +12,23 @@ namespace cCoder.DocumentManagement.Models;
 
 public class DmsProcessingRequest
 {
-    public required App App { get; init; }
-    public required string Method { get; init; }
-    public required string RequestPath { get; init; }
-    public required string Host { get; init; }
-    public string QueryString { get; init; } = string.Empty;
-    public string ContentType { get; init; } = string.Empty;
-    public Stream Body { get; init; } = Stream.Null;
-    public Dictionary<string, string[]> Headers { get; init; } =
-        new(comparer: StringComparer.OrdinalIgnoreCase);
+    public App App { get; init; }
+    public string Method { get; init; }
+    public string RequestPath { get; init; }
+    public string Host { get; init; }
+    public string QueryString { get; init; }
+    public string ContentType { get; init; }
+    public Stream Body { get; init; }
+    public Dictionary<string, string[]> Headers { get; init; }
+
+    public DmsProcessingRequest()
+    {
+        Method = string.Empty;
+        RequestPath = string.Empty;
+        Host = string.Empty;
+        QueryString = string.Empty;
+        ContentType = string.Empty;
+        Body = Stream.Null;
+        Headers = new(comparer: StringComparer.OrdinalIgnoreCase);
+    }
 }

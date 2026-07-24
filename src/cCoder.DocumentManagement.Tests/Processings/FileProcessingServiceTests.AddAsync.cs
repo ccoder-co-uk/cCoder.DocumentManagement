@@ -16,7 +16,7 @@ namespace cCoder.Core.Services.Tests.DMS.Processings;
 public partial class FileProcessingServiceTests
 {
     [Fact]
-    public async Task ShouldCreateAndReturnFileWhenUserCanCreateFileForAddAsync()
+    public async Task ShouldCreateAndReturnFileWhenUserCanCreateLocalFileForAddAsync()
     {
         // Given
         authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())

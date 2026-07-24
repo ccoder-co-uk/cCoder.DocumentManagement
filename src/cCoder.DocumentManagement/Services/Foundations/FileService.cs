@@ -68,7 +68,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [fileId, ignoreFilters]);
-            return CreateFile(file: fileBroker.SelectFileWithFolderAndContents(fileId: fileId, ignoreFilters: ignoreFilters));
+            return CreateLocalFile(file: fileBroker.SelectFileWithFolderAndContents(fileId: fileId, ignoreFilters: ignoreFilters));
         });
 
     public LocalFile GetWithFolderRolesAndContents(Guid fileId, bool ignoreFilters = false)
@@ -76,7 +76,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [fileId, ignoreFilters]);
-            return CreateFileWithFolderRoles(file: fileBroker.SelectFileWithFolderRolesAndContents(fileId: fileId, ignoreFilters: ignoreFilters));
+            return CreateLocalFileWithFolderRoles(file: fileBroker.SelectFileWithFolderRolesAndContents(fileId: fileId, ignoreFilters: ignoreFilters));
         });
 
     public LocalFile GetByPath(int appId, string path, bool ignoreFilters = false)
@@ -84,7 +84,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [appId, path, ignoreFilters]);
-            return CreateFile(file: fileBroker.SelectFileByPath(appId: appId, path: path, ignoreFilters: ignoreFilters));
+            return CreateLocalFile(file: fileBroker.SelectFileByPath(appId: appId, path: path, ignoreFilters: ignoreFilters));
         });
 
     public LocalFile GetByPathWithFolderAndContents(
@@ -96,7 +96,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [appId, path, ignoreFilters]);
-            return CreateFile(file: fileBroker.SelectFileByPathWithFolderAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters));
+            return CreateLocalFile(file: fileBroker.SelectFileByPathWithFolderAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters));
         });
 
     public LocalFile GetByPathWithFolderRolesAndContents(
@@ -108,7 +108,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [appId, path, ignoreFilters]);
-            return CreateFileWithFolderRoles(
+            return CreateLocalFileWithFolderRoles(
                 file: fileBroker.SelectFileByPathWithFolderRolesAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters)
             );
         });
@@ -120,7 +120,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
             ValidateInputs(inputs: [appId, needle]);
             return fileBroker.SelectFilesByContent(appId: appId, needle: needle)
                                                                 .AsEnumerable()
-                                                                               .Select(selector: CreateFile)
+                                                                               .Select(selector: CreateLocalFile)
                                                                                                             .AsQueryable();
         });
 
@@ -129,7 +129,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [file]);
-            FileEntity newFileEntity = CreateStorageFile(file: file, includeId: false);
+            FileEntity newFileEntity = CreateLocalFileEntity(file: file, includeId: false);
 
 
             authorizationBroker.Authorize(
@@ -178,7 +178,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [file]);
-            FileEntity updateFileEntity = CreateStorageFile(file: file, includeId: true);
+            FileEntity updateFileEntity = CreateLocalFileEntity(file: file, includeId: true);
 
 
             authorizationBroker.Authorize(
@@ -196,7 +196,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [file]);
-            FileEntity updateFileEntity = CreateStorageFile(file: file, includeId: true);
+            FileEntity updateFileEntity = CreateLocalFileEntity(file: file, includeId: true);
 
             FileEntity result = await fileBroker.UpdateFileAsync(entity: updateFileEntity);
 
@@ -263,10 +263,10 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
         {
             ValidateInputs(inputs: [items]);
             return fileBroker.DeleteAllFilesAsync(
-                items: items?.Select(selector: file => CreateStorageFile(file: file, includeId: true)) ?? []);
+                items: items?.Select(selector: file => CreateLocalFileEntity(file: file, includeId: true)) ?? []);
         });
 
-    private static LocalFile CreateFile(FileEntity file) =>
+    private static LocalFile CreateLocalFile(FileEntity file) =>
         file == null
             ? null
             : new LocalFile
@@ -282,11 +282,11 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
                 CreatedOn = file.CreatedOn,
                 DeletedOn = file.DeletedOn,
                 Folder = CreateFolder(folder: file.Folder),
-                Contents = file.Contents?.Select(selector: CreateFileContent)
+                Contents = file.Contents?.Select(selector: CreateLocalFileContent)
                                                                              .ToList() ?? [],
             };
 
-    private static LocalFile CreateFileWithFolderRoles(FileEntity file) =>
+    private static LocalFile CreateLocalFileWithFolderRoles(FileEntity file) =>
         file == null
             ? null
             : new LocalFile
@@ -302,7 +302,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
                 CreatedOn = file.CreatedOn,
                 DeletedOn = file.DeletedOn,
                 Folder = CreateFolderWithRoles(folder: file.Folder),
-                Contents = file.Contents?.Select(selector: CreateFileContent)
+                Contents = file.Contents?.Select(selector: CreateLocalFileContent)
                                                                              .ToList() ?? [],
             };
 
@@ -348,7 +348,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
                   .ToList(),
             };
 
-    private static FileContent CreateFileContent(FileContent content) =>
+    private static FileContent CreateLocalFileContent(FileContent content) =>
         content == null
             ? null
             : new FileContent
@@ -363,7 +363,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
                 RawData = content.RawData,
             };
 
-    private static FileEntity CreateStorageFile(LocalFile file, bool includeId)
+    private static FileEntity CreateLocalFileEntity(LocalFile file, bool includeId)
     {
         if (file == null)
         {

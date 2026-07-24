@@ -17,7 +17,7 @@ public sealed partial class FileContentControllerTests
         // Given
         SeededFileContentContext seededContext = await SeedDatabase("filecontent_create", "filecontent_update", "filecontent_delete");
 
-        FileContent createdFileContent = await CreateFileContentAsync(payload: new
+        FileContent createdFileContent = await CreateLocalFileContentAsync(payload: new
         {
             fileId = seededContext.FileId,
             description = "Acceptance content",

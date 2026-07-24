@@ -261,7 +261,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
                 App = CreateApp(app: folder.App),
                 SubFolders = folder.SubFolders?.Select(selector: CreateFolder)
                                                                               .ToList(),
-                Files = folder.Files?.Select(selector: CreateFile)
+                Files = folder.Files?.Select(selector: CreateLocalFile)
                                                                   .ToList(),
                 Roles = folder.Roles?.Select(selector: CreateFolderRole)
                                                                         .ToList(),
@@ -282,7 +282,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
                 Parent = CreateFolder(folder: folder.Parent),
                 SubFolders = folder.SubFolders?.Select(selector: CreateFolder)
                                                                               .ToList(),
-                Files = folder.Files?.Select(selector: CreateFile)
+                Files = folder.Files?.Select(selector: CreateLocalFile)
                                                                   .ToList(),
                 Roles = folder.Roles?.Select(selector: CreateFolderRole)
                                                                         .ToList(),
@@ -317,7 +317,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
                 DeletedOn = folder.DeletedOn,
                 SubFolders = folder.SubFolders?.Select(selector: CreateFolder)
                                                                               .ToList(),
-                Files = folder.Files?.Select(selector: CreateFile)
+                Files = folder.Files?.Select(selector: CreateLocalFile)
                                                                   .ToList(),
             };
 
@@ -366,7 +366,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
     private static App CreateApp(App app) =>
         app == null ? null : new App { Id = app.Id, Name = app.Name };
 
-    private static LocalFile CreateFile(LocalFile file) =>
+    private static LocalFile CreateLocalFile(LocalFile file) =>
         file == null
             ? null
             : new LocalFile

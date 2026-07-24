@@ -22,7 +22,7 @@ public partial class WebDavProcessingServiceTests
     {
         // Given
         Folder folder = CreateFolderAsync(path: "folder");
-        LocalFile file = CreateFileAsync(path: "folder/file.txt", folder: folder);
+        LocalFile file = CreateLocalFileAsync(path: "folder/file.txt", folder: folder);
 
         DmsProcessingRequest request = CreateRequest(
             method: "PROPFIND",

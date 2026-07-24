@@ -79,7 +79,7 @@ internal partial class WebDavProcessingService(
 
                 headers.Add(item: new KeyValuePair<string, string>(key: "Connection", value: "close"));
 
-                return CreateResponse(
+                return CreateDmsProcessingResponse(
                     body: EncodeText(content: string.Empty),
                     hasBody: true,
                     contentType: "text/xml; charset=\"utf-8\"",
@@ -115,7 +115,7 @@ internal partial class WebDavProcessingService(
                         new KeyValuePair<string, string>(key:"MS-Author-Via", value:"DAV"),
                         ]);
 
-                        return CreateResponse(
+                        return CreateDmsProcessingResponse(
                             body: Stream.Null,
                             hasBody: false,
                             contentType: "text/xml; charset=\"utf-8\"",
@@ -131,9 +131,9 @@ internal partial class WebDavProcessingService(
                             : 0;
 
                         DmsResult getResult = dmsInstanceService.Get(path: path, version: getVer);
-                        return CreateResponse(body: getResult.Data, hasBody: true, contentType: getResult.MimeType, statusCode: 200, headers: headers);
+                        return CreateDmsProcessingResponse(body: getResult.Data, hasBody: true, contentType: getResult.MimeType, statusCode: 200, headers: headers);
                     case "HEAD":
-                        return CreateResponse(
+                        return CreateDmsProcessingResponse(
                             body: Stream.Null,
                             hasBody: false,
                             contentType: "text/xml; charset=\"utf-8\"",
@@ -142,7 +142,7 @@ internal partial class WebDavProcessingService(
                         );
                     case "PROPFIND":
                         string propFindBody = PropFindDmsProcessingRequest(request: request, appId: appId, path: path, requestText: requestText, ns: ns, urlBase: urlBase);
-                        return CreateResponse(
+                        return CreateDmsProcessingResponse(
                             body: EncodeText(content: propFindBody),
                             hasBody: !string.IsNullOrEmpty(value: propFindBody),
                             contentType: "text/xml; charset=\"utf-8\"",
@@ -159,7 +159,7 @@ internal partial class WebDavProcessingService(
                             ])
                         );
 
-                        return CreateResponse(
+                        return CreateDmsProcessingResponse(
                             body: EncodeText(content: responseXmlElement),
                             hasBody: true,
                             contentType: "text/xml; charset=\"utf-8\"",
@@ -171,11 +171,11 @@ internal partial class WebDavProcessingService(
                         request.Body.Position = 0;
                         await dmsInstanceService.SaveAsync(path: path, content: request.Body);
                         request.Body.Position = 0;
-                        return CreateResponse(body: request.Body, hasBody: true, contentType: request.ContentType, statusCode: 201, headers: headers);
+                        return CreateDmsProcessingResponse(body: request.Body, hasBody: true, contentType: request.ContentType, statusCode: 201, headers: headers);
                     case "MKCOL":
                         request.Body.Position = 0;
                         await dmsInstanceService.SaveAsync(path: path, content: request.Body);
-                        return CreateResponse(
+                        return CreateDmsProcessingResponse(
                             body: Stream.Null,
                             hasBody: false,
                             contentType: "text/xml; charset=\"utf-8\"",
@@ -187,7 +187,7 @@ internal partial class WebDavProcessingService(
                             oldPath: path,
                             newPath: ResolveDestinationPathDmsProcessingRequest(request: request, appId: appId)
                         );
-                        return CreateResponse(
+                        return CreateDmsProcessingResponse(
                             body: Stream.Null,
                             hasBody: false,
                             contentType: "text/xml; charset=\"utf-8\"",
@@ -199,7 +199,7 @@ internal partial class WebDavProcessingService(
                             oldPath: path,
                             newPath: ResolveDestinationPathDmsProcessingRequest(request: request, appId: appId)
                         );
-                        return CreateResponse(
+                        return CreateDmsProcessingResponse(
                             body: Stream.Null,
                             hasBody: false,
                             contentType: "text/xml; charset=\"utf-8\"",
@@ -213,7 +213,7 @@ internal partial class WebDavProcessingService(
                                 ? deleteVersion
                                 : 0
                         );
-                        return CreateResponse(
+                        return CreateDmsProcessingResponse(
                             body: Stream.Null,
                             hasBody: false,
                             contentType: "text/xml; charset=\"utf-8\"",
@@ -221,7 +221,7 @@ internal partial class WebDavProcessingService(
                             headers: headers
                         );
                     case "LOCK":
-                        return CreateResponse(
+                        return CreateDmsProcessingResponse(
                             body: Stream.Null,
                             hasBody: false,
                             contentType: "text/xml; charset=\"utf-8\"",
@@ -229,7 +229,7 @@ internal partial class WebDavProcessingService(
                             headers: headers
                         );
                     case "UNLOCK":
-                        return CreateResponse(
+                        return CreateDmsProcessingResponse(
                             body: Stream.Null,
                             hasBody: false,
                             contentType: "text/xml; charset=\"utf-8\"",
@@ -248,11 +248,11 @@ internal partial class WebDavProcessingService(
                     item: new KeyValuePair<string, string>(key: "WWW-Authenticate", value: "Basic realm=\"server\"")
                 );
 
-                return CreateResponse(body: Stream.Null, hasBody: false, contentType: "text/xml; charset=\"utf-8\"", statusCode: 204, headers: headers);
+                return CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "text/xml; charset=\"utf-8\"", statusCode: 204, headers: headers);
             }
             catch (Exception ex)
             {
-                return CreateResponse(
+                return CreateDmsProcessingResponse(
                     body: EncodeText(content: ex.Message),
                     hasBody: true,
                     contentType: "text/xml; charset=\"utf-8\"",
@@ -483,7 +483,7 @@ internal partial class WebDavProcessingService(
     private static string SerializeXml(XElement element) =>
         element.ToString(options: SaveOptions.DisableFormatting);
 
-    private static DmsProcessingResponse CreateResponse(
+    private static DmsProcessingResponse CreateDmsProcessingResponse(
         Stream body,
         bool hasBody,
         string contentType,

@@ -84,7 +84,7 @@ public sealed partial class FileContentControllerTests(WebAcceptanceFixture fixt
         return new SeededFileContentContext(AppId: AppId, RoleId: role.Id, FolderId: folder.Id, FileId: file.Id);
     }
 
-    private async Task<FileContent> CreateFileContentAsync(object payload)
+    private async Task<FileContent> CreateLocalFileContentAsync(object payload)
     {
         using HttpResponseMessage response = await Client.PostAsJsonAsync(requestUri: BaseUrl, value: payload);
         string content = await response.Content.ReadAsStringAsync();

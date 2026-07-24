@@ -117,7 +117,7 @@ public partial class WebDavProcessingServiceTests
             Roles = [],
         };
 
-    private static cCoder.Data.Models.DMS.File CreateFileAsync(string path, Folder folder) =>
+    private static cCoder.Data.Models.DMS.File CreateLocalFileAsync(string path, Folder folder) =>
         new()
         {
             Id = Guid.NewGuid(),

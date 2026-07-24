@@ -16,14 +16,11 @@ using LocalFile = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
-public partial class FileController : ODataController
+public partial class FileController(
+    IFileOrchestrationService service,
+    ILogger<FileController> log
+) : ODataController
 {
-    protected IFileOrchestrationService Service { get; }
-
-    public FileController(IFileOrchestrationService service, ILogger<FileController> log)
-    {
-        Service = service;
-    }
 
     [HttpGet]
     public IActionResult GetMetadata()
@@ -50,7 +47,7 @@ public partial class FileController : ODataController
     )]
     [ActionName("Get")]
     public IActionResult GetAll(ODataQueryOptions<LocalFile> queryOptions) =>
-        Ok(value: Service.GetAll());
+        Ok(value: service.GetAll());
 
     [HttpGet]
     [AllowAnonymous]
@@ -66,7 +63,7 @@ public partial class FileController : ODataController
     {
         try
         {
-            LocalFile result = Service.Get(fileId: key);
+            LocalFile result = service.Get(fileId: key);
             return result is null ? NotFound() : Ok(value: result);
         }
         catch (System.Security.SecurityException)
@@ -91,7 +88,7 @@ public partial class FileController : ODataController
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
         }
 
-        return Ok(value: await Service.AddFileAsync(newFile: entity));
+        return Ok(value: await service.AddFileAsync(newFile: entity));
     }
 
     [HttpPut]
@@ -111,13 +108,13 @@ public partial class FileController : ODataController
         }
 
         entity.Id = key;
-        return Ok(value: await Service.UpdateFileAsync(updatedFile: entity));
+        return Ok(value: await service.UpdateFileAsync(updatedFile: entity));
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
     public async Task<IActionResult> Patch([FromRoute] Guid key, Delta<LocalFile> delta)
     {
-        LocalFile originalEntity = Service.Get(fileId: key);
+        LocalFile originalEntity = service.Get(fileId: key);
 
         if (originalEntity == null)
         {
@@ -125,13 +122,13 @@ public partial class FileController : ODataController
         }
 
         delta.Patch(original: originalEntity);
-        return Ok(value: await Service.UpdateFileAsync(updatedFile: originalEntity));
+        return Ok(value: await service.UpdateFileAsync(updatedFile: originalEntity));
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete([FromRoute] Guid key)
     {
-        await Service.DeleteAsync(fileId: key);
+        await service.DeleteAsync(fileId: key);
         return Ok();
     }
 }

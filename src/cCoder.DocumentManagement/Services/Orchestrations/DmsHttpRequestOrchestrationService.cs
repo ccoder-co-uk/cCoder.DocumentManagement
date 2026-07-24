@@ -41,7 +41,7 @@ internal partial class DmsHttpRequestOrchestrationService(
             }
             catch (SecurityException)
             {
-                return CreateDmsSecurityResponse(host: request.Host);
+                return CreateDmsProcessingSecurityResponse(host: request.Host);
             }
 
         });
@@ -90,7 +90,7 @@ internal partial class DmsHttpRequestOrchestrationService(
         };
     }
 
-    private static DmsProcessingResponse CreateDmsSecurityResponse(string host)
+    private static DmsProcessingResponse CreateDmsProcessingSecurityResponse(string host)
     {
         List<KeyValuePair<string, string>> headers =
         [

@@ -6,7 +6,8 @@ namespace cCoder.DocumentManagement.Models;
 
 public class Path
 {
-    public static Path Empty { get; } = new(path: string.Empty);
+    public static Path Empty =>
+        new(path: string.Empty);
 
     public string Name => Segments.LastOrDefault();
 

@@ -73,7 +73,7 @@ public sealed partial class FileControllerTests(WebAcceptanceFixture fixture)
         return new SeededFileContext(AppId: AppId, RoleId: role.Id, FolderId: folder.Id);
     }
 
-    private async Task<DmsFile> CreateFileAsync(object payload)
+    private async Task<DmsFile> CreateLocalFileAsync(object payload)
     {
         using HttpResponseMessage response = await Client.PostAsJsonAsync(requestUri: BaseUrl, value: payload);
         string content = await response.Content.ReadAsStringAsync();

@@ -17,7 +17,7 @@ public sealed partial class FileControllerTests
         // Given
         SeededFileContext seededContext = await SeedDatabase("file_create", "file_update", "file_delete");
 
-        DmsFile createdFile = await CreateFileAsync(payload: new
+        DmsFile createdFile = await CreateLocalFileAsync(payload: new
         {
             folderId = seededContext.FolderId,
             name = Unique(prefix: "File"),

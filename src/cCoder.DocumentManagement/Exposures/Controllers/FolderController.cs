@@ -19,14 +19,11 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
-public partial class FolderController : ODataController
+public partial class FolderController(
+    IFolderOrchestrationService service,
+    ILogger<FolderController> log
+) : ODataController
 {
-    protected IFolderOrchestrationService Service { get; }
-
-    public FolderController(IFolderOrchestrationService service, ILogger<FolderController> log)
-    {
-        Service = service;
-    }
 
     [HttpPost]
     public async Task<IActionResult> CopyAsync(
@@ -35,7 +32,7 @@ public partial class FolderController : ODataController
         int sourceAppId,
         int destAppId
     ) =>
-        Ok(value: await Service.CopyAsync(source: source, destination: destination, sourceAppId: sourceAppId, destAppId: destAppId));
+        Ok(value: await service.CopyAsync(source: source, destination: destination, sourceAppId: sourceAppId, destAppId: destAppId));
 
     [HttpGet]
     public IActionResult GetMetadata()
@@ -62,7 +59,7 @@ public partial class FolderController : ODataController
     )]
     [ActionName("Get")]
     public IActionResult GetAll(ODataQueryOptions<Folder> queryOptions) =>
-        Ok(value: Service.GetAll());
+        Ok(value: service.GetAll());
 
     [HttpGet]
     [AllowAnonymous]
@@ -78,7 +75,7 @@ public partial class FolderController : ODataController
     {
         try
         {
-            Folder result = Service.Get(folderId: key);
+            Folder result = service.Get(folderId: key);
             return result is null ? NotFound() : Ok(value: result);
         }
         catch (System.Security.SecurityException)
@@ -103,7 +100,7 @@ public partial class FolderController : ODataController
             return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
         }
 
-        return Ok(value: await Service.AddFolderAsync(newFolder: newFolder));
+        return Ok(value: await service.AddFolderAsync(newFolder: newFolder));
     }
 
     [HttpPut]
@@ -123,13 +120,13 @@ public partial class FolderController : ODataController
         }
 
         entity.Id = key;
-        return Ok(value: await Service.UpdateFolderAsync(updatedFolder: entity));
+        return Ok(value: await service.UpdateFolderAsync(updatedFolder: entity));
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
     public async Task<IActionResult> Patch([FromRoute] Guid key, Delta<Folder> delta)
     {
-        Folder originalEntity = Service.Get(folderId: key);
+        Folder originalEntity = service.Get(folderId: key);
 
         if (originalEntity == null)
         {
@@ -137,13 +134,13 @@ public partial class FolderController : ODataController
         }
 
         delta.Patch(original: originalEntity);
-        return Ok(value: await Service.UpdateFolderAsync(updatedFolder: originalEntity));
+        return Ok(value: await service.UpdateFolderAsync(updatedFolder: originalEntity));
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete([FromRoute] Guid key)
     {
-        await Service.DeleteAsync(folderId: key);
+        await service.DeleteAsync(folderId: key);
         return Ok();
     }
 }
