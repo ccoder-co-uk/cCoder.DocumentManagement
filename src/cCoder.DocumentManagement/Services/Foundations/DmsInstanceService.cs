@@ -16,7 +16,7 @@ internal partial class DmsInstanceService(IDmsInstanceBroker dmsInstanceBroker) 
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [paths]);
+            ValidateFilesZippedOnGet(paths:paths);
             return dmsInstanceBroker.GetFilesZipped(paths: paths);
         });
 

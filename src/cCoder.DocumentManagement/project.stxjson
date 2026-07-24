@@ -5790,18 +5790,11 @@
       "LineNumber": 13
     },
     {
-      "Code": "STX0012",
-      "Description": "Business-operation validation methods must evaluate their rules through a validation collector.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
-      "LineNumber": 13
-    },
-    {
-      "Code": "STX0023",
-      "Description": "Each business operation must call its operation-specific validation method.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService",
-      "LineNumber": 13
+      "LineNumber": 17
     },
     {
       "Code": "STXFORMAT001",
@@ -5916,25 +5909,18 @@
       "LineNumber": 43
     },
     {
-      "Code": "STX0012",
-      "Description": "Business-operation validation methods must evaluate their rules through a validation collector.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0023",
-      "Description": "Each business operation must call its operation-specific validation method.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 17
-    },
-    {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
       "LineNumber": 27
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
+      "LineNumber": 29
     },
     {
       "Code": "STXFORMAT008",
@@ -5944,32 +5930,18 @@
       "LineNumber": 80
     },
     {
-      "Code": "STXFORMAT001",
-      "Description": "Source files must not contain newline characters after the final code token.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileContentService",
-      "LineNumber": 200
-    },
-    {
-      "Code": "STX0012",
-      "Description": "Business-operation validation methods must evaluate their rules through a validation collector.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 18
-    },
-    {
-      "Code": "STX0023",
-      "Description": "Each business operation must call its operation-specific validation method.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
-      "LineNumber": 18
-    },
-    {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
       "LineNumber": 26
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FileService",
+      "LineNumber": 47
     },
     {
       "Code": "STXFORMAT008",
@@ -6000,18 +5972,11 @@
       "LineNumber": 265
     },
     {
-      "Code": "STX0012",
-      "Description": "Business-operation validation methods must evaluate their rules through a validation collector.",
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 15
-    },
-    {
-      "Code": "STX0023",
-      "Description": "Each business operation must call its operation-specific validation method.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService",
-      "LineNumber": 15
+      "LineNumber": 23
     },
     {
       "Code": "STXFORMAT008",
@@ -6035,25 +6000,18 @@
       "LineNumber": 17
     },
     {
-      "Code": "STX0012",
-      "Description": "Business-operation validation methods must evaluate their rules through a validation collector.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0023",
-      "Description": "Each business operation must call its operation-specific validation method.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
-      "LineNumber": 17
-    },
-    {
       "Code": "STXFORMAT008",
       "Description": "Wrapped statements must be separated from adjacent method statements by an empty line.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 25
+    },
+    {
+      "Code": "STXFORMAT001",
+      "Description": "Source files must not contain newline characters after the final code token.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
+      "LineNumber": 56
     },
     {
       "Code": "STXFORMAT008",
@@ -6075,20 +6033,6 @@
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Foundations.FolderService",
       "LineNumber": 238
-    },
-    {
-      "Code": "STX0012",
-      "Description": "Business-operation validation methods must evaluate their rules through a validation collector.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.RoleService",
-      "LineNumber": 11
-    },
-    {
-      "Code": "STX0023",
-      "Description": "Each business operation must call its operation-specific validation method.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Foundations.RoleService",
-      "LineNumber": 11
     },
     {
       "Code": "STX0004",

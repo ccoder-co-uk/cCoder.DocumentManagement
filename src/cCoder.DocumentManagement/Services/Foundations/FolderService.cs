@@ -50,7 +50,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [ignoreFilters]);
+            ValidateAllOnGet(ignoreFilters:ignoreFilters );
             return folderBroker.SelectAllFolders(ignoreFilters: ignoreFilters);
         });
 
@@ -58,7 +58,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [folderId, ignoreFilters]);
+            ValidateWithRolesOnGet(folderId:folderId,ignoreFilters:ignoreFilters );
             return CreateFolder(folder: folderBroker.SelectFolderWithRoles(folderId: folderId, ignoreFilters: ignoreFilters));
         });
 
@@ -66,7 +66,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [folderId, ignoreFilters]);
+            ValidateForUpdateOnGet(folderId:folderId,ignoreFilters:ignoreFilters );
             return CreateFolderForUpdate(folder: folderBroker.SelectFolderForUpdate(folderId: folderId, ignoreFilters: ignoreFilters));
         });
 
@@ -74,7 +74,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [appId, path, ignoreFilters]);
+            ValidateByPathOnGet(appId:appId,path:path,ignoreFilters:ignoreFilters );
             return CreateFolder(folder: folderBroker.SelectFolderByPath(appId: appId, path: path, ignoreFilters: ignoreFilters));
         });
 
@@ -82,7 +82,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [appId, path, ignoreFilters]);
+            ValidateByPathWithRolesOnGet(appId:appId,path:path,ignoreFilters:ignoreFilters );
             return CreateFolder(folder: folderBroker.SelectFolderByPathWithRoles(appId: appId, path: path, ignoreFilters: ignoreFilters));
         });
 
@@ -90,7 +90,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [appId, path, ignoreFilters]);
+            ValidateByPathWithParentAndRolesOnGet(appId:appId,path:path,ignoreFilters:ignoreFilters );
             return CreateFolderWithParent(folder: folderBroker.SelectFolderByPathWithParentAndRoles(appId: appId, path: path, ignoreFilters: ignoreFilters));
         });
 
@@ -102,7 +102,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [appId, path, ignoreFilters]);
+            ValidateByPathWithRolesAndFilesAndContentsOnGet(appId:appId,path:path,ignoreFilters:ignoreFilters );
             return CreateFolderWithRolesAndFiles(
                 folder: folderBroker.SelectFolderByPathWithRolesAndFilesAndContents(appId: appId, path: path, ignoreFilters: ignoreFilters)
             );
@@ -116,7 +116,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [appId, path, ignoreFilters]);
+            ValidateByPathWithSubFoldersAndFilesOnGet(appId:appId,path:path,ignoreFilters:ignoreFilters );
             return CreateFolderForMove(folder: folderBroker.SelectFolderByPathWithSubFoldersAndFiles(appId: appId, path: path, ignoreFilters: ignoreFilters));
         });
 
@@ -124,7 +124,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [newFolder]);
+            ValidateFolderOnAdd(newFolder:newFolder);
             authorizationBroker.Authorize(appId: newFolder.AppId, privilege: $"{nameof(Folder)}_create");
 
             Folder storageFolder = CreateStorageFolderForAdd(folder: newFolder);
@@ -151,7 +151,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: (Func<ValueTask<Folder>>)(async () =>
         {
-            ValidateInputs(inputs: (object[])[newFolder]);
+            ValidateForPathBuildFolderOnAdd(newFolder:newFolder);
             Folder storageFolder = CreateStorageFolderForAdd(folder: newFolder);
 
             Folder result = await folderBroker.InsertFolderAsync(newFolder: storageFolder);
@@ -176,7 +176,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [updatedFolder]);
+            ValidateFolderOnUpdate(updatedFolder:updatedFolder);
             authorizationBroker.Authorize(appId: updatedFolder.AppId, privilege: $"{nameof(Folder)}_update");
 
             return await UpdateForAppFolderValueAsync(updatedFolder: updatedFolder);
@@ -187,7 +187,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [updatedFolder]);
+            ValidateForAppFolderOnUpdate(updatedFolder:updatedFolder);
             Folder updateFolder = CreateStorageFolder(folder: updatedFolder, includeId: true);
 
 
@@ -234,7 +234,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [deletedFolder]);
+            ValidateAllForAppFolderOnDelete(deletedFolder:deletedFolder);
             return folderBroker.DeleteAllFoldersAsync(
                 deletedFolder: deletedFolder?.Select(selector: folder => CreateStorageFolder(folder: folder, includeId: true)) ?? []);
         });
@@ -243,7 +243,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [appId]);
+            ValidateAllByAppIdOnDelete(appId:appId);
             return folderBroker.DeleteAllFoldersByAppIdAsync(appId: appId);
         });
 

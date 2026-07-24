@@ -14,7 +14,7 @@ internal partial class RoleService(IRoleBroker roleBroker) : IRoleService
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [ignoreFilters]);
+            ValidateAllOnGet(ignoreFilters:ignoreFilters );
             return roleBroker.GetAllRoles(ignoreFilters: ignoreFilters);
         });
 }
