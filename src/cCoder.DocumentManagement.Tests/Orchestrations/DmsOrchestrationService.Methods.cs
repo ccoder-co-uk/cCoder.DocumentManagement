@@ -10,11 +10,11 @@ using cCoder.Data.Models.Security;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
+using DMSResult = cCoder.DocumentManagement.Dependencies.DMSResult;
 using DataFile = cCoder.Data.Models.DMS.File;
-using ExternalPath = cCoder.DocumentManagement.Models.Path;
+using ExternalPath = cCoder.DocumentManagement.Dependencies.Path;
 using LocalFile = cCoder.Data.Models.DMS.File;
-using LocalPath = cCoder.DocumentManagement.Models.Path;
+using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Orchestrations;

@@ -5,8 +5,8 @@
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Services.Foundations;
-using LocalPath = cCoder.DocumentManagement.Models.Path;
-using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
+using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsResult = cCoder.DocumentManagement.Dependencies.DMSResult;
 using MemoryStream = System.IO.MemoryStream;
 
 

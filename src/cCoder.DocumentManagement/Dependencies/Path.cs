@@ -2,7 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-namespace cCoder.DocumentManagement.Models;
+namespace cCoder.DocumentManagement.Dependencies;
 
 public class Path
 {
@@ -35,7 +35,7 @@ public class Path
     {
         get
         {
-            Mapping mapping = Models.MimeType.Get(fileExtension: Extension);
+            Mapping mapping = DocumentManagement.Models.MimeType.Get(fileExtension: Extension);
             return string.IsNullOrWhiteSpace(value: mapping.MimeType) ? "text/plain" : mapping.MimeType;
         }
     }

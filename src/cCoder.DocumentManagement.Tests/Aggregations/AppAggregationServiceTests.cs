@@ -54,7 +54,9 @@ public partial class AppAggregationServiceTests
 
         folderOrchestrationServiceMock
             .Setup(expression: x => x.AddOrUpdateForAppFolderAsync(items: It.Is<IEnumerable<Folder>>(match: folders => folders.All(predicate: folder => folder.AppId == 7))))
-            .Returns(value: ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Models.Result<Folder>>>(result: []));
+            .Returns(
+                value: ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Dependencies.Result<Folder>>>(
+                    result: []));
 
         // When
         await service.AddAppAsync(newApp: app);

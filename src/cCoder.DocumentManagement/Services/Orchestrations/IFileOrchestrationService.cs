@@ -28,15 +28,15 @@ public interface IFileOrchestrationService
 
     ValueTask HandleFileDeleteEventAsync(cCoder.Data.Models.DMS.File file);
 
-    DMSResult GetAppPath(App app, cCoder.DocumentManagement.Models.Path path, int version = 0);
+    DMSResult GetAppPath(App app, cCoder.DocumentManagement.Dependencies.Path path, int version = 0);
 
     IEnumerable<cCoder.Data.Models.DMS.File> SearchApp(App app, string needle);
 
-    ValueTask SaveAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content = null);
+    ValueTask SaveAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path path, Stream content = null);
 
-    ValueTask DropAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path, int version = 0);
+    ValueTask DropAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path path, int version = 0);
 
-    ValueTask CopyAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath);
+    ValueTask CopyAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath);
 
-    ValueTask MoveAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath);
+    ValueTask MoveAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath);
 }

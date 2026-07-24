@@ -3,8 +3,8 @@
 // ---------------------------------------------------------------
 
 using File = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Models.Path;
-using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
+using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsResult = cCoder.DocumentManagement.Dependencies.DMSResult;
 
 
 namespace cCoder.DocumentManagement.Services.Foundations;

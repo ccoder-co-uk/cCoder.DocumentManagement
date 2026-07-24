@@ -4,10 +4,10 @@
 
 using cCoder.DocumentManagement.Services.Processings;
 using DataFile = cCoder.Data.Models.DMS.File;
-using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
+using DmsResult = cCoder.DocumentManagement.Dependencies.DMSResult;
 using LocalApp = cCoder.Data.Models.CMS.App;
 using LocalFile = cCoder.Data.Models.DMS.File;
-using LocalPath = cCoder.DocumentManagement.Models.Path;
+using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
 
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;

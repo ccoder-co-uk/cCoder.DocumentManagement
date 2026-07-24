@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Dependencies;
-using DmsPath = cCoder.DocumentManagement.Models.Path;
+using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
 
 namespace cCoder.DocumentManagement.Services.Foundations;
 

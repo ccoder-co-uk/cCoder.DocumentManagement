@@ -132,7 +132,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public DMSResult GetFilesZippedAppPath(App app, IEnumerable<cCoder.DocumentManagement.Models.Path> paths)
+    public DMSResult GetFilesZippedAppPath(App app, IEnumerable<cCoder.DocumentManagement.Dependencies.Path> paths)
 =>
         TryCatch(operation: () =>
         {
@@ -141,7 +141,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public DMSResult GetAppPath(App app, cCoder.DocumentManagement.Models.Path path, string search = "")
+    public DMSResult GetAppPath(App app, cCoder.DocumentManagement.Dependencies.Path path, string search = "")
 =>
         TryCatch(operation: () =>
         {
@@ -150,7 +150,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public ValueTask UnpackAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content, bool ignoreArchiveRoot = false)
+    public ValueTask UnpackAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path path, Stream content, bool ignoreArchiveRoot = false)
 =>
         TryCatch(operation: () =>
         {
@@ -159,7 +159,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public ValueTask SaveAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path)
+    public ValueTask SaveAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path path)
 =>
         TryCatch(operation: () =>
         {
@@ -168,7 +168,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public ValueTask DropAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path)
+    public ValueTask DropAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path path)
 =>
         TryCatch(operation: () =>
         {
@@ -177,7 +177,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public ValueTask CopyAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+    public ValueTask CopyAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath)
 =>
         TryCatch(operation: () =>
         {
@@ -186,7 +186,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 
         });
 
-    public ValueTask MoveAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+    public ValueTask MoveAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath)
 =>
         TryCatch(operation: () =>
         {

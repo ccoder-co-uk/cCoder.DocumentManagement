@@ -114,7 +114,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 
         });
 
-    public DMSResult GetAppPath(App app, cCoder.DocumentManagement.Models.Path path, int version = 0)
+    public DMSResult GetAppPath(App app, cCoder.DocumentManagement.Dependencies.Path path, int version = 0)
 =>
         TryCatch(operation: () =>
         {
@@ -132,7 +132,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 
         });
 
-    public ValueTask SaveAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content = null)
+    public ValueTask SaveAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path path, Stream content = null)
 =>
         TryCatch(operation: () =>
         {
@@ -141,7 +141,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 
         });
 
-    public ValueTask DropAppPathAsync(App app, cCoder.DocumentManagement.Models.Path path, int version = 0)
+    public ValueTask DropAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path path, int version = 0)
 =>
         TryCatch(operation: () =>
         {
@@ -150,7 +150,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 
         });
 
-    public ValueTask CopyAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+    public ValueTask CopyAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath)
 =>
         TryCatch(operation: () =>
         {
@@ -159,7 +159,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 
         });
 
-    public ValueTask MoveAppPathAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
+    public ValueTask MoveAppPathAsync(App app, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath)
 =>
         TryCatch(operation: () =>
         {
