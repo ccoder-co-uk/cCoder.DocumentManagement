@@ -718,6 +718,27 @@
       ]
     },
     {
+      "Name": "cCoder.DocumentManagement.Brokers.FolderRoleContextBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "SelectFolderRoleContext",
+          "Inputs": [
+            {
+              "Name": "folderRole",
+              "Type": "cCoder.Data.Models.Security.FolderRole"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.FolderRoleContext"
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.Brokers.JsonBroker",
       "StandardElementType": "Broker",
       "Properties": [],
@@ -2777,6 +2798,21 @@
           "ReturnType": "System.String"
         }
       ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.FolderRoleContext",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Folder",
+          "Type": "cCoder.Data.Models.DMS.Folder"
+        },
+        {
+          "Name": "Role",
+          "Type": "cCoder.Data.Models.Security.Role"
+        }
+      ],
+      "Methods": []
     },
     {
       "Name": "cCoder.DocumentManagement.Models.FolderRoleInfo",
@@ -5684,15 +5720,11 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "ToType": "cCoder.DocumentManagement.Brokers.RoleBroker"
+      "ToType": "cCoder.DocumentManagement.Brokers.FolderRoleContextBroker"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
-      "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderService"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.PackagePayloadJsonProcessingService",
@@ -5742,13 +5774,6 @@
       "Description": "A processing service may use only one foundation service and no higher-level service.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService",
-      "LineNumber": 16
-    },
-    {
-      "Code": "STXP001",
-      "Description": "A processing service may use only one foundation service and no higher-level service.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "LineNumber": 16
     },
     {

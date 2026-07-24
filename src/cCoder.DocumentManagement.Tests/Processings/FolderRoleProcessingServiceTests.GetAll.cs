@@ -34,8 +34,7 @@ public partial class FolderRoleProcessingServiceTests
 
         folderRoleServiceMock.Verify(expression: x => x.GetAll(), times: Times.Once);
         folderRoleServiceMock.VerifyNoOtherCalls();
-        roleBrokerMock.VerifyNoOtherCalls();
-        folderServiceMock.VerifyNoOtherCalls();
+        contextBrokerMock.VerifyNoOtherCalls();
     }
 
 }

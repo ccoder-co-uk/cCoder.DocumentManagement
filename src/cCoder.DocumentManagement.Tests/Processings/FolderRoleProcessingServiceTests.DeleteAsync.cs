@@ -73,8 +73,19 @@ public partial class FolderRoleProcessingServiceTests
 
         currentUser = user;
 
-        folderServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
-            .Returns(value: new[] { folder }.AsQueryable());
+        contextBrokerMock
+            .Setup(expression: broker =>
+                broker.SelectFolderRoleContext(
+                    folderRole: It.Is<FolderRole>(
+                        match: item =>
+                            item.FolderId == folder.Id
+                            && item.RoleId == role.Id),
+                    ignoreFilters: true))
+            .Returns(value: new FolderRoleContext
+            {
+                Folder = folder,
+                Role = role,
+            });
 
         folderRoleServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
             .Returns(value: new[] { link }.AsQueryable());
@@ -88,7 +99,15 @@ public partial class FolderRoleProcessingServiceTests
         );
 
         // Then
-        folderServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Once);
+        contextBrokerMock.Verify(
+            expression: broker =>
+                broker.SelectFolderRoleContext(
+                    folderRole: It.Is<FolderRole>(
+                        match: item =>
+                            item.FolderId == folder.Id
+                            && item.RoleId == role.Id),
+                    ignoreFilters: true),
+            times: Times.Once);
         folderRoleServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Once);
 
         folderRoleServiceMock.Verify(
@@ -149,8 +168,19 @@ public partial class FolderRoleProcessingServiceTests
             RoleId = role.Id,
         };
 
-        folderServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
-            .Returns(value: new[] { folder }.AsQueryable());
+        contextBrokerMock
+            .Setup(expression: broker =>
+                broker.SelectFolderRoleContext(
+                    folderRole: It.Is<FolderRole>(
+                        match: item =>
+                            item.FolderId == folder.Id
+                            && item.RoleId == role.Id),
+                    ignoreFilters: true))
+            .Returns(value: new FolderRoleContext
+            {
+                Folder = folder,
+                Role = role,
+            });
 
         folderRoleServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
             .Returns(value: new[] { link }.AsQueryable());

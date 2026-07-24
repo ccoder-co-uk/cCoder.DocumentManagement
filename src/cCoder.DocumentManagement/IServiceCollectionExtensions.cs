@@ -88,6 +88,7 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IFileContentEventBroker, FileContentEventBroker>();
         services.AddTransient<IFileEventBroker, FileEventBroker>();
         services.AddTransient<IFolderEventBroker, FolderEventBroker>();
+        services.AddTransient<IFolderRoleContextBroker, FolderRoleContextBroker>();
         services.AddTransient<IFolderRoleEventBroker, FolderRoleEventBroker>();
         services.AddTransient<IFileBroker, FileBroker>();
         services.AddTransient<IFileContentBroker, FileContentBroker>();

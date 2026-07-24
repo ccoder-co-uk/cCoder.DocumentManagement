@@ -13,7 +13,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-internal partial class FolderRoleProcessingService(IFolderRoleService service, IRoleBroker roleBroker, IFolderService folderService, IAuthorizationBroker authorizationBroker) : IFolderRoleProcessingService
+internal partial class FolderRoleProcessingService(
+    IFolderRoleService service,
+    IFolderRoleContextBroker contextBroker,
+    IAuthorizationBroker authorizationBroker)
+    : IFolderRoleProcessingService
 {
     private cCoder.Data.Models.Security.User GetCurrentUser() =>
         authorizationBroker.GetCurrentUser();
@@ -71,8 +75,11 @@ internal partial class FolderRoleProcessingService(IFolderRoleService service, I
         {
             ValidateInputs(inputs: [deletedFolderRole]);
 
-            Folder folder = folderService.GetAll(ignoreFilters: true)
-    .FirstOrDefault(predicate: (Folder u) => u.Id == deletedFolderRole.FolderId);
+            Folder folder = contextBroker
+                .SelectFolderRoleContext(
+                    folderRole: deletedFolderRole,
+                    ignoreFilters: true)
+                .Folder;
 
 
             cCoder.Data.Models.Security.FolderRole dbVersion = service.GetAll(ignoreFilters: true)
@@ -165,10 +172,19 @@ internal partial class FolderRoleProcessingService(IFolderRoleService service, I
 
     private (cCoder.Data.Models.Security.Role role, Folder folder) GetFolderAndRoleFolderRole(cCoder.Data.Models.Security.FolderRole entity)
 =>
-        (role: roleBroker.GetAllRoles(ignoreFilters: true)
-            .IgnoreQueryFilters()
-            .FirstOrDefault(predicate: (cCoder.Data.Models.Security.Role r) => r.Id == entity.RoleId), folder: folderService.GetAll(ignoreFilters: true)
-            .FirstOrDefault(predicate: (Folder u) => u.Id == entity.FolderId));
+        GetFolderRoleContext(entity: entity);
+
+    private (cCoder.Data.Models.Security.Role role, Folder folder)
+        GetFolderRoleContext(
+            cCoder.Data.Models.Security.FolderRole entity)
+    {
+        FolderRoleContext context =
+            contextBroker.SelectFolderRoleContext(
+                folderRole: entity,
+                ignoreFilters: true);
+
+        return (role: context.Role, folder: context.Folder);
+    }
 
     private IQueryable<cCoder.Data.Models.Security.FolderRole> GetAllValue() =>
         GetAll();

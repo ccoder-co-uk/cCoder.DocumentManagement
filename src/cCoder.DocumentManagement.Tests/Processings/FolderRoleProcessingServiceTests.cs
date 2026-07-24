@@ -11,26 +11,31 @@ using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Processings;
 using Moq;
 using IAuthorizationBroker = cCoder.DocumentManagement.Brokers.IAuthorizationBroker;
-using IRoleBroker = cCoder.DocumentManagement.Brokers.IRoleBroker;
+using IFolderRoleContextBroker = cCoder.DocumentManagement.Brokers.IFolderRoleContextBroker;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
 
 public partial class FolderRoleProcessingServiceTests
 {
-    private readonly Mock<IFolderService> folderServiceMock = new();
     private User currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
     private readonly Mock<IFolderRoleService> folderRoleServiceMock = new();
-    private readonly Mock<IRoleBroker> roleBrokerMock = new();
+    private readonly Mock<IFolderRoleContextBroker> contextBrokerMock = new();
     private readonly Mock<IAuthorizationBroker> authorizationBrokerMock = new();
     private readonly FolderRoleProcessingService folderRoleProcessingService;
 
     public FolderRoleProcessingServiceTests()
     {
+        contextBrokerMock
+            .Setup(expression: broker =>
+                broker.SelectFolderRoleContext(
+                    folderRole: It.IsAny<FolderRole>(),
+                    ignoreFilters: It.IsAny<bool>()))
+            .Returns(value: new FolderRoleContext());
+
         folderRoleProcessingService = new FolderRoleProcessingService(
             service: folderRoleServiceMock.Object,
-            roleBroker: roleBrokerMock.Object,
-            folderService: folderServiceMock.Object,
+            contextBroker: contextBrokerMock.Object,
             authorizationBroker: authorizationBrokerMock.Object
         );
     }
@@ -59,4 +64,22 @@ public partial class FolderRoleProcessingServiceTests
                     })
                     .ToArray(),
             };
+
+    private static Folder CreateFolder(
+        params FolderRole[] folderRoles) =>
+        new()
+        {
+            Id = Guid.NewGuid(),
+            AppId = 1,
+            Name = "Root",
+            Path = "root",
+            App = new App
+            {
+                Id = 1,
+                Name = "App",
+            },
+            Roles = folderRoles,
+            Files = [],
+            SubFolders = [],
+        };
 }
