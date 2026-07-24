@@ -1621,6 +1621,18 @@
       ]
     },
     {
+      "Name": "cCoder.DocumentManagement.Exposures.BaselineExposure",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetBaselinePackages",
+          "Inputs": [],
+          "ReturnType": "cCoder.Data.Models.Packaging.Package[]"
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.BaselineController",
       "StandardElementType": "Exposure",
       "Properties": [],
@@ -2056,9 +2068,9 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "CreateDmsInstance",
+          "Name": "CreateDms",
           "Inputs": [],
-          "ReturnType": "cCoder.DocumentManagement.Exposures.IDms"
+          "ReturnType": "cCoder.DocumentManagement.Exposures.Dms"
         }
       ]
     },
@@ -5225,6 +5237,10 @@
       "ToType": "cCoder.DocumentManagement.Exposures.DmsInstanceFactory"
     },
     {
+      "FromType": "cCoder.DocumentManagement.Exposures.Controllers.BaselineController",
+      "ToType": "cCoder.DocumentManagement.Exposures.BaselineExposure"
+    },
+    {
       "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
       "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService"
     },
@@ -5531,24 +5547,10 @@
   ],
   "AnalysisItems": [
     {
-      "Code": "STXAPI001",
-      "Description": "An API controller must have exactly one business dependency.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.BaselineController",
-      "LineNumber": 10
-    },
-    {
       "Code": "STXAPI002",
       "Description": "An API controller must expose a single model contract.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
-      "LineNumber": 17
-    },
-    {
-      "Code": "STX0022",
-      "Description": "Creation method names must include the concrete type they create.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.DmsInstanceFactory",
       "LineNumber": 17
     },
     {

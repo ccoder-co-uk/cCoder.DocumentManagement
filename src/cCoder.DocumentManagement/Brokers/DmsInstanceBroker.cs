@@ -27,41 +27,41 @@ internal sealed class DmsInstanceBroker(IDmsInstanceFactory dmsInstanceFactory) 
 {
     public DmsResult GetFilesZipped(IEnumerable<DmsPath> paths)
         =>
-        dmsInstanceFactory.CreateDmsInstance()
+        dmsInstanceFactory.CreateDms()
                                          .GetFilesZipped(paths: paths);
 
     public DmsResult Get(DmsPath path, int version = 0, string search = "")
         =>
-        dmsInstanceFactory.CreateDmsInstance()
+        dmsInstanceFactory.CreateDms()
                                          .Get(path: path, version: version, search: search);
 
     public IEnumerable<File> Search(string needle)
         =>
-        dmsInstanceFactory.CreateDmsInstance()
+        dmsInstanceFactory.CreateDms()
                                          .Search(needle: needle);
 
     public ValueTask UnpackAsync(DmsPath path, Stream content, bool ignoreArchiveRoot = false)
         =>
-        dmsInstanceFactory.CreateDmsInstance()
+        dmsInstanceFactory.CreateDms()
                                          .UnpackAsync(path: path, content: content, ignoreArchiveRoot: ignoreArchiveRoot);
 
     public ValueTask SaveAsync(DmsPath path, Stream content = null)
         =>
-        dmsInstanceFactory.CreateDmsInstance()
+        dmsInstanceFactory.CreateDms()
                                          .SaveAsync(path: path, content: content);
 
     public ValueTask DropAsync(DmsPath path, int version = 0)
         =>
-        dmsInstanceFactory.CreateDmsInstance()
+        dmsInstanceFactory.CreateDms()
                                          .DropAsync(path: path, version: version);
 
     public ValueTask CopyAsync(DmsPath oldPath, DmsPath newPath)
         =>
-        dmsInstanceFactory.CreateDmsInstance()
+        dmsInstanceFactory.CreateDms()
                                          .CopyAsync(oldPath: oldPath, newPath: newPath);
 
     public ValueTask MoveAsync(DmsPath oldPath, DmsPath newPath)
         =>
-        dmsInstanceFactory.CreateDmsInstance()
+        dmsInstanceFactory.CreateDms()
                                          .MoveAsync(oldPath: oldPath, newPath: newPath);
 }

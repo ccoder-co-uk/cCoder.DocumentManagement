@@ -29,7 +29,7 @@ public partial class DmsInstanceFactoryTests
         var factory = new DmsInstanceFactory(dmsOrchestrationService: orchestrationServiceMock.Object);
 
         // When
-        IDms dms = factory.CreateDmsInstance();
+        IDms dms = factory.CreateDms();
         IEnumerable<DataFile> actualFiles = dms.Search(needle: "needle");
 
         // Then
@@ -54,7 +54,7 @@ public partial class DmsInstanceFactoryTests
 
         var factory = new DmsInstanceFactory(dmsOrchestrationService: orchestrationServiceMock.Object);
 
-        IDms dms = factory.CreateDmsInstance();
+        IDms dms = factory.CreateDms();
         // When
         await dms.SaveAsync(path: path, content: content);
 

@@ -110,6 +110,7 @@ public static partial class IServiceCollectionExtensions
     {
         services.AddTransient<Services.Foundations.Events.IEventHandlerService, Services.Foundations.Events.EventHandlerService>();
         services.AddTransient<IDmsInstanceService, DmsInstanceService>();
+        services.AddTransient<IBaselineExposure, BaselineExposure>();
         services.AddTransient<IFileContentService, FileContentService>();
         services.AddTransient<IFileService, FileService>();
         services.AddTransient<IDocumentManagementMetadataTypeService, DocumentManagementMetadataTypeService>();
