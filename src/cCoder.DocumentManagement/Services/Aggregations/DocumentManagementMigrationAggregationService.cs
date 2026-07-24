@@ -6,9 +6,7 @@ using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
-using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Orchestrations;
-using IJsonBroker = cCoder.DocumentManagement.Brokers.IJsonBroker;
 using LocalFolderRole = cCoder.Data.Models.Security.FolderRole;
 
 
@@ -17,8 +15,8 @@ namespace cCoder.DocumentManagement.Services.Aggregations;
 internal partial class DocumentManagementMigrationAggregationService(
     IFolderRoleOrchestrationService folderRoleOrchestrationService,
     IFolderOrchestrationService folderOrchestrationService,
-    IRoleService roleService,
-    IJsonBroker jsonBroker
+    IRoleMigrationOrchestrationService roleMigrationOrchestrationService,
+    IPackagePayloadMigrationOrchestrationService packagePayloadMigrationOrchestrationService
 ) : IDocumentManagementMigrationAggregationService
 {
     public ValueTask ImportPackageDocumentManagementPackageAsync(int appId, DocumentManagementPackage package)
@@ -40,15 +38,16 @@ internal partial class DocumentManagementMigrationAggregationService(
                     continue;
                 }
 
-                FolderRoleInfo[] folderRoleInfos = item.Data.StartsWith(value: "{")
-                    ? [jsonBroker.ParseJson<FolderRoleInfo>(json: item.Data)]
-                    : jsonBroker.ParseJson<FolderRoleInfo[]>(json: item.Data);
+                FolderRoleInfo[] folderRoleInfos =
+                    packagePayloadMigrationOrchestrationService
+                        .ParseFolderRoleInfos(data: item.Data);
 
-                var roles = roleService.GetAll(ignoreFilters: false)
-                    .Where(predicate: role => role.AppId == appId)
-                    .ToArray();
+                Role[] roles = roleMigrationOrchestrationService
+                    .GetRolesForApp(
+                        appId: appId,
+                        ignoreFilters: false);
 
-                var folders = folderOrchestrationService
+                Folder[] folders = folderOrchestrationService
                     .GetAll(ignoreFilters: false)
                     .Where(predicate: folder => folder.AppId == appId)
                     .ToArray();
@@ -66,7 +65,9 @@ internal partial class DocumentManagementMigrationAggregationService(
                     }
                 }
 
-                _ = await folderRoleOrchestrationService.AddOrUpdateFolderRole(items: folderRolesToAdd);
+                _ = await folderRoleOrchestrationService
+                    .AddOrUpdateFolderRole(
+                        items: folderRolesToAdd);
             }
 
         });
@@ -104,12 +105,15 @@ internal partial class DocumentManagementMigrationAggregationService(
 
     private cCoder.Data.Models.Packaging.Package ExportFolderRoles(int appId)
     {
-        var roles = roleService.GetAll(ignoreFilters: true)
-            .Where(predicate: role => role.AppId == appId)
+        var roles = roleMigrationOrchestrationService
+            .GetRolesForApp(
+                appId: appId,
+                ignoreFilters: true)
             .Select(selector: role => new { role.Id, role.Name })
             .ToArray();
 
-        var folders = folderOrchestrationService.GetAll(ignoreFilters: true)
+        var folders = folderOrchestrationService
+            .GetAll(ignoreFilters: true)
             .Where(predicate: folder => folder.AppId == appId)
             .Select(selector: folder => new { folder.Id, folder.Path })
             .ToArray();
@@ -123,7 +127,9 @@ internal partial class DocumentManagementMigrationAggregationService(
                     new Data.Models.Packaging.PackageItem
                     {
                         Type = "Core/FolderRole",
-                        Data = jsonBroker.Serialize(value:Array.Empty<FolderRoleInfo>()),
+                        Data = packagePayloadMigrationOrchestrationService
+                            .SerializeFolderRoleInfos(
+                                folderRoleInfos: Array.Empty<FolderRoleInfo>()),
                     },
                 ],
             };
@@ -134,11 +140,13 @@ internal partial class DocumentManagementMigrationAggregationService(
         Guid[] roleIds = roleNamesById.Keys.ToArray();
         Guid[] folderIds = folderPathsById.Keys.ToArray();
 
-        var folderRoles = folderRoleOrchestrationService.GetAll(ignoreFilters: true)
-            .Where(predicate: folderRole =>
-                folderIds.Contains(value: folderRole.FolderId)
-                && roleIds.Contains(value: folderRole.RoleId))
-            .ToArray();
+        LocalFolderRole[] folderRoles =
+            folderRoleOrchestrationService
+                .GetAll(ignoreFilters: true)
+                .Where(predicate: folderRole =>
+                    folderIds.Contains(value: folderRole.FolderId)
+                    && roleIds.Contains(value: folderRole.RoleId))
+                .ToArray();
 
         FolderRoleInfo[] folderRoleInfos = folderRoles
             .Select(selector: folderRole => new FolderRoleInfo
@@ -155,7 +163,9 @@ internal partial class DocumentManagementMigrationAggregationService(
                 new Data.Models.Packaging.PackageItem
                 {
                     Type = "Core/FolderRole",
-                    Data = jsonBroker.Serialize(value:folderRoleInfos),
+                    Data = packagePayloadMigrationOrchestrationService
+                        .SerializeFolderRoleInfos(
+                            folderRoleInfos: folderRoleInfos),
                 },
             ],
         };

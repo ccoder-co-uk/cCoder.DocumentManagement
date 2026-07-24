@@ -134,6 +134,8 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IFileOrchestrationService, FileOrchestrationService>();
         services.AddTransient<IFolderOrchestrationService, FolderOrchestrationService>();
         services.AddTransient<IFolderRoleOrchestrationService, FolderRoleOrchestrationService>();
+        services.AddTransient<IPackagePayloadMigrationOrchestrationService, PackagePayloadMigrationOrchestrationService>();
+        services.AddTransient<IRoleMigrationOrchestrationService, RoleMigrationOrchestrationService>();
     }
 
     private static void AddProcessings(this IServiceCollection services)
@@ -148,6 +150,10 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IFolderProcessingService, FolderProcessingService>();
         services.AddTransient<IFolderRoleEventProcessingService, FolderRoleEventProcessingService>();
         services.AddTransient<IFolderRoleProcessingService, FolderRoleProcessingService>();
+        services.AddTransient<IPackagePayloadJsonProcessingService, PackagePayloadJsonProcessingService>();
+        services.AddTransient<IPackagePayloadShapeProcessingService, PackagePayloadShapeProcessingService>();
+        services.AddTransient<IRoleMigrationFilterProcessingService, RoleMigrationFilterProcessingService>();
+        services.AddTransient<IRoleMigrationRetrievalProcessingService, RoleMigrationRetrievalProcessingService>();
         services.AddTransient<IWebDavProcessingService, WebDavProcessingService>();
     }
 }

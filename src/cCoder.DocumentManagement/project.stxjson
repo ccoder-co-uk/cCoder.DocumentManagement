@@ -4436,6 +4436,54 @@
       ]
     },
     {
+      "Name": "cCoder.DocumentManagement.Services.Orchestrations.PackagePayloadMigrationOrchestrationService",
+      "StandardElementType": "OrchestrationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ParseFolderRoleInfos",
+          "Inputs": [
+            {
+              "Name": "data",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.FolderRoleInfo[]"
+        },
+        {
+          "Name": "SerializeFolderRoleInfos",
+          "Inputs": [
+            {
+              "Name": "folderRoleInfos",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.FolderRoleInfo\u003E"
+            }
+          ],
+          "ReturnType": "System.String"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Orchestrations.RoleMigrationOrchestrationService",
+      "StandardElementType": "OrchestrationService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetRolesForApp",
+          "Inputs": [
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            },
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.Security.Role[]"
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService",
       "StandardElementType": "ProcessingService",
       "Properties": [],
@@ -5189,6 +5237,98 @@
       ]
     },
     {
+      "Name": "cCoder.DocumentManagement.Services.Processings.PackagePayloadJsonProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ParseFolderRoleInfo",
+          "Inputs": [
+            {
+              "Name": "data",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.FolderRoleInfo"
+        },
+        {
+          "Name": "ParseFolderRoleInfos",
+          "Inputs": [
+            {
+              "Name": "data",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.FolderRoleInfo[]"
+        },
+        {
+          "Name": "SerializeFolderRoleInfos",
+          "Inputs": [
+            {
+              "Name": "folderRoleInfos",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.FolderRoleInfo\u003E"
+            }
+          ],
+          "ReturnType": "System.String"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.PackagePayloadShapeProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "IsSingleItem",
+          "Inputs": [
+            {
+              "Name": "data",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.RoleMigrationFilterProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "FilterRolesForApp",
+          "Inputs": [
+            {
+              "Name": "roles",
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.Role\u003E"
+            },
+            {
+              "Name": "appId",
+              "Type": "System.Int32"
+            }
+          ],
+          "ReturnType": "cCoder.Data.Models.Security.Role[]"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Services.Processings.RoleMigrationRetrievalProcessingService",
+      "StandardElementType": "ProcessingService",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetAllRoles",
+          "Inputs": [
+            {
+              "Name": "ignoreFilters",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.Role\u003E"
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
       "StandardElementType": "ProcessingService",
       "Properties": [],
@@ -5292,19 +5432,19 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "ToType": "cCoder.DocumentManagement.Brokers.JsonBroker"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "ToType": "cCoder.DocumentManagement.Services.Foundations.RoleService"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
       "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
       "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FolderRoleOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.PackagePayloadMigrationOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
+      "ToType": "cCoder.DocumentManagement.Services.Orchestrations.RoleMigrationOrchestrationService"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Coordinations.FolderCoordinationService",
@@ -5447,6 +5587,22 @@
       "ToType": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService"
     },
     {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.PackagePayloadMigrationOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.PackagePayloadJsonProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.PackagePayloadMigrationOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.PackagePayloadShapeProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.RoleMigrationOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.RoleMigrationFilterProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Orchestrations.RoleMigrationOrchestrationService",
+      "ToType": "cCoder.DocumentManagement.Services.Processings.RoleMigrationRetrievalProcessingService"
+    },
+    {
       "FromType": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService",
       "ToType": "cCoder.DocumentManagement.Brokers.Storage.AppBroker"
     },
@@ -5539,6 +5695,14 @@
       "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderService"
     },
     {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.PackagePayloadJsonProcessingService",
+      "ToType": "cCoder.DocumentManagement.Brokers.JsonBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.RoleMigrationRetrievalProcessingService",
+      "ToType": "cCoder.DocumentManagement.Services.Foundations.RoleService"
+    },
+    {
       "FromType": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
       "ToType": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService"
     },
@@ -5552,13 +5716,6 @@
     }
   ],
   "AnalysisItems": [
-    {
-      "Code": "STXA001",
-      "Description": "An aggregation service may have any number of dependencies, but they must share the same service variation.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Services.Aggregations.DocumentManagementMigrationAggregationService",
-      "LineNumber": 17
-    },
     {
       "Code": "STX0004",
       "Description": "A service must not depend on another service at the same layer.",
