@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -15,26 +19,20 @@ public partial class FolderRoleOrchestrationServiceTests
     {
         // Given
         FolderRole folderRole = CreateRandomFolderRole();
-        folderRoleProcessingServiceMock.Setup(x => x.DeleteAsync(folderRole)).Returns(ValueTask.CompletedTask);
+
+        folderRoleProcessingServiceMock.Setup(expression: x => x.DeleteFolderRoleAsync(deletedFolderRole: folderRole))
+            .Returns(value: ValueTask.CompletedTask);
 
         folderRoleEventProcessingServiceMock
-            .Setup(x => x.RaiseFolderRoleDeleteEventAsync(folderRole))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFolderRoleDeleteEventAsync(entity: folderRole))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.DeleteAsync(folderRole);
+        await orchestrationService.DeleteFolderRoleAsync(deletedFolderRole: folderRole);
 
         // Then
-        folderRoleProcessingServiceMock.Verify(x => x.DeleteAsync(folderRole), Times.Once);
-        folderRoleEventProcessingServiceMock.Verify(x => x.RaiseFolderRoleDeleteEventAsync(folderRole), Times.Once);
+        folderRoleProcessingServiceMock.Verify(expression: x => x.DeleteFolderRoleAsync(deletedFolderRole: folderRole), times: Times.Once);
+        folderRoleEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderRoleDeleteEventAsync(entity: folderRole), times: Times.Once);
     }
 
 }
-
-
-
-
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data.Models.DMS;
 using FluentAssertions;
 using Xunit;
@@ -11,11 +15,12 @@ public sealed partial class FolderControllerTests
     public async Task Copy_CopiesFolderBetweenApps()
     {
         // Given
-        SeededFolderContext sourceContext = await SeedCopyDatabase("folder_create", "folder_copy", "folder_delete");
-        SeededFolderContext destinationContext = await SeedCopyDatabase("folder_create", "folder_copy", "folder_delete");
-        string sourceName = Unique("SourceFolder");
+        string[] privileges = ["folder_create", "folder_copy", "folder_delete"];
+        SeededFolderContext sourceContext = await SeedCopyDatabase(privileges: privileges);
+        SeededFolderContext destinationContext = await SeedCopyDatabase(privileges: privileges);
+        string sourceName = Unique(prefix: "SourceFolder");
 
-        Folder sourceFolder = await CreateFolderAsync(new
+        Folder sourceFolder = await CreateFolderAsync(payload: new
         {
             appId = sourceContext.AppId,
             name = sourceName,
@@ -23,7 +28,8 @@ public sealed partial class FolderControllerTests
         });
 
         string destinationName = "copiedfolder";
-        Folder destinationFolder = await CreateFolderAsync(new
+
+        Folder destinationFolder = await CreateFolderAsync(payload: new
         {
             appId = destinationContext.AppId,
             name = destinationName,
@@ -32,22 +38,18 @@ public sealed partial class FolderControllerTests
 
         // When
         int actualStatusCode = await CopyFolderAsync(
-            sourceName.ToLowerInvariant(),
-            destinationName,
-            sourceContext.AppId,
-            destinationContext.AppId);
+            sourcePath: sourceName.ToLowerInvariant(),
+            destinationPath: destinationName,
+            sourceAppId: sourceContext.AppId,
+            destinationAppId: destinationContext.AppId);
 
         // Then
-        actualStatusCode.Should().Be(200);
+        actualStatusCode.Should()
+            .Be(expected: 200);
 
-        await DeleteFolderAsync(sourceFolder.Id);
-        await DeleteFolderAsync(destinationFolder.Id);
-        await Teardown(sourceContext);
-        await Teardown(destinationContext);
+        await DeleteFolderAsync(id: sourceFolder.Id);
+        await DeleteFolderAsync(id: destinationFolder.Id);
+        await Teardown(seededContext: sourceContext);
+        await Teardown(seededContext: destinationContext);
     }
 }
-
-
-
-
-

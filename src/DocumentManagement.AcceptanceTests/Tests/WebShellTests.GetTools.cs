@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using FluentAssertions;
 using Xunit;
 
@@ -11,21 +15,44 @@ public sealed partial class WebShellTests
         // Given
 
         // When
-        string content = await GetOkContentAsync("/tools/index.html");
+        string content = await GetOkContentAsync(path: "/tools/index.html");
 
         // Then
-        content.Should().Contain("Document Management");
-        content.Should().Contain("/tools/company-logo.png");
-        content.Should().Contain("dm-logo");
-        content.Should().Contain("Sign in required");
-        content.Should().Contain("dm-login-gate");
-        content.Should().Contain("dm-workbench");
-        content.Should().Contain("Document Management workspace tabs");
-        content.Should().Contain("dm-workspace-tabs");
-        content.Should().Contain("folder-grid");
-        content.Should().Contain("/tools/api.js");
-        content.Should().Contain("/tools/grids.js");
-        content.Should().Contain("/tools/styles.css");
+        content.Should()
+            .Contain(expected: "Document Management");
+
+        content.Should()
+            .Contain(expected: "/tools/company-logo.png");
+
+        content.Should()
+            .Contain(expected: "dm-logo");
+
+        content.Should()
+            .Contain(expected: "Sign in required");
+
+        content.Should()
+            .Contain(expected: "dm-login-gate");
+
+        content.Should()
+            .Contain(expected: "dm-workbench");
+
+        content.Should()
+            .Contain(expected: "Document Management workspace tabs");
+
+        content.Should()
+            .Contain(expected: "dm-workspace-tabs");
+
+        content.Should()
+            .Contain(expected: "folder-grid");
+
+        content.Should()
+            .Contain(expected: "/tools/api.js");
+
+        content.Should()
+            .Contain(expected: "/tools/grids.js");
+
+        content.Should()
+            .Contain(expected: "/tools/styles.css");
     }
 
     [Fact]
@@ -34,12 +61,17 @@ public sealed partial class WebShellTests
         // Given
 
         // When
-        string content = await GetOkContentAsync("/tools/api.js");
+        string content = await GetOkContentAsync(path: "/tools/api.js");
 
         // Then
-        content.Should().Contain("document-management-auth-changed");
-        content.Should().Contain("isAuthenticated: function");
-        content.Should().Contain("document.body.classList.toggle(\"is-authenticated\"");
+        content.Should()
+            .Contain(expected: "document-management-auth-changed");
+
+        content.Should()
+            .Contain(expected: "isAuthenticated: function");
+
+        content.Should()
+            .Contain(expected: "document.body.classList.toggle(\"is-authenticated\"");
     }
 
     [Fact]
@@ -48,17 +80,32 @@ public sealed partial class WebShellTests
         // Given
 
         // When
-        string content = await GetOkContentAsync("/tools/grids.js");
+        string content = await GetOkContentAsync(path: "/tools/grids.js");
 
         // Then
-        content.Should().Contain("DocumentManagementGrids");
-        content.Should().Contain("DocumentManagementApi.isAuthenticated()");
-        content.Should().Contain("document-management-auth-changed");
-        content.Should().Contain("data-child-grid=\"File\"");
-        content.Should().Contain("data-child-grid=\"FolderRole\"");
-        content.Should().Contain("data-child-grid=\"FileContent\"");
-        content.Should().Contain("loadFolderDetails");
-        content.Should().Contain("loadFileDetails");
+        content.Should()
+            .Contain(expected: "DocumentManagementGrids");
+
+        content.Should()
+            .Contain(expected: "DocumentManagementApi.isAuthenticated()");
+
+        content.Should()
+            .Contain(expected: "document-management-auth-changed");
+
+        content.Should()
+            .Contain(expected: "data-child-grid=\"File\"");
+
+        content.Should()
+            .Contain(expected: "data-child-grid=\"FolderRole\"");
+
+        content.Should()
+            .Contain(expected: "data-child-grid=\"FileContent\"");
+
+        content.Should()
+            .Contain(expected: "loadFolderDetails");
+
+        content.Should()
+            .Contain(expected: "loadFileDetails");
     }
 
     [Fact]
@@ -67,16 +114,31 @@ public sealed partial class WebShellTests
         // Given
 
         // When
-        string content = await GetOkContentAsync("/tools/styles.css");
+        string content = await GetOkContentAsync(path: "/tools/styles.css");
 
         // Then
-        content.Should().Contain(".dm-table");
-        content.Should().Contain(".dm-detail");
-        content.Should().Contain(".dm-tab-panel");
-        content.Should().Contain("body.dm-shell:not(.is-authenticated) .dm-workbench");
-        content.Should().Contain("body.dm-shell.is-authenticated .dm-login-gate");
-        content.Should().Contain(".dm-logo");
-        content.Should().Contain(".dm-workspace-tabs");
-        content.Should().Contain(".dm-workspace-tabs button.active");
+        content.Should()
+            .Contain(expected: ".dm-table");
+
+        content.Should()
+            .Contain(expected: ".dm-detail");
+
+        content.Should()
+            .Contain(expected: ".dm-tab-panel");
+
+        content.Should()
+            .Contain(expected: "body.dm-shell:not(.is-authenticated) .dm-workbench");
+
+        content.Should()
+            .Contain(expected: "body.dm-shell.is-authenticated .dm-login-gate");
+
+        content.Should()
+            .Contain(expected: ".dm-logo");
+
+        content.Should()
+            .Contain(expected: ".dm-workspace-tabs");
+
+        content.Should()
+            .Contain(expected: ".dm-workspace-tabs button.active");
     }
 }

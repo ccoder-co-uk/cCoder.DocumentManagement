@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -9,11 +13,11 @@ public interface IFolderRoleOrchestrationService
 {
     IQueryable<FolderRole> GetAll(bool ignoreFilters = false);
 
-    ValueTask<FolderRole> AddAsync(FolderRole entity);
+    ValueTask<FolderRole> AddFolderRoleAsync(FolderRole newFolderRole);
 
-    ValueTask DeleteAsync(FolderRole entity);
+    ValueTask DeleteFolderRoleAsync(FolderRole deletedFolderRole);
 
-    ValueTask<IEnumerable<Result<FolderRole>>> AddOrUpdate(IEnumerable<FolderRole> items);
+    ValueTask<IEnumerable<Result<FolderRole>>> AddOrUpdateFolderRole(IEnumerable<FolderRole> items);
 
-    ValueTask DeleteAllAsync(IEnumerable<FolderRole> items);
+    ValueTask DeleteAllFolderRoleAsync(IEnumerable<FolderRole> deletedFolderRole);
 }

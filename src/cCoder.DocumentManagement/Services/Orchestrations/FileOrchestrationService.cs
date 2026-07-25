@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -6,93 +10,161 @@ using cCoder.DocumentManagement.Services.Processings;
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
-internal class FileOrchestrationService(IFileProcessingService processingService, IFileEventProcessingService eventService) : IFileOrchestrationService
+internal partial class FileOrchestrationService(IFileProcessingService processingService, IFileEventProcessingService eventService) : IFileOrchestrationService
 {
-    public cCoder.Data.Models.DMS.File Get(Guid id)
-    {
-        return processingService.Get(id);
-    }
+    public cCoder.Data.Models.DMS.File Get(Guid fileId)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [fileId]);
+            return processingService.Get(fileId: fileId);
+
+        });
 
     public IQueryable<cCoder.Data.Models.DMS.File> GetAll(bool ignoreFilters = false)
-    {
-        return processingService.GetAll(ignoreFilters);
-    }
-
-    public async ValueTask<cCoder.Data.Models.DMS.File> AddAsync(cCoder.Data.Models.DMS.File entity)
-    {
-        cCoder.Data.Models.DMS.File result = await processingService.AddAsync(entity);
-        await eventService.RaiseFileAddEventAsync(result);
-        return result;
-    }
-
-    public async ValueTask<cCoder.Data.Models.DMS.File> UpdateAsync(cCoder.Data.Models.DMS.File entity)
-    {
-        cCoder.Data.Models.DMS.File result = await processingService.UpdateAsync(entity);
-        await eventService.RaiseFileUpdateEventAsync(result);
-        return result;
-    }
-
-    public async ValueTask DeleteAsync(Guid id)
-    {
-        cCoder.Data.Models.DMS.File entity = processingService.GetAll(ignoreFilters: true)
-            .FirstOrDefault(file => file.Id == id);
-
-        if (entity == null)
+=>
+        TryCatch(operation: () =>
         {
-            return;
-        }
+            ValidateInputs(inputs: [ignoreFilters]);
+            return processingService.GetAll(ignoreFilters: ignoreFilters);
 
-        await eventService.RaiseFileDeleteEventAsync(entity);
-        await processingService.DeleteAsync(id);
-    }
+        });
 
-    public ValueTask<IEnumerable<Result<cCoder.Data.Models.DMS.File>>> AddOrUpdate(IEnumerable<cCoder.Data.Models.DMS.File> items)
-    {
-        return processingService.AddOrUpdate(items);
-    }
+    public ValueTask<cCoder.Data.Models.DMS.File> AddFileAsync(cCoder.Data.Models.DMS.File newFile)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [newFile]);
+            cCoder.Data.Models.DMS.File result = await processingService.AddFileAsync(newFile: newFile);
 
-    public ValueTask DeleteAllAsync(IEnumerable<cCoder.Data.Models.DMS.File> items)
-    {
-        return processingService.DeleteAllAsync(items);
-    }
+            await eventService.RaiseFileAddEventAsync(entity: result);
+
+            return result;
+
+        });
+
+    public ValueTask<cCoder.Data.Models.DMS.File> UpdateFileAsync(cCoder.Data.Models.DMS.File updatedFile)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [updatedFile]);
+            cCoder.Data.Models.DMS.File result = await processingService.UpdateFileAsync(updatedFile: updatedFile);
+
+            await eventService.RaiseFileUpdateEventAsync(entity: result);
+
+            return result;
+
+        });
+
+    public ValueTask DeleteAsync(Guid fileId)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [fileId]);
+
+            cCoder.Data.Models.DMS.File entity = processingService.GetAll(ignoreFilters: true)
+    .FirstOrDefault(predicate: file => file.Id == fileId);
+
+
+            if (entity == null)
+            {
+                return;
+            }
+
+
+            await eventService.RaiseFileDeleteEventAsync(entity: entity);
+
+            await processingService.DeleteAsync(fileId: fileId);
+
+        });
+
+    public ValueTask<IEnumerable<Result<cCoder.Data.Models.DMS.File>>> AddOrUpdateFile(IEnumerable<cCoder.Data.Models.DMS.File> items)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [items]);
+            return processingService.AddOrUpdateFile(items: items);
+
+        });
+
+    public ValueTask DeleteAllFileAsync(IEnumerable<cCoder.Data.Models.DMS.File> deletedFile)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [deletedFile]);
+            return processingService.DeleteAllFileAsync(deletedFile: deletedFile);
+
+        });
 
     public cCoder.Data.Models.DMS.File GetByPath(int appId, string path)
-    {
-        return processingService.GetByPath(appId, path);
-    }
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [appId, path]);
+            return processingService.GetByPath(appId: appId, path: path);
+
+        });
 
     public ValueTask HandleFileDeleteEventAsync(cCoder.Data.Models.DMS.File file)
-    {
-        return processingService.HandleFileDeleteEventAsync(file);
-    }
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [file]);
+            return processingService.HandleFileDeleteEventAsync(file: file);
 
-    public DMSResult Get(App app, cCoder.DocumentManagement.Models.Path path, int version = 0)
-    {
-        return processingService.Get(app, path, version);
-    }
+        });
 
-    public IEnumerable<cCoder.Data.Models.DMS.File> Search(App app, string needle)
-    {
-        return processingService.Search(app, needle);
-    }
+    public DMSResult GetAppPath(int appId, cCoder.DocumentManagement.Dependencies.Path path, int version = 0)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [appId, path, version]);
+            return processingService.GetAppPath(appId: appId, path: path, version: version);
 
-    public ValueTask SaveAsync(App app, cCoder.DocumentManagement.Models.Path path, Stream content = null)
-    {
-        return processingService.SaveAsync(app, path, content);
-    }
+        });
 
-    public ValueTask DropAsync(App app, cCoder.DocumentManagement.Models.Path path, int version = 0)
-    {
-        return processingService.DropAsync(app, path, version);
-    }
+    public IEnumerable<cCoder.Data.Models.DMS.File> SearchApp(int appId, string needle)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [appId, needle]);
+            return processingService.SearchApp(appId: appId, needle: needle);
 
-    public ValueTask CopyAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
-    {
-        return processingService.CopyAsync(app, oldPath, newPath);
-    }
+        });
 
-    public ValueTask MoveAsync(App app, cCoder.DocumentManagement.Models.Path oldPath, cCoder.DocumentManagement.Models.Path newPath)
-    {
-        return processingService.MoveAsync(app, oldPath, newPath);
-    }
+    public ValueTask SaveAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path path, Stream content = null)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [appId, path, content]);
+            return processingService.SaveAppPathAsync(appId: appId, path: path, content: content);
+
+        });
+
+    public ValueTask DropAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path path, int version = 0)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [appId, path, version]);
+            return processingService.DropAppPathAsync(appId: appId, path: path, version: version);
+
+        });
+
+    public ValueTask CopyAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [appId, oldPath, newPath]);
+            return processingService.CopyAppPathAsync(appId: appId, oldPath: oldPath, newPath: newPath);
+
+        });
+
+    public ValueTask MoveAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath)
+=>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [appId, oldPath, newPath]);
+            return processingService.MoveAppPathAsync(appId: appId, oldPath: oldPath, newPath: newPath);
+
+        });
 }

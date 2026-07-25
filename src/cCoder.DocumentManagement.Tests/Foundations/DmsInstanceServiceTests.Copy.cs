@@ -1,6 +1,10 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using Moq;
 using Xunit;
-using DmsPath = cCoder.DocumentManagement.Models.Path;
+using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Foundations;
@@ -11,20 +15,18 @@ public partial class DmsInstanceServiceTests
     public async Task ShouldDelegateToBrokerWhenCopy()
     {
         // Given
-        DmsPath oldPath = CreatePath("folder/old.txt");
-        DmsPath newPath = CreatePath("folder/new.txt");
-        dmsInstanceBrokerMock.Setup(x => x.CopyAsync(oldPath, newPath)).Returns(ValueTask.CompletedTask);
+        DmsPath oldPath = CreatePath(fullPath: "folder/old.txt");
+        DmsPath newPath = CreatePath(fullPath: "folder/new.txt");
+
+        dmsInstanceBrokerMock.Setup(expression: x => x.CopyAsync(oldPath: oldPath, newPath: newPath))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await dmsInstanceService.CopyAsync(oldPath, newPath);
+        await dmsInstanceService.CopyAsync(oldPath: oldPath, newPath: newPath);
 
         // Then
-        dmsInstanceBrokerMock.Verify(x => x.CopyAsync(oldPath, newPath), Times.Once);
+        dmsInstanceBrokerMock.Verify(expression: x => x.CopyAsync(oldPath: oldPath, newPath: newPath), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -16,27 +20,23 @@ public partial class FolderOrchestrationServiceTests
     {
         // Given
         Folder entity = CreateRandomFolder();
-        folderProcessingServiceMock.Setup(x => x.AddAsync(entity)).ReturnsAsync(entity);
+
+        folderProcessingServiceMock.Setup(expression: x => x.AddFolderAsync(newFolder: entity))
+            .ReturnsAsync(value: entity);
 
         folderEventProcessingServiceMock
-            .Setup(x => x.RaiseFolderAddEventAsync(entity))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFolderAddEventAsync(entity: entity))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        Folder result = await orchestrationService.AddAsync(entity);
+        Folder result = await orchestrationService.AddFolderAsync(newFolder: entity);
 
         // Then
-        result.Should().BeSameAs(entity);
-        folderProcessingServiceMock.Verify(x => x.AddAsync(entity), Times.Once);
-        folderEventProcessingServiceMock.Verify(x => x.RaiseFolderAddEventAsync(entity), Times.Once);
+        result.Should()
+            .BeSameAs(expected: entity);
+
+        folderProcessingServiceMock.Verify(expression: x => x.AddFolderAsync(newFolder: entity), times: Times.Once);
+        folderEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderAddEventAsync(entity: entity), times: Times.Once);
     }
 
 }
-
-
-
-
-
-
-
-

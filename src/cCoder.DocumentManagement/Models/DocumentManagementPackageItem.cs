@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 namespace cCoder.DocumentManagement.Models;
 
 public class DocumentManagementPackageItem
@@ -12,4 +16,3 @@ public class DocumentManagementPackageItem
 
     public virtual DocumentManagementPackage Package { get; set; }
 }
-

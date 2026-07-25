@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -17,21 +21,11 @@ public partial class FolderRoleEventProcessingServiceTests
 
     public FolderRoleEventProcessingServiceTests()
     {
-        folderRoleEventServiceMock = new Mock<IFolderRoleEventService>(MockBehavior.Strict);
-        service = new FolderRoleEventProcessingService(folderRoleEventServiceMock.Object);
+        folderRoleEventServiceMock = new Mock<IFolderRoleEventService>(behavior: MockBehavior.Strict);
+        service = new FolderRoleEventProcessingService(eventService: folderRoleEventServiceMock.Object);
     }
 
     private static FolderRole CreateRandomFolderRole() =>
-        Builder<FolderRole>.CreateNew().Build();
+        Builder<FolderRole>.CreateNew()
+                                       .Build();
 }
-
-
-
-
-
-
-
-
-
-
-

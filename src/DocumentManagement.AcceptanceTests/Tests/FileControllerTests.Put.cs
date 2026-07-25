@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using FluentAssertions;
 using Xunit;
 using DmsFile = cCoder.Data.Models.DMS.File;
@@ -11,21 +15,23 @@ public sealed partial class FileControllerTests
     public async Task Put_UpdatesFile()
     {
         // Given
-        SeededFileContext seededContext = await SeedDatabase("file_create", "file_update", "file_delete");
-        DmsFile createdFile = await CreateFileAsync(new
+        SeededFileContext seededContext = await SeedDatabase(privileges:["file_create","file_update","file_delete"]);
+
+        DmsFile createdFile = await CreateLocalFileAsync(payload: new
         {
             folderId = seededContext.FolderId,
-            name = Unique("File"),
+            name = Unique(prefix: "File"),
             description = "Acceptance file",
             path = "file.txt",
             mimeType = "text/plain",
             size = "12",
         });
-        string updatedName = Unique("UpdatedFile");
+
+        string updatedName = Unique(prefix: "UpdatedFile");
         DmsFile actualFile;
 
         // When
-        await UpdateFileAsync(createdFile.Id, new
+        await UpdateFileAsync(id: createdFile.Id, payload: new
         {
             id = createdFile.Id,
             folderId = seededContext.FolderId,
@@ -36,18 +42,16 @@ public sealed partial class FileControllerTests
             size = "24",
         });
 
-        actualFile = await GetFileAsync(createdFile.Id);
+        actualFile = await GetFileAsync(id: createdFile.Id);
 
         // Then
-        actualFile.Should().NotBeNull();
-        actualFile!.Name.Should().Be(updatedName);
+        actualFile.Should()
+            .NotBeNull();
 
-        await DeleteFileAsync(createdFile.Id);
-        await Teardown(seededContext);
+        actualFile!.Name.Should()
+            .Be(expected: updatedName);
+
+        await DeleteFileAsync(id: createdFile.Id);
+        await Teardown(seededContext: seededContext);
     }
 }
-
-
-
-
-

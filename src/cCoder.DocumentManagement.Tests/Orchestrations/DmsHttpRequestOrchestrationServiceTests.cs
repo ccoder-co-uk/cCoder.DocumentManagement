@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -14,21 +18,21 @@ namespace cCoder.Core.Services.Tests.DMS.Orchestrations;
 
 public partial class DmsHttpRequestOrchestrationServiceTests
 {
-    private readonly Mock<IDocumentManagementCurrentAppResolver> currentAppResolverMock;
-    private readonly Mock<IDmsProcessingService> dmsProcessingServiceMock;
+    private readonly Mock<ICurrentAppResolverProcessingService> currentAppResolverMock;
+    private readonly Mock<IDmsInstanceProcessingService> dmsProcessingServiceMock;
     private readonly Mock<IWebDavProcessingService> webDavProcessingServiceMock;
     private readonly DmsHttpRequestOrchestrationService orchestrationService;
 
     public DmsHttpRequestOrchestrationServiceTests()
     {
-        currentAppResolverMock = new Mock<IDocumentManagementCurrentAppResolver>(MockBehavior.Strict);
-        dmsProcessingServiceMock = new Mock<IDmsProcessingService>(MockBehavior.Strict);
-        webDavProcessingServiceMock = new Mock<IWebDavProcessingService>(MockBehavior.Strict);
+        currentAppResolverMock = new Mock<ICurrentAppResolverProcessingService>(behavior: MockBehavior.Strict);
+        dmsProcessingServiceMock = new Mock<IDmsInstanceProcessingService>(behavior: MockBehavior.Strict);
+        webDavProcessingServiceMock = new Mock<IWebDavProcessingService>(behavior: MockBehavior.Strict);
 
         orchestrationService = new DmsHttpRequestOrchestrationService(
-            currentAppResolverMock.Object,
-            dmsProcessingServiceMock.Object,
-            webDavProcessingServiceMock.Object
+            currentAppResolver: currentAppResolverMock.Object,
+            dmsProcessingService: dmsProcessingServiceMock.Object,
+            webDavProcessingService: webDavProcessingServiceMock.Object
         );
     }
 
@@ -52,27 +56,24 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         Dictionary<string, string[]> headers = null
     )
     {
-        Mock<HttpRequest> requestMock = new();
-        Mock<HttpContext> contextMock = new();
-        HeaderDictionary headerDictionary = [];
+        DefaultHttpContext context = new();
+        context.Request.Method = method;
+        context.Request.Path = new PathString(value: path);
+        context.Request.Host = new HostString(value: host);
+        context.Request.QueryString = new QueryString(value: queryString);
+        context.Request.Body = new MemoryStream(buffer: body ?? []);
+        context.Request.ContentType = contentType;
+        context.Response.Body = new MemoryStream();
 
         if (headers != null)
         {
             foreach ((string key, string[] values) in headers)
-                headerDictionary.Append(key, values);
+            {
+                context.Request.Headers.Append(key: key, value: values);
+            }
         }
 
-        requestMock.SetupGet(x => x.Method).Returns(method);
-        requestMock.SetupGet(x => x.Path).Returns(new PathString(path));
-        requestMock.SetupGet(x => x.Host).Returns(new HostString(host));
-        requestMock.SetupGet(x => x.QueryString).Returns(new QueryString(queryString));
-        requestMock.SetupGet(x => x.Body).Returns(new MemoryStream(body ?? []));
-        requestMock.SetupGet(x => x.Headers).Returns(headerDictionary);
-        requestMock.SetupGet(x => x.ContentType).Returns(contentType);
-
-        contextMock.SetupGet(x => x.Request).Returns(requestMock.Object);
-
-        return contextMock.Object;
+        return context;
     }
 
     private static DmsProcessingResponse CreateResponse(
@@ -86,15 +87,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             StatusCode = statusCode,
             ContentType = contentType,
             HasBody = hasBody,
-            Body = hasBody ? new MemoryStream([1, 2, 3]) : Stream.Null,
+            Body = hasBody ? new MemoryStream(buffer: [1, 2, 3]) : Stream.Null,
             Headers = headers ?? [],
         };
 }
-
-
-
-
-
-
-
-

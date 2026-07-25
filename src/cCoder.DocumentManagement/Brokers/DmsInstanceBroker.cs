@@ -1,7 +1,12 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
+using cCoder.DocumentManagement.Exposures;
 using File = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Models.Path;
-using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
+using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsResult = cCoder.DocumentManagement.Dependencies.DMSResult;
 
 
 namespace cCoder.DocumentManagement.Brokers;
@@ -18,36 +23,45 @@ public interface IDmsInstanceBroker
     ValueTask MoveAsync(DmsPath oldPath, DmsPath newPath);
 }
 
-public class DmsInstanceBroker(IDmsInstanceFactory dmsInstanceFactory) : IDmsInstanceBroker
+internal sealed class DmsInstanceBroker(IDmsInstanceFactory dmsInstanceFactory) : IDmsInstanceBroker
 {
     public DmsResult GetFilesZipped(IEnumerable<DmsPath> paths)
-        => dmsInstanceFactory.CreateDms().GetFilesZipped(paths);
+        =>
+        dmsInstanceFactory.CreateDms()
+                                         .GetFilesZipped(paths: paths);
 
     public DmsResult Get(DmsPath path, int version = 0, string search = "")
-        => dmsInstanceFactory.CreateDms().Get(path, version, search);
+        =>
+        dmsInstanceFactory.CreateDms()
+                                         .Get(path: path, version: version, search: search);
 
     public IEnumerable<File> Search(string needle)
-        => dmsInstanceFactory.CreateDms().Search(needle);
+        =>
+        dmsInstanceFactory.CreateDms()
+                                         .Search(needle: needle);
 
     public ValueTask UnpackAsync(DmsPath path, Stream content, bool ignoreArchiveRoot = false)
-        => dmsInstanceFactory.CreateDms().UnpackAsync(path, content, ignoreArchiveRoot);
+        =>
+        dmsInstanceFactory.CreateDms()
+                                         .UnpackAsync(path: path, content: content, ignoreArchiveRoot: ignoreArchiveRoot);
 
     public ValueTask SaveAsync(DmsPath path, Stream content = null)
-        => dmsInstanceFactory.CreateDms().SaveAsync(path, content);
+        =>
+        dmsInstanceFactory.CreateDms()
+                                         .SaveAsync(path: path, content: content);
 
     public ValueTask DropAsync(DmsPath path, int version = 0)
-        => dmsInstanceFactory.CreateDms().DropAsync(path, version);
+        =>
+        dmsInstanceFactory.CreateDms()
+                                         .DropAsync(path: path, version: version);
 
     public ValueTask CopyAsync(DmsPath oldPath, DmsPath newPath)
-        => dmsInstanceFactory.CreateDms().CopyAsync(oldPath, newPath);
+        =>
+        dmsInstanceFactory.CreateDms()
+                                         .CopyAsync(oldPath: oldPath, newPath: newPath);
 
     public ValueTask MoveAsync(DmsPath oldPath, DmsPath newPath)
-        => dmsInstanceFactory.CreateDms().MoveAsync(oldPath, newPath);
+        =>
+        dmsInstanceFactory.CreateDms()
+                                         .MoveAsync(oldPath: oldPath, newPath: newPath);
 }
-
-
-
-
-
-
-

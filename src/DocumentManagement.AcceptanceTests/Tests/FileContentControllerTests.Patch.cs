@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data.Models.DMS;
 using FluentAssertions;
 using Xunit;
@@ -11,8 +15,9 @@ public sealed partial class FileContentControllerTests
     public async Task Patch_UpdatesFileContent()
     {
         // Given
-        SeededFileContentContext seededContext = await SeedDatabase("filecontent_create", "filecontent_update", "filecontent_delete");
-        FileContent createdFileContent = await CreateFileContentAsync(new
+        SeededFileContentContext seededContext = await SeedDatabase(privileges:["filecontent_create","filecontent_update","filecontent_delete"]);
+
+        FileContent createdFileContent = await CreateLocalFileContentAsync(payload: new
         {
             fileId = seededContext.FileId,
             description = "Acceptance content",
@@ -20,27 +25,26 @@ public sealed partial class FileContentControllerTests
             version = 1,
             rawData = new byte[] { 1, 2, 3, 4 },
         });
+
         FileContent actualFileContent;
 
         // When
-        await PatchFileContentAsync(createdFileContent.Id, new
+        await PatchFileContentAsync(id: createdFileContent.Id, payload: new
         {
             description = "Patched content",
             version = 3,
         });
 
-        actualFileContent = await GetFileContentAsync(createdFileContent.Id);
+        actualFileContent = await GetFileContentAsync(id: createdFileContent.Id);
 
         // Then
-        actualFileContent.Should().NotBeNull();
-        actualFileContent!.Version.Should().Be(3);
+        actualFileContent.Should()
+            .NotBeNull();
 
-        await DeleteFileContentAsync(createdFileContent.Id);
-        await Teardown(seededContext);
+        actualFileContent!.Version.Should()
+            .Be(expected: 3);
+
+        await DeleteFileContentAsync(id: createdFileContent.Id);
+        await Teardown(seededContext: seededContext);
     }
 }
-
-
-
-
-

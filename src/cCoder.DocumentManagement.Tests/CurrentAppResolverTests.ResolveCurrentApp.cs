@@ -1,4 +1,8 @@
-using cCoder.DocumentManagement.Services;
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
+using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Moq;
@@ -14,75 +18,105 @@ public partial class CurrentAppResolverTests
     [Fact]
     public void ShouldResolveCurrentAppByIdForWebDavCoreAppPath()
     {
+        // Given
         DataApp dataApp = CreateRandomDataApp(id: 42, domain: "ignored.test");
         DefaultHttpContext httpContext = new();
         httpContext.Request.Path = "/webdav/Core/App(42)/Files";
 
-        appBrokerMock.Setup(broker => broker.GetAppById(42)).Returns(dataApp);
+        appBrokerMock.Setup(expression: broker => broker.SelectAppById(appId: 42))
+            .Returns(value: dataApp);
 
-        IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBrokerMock.Object, httpContext);
+        ICurrentAppResolverProcessingService resolver = new CurrentAppResolverProcessingService(
+            appBroker: appBrokerMock.Object,
+            httpContext: httpContext);
 
+        // When
         App result = resolver.ResolveCurrentApp();
 
-        result.Should().BeEquivalentTo(CreateExpectedApp(dataApp));
-        appBrokerMock.Verify(broker => broker.GetAppById(42), Times.Once);
+        // Then
+        result.Should()
+            .BeEquivalentTo(expectation: CreateExpectedApp(app: dataApp));
+
+        appBrokerMock.Verify(expression: broker => broker.SelectAppById(appId: 42), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
     }
 
     [Fact]
     public void ShouldThrowWhenWebDavCoreAppPathIdCannotBeResolved()
     {
+        // Given
         DefaultHttpContext httpContext = new();
         httpContext.Request.Path = "/webdav/Core/App(42)/Files";
 
-        appBrokerMock.Setup(broker => broker.GetAppById(42)).Returns((DataApp)null);
+        appBrokerMock.Setup(expression: broker => broker.SelectAppById(appId: 42))
+            .Returns(value: (DataApp)null);
 
-        IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBrokerMock.Object, httpContext);
+        ICurrentAppResolverProcessingService resolver = new CurrentAppResolverProcessingService(
+            appBroker: appBrokerMock.Object,
+            httpContext: httpContext);
 
+        // When
         Action action = () => resolver.ResolveCurrentApp();
 
-        action.Should().Throw<InvalidOperationException>()
-            .WithMessage("Unable to resolve app '42'.");
-        appBrokerMock.Verify(broker => broker.GetAppById(42), Times.Once);
+        // Then
+        action.Should()
+            .Throw<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(InvalidOperationException));
+
+        appBrokerMock.Verify(expression: broker => broker.SelectAppById(appId: 42), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
     }
 
     [Fact]
     public void ShouldResolveCurrentAppByHostWhenRequestIsNotWebDavCoreAppPath()
     {
+        // Given
         DataApp dataApp = CreateRandomDataApp(domain: "demo.localhost");
         DefaultHttpContext httpContext = new();
-        httpContext.Request.Host = new HostString("demo.localhost");
+        httpContext.Request.Host = new HostString(value: "demo.localhost");
         httpContext.Request.Path = "/folder";
 
-        appBrokerMock.Setup(broker => broker.GetAppByDomain("demo.localhost")).Returns(dataApp);
+        appBrokerMock.Setup(expression: broker => broker.SelectAppByDomain(domain: "demo.localhost"))
+            .Returns(value: dataApp);
 
-        IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBrokerMock.Object, httpContext);
+        ICurrentAppResolverProcessingService resolver = new CurrentAppResolverProcessingService(
+            appBroker: appBrokerMock.Object,
+            httpContext: httpContext);
 
+        // When
         App result = resolver.ResolveCurrentApp();
 
-        result.Should().BeEquivalentTo(CreateExpectedApp(dataApp));
-        appBrokerMock.Verify(broker => broker.GetAppByDomain("demo.localhost"), Times.Once);
+        // Then
+        result.Should()
+            .BeEquivalentTo(expectation: CreateExpectedApp(app: dataApp));
+
+        appBrokerMock.Verify(expression: broker => broker.SelectAppByDomain(domain: "demo.localhost"), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
     }
 
     [Fact]
     public void ShouldThrowWhenHostCannotBeResolved()
     {
+        // Given
         DefaultHttpContext httpContext = new();
-        httpContext.Request.Host = new HostString("missing.localhost");
+        httpContext.Request.Host = new HostString(value: "missing.localhost");
 
-        appBrokerMock.Setup(broker => broker.GetAppByDomain("missing.localhost")).Returns((DataApp)null);
+        appBrokerMock.Setup(expression: broker => broker.SelectAppByDomain(domain: "missing.localhost"))
+            .Returns(value: (DataApp)null);
 
-        IDocumentManagementCurrentAppResolver resolver = new CurrentAppResolver(appBrokerMock.Object, httpContext);
+        ICurrentAppResolverProcessingService resolver = new CurrentAppResolverProcessingService(
+            appBroker: appBrokerMock.Object,
+            httpContext: httpContext);
 
+        // When
         Action action = () => resolver.ResolveCurrentApp();
 
-        action.Should().Throw<InvalidOperationException>()
-            .WithMessage("Unable to resolve current app for host 'missing.localhost'.");
-        appBrokerMock.Verify(broker => broker.GetAppByDomain("missing.localhost"), Times.Once);
+        // Then
+        action.Should()
+            .Throw<DocumentManagementServiceException>()
+            .WithInnerException(innerException: typeof(InvalidOperationException));
+
+        appBrokerMock.Verify(expression: broker => broker.SelectAppByDomain(domain: "missing.localhost"), times: Times.Once);
         appBrokerMock.VerifyNoOtherCalls();
     }
 }
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data.Models.Packaging;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Models;
@@ -14,13 +18,18 @@ using DmsFile = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
-internal class EventHandlerService(IEventHubBroker eventHubBroker) : IEventHandlerService
+internal partial class EventHandlerService(IEventHubBroker eventHubBroker) : IEventHandlerService
 {
     public void ListenToAllEvents()
-    {
-        ListenToFileSystemEvents();
-        ListenToPackageEvents();
-    }
+=>
+        TryCatch(operation: () =>
+        {
+
+            ListenToFileSystemEvents();
+
+            ListenToPackageEvents();
+
+        });
 
     void ListenToFileSystemEvents()
     {
@@ -36,51 +45,55 @@ internal class EventHandlerService(IEventHubBroker eventHubBroker) : IEventHandl
         ListenToAppDeleteEvents();
     }
 
-    void ListenToFolderEvents() => ListenToFolderDeleteEvents();
+    void ListenToFolderEvents() =>
+        ListenToFolderDeleteEvents();
 
-    void ListenToFileEvents() => ListenToFileDeleteEvents();
+    void ListenToFileEvents() =>
+        ListenToFileDeleteEvents();
 
-    void ListenToPackageEvents() => ListenToPackageImportEvents();
+    void ListenToPackageEvents() =>
+        ListenToPackageImportEvents();
 
     void ListenToAppAddEvents() =>
-        eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
-            "app_add",
-            (service, app) => service.AddAsync(app));
+        eventHubBroker.ListenToEvent<App, IAppAggregationService>(
+            eventName: "app_add",
+            handler: (service, app) => service.AddAppAsync(newApp: app));
 
     void ListenToAppUpdateEvents() =>
-        eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
-            "app_update",
-            (service, app) => service.UpdateAsync(app));
+        eventHubBroker.ListenToEvent<App, IAppAggregationService>(
+            eventName: "app_update",
+            handler: (service, app) => service.UpdateAppAsync(updatedApp: app));
 
     void ListenToAppDeleteEvents() =>
-        eventHubBroker.ListenToEvent<App, IAppOrchestrationService>(
-            "app_delete",
-            (service, app) => service.DeleteAsync(app.Id));
+        eventHubBroker.ListenToEvent<App, IAppAggregationService>(
+            eventName: "app_delete",
+            handler: (service, app) => service.DeleteAsync(appId: app.Id));
 
     void ListenToFolderDeleteEvents() =>
         eventHubBroker.ListenToEvent<DataFolder, IFolderCoordinationService>(
-            "folder_delete",
-            (service, folder) => service.DeleteFolderAsync(folder));
+            eventName: "folder_delete",
+            handler: (service, folder) => service.DeleteFolderAsync(deletedFolder: folder));
 
     void ListenToFileDeleteEvents() =>
         eventHubBroker.ListenToEvent<DmsFile, IFileOrchestrationService>(
-            "file_delete",
-            (service, file) => service.HandleFileDeleteEventAsync(file));
+            eventName: "file_delete",
+            handler: (service, file) => service.HandleFileDeleteEventAsync(file: file));
 
     void ListenToPackageImportEvents() =>
         eventHubBroker.ListenToEvent<(int appId, Package package), IDocumentManagementMigrationAggregationService>(
-            "package_import",
-            (service, args) => service.ImportPackageAsync(args.appId, ToLocalPackage(args.package)));
+            eventName: "package_import",
+            handler: (service, args) => service.ImportPackageDocumentManagementPackageAsync(appId: args.appId, package: ToLocalPackage(package: args.package)));
 
     static DocumentManagementPackage ToLocalPackage(Package package) =>
-        package == null ? null : new DocumentManagementPackage(package.Name)
+        package == null ? null : new DocumentManagementPackage(name: package.Name)
         {
             Id = package.Id,
             Name = package.Name,
             Description = package.Description,
             Category = package.Category,
             SourceApi = package.SourceApi,
-            Items = package.Items?.Select(ToLocalPackageItem).ToArray(),
+            Items = package.Items?.Select(selector: ToLocalPackageItem)
+                                                                       .ToArray(),
         };
 
     static DocumentManagementPackageItem ToLocalPackageItem(DataPackageItem packageItem) =>
@@ -93,6 +106,3 @@ internal class EventHandlerService(IEventHubBroker eventHubBroker) : IEventHandl
         };
 
 }
-
-
-

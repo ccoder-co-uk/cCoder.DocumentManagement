@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -15,24 +19,17 @@ public partial class FileContentEventProcessingServiceTests
     {
         // Given
         FileContent entity = CreateRandomFileContent();
+
         fileContentEventServiceMock
-            .Setup(x => x.RaiseFileContentUpdateEventAsync(entity))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFileContentUpdateEventAsync(entity: entity))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFileContentUpdateEventAsync(entity);
+        await service.RaiseFileContentUpdateEventAsync(entity: entity);
 
         // Then
-        fileContentEventServiceMock.Verify(x => x.RaiseFileContentUpdateEventAsync(entity), Times.Once);
+        fileContentEventServiceMock.Verify(expression: x => x.RaiseFileContentUpdateEventAsync(entity: entity), times: Times.Once);
         fileContentEventServiceMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

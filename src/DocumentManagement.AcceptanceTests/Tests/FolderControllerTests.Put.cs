@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data.Models.DMS;
 using FluentAssertions;
 using Xunit;
@@ -11,18 +15,20 @@ public sealed partial class FolderControllerTests
     public async Task Put_UpdatesFolder()
     {
         // Given
-        SeededFolderContext seededContext = await SeedDatabase("folder_create", "folder_update", "folder_delete");
-        Folder createdFolder = await CreateFolderAsync(new
+        SeededFolderContext seededContext = await SeedDatabase(privileges:["folder_create","folder_update","folder_delete"]);
+
+        Folder createdFolder = await CreateFolderAsync(payload: new
         {
             appId = seededContext.AppId,
-            name = Unique("Folder"),
+            name = Unique(prefix: "Folder"),
             path = "folder",
         });
-        string updatedName = Unique("UpdatedFolder");
+
+        string updatedName = Unique(prefix: "UpdatedFolder");
         Folder actualFolder;
 
         // When
-        await UpdateFolderAsync(createdFolder.Id, new
+        await UpdateFolderAsync(id: createdFolder.Id, payload: new
         {
             id = createdFolder.Id,
             appId = seededContext.AppId,
@@ -30,18 +36,16 @@ public sealed partial class FolderControllerTests
             path = "updatedfolder",
         });
 
-        actualFolder = await GetFolderAsync(createdFolder.Id);
+        actualFolder = await GetFolderAsync(id: createdFolder.Id);
 
         // Then
-        actualFolder.Should().NotBeNull();
-        actualFolder!.Name.Should().Be(updatedName);
+        actualFolder.Should()
+            .NotBeNull();
 
-        await DeleteFolderAsync(createdFolder.Id);
-        await Teardown(seededContext);
+        actualFolder!.Name.Should()
+            .Be(expected: updatedName);
+
+        await DeleteFolderAsync(id: createdFolder.Id);
+        await Teardown(seededContext: seededContext);
     }
 }
-
-
-
-
-

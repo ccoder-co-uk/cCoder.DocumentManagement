@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Net;
 using FluentAssertions;
 using Xunit;
@@ -17,11 +21,13 @@ public sealed partial class DmsMiddlewareTests
         actualResult = await InvokeOptionsAsync();
 
         // Then
-        actualResult.StatusCode.Should().Be((int)HttpStatusCode.NoContent);
-        actualResult.Headers.Should().Contain("Access-Control-Allow-Origin");
-        actualResult.Headers.Should().Contain("Access-Control-Allow-Methods");
+        actualResult.StatusCode.Should()
+            .Be(expected: (int)HttpStatusCode.NoContent);
+
+        actualResult.Headers.Should()
+            .Contain(expected: "Access-Control-Allow-Origin");
+
+        actualResult.Headers.Should()
+            .Contain(expected: "Access-Control-Allow-Methods");
     }
 }
-
-
-

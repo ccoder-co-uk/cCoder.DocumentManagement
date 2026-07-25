@@ -1,8 +1,12 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DmsPath = cCoder.DocumentManagement.Models.Path;
+using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -14,12 +18,12 @@ public partial class WebDavProcessingServiceTests
     {
         // Given
         DmsProcessingRequest request = CreateRequest(
-            "MOVE",
-            "Core/App(7)/DAV/folder/file.txt",
-            headers: new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
+            method: "MOVE",
+            requestPath: "Core/App(7)/DAV/folder/file.txt",
+            headers: new Dictionary<string, string[]>(comparer: StringComparer.OrdinalIgnoreCase)
             {
-                ["Authorization"] = ["Basic token"],
-                ["Destination"] =
+                [key: "Authorization"] = ["Basic token"],
+                [key: "Destination"] =
                 [
                     "https://example.test/Api/Core/App(7)/DAV/folder/archive/file.txt",
                 ],
@@ -27,27 +31,30 @@ public partial class WebDavProcessingServiceTests
         );
 
         dmsInstanceServiceMock
-            .Setup(x =>
+            .Setup(expression: x =>
                 x.MoveAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
+                    oldPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    newPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/archive/file.txt")
                 )
             )
-            .Returns(ValueTask.CompletedTask);
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(204);
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
         dmsInstanceServiceMock.Verify(
-            x =>
+            expression: x =>
                 x.MoveAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
+                    oldPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    newPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/archive/file.txt")
                 ),
-            Times.Once
+            times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 
@@ -56,12 +63,12 @@ public partial class WebDavProcessingServiceTests
     {
         // Given
         DmsProcessingRequest request = CreateRequest(
-            "COPY",
-            "Core/App(7)/DAV/folder/file.txt",
-            headers: new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
+            method: "COPY",
+            requestPath: "Core/App(7)/DAV/folder/file.txt",
+            headers: new Dictionary<string, string[]>(comparer: StringComparer.OrdinalIgnoreCase)
             {
-                ["Authorization"] = ["Basic token"],
-                ["Destination"] =
+                [key: "Authorization"] = ["Basic token"],
+                [key: "Destination"] =
                 [
                     "https://example.test/Api/Core/App(7)/DAV/folder/archive/file.txt",
                 ],
@@ -69,34 +76,30 @@ public partial class WebDavProcessingServiceTests
         );
 
         dmsInstanceServiceMock
-            .Setup(x =>
+            .Setup(expression: x =>
                 x.CopyAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
+                    oldPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    newPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/archive/file.txt")
                 )
             )
-            .Returns(ValueTask.CompletedTask);
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        DmsProcessingResponse response = await webDavProcessingService.ProcessAsync(request);
+        DmsProcessingResponse response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
 
         // Then
-        response.StatusCode.Should().Be(204);
+        response.StatusCode.Should()
+            .Be(expected: 204);
+
         dmsInstanceServiceMock.Verify(
-            x =>
+            expression: x =>
                 x.CopyAsync(
-                    It.Is<DmsPath>(path => path.FullPath == "folder/file.txt"),
-                    It.Is<DmsPath>(path => path.FullPath == "folder/archive/file.txt")
+                    oldPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    newPath: It.Is<DmsPath>(match: path => path.FullPath == "folder/archive/file.txt")
                 ),
-            Times.Once
+            times: Times.Once
         );
+
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 }
-
-
-
-
-
-
-

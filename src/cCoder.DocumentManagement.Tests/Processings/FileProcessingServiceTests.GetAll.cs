@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -15,22 +19,19 @@ public partial class FileProcessingServiceTests
         {
             CreateRandomFile(),
         }.AsQueryable();
-        fileServiceMock.Setup(x => x.GetAll()).Returns(files);
+
+        fileServiceMock.Setup(expression: x => x.GetAll())
+            .Returns(value: files);
 
         // When
         IQueryable<cCoder.Data.Models.DMS.File> result = fileProcessingService.GetAll();
 
         // Then
-        result.Should().BeSameAs(files);
-        fileServiceMock.Verify(x => x.GetAll(), Times.Once);
+        result.Should()
+            .BeSameAs(expected: files);
+
+        fileServiceMock.Verify(expression: x => x.GetAll(), times: Times.Once);
         fileServiceMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-

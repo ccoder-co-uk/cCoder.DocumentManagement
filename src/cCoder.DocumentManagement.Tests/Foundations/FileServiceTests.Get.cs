@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -16,25 +20,19 @@ public partial class FileServiceTests
         FileEntity file = CreateRandomFile(id: fileId);
 
         fileBrokerMock
-            .Setup(x => x.GetAllFiles(false))
-            .Returns(new[] { ToExternalFile(file) }.AsQueryable());
+            .Setup(expression: x => x.SelectAllFiles(ignoreFilters: false))
+            .Returns(value: new[] { ToExternalFile(file: file) }.AsQueryable());
 
         // When
-        FileEntity result = fileService.Get(fileId);
+        FileEntity result = fileService.Get(fileId: fileId);
 
         // Then
-        result.Should().BeEquivalentTo(file);
-        fileBrokerMock.Verify(x => x.GetAllFiles(false), Times.Once);
+        result.Should()
+            .BeEquivalentTo(expectation: file);
+
+        fileBrokerMock.Verify(expression: x => x.SelectAllFiles(ignoreFilters: false), times: Times.Once);
         fileBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

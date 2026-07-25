@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -16,23 +20,19 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         IQueryable<Folder> entities = new[] { CreateRandomFolder() }.AsQueryable();
-        folderServiceMock.Setup(x => x.GetAll()).Returns(entities);
+
+        folderServiceMock.Setup(expression: x => x.GetAll())
+            .Returns(value: entities);
 
         // When
         IQueryable<Folder> result = folderProcessingService.GetAll();
 
         // Then
-        result.Should().BeSameAs(entities);
-        folderServiceMock.Verify(x => x.GetAll(), Times.Once);
+        result.Should()
+            .BeSameAs(expected: entities);
+
+        folderServiceMock.Verify(expression: x => x.GetAll(), times: Times.Once);
         folderServiceMock.VerifyNoOtherCalls();
     }
 
 }
-
-
-
-
-
-
-
-

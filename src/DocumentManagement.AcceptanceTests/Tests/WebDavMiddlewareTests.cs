@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Net;
 using FluentAssertions;
 using Web.AcceptanceTests.Infrastructure;
@@ -14,16 +18,18 @@ public sealed partial class WebDavMiddlewareTests(WebAcceptanceFixture fixture)
 
     private async Task<int> InvokeOptionsAsync()
     {
-        using HttpRequestMessage request = new(HttpMethod.Options, $"{BaseUrl}/Core/App(1)/DAV/");
-        request.Headers.TryAddWithoutValidation("Authorization", "Basic acceptance");
+        using HttpRequestMessage request = new(method: HttpMethod.Options, requestUri: $"{BaseUrl}/Core/App(1)/DAV/");
+        request.Headers.TryAddWithoutValidation(name: "Authorization", value: "Basic acceptance");
 
-        using HttpResponseMessage response = await Client.SendAsync(request);
+        using HttpResponseMessage response = await Client.SendAsync(request: request);
         string content = await response.Content.ReadAsStringAsync();
-        response.StatusCode.Should().NotBe(HttpStatusCode.NotFound, content);
-        response.StatusCode.Should().NotBe(HttpStatusCode.MethodNotAllowed, content);
+
+        response.StatusCode.Should()
+            .NotBe(unexpected: HttpStatusCode.NotFound, because: content);
+
+        response.StatusCode.Should()
+            .NotBe(unexpected: HttpStatusCode.MethodNotAllowed, because: content);
+
         return (int)response.StatusCode;
     }
 }
-
-
-

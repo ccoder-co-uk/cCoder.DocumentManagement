@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -6,11 +10,11 @@ using cCoder.Data.Models.Security;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
+using DMSResult = cCoder.DocumentManagement.Dependencies.DMSResult;
 using DataFile = cCoder.Data.Models.DMS.File;
-using ExternalPath = cCoder.DocumentManagement.Models.Path;
+using ExternalPath = cCoder.DocumentManagement.Dependencies.Path;
 using LocalFile = cCoder.Data.Models.DMS.File;
-using LocalPath = cCoder.DocumentManagement.Models.Path;
+using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Orchestrations;
@@ -20,389 +24,478 @@ public partial class DmsOrchestrationServiceTests
     [Fact]
     public void GetFilesZipped_ShouldDelegateToFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
-        ExternalPath[] paths = [new("/folder/")];
+        ExternalPath[] paths = [new(path: "/folder/")];
         DMSResult expected = new();
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         folderProcessingServiceMock
-            .Setup(x =>
-                x.GetFilesZipped(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<IEnumerable<LocalPath>>(items =>
-                        items.Select(item => item.FullPath).SequenceEqual(paths.Select(path => path.FullPath))
+            .Setup(expression: x =>
+                x.GetFilesZippedAppPath(
+                    appId: app.Id,
+                    paths: It.Is<IEnumerable<LocalPath>>(match: items =>
+                        items.Select(selector: item => item.FullPath)
+            .SequenceEqual(second: paths.Select(selector: path => path.FullPath))
                     )
                 )
             )
-            .Returns(() => expected);
+            .Returns(valueFunction: () => expected);
 
-        DMSResult result = orchestrationService.GetFilesZipped(paths);
+        // When
+        DMSResult result = orchestrationService.GetFilesZipped(paths: paths);
 
-        result.Should().BeSameAs(expected);
-        currentAppResolverMock.Verify(x => x.ResolveCurrentApp(), Times.Once);
+        // Then
+        result.Should()
+            .BeSameAs(expected: expected);
+
+        currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
+
         folderProcessingServiceMock.Verify(
-            x =>
-                x.GetFilesZipped(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<IEnumerable<LocalPath>>(items =>
-                        items.Select(item => item.FullPath).SequenceEqual(paths.Select(path => path.FullPath))
+            expression: x =>
+                x.GetFilesZippedAppPath(
+                    appId: app.Id,
+                    paths: It.Is<IEnumerable<LocalPath>>(match: items =>
+                        items.Select(selector: item => item.FullPath)
+            .SequenceEqual(second: paths.Select(selector: path => path.FullPath))
                     )
                 ),
-            Times.Once
+            times: Times.Once
         );
     }
 
     [Fact]
     public void Get_WhenPathIsFile_ShouldUseFileProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
-        ExternalPath path = new("/file.txt");
+        ExternalPath path = new(path: "/file.txt");
         DMSResult expected = new();
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         fileProcessingServiceMock
-            .Setup(x =>
-                x.Get(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath),
-                    2
+            .Setup(expression: x =>
+                x.GetAppPath(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
+                    version: 2
                 )
             )
-            .Returns(() => expected);
+            .Returns(valueFunction: () => expected);
 
-        DMSResult result = orchestrationService.Get(path, 2);
+        // When
+        DMSResult result = orchestrationService.Get(path: path, version: 2);
 
-        result.Should().BeSameAs(expected);
+        // Then
+        result.Should()
+            .BeSameAs(expected: expected);
+
         fileProcessingServiceMock.Verify(
-            x =>
-                x.Get(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath),
-                    2
+            expression: x =>
+                x.GetAppPath(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
+                    version: 2
                 ),
-            Times.Once
+            times: Times.Once
         );
     }
 
     [Fact]
     public void Get_WhenPathIsFolder_ShouldUseFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
-        ExternalPath path = new("/folder/");
+        ExternalPath path = new(path: "/folder/");
         DMSResult expected = new();
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         folderProcessingServiceMock
-            .Setup(x =>
-                x.Get(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath),
-                    "needle"
+            .Setup(expression: x =>
+                x.GetAppPath(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
+                    search: "needle"
                 )
             )
-            .Returns(() => expected);
+            .Returns(valueFunction: () => expected);
 
-        DMSResult result = orchestrationService.Get(path, search: "needle");
+        // When
+        DMSResult result = orchestrationService.Get(path: path, search: "needle");
 
-        result.Should().BeSameAs(expected);
+        // Then
+        result.Should()
+            .BeSameAs(expected: expected);
+
         folderProcessingServiceMock.Verify(
-            x =>
-                x.Get(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath),
-                    "needle"
+            expression: x =>
+                x.GetAppPath(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
+                    search: "needle"
                 ),
-            Times.Once
+            times: Times.Once
         );
     }
 
     [Fact]
     public void Search_ShouldReturnFileProcessingResults()
     {
+        // Given
         var app = CreateRandomApp();
         LocalFile[] files = [new() { Id = Guid.NewGuid(), Name = "file.txt", Path = "file.txt" }];
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         fileProcessingServiceMock
-            .Setup(x => x.Search(It.Is<App>(a => a.Id == app.Id && a.Name == app.Name), "needle"))
-            .Returns(files);
+            .Setup(expression: x => x.SearchApp(appId: app.Id, needle: "needle"))
+            .Returns(value: files);
 
-        IEnumerable<DataFile> result = orchestrationService.Search("needle");
+        // When
+        IEnumerable<DataFile> result = orchestrationService.Search(needle: "needle");
 
-        result.Should().ContainSingle();
-        result.Single().Id.Should().Be(files[0].Id);
-        result.Single().Name.Should().Be(files[0].Name);
-        result.Single().Path.Should().Be(files[0].Path);
+        // Then
+        result.Should()
+            .ContainSingle();
+
+        result.Single().Id.Should()
+            .Be(expected: files[0].Id);
+
+        result.Single().Name.Should()
+            .Be(expected: files[0].Name);
+
+        result.Single().Path.Should()
+            .Be(expected: files[0].Path);
+
         fileProcessingServiceMock.Verify(
-            x => x.Search(It.Is<App>(a => a.Id == app.Id && a.Name == app.Name), "needle"),
-            Times.Once
+            expression: x => x.SearchApp(appId: app.Id, needle: "needle"),
+            times: Times.Once
         );
     }
 
     [Fact]
     public async Task UnpackAsync_ShouldDelegateToFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
-        ExternalPath path = new("/folder/");
+        ExternalPath path = new(path: "/folder/");
         using MemoryStream stream = new();
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         folderProcessingServiceMock
-            .Setup(x =>
-                x.UnpackAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath),
-                    stream,
-                    true
+            .Setup(expression: x =>
+                x.UnpackAppPathAsync(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
+                    content: stream,
+                    ignoreArchiveRoot: true
                 )
             )
-            .Returns(ValueTask.CompletedTask);
+            .Returns(value: ValueTask.CompletedTask);
 
-        await orchestrationService.UnpackAsync(path, stream, true);
+        // When
+        await orchestrationService.UnpackAsync(path: path, content: stream, ignoreArchiveRoot: true);
 
+        // Then
         folderProcessingServiceMock.Verify(
-            x =>
-                x.UnpackAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath),
-                    stream,
-                    true
+            expression: x =>
+                x.UnpackAppPathAsync(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
+                    content: stream,
+                    ignoreArchiveRoot: true
                 ),
-            Times.Once
+            times: Times.Once
         );
     }
 
     [Fact]
     public async Task SaveAsync_WhenPathIsFile_ShouldUseFileProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
-        ExternalPath path = new("/file.txt");
+        ExternalPath path = new(path: "/file.txt");
         using MemoryStream stream = new();
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         fileProcessingServiceMock
-            .Setup(x =>
-                x.SaveAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath),
-                    stream
+            .Setup(expression: x =>
+                x.SaveAppPathAsync(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
+                    content: stream
                 )
             )
-            .Returns(ValueTask.CompletedTask);
+            .Returns(value: ValueTask.CompletedTask);
 
-        await orchestrationService.SaveAsync(path, stream);
+        // When
+        await orchestrationService.SaveAsync(path: path, content: stream);
 
+        // Then
         fileProcessingServiceMock.Verify(
-            x =>
-                x.SaveAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath),
-                    stream
+            expression: x =>
+                x.SaveAppPathAsync(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
+                    content: stream
                 ),
-            Times.Once
+            times: Times.Once
         );
     }
 
     [Fact]
     public async Task SaveAsync_WhenPathIsFolder_ShouldUseFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
-        ExternalPath path = new("/folder/");
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+        ExternalPath path = new(path: "/folder/");
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         folderProcessingServiceMock
-            .Setup(x =>
-                x.SaveAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath)
+            .Setup(expression: x =>
+                x.SaveAppPathAsync(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath)
                 )
             )
-            .Returns(ValueTask.CompletedTask);
+            .Returns(value: ValueTask.CompletedTask);
 
-        await orchestrationService.SaveAsync(path);
+        // When
+        await orchestrationService.SaveAsync(path: path);
 
+        // Then
         folderProcessingServiceMock.Verify(
-            x =>
-                x.SaveAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath)
+            expression: x =>
+                x.SaveAppPathAsync(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath)
                 ),
-            Times.Once
+            times: Times.Once
         );
     }
 
     [Fact]
     public async Task DropAsync_WhenPathIsFile_ShouldUseFileProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
-        ExternalPath path = new("/file.txt");
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+        ExternalPath path = new(path: "/file.txt");
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         fileProcessingServiceMock
-            .Setup(x =>
-                x.DropAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath),
-                    2
+            .Setup(expression: x =>
+                x.DropAppPathAsync(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
+                    version: 2
                 )
             )
-            .Returns(ValueTask.CompletedTask);
+            .Returns(value: ValueTask.CompletedTask);
 
-        await orchestrationService.DropAsync(path, 2);
+        // When
+        await orchestrationService.DropAsync(path: path, version: 2);
 
+        // Then
         fileProcessingServiceMock.Verify(
-            x =>
-                x.DropAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath),
-                    2
+            expression: x =>
+                x.DropAppPathAsync(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath),
+                    version: 2
                 ),
-            Times.Once
+            times: Times.Once
         );
     }
 
     [Fact]
     public async Task DropAsync_WhenPathIsFolder_ShouldUseFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
-        ExternalPath path = new("/folder/");
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+        ExternalPath path = new(path: "/folder/");
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         folderProcessingServiceMock
-            .Setup(x =>
-                x.DropAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath)
+            .Setup(expression: x =>
+                x.DropAppPathAsync(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath)
                 )
             )
-            .Returns(ValueTask.CompletedTask);
+            .Returns(value: ValueTask.CompletedTask);
 
-        await orchestrationService.DropAsync(path);
+        // When
+        await orchestrationService.DropAsync(path: path);
 
+        // Then
         folderProcessingServiceMock.Verify(
-            x =>
-                x.DropAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == path.FullPath)
+            expression: x =>
+                x.DropAppPathAsync(
+                    appId: app.Id,
+                    path: It.Is<LocalPath>(match: item => item.FullPath == path.FullPath)
                 ),
-            Times.Once
+            times: Times.Once
         );
     }
 
     [Fact]
     public async Task CopyAsync_WhenPathIsFile_ShouldUseFileProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
-        ExternalPath oldPath = new("/file.txt");
-        ExternalPath newPath = new("/copy.txt");
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+        ExternalPath oldPath = new(path: "/file.txt");
+        ExternalPath newPath = new(path: "/copy.txt");
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         fileProcessingServiceMock
-            .Setup(x =>
-                x.CopyAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == oldPath.FullPath),
-                    It.Is<LocalPath>(item => item.FullPath == newPath.FullPath)
+            .Setup(expression: x =>
+                x.CopyAppPathAsync(
+                    appId: app.Id,
+                    oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
+                    newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
                 )
             )
-            .Returns(ValueTask.CompletedTask);
+            .Returns(value: ValueTask.CompletedTask);
 
-        await orchestrationService.CopyAsync(oldPath, newPath);
+        // When
+        await orchestrationService.CopyAsync(oldPath: oldPath, newPath: newPath);
 
+        // Then
         fileProcessingServiceMock.Verify(
-            x =>
-                x.CopyAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == oldPath.FullPath),
-                    It.Is<LocalPath>(item => item.FullPath == newPath.FullPath)
+            expression: x =>
+                x.CopyAppPathAsync(
+                    appId: app.Id,
+                    oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
+                    newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
                 ),
-            Times.Once
+            times: Times.Once
         );
     }
 
     [Fact]
     public async Task CopyAsync_WhenPathIsFolder_ShouldUseFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
-        ExternalPath oldPath = new("/folder/");
-        ExternalPath newPath = new("/copy/");
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+        ExternalPath oldPath = new(path: "/folder/");
+        ExternalPath newPath = new(path: "/copy/");
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         folderProcessingServiceMock
-            .Setup(x =>
-                x.CopyAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == oldPath.FullPath),
-                    It.Is<LocalPath>(item => item.FullPath == newPath.FullPath)
+            .Setup(expression: x =>
+                x.CopyAppPathAsync(
+                    appId: app.Id,
+                    oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
+                    newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
                 )
             )
-            .Returns(ValueTask.CompletedTask);
+            .Returns(value: ValueTask.CompletedTask);
 
-        await orchestrationService.CopyAsync(oldPath, newPath);
+        // When
+        await orchestrationService.CopyAsync(oldPath: oldPath, newPath: newPath);
 
+        // Then
         folderProcessingServiceMock.Verify(
-            x =>
-                x.CopyAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == oldPath.FullPath),
-                    It.Is<LocalPath>(item => item.FullPath == newPath.FullPath)
+            expression: x =>
+                x.CopyAppPathAsync(
+                    appId: app.Id,
+                    oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
+                    newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
                 ),
-            Times.Once
+            times: Times.Once
         );
     }
 
     [Fact]
     public async Task MoveAsync_WhenPathIsFile_ShouldUseFileProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
-        ExternalPath oldPath = new("/file.txt");
-        ExternalPath newPath = new("/moved.txt");
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+        ExternalPath oldPath = new(path: "/file.txt");
+        ExternalPath newPath = new(path: "/moved.txt");
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         fileProcessingServiceMock
-            .Setup(x =>
-                x.MoveAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == oldPath.FullPath),
-                    It.Is<LocalPath>(item => item.FullPath == newPath.FullPath)
+            .Setup(expression: x =>
+                x.MoveAppPathAsync(
+                    appId: app.Id,
+                    oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
+                    newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
                 )
             )
-            .Returns(ValueTask.CompletedTask);
+            .Returns(value: ValueTask.CompletedTask);
 
-        await orchestrationService.MoveAsync(oldPath, newPath);
+        // When
+        await orchestrationService.MoveAsync(oldPath: oldPath, newPath: newPath);
 
+        // Then
         fileProcessingServiceMock.Verify(
-            x =>
-                x.MoveAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == oldPath.FullPath),
-                    It.Is<LocalPath>(item => item.FullPath == newPath.FullPath)
+            expression: x =>
+                x.MoveAppPathAsync(
+                    appId: app.Id,
+                    oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
+                    newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
                 ),
-            Times.Once
+            times: Times.Once
         );
     }
 
     [Fact]
     public async Task MoveAsync_WhenPathIsFolder_ShouldUseFolderProcessingService()
     {
+        // Given
         var app = CreateRandomApp();
-        ExternalPath oldPath = new("/folder/");
-        ExternalPath newPath = new("/moved/");
-        currentAppResolverMock.Setup(x => x.ResolveCurrentApp()).Returns(app);
+        ExternalPath oldPath = new(path: "/folder/");
+        ExternalPath newPath = new(path: "/moved/");
+
+        currentAppResolverMock.Setup(expression: x => x.ResolveCurrentApp())
+            .Returns(value: app);
+
         folderProcessingServiceMock
-            .Setup(x =>
-                x.MoveAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == oldPath.FullPath),
-                    It.Is<LocalPath>(item => item.FullPath == newPath.FullPath)
+            .Setup(expression: x =>
+                x.MoveAppPathAsync(
+                    appId: app.Id,
+                    oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
+                    newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
                 )
             )
-            .Returns(ValueTask.CompletedTask);
+            .Returns(value: ValueTask.CompletedTask);
 
-        await orchestrationService.MoveAsync(oldPath, newPath);
+        // When
+        await orchestrationService.MoveAsync(oldPath: oldPath, newPath: newPath);
 
+        // Then
         folderProcessingServiceMock.Verify(
-            x =>
-                x.MoveAsync(
-                    It.Is<App>(a => a.Id == app.Id && a.Name == app.Name),
-                    It.Is<LocalPath>(item => item.FullPath == oldPath.FullPath),
-                    It.Is<LocalPath>(item => item.FullPath == newPath.FullPath)
+            expression: x =>
+                x.MoveAppPathAsync(
+                    appId: app.Id,
+                    oldPath: It.Is<LocalPath>(match: item => item.FullPath == oldPath.FullPath),
+                    newPath: It.Is<LocalPath>(match: item => item.FullPath == newPath.FullPath)
                 ),
-            Times.Once
+            times: Times.Once
         );
     }
 }
-
-
-
-
-
-

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -8,34 +12,73 @@ using cCoder.DocumentManagement.Services.Processings;
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
-internal class DmsHttpRequestOrchestrationService(
-    IDocumentManagementCurrentAppResolver currentAppResolver,
-    IDmsProcessingService dmsProcessingService,
+internal partial class DmsHttpRequestOrchestrationService(
+    ICurrentAppResolverProcessingService currentAppResolver,
+    IDmsInstanceProcessingService dmsProcessingService,
     IWebDavProcessingService webDavProcessingService
 ) : IDmsHttpRequestOrchestrationService
 {
-    public async ValueTask<DmsProcessingResponse> ProcessRequestAsync(HttpContext context)
+    public ValueTask ProcessRequestAsync(HttpContext context)
+=>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [context]);
+            App app = currentAppResolver.ResolveCurrentApp();
+
+            DmsProcessingRequest request = BuildRequestApp(context: context, app: app);
+            DmsProcessingResponse response;
+
+
+            if (IsWebDavRequestDmsProcessingRequest(request: request))
+            {
+                response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
+            }
+            else
+            {
+                try
+                {
+                    DmsProcessingResponse processedResponse =
+                        await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
+
+                    response = AddDmsDefaultHeadersDmsProcessingResponse(
+                        newDmsProcessingResponse: processedResponse);
+                }
+                catch (SecurityException)
+                {
+                    response = CreateDmsProcessingResponseForSecurity(host: request.Host);
+                }
+            }
+
+            await WriteDmsProcessingResponseAsync(context: context, response: response);
+        });
+
+    private static async ValueTask WriteDmsProcessingResponseAsync(
+        HttpContext context,
+        DmsProcessingResponse response)
     {
-        App app = currentAppResolver.ResolveCurrentApp();
-        DmsProcessingRequest request = BuildRequest(context, app);
-
-        if (IsWebDavRequest(request))
+        foreach (KeyValuePair<string, string> header in response.Headers)
         {
-            return await webDavProcessingService.ProcessAsync(request);
+            if (!context.Response.Headers.ContainsKey(key: header.Key))
+            {
+                context.Response.Headers.Append(key: header.Key, value: header.Value);
+            }
         }
 
-        try
+        context.Response.ContentType = response.ContentType;
+        context.Response.StatusCode = response.StatusCode;
+
+        if (response.HasBody)
         {
-            DmsProcessingResponse response = await dmsProcessingService.ProcessAsync(request);
-            return AddDmsDefaultHeaders(response);
-        }
-        catch (SecurityException)
-        {
-            return CreateDmsSecurityResponse(request.Host);
+            context.Response.Headers.Append(
+                key: "Content-Length",
+                value: response.Body.Length.ToString());
+
+            await response.Body.CopyToAsync(destination: context.Response.Body);
+            response.Body.Close();
         }
     }
 
-    private static DmsProcessingRequest BuildRequest(HttpContext context, App app) =>
+    private static DmsProcessingRequest BuildRequestApp(HttpContext context, App app) =>
         new()
         {
             App = app,
@@ -46,48 +89,50 @@ internal class DmsHttpRequestOrchestrationService(
             ContentType = context.Request.Headers.ContentType.ToString(),
             Body = context.Request.Body,
             Headers = context.Request.Headers.ToDictionary(
-                header => header.Key,
-                header => header.Value.ToArray(),
-                StringComparer.OrdinalIgnoreCase
+                keySelector: header => header.Key,
+                elementSelector: header => header.Value.ToArray(),
+                comparer: StringComparer.OrdinalIgnoreCase
             ),
         };
 
-    private static bool IsWebDavRequest(DmsProcessingRequest request) =>
-        request.RequestPath.Contains("/webdav", StringComparison.OrdinalIgnoreCase);
+    private static bool IsWebDavRequestDmsProcessingRequest(DmsProcessingRequest request) =>
+        request.RequestPath.Contains(value: "/webdav", comparisonType: StringComparison.OrdinalIgnoreCase);
 
-    private static DmsProcessingResponse AddDmsDefaultHeaders(DmsProcessingResponse response)
+    private static DmsProcessingResponse AddDmsDefaultHeadersDmsProcessingResponse(DmsProcessingResponse newDmsProcessingResponse)
     {
-        List<KeyValuePair<string, string>> headers = [.. response.Headers];
-        AddHeaderIfMissing(headers, "Access-Control-Allow-Origin", "*");
+        List<KeyValuePair<string, string>> headers = [.. newDmsProcessingResponse.Headers];
+        AddHeaderIfMissing(headers: headers, key: "Access-Control-Allow-Origin", value: "*");
+
         AddHeaderIfMissing(
-            headers,
-            "Access-Control-Allow-Headers",
-            "access-control-allow-origin,authorization,content-type,x-requested-with"
+            headers: headers,
+            key: "Access-Control-Allow-Headers",
+            value: "access-control-allow-origin,authorization,content-type,x-requested-with"
         );
-        AddHeaderIfMissing(headers, "Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-        AddHeaderIfMissing(headers, "Cache-Control", "max-age=2592000");
+
+        AddHeaderIfMissing(headers: headers, key: "Access-Control-Allow-Methods", value: "PUT,POST,GET,DELETE,OPTIONS");
+        AddHeaderIfMissing(headers: headers, key: "Cache-Control", value: "max-age=2592000");
 
         return new DmsProcessingResponse
         {
-            Body = response.Body,
-            ContentType = response.ContentType,
-            StatusCode = response.StatusCode,
-            HasBody = response.HasBody,
+            Body = newDmsProcessingResponse.Body,
+            ContentType = newDmsProcessingResponse.ContentType,
+            StatusCode = newDmsProcessingResponse.StatusCode,
+            HasBody = newDmsProcessingResponse.HasBody,
             Headers = headers,
         };
     }
 
-    private static DmsProcessingResponse CreateDmsSecurityResponse(string host)
+    private static DmsProcessingResponse CreateDmsProcessingResponseForSecurity(string host)
     {
         List<KeyValuePair<string, string>> headers =
         [
-            new("Access-Control-Allow-Origin", host),
+            new(key:"Access-Control-Allow-Origin", value:host),
             new(
-                "Access-Control-Allow-Headers",
-                "access-control-allow-origin,authorization,content-type,x-requested-with"
+                key:                "Access-Control-Allow-Headers",
+                value:                "access-control-allow-origin,authorization,content-type,x-requested-with"
             ),
-            new("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS"),
-            new("Cache-Control", "max-age=2592000"),
+            new(key:"Access-Control-Allow-Methods", value:"PUT,POST,GET,DELETE,OPTIONS"),
+            new(key:"Cache-Control", value:"max-age=2592000"),
         ];
 
         return new DmsProcessingResponse
@@ -106,22 +151,12 @@ internal class DmsHttpRequestOrchestrationService(
     )
     {
         if (
-            !headers.Any(header =>
-                string.Equals(header.Key, key, StringComparison.OrdinalIgnoreCase)
+            !headers.Any(predicate: header =>
+                string.Equals(a: header.Key, b: key, comparisonType: StringComparison.OrdinalIgnoreCase)
             )
         )
         {
-            headers.Add(new KeyValuePair<string, string>(key, value));
+            headers.Add(item: new KeyValuePair<string, string>(key: key, value: value));
         }
     }
 }
-
-
-
-
-
-
-
-
-
-

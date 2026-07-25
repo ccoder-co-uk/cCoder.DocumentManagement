@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data.Models.DMS;
 using FluentAssertions;
 using Xunit;
@@ -11,28 +15,28 @@ public sealed partial class FolderControllerTests
     public async Task Delete_RemovesFolder()
     {
         // Given
-        SeededFolderContext seededContext = await SeedDatabase("folder_create", "folder_delete");
-        Folder createdFolder = await CreateFolderAsync(new
+        SeededFolderContext seededContext = await SeedDatabase(privileges:["folder_create","folder_delete"]);
+
+        Folder createdFolder = await CreateFolderAsync(payload: new
         {
             appId = seededContext.AppId,
-            name = Unique("Folder"),
+            name = Unique(prefix: "Folder"),
             path = "folder",
         });
+
         int actualReadStatusCode;
 
         // When
-        int actualStatusCode = await DeleteFolderAsync(createdFolder.Id);
-        actualReadStatusCode = await GetFolderStatusCodeAsync(createdFolder.Id);
+        int actualStatusCode = await DeleteFolderAsync(id: createdFolder.Id);
+        actualReadStatusCode = await GetFolderStatusCodeAsync(id: createdFolder.Id);
 
         // Then
-        actualStatusCode.Should().Be(200);
-        actualReadStatusCode.Should().Be(404);
+        actualStatusCode.Should()
+            .Be(expected: 200);
 
-        await Teardown(seededContext);
+        actualReadStatusCode.Should()
+            .Be(expected: 404);
+
+        await Teardown(seededContext: seededContext);
     }
 }
-
-
-
-
-

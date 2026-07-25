@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using FluentAssertions;
 using Xunit;
 using DmsFile = cCoder.Data.Models.DMS.File;
@@ -11,31 +15,31 @@ public sealed partial class FileControllerTests
     public async Task Delete_RemovesFile()
     {
         // Given
-        SeededFileContext seededContext = await SeedDatabase("file_create", "file_delete");
-        DmsFile createdFile = await CreateFileAsync(new
+        SeededFileContext seededContext = await SeedDatabase(privileges:["file_create","file_delete"]);
+
+        DmsFile createdFile = await CreateLocalFileAsync(payload: new
         {
             folderId = seededContext.FolderId,
-            name = Unique("File"),
+            name = Unique(prefix: "File"),
             description = "Acceptance file",
             path = "file.txt",
             mimeType = "text/plain",
             size = "12",
         });
+
         int actualReadStatusCode;
 
         // When
-        int actualStatusCode = await DeleteFileAsync(createdFile.Id);
-        actualReadStatusCode = await GetFileStatusCodeAsync(createdFile.Id);
+        int actualStatusCode = await DeleteFileAsync(id: createdFile.Id);
+        actualReadStatusCode = await GetFileStatusCodeAsync(id: createdFile.Id);
 
         // Then
-        actualStatusCode.Should().Be(200);
-        actualReadStatusCode.Should().Be(404);
+        actualStatusCode.Should()
+            .Be(expected: 200);
 
-        await Teardown(seededContext);
+        actualReadStatusCode.Should()
+            .Be(expected: 404);
+
+        await Teardown(seededContext: seededContext);
     }
 }
-
-
-
-
-

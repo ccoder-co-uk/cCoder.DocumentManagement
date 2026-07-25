@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -17,28 +21,24 @@ public partial class FolderOrchestrationServiceTests
         Guid id = Guid.NewGuid();
         Folder entity = CreateRandomFolder();
         entity.Id = id;
-        folderProcessingServiceMock.Setup(x => x.GetAll(true)).Returns(new[] { entity }.AsQueryable());
-        folderProcessingServiceMock.Setup(x => x.DeleteAsync(id)).Returns(ValueTask.CompletedTask);
+
+        folderProcessingServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
+            .Returns(value: new[] { entity }.AsQueryable());
+
+        folderProcessingServiceMock.Setup(expression: x => x.DeleteAsync(folderId: id))
+            .Returns(value: ValueTask.CompletedTask);
 
         folderEventProcessingServiceMock
-            .Setup(x => x.RaiseFolderDeleteEventAsync(entity))
-            .Returns(ValueTask.CompletedTask);
+            .Setup(expression: x => x.RaiseFolderDeleteEventAsync(entity: entity))
+            .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.DeleteAsync(id);
+        await orchestrationService.DeleteAsync(folderId: id);
 
         // Then
-        folderProcessingServiceMock.Verify(x => x.GetAll(true), Times.Once);
-        folderProcessingServiceMock.Verify(x => x.DeleteAsync(id), Times.Once);
-        folderEventProcessingServiceMock.Verify(x => x.RaiseFolderDeleteEventAsync(entity), Times.Once);
+        folderProcessingServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Once);
+        folderProcessingServiceMock.Verify(expression: x => x.DeleteAsync(folderId: id), times: Times.Once);
+        folderEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderDeleteEventAsync(entity: entity), times: Times.Once);
     }
 
 }
-
-
-
-
-
-
-
-

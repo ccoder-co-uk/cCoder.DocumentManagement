@@ -1,11 +1,17 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Packaging;
 using cCoder.DocumentManagement.Api.OData;
 using cCoder.DocumentManagement.Brokers;
+using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Brokers.Storage;
-using cCoder.DocumentManagement.Exposures;
+using cCoder.DocumentManagement.Dependencies;
+using cCoder.DocumentManagement.Dependencies.OData;
 using cCoder.DocumentManagement.Exposures.EventHandlers;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Services;
@@ -38,14 +44,14 @@ public static partial class IServiceCollectionExtensions
         this IServiceCollection services,
         Action<DocumentManagementConfiguration> configure = null,
         ODataConventionModelBuilder builder = null) =>
-        services.AddConfiguredDocumentManagementWeb((_, configuration) => configure?.Invoke(configuration), builder);
+        services.AddConfiguredDocumentManagementWeb(configure: (_, configuration) => configure?.Invoke(obj: configuration), builder: builder);
 
     public static void AddDocumentManagementHostedServices(
         this IServiceCollection services,
         Action<DocumentManagementConfiguration> configure = null) =>
-        services.AddConfiguredDocumentManagement((_, configuration) => configure?.Invoke(configuration));
+        services.AddConfiguredDocumentManagement(configure: (_, configuration) => configure?.Invoke(obj: configuration));
 
-    private static void AddDocumentManagement(this IServiceCollection services)
+    internal static void AddDocumentManagement(this IServiceCollection services)
     {
         services.AddEventingTypes();
         services.AddBrokers();
@@ -55,7 +61,7 @@ public static partial class IServiceCollectionExtensions
         services.AddEventHandlers();
     }
 
-    private static void AddDocumentManagementWeb(this IServiceCollection services, ODataConventionModelBuilder builder = null)
+    internal static void AddDocumentManagementWeb(this IServiceCollection services, ODataConventionModelBuilder builder = null)
     {
         services.AddDocumentManagement();
 
@@ -78,9 +84,11 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IEventHubBroker, EventHubBroker>();
         services.AddTransient<IDmsInstanceFactory, DmsInstanceFactory>();
         services.AddTransient<IDmsInstanceBroker, DmsInstanceBroker>();
+        services.AddTransient<IAuthInfoBroker, AuthInfoBroker>();
         services.AddTransient<IFileContentEventBroker, FileContentEventBroker>();
         services.AddTransient<IFileEventBroker, FileEventBroker>();
         services.AddTransient<IFolderEventBroker, FolderEventBroker>();
+        services.AddTransient<IFolderRoleContextBroker, FolderRoleContextBroker>();
         services.AddTransient<IFolderRoleEventBroker, FolderRoleEventBroker>();
         services.AddTransient<IFileBroker, FileBroker>();
         services.AddTransient<IFileContentBroker, FileContentBroker>();
@@ -95,6 +103,13 @@ public static partial class IServiceCollectionExtensions
     private static void AddEventHandlers(this IServiceCollection services)
     {
         services.AddTransient<IDocumentManagementAppExposure, DocumentManagementAppExposure>();
+        services.AddTransient<IDmsInstanceOperationsExposure, DmsInstanceOperationsExposure>();
+        services.AddTransient<IFileContentOperationsExposure, FileContentOperationsExposure>();
+        services.AddTransient<IFileOperationsExposure, FileOperationsExposure>();
+        services.AddTransient<IFilePathOperationsExposure, FilePathOperationsExposure>();
+        services.AddTransient<IFolderOperationsExposure, FolderOperationsExposure>();
+        services.AddTransient<IFolderRoleOperationsExposure, FolderRoleOperationsExposure>();
+        services.AddTransient<IRoleOperationsExposure, RoleOperationsExposure>();
         services.AddTransient<IDocumentManagementPackageManager, DocumentManagementPackageManager>();
         services.AddTransient<IDocumentManagementEventHandlers, DocumentManagementEventHandlers>();
     }
@@ -103,6 +118,7 @@ public static partial class IServiceCollectionExtensions
     {
         services.AddTransient<Services.Foundations.Events.IEventHandlerService, Services.Foundations.Events.EventHandlerService>();
         services.AddTransient<IDmsInstanceService, DmsInstanceService>();
+        services.AddTransient<IBaselineExposure, BaselineExposure>();
         services.AddTransient<IFileContentService, FileContentService>();
         services.AddTransient<IFileService, FileService>();
         services.AddTransient<IDocumentManagementMetadataTypeService, DocumentManagementMetadataTypeService>();
@@ -113,12 +129,12 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IFileEventService, FileEventService>();
         services.AddTransient<IFolderEventService, FolderEventService>();
         services.AddTransient<IFolderRoleEventService, FolderRoleEventService>();
-        services.AddTransient<IDocumentManagementCurrentAppResolver, CurrentAppResolver>();
+        services.AddTransient<ICurrentAppResolverProcessingService, CurrentAppResolverProcessingService>();
     }
 
     private static void AddOrchestrations(this IServiceCollection services)
     {
-        services.AddTransient<IAppOrchestrationService, AppOrchestrationService>();
+        services.AddTransient<IAppAggregationService, AppAggregationService>();
         services.AddTransient<IDocumentManagementMigrationAggregationService, DocumentManagementMigrationAggregationService>();
         services.AddTransient<IDmsOrchestrationService, DmsOrchestrationService>();
         services.AddTransient<IDmsHttpRequestOrchestrationService, DmsHttpRequestOrchestrationService>();
@@ -126,12 +142,14 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IFileOrchestrationService, FileOrchestrationService>();
         services.AddTransient<IFolderOrchestrationService, FolderOrchestrationService>();
         services.AddTransient<IFolderRoleOrchestrationService, FolderRoleOrchestrationService>();
+        services.AddTransient<IPackagePayloadMigrationOrchestrationService, PackagePayloadMigrationOrchestrationService>();
+        services.AddTransient<IRoleMigrationOrchestrationService, RoleMigrationOrchestrationService>();
     }
 
     private static void AddProcessings(this IServiceCollection services)
     {
         services.AddTransient<IFolderCoordinationService, FolderCoordinationService>();
-        services.AddTransient<IDmsProcessingService, DmsProcessingService>();
+        services.AddTransient<IDmsInstanceProcessingService, DmsInstanceProcessingService>();
         services.AddTransient<IFileContentEventProcessingService, FileContentEventProcessingService>();
         services.AddTransient<IFileContentProcessingService, FileContentProcessingService>();
         services.AddTransient<IFileEventProcessingService, FileEventProcessingService>();
@@ -140,6 +158,10 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IFolderProcessingService, FolderProcessingService>();
         services.AddTransient<IFolderRoleEventProcessingService, FolderRoleEventProcessingService>();
         services.AddTransient<IFolderRoleProcessingService, FolderRoleProcessingService>();
+        services.AddTransient<IPackagePayloadJsonProcessingService, PackagePayloadJsonProcessingService>();
+        services.AddTransient<IPackagePayloadShapeProcessingService, PackagePayloadShapeProcessingService>();
+        services.AddTransient<IRoleMigrationFilterProcessingService, RoleMigrationFilterProcessingService>();
+        services.AddTransient<IRoleMigrationRetrievalProcessingService, RoleMigrationRetrievalProcessingService>();
         services.AddTransient<IWebDavProcessingService, WebDavProcessingService>();
     }
 }

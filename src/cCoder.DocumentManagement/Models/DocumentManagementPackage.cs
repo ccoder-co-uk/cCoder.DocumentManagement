@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 namespace cCoder.DocumentManagement.Models;
 
 public class DocumentManagementPackage
@@ -21,4 +25,3 @@ public class DocumentManagementPackage
         Name = name;
     }
 }
-

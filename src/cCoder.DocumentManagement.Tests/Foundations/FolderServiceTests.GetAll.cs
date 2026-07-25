@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -17,16 +21,19 @@ public partial class FolderServiceTests
     {
         // Given
         Folder folder = CreateRandomFolder();
-        IQueryable<DataFolder> folders = new[] { ToExternalFolder(folder) }.AsQueryable();
+        IQueryable<DataFolder> folders = new[] { ToExternalFolder(folder: folder) }.AsQueryable();
 
-        folderBrokerMock.Setup(x => x.GetAllFolders(false)).Returns(folders);
+        folderBrokerMock.Setup(expression: x => x.SelectAllFolders(ignoreFilters: false))
+            .Returns(value: folders);
 
         // When
         IQueryable<Folder> result = folderService.GetAll();
 
         // Then
-        result.Should().BeEquivalentTo(new[] { folder }.AsQueryable());
-        folderBrokerMock.Verify(x => x.GetAllFolders(false), Times.Once);
+        result.Should()
+            .BeEquivalentTo(expectation: new[] { folder }.AsQueryable());
+
+        folderBrokerMock.Verify(expression: x => x.SelectAllFolders(ignoreFilters: false), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
@@ -38,6 +45,7 @@ public partial class FolderServiceTests
         Guid folderId = Guid.NewGuid();
         Guid childId = Guid.NewGuid();
         Guid fileId = Guid.NewGuid();
+
         IQueryable<DataFolder> folders =
             new[]
             {
@@ -71,26 +79,28 @@ public partial class FolderServiceTests
                 }
             }.AsQueryable();
 
-        folderBrokerMock.Setup(x => x.GetAllFolders(false)).Returns(folders);
+        folderBrokerMock.Setup(expression: x => x.SelectAllFolders(ignoreFilters: false))
+            .Returns(value: folders);
 
         // When
-        Folder result = folderService.GetAll().Single();
+        Folder result = folderService.GetAll()
+            .Single();
 
         // Then
-        result.SubFolders.Should().ContainSingle();
-        result.SubFolders.Single().Id.Should().Be(childId);
-        result.Files.Should().ContainSingle();
-        result.Files.Single().Id.Should().Be(fileId);
-        folderBrokerMock.Verify(x => x.GetAllFolders(false), Times.Once);
+        result.SubFolders.Should()
+            .ContainSingle();
+
+        result.SubFolders.Single().Id.Should()
+            .Be(expected: childId);
+
+        result.Files.Should()
+            .ContainSingle();
+
+        result.Files.Single().Id.Should()
+            .Be(expected: fileId);
+
+        folderBrokerMock.Verify(expression: x => x.SelectAllFolders(ignoreFilters: false), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 }
-
-
-
-
-
-
-
-

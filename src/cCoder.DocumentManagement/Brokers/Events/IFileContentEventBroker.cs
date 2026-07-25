@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data.Models.DMS;
 using cCoder.Eventing.Models;
 
@@ -10,10 +14,3 @@ public interface IFileContentEventBroker
     ValueTask RaiseFileContentUpdateEventAsync(EventMessage<FileContent> message);
     ValueTask RaiseFileContentDeleteEventAsync(EventMessage<FileContent> message);
 }
-
-
-
-
-
-
-

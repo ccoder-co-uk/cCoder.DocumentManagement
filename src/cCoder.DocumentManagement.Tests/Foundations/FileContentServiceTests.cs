@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -20,11 +24,11 @@ public partial class FileContentServiceTests
 
     public FileContentServiceTests()
     {
-        fileContentBrokerMock = new Mock<IFileContentBroker>(MockBehavior.Strict);
-        authorizationBrokerMock = new Mock<IAuthorizationBroker>(MockBehavior.Strict);
+        fileContentBrokerMock = new Mock<IFileContentBroker>(behavior: MockBehavior.Strict);
+        authorizationBrokerMock = new Mock<IAuthorizationBroker>(behavior: MockBehavior.Strict);
         fileContentService = new FileContentService(
-            fileContentBrokerMock.Object,
-            authorizationBrokerMock.Object
+            fileContentBroker: fileContentBrokerMock.Object,
+            authorizationBroker: authorizationBrokerMock.Object
         );
     }
 
@@ -32,14 +36,14 @@ public partial class FileContentServiceTests
     {
         FileContent fileContent = Builder<FileContent>
             .CreateNew()
-            .With(x => x.Id = id == Guid.Empty ? Guid.NewGuid() : id)
-            .With(x => x.FileId = fileId == Guid.Empty ? Guid.NewGuid() : fileId)
-            .With(x => x.Description = $"Description-{Guid.NewGuid():N}")
-            .With(x => x.Size = "1024")
-            .With(x => x.CreatedBy = "tester")
-            .With(x => x.CreatedOn = DateTimeOffset.UtcNow)
-            .With(x => x.Version = 1)
-            .With(x => x.RawData = [1, 2, 3])
+            .With(func: x => x.Id = id == Guid.Empty ? Guid.NewGuid() : id)
+            .With(func: x => x.FileId = fileId == Guid.Empty ? Guid.NewGuid() : fileId)
+            .With(func: x => x.Description = $"Description-{Guid.NewGuid():N}")
+            .With(func: x => x.Size = "1024")
+            .With(func: x => x.CreatedBy = "tester")
+            .With(func: x => x.CreatedOn = DateTimeOffset.UtcNow)
+            .With(func: x => x.Version = 1)
+            .With(func: x => x.RawData = [1, 2, 3])
             .Build();
 
         return fileContent;
@@ -60,17 +64,3 @@ public partial class FileContentServiceTests
                 RawData = fileContent.RawData,
             };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

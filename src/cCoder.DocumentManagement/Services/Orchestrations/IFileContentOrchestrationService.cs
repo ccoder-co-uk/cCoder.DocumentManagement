@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -7,17 +11,17 @@ namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 public interface IFileContentOrchestrationService
 {
-    FileContent Get(Guid id);
+    FileContent Get(Guid fileContentId);
 
     IQueryable<FileContent> GetAll(bool ignoreFilters = false);
 
-    ValueTask<FileContent> AddAsync(FileContent entity);
+    ValueTask<FileContent> AddFileContentAsync(FileContent newFileContent);
 
-    ValueTask<FileContent> UpdateAsync(FileContent entity);
+    ValueTask<FileContent> UpdateFileContentAsync(FileContent updatedFileContent);
 
-    ValueTask DeleteAsync(Guid id);
+    ValueTask DeleteAsync(Guid fileContentId);
 
-    ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdate(IEnumerable<FileContent> items);
+    ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdateFileContent(IEnumerable<FileContent> items);
 
-    ValueTask DeleteAllAsync(IEnumerable<FileContent> items);
+    ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> deletedFileContent);
 }

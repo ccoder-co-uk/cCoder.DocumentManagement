@@ -1,39 +1,53 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Services.Orchestrations;
 using Folder = cCoder.Data.Models.DMS.Folder;
 
 namespace cCoder.DocumentManagement.Services.Coordinations;
 
-internal class FolderCoordinationService(
+internal partial class FolderCoordinationService(
     IFolderOrchestrationService folderOrchestrationService,
     IFileOrchestrationService fileOrchestrationService) : IFolderCoordinationService
 {
-    public async ValueTask DeleteFolderAsync(Folder folder)
-    {
-        if (folder == null)
+    public ValueTask DeleteFolderAsync(Folder deletedFolder)
+=>
+        TryCatch(operation: async () =>
         {
-            return;
-        }
+            ValidateInputs(inputs: [deletedFolder]);
 
-        Guid folderId = folder.Id;
+            if (deletedFolder == null)
+            {
+                return;
+            }
 
-        Guid[] childFileIds =
-            [.. fileOrchestrationService.GetAll(ignoreFilters: true)
-                .Where(file => file.FolderId == folderId)
-                .Select(file => file.Id)];
 
-        Guid[] childFolderIds =
-            [.. folderOrchestrationService.GetAll(ignoreFilters: true)
-                .Where(childFolder => childFolder.ParentId == folderId)
-                .Select(childFolder => childFolder.Id)];
+            Guid folderId = deletedFolder.Id;
 
-        foreach (Guid childFileId in childFileIds)
-        {
-            await fileOrchestrationService.DeleteAsync(childFileId);
-        }
 
-        foreach (Guid childFolderId in childFolderIds)
-        {
-            await folderOrchestrationService.DeleteAsync(childFolderId);
-        }
-    }
+            Guid[] childFileIds =
+                [.. fileOrchestrationService.GetAll(ignoreFilters: true)
+                .Where(predicate:file => file.FolderId == folderId)
+                .Select(selector:file => file.Id)];
+
+
+            Guid[] childFolderIds =
+                [.. folderOrchestrationService.GetAll(ignoreFilters: true)
+                .Where(predicate:childFolder => childFolder.ParentId == folderId)
+                .Select(selector:childFolder => childFolder.Id)];
+
+
+            foreach (Guid childFileId in childFileIds)
+            {
+                await fileOrchestrationService.DeleteAsync(fileId: childFileId);
+            }
+
+
+            foreach (Guid childFolderId in childFolderIds)
+            {
+                await folderOrchestrationService.DeleteAsync(folderId: childFolderId);
+            }
+
+        });
 }

@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -20,19 +24,19 @@ public partial class FolderServiceTests
 
     public FolderServiceTests()
     {
-        folderBrokerMock = new Mock<IFolderBroker>(MockBehavior.Strict);
-        authorizationBrokerMock = new Mock<IAuthorizationBroker>(MockBehavior.Strict);
-        folderService = new FolderService(folderBrokerMock.Object, authorizationBrokerMock.Object);
+        folderBrokerMock = new Mock<IFolderBroker>(behavior: MockBehavior.Strict);
+        authorizationBrokerMock = new Mock<IAuthorizationBroker>(behavior: MockBehavior.Strict);
+        folderService = new FolderService(folderBroker: folderBrokerMock.Object, authorizationBroker: authorizationBrokerMock.Object);
     }
 
     private static Folder CreateRandomFolder(Guid id = default, int appId = 7)
     {
         Folder folder = Builder<Folder>
             .CreateNew()
-            .With(x => x.Id = id == Guid.Empty ? Guid.NewGuid() : id)
-            .With(x => x.AppId = appId)
-            .With(x => x.Name = $"Folder-{Guid.NewGuid():N}")
-            .With(x => x.Path = $"/folder/{Guid.NewGuid():N}")
+            .With(func: x => x.Id = id == Guid.Empty ? Guid.NewGuid() : id)
+            .With(func: x => x.AppId = appId)
+            .With(func: x => x.Name = $"Folder-{Guid.NewGuid():N}")
+            .With(func: x => x.Path = $"/folder/{Guid.NewGuid():N}")
             .Build();
 
         return folder;
@@ -51,17 +55,3 @@ public partial class FolderServiceTests
                 DeletedOn = folder.DeletedOn,
             };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,8 @@
-using cCoder.Data;
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
+using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -12,43 +16,61 @@ using LocalFile = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
-internal class FileContentEventService(
+internal partial class FileContentEventService(
     IFileContentEventBroker fileContentEventBroker,
-    ICoreAuthInfo authInfo
+    IAuthInfoBroker authInfoBroker
 ) : IFileContentEventService
 {
-    public async ValueTask RaiseFileContentAddEventAsync(FileContent entity)
-    {
-        EventMessage<DataFileContent> message = new()
+    public ValueTask RaiseFileContentAddEventAsync(FileContent entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFileContent(entity),
-        };
+            ValidateInputs(inputs: [entity]);
 
-        await fileContentEventBroker.RaiseFileContentAddEventAsync(message);
-    }
+            EventMessage<DataFileContent> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
+                Data = ToExternalFileContent(fileContent: entity),
+            };
 
-    public async ValueTask RaiseFileContentUpdateEventAsync(FileContent entity)
-    {
-        EventMessage<DataFileContent> message = new()
+
+            await fileContentEventBroker.RaiseFileContentAddEventAsync(message: message);
+
+        });
+
+    public ValueTask RaiseFileContentUpdateEventAsync(FileContent entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFileContent(entity),
-        };
+            ValidateInputs(inputs: [entity]);
 
-        await fileContentEventBroker.RaiseFileContentUpdateEventAsync(message);
-    }
+            EventMessage<DataFileContent> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
+                Data = ToExternalFileContent(fileContent: entity),
+            };
 
-    public async ValueTask RaiseFileContentDeleteEventAsync(FileContent entity)
-    {
-        EventMessage<DataFileContent> message = new()
+
+            await fileContentEventBroker.RaiseFileContentUpdateEventAsync(message: message);
+
+        });
+
+    public ValueTask RaiseFileContentDeleteEventAsync(FileContent entity)
+=>
+        TryCatch(operation: async () =>
         {
-            AuthInfo = new EventAuthInfo { SSOUserId = authInfo.SSOUserId },
-            Data = ToExternalFileContent(entity),
-        };
+            ValidateInputs(inputs: [entity]);
 
-        await fileContentEventBroker.RaiseFileContentDeleteEventAsync(message);
-    }
+            EventMessage<DataFileContent> message = new()
+            {
+                AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
+                Data = ToExternalFileContent(fileContent: entity),
+            };
+
+
+            await fileContentEventBroker.RaiseFileContentDeleteEventAsync(message: message);
+
+        });
 
     private static DataFileContent ToExternalFileContent(FileContent fileContent) =>
         fileContent == null
@@ -63,7 +85,7 @@ internal class FileContentEventService(
                 CreatedOn = fileContent.CreatedOn,
                 Version = fileContent.Version,
                 RawData = fileContent.RawData,
-                File = ToExternalFile(fileContent.File),
+                File = ToExternalFile(file: fileContent.File),
             };
 
     private static DataFile ToExternalFile(LocalFile file) =>
@@ -83,12 +105,3 @@ internal class FileContentEventService(
                 DeletedOn = file.DeletedOn,
             };
 }
-
-
-
-
-
-
-
-
-

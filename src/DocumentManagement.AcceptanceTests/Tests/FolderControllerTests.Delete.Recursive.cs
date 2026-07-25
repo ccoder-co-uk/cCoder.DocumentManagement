@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.Data;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
@@ -16,38 +20,40 @@ public sealed partial class FolderControllerTests
     public async Task Delete_RemovesChildFoldersFilesAndContents()
     {
         // Given
-        SeededFolderContext seededContext = await SeedDatabase("folder_delete", "file_delete");
+        SeededFolderContext seededContext = await SeedDatabase(privileges:["folder_delete","file_delete"]);
         Guid rootFolderId;
         Guid childFolderId;
         Guid fileId;
 
         using (IServiceScope scope = fixture.Factory.Services.CreateScope())
         {
-        using var core = scope.ServiceProvider
-            .GetRequiredService<cCoder.Data.ICoreContextFactory>()
-            .CreateCoreContext();
+            using var core = scope.ServiceProvider
+                .GetRequiredService<cCoder.Data.ICoreContextFactory>()
+                .CreateCoreContext();
 
-            Folder rootFolder = await core.AddFolderAsync(new Folder
+            Folder rootFolder = await core.InsertFolderAsync(folder: new Folder
             {
                 Id = Guid.NewGuid(),
                 AppId = seededContext.AppId,
-                Name = Unique("Root"),
-                Path = Unique("root").ToLowerInvariant()
+                Name = Unique(prefix: "Root"),
+                Path = Unique(prefix: "root")
+                .ToLowerInvariant()
             });
 
-            Folder childFolder = await core.AddFolderAsync(new Folder
+            Folder childFolder = await core.InsertFolderAsync(folder: new Folder
             {
                 Id = Guid.NewGuid(),
                 AppId = seededContext.AppId,
                 ParentId = rootFolder.Id,
-                Name = Unique("Child"),
-                Path = $"{rootFolder.Path}/{Unique("child").ToLowerInvariant()}"
+                Name = Unique(prefix: "Child"),
+                Path = $"{rootFolder.Path}/{Unique(prefix: "child")
+                .ToLowerInvariant()}"
             });
 
-            await core.AddFolderRoleAsync(new FolderRole { FolderId = rootFolder.Id, RoleId = seededContext.RoleId });
-            await core.AddFolderRoleAsync(new FolderRole { FolderId = childFolder.Id, RoleId = seededContext.RoleId });
+            await core.InsertFolderRoleAsync(folderRole: new FolderRole { FolderId = rootFolder.Id, RoleId = seededContext.RoleId });
+            await core.InsertFolderRoleAsync(folderRole: new FolderRole { FolderId = childFolder.Id, RoleId = seededContext.RoleId });
 
-            DmsFile file = await core.AddDmsFileAsync(new DmsFile
+            DmsFile file = await core.AddDmsFileAsync(file: new DmsFile
             {
                 Id = Guid.NewGuid(),
                 FolderId = childFolder.Id,
@@ -59,7 +65,7 @@ public sealed partial class FolderControllerTests
                 Size = "1 B"
             });
 
-            await core.AddFileContentAsync(new FileContent
+            await core.InsertFileContentAsync(fileContent: new FileContent
             {
                 Id = Guid.NewGuid(),
                 FileId = file.Id,
@@ -77,25 +83,43 @@ public sealed partial class FolderControllerTests
         }
 
         // When
-        int actualStatusCode = await DeleteFolderAsync(rootFolderId);
+        int actualStatusCode = await DeleteFolderAsync(id: rootFolderId);
 
         // Then
         using (IServiceScope scope = fixture.Factory.Services.CreateScope())
         {
-        using var core = scope.ServiceProvider
-            .GetRequiredService<cCoder.Data.ICoreContextFactory>()
-            .CreateCoreContext();
+            using var core = scope.ServiceProvider
+                .GetRequiredService<cCoder.Data.ICoreContextFactory>()
+                .CreateCoreContext();
 
-            actualStatusCode.Should().Be(200);
-            core.Set<Folder>().IgnoreQueryFilters().Any(folder => folder.Id == rootFolderId).Should().BeFalse();
-            core.Set<Folder>().IgnoreQueryFilters().Any(folder => folder.Id == childFolderId).Should().BeFalse();
-            core.Set<DmsFile>().IgnoreQueryFilters().Any(file => file.Id == fileId).Should().BeFalse();
-            core.Set<FileContent>().IgnoreQueryFilters().Any(content => content.FileId == fileId).Should().BeFalse();
+            actualStatusCode.Should()
+                .Be(expected: 200);
+
+            core.Set<Folder>()
+                .IgnoreQueryFilters()
+                .Any(predicate: folder => folder.Id == rootFolderId)
+                .Should()
+                .BeFalse();
+
+            core.Set<Folder>()
+                .IgnoreQueryFilters()
+                .Any(predicate: folder => folder.Id == childFolderId)
+                .Should()
+                .BeFalse();
+
+            core.Set<DmsFile>()
+                .IgnoreQueryFilters()
+                .Any(predicate: file => file.Id == fileId)
+                .Should()
+                .BeFalse();
+
+            core.Set<FileContent>()
+                .IgnoreQueryFilters()
+                .Any(predicate: content => content.FileId == fileId)
+                .Should()
+                .BeFalse();
         }
 
-        await Teardown(seededContext);
+        await Teardown(seededContext: seededContext);
     }
 }
-
-
-

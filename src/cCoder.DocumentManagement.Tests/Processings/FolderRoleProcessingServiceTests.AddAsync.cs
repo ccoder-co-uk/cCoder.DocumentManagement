@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -16,22 +20,12 @@ public partial class FolderRoleProcessingServiceTests
     public async Task ShouldUseDataContextWhenUserCanCreateFolderRoleForAddAsync()
     {
         // Given
-        authorizationBrokerMock
-            .Setup(x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
-            .Callback((int? appId, string privilege) =>
-            {
-                if (!(currentUser?.Can(appId, privilege) ?? false))
-                    throw new SecurityException("Access Denied!");
-            });
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(valueFunction: () => currentUser);
 
-        authorizationBrokerMock
-            .Setup(x => x.IsAdminOfApp(It.IsAny<int>()))
-            .Returns((int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
-
-        authorizationBrokerMock.Setup(x => x.GetCurrentUser()).Returns(() => currentUser);
-
-        User user = ToLocalUser(TestUsers.WithPrivilege("folderrole_create", 1));
+        User user = ToLocalUser(user: TestUsers.WithPrivilege(privilege: "folderrole_create", appId: 1));
         UserRole currentUserRole = user.Roles.First();
+
         DataRole roleToAdd = new()
         {
             Id = Guid.NewGuid(),
@@ -41,51 +35,41 @@ public partial class FolderRoleProcessingServiceTests
             Users = [],
             Folders = [],
         };
-        Folder folder = new()
-        {
-            Id = Guid.NewGuid(),
-            AppId = 1,
-            Name = "Root",
-            Path = "root",
-            App = new App { Id = 1, Name = "App" },
-            Roles =
+
+        Folder folder = CreateFolder(
+            folderRoles:
             [
-                new FolderRole { RoleId = currentUserRole.RoleId, Role = currentUserRole.Role },
-            ],
-            Files = [],
-            SubFolders = [],
-        };
+                new FolderRole
+                {
+                    RoleId = currentUserRole.RoleId,
+                    Role = currentUserRole.Role,
+                },
+            ]);
+
         FolderRole link = new() { FolderId = folder.Id, RoleId = roleToAdd.Id };
         currentUser = user;
-        roleBrokerMock.Setup(x => x.GetAllRoles(true)).Returns(new[] { roleToAdd }.AsQueryable());
-        folderServiceMock.Setup(x => x.GetAll(true)).Returns(new[] { folder }.AsQueryable());
-        folderRoleServiceMock.Setup(x => x.AddAsync(link)).ReturnsAsync(link);
+
+        FolderRoleContext context = CreateFolderRoleContext(folder: folder, role: roleToAdd);
+
+        SetupFolderRoleContext(folderRole: link, context: context);
+
+        folderRoleServiceMock.Setup(expression: x => x.AddFolderRoleAsync(newFolderRole: link))
+            .ReturnsAsync(value: link);
 
         // When
-        FolderRole result = await folderRoleProcessingService.AddAsync(link);
+        FolderRole result = await folderRoleProcessingService.AddFolderRoleAsync(newFolderRole: link);
 
         // Then
-        Assert.Same(link, result);
-        folderRoleServiceMock.Verify(x => x.AddAsync(link), Times.Once);
+        Assert.Same(expected: link, actual: result);
+        folderRoleServiceMock.Verify(expression: x => x.AddFolderRoleAsync(newFolderRole: link), times: Times.Once);
     }
 
     [Fact]
     public async Task ShouldThrowSecurityExceptionWhenUserLacksCreatePrivilegeForAddAsync()
     {
         // Given
-        authorizationBrokerMock
-            .Setup(x => x.Authorize(It.IsAny<int?>(), It.IsAny<string>()))
-            .Callback((int? appId, string privilege) =>
-            {
-                if (!(currentUser?.Can(appId, privilege) ?? false))
-                    throw new SecurityException("Access Denied!");
-            });
-
-        authorizationBrokerMock
-            .Setup(x => x.IsAdminOfApp(It.IsAny<int>()))
-            .Returns((int appId) => currentUser?.IsAdminOfApp(appId) ?? false);
-
-        authorizationBrokerMock.Setup(x => x.GetCurrentUser()).Returns(() => currentUser);
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(valueFunction: () => currentUser);
 
         DataRole roleToAdd = new()
         {
@@ -96,39 +80,23 @@ public partial class FolderRoleProcessingServiceTests
             Users = [],
             Folders = [],
         };
-        Folder folder = new()
-        {
-            Id = Guid.NewGuid(),
-            AppId = 1,
-            Name = "Root",
-            Path = "root",
-            App = new App { Id = 1, Name = "App" },
-            Roles = [],
-            Files = [],
-            SubFolders = [],
-        };
+
+        Folder folder = CreateFolder(
+            folderRoles: []);
+
         FolderRole link = new() { FolderId = folder.Id, RoleId = roleToAdd.Id };
-        roleBrokerMock.Setup(x => x.GetAllRoles(true)).Returns(new[] { roleToAdd }.AsQueryable());
-        folderServiceMock.Setup(x => x.GetAll(true)).Returns(new[] { folder }.AsQueryable());
+
+        FolderRoleContext context = CreateFolderRoleContext(folder: folder, role: roleToAdd);
+
+        SetupFolderRoleContext(folderRole: link, context: context);
 
         // When
-        await Assert.ThrowsAsync<SecurityException>(async () =>
-            await folderRoleProcessingService.AddAsync(link)
-        );
+        Func<Task> action = async () =>
+            await folderRoleProcessingService.AddFolderRoleAsync(newFolderRole: link);
 
         // Then
+        var exception = await Assert.ThrowsAsync<DocumentManagementServiceException>(testCode: action);
+
+        Assert.IsType<SecurityException>(@object: exception.InnerException);
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-

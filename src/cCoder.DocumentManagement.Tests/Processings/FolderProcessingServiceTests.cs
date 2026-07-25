@@ -1,7 +1,12 @@
+// ---------------------------------------------------------------
+// Copyright (c) Paul.Ward@ccoder.co.uk
+// ---------------------------------------------------------------
+
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
+using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Processings;
 using FizzWare.NBuilder;
@@ -25,22 +30,26 @@ public partial class FolderProcessingServiceTests
     private readonly Mock<IFolderRoleService> folderRoleServiceMock = new();
     private readonly Mock<IRoleService> roleServiceMock = new();
     private readonly Mock<IFileService> fileServiceMock = new();
-    private readonly Mock<IFileContentService> fileContentServiceMock = new();
+    private readonly Mock<IFileContentOperationsExposure> fileContentOperationsExposureMock = new();
     private readonly Mock<IFileProcessingService> fileProcessingServiceMock = new();
     private readonly Mock<ILogger<FolderProcessingService>> loggerMock = new();
-    private User currentUser = ToLocalUser(TestUsers.WithoutPrivileges());
+    private User currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
     private readonly FolderProcessingService folderProcessingService;
 
     public FolderProcessingServiceTests()
     {
         folderProcessingService = new FolderProcessingService(
-            folderServiceMock.Object,
-            folderRoleServiceMock.Object,
-            roleServiceMock.Object,
-            fileServiceMock.Object,
-            fileContentServiceMock.Object,
-            fileProcessingServiceMock.Object,
-            authorizationBrokerMock.Object
+            service: folderServiceMock.Object,
+            folderRoleOperationsExposure: new FolderRoleOperationsExposure(
+                folderRoleService: folderRoleServiceMock.Object),
+            roleOperationsExposure: new RoleOperationsExposure(
+                roleService: roleServiceMock.Object),
+            fileOperationsExposure: new FileOperationsExposure(
+                fileService: fileServiceMock.Object),
+            filePathOperationsExposure: new FilePathOperationsExposure(
+                fileProcessingService: fileProcessingServiceMock.Object),
+            fileContentOperationsExposure: fileContentOperationsExposureMock.Object,
+            authorizationBroker: authorizationBrokerMock.Object
         );
     }
 
@@ -60,8 +69,8 @@ public partial class FolderProcessingServiceTests
     private static App CreateRandomAppForTests() =>
         Builder<App>
             .CreateNew()
-            .With(x => x.Id = 1)
-            .With(x => x.Name = $"App-{Guid.NewGuid():N}")
+            .With(func: x => x.Id = 1)
+            .With(func: x => x.Name = $"App-{Guid.NewGuid():N}")
             .Build();
 
     private static User ToLocalUser(cCoder.Data.Models.Security.User user) =>
@@ -71,7 +80,7 @@ public partial class FolderProcessingServiceTests
             {
                 Id = user.Id,
                 Roles = user.Roles?
-                    .Select(role => new UserRole
+                    .Select(selector: role => new UserRole
                     {
                         UserId = role.UserId,
                         RoleId = role.RoleId,
@@ -105,7 +114,7 @@ public partial class FolderProcessingServiceTests
                     Id = folder.App.Id,
                     Name = folder.App.Name,
                 },
-                Roles = folder.Roles?.Select(role => new DataFolderRole
+                Roles = folder.Roles?.Select(selector: role => new DataFolderRole
                 {
                     FolderId = role.FolderId,
                     RoleId = role.RoleId,
@@ -119,8 +128,9 @@ public partial class FolderProcessingServiceTests
                             Description = role.Role.Description,
                             Privs = role.Role.Privs,
                         },
-                }).ToList() ?? [],
-                Files = folder.Files?.Select(file => new DataFile
+                })
+                  .ToList() ?? [],
+                Files = folder.Files?.Select(selector: file => new DataFile
                 {
                     Id = file.Id,
                     FolderId = file.FolderId,
@@ -132,7 +142,7 @@ public partial class FolderProcessingServiceTests
                     CreatedBy = file.CreatedBy,
                     CreatedOn = file.CreatedOn,
                     DeletedOn = file.DeletedOn,
-                    Contents = file.Contents?.Select(content => new DataFileContent
+                    Contents = file.Contents?.Select(selector: content => new DataFileContent
                     {
                         Id = content.Id,
                         FileId = content.FileId,
@@ -142,22 +152,9 @@ public partial class FolderProcessingServiceTests
                         CreatedOn = content.CreatedOn,
                         Version = content.Version,
                         RawData = content.RawData,
-                    }).ToList() ?? [],
-                }).ToList() ?? [],
+                    })
+                      .ToList() ?? [],
+                })
+                  .ToList() ?? [],
             };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
