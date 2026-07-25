@@ -1,5 +1,6 @@
 window.DocumentManagementGrids = {
     apiRoot: "/Api/Core",
+    initialized: false,
 
     configs: {
         Folder: {
@@ -62,6 +63,11 @@ window.DocumentManagementGrids = {
     },
 
     init: function () {
+        if (this.initialized || !DocumentManagementApi.isAuthenticated()) {
+            return;
+        }
+
+        this.initialized = true;
         document.getElementById("create-folder")
             ?.addEventListener("click", () => this.openEditor(this.configs.Folder, null, null));
 
@@ -473,5 +479,11 @@ window.DocumentManagementGrids = {
             .replace(/"/g, "&quot;");
     }
 };
+
+document.addEventListener("document-management-auth-changed", event => {
+    if (event.detail.isAuthenticated) {
+        window.DocumentManagementGrids.init();
+    }
+});
 
 document.addEventListener("DOMContentLoaded", () => window.DocumentManagementGrids.init());

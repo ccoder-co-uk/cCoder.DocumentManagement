@@ -118,6 +118,16 @@ window.DocumentManagementApi = {
         document.getElementById("auth-user").textContent = hasToken ? (user || "Authenticated") : "Guest";
         document.getElementById("auth-login").hidden = hasToken;
         document.getElementById("auth-logout").hidden = !hasToken;
+        document.getElementById("auth-username").hidden = hasToken;
+        document.getElementById("auth-password").hidden = hasToken;
+        document.body.classList.toggle("is-authenticated", hasToken);
+        document.dispatchEvent(new CustomEvent("document-management-auth-changed", {
+            detail: { isAuthenticated: hasToken }
+        }));
+    },
+
+    isAuthenticated: function () {
+        return Boolean(this.token);
     },
 
     currentUserId: function () {
