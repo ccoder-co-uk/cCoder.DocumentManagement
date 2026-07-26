@@ -1856,30 +1856,6 @@
       ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Exposures.BaselineExposure",
-      "StandardElementType": "Exposure",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "GetBaselinePackages",
-          "Inputs": [],
-          "ReturnType": "cCoder.Data.Models.Packaging.Package[]"
-        }
-      ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Exposures.Controllers.BaselineController",
-      "StandardElementType": "Exposure",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "Get",
-          "Inputs": [],
-          "ReturnType": "IActionResult"
-        }
-      ]
-    },
-    {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
       "StandardElementType": "Exposure",
       "Properties": [],
@@ -2807,17 +2783,6 @@
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.Security.Role\u003E"
         }
       ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Exposures.Setup.UIBaseline",
-      "StandardElementType": "Dependency",
-      "Properties": [
-        {
-          "Name": "Packages",
-          "Type": "cCoder.Data.Models.Packaging.Package[]"
-        }
-      ],
-      "Methods": []
     },
     {
       "Name": "cCoder.DocumentManagement.IServiceCollectionExtensions",
@@ -5810,10 +5775,6 @@
     {
       "FromType": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker",
       "ToType": "cCoder.DocumentManagement.Exposures.DmsInstanceFactory"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Exposures.Controllers.BaselineController",
-      "ToType": "cCoder.DocumentManagement.Exposures.BaselineExposure"
     },
     {
       "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
