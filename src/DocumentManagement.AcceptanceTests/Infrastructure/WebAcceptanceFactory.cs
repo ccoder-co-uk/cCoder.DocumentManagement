@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Web.AcceptanceTests.Models;
@@ -41,6 +42,8 @@ internal sealed class WebAcceptanceFactory(AcceptanceSettings settings)
         {
             services.RemoveAll<ICoreContextFactory>();
             services.RemoveAll<ISecurityDbContextFactory>();
+            services.RemoveAll<IDistributedCache>();
+            services.AddDistributedMemoryCache();
 
             services.AddSingleton(
                 implementationInstance: new cCoder.Data.Config
