@@ -2,9 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-namespace cCoder.DocumentManagement.Dependencies;
+namespace cCoder.DocumentManagement.Models;
 
-public class Path
+public record Path
 {
     public static Path Empty =>
         new(path: string.Empty);
@@ -35,7 +35,9 @@ public class Path
     {
         get
         {
-            Mapping mapping = DocumentManagement.Models.MimeType.Get(fileExtension: Extension);
+            Mapping mapping =
+                Extensions.MimeTypeExtensions.GetMimeType(
+                    fileExtension: Extension);
             return string.IsNullOrWhiteSpace(value: mapping.MimeType) ? "text/plain" : mapping.MimeType;
         }
     }
@@ -54,4 +56,5 @@ public class Path
 
     public override string ToString() =>
         FullPath;
+
 }

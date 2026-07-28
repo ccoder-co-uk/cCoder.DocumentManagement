@@ -5,13 +5,13 @@
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Packaging;
-using cCoder.DocumentManagement.Api.OData;
+using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Dependencies;
-using cCoder.DocumentManagement.Dependencies.OData;
+using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Exposures.EventHandlers;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Services;
@@ -43,28 +43,52 @@ public static partial class IServiceCollectionExtensions
     public static void AddDocumentManagementWeb(
         this IServiceCollection services,
         Action<DocumentManagementConfiguration> configure = null,
-        ODataConventionModelBuilder builder = null) =>
-        services.AddConfiguredDocumentManagementWeb(configure: (_, configuration) => configure?.Invoke(obj: configuration), builder: builder);
-
-    public static void AddDocumentManagementHostedServices(
-        this IServiceCollection services,
-        Action<DocumentManagementConfiguration> configure = null) =>
-        services.AddConfiguredDocumentManagement(configure: (_, configuration) => configure?.Invoke(obj: configuration));
-
-    internal static void AddDocumentManagement(this IServiceCollection services)
+        ODataConventionModelBuilder builder = null)
     {
+        DocumentManagementConfiguration configuration = new();
+        configure?.Invoke(obj: configuration);
+        services.AddDocumentManagementWeb(configuration: configuration, builder: builder);
+    }
+
+    public static void AddDocumentManagementWeb(
+        this IServiceCollection services,
+        DocumentManagementConfiguration configuration,
+        ODataConventionModelBuilder builder = null)
+    {
+        services.RegisterDocumentManagementConfiguration(
+            configuration: configuration);
         services.AddEventingTypes();
         services.AddBrokers();
         services.AddFoundations();
         services.AddProcessings();
         services.AddOrchestrations();
         services.AddEventHandlers();
+        services.AddDocumentManagementApi(
+            configuration: configuration,
+            builder: builder);
     }
 
-    internal static void AddDocumentManagementWeb(this IServiceCollection services, ODataConventionModelBuilder builder = null)
+    public static void AddDocumentManagementHostedServices(
+        this IServiceCollection services,
+        Action<DocumentManagementConfiguration> configure = null)
     {
-        services.AddDocumentManagement();
+        DocumentManagementConfiguration configuration = new();
+        configure?.Invoke(obj: configuration);
+        services.AddDocumentManagementHostedServices(configuration: configuration);
+    }
 
+    public static void AddDocumentManagementHostedServices(
+        this IServiceCollection services,
+        DocumentManagementConfiguration configuration)
+    {
+        services.RegisterDocumentManagementConfiguration(
+            configuration: configuration);
+        services.AddEventingTypes();
+        services.AddBrokers();
+        services.AddFoundations();
+        services.AddProcessings();
+        services.AddOrchestrations();
+        services.AddEventHandlers();
     }
 
     private static void AddEventingTypes(this IServiceCollection services)
@@ -153,8 +177,10 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IFileContentProcessingService, FileContentProcessingService>();
         services.AddTransient<IFileEventProcessingService, FileEventProcessingService>();
         services.AddTransient<IFileProcessingService, FileProcessingService>();
+        services.AddTransient<IFilePathProcessingService, FileProcessingService>();
         services.AddTransient<IFolderEventProcessingService, FolderEventProcessingService>();
         services.AddTransient<IFolderProcessingService, FolderProcessingService>();
+        services.AddTransient<IFolderPathProcessingService, FolderProcessingService>();
         services.AddTransient<IFolderRoleEventProcessingService, FolderRoleEventProcessingService>();
         services.AddTransient<IFolderRoleProcessingService, FolderRoleProcessingService>();
         services.AddTransient<IPackagePayloadJsonProcessingService, PackagePayloadJsonProcessingService>();

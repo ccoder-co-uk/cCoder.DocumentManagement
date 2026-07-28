@@ -3,12 +3,12 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Services.Processings;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 namespace cCoder.DocumentManagement.Exposures;
 
 internal sealed class FilePathOperationsExposure(
-    IFileProcessingService fileProcessingService)
+    IFilePathProcessingService fileProcessingService)
     : IFilePathOperationsExposure
 {
     public ValueTask SaveFilePathAsync(

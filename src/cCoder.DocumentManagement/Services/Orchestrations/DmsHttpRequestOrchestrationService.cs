@@ -31,17 +31,28 @@ internal partial class DmsHttpRequestOrchestrationService(
 
             if (IsWebDavRequestDmsProcessingRequest(request: request))
             {
-                response = await webDavProcessingService.ProcessDmsProcessingRequestAsync(request: request);
+                DmsProcessingSession session =
+                    await webDavProcessingService.ProcessDmsProcessingSessionAsync(
+                        session: new DmsProcessingSession
+                        {
+                            Request = request
+                        });
+
+                response = session.Response;
             }
             else
             {
                 try
                 {
-                    DmsProcessingResponse processedResponse =
-                        await dmsProcessingService.ProcessDmsProcessingRequestAsync(request: request);
+                    DmsProcessingSession session =
+                        await dmsProcessingService.ProcessDmsProcessingSessionAsync(
+                            session: new DmsProcessingSession
+                            {
+                                Request = request
+                            });
 
                     response = AddDmsDefaultHeadersDmsProcessingResponse(
-                        newDmsProcessingResponse: processedResponse);
+                        newDmsProcessingResponse: session.Response);
                 }
                 catch (SecurityException)
                 {

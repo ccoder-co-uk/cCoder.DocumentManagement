@@ -4,7 +4,7 @@
 
 using Moq;
 using Xunit;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Foundations;
@@ -22,7 +22,7 @@ public partial class DmsInstanceServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await dmsInstanceService.CopyAsync(oldPath: oldPath, newPath: newPath);
+        await dmsInstanceService.CopyAsync(oldPath: oldPath.FullPath, newPath: newPath.FullPath);
 
         // Then
         dmsInstanceBrokerMock.Verify(expression: x => x.CopyAsync(oldPath: oldPath, newPath: newPath), times: Times.Once);

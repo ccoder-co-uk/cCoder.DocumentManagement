@@ -5,7 +5,6 @@
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
-using cCoder.Data;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.Data.Models.CMS;
@@ -14,8 +13,8 @@ using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services.Foundations;
 using LocalFile = cCoder.Data.Models.DMS.File;
 using LocalFolder = cCoder.Data.Models.DMS.Folder;
-using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
-using DmsResult = cCoder.DocumentManagement.Dependencies.DMSResult;
+using LocalPath = cCoder.DocumentManagement.Models.Path;
+using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
 using MemoryStream = System.IO.MemoryStream;
 
 
@@ -25,11 +24,24 @@ internal partial class WebDavProcessingService(
     IFileOperationsExposure fileOperationsExposure,
     IFolderOperationsExposure folderOperationsExposure,
     IDmsInstanceOperationsExposure dmsInstanceOperationsExposure,
-    Config config,
+    DocumentManagementConfiguration config,
     ILogger<WebDavProcessingService> log
 ) : IWebDavProcessingService
 {
-    public ValueTask<DmsProcessingResponse> ProcessDmsProcessingRequestAsync(DmsProcessingRequest request)
+    public ValueTask<DmsProcessingSession> ProcessDmsProcessingSessionAsync(
+        DmsProcessingSession session) =>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [session]);
+
+            session.Response =
+                await ProcessDmsProcessingRequestAsync(
+                    request: session.Request);
+
+            return session;
+        });
+
+    internal ValueTask<DmsProcessingResponse> ProcessDmsProcessingRequestAsync(DmsProcessingRequest request)
 =>
         TryCatch(operation: async () =>
         {
@@ -58,9 +70,7 @@ internal partial class WebDavProcessingService(
             Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
 
 
-            string sslPort = config.Settings.TryGetValue(key: "sslPort", value: out string configuredSslPort)
-                ? configuredSslPort
-                : "443";
+            int sslPort = config.SslPort ?? 443;
 
 
             string urlBase = $"https://{app.Domain}:{sslPort}/Api/";

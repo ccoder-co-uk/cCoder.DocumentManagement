@@ -35,7 +35,7 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<Folder> query = Branching.ApplyQueryFilters(query: coreDataContext.Folders, ignoreFilters: ignoreFilters);
+        IQueryable<Folder> query = coreDataContext.Folders.ApplyQueryFilters(ignoreFilters: ignoreFilters);
 
         return query
             .Include(navigationPropertyPath: folder => folder.Files)
@@ -47,7 +47,7 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<Folder> query = Branching.ApplyQueryFilters(query: coreDataContext.Folders, ignoreFilters: ignoreFilters);
+        IQueryable<Folder> query = coreDataContext.Folders.ApplyQueryFilters(ignoreFilters: ignoreFilters);
 
         return query
             .Include(navigationPropertyPath: folder => folder.Roles)
@@ -59,7 +59,7 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<Folder> query = Branching.ApplyQueryFilters(query: coreDataContext.Folders, ignoreFilters: ignoreFilters);
+        IQueryable<Folder> query = coreDataContext.Folders.ApplyQueryFilters(ignoreFilters: ignoreFilters);
 
         return query
             .Include(navigationPropertyPath: folder => folder.App)
@@ -76,7 +76,7 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<Folder> query = Branching.ApplyQueryFilters(query: coreDataContext.Folders, ignoreFilters: ignoreFilters);
+        IQueryable<Folder> query = coreDataContext.Folders.ApplyQueryFilters(ignoreFilters: ignoreFilters);
 
         return query.FirstOrDefault(predicate: folder => folder.AppId == appId && folder.Path == path);
     }
@@ -85,7 +85,7 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<Folder> query = Branching.ApplyQueryFilters(query: coreDataContext.Folders, ignoreFilters: ignoreFilters);
+        IQueryable<Folder> query = coreDataContext.Folders.ApplyQueryFilters(ignoreFilters: ignoreFilters);
 
         return query
             .Include(navigationPropertyPath: folder => folder.Roles)
@@ -97,7 +97,7 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<Folder> query = Branching.ApplyQueryFilters(query: coreDataContext.Folders, ignoreFilters: ignoreFilters);
+        IQueryable<Folder> query = coreDataContext.Folders.ApplyQueryFilters(ignoreFilters: ignoreFilters);
 
         return query
             .Include(navigationPropertyPath: folder => folder.Parent)
@@ -110,7 +110,7 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<Folder> query = Branching.ApplyQueryFilters(query: coreDataContext.Folders, ignoreFilters: ignoreFilters);
+        IQueryable<Folder> query = coreDataContext.Folders.ApplyQueryFilters(ignoreFilters: ignoreFilters);
 
         return query
             .Include(navigationPropertyPath: folder => folder.Roles)
@@ -124,7 +124,7 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<Folder> query = Branching.ApplyQueryFilters(query: coreDataContext.Folders, ignoreFilters: ignoreFilters);
+        IQueryable<Folder> query = coreDataContext.Folders.ApplyQueryFilters(ignoreFilters: ignoreFilters);
 
         return query
             .Include(navigationPropertyPath: folder => folder.SubFolders)
@@ -152,23 +152,19 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        Folder folder = await coreDataContext.Folders
+        Folder[] folders = await coreDataContext.Folders
             .IgnoreQueryFilters()
-            .Include(navigationPropertyPath: foundFolder => foundFolder.Roles)
-            .FirstOrDefaultAsync(predicate: foundFolder => foundFolder.Id == deletedFolder.Id);
+            .Include(navigationPropertyPath: folder => folder.Roles)
+            .Where(predicate: folder => folder.Id == deletedFolder.Id)
+            .ToArrayAsync();
 
-        return await Branching.ExecuteWhenNotNullAsync(
-            input: folder,
-            operation: async foundFolder =>
-            {
-                coreDataContext.FolderRoles.RemoveRange(
-                    entities: foundFolder.Roles ?? []);
+        coreDataContext.FolderRoles.RemoveRange(
+            entities: folders.SelectMany(
+                selector: folder => folder.Roles ?? []));
 
-                coreDataContext.Folders.Remove(entity: foundFolder);
+        coreDataContext.Folders.RemoveRange(entities: folders);
 
-                return await coreDataContext.SaveChangesAsync();
-            },
-            defaultValue: 0);
+        return await coreDataContext.SaveChangesAsync();
     }
 
     public async ValueTask DeleteAllFoldersAsync(IEnumerable<Folder> deletedFolder)

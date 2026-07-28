@@ -2,7 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-namespace cCoder.DocumentManagement.Dependencies.OData;
+using cCoder.DocumentManagement.Models.OData;
+
+namespace cCoder.DocumentManagement.Extensions.OData;
 
 internal static class ODataMetadataProvider
 {

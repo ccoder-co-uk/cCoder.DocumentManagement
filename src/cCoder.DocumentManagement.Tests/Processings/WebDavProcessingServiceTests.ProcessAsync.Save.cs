@@ -6,7 +6,7 @@ using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -30,11 +30,11 @@ public partial class WebDavProcessingServiceTests
         dmsInstanceServiceMock
             .Setup(expression: x =>
                 x.SaveAsync(
-                    path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    path: It.Is<string>(match: path => path == "folder/file.txt"),
                     content: It.IsAny<Stream>()
                 )
             )
-            .Callback<DmsPath, Stream>(action: (_, stream) => capturedBytes = ReadAllBytes(stream: stream))
+            .Callback<string, Stream>(action: (_, stream) => capturedBytes = ReadAllBytes(stream: stream))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
@@ -53,7 +53,7 @@ public partial class WebDavProcessingServiceTests
         dmsInstanceServiceMock.Verify(
             expression: x =>
                 x.SaveAsync(
-                    path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    path: It.Is<string>(match: path => path == "folder/file.txt"),
                     content: It.IsAny<Stream>()
                 ),
             times: Times.Once
@@ -81,11 +81,11 @@ public partial class WebDavProcessingServiceTests
         dmsInstanceServiceMock
             .Setup(expression: x =>
                 x.SaveAsync(
-                    path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    path: It.Is<string>(match: path => path == "folder/file.txt"),
                     content: It.IsAny<Stream>()
                 )
             )
-            .Callback<DmsPath, Stream>(action: (_, stream) => capturedBytes = ReadAllBytes(stream: stream))
+            .Callback<string, Stream>(action: (_, stream) => capturedBytes = ReadAllBytes(stream: stream))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
@@ -101,7 +101,7 @@ public partial class WebDavProcessingServiceTests
         dmsInstanceServiceMock.Verify(
             expression: x =>
                 x.SaveAsync(
-                    path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"),
+                    path: It.Is<string>(match: path => path == "folder/file.txt"),
                     content: It.IsAny<Stream>()
                 ),
             times: Times.Once
@@ -120,7 +120,7 @@ public partial class WebDavProcessingServiceTests
 
         dmsInstanceServiceMock
             .Setup(expression: x =>
-                x.SaveAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder"), content: It.IsAny<Stream>())
+                x.SaveAsync(path: It.Is<string>(match: path => path == "folder"), content: It.IsAny<Stream>())
             )
             .Returns(value: ValueTask.CompletedTask);
 
@@ -132,7 +132,7 @@ public partial class WebDavProcessingServiceTests
             .Be(expected: 204);
 
         dmsInstanceServiceMock.Verify(
-            expression: x => x.SaveAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder"), content: It.IsAny<Stream>()),
+            expression: x => x.SaveAsync(path: It.Is<string>(match: path => path == "folder"), content: It.IsAny<Stream>()),
             times: Times.Once
         );
 

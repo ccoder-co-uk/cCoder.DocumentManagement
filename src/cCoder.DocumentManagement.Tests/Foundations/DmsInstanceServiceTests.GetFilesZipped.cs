@@ -6,8 +6,8 @@ using cCoder.Data;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DMSResult = cCoder.DocumentManagement.Dependencies.DMSResult;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Foundations;
@@ -27,7 +27,10 @@ public partial class DmsInstanceServiceTests
             .Returns(value: result);
 
         // When
-        DMSResult returnedResult = dmsInstanceService.GetFilesZipped(paths: paths);
+        DMSResult returnedResult = dmsInstanceService.GetFilesZipped(
+            paths: paths.Select(
+                selector: path =>
+                    path.FullPath));
 
         // Then
         returnedResult.Should()

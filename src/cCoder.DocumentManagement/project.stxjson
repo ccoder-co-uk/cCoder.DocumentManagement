@@ -2,7 +2,7 @@
   "Classes": [
     {
       "Name": "cCoder.Data.Models.DMS.DmsModelExtensions",
-      "StandardElementType": "Dependency",
+      "StandardElementType": "Exposure",
       "Properties": [],
       "Methods": [
         {
@@ -122,262 +122,6 @@
       ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Api.OData.BadRequestResult",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Api.OData.CompositePropertyInfo",
-      "StandardElementType": "Dependency",
-      "Properties": [
-        {
-          "Name": "Attributes",
-          "Type": "System.Reflection.PropertyAttributes"
-        },
-        {
-          "Name": "CanRead",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "CanWrite",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "DeclaringType",
-          "Type": "System.Type"
-        },
-        {
-          "Name": "Name",
-          "Type": "System.String"
-        },
-        {
-          "Name": "PropertyType",
-          "Type": "System.Type"
-        },
-        {
-          "Name": "ReflectedType",
-          "Type": "System.Type"
-        }
-      ],
-      "Methods": [
-        {
-          "Name": "GetAccessors",
-          "Inputs": [
-            {
-              "Name": "nonPublic",
-              "Type": "System.Boolean"
-            }
-          ],
-          "ReturnType": "System.Reflection.MethodInfo[]"
-        },
-        {
-          "Name": "GetCustomAttributes",
-          "Inputs": [
-            {
-              "Name": "inherit",
-              "Type": "System.Boolean"
-            }
-          ],
-          "ReturnType": "System.Object[]"
-        },
-        {
-          "Name": "GetCustomAttributes",
-          "Inputs": [
-            {
-              "Name": "attributeType",
-              "Type": "System.Type"
-            },
-            {
-              "Name": "inherit",
-              "Type": "System.Boolean"
-            }
-          ],
-          "ReturnType": "System.Object[]"
-        },
-        {
-          "Name": "GetGetMethod",
-          "Inputs": [
-            {
-              "Name": "nonPublic",
-              "Type": "System.Boolean"
-            }
-          ],
-          "ReturnType": "System.Reflection.MethodInfo"
-        },
-        {
-          "Name": "GetIndexParameters",
-          "Inputs": [],
-          "ReturnType": "System.Reflection.ParameterInfo[]"
-        },
-        {
-          "Name": "GetSetMethod",
-          "Inputs": [
-            {
-              "Name": "nonPublic",
-              "Type": "System.Boolean"
-            }
-          ],
-          "ReturnType": "System.Reflection.MethodInfo"
-        },
-        {
-          "Name": "GetValue",
-          "Inputs": [
-            {
-              "Name": "obj",
-              "Type": "System.Object"
-            },
-            {
-              "Name": "invokeAttr",
-              "Type": "System.Reflection.BindingFlags"
-            },
-            {
-              "Name": "binder",
-              "Type": "System.Reflection.Binder"
-            },
-            {
-              "Name": "index",
-              "Type": "System.Object[]"
-            },
-            {
-              "Name": "culture",
-              "Type": "System.Globalization.CultureInfo"
-            }
-          ],
-          "ReturnType": "System.Object"
-        },
-        {
-          "Name": "IsDefined",
-          "Inputs": [
-            {
-              "Name": "attributeType",
-              "Type": "System.Type"
-            },
-            {
-              "Name": "inherit",
-              "Type": "System.Boolean"
-            }
-          ],
-          "ReturnType": "System.Boolean"
-        },
-        {
-          "Name": "SetValue",
-          "Inputs": [
-            {
-              "Name": "obj",
-              "Type": "System.Object"
-            },
-            {
-              "Name": "value",
-              "Type": "System.Object"
-            },
-            {
-              "Name": "invokeAttr",
-              "Type": "System.Reflection.BindingFlags"
-            },
-            {
-              "Name": "binder",
-              "Type": "System.Reflection.Binder"
-            },
-            {
-              "Name": "index",
-              "Type": "System.Object[]"
-            },
-            {
-              "Name": "culture",
-              "Type": "System.Globalization.CultureInfo"
-            }
-          ],
-          "ReturnType": "System.Void"
-        }
-      ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Api.OData.EdmModelExtensions",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "GetExtendedMetadataForType",
-          "Inputs": [
-            {
-              "Name": "model",
-              "Type": "Microsoft.OData.Edm.IEdmModel"
-            },
-            {
-              "Name": "context",
-              "Type": "System.String"
-            },
-            {
-              "Name": "type",
-              "Type": "System.Type"
-            },
-            {
-              "Name": "hasEndpoint",
-              "Type": "System.Boolean"
-            }
-          ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.OData.ExtendedMetadataContainer"
-        }
-      ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Api.OData.ModelStateError",
-      "StandardElementType": "Model",
-      "Properties": [
-        {
-          "Name": "Errors",
-          "Type": "System.String[]"
-        },
-        {
-          "Name": "Key",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Value",
-          "Type": "System.Object"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Api.OData.ODataCollectionExtensions",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Api.OData.ODataJsonExtensions",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Api.OData.ODataModel",
-      "StandardElementType": "Model",
-      "Properties": [
-        {
-          "Name": "Context",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Description",
-          "Type": "System.String"
-        },
-        {
-          "Name": "EDMModel",
-          "Type": "Microsoft.OData.Edm.IEdmModel"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Api.OData.ODataTypeExtensions",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": []
-    },
-    {
       "Name": "cCoder.DocumentManagement.Brokers.AuthInfoBroker",
       "StandardElementType": "Broker",
       "Properties": [],
@@ -449,11 +193,11 @@
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -463,7 +207,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "version",
@@ -477,7 +221,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "version",
@@ -488,28 +232,28 @@
               "Type": "System.String"
             }
           ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+          "ReturnType": "cCoder.DocumentManagement.Models.DMSResult"
         },
         {
           "Name": "GetFilesZipped",
           "Inputs": [
             {
               "Name": "paths",
-              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E"
             }
           ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+          "ReturnType": "cCoder.DocumentManagement.Models.DMSResult"
         },
         {
           "Name": "MoveAsync",
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -519,7 +263,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "content",
@@ -543,7 +287,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "content",
@@ -772,6 +516,35 @@
             }
           ],
           "ReturnType": "System.String"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.OData.DocumentManagementModelBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "Build",
+          "Inputs": [],
+          "ReturnType": "cCoder.DocumentManagement.Extensions.OData.ODataModel"
+        },
+        {
+          "Name": "Configure",
+          "Inputs": [],
+          "ReturnType": "System.Void"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.OData.ODataModelBroker",
+      "StandardElementType": "Broker",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "Build",
+          "Inputs": [],
+          "ReturnType": "cCoder.DocumentManagement.Extensions.OData.ODataModel"
         }
       ]
     },
@@ -1386,29 +1159,8 @@
       ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Dependencies.Branching",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.DMSResult",
-      "StandardElementType": "Dependency",
-      "Properties": [
-        {
-          "Name": "Data",
-          "Type": "System.IO.Stream"
-        },
-        {
-          "Name": "MimeType",
-          "Type": "System.String"
-        }
-      ],
-      "Methods": []
-    },
-    {
       "Name": "cCoder.DocumentManagement.Dependencies.DmsProcessingRequest",
-      "StandardElementType": "Dependency",
+      "StandardElementType": "Model",
       "Properties": [
         {
           "Name": "App",
@@ -1447,7 +1199,7 @@
     },
     {
       "Name": "cCoder.DocumentManagement.Dependencies.DmsProcessingResponse",
-      "StandardElementType": "Dependency",
+      "StandardElementType": "Model",
       "Properties": [
         {
           "Name": "Body",
@@ -1473,353 +1225,8 @@
       "Methods": []
     },
     {
-      "Name": "cCoder.DocumentManagement.Dependencies.OData.DocumentManagementModelBuilder",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "Build",
-          "Inputs": [],
-          "ReturnType": "cCoder.DocumentManagement.Api.OData.ODataModel"
-        },
-        {
-          "Name": "Configure",
-          "Inputs": [],
-          "ReturnType": "System.Void"
-        }
-      ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.OData.ExtendedMetadataContainer",
-      "StandardElementType": "Dependency",
-      "Properties": [
-        {
-          "Name": "Operations",
-          "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.OData.OperationContainer\u003E"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.OData.MetadataContainer",
-      "StandardElementType": "Dependency",
-      "Properties": [
-        {
-          "Name": "Category",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Description",
-          "Type": "System.String"
-        },
-        {
-          "Name": "DisplayName",
-          "Type": "System.String"
-        },
-        {
-          "Name": "HasEndpoint",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsEntity",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsJoinEntity",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsSystemManaged",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsValueType",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "Name",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Properties",
-          "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.OData.PropertyContainer\u003E"
-        },
-        {
-          "Name": "ServerType",
-          "Type": "System.String"
-        },
-        {
-          "Name": "ServerTypeName",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Type",
-          "Type": "System.String"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.OData.MetadataContainerSet",
-      "StandardElementType": "Dependency",
-      "Properties": [
-        {
-          "Name": "Name",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Types",
-          "Type": "cCoder.DocumentManagement.Dependencies.OData.ExtendedMetadataContainer[]"
-        },
-        {
-          "Name": "UriBase",
-          "Type": "System.String"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.OData.ODataCollection\u003CTCollectionType\u003E",
-      "StandardElementType": "Dependency",
-      "Properties": [
-        {
-          "Name": "ODataContext",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Value",
-          "Type": "System.Collections.Generic.IEnumerable\u003CTCollectionType\u003E"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.OData.ODataMetadataProvider",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.OData.ODataModelBuilder",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "Build",
-          "Inputs": [],
-          "ReturnType": "cCoder.DocumentManagement.Api.OData.ODataModel"
-        }
-      ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.OData.OperationContainer",
-      "StandardElementType": "Dependency",
-      "Properties": [
-        {
-          "Name": "Definition",
-          "Type": "System.String"
-        },
-        {
-          "Name": "HttpVerb",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Name",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Parameters",
-          "Type": "System.Collections.Generic.IDictionary\u003CSystem.String, System.String\u003E"
-        },
-        {
-          "Name": "Queryable",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "ReturnType",
-          "Type": "cCoder.DocumentManagement.Dependencies.OData.MetadataContainer"
-        },
-        {
-          "Name": "Url",
-          "Type": "System.String"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.OData.PropertyContainer",
-      "StandardElementType": "Dependency",
-      "Properties": [
-        {
-          "Name": "Description",
-          "Type": "System.String"
-        },
-        {
-          "Name": "DisplayName",
-          "Type": "System.String"
-        },
-        {
-          "Name": "IsGeneric",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsReadOnly",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsRequired",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsSystemManaged",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "IsValueType",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "Name",
-          "Type": "System.String"
-        },
-        {
-          "Name": "ServerType",
-          "Type": "System.String"
-        },
-        {
-          "Name": "ServerTypeName",
-          "Type": "System.String"
-        },
-        {
-          "Name": "ShortDisplayName",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Template",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Type",
-          "Type": "System.String"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.Path",
-      "StandardElementType": "Dependency",
-      "Properties": [
-        {
-          "Name": "Depth",
-          "Type": "System.Int32"
-        },
-        {
-          "Name": "Empty",
-          "Type": "cCoder.DocumentManagement.Dependencies.Path"
-        },
-        {
-          "Name": "Extension",
-          "Type": "System.String"
-        },
-        {
-          "Name": "FullPath",
-          "Type": "System.String"
-        },
-        {
-          "Name": "IsToFile",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "Length",
-          "Type": "System.Int32"
-        },
-        {
-          "Name": "Lowered",
-          "Type": "System.String"
-        },
-        {
-          "Name": "MimeType",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Name",
-          "Type": "System.String"
-        },
-        {
-          "Name": "ParentPath",
-          "Type": "cCoder.DocumentManagement.Dependencies.Path"
-        },
-        {
-          "Name": "Segments",
-          "Type": "System.String[]"
-        }
-      ],
-      "Methods": [
-        {
-          "Name": "ToString",
-          "Inputs": [],
-          "ReturnType": "System.String"
-        }
-      ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.Result",
-      "StandardElementType": "Dependency",
-      "Properties": [
-        {
-          "Name": "Id",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Message",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Success",
-          "Type": "System.Boolean"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.Result\u003CT\u003E",
-      "StandardElementType": "Dependency",
-      "Properties": [
-        {
-          "Name": "Id",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Item",
-          "Type": "T"
-        }
-      ],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Dependencies.ResultExtensions",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "ToNew",
-          "Inputs": [
-            {
-              "Name": "result",
-              "Type": "cCoder.DocumentManagement.Dependencies.Result\u003CT\u003E"
-            },
-            {
-              "Name": "item",
-              "Type": "TNew"
-            }
-          ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.Result\u003CTNew\u003E"
-        }
-      ]
-    },
-    {
       "Name": "cCoder.DocumentManagement.DocumentManagementConfigurationExtensions",
-      "StandardElementType": "Dependency",
+      "StandardElementType": "Exposure",
       "Properties": [],
       "Methods": [
         {
@@ -1840,20 +1247,9 @@
     },
     {
       "Name": "cCoder.DocumentManagement.DocumentManagementServiceCollectionConfigurationExtensions",
-      "StandardElementType": "Dependency",
+      "StandardElementType": "Exposure",
       "Properties": [],
-      "Methods": [
-        {
-          "Name": "ConfigureDocumentManagementApiModel",
-          "Inputs": [
-            {
-              "Name": "builder",
-              "Type": "Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"
-            }
-          ],
-          "ReturnType": "System.Void"
-        }
-      ]
+      "Methods": []
     },
     {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
@@ -2127,7 +1523,7 @@
           "Inputs": [
             {
               "Name": "deletedFolderRole",
-              "Type": "cCoder.DocumentManagement.Dependencies.OData.ODataCollection\u003CcCoder.Data.Models.Security.FolderRole\u003E"
+              "Type": "cCoder.DocumentManagement.Extensions.OData.ODataCollection\u003CcCoder.Data.Models.Security.FolderRole\u003E"
             }
           ],
           "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E"
@@ -2164,11 +1560,11 @@
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -2178,7 +1574,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "version",
@@ -2192,7 +1588,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "version",
@@ -2203,28 +1599,28 @@
               "Type": "System.String"
             }
           ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+          "ReturnType": "cCoder.DocumentManagement.Models.DMSResult"
         },
         {
           "Name": "GetFilesZipped",
           "Inputs": [
             {
               "Name": "paths",
-              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E"
             }
           ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+          "ReturnType": "cCoder.DocumentManagement.Models.DMSResult"
         },
         {
           "Name": "MoveAsync",
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -2234,7 +1630,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "content",
@@ -2258,7 +1654,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "content",
@@ -2295,11 +1691,11 @@
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -2309,7 +1705,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "version",
@@ -2323,25 +1719,25 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "version",
               "Type": "System.Int32"
             }
           ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+          "ReturnType": "cCoder.DocumentManagement.Models.DMSResult"
         },
         {
           "Name": "MoveDmsPathAsync",
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -2351,7 +1747,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "content",
@@ -2469,7 +1865,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllForFileAsync",
@@ -2592,11 +1988,11 @@
             },
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -2610,7 +2006,7 @@
             },
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "cCoder.DocumentManagement.Models.Path"
             },
             {
               "Name": "content",
@@ -2785,6 +2181,361 @@
       ]
     },
     {
+      "Name": "cCoder.DocumentManagement.Extensions.AuthorizationExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.MimeTypeExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetMimeType",
+          "Inputs": [
+            {
+              "Name": "fileExtension",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.Mapping"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.OData.BadRequestResult",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.OData.CompositePropertyInfo",
+      "StandardElementType": "Dependency",
+      "Properties": [
+        {
+          "Name": "Attributes",
+          "Type": "System.Reflection.PropertyAttributes"
+        },
+        {
+          "Name": "CanRead",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "CanWrite",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "DeclaringType",
+          "Type": "System.Type"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "PropertyType",
+          "Type": "System.Type"
+        },
+        {
+          "Name": "ReflectedType",
+          "Type": "System.Type"
+        }
+      ],
+      "Methods": [
+        {
+          "Name": "GetAccessors",
+          "Inputs": [
+            {
+              "Name": "nonPublic",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Reflection.MethodInfo[]"
+        },
+        {
+          "Name": "GetCustomAttributes",
+          "Inputs": [
+            {
+              "Name": "inherit",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Object[]"
+        },
+        {
+          "Name": "GetCustomAttributes",
+          "Inputs": [
+            {
+              "Name": "attributeType",
+              "Type": "System.Type"
+            },
+            {
+              "Name": "inherit",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Object[]"
+        },
+        {
+          "Name": "GetGetMethod",
+          "Inputs": [
+            {
+              "Name": "nonPublic",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Reflection.MethodInfo"
+        },
+        {
+          "Name": "GetIndexParameters",
+          "Inputs": [],
+          "ReturnType": "System.Reflection.ParameterInfo[]"
+        },
+        {
+          "Name": "GetSetMethod",
+          "Inputs": [
+            {
+              "Name": "nonPublic",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Reflection.MethodInfo"
+        },
+        {
+          "Name": "GetValue",
+          "Inputs": [
+            {
+              "Name": "obj",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "invokeAttr",
+              "Type": "System.Reflection.BindingFlags"
+            },
+            {
+              "Name": "binder",
+              "Type": "System.Reflection.Binder"
+            },
+            {
+              "Name": "index",
+              "Type": "System.Object[]"
+            },
+            {
+              "Name": "culture",
+              "Type": "System.Globalization.CultureInfo"
+            }
+          ],
+          "ReturnType": "System.Object"
+        },
+        {
+          "Name": "IsDefined",
+          "Inputs": [
+            {
+              "Name": "attributeType",
+              "Type": "System.Type"
+            },
+            {
+              "Name": "inherit",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        },
+        {
+          "Name": "SetValue",
+          "Inputs": [
+            {
+              "Name": "obj",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "value",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "invokeAttr",
+              "Type": "System.Reflection.BindingFlags"
+            },
+            {
+              "Name": "binder",
+              "Type": "System.Reflection.Binder"
+            },
+            {
+              "Name": "index",
+              "Type": "System.Object[]"
+            },
+            {
+              "Name": "culture",
+              "Type": "System.Globalization.CultureInfo"
+            }
+          ],
+          "ReturnType": "System.Void"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.OData.DocumentManagementApiModelExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ConfigureDocumentManagementApiModel",
+          "Inputs": [
+            {
+              "Name": "builder",
+              "Type": "Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"
+            }
+          ],
+          "ReturnType": "System.Void"
+        },
+        {
+          "Name": "CreateIEdmModel",
+          "Inputs": [],
+          "ReturnType": "Microsoft.OData.Edm.IEdmModel"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.OData.EdmModelExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "GetExtendedMetadataForType",
+          "Inputs": [
+            {
+              "Name": "model",
+              "Type": "Microsoft.OData.Edm.IEdmModel"
+            },
+            {
+              "Name": "context",
+              "Type": "System.String"
+            },
+            {
+              "Name": "type",
+              "Type": "System.Type"
+            },
+            {
+              "Name": "hasEndpoint",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.OData.ExtendedMetadataContainer"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.OData.MetadataTypeExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.OData.ModelStateError",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Errors",
+          "Type": "System.String[]"
+        },
+        {
+          "Name": "Key",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Value",
+          "Type": "System.Object"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.OData.ODataCollection\u003CTCollectionType\u003E",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "ODataContext",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Value",
+          "Type": "System.Collections.Generic.IEnumerable\u003CTCollectionType\u003E"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.OData.ODataCollectionExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.OData.ODataJsonExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.OData.ODataMetadataProvider",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.OData.ODataModel",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Context",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Description",
+          "Type": "System.String"
+        },
+        {
+          "Name": "EDMModel",
+          "Type": "Microsoft.OData.Edm.IEdmModel"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.OData.ODataTypeExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.QueryFilterExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.ResultExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "ToNew",
+          "Inputs": [
+            {
+              "Name": "result",
+              "Type": "cCoder.DocumentManagement.Models.Result\u003CT\u003E"
+            },
+            {
+              "Name": "item",
+              "Type": "TNew"
+            }
+          ],
+          "ReturnType": "cCoder.DocumentManagement.Models.Result\u003CTNew\u003E"
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.IServiceCollectionExtensions",
       "StandardElementType": "App",
       "Properties": [],
@@ -2804,6 +2555,20 @@
           "ReturnType": "System.Void"
         },
         {
+          "Name": "AddDocumentManagementHostedServices",
+          "Inputs": [
+            {
+              "Name": "services",
+              "Type": "IServiceCollection"
+            },
+            {
+              "Name": "configuration",
+              "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration"
+            }
+          ],
+          "ReturnType": "System.Void"
+        },
+        {
           "Name": "AddDocumentManagementWeb",
           "Inputs": [
             {
@@ -2813,6 +2578,24 @@
             {
               "Name": "configure",
               "Type": "System.Action\u003CcCoder.DocumentManagement.Models.DocumentManagementConfiguration\u003E"
+            },
+            {
+              "Name": "builder",
+              "Type": "Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"
+            }
+          ],
+          "ReturnType": "System.Void"
+        },
+        {
+          "Name": "AddDocumentManagementWeb",
+          "Inputs": [
+            {
+              "Name": "services",
+              "Type": "IServiceCollection"
+            },
+            {
+              "Name": "configuration",
+              "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration"
             },
             {
               "Name": "builder",
@@ -2950,12 +2733,89 @@
       "Methods": []
     },
     {
+      "Name": "cCoder.DocumentManagement.Models.DMSResult",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Data",
+          "Type": "System.IO.Stream"
+        },
+        {
+          "Name": "MimeType",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.DmsOperation",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Content",
+          "Type": "System.IO.Stream"
+        },
+        {
+          "Name": "Files",
+          "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+        },
+        {
+          "Name": "IgnoreArchiveRoot",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "Needle",
+          "Type": "System.String"
+        },
+        {
+          "Name": "NewPath",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Path",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Paths",
+          "Type": "System.Collections.Generic.IEnumerable\u003CSystem.String\u003E"
+        },
+        {
+          "Name": "Result",
+          "Type": "cCoder.DocumentManagement.Models.DMSResult"
+        },
+        {
+          "Name": "Search",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Version",
+          "Type": "System.Int32"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.DmsProcessingSession",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Request",
+          "Type": "cCoder.DocumentManagement.Dependencies.DmsProcessingRequest"
+        },
+        {
+          "Name": "Response",
+          "Type": "cCoder.DocumentManagement.Dependencies.DmsProcessingResponse"
+        }
+      ],
+      "Methods": []
+    },
+    {
       "Name": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
       "StandardElementType": "Model",
       "Properties": [
         {
-          "Name": "ConnectionStrings",
-          "Type": "System.Collections.Generic.IDictionary\u003CSystem.String, System.String\u003E"
+          "Name": "ConnectionString",
+          "Type": "System.String"
         },
         {
           "Name": "DebugInfo",
@@ -2966,10 +2826,6 @@
           "Type": "cCoder.Eventing.Models.EventProvider[]"
         },
         {
-          "Name": "IncludeLegacyCoreContext",
-          "Type": "System.Boolean"
-        },
-        {
           "Name": "LogSQL",
           "Type": "System.Boolean"
         },
@@ -2978,12 +2834,8 @@
           "Type": "System.String"
         },
         {
-          "Name": "Services",
-          "Type": "System.Collections.Generic.IDictionary\u003CSystem.String, System.String\u003E"
-        },
-        {
-          "Name": "Settings",
-          "Type": "System.Collections.Generic.IDictionary\u003CSystem.String, System.String\u003E"
+          "Name": "SslPort",
+          "Type": "System.Int32?"
         }
       ],
       "Methods": []
@@ -3168,21 +3020,308 @@
       "Methods": []
     },
     {
-      "Name": "cCoder.DocumentManagement.Models.MimeType",
-      "StandardElementType": "Dependency",
-      "Properties": [],
+      "Name": "cCoder.DocumentManagement.Models.OData.ExtendedMetadataContainer",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Operations",
+          "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.OData.OperationContainer\u003E"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.OData.MetadataContainer",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Category",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Description",
+          "Type": "System.String"
+        },
+        {
+          "Name": "DisplayName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "HasEndpoint",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsEntity",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsJoinEntity",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsSystemManaged",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsValueType",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Properties",
+          "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.OData.PropertyContainer\u003E"
+        },
+        {
+          "Name": "ServerType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ServerTypeName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Type",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.OData.MetadataContainerSet",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Types",
+          "Type": "cCoder.DocumentManagement.Models.OData.ExtendedMetadataContainer[]"
+        },
+        {
+          "Name": "UriBase",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.OData.OperationContainer",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Definition",
+          "Type": "System.String"
+        },
+        {
+          "Name": "HttpVerb",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Parameters",
+          "Type": "System.Collections.Generic.IDictionary\u003CSystem.String, System.String\u003E"
+        },
+        {
+          "Name": "Queryable",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "ReturnType",
+          "Type": "cCoder.DocumentManagement.Models.OData.MetadataContainer"
+        },
+        {
+          "Name": "Url",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.OData.PropertyContainer",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Description",
+          "Type": "System.String"
+        },
+        {
+          "Name": "DisplayName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "IsGeneric",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsReadOnly",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsRequired",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsSystemManaged",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "IsValueType",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ServerType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ServerTypeName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ShortDisplayName",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Template",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Type",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.Path",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Depth",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "Empty",
+          "Type": "cCoder.DocumentManagement.Models.Path"
+        },
+        {
+          "Name": "Extension",
+          "Type": "System.String"
+        },
+        {
+          "Name": "FullPath",
+          "Type": "System.String"
+        },
+        {
+          "Name": "IsToFile",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "Length",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "Lowered",
+          "Type": "System.String"
+        },
+        {
+          "Name": "MimeType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ParentPath",
+          "Type": "cCoder.DocumentManagement.Models.Path"
+        },
+        {
+          "Name": "Segments",
+          "Type": "System.String[]"
+        }
+      ],
       "Methods": [
         {
-          "Name": "Get",
+          "Name": "\u003CClone\u003E$",
+          "Inputs": [],
+          "ReturnType": "cCoder.DocumentManagement.Models.Path"
+        },
+        {
+          "Name": "Equals",
           "Inputs": [
             {
-              "Name": "fileExtension",
-              "Type": "System.String"
+              "Name": "obj",
+              "Type": "System.Object?"
             }
           ],
-          "ReturnType": "cCoder.DocumentManagement.Models.Mapping"
+          "ReturnType": "System.Boolean"
+        },
+        {
+          "Name": "Equals",
+          "Inputs": [
+            {
+              "Name": "other",
+              "Type": "cCoder.DocumentManagement.Models.Path?"
+            }
+          ],
+          "ReturnType": "System.Boolean"
+        },
+        {
+          "Name": "GetHashCode",
+          "Inputs": [],
+          "ReturnType": "System.Int32"
+        },
+        {
+          "Name": "ToString",
+          "Inputs": [],
+          "ReturnType": "System.String"
         }
       ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.Result",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Id",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Message",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Success",
+          "Type": "System.Boolean"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.Result\u003CT\u003E",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Id",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Item",
+          "Type": "T"
+        }
+      ],
+      "Methods": []
     },
     {
       "Name": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService",
@@ -3283,11 +3422,11 @@
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "System.String"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "System.String"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -3297,7 +3436,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "System.String"
             },
             {
               "Name": "version",
@@ -3311,7 +3450,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "System.String"
             },
             {
               "Name": "version",
@@ -3322,28 +3461,28 @@
               "Type": "System.String"
             }
           ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+          "ReturnType": "cCoder.DocumentManagement.Models.DMSResult"
         },
         {
           "Name": "GetFilesZipped",
           "Inputs": [
             {
               "Name": "paths",
-              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
+              "Type": "System.Collections.Generic.IEnumerable\u003CSystem.String\u003E"
             }
           ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+          "ReturnType": "cCoder.DocumentManagement.Models.DMSResult"
         },
         {
           "Name": "MoveAsync",
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "System.String"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "System.String"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -3353,7 +3492,7 @@
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "System.String"
             },
             {
               "Name": "content",
@@ -3363,21 +3502,11 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "Search",
-          "Inputs": [
-            {
-              "Name": "needle",
-              "Type": "System.String"
-            }
-          ],
-          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
-        },
-        {
           "Name": "UnpackAsync",
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Type": "System.String"
             },
             {
               "Name": "content",
@@ -3400,7 +3529,7 @@
         {
           "Name": "GetKnownMetadata",
           "Inputs": [],
-          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.OData.MetadataContainerSet\u003E"
+          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.OData.MetadataContainerSet\u003E"
         }
       ]
     },
@@ -4110,116 +4239,84 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "CopyAsync",
+          "Name": "CopyDmsOperationAsync",
           "Inputs": [
             {
-              "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Name": "operation",
+              "Type": "cCoder.DocumentManagement.Models.DmsOperation"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.DocumentManagement.Models.DmsOperation\u003E"
         },
         {
-          "Name": "DropAsync",
+          "Name": "DropDmsOperationAsync",
           "Inputs": [
             {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "version",
-              "Type": "System.Int32"
+              "Name": "operation",
+              "Type": "cCoder.DocumentManagement.Models.DmsOperation"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.DocumentManagement.Models.DmsOperation\u003E"
         },
         {
-          "Name": "Get",
+          "Name": "GetDmsOperation",
           "Inputs": [
             {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "version",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "search",
-              "Type": "System.String"
+              "Name": "operation",
+              "Type": "cCoder.DocumentManagement.Models.DmsOperation"
             }
           ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+          "ReturnType": "cCoder.DocumentManagement.Models.DmsOperation"
         },
         {
-          "Name": "GetFilesZipped",
+          "Name": "GetFilesZippedDmsOperation",
           "Inputs": [
             {
-              "Name": "paths",
-              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
+              "Name": "operation",
+              "Type": "cCoder.DocumentManagement.Models.DmsOperation"
             }
           ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
+          "ReturnType": "cCoder.DocumentManagement.Models.DmsOperation"
         },
         {
-          "Name": "MoveAsync",
+          "Name": "MoveDmsOperationAsync",
           "Inputs": [
             {
-              "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
+              "Name": "operation",
+              "Type": "cCoder.DocumentManagement.Models.DmsOperation"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.DocumentManagement.Models.DmsOperation\u003E"
         },
         {
-          "Name": "SaveAsync",
+          "Name": "SaveDmsOperationAsync",
           "Inputs": [
             {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "content",
-              "Type": "System.IO.Stream"
+              "Name": "operation",
+              "Type": "cCoder.DocumentManagement.Models.DmsOperation"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.DocumentManagement.Models.DmsOperation\u003E"
         },
         {
-          "Name": "Search",
+          "Name": "SearchFilesDmsOperation",
           "Inputs": [
             {
-              "Name": "needle",
-              "Type": "System.String"
+              "Name": "operation",
+              "Type": "cCoder.DocumentManagement.Models.DmsOperation"
             }
           ],
-          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
+          "ReturnType": "cCoder.DocumentManagement.Models.DmsOperation"
         },
         {
-          "Name": "UnpackAsync",
+          "Name": "UnpackDmsOperationAsync",
           "Inputs": [
             {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "content",
-              "Type": "System.IO.Stream"
-            },
-            {
-              "Name": "ignoreArchiveRoot",
-              "Type": "System.Boolean"
+              "Name": "operation",
+              "Type": "cCoder.DocumentManagement.Models.DmsOperation"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.DocumentManagement.Models.DmsOperation\u003E"
         }
       ]
     },
@@ -4246,7 +4343,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllFileContentAsync",
@@ -4323,25 +4420,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.File\u003E\u003E\u003E"
-        },
-        {
-          "Name": "CopyAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.File\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllFileAsync",
@@ -4359,24 +4438,6 @@
             {
               "Name": "fileId",
               "Type": "System.Guid"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "DropAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "version",
-              "Type": "System.Int32"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -4402,24 +4463,6 @@
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
-          "Name": "GetAppPath",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "version",
-              "Type": "System.Int32"
-            }
-          ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
-        },
-        {
           "Name": "GetByPath",
           "Inputs": [
             {
@@ -4442,56 +4485,6 @@
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "MoveAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "SaveAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "content",
-              "Type": "System.IO.Stream"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "SearchApp",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "needle",
-              "Type": "System.String"
-            }
-          ],
-          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
           "Name": "UpdateFileAsync",
@@ -4528,7 +4521,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
         },
         {
           "Name": "AddOrUpdateForAppFolderAsync",
@@ -4538,25 +4531,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
-        },
-        {
-          "Name": "CopyAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
         },
         {
           "Name": "CopyAsync",
@@ -4578,7 +4553,7 @@
               "Type": "System.Int32"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.List\u003CcCoder.DocumentManagement.Dependencies.Result\u003CSystem.Guid?\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.List\u003CcCoder.DocumentManagement.Models.Result\u003CSystem.Guid?\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllByAppIdAsync",
@@ -4611,20 +4586,6 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "DropAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
           "Name": "Get",
           "Inputs": [
             {
@@ -4645,97 +4606,11 @@
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
         },
         {
-          "Name": "GetAppPath",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "search",
-              "Type": "System.String"
-            }
-          ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
-        },
-        {
-          "Name": "GetFilesZippedAppPath",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "paths",
-              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
-            }
-          ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
-        },
-        {
           "Name": "HandleFolderDeleteEventAsync",
           "Inputs": [
             {
               "Name": "folder",
               "Type": "cCoder.Data.Models.DMS.Folder"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "MoveAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "SaveAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "UnpackAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "content",
-              "Type": "System.IO.Stream"
-            },
-            {
-              "Name": "ignoreArchiveRoot",
-              "Type": "System.Boolean"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -4775,7 +4650,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.Security.FolderRole\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.Security.FolderRole\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllFolderRoleAsync",
@@ -4875,14 +4750,14 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "ProcessDmsProcessingRequestAsync",
+          "Name": "ProcessDmsProcessingSessionAsync",
           "Inputs": [
             {
-              "Name": "request",
-              "Type": "cCoder.DocumentManagement.Dependencies.DmsProcessingRequest"
+              "Name": "session",
+              "Type": "cCoder.DocumentManagement.Models.DmsProcessingSession"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.DocumentManagement.Dependencies.DmsProcessingResponse\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.DocumentManagement.Models.DmsProcessingSession\u003E"
         }
       ]
     },
@@ -4946,7 +4821,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.FileContent\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.FileContent\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllFileContentAsync",
@@ -5080,25 +4955,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.File\u003E\u003E\u003E"
-        },
-        {
-          "Name": "CopyAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.File\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllFileAsync",
@@ -5116,24 +4973,6 @@
             {
               "Name": "fileId",
               "Type": "System.Guid"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "DropAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "version",
-              "Type": "System.Int32"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -5159,24 +4998,6 @@
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
-          "Name": "GetAppPath",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "version",
-              "Type": "System.Int32"
-            }
-          ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
-        },
-        {
           "Name": "GetByPath",
           "Inputs": [
             {
@@ -5199,56 +5020,6 @@
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "MoveAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "SaveAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "content",
-              "Type": "System.IO.Stream"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "SearchApp",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "needle",
-              "Type": "System.String"
-            }
-          ],
-          "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E"
         },
         {
           "Name": "UpdateFileAsync",
@@ -5322,7 +5093,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
         },
         {
           "Name": "AddOrUpdateForAppFolderAsync",
@@ -5332,25 +5103,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
-        },
-        {
-          "Name": "CopyAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.DMS.Folder\u003E\u003E\u003E"
         },
         {
           "Name": "CopyAsync",
@@ -5372,7 +5125,7 @@
               "Type": "System.Int32"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.List\u003CcCoder.DocumentManagement.Dependencies.Result\u003CSystem.Guid?\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.List\u003CcCoder.DocumentManagement.Models.Result\u003CSystem.Guid?\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllFolderAsync",
@@ -5405,20 +5158,6 @@
           "ReturnType": "System.Threading.Tasks.ValueTask"
         },
         {
-          "Name": "DropAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
           "Name": "Get",
           "Inputs": [
             {
@@ -5439,97 +5178,11 @@
           "ReturnType": "System.Linq.IQueryable\u003CcCoder.Data.Models.DMS.Folder\u003E"
         },
         {
-          "Name": "GetAppPath",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "search",
-              "Type": "System.String"
-            }
-          ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
-        },
-        {
-          "Name": "GetFilesZippedAppPath",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "paths",
-              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
-            }
-          ],
-          "ReturnType": "cCoder.DocumentManagement.Dependencies.DMSResult"
-        },
-        {
           "Name": "HandleFolderDeleteEventAsync",
           "Inputs": [
             {
               "Name": "folder",
               "Type": "cCoder.Data.Models.DMS.Folder"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "MoveAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "SaveAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            }
-          ],
-          "ReturnType": "System.Threading.Tasks.ValueTask"
-        },
-        {
-          "Name": "UnpackAppPathAsync",
-          "Inputs": [
-            {
-              "Name": "appId",
-              "Type": "System.Int32"
-            },
-            {
-              "Name": "path",
-              "Type": "cCoder.DocumentManagement.Dependencies.Path"
-            },
-            {
-              "Name": "content",
-              "Type": "System.IO.Stream"
-            },
-            {
-              "Name": "ignoreArchiveRoot",
-              "Type": "System.Boolean"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask"
@@ -5596,7 +5249,7 @@
               "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Result\u003CcCoder.Data.Models.Security.FolderRole\u003E\u003E\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CSystem.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Result\u003CcCoder.Data.Models.Security.FolderRole\u003E\u003E\u003E"
         },
         {
           "Name": "DeleteAllFolderRoleAsync",
@@ -5728,20 +5381,20 @@
       "Properties": [],
       "Methods": [
         {
-          "Name": "ProcessDmsProcessingRequestAsync",
+          "Name": "ProcessDmsProcessingSessionAsync",
           "Inputs": [
             {
-              "Name": "request",
-              "Type": "cCoder.DocumentManagement.Dependencies.DmsProcessingRequest"
+              "Name": "session",
+              "Type": "cCoder.DocumentManagement.Models.DmsProcessingSession"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.DocumentManagement.Dependencies.DmsProcessingResponse\u003E"
+          "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.DocumentManagement.Models.DmsProcessingSession\u003E"
         }
       ]
     },
     {
       "Name": "cCoder.DocumentManagement.WebApplicationExtensions",
-      "StandardElementType": "Dependency",
+      "StandardElementType": "App",
       "Properties": [],
       "Methods": [
         {
@@ -5843,6 +5496,10 @@
     {
       "FromType": "cCoder.DocumentManagement.Models.FolderArchiveData",
       "ToType": "cCoder.DocumentManagement.Models.FolderArchiveData"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Models.Path",
+      "ToType": "cCoder.DocumentManagement.Models.Path"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService",
@@ -6123,6 +5780,10 @@
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
       "ToType": "cCoder.DocumentManagement.Exposures.FolderOperationsExposure"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
+      "ToType": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration"
     }
   ],
   "AnalysisItems": []

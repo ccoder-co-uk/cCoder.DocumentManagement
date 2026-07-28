@@ -2,6 +2,22 @@
 
 `cCoder.DocumentManagement` contains the Document Management domain for the cCoder platform. It provides folder, file, file-content, and folder-role functionality that can be consumed directly as a domain package or hosted through the standalone web app.
 
+## Local Configuration
+
+The Web app binds its structured `DocumentManagement`, `Data`, `Security`, and
+`Eventing` sections directly. Leave secret values empty in `appsettings.json`
+and define these as user-level or machine-level environment variables:
+
+- `DocumentManagement__ConnectionString`
+- `Data__ConnectionString`
+- `Security__ConnectionString`
+- `Security__DecryptionKey`
+- `Eventing__ServiceBus__ConnectionString` when `Eventing__ProviderType` is
+  `ServiceBus`
+
+Restart Visual Studio, select the Web startup project, and press F5. No
+configuration conversion step is required.
+
 ## Functionality
 
 - Folder management: create and maintain application-owned folder trees with path hooks and optional parent folders.
@@ -26,13 +42,13 @@
 ## Build
 
 ```powershell
-dotnet build src/cCoder.DocumentManagement.sln -v minimal
+dotnet build src/cCoder.DocumentManagement.slnx -v minimal
 ```
 
 ## Test
 
 ```powershell
-dotnet test src/cCoder.DocumentManagement.sln -v minimal --no-build
+dotnet test src/cCoder.DocumentManagement.slnx -v minimal --no-build
 ```
 
 The solution test run includes unit and acceptance tests. Acceptance tests actively call the hosted HTTP surface, including `/Health`, the manual tools shell, OData endpoints, DMS middleware, and WebDAV middleware.
@@ -49,18 +65,6 @@ Useful local endpoints:
 - `/tools/index.html` opens the manual domain tester.
 - `/swagger` opens the API explorer.
 - `/Health` returns `OK`.
-
-## Local Configuration
-
-The standalone web host reads local secrets from environment variables rather than committed config.
-
-Before running `src/DocumentManagement.Web`, set:
-
-- `ConnectionStrings__Core`
-- `ConnectionStrings__SSO`
-- `Settings__DecryptionKey`
-
-The committed `appsettings.json` keeps these values blank so user or machine environment variables can supply them during local development.
 
 ## Package
 

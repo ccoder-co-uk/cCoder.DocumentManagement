@@ -23,7 +23,7 @@ public sealed partial class FileContentControllerTests(WebAcceptanceFixture fixt
 {
     private const int AppId = 1;
     private HttpClient Client { get; } = fixture.Client;
-    private string BaseUrl { get; } = "/Api/Core/FileContent";
+    private string BaseUrl { get; } = "/Api/DocumentManagement/FileContent";
     private static JsonSerializerOptions JsonOptions { get; } = new() { PropertyNameCaseInsensitive = true };
 
     private static string Unique(string prefix) =>

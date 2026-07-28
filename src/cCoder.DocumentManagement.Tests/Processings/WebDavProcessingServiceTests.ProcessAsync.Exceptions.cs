@@ -7,7 +7,7 @@ using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -21,7 +21,7 @@ public partial class WebDavProcessingServiceTests
         DmsProcessingRequest request = CreateRequest(method: "DELETE", requestPath: "Core/App(7)/DAV/folder/file.txt");
 
         dmsInstanceServiceMock
-            .Setup(expression: x => x.DropAsync(path: It.IsAny<DmsPath>(), version: 0))
+            .Setup(expression: x => x.DropAsync(path: It.IsAny<string>(), version: 0))
             .Throws(exception: new SecurityException(message: "Denied"));
 
         // When
@@ -34,7 +34,7 @@ public partial class WebDavProcessingServiceTests
         response.Headers.Should()
             .Contain(predicate: header => header.Key == "WWW-Authenticate");
 
-        dmsInstanceServiceMock.Verify(expression: x => x.DropAsync(path: It.IsAny<DmsPath>(), version: 0), times: Times.Once);
+        dmsInstanceServiceMock.Verify(expression: x => x.DropAsync(path: It.IsAny<string>(), version: 0), times: Times.Once);
         dmsInstanceServiceMock.VerifyNoOtherCalls();
     }
 

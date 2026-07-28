@@ -22,7 +22,7 @@ namespace Web.AcceptanceTests.Tests.DocumentManagement;
 public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixture)
 {
     private HttpClient Client { get; } = fixture.Client;
-    private string BaseUrl { get; } = "/Api/Core/FolderRole";
+    private string BaseUrl { get; } = "/Api/DocumentManagement/FolderRole";
     private static JsonSerializerOptions JsonOptions { get; } = new() { PropertyNameCaseInsensitive = true };
 
     private static string Unique(string prefix) =>

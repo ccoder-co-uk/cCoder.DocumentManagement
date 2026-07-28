@@ -6,7 +6,7 @@ using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -24,7 +24,7 @@ public partial class DmsInstanceProcessingServiceTests
         );
 
         dmsInstanceServiceMock
-            .Setup(expression: x => x.DropAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 4))
+            .Setup(expression: x => x.DropAsync(path: It.Is<string>(match: path => path == "folder/file.txt"), version: 4))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
@@ -41,7 +41,7 @@ public partial class DmsInstanceProcessingServiceTests
             .BeFalse();
 
         dmsInstanceServiceMock.Verify(
-            expression: x => x.DropAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 4),
+            expression: x => x.DropAsync(path: It.Is<string>(match: path => path == "folder/file.txt"), version: 4),
             times: Times.Once
         );
 
@@ -55,7 +55,7 @@ public partial class DmsInstanceProcessingServiceTests
         DmsProcessingRequest request = CreateRequest(method: "DELETE", requestPath: "/api/dms/folder/file.txt");
 
         dmsInstanceServiceMock
-            .Setup(expression: x => x.DropAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0))
+            .Setup(expression: x => x.DropAsync(path: It.Is<string>(match: path => path == "folder/file.txt"), version: 0))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
@@ -66,7 +66,7 @@ public partial class DmsInstanceProcessingServiceTests
             .Be(expected: 204);
 
         dmsInstanceServiceMock.Verify(
-            expression: x => x.DropAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0),
+            expression: x => x.DropAsync(path: It.Is<string>(match: path => path == "folder/file.txt"), version: 0),
             times: Times.Once
         );
 

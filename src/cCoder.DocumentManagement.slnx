@@ -1,0 +1,13 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Apps/">
+    <Project Path="DocumentManagement.Web/DocumentManagement.Web.csproj" />
+  </Folder>
+  <Project Path="cCoder.DocumentManagement.Tests/cCoder.DocumentManagement.Tests.csproj" />
+  <Project Path="cCoder.DocumentManagement/cCoder.DocumentManagement.csproj" />
+  <Project Path="DocumentManagement.AcceptanceTests/DocumentManagement.AcceptanceTests.csproj" />
+</Solution>

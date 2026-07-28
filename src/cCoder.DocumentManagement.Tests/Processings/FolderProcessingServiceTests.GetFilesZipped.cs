@@ -12,9 +12,9 @@ using cCoder.Data.Models.Security;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DMSResult = cCoder.DocumentManagement.Dependencies.DMSResult;
+using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
 using DmsFile = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -33,7 +33,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: (DmsFile)null);
 
         // When
-        Action act = () => folderProcessingService.GetFilesZippedAppPath(appId: app.Id, paths: [filePath]);
+        Action act = () => folderPathProcessingService.GetFilesZippedAppPath(appId: app.Id, paths: [filePath]);
 
         // Then
         act.Should()
@@ -116,7 +116,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: new[] { nestedContent }.AsQueryable());
 
         // When
-        DMSResult result = folderProcessingService.GetFilesZippedAppPath(appId: app.Id, paths: [directFilePath, folderPath]);
+        DMSResult result = folderPathProcessingService.GetFilesZippedAppPath(appId: app.Id, paths: [directFilePath, folderPath]);
 
         // Then
         using ZipArchive zip = new(stream: result.Data, mode: ZipArchiveMode.Read);

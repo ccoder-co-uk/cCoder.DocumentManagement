@@ -1,47 +1,6 @@
 {
   "Classes": [
     {
-      "Name": "Apps.Shared.DomainApiHosting",
-      "StandardElementType": "Dependency",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "UseDomainApiShell",
-          "Inputs": [
-            {
-              "Name": "app",
-              "Type": "WebApplication"
-            }
-          ],
-          "ReturnType": "System.Void"
-        },
-        {
-          "Name": "UseDomainDefaultCors",
-          "Inputs": [
-            {
-              "Name": "app",
-              "Type": "WebApplication"
-            }
-          ],
-          "ReturnType": "System.Void"
-        },
-        {
-          "Name": "UseDomainExceptionHandling",
-          "Inputs": [
-            {
-              "Name": "app",
-              "Type": "WebApplication"
-            },
-            {
-              "Name": "errorHandler",
-              "Type": "RequestDelegate"
-            }
-          ],
-          "ReturnType": "System.Void"
-        }
-      ]
-    },
-    {
       "Name": "Apps.Shared.Hosting.NoOpSession",
       "StandardElementType": "Dependency",
       "Properties": [
@@ -167,9 +126,51 @@
       "Methods": []
     },
     {
-      "Name": "DocumentManagement.Web.Hosting.DocumentManagementHosting",
-      "StandardElementType": "Dependency",
+      "Name": "DocumentManagement.Web.IServiceCollectionExtensions",
+      "StandardElementType": "App",
       "Properties": [],
+      "Methods": [
+        {
+          "Name": "AddDocumentManagementWeb",
+          "Inputs": [
+            {
+              "Name": "services",
+              "Type": "IServiceCollection"
+            },
+            {
+              "Name": "configuration",
+              "Type": "IConfiguration"
+            },
+            {
+              "Name": "configure",
+              "Type": "System.Action\u003CDocumentManagement.Web.Models.DocumentManagementWebConfiguration\u003E"
+            }
+          ],
+          "ReturnType": "IServiceCollection"
+        }
+      ]
+    },
+    {
+      "Name": "DocumentManagement.Web.Models.DocumentManagementWebConfiguration",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Data",
+          "Type": "cCoder.Data.Models.DataConfiguration"
+        },
+        {
+          "Name": "DocumentManagement",
+          "Type": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration"
+        },
+        {
+          "Name": "Eventing",
+          "Type": "cCoder.Eventing.Models.EventingConfiguration"
+        },
+        {
+          "Name": "Security",
+          "Type": "cCoder.Security.Objects.SecurityConfiguration"
+        }
+      ],
       "Methods": []
     },
     {
@@ -186,6 +187,23 @@
             }
           ],
           "ReturnType": "System.Void"
+        }
+      ]
+    },
+    {
+      "Name": "DocumentManagement.Web.WebApplicationExtensions",
+      "StandardElementType": "App",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "UseDocumentManagementApplication",
+          "Inputs": [
+            {
+              "Name": "app",
+              "Type": "WebApplication"
+            }
+          ],
+          "ReturnType": "WebApplication"
         }
       ]
     }

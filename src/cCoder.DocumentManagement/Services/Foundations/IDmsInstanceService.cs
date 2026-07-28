@@ -2,21 +2,18 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using File = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
-using DmsResult = cCoder.DocumentManagement.Dependencies.DMSResult;
+using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
 
 
 namespace cCoder.DocumentManagement.Services.Foundations;
 
 public interface IDmsInstanceService
 {
-    DmsResult GetFilesZipped(IEnumerable<DmsPath> paths);
-    DmsResult Get(DmsPath path, int version = 0, string search = "");
-    IEnumerable<File> Search(string needle);
-    ValueTask UnpackAsync(DmsPath path, Stream content, bool ignoreArchiveRoot = false);
-    ValueTask SaveAsync(DmsPath path, Stream content = null);
-    ValueTask DropAsync(DmsPath path, int version = 0);
-    ValueTask CopyAsync(DmsPath oldPath, DmsPath newPath);
-    ValueTask MoveAsync(DmsPath oldPath, DmsPath newPath);
+    DmsResult GetFilesZipped(IEnumerable<string> paths);
+    DmsResult Get(string path, int version = 0, string search = "");
+    ValueTask UnpackAsync(string path, Stream content, bool ignoreArchiveRoot = false);
+    ValueTask SaveAsync(string path, Stream content = null);
+    ValueTask DropAsync(string path, int version = 0);
+    ValueTask CopyAsync(string oldPath, string newPath);
+    ValueTask MoveAsync(string oldPath, string newPath);
 }

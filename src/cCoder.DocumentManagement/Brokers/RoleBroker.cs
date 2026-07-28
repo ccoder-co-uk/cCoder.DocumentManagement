@@ -25,7 +25,7 @@ internal class RoleBroker(ICoreContextFactory coreContextFactory) : IRoleBroker
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        return Branching.ApplyQueryFilters(query: coreDataContext.Roles, ignoreFilters: ignoreFilters);
+        return coreDataContext.Roles.ApplyQueryFilters(ignoreFilters: ignoreFilters);
     }
 
     public async ValueTask<Role> AddRoleAsync(Role newRole)

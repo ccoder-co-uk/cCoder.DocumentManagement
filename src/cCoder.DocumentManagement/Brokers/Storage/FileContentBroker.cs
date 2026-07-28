@@ -29,7 +29,7 @@ internal sealed class FileContentBroker(ICoreContextFactory coreContextFactory) 
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        return Branching.ApplyQueryFilters(query: coreDataContext.FileContents, ignoreFilters: ignoreFilters);
+        return coreDataContext.FileContents.ApplyQueryFilters(ignoreFilters: ignoreFilters);
     }
 
     public async ValueTask<FileContent> InsertFileContentAsync(FileContent newFileContent)

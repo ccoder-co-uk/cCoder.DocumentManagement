@@ -4,158 +4,185 @@
 
 using cCoder.DocumentManagement.Services.Processings;
 using DataFile = cCoder.Data.Models.DMS.File;
-using DmsResult = cCoder.DocumentManagement.Dependencies.DMSResult;
 using LocalApp = cCoder.Data.Models.CMS.App;
-using LocalFile = cCoder.Data.Models.DMS.File;
-using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
+using LocalPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 internal partial class DmsOrchestrationService(
     ICurrentAppResolverProcessingService currentAppResolver,
-    IFileProcessingService fileProcessingService,
-    IFolderProcessingService folderProcessingService
+    IFilePathProcessingService fileProcessingService,
+    IFolderPathProcessingService folderProcessingService
 ) : IDmsOrchestrationService
 {
-    public DmsResult GetFilesZipped(IEnumerable<LocalPath> paths)
-=>
+    public DmsOperation GetFilesZippedDmsOperation(DmsOperation operation) =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [paths]);
+            ValidateInputs(inputs: [operation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
 
-            return folderProcessingService.GetFilesZippedAppPath(appId: app.Id, paths: paths);
+            operation.Result =
+                folderProcessingService.GetFilesZippedAppPath(
+                appId: app.Id,
+                paths: operation.Paths.Select(
+                    selector: path =>
+                        new LocalPath(path: path)));
+
+            return operation;
 
         });
 
-    public DmsResult Get(LocalPath path, int version = 0, string search = "")
-=>
+    public DmsOperation GetDmsOperation(DmsOperation operation) =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [path, version, search]);
+            ValidateInputs(inputs: [operation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
+            LocalPath localPath = new(path: operation.Path);
 
 
-            return path.IsToFile
-                ? fileProcessingService.GetAppPath(appId: app.Id, path: path, version: version)
-                : folderProcessingService.GetAppPath(appId: app.Id, path: path, search: search);
+            operation.Result = localPath.IsToFile
+                ? fileProcessingService.GetAppPath(appId: app.Id, path: localPath, version: operation.Version)
+                : folderProcessingService.GetAppPath(appId: app.Id, path: localPath, search: operation.Search);
+
+            return operation;
 
         });
 
-    public IEnumerable<DataFile> Search(string needle)
-=>
+    public DmsOperation SearchFilesDmsOperation(DmsOperation operation) =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [needle]);
+            ValidateInputs(inputs: [operation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
 
-
-            return fileProcessingService.SearchApp(appId: app.Id, needle: needle)
+            operation.Files =
+                fileProcessingService.SearchApp(
+                    appId: app.Id,
+                    needle: operation.Needle)
                 .Select(selector: ToExternalFile)
                 .ToArray();
 
+            return operation;
         });
 
-    public ValueTask UnpackAsync(LocalPath path, Stream content, bool ignoreArchiveRoot = false)
-=>
+    public ValueTask<DmsOperation> UnpackDmsOperationAsync(DmsOperation operation) =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [path, content, ignoreArchiveRoot]);
+            ValidateInputs(inputs: [operation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
 
-            await folderProcessingService.UnpackAppPathAsync(appId: app.Id, path: path, content: content, ignoreArchiveRoot: ignoreArchiveRoot);
+            await folderProcessingService.UnpackAppPathAsync(
+                appId: app.Id,
+                path: new LocalPath(path: operation.Path),
+                content: operation.Content,
+                ignoreArchiveRoot: operation.IgnoreArchiveRoot);
+
+            return operation;
 
         });
 
-    public ValueTask SaveAsync(LocalPath path, Stream content = null)
-=>
+    public ValueTask<DmsOperation> SaveDmsOperationAsync(DmsOperation operation) =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [path]);
+            ValidateInputs(inputs: [operation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
+            LocalPath localPath = new(path: operation.Path);
 
 
-            if (path.IsToFile)
+            if (localPath.IsToFile)
             {
-                await fileProcessingService.SaveAppPathAsync(appId: app.Id, path: path, content: content);
+                await fileProcessingService.SaveAppPathAsync(
+                    appId: app.Id,
+                    path: localPath,
+                    content: operation.Content);
             }
             else
             {
-                await folderProcessingService.SaveAppPathAsync(appId: app.Id, path: path);
+                await folderProcessingService.SaveAppPathAsync(appId: app.Id, path: localPath);
             }
 
+            return operation;
         });
 
-    public ValueTask DropAsync(LocalPath path, int version = 0)
-=>
+    public ValueTask<DmsOperation> DropDmsOperationAsync(DmsOperation operation) =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [path, version]);
+            ValidateInputs(inputs: [operation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
+            LocalPath localPath = new(path: operation.Path);
 
 
-            if (path.IsToFile)
+            if (localPath.IsToFile)
             {
-                await fileProcessingService.DropAppPathAsync(appId: app.Id, path: path, version: version);
+                await fileProcessingService.DropAppPathAsync(
+                    appId: app.Id,
+                    path: localPath,
+                    version: operation.Version);
             }
             else
             {
-                await folderProcessingService.DropAppPathAsync(appId: app.Id, path: path);
+                await folderProcessingService.DropAppPathAsync(appId: app.Id, path: localPath);
             }
 
+            return operation;
         });
 
-    public ValueTask CopyAsync(LocalPath oldPath, LocalPath newPath)
-=>
+    public ValueTask<DmsOperation> CopyDmsOperationAsync(DmsOperation operation) =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [oldPath, newPath]);
+            ValidateInputs(inputs: [operation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
+            LocalPath sourcePath = new(path: operation.Path);
+            LocalPath destinationPath = new(path: operation.NewPath);
 
 
-            if (oldPath.IsToFile)
+            if (sourcePath.IsToFile)
             {
-                await fileProcessingService.CopyAppPathAsync(appId: app.Id, oldPath: oldPath, newPath: newPath);
+                await fileProcessingService.CopyAppPathAsync(appId: app.Id, oldPath: sourcePath, newPath: destinationPath);
             }
             else
             {
-                await folderProcessingService.CopyAppPathAsync(appId: app.Id, oldPath: oldPath, newPath: newPath);
+                await folderProcessingService.CopyAppPathAsync(appId: app.Id, oldPath: sourcePath, newPath: destinationPath);
             }
 
+            return operation;
         });
 
-    public ValueTask MoveAsync(LocalPath oldPath, LocalPath newPath)
-=>
+    public ValueTask<DmsOperation> MoveDmsOperationAsync(DmsOperation operation) =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [oldPath, newPath]);
+            ValidateInputs(inputs: [operation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
+            LocalPath sourcePath = new(path: operation.Path);
+            LocalPath destinationPath = new(path: operation.NewPath);
 
 
-            if (oldPath.IsToFile)
+            if (sourcePath.IsToFile)
             {
-                await fileProcessingService.MoveAppPathAsync(appId: app.Id, oldPath: oldPath, newPath: newPath);
+                await fileProcessingService.MoveAppPathAsync(appId: app.Id, oldPath: sourcePath, newPath: destinationPath);
             }
             else
             {
-                await folderProcessingService.MoveAppPathAsync(appId: app.Id, oldPath: oldPath, newPath: newPath);
+                await folderProcessingService.MoveAppPathAsync(appId: app.Id, oldPath: sourcePath, newPath: destinationPath);
             }
 
+            return operation;
         });
 
-    private static DataFile ToExternalFile(LocalFile file) =>
-        file == null ? null : new DataFile
-        {
-            Id = file.Id,
-            FolderId = file.FolderId,
-            Name = file.Name,
-            Description = file.Description,
-            Path = file.Path,
-            MimeType = file.MimeType,
-            CreatedBy = file.CreatedBy,
-            Size = file.Size,
-            CreatedOn = file.CreatedOn,
-            DeletedOn = file.DeletedOn,
-        };
+    private static DataFile ToExternalFile(DataFile file) =>
+        file is null
+            ? null
+            : new DataFile
+            {
+                Id = file.Id,
+                FolderId = file.FolderId,
+                Name = file.Name,
+                Description = file.Description,
+                Path = file.Path,
+                MimeType = file.MimeType,
+                CreatedBy = file.CreatedBy,
+                Size = file.Size,
+                CreatedOn = file.CreatedOn,
+                DeletedOn = file.DeletedOn
+            };
 }

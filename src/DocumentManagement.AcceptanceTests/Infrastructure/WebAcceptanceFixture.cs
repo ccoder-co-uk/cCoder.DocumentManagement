@@ -5,6 +5,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using DocumentManagement.Web.Models;
 using Web.AcceptanceTests.Models;
 using Xunit;
 
@@ -21,11 +22,18 @@ public sealed class WebAcceptanceFixture : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
+        DocumentManagementWebConfiguration configuration =
+            LoadTestConfiguration();
+
         AcceptanceSettings settings = new()
         {
-            CoreConnectionString = AddDatabaseSuffix(variableName: "ConnectionStrings__Core"),
-            SsoConnectionString = AddDatabaseSuffix(variableName: "ConnectionStrings__SSO"),
-            DecryptionKey = "000000000000000000000000000000000000000000000000",
+            CoreConnectionString = AddDatabaseSuffix(
+                connectionString:
+                    configuration.DocumentManagement.ConnectionString),
+            SsoConnectionString = AddDatabaseSuffix(
+                connectionString:
+                    configuration.Security.ConnectionString),
+            DecryptionKey = configuration.Security.DecryptionKey
         };
 
         Factory = new WebAcceptanceFactory(settings: settings);
@@ -58,14 +66,8 @@ public sealed class WebAcceptanceFixture : IAsyncLifetime
     private Task SeedAsync() =>
         new AcceptanceApplicationSeeder(services: Factory.Services).SeedAsync();
 
-    private static string AddDatabaseSuffix(string variableName)
+    private static string AddDatabaseSuffix(string connectionString)
     {
-        string connectionString =
-            Environment.GetEnvironmentVariable(variable: variableName)
-            ?? Environment.GetEnvironmentVariable(variable: variableName, target: EnvironmentVariableTarget.User)
-            ?? Environment.GetEnvironmentVariable(variable: variableName, target: EnvironmentVariableTarget.Machine)
-            ?? ReadConfiguredConnectionString(variableName: variableName);
-
         if (string.IsNullOrWhiteSpace(value: connectionString))
         {
             return string.Empty;
@@ -88,18 +90,18 @@ public sealed class WebAcceptanceFixture : IAsyncLifetime
         return builder.ConnectionString;
     }
 
-    private static string ReadConfiguredConnectionString(string variableName)
+    private static DocumentManagementWebConfiguration LoadTestConfiguration()
     {
-        string connectionName = variableName.Contains(value: "CORE", comparisonType: StringComparison.OrdinalIgnoreCase)
-            ? "Core"
-            : "SSO";
-
         IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(basePath: AppContext.BaseDirectory)
             .AddJsonFile(path: "appsettings.testing.json", optional: true)
+            .AddEnvironmentVariables()
             .Build();
 
-        return configuration.GetConnectionString(name: connectionName) ?? string.Empty;
+        DocumentManagementWebConfiguration result = new();
+        configuration.Bind(instance: result);
+
+        return result;
     }
 }
 

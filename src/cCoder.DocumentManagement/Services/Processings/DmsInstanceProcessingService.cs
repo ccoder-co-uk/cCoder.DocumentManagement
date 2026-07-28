@@ -5,8 +5,8 @@
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Services.Foundations;
-using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
-using DmsResult = cCoder.DocumentManagement.Dependencies.DMSResult;
+using LocalPath = cCoder.DocumentManagement.Models.Path;
+using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
 using MemoryStream = System.IO.MemoryStream;
 
 
@@ -17,8 +17,20 @@ internal partial class DmsInstanceProcessingService(
     ILogger<DmsInstanceProcessingService> log
 ) : IDmsInstanceProcessingService
 {
-    public ValueTask<DmsProcessingResponse> ProcessDmsProcessingRequestAsync(DmsProcessingRequest request)
-=>
+    public ValueTask<DmsProcessingSession> ProcessDmsProcessingSessionAsync(
+        DmsProcessingSession session) =>
+        TryCatch(operation: async () =>
+        {
+            ValidateInputs(inputs: [session]);
+
+            session.Response =
+                await ProcessDmsProcessingRequestAsync(
+                    request: session.Request);
+
+            return session;
+        });
+
+    internal ValueTask<DmsProcessingResponse> ProcessDmsProcessingRequestAsync(DmsProcessingRequest request) =>
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [request]);
@@ -87,7 +99,11 @@ internal partial class DmsInstanceProcessingService(
 
         Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
         _ = int.TryParse(s: TryGetSingleValue(query: query, key: "version"), result: out int deleteVersion);
-        await dmsInstanceService.DropAsync(path: new LocalPath(path: path), version: deleteVersion);
+
+        await dmsInstanceService.DropAsync(
+            path: path,
+            version: deleteVersion);
+
         return CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
     }
 
@@ -116,10 +132,11 @@ internal partial class DmsInstanceProcessingService(
         DmsResult result =
             downloadPaths.Length > 0
                 ? dmsInstanceService.GetFilesZipped(
-                    paths: downloadPaths.Select(selector: value => new LocalPath(path: value))
-            .ToArray()
-                )
-                : dmsInstanceService.Get(path: new LocalPath(path: path), version: version, search: search);
+                    paths: downloadPaths)
+                : dmsInstanceService.Get(
+                    path: path,
+                    version: version,
+                    search: search);
 
         return result != null
             ? CreateDmsProcessingResponse(
@@ -150,8 +167,8 @@ internal partial class DmsInstanceProcessingService(
             if (!string.IsNullOrWhiteSpace(value: newPath))
             {
                 await dmsInstanceService.CopyAsync(
-                    oldPath: new LocalPath(path: path.Split(separator: "?")[0]),
-                    newPath: new LocalPath(path: newPath)
+                    oldPath: path.Split(separator: '?')[0],
+                    newPath: newPath
                 );
             }
 
@@ -165,8 +182,8 @@ internal partial class DmsInstanceProcessingService(
             if (!string.IsNullOrWhiteSpace(value: newPath))
             {
                 await dmsInstanceService.MoveAsync(
-                    oldPath: new LocalPath(path: path.Split(separator: "?")[0]),
-                    newPath: new LocalPath(path: newPath)
+                    oldPath: path.Split(separator: '?')[0],
+                    newPath: newPath
                 );
             }
 
@@ -195,8 +212,8 @@ internal partial class DmsInstanceProcessingService(
             if (!string.IsNullOrWhiteSpace(value: newPath))
             {
                 await dmsInstanceService.CopyAsync(
-                    oldPath: new LocalPath(path: path.Split(separator: "?")[0]),
-                    newPath: new LocalPath(path: newPath)
+                    oldPath: path.Split(separator: '?')[0],
+                    newPath: newPath
                 );
             }
 
@@ -210,8 +227,8 @@ internal partial class DmsInstanceProcessingService(
             if (!string.IsNullOrWhiteSpace(value: newPath))
             {
                 await dmsInstanceService.MoveAsync(
-                    oldPath: new LocalPath(path: path.Split(separator: "?")[0]),
-                    newPath: new LocalPath(path: newPath)
+                    oldPath: path.Split(separator: '?')[0],
+                    newPath: newPath
                 );
             }
 
@@ -247,14 +264,16 @@ internal partial class DmsInstanceProcessingService(
             );
 
             await dmsInstanceService.UnpackAsync(
-                path: destinationPath,
+                path: destinationPath.FullPath,
                 content: memoryStream,
                 ignoreArchiveRoot: ignoreArchiveRoot
             );
         }
         else
         {
-            await dmsInstanceService.SaveAsync(path: destinationPath, content: memoryStream);
+            await dmsInstanceService.SaveAsync(
+                path: destinationPath.FullPath,
+                content: memoryStream);
         }
 
         return CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);

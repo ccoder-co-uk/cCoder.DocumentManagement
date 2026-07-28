@@ -2,7 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-namespace cCoder.DocumentManagement.Api.OData;
+namespace cCoder.DocumentManagement.Extensions.OData;
 
 public sealed class ModelStateError
 {

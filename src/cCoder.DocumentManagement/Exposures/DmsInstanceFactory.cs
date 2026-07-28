@@ -11,9 +11,11 @@ public interface IDmsInstanceFactory
     Dms CreateDms();
 }
 
-internal sealed class DmsInstanceFactory(IDmsOrchestrationService dmsOrchestrationService)
+internal sealed class DmsInstanceFactory(
+    IDmsOrchestrationService dmsOrchestrationService)
     : IDmsInstanceFactory
 {
     public Dms CreateDms() =>
-        new Dms(dmsOrchestrationService: dmsOrchestrationService);
+        new Dms(
+            dmsOrchestrationService: dmsOrchestrationService);
 }

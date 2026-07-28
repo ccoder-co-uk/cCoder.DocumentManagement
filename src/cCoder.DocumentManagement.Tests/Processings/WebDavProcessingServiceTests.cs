@@ -35,7 +35,10 @@ public partial class WebDavProcessingServiceTests
         dmsInstanceServiceMock = new();
         loggerMock = new();
 
-        Config config = new() { Settings = new Dictionary<string, string> { [key: "sslPort"] = "443" } };
+        DocumentManagementConfiguration config = new()
+        {
+            SslPort = 443
+        };
 
         webDavProcessingService = new WebDavProcessingService(
             fileOperationsExposure: new FileOperationsExposure(
