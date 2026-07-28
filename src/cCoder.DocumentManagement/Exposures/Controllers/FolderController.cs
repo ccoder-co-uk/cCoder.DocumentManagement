@@ -2,7 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Api.OData;
+using cCoder.DocumentManagement.Extensions.OData;
+using cCoder.DocumentManagement.Models.OData;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Extensions;
 using cCoder.Data.Models.CMS;
@@ -41,9 +42,8 @@ public partial class FolderController(
 
         return isExtendedMetaRequest
             ? Ok(
-                value: new cCoder.DocumentManagement.Dependencies.OData.DocumentManagementModelBuilder()
-                    .Build()
-                    .EDMModel.GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(Folder))
+                value: DocumentManagementApiModelExtensions.CreateIEdmModel()
+                    .GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(Folder))
             )
             : Ok(value: new MetadataContainer(type: typeof(Folder), isEntity: true, hasEndpoint: true));
     }
@@ -97,7 +97,7 @@ public partial class FolderController(
     {
         if (!ModelState.IsValid)
         {
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
+            return new cCoder.DocumentManagement.Extensions.OData.BadRequestResult(modelState: ModelState);
         }
 
         return Ok(value: await service.AddFolderAsync(newFolder: newFolder));
@@ -116,7 +116,7 @@ public partial class FolderController(
     {
         if (!ModelState.IsValid)
         {
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
+            return new cCoder.DocumentManagement.Extensions.OData.BadRequestResult(modelState: ModelState);
         }
 
         updatedFolder.Id = key;

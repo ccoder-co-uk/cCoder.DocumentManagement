@@ -9,7 +9,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace cCoder.DocumentManagement.Api.OData;
+namespace cCoder.DocumentManagement.Extensions.OData;
 
 internal static class ODataCollectionExtensions
 {

@@ -10,11 +10,11 @@ using cCoder.Data.Models.Security;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DMSResult = cCoder.DocumentManagement.Dependencies.DMSResult;
+using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
 using DataFile = cCoder.Data.Models.DMS.File;
-using ExternalPath = cCoder.DocumentManagement.Dependencies.Path;
+using ExternalPath = cCoder.DocumentManagement.Models.Path;
 using LocalFile = cCoder.Data.Models.DMS.File;
-using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
+using LocalPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Orchestrations;
@@ -45,7 +45,14 @@ public partial class DmsOrchestrationServiceTests
             .Returns(valueFunction: () => expected);
 
         // When
-        DMSResult result = orchestrationService.GetFilesZipped(paths: paths);
+        DMSResult result = orchestrationService.GetFilesZippedDmsOperation(
+            operation: new DmsOperation
+            {
+                Paths = paths.Select(
+                    selector: path =>
+                        path.FullPath)
+            })
+            .Result;
 
         // Then
         result.Should()
@@ -88,7 +95,13 @@ public partial class DmsOrchestrationServiceTests
             .Returns(valueFunction: () => expected);
 
         // When
-        DMSResult result = orchestrationService.Get(path: path, version: 2);
+        DMSResult result = orchestrationService.GetDmsOperation(
+            operation: new DmsOperation
+            {
+                Path = path.FullPath,
+                Version = 2
+            })
+            .Result;
 
         // Then
         result.Should()
@@ -127,7 +140,13 @@ public partial class DmsOrchestrationServiceTests
             .Returns(valueFunction: () => expected);
 
         // When
-        DMSResult result = orchestrationService.Get(path: path, search: "needle");
+        DMSResult result = orchestrationService.GetDmsOperation(
+            operation: new DmsOperation
+            {
+                Path = path.FullPath,
+                Search = "needle"
+            })
+            .Result;
 
         // Then
         result.Should()
@@ -159,7 +178,12 @@ public partial class DmsOrchestrationServiceTests
             .Returns(value: files);
 
         // When
-        IEnumerable<DataFile> result = orchestrationService.Search(needle: "needle");
+        IEnumerable<DataFile> result = orchestrationService.SearchFilesDmsOperation(
+            operation: new DmsOperation
+            {
+                Needle = "needle"
+            })
+            .Files;
 
         // Then
         result.Should()
@@ -203,7 +227,13 @@ public partial class DmsOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.UnpackAsync(path: path, content: stream, ignoreArchiveRoot: true);
+        _ = await orchestrationService.UnpackDmsOperationAsync(
+            operation: new DmsOperation
+            {
+                Path = path.FullPath,
+                Content = stream,
+                IgnoreArchiveRoot = true
+            });
 
         // Then
         folderProcessingServiceMock.Verify(
@@ -240,7 +270,12 @@ public partial class DmsOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.SaveAsync(path: path, content: stream);
+        _ = await orchestrationService.SaveDmsOperationAsync(
+            operation: new DmsOperation
+            {
+                Path = path.FullPath,
+                Content = stream
+            });
 
         // Then
         fileProcessingServiceMock.Verify(
@@ -274,7 +309,11 @@ public partial class DmsOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.SaveAsync(path: path);
+        _ = await orchestrationService.SaveDmsOperationAsync(
+            operation: new DmsOperation
+            {
+                Path = path.FullPath
+            });
 
         // Then
         folderProcessingServiceMock.Verify(
@@ -308,7 +347,12 @@ public partial class DmsOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.DropAsync(path: path, version: 2);
+        _ = await orchestrationService.DropDmsOperationAsync(
+            operation: new DmsOperation
+            {
+                Path = path.FullPath,
+                Version = 2
+            });
 
         // Then
         fileProcessingServiceMock.Verify(
@@ -342,7 +386,11 @@ public partial class DmsOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.DropAsync(path: path);
+        _ = await orchestrationService.DropDmsOperationAsync(
+            operation: new DmsOperation
+            {
+                Path = path.FullPath
+            });
 
         // Then
         folderProcessingServiceMock.Verify(
@@ -377,7 +425,12 @@ public partial class DmsOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.CopyAsync(oldPath: oldPath, newPath: newPath);
+        _ = await orchestrationService.CopyDmsOperationAsync(
+            operation: new DmsOperation
+            {
+                Path = oldPath.FullPath,
+                NewPath = newPath.FullPath
+            });
 
         // Then
         fileProcessingServiceMock.Verify(
@@ -413,7 +466,12 @@ public partial class DmsOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.CopyAsync(oldPath: oldPath, newPath: newPath);
+        _ = await orchestrationService.CopyDmsOperationAsync(
+            operation: new DmsOperation
+            {
+                Path = oldPath.FullPath,
+                NewPath = newPath.FullPath
+            });
 
         // Then
         folderProcessingServiceMock.Verify(
@@ -449,7 +507,12 @@ public partial class DmsOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.MoveAsync(oldPath: oldPath, newPath: newPath);
+        _ = await orchestrationService.MoveDmsOperationAsync(
+            operation: new DmsOperation
+            {
+                Path = oldPath.FullPath,
+                NewPath = newPath.FullPath
+            });
 
         // Then
         fileProcessingServiceMock.Verify(
@@ -485,7 +548,12 @@ public partial class DmsOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await orchestrationService.MoveAsync(oldPath: oldPath, newPath: newPath);
+        _ = await orchestrationService.MoveDmsOperationAsync(
+            operation: new DmsOperation
+            {
+                Path = oldPath.FullPath,
+                NewPath = newPath.FullPath
+            });
 
         // Then
         folderProcessingServiceMock.Verify(

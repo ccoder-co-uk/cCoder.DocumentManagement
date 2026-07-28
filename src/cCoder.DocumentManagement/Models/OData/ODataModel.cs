@@ -5,7 +5,7 @@
 using Microsoft.OData.Edm;
 
 
-namespace cCoder.DocumentManagement.Api.OData;
+namespace cCoder.DocumentManagement.Extensions.OData;
 
 public class ODataModel
 {

@@ -2,14 +2,13 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Api.OData;
-using cCoder.DocumentManagement.Dependencies.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.OData.Edm;
+using cCoder.DocumentManagement.Models.OData;
 
 
-namespace cCoder.DocumentManagement.Api.OData
+namespace cCoder.DocumentManagement.Extensions.OData
 {
     public static class EdmModelExtensions
     {
@@ -66,9 +65,8 @@ namespace cCoder.DocumentManagement.Api.OData
             type.IsJoinEntity ? GetBaseCrudOperationsForJoinEntity(type: type) : GetBaseCrudOperationsForEntity(type: type);
 
         private static IEnumerable<OperationContainer> GetBaseCrudOperationsForJoinEntity(
-            MetadataContainer type
-        ) =>
-        [
+            MetadataContainer type) =>
+            [
             new()
         {
             Name = "Add",
@@ -107,9 +105,8 @@ namespace cCoder.DocumentManagement.Api.OData
         ];
 
         private static IEnumerable<OperationContainer> GetBaseCrudOperationsForEntity(
-            MetadataContainer type
-        ) =>
-        [
+            MetadataContainer type) =>
+            [
             new()
         {
             Name = "Add",

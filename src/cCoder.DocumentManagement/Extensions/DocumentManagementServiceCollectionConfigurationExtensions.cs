@@ -2,9 +2,10 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Api.OData;
-using cCoder.DocumentManagement.Dependencies.OData;
+using cCoder.DocumentManagement.Brokers.OData;
+using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Models;
+using cCoder.Data;
 using cCoder.Eventing;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.OData.Batch;
@@ -15,56 +16,41 @@ using Microsoft.OpenApi;
 
 namespace cCoder.DocumentManagement;
 
-public static class DocumentManagementServiceCollectionConfigurationExtensions
+internal static class DocumentManagementServiceCollectionConfigurationExtensions
 {
-    internal static DocumentManagementConfiguration AddConfiguredDocumentManagement(
+    internal static void RegisterDocumentManagementConfiguration(
         this IServiceCollection services,
-        Action<IServiceCollection, DocumentManagementConfiguration> configure)
+        DocumentManagementConfiguration configuration)
     {
-        DocumentManagementConfiguration configuration = CreateConfiguration(services: services, configure: configure);
-        services.AddDocumentManagement();
-        return configuration;
-    }
-
-    internal static DocumentManagementConfiguration AddConfiguredDocumentManagementWeb(
-        this IServiceCollection services,
-        Action<IServiceCollection, DocumentManagementConfiguration> configure,
-        ODataConventionModelBuilder builder = null)
-    {
-        DocumentManagementConfiguration configuration = CreateConfiguration(services: services, configure: configure);
-        services.AddDocumentManagementWeb(builder: builder);
-
-        services.AddConfiguredApi(
-            configuration: configuration,
-            documentName: "DocumentManagement",
-            configureModel: static modelBuilder => modelBuilder.ConfigureDocumentManagementApiModel(),
-            builder: builder);
-
-        return configuration;
-    }
-
-    public static void ConfigureDocumentManagementApiModel(this ODataConventionModelBuilder builder) =>
-        new DocumentManagementModelBuilder(builder: builder).Configure();
-
-    private static DocumentManagementConfiguration CreateConfiguration(
-        IServiceCollection services,
-        Action<IServiceCollection, DocumentManagementConfiguration> configure)
-    {
-        DocumentManagementConfiguration configuration = new();
-        configure?.Invoke(arg1: services, arg2: configuration);
+        ArgumentNullException.ThrowIfNull(argument: configuration);
         services.AddSingleton(implementationInstance: configuration);
+
+        if (!string.IsNullOrWhiteSpace(
+            value: configuration.ConnectionString))
+        {
+            services.AddData(
+                configuration: new cCoder.Data.Models.DataConfiguration
+                {
+                    ConnectionString = configuration.ConnectionString,
+                    DebugInfo = configuration.DebugInfo,
+                    LogSQL = configuration.LogSQL,
+                });
+        }
+
         services.AddEventProviders(eventProviders: configuration.EventProviders);
-        return configuration;
     }
 
-    private static void AddConfiguredApi(
+    internal static void AddDocumentManagementApi(
         this IServiceCollection services,
         DocumentManagementConfiguration configuration,
-        string documentName,
-        Action<ODataConventionModelBuilder> configureModel,
-        ODataConventionModelBuilder builder = null,
-        bool useFullSchemaIds = false)
+        ODataConventionModelBuilder builder = null)
     {
+        const string documentName = "DocumentManagement";
+
+        Action<ODataConventionModelBuilder> configureModel =
+            static modelBuilder =>
+                modelBuilder.ConfigureDocumentManagementApiModel();
+
         services.AddSingleton<Action<ODataConventionModelBuilder>>(implementationInstance: configureModel);
 
         if (builder is not null)
@@ -76,7 +62,10 @@ public static class DocumentManagementServiceCollectionConfigurationExtensions
 
         if (builder is null)
         {
-            AddApiDocumentation(services: services, documentName: documentName, configuration: configuration, useFullSchemaIds: useFullSchemaIds);
+            AddApiDocumentation(
+                services: services,
+                documentName: documentName,
+                configuration: configuration);
         }
 
         IEdmModel routeModel = BuildRouteModel(configureModel: configureModel);
@@ -100,26 +89,17 @@ public static class DocumentManagementServiceCollectionConfigurationExtensions
                 .OrderBy()
                 .SetMaxTop(maxTopValue: 1000)
                 .AddRouteComponents(routePrefix: rootPath, model: routeModel, batchHandler: batchHandler);
-
-            if (builder is null
-                && configuration.IncludeLegacyCoreContext
-                && !string.Equals(a: rootPath, b: "Api/Core", comparisonType: StringComparison.OrdinalIgnoreCase))
-            {
-                _ = options.AddRouteComponents(routePrefix: "Api/Core", model: routeModel, batchHandler: batchHandler);
-            }
         });
     }
 
     private static void AddApiDocumentation(
         IServiceCollection services,
         string documentName,
-        DocumentManagementConfiguration configuration,
-        bool useFullSchemaIds)
-    {
+        DocumentManagementConfiguration configuration) =>
         services.AddSwaggerGen(setupAction: options =>
         {
             options.ResolveConflictingActions(resolver: apiDescriptions => apiDescriptions.First());
-            AddSwaggerDocuments(options: options, documentName: documentName, configuration: configuration);
+            AddSwaggerDocument(options: options, documentName: documentName);
 
             options.DocInclusionPredicate(
                 predicate: (swaggerDocumentName, apiDescription) =>
@@ -128,11 +108,6 @@ public static class DocumentManagementServiceCollectionConfigurationExtensions
                         relativePath: apiDescription.RelativePath,
                         documentName: documentName,
                         configuration: configuration));
-
-            if (useFullSchemaIds)
-            {
-                options.CustomSchemaIds(schemaIdSelector: type => type.FullName?.Replace(oldChar: '+', newChar: '.') ?? type.Name);
-            }
 
             options.AddSecurityDefinition(name: "bearer", securityScheme: new OpenApiSecurityScheme
             {
@@ -143,34 +118,15 @@ public static class DocumentManagementServiceCollectionConfigurationExtensions
                 Scheme = "bearer",
             });
         });
-    }
 
-    private static void AddSwaggerDocuments(
+    private static void AddSwaggerDocument(
         Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions options,
-        string documentName,
-        DocumentManagementConfiguration configuration)
-    {
+        string documentName) =>
         options.SwaggerDoc(name: documentName, info: new OpenApiInfo
         {
             Title = $"{documentName} API definition",
             Version = documentName,
         });
-
-        if (configuration.IncludeLegacyCoreContext)
-        {
-            options.SwaggerDoc(name: "Core", info: new OpenApiInfo
-            {
-                Title = "Core API definition",
-                Version = "Core",
-            });
-
-            options.SwaggerDoc(name: "v1", info: new OpenApiInfo
-            {
-                Title = "Core API definition",
-                Version = "v1",
-            });
-        }
-    }
 
     private static bool ShouldIncludeInDocument(
         string swaggerDocumentName,
@@ -183,20 +139,17 @@ public static class DocumentManagementServiceCollectionConfigurationExtensions
             return false;
         }
 
-        if (string.Equals(a: swaggerDocumentName, b: "v1", comparisonType: StringComparison.OrdinalIgnoreCase))
-        {
-            swaggerDocumentName = "Core";
-        }
-
         string path = NormalizePath(relativePath: relativePath);
 
         string rootPath = string.IsNullOrWhiteSpace(value: configuration.RootPath)
             ? $"Api/{documentName}"
             : configuration.RootPath;
 
-        return string.Equals(a: swaggerDocumentName, b: "Core", comparisonType: StringComparison.OrdinalIgnoreCase)
-            ? configuration.IncludeLegacyCoreContext && MatchesContextRoute(path: path, rootPath: "Api/Core")
-            : MatchesContextRoute(path: path, rootPath: rootPath);
+        return string.Equals(
+                a: swaggerDocumentName,
+                b: documentName,
+                comparisonType: StringComparison.OrdinalIgnoreCase)
+            && MatchesContextRoute(path: path, rootPath: rootPath);
     }
 
     private static bool MatchesContextRoute(string path, string rootPath)

@@ -6,8 +6,8 @@ using cCoder.Data;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DMSResult = cCoder.DocumentManagement.Dependencies.DMSResult;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Foundations;
@@ -25,7 +25,7 @@ public partial class DmsInstanceServiceTests
             .Returns(value: result);
 
         // When
-        DMSResult returnedResult = dmsInstanceService.Get(path: path, version: 3, search: "needle");
+        DMSResult returnedResult = dmsInstanceService.Get(path: path.FullPath, version: 3, search: "needle");
 
         // Then
         returnedResult.Should()

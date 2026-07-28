@@ -2,8 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
-using DmsResult = cCoder.DocumentManagement.Dependencies.DMSResult;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
+using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
 
 namespace cCoder.DocumentManagement.Exposures;
 

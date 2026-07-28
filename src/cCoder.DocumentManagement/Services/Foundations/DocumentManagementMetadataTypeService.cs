@@ -2,8 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Api.OData;
-using cCoder.DocumentManagement.Dependencies.OData;
+using cCoder.DocumentManagement.Extensions.OData;
+using cCoder.DocumentManagement.Models.OData;
 using cCoder.Data.Models.DMS;
 using DmsFile = cCoder.Data.Models.DMS.File;
 using FolderRole = cCoder.Data.Models.Security.FolderRole;

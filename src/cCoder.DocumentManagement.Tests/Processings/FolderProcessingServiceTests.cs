@@ -31,10 +31,11 @@ public partial class FolderProcessingServiceTests
     private readonly Mock<IRoleService> roleServiceMock = new();
     private readonly Mock<IFileService> fileServiceMock = new();
     private readonly Mock<IFileContentOperationsExposure> fileContentOperationsExposureMock = new();
-    private readonly Mock<IFileProcessingService> fileProcessingServiceMock = new();
+    private readonly Mock<IFilePathProcessingService> fileProcessingServiceMock = new();
     private readonly Mock<ILogger<FolderProcessingService>> loggerMock = new();
     private User currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
     private readonly FolderProcessingService folderProcessingService;
+    private readonly IFolderPathProcessingService folderPathProcessingService;
 
     public FolderProcessingServiceTests()
     {
@@ -51,6 +52,7 @@ public partial class FolderProcessingServiceTests
             fileContentOperationsExposure: fileContentOperationsExposureMock.Object,
             authorizationBroker: authorizationBrokerMock.Object
         );
+        folderPathProcessingService = folderProcessingService;
     }
 
     private static Folder CreateRandomFolder() =>

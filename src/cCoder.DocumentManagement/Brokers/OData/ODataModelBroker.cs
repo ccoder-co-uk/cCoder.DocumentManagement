@@ -4,18 +4,19 @@
 
 using System.Linq.Expressions;
 using cCoder.DocumentManagement.Models;
-using cCoder.DocumentManagement.Api.OData;
+using cCoder.DocumentManagement.Models.OData;
+using cCoder.DocumentManagement.Extensions.OData;
 using Microsoft.OData.ModelBuilder;
 
-namespace cCoder.DocumentManagement.Dependencies.OData;
+namespace cCoder.DocumentManagement.Brokers.OData;
 
-public abstract class ODataModelBuilder
+internal abstract class ODataModelBroker : IODataModelBroker
 {
-    protected ODataConventionModelBuilder Builder { get; }
+    protected readonly ODataConventionModelBuilder builder;
 
-    protected ODataModelBuilder(ODataConventionModelBuilder builder = null)
+    protected ODataModelBroker(ODataConventionModelBuilder builder = null)
     {
-        Builder = builder ?? new ODataConventionModelBuilder();
+        this.builder = builder ?? new ODataConventionModelBuilder();
     }
 
     public abstract ODataModel Build();
@@ -24,16 +25,16 @@ public abstract class ODataModelBuilder
         where T : class
     {
         setName ??= typeof(T).Name;
-        return Builder.EntitySet<T>(name: setName);
+        return builder.EntitySet<T>(name: setName);
     }
 
     protected virtual EntitySetConfiguration<T> AddJoinSet<T, TKey>(Expression<Func<T, TKey>> key)
         where T : class
     {
         string name = typeof(T).Name;
-        EntitySetConfiguration<T> result = Builder.EntitySet<T>(name: name);
+        EntitySetConfiguration<T> result = builder.EntitySet<T>(name: name);
 
-        Builder.EntityType<T>()
+        builder.EntityType<T>()
             .HasKey(keyDefinitionExpression: key);
 
         return result;
@@ -41,10 +42,10 @@ public abstract class ODataModelBuilder
 
     protected virtual void AddCommonComplextypes()
     {
-        Builder.ComplexType<MetadataContainerSet>();
-        Builder.ComplexType<MetadataContainer>();
-        Builder.ComplexType<PropertyContainer>();
-        Builder.ComplexType<AuditResultsByUser>();
-        Builder.ComplexType<AuditResultByProperty>();
+        builder.ComplexType<MetadataContainerSet>();
+        builder.ComplexType<MetadataContainer>();
+        builder.ComplexType<PropertyContainer>();
+        builder.ComplexType<AuditResultsByUser>();
+        builder.ComplexType<AuditResultByProperty>();
     }
 }

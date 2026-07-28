@@ -2,7 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-namespace cCoder.DocumentManagement.Dependencies;
+using cCoder.DocumentManagement.Models;
+
+namespace cCoder.DocumentManagement.Extensions;
 
 public static class ResultExtensions
 {

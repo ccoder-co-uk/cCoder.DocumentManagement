@@ -2,7 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Dependencies.OData;
+using cCoder.DocumentManagement.Models.OData;
 
 
 namespace cCoder.DocumentManagement.Services.Foundations;

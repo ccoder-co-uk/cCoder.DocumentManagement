@@ -2,28 +2,23 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using DmsFile = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
-using DmsResult = cCoder.DocumentManagement.Dependencies.DMSResult;
-
-
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 public interface IDmsOrchestrationService
 {
-    DmsResult GetFilesZipped(IEnumerable<DmsPath> paths);
+    DmsOperation GetFilesZippedDmsOperation(DmsOperation operation);
 
-    DmsResult Get(DmsPath path, int version = 0, string search = "");
+    DmsOperation GetDmsOperation(DmsOperation operation);
 
-    IEnumerable<DmsFile> Search(string needle);
+    DmsOperation SearchFilesDmsOperation(DmsOperation operation);
 
-    ValueTask UnpackAsync(DmsPath path, Stream content, bool ignoreArchiveRoot = false);
+    ValueTask<DmsOperation> UnpackDmsOperationAsync(DmsOperation operation);
 
-    ValueTask SaveAsync(DmsPath path, Stream content = null);
+    ValueTask<DmsOperation> SaveDmsOperationAsync(DmsOperation operation);
 
-    ValueTask DropAsync(DmsPath path, int version = 0);
+    ValueTask<DmsOperation> DropDmsOperationAsync(DmsOperation operation);
 
-    ValueTask CopyAsync(DmsPath oldPath, DmsPath newPath);
+    ValueTask<DmsOperation> CopyDmsOperationAsync(DmsOperation operation);
 
-    ValueTask MoveAsync(DmsPath oldPath, DmsPath newPath);
+    ValueTask<DmsOperation> MoveDmsOperationAsync(DmsOperation operation);
 }

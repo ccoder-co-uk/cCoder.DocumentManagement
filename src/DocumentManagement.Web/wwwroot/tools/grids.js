@@ -1,5 +1,5 @@
 window.DocumentManagementGrids = {
-    apiRoot: "/Api/Core",
+    apiRoot: "/Api/DocumentManagement",
     initialized: false,
 
     configs: {

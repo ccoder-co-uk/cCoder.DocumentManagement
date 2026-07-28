@@ -4,12 +4,13 @@
 
 using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Exposures;
+using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using FluentAssertions;
 using Moq;
 using Xunit;
 using DataFile = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Brokers;
@@ -23,8 +24,15 @@ public partial class DmsInstanceFactoryTests
         IEnumerable<DataFile> expectedFiles = [new() { Id = Guid.NewGuid(), Name = "file.txt" }];
         var orchestrationServiceMock = new Mock<IDmsOrchestrationService>(behavior: MockBehavior.Strict);
 
-        orchestrationServiceMock.Setup(expression: service => service.Search(needle: "needle"))
-            .Returns(value: expectedFiles);
+        orchestrationServiceMock
+            .Setup(expression: service =>
+                service.SearchFilesDmsOperation(
+                    operation: It.Is<DmsOperation>(match: operation =>
+                        operation.Needle == "needle")))
+            .Returns(value: new DmsOperation
+            {
+                Files = expectedFiles
+            });
 
         var factory = new DmsInstanceFactory(dmsOrchestrationService: orchestrationServiceMock.Object);
 
@@ -36,7 +44,13 @@ public partial class DmsInstanceFactoryTests
         actualFiles.Should()
             .BeSameAs(expected: expectedFiles);
 
-        orchestrationServiceMock.Verify(expression: service => service.Search(needle: "needle"), times: Times.Once);
+        orchestrationServiceMock.Verify(
+            expression: service =>
+                service.SearchFilesDmsOperation(
+                    operation: It.Is<DmsOperation>(match: operation =>
+                        operation.Needle == "needle")),
+            times: Times.Once);
+
         orchestrationServiceMock.VerifyNoOtherCalls();
     }
 
@@ -49,17 +63,30 @@ public partial class DmsInstanceFactoryTests
         using var content = new MemoryStream(buffer: [1, 2, 3]);
 
         orchestrationServiceMock
-            .Setup(expression: service => service.SaveAsync(path: path, content: content))
-            .Returns(value: ValueTask.CompletedTask);
+            .Setup(expression: service =>
+                service.SaveDmsOperationAsync(
+                    operation: It.Is<DmsOperation>(match: operation =>
+                        operation.Path == path.FullPath
+                        && operation.Content == content)))
+            .Returns(value: ValueTask.FromResult(
+                result: new DmsOperation()));
 
         var factory = new DmsInstanceFactory(dmsOrchestrationService: orchestrationServiceMock.Object);
 
         IDms dms = factory.CreateDms();
+
         // When
         await dms.SaveAsync(path: path, content: content);
 
         // Then
-        orchestrationServiceMock.Verify(expression: service => service.SaveAsync(path: path, content: content), times: Times.Once);
+        orchestrationServiceMock.Verify(
+            expression: service =>
+                service.SaveDmsOperationAsync(
+                    operation: It.Is<DmsOperation>(match: operation =>
+                        operation.Path == path.FullPath
+                        && operation.Content == content)),
+            times: Times.Once);
+
         orchestrationServiceMock.VerifyNoOtherCalls();
     }
 }

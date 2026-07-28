@@ -2,12 +2,12 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Api.OData;
+using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services.Orchestrations;
-using cCoder.DocumentManagement.Dependencies.OData;
+using cCoder.DocumentManagement.Extensions.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
@@ -40,7 +40,7 @@ public class FolderRoleController(
     {
         if (!base.ModelState.IsValid)
         {
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: base.ModelState);
+            return new cCoder.DocumentManagement.Extensions.OData.BadRequestResult(modelState: base.ModelState);
         }
 
         return Ok(value: await service.AddFolderRoleAsync(newFolderRole: newFolderRole));
@@ -51,7 +51,7 @@ public class FolderRoleController(
     {
         if (!base.ModelState.IsValid)
         {
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: base.ModelState);
+            return new cCoder.DocumentManagement.Extensions.OData.BadRequestResult(modelState: base.ModelState);
         }
 
         await service.DeleteAllFolderRoleAsync(deletedFolderRole: deletedFolderRole.Value);

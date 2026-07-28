@@ -4,7 +4,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace cCoder.DocumentManagement.Dependencies;
+namespace cCoder.DocumentManagement.Models;
 
 public class Result
 {

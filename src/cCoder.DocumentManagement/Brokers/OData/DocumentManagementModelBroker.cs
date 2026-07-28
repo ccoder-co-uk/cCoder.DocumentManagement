@@ -6,16 +6,17 @@ using System.Linq.Expressions;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Models;
-using cCoder.DocumentManagement.Api.OData;
+using cCoder.DocumentManagement.Models.OData;
+using cCoder.DocumentManagement.Extensions.OData;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using FileModel = cCoder.Data.Models.DMS.File;
 
-namespace cCoder.DocumentManagement.Dependencies.OData;
+namespace cCoder.DocumentManagement.Brokers.OData;
 
-internal class DocumentManagementModelBuilder : ODataModelBuilder
+internal class DocumentManagementModelBroker : ODataModelBroker, IDocumentManagementModelBroker
 {
-    public DocumentManagementModelBuilder(ODataConventionModelBuilder builder = null)
+    public DocumentManagementModelBroker(ODataConventionModelBuilder builder = null)
         : base(builder: builder)
     {
     }
@@ -38,7 +39,7 @@ internal class DocumentManagementModelBuilder : ODataModelBuilder
     private IEdmModel BuildEdmModel()
     {
         ConfigureModel();
-        return base.Builder.GetEdmModel();
+        return builder.GetEdmModel();
     }
 
     private void ConfigureModel()
@@ -48,9 +49,9 @@ internal class DocumentManagementModelBuilder : ODataModelBuilder
         AddSet<Folder, Guid>();
         AddSet<FileContent, Guid>();
         AddJoinSet(key: (Expression<Func<FolderRole, object>>)((FolderRole i) => new { i.FolderId, i.RoleId }));
-        base.Builder.Namespace = "";
+        builder.Namespace = "";
 
-        base.Builder.EntityType<Folder>().Collection.Action(name: "Copy")
+        builder.EntityType<Folder>().Collection.Action(name: "Copy")
             .ReturnsCollection<Result<Guid?>>();
     }
 }

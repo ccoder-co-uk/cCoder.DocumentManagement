@@ -30,15 +30,13 @@ internal sealed class FolderRoleContextBroker(
 
         return new FolderRoleContext
         {
-            Folder = Branching.ApplyQueryFilters(
-                    query: coreDataContext.Folders,
-                    ignoreFilters: ignoreFilters)
+            Folder = coreDataContext.Folders
+                .ApplyQueryFilters(ignoreFilters: ignoreFilters)
                 .FirstOrDefault(
                     predicate: folder =>
                         folder.Id == folderRole.FolderId),
-            Role = Branching.ApplyQueryFilters(
-                    query: coreDataContext.Roles,
-                    ignoreFilters: ignoreFilters)
+            Role = coreDataContext.Roles
+                .ApplyQueryFilters(ignoreFilters: ignoreFilters)
                 .FirstOrDefault(
                     predicate: role =>
                         role.Id == folderRole.RoleId),

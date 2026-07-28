@@ -7,8 +7,8 @@ using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DMSResult = cCoder.DocumentManagement.Dependencies.DMSResult;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -30,7 +30,7 @@ public partial class DmsInstanceProcessingServiceTests
 
         dmsInstanceServiceMock
             .Setup(expression: x =>
-                x.Get(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 3, search: "needle")
+                x.Get(path: It.Is<string>(match: path => path == "folder/file.txt"), version: 3, search: "needle")
             )
             .Returns(value: result);
 
@@ -51,7 +51,7 @@ public partial class DmsInstanceProcessingServiceTests
             .BeSameAs(expected: body);
 
         dmsInstanceServiceMock.Verify(
-            expression: x => x.Get(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 3, search: "needle"),
+            expression: x => x.Get(path: It.Is<string>(match: path => path == "folder/file.txt"), version: 3, search: "needle"),
             times: Times.Once
         );
 
@@ -75,10 +75,8 @@ public partial class DmsInstanceProcessingServiceTests
         dmsInstanceServiceMock
             .Setup(expression: x =>
                 x.GetFilesZipped(
-                    paths: It.Is<IEnumerable<DmsPath>>(match: paths =>
-                        paths.Select(selector: path => path.FullPath)
-            .SequenceEqual(second: expectedPaths)
-                    )
+                    paths: It.Is<IEnumerable<string>>(match: paths =>
+                        paths.SequenceEqual(second: expectedPaths))
                 )
             )
             .Returns(value: result);
@@ -102,10 +100,8 @@ public partial class DmsInstanceProcessingServiceTests
         dmsInstanceServiceMock.Verify(
             expression: x =>
                 x.GetFilesZipped(
-                    paths: It.Is<IEnumerable<DmsPath>>(match: paths =>
-                        paths.Select(selector: path => path.FullPath)
-            .SequenceEqual(second: expectedPaths)
-                    )
+                    paths: It.Is<IEnumerable<string>>(match: paths =>
+                        paths.SequenceEqual(second: expectedPaths))
                 ),
             times: Times.Once
         );
@@ -121,7 +117,7 @@ public partial class DmsInstanceProcessingServiceTests
 
         dmsInstanceServiceMock
             .Setup(expression: x =>
-                x.Get(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0, search: string.Empty)
+                x.Get(path: It.Is<string>(match: path => path == "folder/file.txt"), version: 0, search: string.Empty)
             )
             .Returns(value: (DMSResult)null!);
 
@@ -139,7 +135,7 @@ public partial class DmsInstanceProcessingServiceTests
             .BeFalse();
 
         dmsInstanceServiceMock.Verify(
-            expression: x => x.Get(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0, search: string.Empty),
+            expression: x => x.Get(path: It.Is<string>(match: path => path == "folder/file.txt"), version: 0, search: string.Empty),
             times: Times.Once
         );
 

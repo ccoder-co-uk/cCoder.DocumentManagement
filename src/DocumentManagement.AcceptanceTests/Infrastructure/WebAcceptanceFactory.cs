@@ -3,8 +3,8 @@
 // ---------------------------------------------------------------
 
 using cCoder.Data;
+using cCoder.Data.Models;
 using cCoder.Security.Data.EF;
-using cCoder.Security.Data.EF.Dependencies;
 using cCoder.Security.Data.EF.Interfaces;
 using cCoder.Security.Objects;
 using DocumentManagement.Web;
@@ -31,10 +31,21 @@ internal sealed class WebAcceptanceFactory(AcceptanceSettings settings)
         {
             config.AddInMemoryCollection(
             initialData: [
-                new KeyValuePair<string, string>(key:"ConnectionStrings:Core", value:settings.CoreConnectionString),
-                new KeyValuePair<string, string>(key:"ConnectionStrings:SSO", value:settings.SsoConnectionString),
-                new KeyValuePair<string, string>(key:"Settings:DecryptionKey", value:settings.DecryptionKey),
-                new KeyValuePair<string, string>(key:"Settings:enableExternalEventing", value:"false"),
+                new KeyValuePair<string, string>(
+                    key: "DocumentManagement:ConnectionString",
+                    value: settings.CoreConnectionString),
+                new KeyValuePair<string, string>(
+                    key: "Data:ConnectionString",
+                    value: settings.CoreConnectionString),
+                new KeyValuePair<string, string>(
+                    key: "Security:ConnectionString",
+                    value: settings.SsoConnectionString),
+                new KeyValuePair<string, string>(
+                    key: "Security:DecryptionKey",
+                    value: settings.DecryptionKey),
+                new KeyValuePair<string, string>(
+                    key: "Eventing:ProviderType",
+                    value: string.Empty)
             ]);
         });
 
@@ -42,30 +53,24 @@ internal sealed class WebAcceptanceFactory(AcceptanceSettings settings)
         {
             services.RemoveAll<ICoreContextFactory>();
             services.RemoveAll<ISecurityDbContextFactory>();
+            services.RemoveAll<DataConfiguration>();
             services.RemoveAll<IDistributedCache>();
-            services.AddDistributedMemoryCache();
 
-            services.AddSingleton(
-                implementationInstance: new cCoder.Data.Config
+            services.AddData(
+                configuration: new DataConfiguration
                 {
-                    ConnectionStrings = new Dictionary<string, string>
-                    {
-                        [key: "Core"] = settings.CoreConnectionString,
-                        [key: "SSO"] = settings.SsoConnectionString,
-                    },
-                    Settings = new Dictionary<string, string>
-                    {
-                        [key: "DecryptionKey"] = settings.DecryptionKey,
-                        [key: "enableExternalEventing"] = "false",
-                    },
-                    Services = new Dictionary<string, string>(),
+                    ConnectionString = settings.CoreConnectionString,
                 });
 
-            services.AddSingleton<ISecurityDbContextFactory>(
-                implementationFactory: _ => new MSSQLSecurityDbContextFactory(
-                    connectionString: settings.SsoConnectionString));
+            services.AddSecurityData(
+                configuration: new SecurityConfiguration
+                {
+                    ConnectionString = settings.SsoConnectionString,
+                });
 
-            services.AddCoreData(connectionString: settings.CoreConnectionString);
+            services.RemoveAll<IDistributedCache>();
+
+            services.AddDistributedMemoryCache();
         });
     }
 }

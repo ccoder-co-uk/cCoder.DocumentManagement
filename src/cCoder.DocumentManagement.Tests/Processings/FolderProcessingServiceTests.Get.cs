@@ -12,9 +12,9 @@ using cCoder.Data.Models.Security;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DMSResult = cCoder.DocumentManagement.Dependencies.DMSResult;
+using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
 using DmsFile = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -50,7 +50,7 @@ public partial class FolderProcessingServiceTests
         DmsPath filePath = new(path: "docs/file.txt");
 
         // When
-        Action act = () => folderProcessingService.GetAppPath(appId: app.Id, path: filePath);
+        Action act = () => folderPathProcessingService.GetAppPath(appId: app.Id, path: filePath);
 
         // Then
         act.Should()
@@ -73,7 +73,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: (Folder)null);
 
         // When
-        Action act = () => folderProcessingService.GetAppPath(appId: app.Id, path: folderPath);
+        Action act = () => folderPathProcessingService.GetAppPath(appId: app.Id, path: folderPath);
 
         // Then
         act.Should()
@@ -151,7 +151,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: new[] { rootContent, childContent }.AsQueryable());
 
         // When
-        DMSResult result = folderProcessingService.GetAppPath(appId: app.Id, path: new DmsPath(path: rootFolder.Path));
+        DMSResult result = folderPathProcessingService.GetAppPath(appId: app.Id, path: new DmsPath(path: rootFolder.Path));
 
         // Then
         using ZipArchive zip = new(stream: result.Data, mode: ZipArchiveMode.Read);

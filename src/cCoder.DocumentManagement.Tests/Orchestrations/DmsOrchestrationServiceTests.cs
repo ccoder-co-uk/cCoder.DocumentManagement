@@ -18,15 +18,15 @@ namespace cCoder.Core.Services.Tests.DMS.Orchestrations;
 public partial class DmsOrchestrationServiceTests
 {
     private readonly Mock<ICurrentAppResolverProcessingService> currentAppResolverMock;
-    private readonly Mock<IFileProcessingService> fileProcessingServiceMock;
-    private readonly Mock<IFolderProcessingService> folderProcessingServiceMock;
+    private readonly Mock<IFilePathProcessingService> fileProcessingServiceMock;
+    private readonly Mock<IFolderPathProcessingService> folderProcessingServiceMock;
     private readonly DmsOrchestrationService orchestrationService;
 
     public DmsOrchestrationServiceTests()
     {
         currentAppResolverMock = new Mock<ICurrentAppResolverProcessingService>(behavior: MockBehavior.Strict);
-        fileProcessingServiceMock = new Mock<IFileProcessingService>(behavior: MockBehavior.Strict);
-        folderProcessingServiceMock = new Mock<IFolderProcessingService>(behavior: MockBehavior.Strict);
+        fileProcessingServiceMock = new Mock<IFilePathProcessingService>(behavior: MockBehavior.Strict);
+        folderProcessingServiceMock = new Mock<IFolderPathProcessingService>(behavior: MockBehavior.Strict);
         orchestrationService = new DmsOrchestrationService(
             currentAppResolver: currentAppResolverMock.Object,
             fileProcessingService: fileProcessingServiceMock.Object,

@@ -2,7 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Api.OData;
+using cCoder.DocumentManagement.Extensions.OData;
+using cCoder.DocumentManagement.Models.OData;
 using cCoder.Data.Extensions;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using Microsoft.AspNetCore.Authorization;
@@ -28,9 +29,8 @@ public partial class FileController(
 
         return isExtendedMetaRequest
             ? Ok(
-                value: new cCoder.DocumentManagement.Dependencies.OData.DocumentManagementModelBuilder()
-                    .Build()
-                    .EDMModel.GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(LocalFile))
+                value: DocumentManagementApiModelExtensions.CreateIEdmModel()
+                    .GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(LocalFile))
             )
             : Ok(value: new MetadataContainer(type: typeof(LocalFile), isEntity: true, hasEndpoint: true));
     }
@@ -84,7 +84,7 @@ public partial class FileController(
     {
         if (!ModelState.IsValid)
         {
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
+            return new cCoder.DocumentManagement.Extensions.OData.BadRequestResult(modelState: ModelState);
         }
 
         return Ok(value: await service.AddFileAsync(newFile: entity));
@@ -103,7 +103,7 @@ public partial class FileController(
     {
         if (!ModelState.IsValid)
         {
-            return new cCoder.DocumentManagement.Api.OData.BadRequestResult(modelState: ModelState);
+            return new cCoder.DocumentManagement.Extensions.OData.BadRequestResult(modelState: ModelState);
         }
 
         entity.Id = key;

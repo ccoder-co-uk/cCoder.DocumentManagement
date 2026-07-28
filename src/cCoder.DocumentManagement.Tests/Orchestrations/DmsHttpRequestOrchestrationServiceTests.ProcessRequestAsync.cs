@@ -32,18 +32,18 @@ public partial class DmsHttpRequestOrchestrationServiceTests
 
         webDavProcessingServiceMock
             .Setup(expression: x =>
-                x.ProcessDmsProcessingRequestAsync(
-                    request: It.Is<DmsProcessingRequest>(match: request =>
-                        request.App.Id == app.Id
-                        && request.App.Domain == app.Domain
-                        && request.App.Name == app.Name
-                        && request.Method == "GET"
-                        && request.RequestPath == "/api/webdav/Core/App(7)/DAV/folder/file.txt"
-                        && request.Host == "example.test"
+                x.ProcessDmsProcessingSessionAsync(
+                    session: It.Is<DmsProcessingSession>(match: session =>
+                        session.Request.App.Id == app.Id
+                        && session.Request.App.Domain == app.Domain
+                        && session.Request.App.Name == app.Name
+                        && session.Request.Method == "GET"
+                        && session.Request.RequestPath == "/api/webdav/Core/App(7)/DAV/folder/file.txt"
+                        && session.Request.Host == "example.test"
                     )
                 )
             )
-            .ReturnsAsync(value: response);
+            .ReturnsAsync(value: new DmsProcessingSession { Response = response });
 
         // When
         await orchestrationService.ProcessRequestAsync(context: context);
@@ -58,7 +58,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
 
         webDavProcessingServiceMock.Verify(
-            expression: x => x.ProcessDmsProcessingRequestAsync(request: It.IsAny<DmsProcessingRequest>()),
+            expression: x => x.ProcessDmsProcessingSessionAsync(session: It.IsAny<DmsProcessingSession>()),
             times: Times.Once
         );
 
@@ -86,19 +86,19 @@ public partial class DmsHttpRequestOrchestrationServiceTests
 
         dmsProcessingServiceMock
             .Setup(expression: x =>
-                x.ProcessDmsProcessingRequestAsync(
-                    request: It.Is<DmsProcessingRequest>(match: request =>
-                        request.App.Id == app.Id
-                        && request.App.Domain == app.Domain
-                        && request.App.Name == app.Name
-                        && request.Method == "GET"
-                        && request.RequestPath == "/api/dms/folder/file.txt"
-                        && request.QueryString == "?version=3"
-                        && request.Host == "example.test"
+                x.ProcessDmsProcessingSessionAsync(
+                    session: It.Is<DmsProcessingSession>(match: session =>
+                        session.Request.App.Id == app.Id
+                        && session.Request.App.Domain == app.Domain
+                        && session.Request.App.Name == app.Name
+                        && session.Request.Method == "GET"
+                        && session.Request.RequestPath == "/api/dms/folder/file.txt"
+                        && session.Request.QueryString == "?version=3"
+                        && session.Request.Host == "example.test"
                     )
                 )
             )
-            .ReturnsAsync(value: response);
+            .ReturnsAsync(value: new DmsProcessingSession { Response = response });
 
         // When
         await orchestrationService.ProcessRequestAsync(context: context);
@@ -118,7 +118,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
 
         dmsProcessingServiceMock.Verify(
-            expression: x => x.ProcessDmsProcessingRequestAsync(request: It.IsAny<DmsProcessingRequest>()),
+            expression: x => x.ProcessDmsProcessingSessionAsync(session: It.IsAny<DmsProcessingSession>()),
             times: Times.Once
         );
 
@@ -145,8 +145,8 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             .Returns(value: app);
 
         dmsProcessingServiceMock
-            .Setup(expression: x => x.ProcessDmsProcessingRequestAsync(request: It.IsAny<DmsProcessingRequest>()))
-            .ReturnsAsync(value: response);
+            .Setup(expression: x => x.ProcessDmsProcessingSessionAsync(session: It.IsAny<DmsProcessingSession>()))
+            .ReturnsAsync(value: new DmsProcessingSession { Response = response });
 
         // When
         await orchestrationService.ProcessRequestAsync(context: context);
@@ -163,7 +163,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
 
         dmsProcessingServiceMock.Verify(
-            expression: x => x.ProcessDmsProcessingRequestAsync(request: It.IsAny<DmsProcessingRequest>()),
+            expression: x => x.ProcessDmsProcessingSessionAsync(session: It.IsAny<DmsProcessingSession>()),
             times: Times.Once
         );
 
@@ -183,7 +183,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             .Returns(value: app);
 
         dmsProcessingServiceMock
-            .Setup(expression: x => x.ProcessDmsProcessingRequestAsync(request: It.IsAny<DmsProcessingRequest>()))
+            .Setup(expression: x => x.ProcessDmsProcessingSessionAsync(session: It.IsAny<DmsProcessingSession>()))
             .ThrowsAsync(exception: new SecurityException(message: "Denied"));
 
         // When
@@ -203,7 +203,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
 
         dmsProcessingServiceMock.Verify(
-            expression: x => x.ProcessDmsProcessingRequestAsync(request: It.IsAny<DmsProcessingRequest>()),
+            expression: x => x.ProcessDmsProcessingSessionAsync(session: It.IsAny<DmsProcessingSession>()),
             times: Times.Once
         );
 

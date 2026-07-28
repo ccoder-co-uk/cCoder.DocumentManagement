@@ -7,7 +7,7 @@ using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -21,7 +21,7 @@ public partial class DmsInstanceProcessingServiceTests
         DmsProcessingRequest request = CreateRequest(method: "DELETE", requestPath: "/api/dms/folder/file.txt");
 
         dmsInstanceServiceMock
-            .Setup(expression: x => x.DropAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0))
+            .Setup(expression: x => x.DropAsync(path: It.Is<string>(match: path => path == "folder/file.txt"), version: 0))
             .Throws(exception: new SecurityException(message: "Access Denied!"));
 
         // When
@@ -33,7 +33,7 @@ public partial class DmsInstanceProcessingServiceTests
             .WithInnerException(innerException: typeof(SecurityException));
 
         dmsInstanceServiceMock.Verify(
-            expression: x => x.DropAsync(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0),
+            expression: x => x.DropAsync(path: It.Is<string>(match: path => path == "folder/file.txt"), version: 0),
             times: Times.Once
         );
 
@@ -48,7 +48,7 @@ public partial class DmsInstanceProcessingServiceTests
 
         dmsInstanceServiceMock
             .Setup(expression: x =>
-                x.Get(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0, search: string.Empty)
+                x.Get(path: It.Is<string>(match: path => path == "folder/file.txt"), version: 0, search: string.Empty)
             )
             .Throws(exception: new InvalidOperationException(message: "Boom"));
 
@@ -61,7 +61,7 @@ public partial class DmsInstanceProcessingServiceTests
             .WithInnerException(innerException: typeof(InvalidOperationException));
 
         dmsInstanceServiceMock.Verify(
-            expression: x => x.Get(path: It.Is<DmsPath>(match: path => path.FullPath == "folder/file.txt"), version: 0, search: string.Empty),
+            expression: x => x.Get(path: It.Is<string>(match: path => path == "folder/file.txt"), version: 0, search: string.Empty),
             times: Times.Once
         );
 
