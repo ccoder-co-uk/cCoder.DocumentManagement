@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Data.SqlClient;
 using Web.AcceptanceTests.Models;
 using Xunit;
 
@@ -20,21 +19,16 @@ public sealed class WebAcceptanceFixture : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        string suffix = $"-acceptance-{Guid.NewGuid():N}";
+        AcceptanceTestConfiguration configuration =
+            AcceptanceTestConfiguration.Load();
 
         AcceptanceSettings settings = new()
         {
-            CoreConnectionString = AddDatabaseSuffix(
-                connectionString: ReadRequiredValue(
-                    variableName:
-                        "DocumentManagement__ConnectionString"),
-                suffix: suffix),
-            SsoConnectionString = AddDatabaseSuffix(
-                connectionString: ReadRequiredValue(
-                    variableName: "Security__ConnectionString"),
-                suffix: suffix),
-            DecryptionKey = ReadRequiredValue(
-                variableName: "Security__DecryptionKey"),
+            CoreConnectionString =
+                configuration.CoreConnectionString,
+            SsoConnectionString =
+                configuration.SecurityConnectionString,
+            DecryptionKey = configuration.DecryptionKey,
         };
 
         Factory = new WebAcceptanceFactory(settings: settings);
@@ -67,47 +61,6 @@ public sealed class WebAcceptanceFixture : IAsyncLifetime
     private Task SeedAsync() =>
         new AcceptanceApplicationSeeder(services: Factory.Services).SeedAsync();
 
-    private static string AddDatabaseSuffix(
-        string connectionString,
-        string suffix)
-    {
-        SqlConnectionStringBuilder builder = new(connectionString: connectionString)
-        {
-            Encrypt = true,
-            TrustServerCertificate = true,
-        };
-
-        string databaseName = builder.InitialCatalog ?? string.Empty;
-
-        if (string.IsNullOrWhiteSpace(value: databaseName))
-        {
-            throw new InvalidOperationException(
-                "Acceptance test connection strings must name a database.");
-        }
-
-        builder.InitialCatalog = $"{databaseName}{suffix}";
-        return builder.ConnectionString;
-    }
-
-    private static string ReadRequiredValue(string variableName)
-    {
-        string value =
-            Environment.GetEnvironmentVariable(variable: variableName)
-            ?? Environment.GetEnvironmentVariable(
-                variable: variableName,
-                target: EnvironmentVariableTarget.User)
-            ?? Environment.GetEnvironmentVariable(
-                variable: variableName,
-                target: EnvironmentVariableTarget.Machine);
-
-        if (!string.IsNullOrWhiteSpace(value: value))
-        {
-            return value;
-        }
-
-        throw new InvalidOperationException(
-            $"Required configuration environment variable '{variableName}' was not found.");
-    }
 }
 
 [CollectionDefinition(Name)]
