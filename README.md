@@ -9,7 +9,6 @@ The Web app binds its structured `DocumentManagement`, `Data`, `Security`, and
 and define these as user-level or machine-level environment variables:
 
 - `DocumentManagement__ConnectionString`
-- `Data__ConnectionString`
 - `Security__ConnectionString`
 - `Security__DecryptionKey`
 - `Eventing__ServiceBus__ConnectionString` when `Eventing__ProviderType` is
