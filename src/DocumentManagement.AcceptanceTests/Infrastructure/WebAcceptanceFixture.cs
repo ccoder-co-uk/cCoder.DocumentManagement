@@ -4,8 +4,6 @@
 
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using DocumentManagement.Web.Models;
 using Web.AcceptanceTests.Models;
 using Xunit;
 
@@ -22,18 +20,21 @@ public sealed class WebAcceptanceFixture : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        DocumentManagementWebConfiguration configuration =
-            LoadTestConfiguration();
+        string suffix = $"-acceptance-{Guid.NewGuid():N}";
 
         AcceptanceSettings settings = new()
         {
             CoreConnectionString = AddDatabaseSuffix(
-                connectionString:
-                    configuration.DocumentManagement.ConnectionString),
+                connectionString: ReadRequiredValue(
+                    variableName:
+                        "DocumentManagement__ConnectionString"),
+                suffix: suffix),
             SsoConnectionString = AddDatabaseSuffix(
-                connectionString:
-                    configuration.Security.ConnectionString),
-            DecryptionKey = configuration.Security.DecryptionKey
+                connectionString: ReadRequiredValue(
+                    variableName: "Security__ConnectionString"),
+                suffix: suffix),
+            DecryptionKey = ReadRequiredValue(
+                variableName: "Security__DecryptionKey"),
         };
 
         Factory = new WebAcceptanceFactory(settings: settings);
@@ -66,13 +67,10 @@ public sealed class WebAcceptanceFixture : IAsyncLifetime
     private Task SeedAsync() =>
         new AcceptanceApplicationSeeder(services: Factory.Services).SeedAsync();
 
-    private static string AddDatabaseSuffix(string connectionString)
+    private static string AddDatabaseSuffix(
+        string connectionString,
+        string suffix)
     {
-        if (string.IsNullOrWhiteSpace(value: connectionString))
-        {
-            return string.Empty;
-        }
-
         SqlConnectionStringBuilder builder = new(connectionString: connectionString)
         {
             Encrypt = true,
@@ -83,25 +81,32 @@ public sealed class WebAcceptanceFixture : IAsyncLifetime
 
         if (string.IsNullOrWhiteSpace(value: databaseName))
         {
-            return connectionString;
+            throw new InvalidOperationException(
+                "Acceptance test connection strings must name a database.");
         }
 
-        builder.InitialCatalog = $"{databaseName}-acceptance-{Guid.NewGuid():N}";
+        builder.InitialCatalog = $"{databaseName}{suffix}";
         return builder.ConnectionString;
     }
 
-    private static DocumentManagementWebConfiguration LoadTestConfiguration()
+    private static string ReadRequiredValue(string variableName)
     {
-        IConfigurationRoot configuration = new ConfigurationBuilder()
-            .SetBasePath(basePath: AppContext.BaseDirectory)
-            .AddJsonFile(path: "appsettings.testing.json", optional: true)
-            .AddEnvironmentVariables()
-            .Build();
+        string value =
+            Environment.GetEnvironmentVariable(variable: variableName)
+            ?? Environment.GetEnvironmentVariable(
+                variable: variableName,
+                target: EnvironmentVariableTarget.User)
+            ?? Environment.GetEnvironmentVariable(
+                variable: variableName,
+                target: EnvironmentVariableTarget.Machine);
 
-        DocumentManagementWebConfiguration result = new();
-        configuration.Bind(instance: result);
+        if (!string.IsNullOrWhiteSpace(value: value))
+        {
+            return value;
+        }
 
-        return result;
+        throw new InvalidOperationException(
+            $"Required configuration environment variable '{variableName}' was not found.");
     }
 }
 
