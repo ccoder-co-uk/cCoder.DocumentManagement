@@ -5,8 +5,9 @@
 using cCoder.DocumentManagement.Services.Processings;
 
 
-using cCoder.DocumentManagement.Exposures;
+namespace cCoder.DocumentManagement.Exposures;
 
-namespace cCoder.DocumentManagement.Services.Orchestrations;
-
-internal interface IDmsHttpRequestOrchestrationService : IDmsHttpRequestManager { }
+public interface IDmsHttpRequestManager
+{
+    ValueTask ProcessRequestAsync(HttpContext context);
+}

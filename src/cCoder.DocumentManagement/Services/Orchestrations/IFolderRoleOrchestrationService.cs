@@ -7,17 +7,8 @@ using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 
+using cCoder.DocumentManagement.Exposures;
+
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
-public interface IFolderRoleOrchestrationService
-{
-    IQueryable<FolderRole> GetAll(bool ignoreFilters = false);
-
-    ValueTask<FolderRole> AddFolderRoleAsync(FolderRole newFolderRole);
-
-    ValueTask DeleteFolderRoleAsync(FolderRole deletedFolderRole);
-
-    ValueTask<IEnumerable<Result<FolderRole>>> AddOrUpdateFolderRole(IEnumerable<FolderRole> items);
-
-    ValueTask DeleteAllFolderRoleAsync(IEnumerable<FolderRole> deletedFolderRole);
-}
+internal interface IFolderRoleOrchestrationService : IFolderRoleManager { }

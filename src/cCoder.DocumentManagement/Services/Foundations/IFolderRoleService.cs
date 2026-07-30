@@ -10,7 +10,7 @@ using cCoder.Data.Models.Security;
 
 namespace cCoder.DocumentManagement.Services.Foundations;
 
-public interface IFolderRoleService
+internal interface IFolderRoleService
 {
     IQueryable<FolderRole> GetAll(bool ignoreFilters = false);
     ValueTask<FolderRole> AddFolderRoleAsync(FolderRole newFolderRole);

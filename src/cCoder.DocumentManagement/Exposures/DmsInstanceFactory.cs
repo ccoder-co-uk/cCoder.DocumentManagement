@@ -8,14 +8,14 @@ namespace cCoder.DocumentManagement.Exposures;
 
 public interface IDmsInstanceFactory
 {
-    Dms CreateDms();
+    IDms CreateDms();
 }
 
 internal sealed class DmsInstanceFactory(
     IDmsOrchestrationService dmsOrchestrationService)
     : IDmsInstanceFactory
 {
-    public Dms CreateDms() =>
+    public IDms CreateDms() =>
         new Dms(
             dmsOrchestrationService: dmsOrchestrationService);
 }

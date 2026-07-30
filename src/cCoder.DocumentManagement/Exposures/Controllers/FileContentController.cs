@@ -18,7 +18,7 @@ using LocalFileContent = cCoder.Data.Models.DMS.FileContent;
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
 public partial class FileContentController(
-    IFileContentOrchestrationService service
+    IFileContentManager service
 ) : ODataController
 {
 

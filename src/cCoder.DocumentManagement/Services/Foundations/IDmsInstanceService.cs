@@ -7,7 +7,7 @@ using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
 
 namespace cCoder.DocumentManagement.Services.Foundations;
 
-public interface IDmsInstanceService
+internal interface IDmsInstanceService
 {
     DmsResult GetFilesZipped(IEnumerable<string> paths);
     DmsResult Get(string path, int version = 0, string search = "");

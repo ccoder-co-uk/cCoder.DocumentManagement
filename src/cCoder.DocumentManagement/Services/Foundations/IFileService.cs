@@ -9,7 +9,7 @@ using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 
-public interface IFileService
+internal interface IFileService
 {
     File Get(Guid fileId);
     Guid[] GetIdsByFolderIds(Guid[] folderIds, bool ignoreFilters = false);

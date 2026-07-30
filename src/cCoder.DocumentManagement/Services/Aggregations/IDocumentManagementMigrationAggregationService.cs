@@ -10,7 +10,7 @@ using cCoder.Data.Models.Security;
 
 namespace cCoder.DocumentManagement.Services.Aggregations;
 
-public interface IDocumentManagementMigrationAggregationService
+internal interface IDocumentManagementMigrationAggregationService
 {
     ValueTask ImportPackageDocumentManagementPackageAsync(int appId, DocumentManagementPackage package);
 

@@ -9,7 +9,7 @@ using cCoder.Data.Models.Security;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-public interface IFileContentProcessingService
+internal interface IFileContentProcessingService
 {
     FileContent Get(Guid fileContentId);
 

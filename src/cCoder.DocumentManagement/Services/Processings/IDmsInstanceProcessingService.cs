@@ -4,7 +4,7 @@
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-public interface IDmsInstanceProcessingService
+internal interface IDmsInstanceProcessingService
 {
     ValueTask<DmsProcessingSession> ProcessDmsProcessingSessionAsync(DmsProcessingSession session);
 }

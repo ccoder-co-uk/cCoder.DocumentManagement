@@ -7,21 +7,8 @@ using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 
+using cCoder.DocumentManagement.Exposures;
+
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
-public interface IFileContentOrchestrationService
-{
-    FileContent Get(Guid fileContentId);
-
-    IQueryable<FileContent> GetAll(bool ignoreFilters = false);
-
-    ValueTask<FileContent> AddFileContentAsync(FileContent newFileContent);
-
-    ValueTask<FileContent> UpdateFileContentAsync(FileContent updatedFileContent);
-
-    ValueTask DeleteAsync(Guid fileContentId);
-
-    ValueTask<IEnumerable<Result<FileContent>>> AddOrUpdateFileContent(IEnumerable<FileContent> items);
-
-    ValueTask DeleteAllFileContentAsync(IEnumerable<FileContent> deletedFileContent);
-}
+internal interface IFileContentOrchestrationService : IFileContentManager { }

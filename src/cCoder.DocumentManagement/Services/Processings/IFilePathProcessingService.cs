@@ -4,7 +4,7 @@
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-public interface IFilePathProcessingService
+internal interface IFilePathProcessingService
 {
     DMSResult GetAppPath(int appId, cCoder.DocumentManagement.Models.Path path, int version = 0);
 

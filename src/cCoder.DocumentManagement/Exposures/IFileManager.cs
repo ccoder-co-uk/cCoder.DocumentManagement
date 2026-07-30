@@ -7,9 +7,9 @@ using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 
-namespace cCoder.DocumentManagement.Services.Processings;
+namespace cCoder.DocumentManagement.Exposures;
 
-internal interface IFileProcessingService
+public interface IFileManager
 {
     cCoder.Data.Models.DMS.File Get(Guid fileId);
 
@@ -20,7 +20,6 @@ internal interface IFileProcessingService
     ValueTask<cCoder.Data.Models.DMS.File> UpdateFileAsync(cCoder.Data.Models.DMS.File updatedFile);
 
     ValueTask DeleteAsync(Guid fileId);
-
     ValueTask<IEnumerable<Result<cCoder.Data.Models.DMS.File>>> AddOrUpdateFile(IEnumerable<cCoder.Data.Models.DMS.File> items);
 
     ValueTask DeleteAllFileAsync(IEnumerable<cCoder.Data.Models.DMS.File> deletedFile);

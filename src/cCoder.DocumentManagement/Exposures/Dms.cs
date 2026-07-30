@@ -10,7 +10,7 @@ using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
 
 namespace cCoder.DocumentManagement.Exposures;
 
-public class Dms(
+internal sealed class Dms(
     IDmsOrchestrationService dmsOrchestrationService)
     : IDms
 {
