@@ -10,7 +10,7 @@ using cCoder.Data.Models.Security;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-public interface IFileContentEventProcessingService
+internal interface IFileContentEventProcessingService
 {
     ValueTask RaiseFileContentAddEventAsync(FileContent entity);
     ValueTask RaiseFileContentUpdateEventAsync(FileContent entity);

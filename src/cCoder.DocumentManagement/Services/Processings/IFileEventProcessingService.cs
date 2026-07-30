@@ -7,7 +7,7 @@ using LocalFile = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-public interface IFileEventProcessingService
+internal interface IFileEventProcessingService
 {
     ValueTask RaiseFileAddEventAsync(LocalFile entity);
     ValueTask RaiseFileUpdateEventAsync(LocalFile entity);

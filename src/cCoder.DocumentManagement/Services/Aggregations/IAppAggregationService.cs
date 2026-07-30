@@ -9,7 +9,7 @@ using cCoder.Data.Models.Security;
 
 namespace cCoder.DocumentManagement.Services.Aggregations;
 
-public interface IAppAggregationService
+internal interface IAppAggregationService
 {
     ValueTask AddAppAsync(App newApp);
     ValueTask UpdateAppAsync(App updatedApp);

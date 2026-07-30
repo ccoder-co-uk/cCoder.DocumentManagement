@@ -18,7 +18,7 @@ using LocalFile = cCoder.Data.Models.DMS.File;
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
 public partial class FileController(
-    IFileOrchestrationService service
+    IFileManager service
 ) : ODataController
 {
 

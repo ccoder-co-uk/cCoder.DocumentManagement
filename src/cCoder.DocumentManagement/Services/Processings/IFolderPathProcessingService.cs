@@ -4,7 +4,7 @@
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-public interface IFolderPathProcessingService
+internal interface IFolderPathProcessingService
 {
     DMSResult GetFilesZippedAppPath(int appId, IEnumerable<cCoder.DocumentManagement.Models.Path> paths);
 

@@ -10,7 +10,7 @@ using cCoder.Data.Models.Security;
 
 namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
-public interface IFolderRoleEventService
+internal interface IFolderRoleEventService
 {
     ValueTask RaiseFolderRoleAddEventAsync(FolderRole entity);
     ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole entity);

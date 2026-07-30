@@ -10,7 +10,7 @@ using cCoder.Data.Models.Security;
 
 namespace cCoder.DocumentManagement.Services.Foundations;
 
-public interface IFolderService
+internal interface IFolderService
 {
     Folder Get(Guid folderId);
     Folder GetWithRoles(Guid folderId, bool ignoreFilters = false);

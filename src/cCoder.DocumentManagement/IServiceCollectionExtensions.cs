@@ -161,10 +161,15 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IDocumentManagementMigrationAggregationService, DocumentManagementMigrationAggregationService>();
         services.AddTransient<IDmsOrchestrationService, DmsOrchestrationService>();
         services.AddTransient<IDmsHttpRequestOrchestrationService, DmsHttpRequestOrchestrationService>();
+        services.AddTransient<IDmsHttpRequestManager, DmsHttpRequestOrchestrationService>();
         services.AddTransient<IFileContentOrchestrationService, FileContentOrchestrationService>();
+        services.AddTransient<IFileContentManager, FileContentOrchestrationService>();
         services.AddTransient<IFileOrchestrationService, FileOrchestrationService>();
+        services.AddTransient<IFileManager, FileOrchestrationService>();
         services.AddTransient<IFolderOrchestrationService, FolderOrchestrationService>();
+        services.AddTransient<IFolderManager, FolderOrchestrationService>();
         services.AddTransient<IFolderRoleOrchestrationService, FolderRoleOrchestrationService>();
+        services.AddTransient<IFolderRoleManager, FolderRoleOrchestrationService>();
         services.AddTransient<IPackagePayloadMigrationOrchestrationService, PackagePayloadMigrationOrchestrationService>();
         services.AddTransient<IRoleMigrationOrchestrationService, RoleMigrationOrchestrationService>();
     }

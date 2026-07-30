@@ -4,7 +4,7 @@
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
-public interface IWebDavProcessingService
+internal interface IWebDavProcessingService
 {
     ValueTask<DmsProcessingSession> ProcessDmsProcessingSessionAsync(DmsProcessingSession session);
 }

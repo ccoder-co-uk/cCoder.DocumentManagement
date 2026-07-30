@@ -1630,7 +1630,7 @@
         {
           "Name": "CreateDms",
           "Inputs": [],
-          "ReturnType": "cCoder.DocumentManagement.Exposures.Dms"
+          "ReturnType": "cCoder.DocumentManagement.Exposures.IDms"
         }
       ]
     },
@@ -2088,7 +2088,7 @@
             },
             {
               "Name": "dmsHttpRequestOrchestrationService",
-              "Type": "cCoder.DocumentManagement.Services.Orchestrations.IDmsHttpRequestOrchestrationService"
+              "Type": "cCoder.DocumentManagement.Exposures.IDmsHttpRequestManager"
             }
           ],
           "ReturnType": "System.Threading.Tasks.Task"
@@ -2109,7 +2109,7 @@
             },
             {
               "Name": "dmsHttpRequestOrchestrationService",
-              "Type": "cCoder.DocumentManagement.Services.Orchestrations.IDmsHttpRequestOrchestrationService"
+              "Type": "cCoder.DocumentManagement.Exposures.IDmsHttpRequestManager"
             }
           ],
           "ReturnType": "System.Threading.Tasks.Task"

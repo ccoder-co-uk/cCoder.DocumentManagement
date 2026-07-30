@@ -10,7 +10,7 @@ using cCoder.Data.Models.Security;
 
 namespace cCoder.DocumentManagement.Services.Foundations.Events;
 
-public interface IFolderEventService
+internal interface IFolderEventService
 {
     ValueTask RaiseFolderAddEventAsync(Folder entity);
     ValueTask RaiseFolderUpdateEventAsync(Folder entity);

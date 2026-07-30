@@ -10,7 +10,7 @@ using cCoder.Data.Models.Security;
 
 namespace cCoder.DocumentManagement.Services.Foundations;
 
-public interface IRoleService
+internal interface IRoleService
 {
     IQueryable<Role> GetAll(bool ignoreFilters = false);
 }

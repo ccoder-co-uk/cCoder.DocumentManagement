@@ -7,9 +7,9 @@ using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 
-namespace cCoder.DocumentManagement.Services.Processings;
+namespace cCoder.DocumentManagement.Exposures;
 
-internal interface IFolderRoleProcessingService
+public interface IFolderRoleManager
 {
     IQueryable<FolderRole> GetAll(bool ignoreFilters = false);
 

@@ -4,7 +4,7 @@
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
-public interface IDmsOrchestrationService
+internal interface IDmsOrchestrationService
 {
     DmsOperation GetFilesZippedDmsOperation(DmsOperation operation);
 
