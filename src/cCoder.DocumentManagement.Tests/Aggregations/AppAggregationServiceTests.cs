@@ -64,4 +64,32 @@ public partial class AppAggregationServiceTests
         // Then
         folderOrchestrationServiceMock.VerifyAll();
     }
+
+    [Fact]
+    public async Task ShouldCreateContentRootFolderWhenAddingAppWithoutFoldersAsync()
+    {
+        // Given
+        App app = new()
+        {
+            Id = 7,
+            Name = "New App"
+        };
+
+        folderOrchestrationServiceMock
+            .Setup(expression: x => x.AddOrUpdateForAppFolderAsync(
+                items: It.Is<IEnumerable<Folder>>(match: folders =>
+                    folders.Count() == 1
+                    && folders.Single().AppId == 7
+                    && folders.Single().Name == "Content"
+                    && folders.Single().Path == "Content")))
+            .Returns(
+                value: ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Models.Result<Folder>>>(
+                    result: []));
+
+        // When
+        await service.AddAppAsync(newApp: app);
+
+        // Then
+        folderOrchestrationServiceMock.VerifyAll();
+    }
 }
