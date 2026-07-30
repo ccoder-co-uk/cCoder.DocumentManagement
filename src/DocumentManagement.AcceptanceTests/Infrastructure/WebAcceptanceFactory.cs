@@ -6,7 +6,7 @@ using cCoder.Data;
 using cCoder.Data.Models;
 using cCoder.Security.Data.EF;
 using cCoder.Security.Data.EF.Interfaces;
-using cCoder.Security.Objects;
+using cCoder.Security.Models;
 using DocumentManagement.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;

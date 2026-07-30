@@ -2,15 +2,13 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.OData.Edm;
 using cCoder.DocumentManagement.Models.OData;
 
 
 namespace cCoder.DocumentManagement.Extensions.OData
 {
-    public static class EdmModelExtensions
+    public static class IEdmModelExtensions
     {
         public static ExtendedMetadataContainer GetExtendedMetadataForType(
             this IEdmModel model,
@@ -151,22 +149,6 @@ namespace cCoder.DocumentManagement.Extensions.OData
         },
         new() { Name = "Delete", Url = $"{type.Category}/{type.Name}({{key}})", HttpVerb = "DELETE" },
         ];
-    }
-
-    public sealed class BadRequestResult : BadRequestObjectResult
-    {
-        public BadRequestResult(ModelStateDictionary modelState)
-            : base(modelState: modelState) =>
-            Value = modelState
-                .Select(selector: item => new ModelStateError
-                {
-                    Key = item.Key,
-                    Value = item.Value?.RawValue,
-                    Errors = item.Value?.Errors?.Select(selector: error => $"{error.ErrorMessage} - {error.Exception?.Message}")
-                                                                                                                      .ToArray(),
-                })
-                .ToArray()
-                .ToJsonForOdata();
     }
 
 }

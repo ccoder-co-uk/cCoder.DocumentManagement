@@ -1,7 +1,7 @@
 {
   "Classes": [
     {
-      "Name": "cCoder.Data.Models.DMS.DmsModelExtensions",
+      "Name": "cCoder.Data.Models.DMS.FileExtensions",
       "StandardElementType": "Exposure",
       "Properties": [],
       "Methods": [
@@ -30,43 +30,11 @@
           "ReturnType": "System.Void"
         },
         {
-          "Name": "RecomputePaths",
-          "Inputs": [
-            {
-              "Name": "folder",
-              "Type": "cCoder.Data.Models.DMS.Folder"
-            }
-          ],
-          "ReturnType": "System.Void"
-        },
-        {
           "Name": "ToWebDavResponse",
           "Inputs": [
             {
               "Name": "file",
               "Type": "cCoder.Data.Models.DMS.File"
-            },
-            {
-              "Name": "urlBase",
-              "Type": "System.String"
-            },
-            {
-              "Name": "ns",
-              "Type": "System.Xml.Linq.XNamespace"
-            },
-            {
-              "Name": "requestedProperties",
-              "Type": "System.Collections.Generic.IEnumerable\u003CSystem.String\u003E"
-            }
-          ],
-          "ReturnType": "System.Xml.Linq.XElement"
-        },
-        {
-          "Name": "ToWebDavResponse",
-          "Inputs": [
-            {
-              "Name": "folder",
-              "Type": "cCoder.Data.Models.DMS.Folder"
             },
             {
               "Name": "urlBase",
@@ -100,6 +68,45 @@
             }
           ],
           "ReturnType": "System.Boolean"
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.Data.Models.DMS.FolderExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": [
+        {
+          "Name": "RecomputePaths",
+          "Inputs": [
+            {
+              "Name": "folder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            }
+          ],
+          "ReturnType": "System.Void"
+        },
+        {
+          "Name": "ToWebDavResponse",
+          "Inputs": [
+            {
+              "Name": "folder",
+              "Type": "cCoder.Data.Models.DMS.Folder"
+            },
+            {
+              "Name": "urlBase",
+              "Type": "System.String"
+            },
+            {
+              "Name": "ns",
+              "Type": "System.Xml.Linq.XNamespace"
+            },
+            {
+              "Name": "requestedProperties",
+              "Type": "System.Collections.Generic.IEnumerable\u003CSystem.String\u003E"
+            }
+          ],
+          "ReturnType": "System.Xml.Linq.XElement"
         },
         {
           "Name": "UserCan",
@@ -1159,69 +1166,21 @@
       ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Dependencies.DmsProcessingRequest",
-      "StandardElementType": "Model",
-      "Properties": [
+      "Name": "cCoder.DocumentManagement.Dependencies.DocumentArchiveDependency",
+      "StandardElementType": "Dependency",
+      "Properties": [],
+      "Methods": [
         {
-          "Name": "App",
-          "Type": "cCoder.Data.Models.CMS.App"
-        },
-        {
-          "Name": "Body",
-          "Type": "System.IO.Stream"
-        },
-        {
-          "Name": "ContentType",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Headers",
-          "Type": "System.Collections.Generic.Dictionary\u003CSystem.String, System.String[]\u003E"
-        },
-        {
-          "Name": "Host",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Method",
-          "Type": "System.String"
-        },
-        {
-          "Name": "QueryString",
-          "Type": "System.String"
-        },
-        {
-          "Name": "RequestPath",
-          "Type": "System.String"
+          "Name": "Dispose",
+          "Inputs": [],
+          "ReturnType": "System.Void"
         }
-      ],
-      "Methods": []
+      ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Dependencies.DmsProcessingResponse",
-      "StandardElementType": "Model",
-      "Properties": [
-        {
-          "Name": "Body",
-          "Type": "System.IO.Stream"
-        },
-        {
-          "Name": "ContentType",
-          "Type": "System.String"
-        },
-        {
-          "Name": "HasBody",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "Headers",
-          "Type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.KeyValuePair\u003CSystem.String, System.String\u003E\u003E"
-        },
-        {
-          "Name": "StatusCode",
-          "Type": "System.Int32"
-        }
-      ],
+      "Name": "cCoder.DocumentManagement.Dependencies.DocumentStreamDependency",
+      "StandardElementType": "Dependency",
+      "Properties": [],
       "Methods": []
     },
     {
@@ -1244,12 +1203,6 @@
           "ReturnType": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration"
         }
       ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.DocumentManagementServiceCollectionConfigurationExtensions",
-      "StandardElementType": "Exposure",
-      "Properties": [],
-      "Methods": []
     },
     {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
@@ -2181,31 +2134,14 @@
       ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Extensions.AuthorizationExtensions",
+      "Name": "cCoder.DocumentManagement.Extensions.DataUserExtensions",
       "StandardElementType": "Exposure",
       "Properties": [],
       "Methods": []
     },
     {
-      "Name": "cCoder.DocumentManagement.Extensions.MimeTypeExtensions",
+      "Name": "cCoder.DocumentManagement.Extensions.IQueryableExtensions",
       "StandardElementType": "Exposure",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "GetMimeType",
-          "Inputs": [
-            {
-              "Name": "fileExtension",
-              "Type": "System.String"
-            }
-          ],
-          "ReturnType": "cCoder.DocumentManagement.Models.Mapping"
-        }
-      ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Extensions.OData.BadRequestResult",
-      "StandardElementType": "Dependency",
       "Properties": [],
       "Methods": []
     },
@@ -2375,29 +2311,7 @@
       ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Extensions.OData.DocumentManagementApiModelExtensions",
-      "StandardElementType": "Exposure",
-      "Properties": [],
-      "Methods": [
-        {
-          "Name": "ConfigureDocumentManagementApiModel",
-          "Inputs": [
-            {
-              "Name": "builder",
-              "Type": "Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"
-            }
-          ],
-          "ReturnType": "System.Void"
-        },
-        {
-          "Name": "CreateIEdmModel",
-          "Inputs": [],
-          "ReturnType": "Microsoft.OData.Edm.IEdmModel"
-        }
-      ]
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Extensions.OData.EdmModelExtensions",
+      "Name": "cCoder.DocumentManagement.Extensions.OData.IEdmModelExtensions",
       "StandardElementType": "Exposure",
       "Properties": [],
       "Methods": [
@@ -2426,7 +2340,7 @@
       ]
     },
     {
-      "Name": "cCoder.DocumentManagement.Extensions.OData.MetadataTypeExtensions",
+      "Name": "cCoder.DocumentManagement.Extensions.OData.IEnumerableExtensions",
       "StandardElementType": "Exposure",
       "Properties": [],
       "Methods": []
@@ -2466,16 +2380,26 @@
       "Methods": []
     },
     {
-      "Name": "cCoder.DocumentManagement.Extensions.OData.ODataCollectionExtensions",
+      "Name": "cCoder.DocumentManagement.Extensions.OData.ODataConventionModelBuilderExtensions",
       "StandardElementType": "Exposure",
       "Properties": [],
-      "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Extensions.OData.ODataJsonExtensions",
-      "StandardElementType": "Exposure",
-      "Properties": [],
-      "Methods": []
+      "Methods": [
+        {
+          "Name": "ConfigureDocumentManagementApiModel",
+          "Inputs": [
+            {
+              "Name": "builder",
+              "Type": "Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"
+            }
+          ],
+          "ReturnType": "System.Void"
+        },
+        {
+          "Name": "CreateIEdmModel",
+          "Inputs": [],
+          "ReturnType": "Microsoft.OData.Edm.IEdmModel"
+        }
+      ]
     },
     {
       "Name": "cCoder.DocumentManagement.Extensions.OData.ODataMetadataProvider",
@@ -2503,13 +2427,13 @@
       "Methods": []
     },
     {
-      "Name": "cCoder.DocumentManagement.Extensions.OData.ODataTypeExtensions",
+      "Name": "cCoder.DocumentManagement.Extensions.OData.ObjectExtensions",
       "StandardElementType": "Exposure",
       "Properties": [],
       "Methods": []
     },
     {
-      "Name": "cCoder.DocumentManagement.Extensions.QueryFilterExtensions",
+      "Name": "cCoder.DocumentManagement.Extensions.OData.TypeExtensions",
       "StandardElementType": "Exposure",
       "Properties": [],
       "Methods": []
@@ -2534,6 +2458,18 @@
           "ReturnType": "cCoder.DocumentManagement.Models.Result\u003CTNew\u003E"
         }
       ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.RoleExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Extensions.UserExtensions",
+      "StandardElementType": "Exposure",
+      "Properties": [],
+      "Methods": []
     },
     {
       "Name": "cCoder.DocumentManagement.IServiceCollectionExtensions",
@@ -2605,6 +2541,12 @@
           "ReturnType": "System.Void"
         }
       ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.ArchiveEntryData",
+      "StandardElementType": "Model",
+      "Properties": [],
+      "Methods": []
     },
     {
       "Name": "cCoder.DocumentManagement.Models.AuditResultByProperty",
@@ -2795,16 +2737,82 @@
       "Methods": []
     },
     {
+      "Name": "cCoder.DocumentManagement.Models.DmsProcessingRequest",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "App",
+          "Type": "cCoder.Data.Models.CMS.App"
+        },
+        {
+          "Name": "Body",
+          "Type": "System.IO.Stream"
+        },
+        {
+          "Name": "ContentType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Headers",
+          "Type": "System.Collections.Generic.Dictionary\u003CSystem.String, System.String[]\u003E"
+        },
+        {
+          "Name": "Host",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Method",
+          "Type": "System.String"
+        },
+        {
+          "Name": "QueryString",
+          "Type": "System.String"
+        },
+        {
+          "Name": "RequestPath",
+          "Type": "System.String"
+        }
+      ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.DmsProcessingResponse",
+      "StandardElementType": "Model",
+      "Properties": [
+        {
+          "Name": "Body",
+          "Type": "System.IO.Stream"
+        },
+        {
+          "Name": "ContentType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "HasBody",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "Headers",
+          "Type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.KeyValuePair\u003CSystem.String, System.String\u003E\u003E"
+        },
+        {
+          "Name": "StatusCode",
+          "Type": "System.Int32"
+        }
+      ],
+      "Methods": []
+    },
+    {
       "Name": "cCoder.DocumentManagement.Models.DmsProcessingSession",
       "StandardElementType": "Model",
       "Properties": [
         {
           "Name": "Request",
-          "Type": "cCoder.DocumentManagement.Dependencies.DmsProcessingRequest"
+          "Type": "cCoder.DocumentManagement.Models.DmsProcessingRequest"
         },
         {
           "Name": "Response",
-          "Type": "cCoder.DocumentManagement.Dependencies.DmsProcessingResponse"
+          "Type": "cCoder.DocumentManagement.Models.DmsProcessingResponse"
         }
       ],
       "Methods": []
@@ -3017,6 +3025,12 @@
           "Type": "System.String"
         }
       ],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Models.OData.BadRequestResult",
+      "StandardElementType": "Dependency",
+      "Properties": [],
       "Methods": []
     },
     {

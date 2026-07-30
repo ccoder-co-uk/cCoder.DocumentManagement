@@ -8,7 +8,7 @@ using Microsoft.OData.ModelBuilder;
 
 namespace cCoder.DocumentManagement.Extensions.OData;
 
-public static class DocumentManagementApiModelExtensions
+public static class ODataConventionModelBuilderExtensions
 {
     public static void ConfigureDocumentManagementApiModel(
         this ODataConventionModelBuilder builder) =>

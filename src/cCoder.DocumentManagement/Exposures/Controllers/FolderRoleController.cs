@@ -40,7 +40,7 @@ public class FolderRoleController(
     {
         if (!base.ModelState.IsValid)
         {
-            return new cCoder.DocumentManagement.Extensions.OData.BadRequestResult(modelState: base.ModelState);
+            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: base.ModelState);
         }
 
         return Ok(value: await service.AddFolderRoleAsync(newFolderRole: newFolderRole));
@@ -51,7 +51,7 @@ public class FolderRoleController(
     {
         if (!base.ModelState.IsValid)
         {
-            return new cCoder.DocumentManagement.Extensions.OData.BadRequestResult(modelState: base.ModelState);
+            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: base.ModelState);
         }
 
         await service.DeleteAllFolderRoleAsync(deletedFolderRole: deletedFolderRole.Value);

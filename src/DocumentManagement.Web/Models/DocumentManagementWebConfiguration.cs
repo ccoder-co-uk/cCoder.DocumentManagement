@@ -5,7 +5,7 @@
 using cCoder.Data.Models;
 using cCoder.DocumentManagement.Models;
 using cCoder.Eventing.Models;
-using cCoder.Security.Objects;
+using cCoder.Security.Models;
 
 namespace DocumentManagement.Web.Models;
 
