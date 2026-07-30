@@ -18,6 +18,7 @@ internal partial class AppAggregationService(IFolderOrchestrationService folderO
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [newApp]);
+            EnsureContentRootFolder(app: newApp);
             StampFoldersApp(app: newApp);
 
             _ = await folderOrchestrationService.AddOrUpdateForAppFolderAsync(items: newApp.Folders ?? []);
@@ -49,5 +50,22 @@ internal partial class AppAggregationService(IFolderOrchestrationService folderO
         {
             folder.AppId = app.Id;
         }
+    }
+
+    private static void EnsureContentRootFolder(App app)
+    {
+        if (app.Folders?.Any() == true)
+        {
+            return;
+        }
+
+        app.Folders =
+        [
+            new Folder
+            {
+                Name = "Content",
+                Path = "Content"
+            }
+        ];
     }
 }
