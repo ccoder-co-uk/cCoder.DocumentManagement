@@ -4,9 +4,9 @@
 
 namespace cCoder.DocumentManagement.Models;
 
-public class DmsProcessingSession
+internal sealed class ArchiveEntryData
 {
-    public DmsProcessingRequest Request { get; init; }
+    internal string FullName { get; init; }
 
-    public DmsProcessingResponse Response { get; set; }
+    internal byte[] Content { get; init; }
 }

@@ -8,7 +8,7 @@ using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 
 
-namespace cCoder.DocumentManagement.Dependencies;
+namespace cCoder.DocumentManagement.Models;
 
 public class DmsProcessingRequest
 {

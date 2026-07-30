@@ -29,7 +29,7 @@ public partial class FileContentController(
 
         return isExtendedMetaRequest
             ? Ok(
-                value: DocumentManagementApiModelExtensions.CreateIEdmModel()
+                value: ODataConventionModelBuilderExtensions.CreateIEdmModel()
                     .GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(LocalFileContent))
             )
             : Ok(value: new MetadataContainer(type: typeof(LocalFileContent), isEntity: true, hasEndpoint: true));
@@ -86,7 +86,7 @@ public partial class FileContentController(
     {
         if (!ModelState.IsValid)
         {
-            return new cCoder.DocumentManagement.Extensions.OData.BadRequestResult(modelState: ModelState);
+            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
         }
 
         return Ok(value: await service.AddFileContentAsync(newFileContent: entity));
@@ -105,7 +105,7 @@ public partial class FileContentController(
     {
         if (!ModelState.IsValid)
         {
-            return new cCoder.DocumentManagement.Extensions.OData.BadRequestResult(modelState: ModelState);
+            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
         }
 
         entity.Id = key;

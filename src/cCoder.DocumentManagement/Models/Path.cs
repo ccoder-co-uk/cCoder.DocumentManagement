@@ -31,16 +31,16 @@ public record Path
                                                                     .ToLower() ?? string.Empty
             : string.Empty;
 
-    public string MimeType
-    {
-        get
+    public string MimeType =>
+        Extension switch
         {
-            Mapping mapping =
-                Extensions.MimeTypeExtensions.GetMimeType(
-                    fileExtension: Extension);
-            return string.IsNullOrWhiteSpace(value: mapping.MimeType) ? "text/plain" : mapping.MimeType;
-        }
-    }
+            "json" => "application/json",
+            "pdf" => "application/pdf",
+            "svg" => "image/svg+xml",
+            "xml" => "application/xml",
+            "zip" => "application/zip",
+            _ => "text/plain"
+        };
 
     public int Length => FullPath.Length;
 

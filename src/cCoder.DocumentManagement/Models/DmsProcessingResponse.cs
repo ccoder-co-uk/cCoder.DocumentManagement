@@ -2,7 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-namespace cCoder.DocumentManagement.Dependencies;
+namespace cCoder.DocumentManagement.Models;
 
 public class DmsProcessingResponse
 {

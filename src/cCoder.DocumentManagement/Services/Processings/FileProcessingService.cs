@@ -5,6 +5,7 @@
 using System.Security;
 using System.Text;
 using cCoder.DocumentManagement.Brokers;
+using cCoder.DocumentManagement.Dependencies;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -733,7 +734,7 @@ internal partial class FileProcessingService(
         }
 
         long position = (content.CanSeek ? content.Position : 0);
-        using MemoryStream memoryStream2 = new MemoryStream();
+        using DocumentStreamDependency memoryStream2 = new();
         content.CopyTo(destination: memoryStream2);
 
         if (content.CanSeek)

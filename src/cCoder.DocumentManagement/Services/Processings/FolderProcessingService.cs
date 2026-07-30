@@ -2,9 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using System.IO.Compression;
 using System.Security;
 using cCoder.DocumentManagement.Brokers;
+using cCoder.DocumentManagement.Dependencies;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -93,7 +93,7 @@ internal partial class FolderProcessingService(
 
             foreach (cCoder.Data.Models.DMS.File entry in array)
             {
-                using MemoryStream sourceStream = new MemoryStream(buffer: entry.Contents.OrderBy(keySelector: (FileContent k) => k.Version)
+                using DocumentStreamDependency sourceStream = new(buffer: entry.Contents.OrderBy(keySelector: (FileContent k) => k.Version)
                     .FirstOrDefault().RawData);
 
                 try
@@ -278,11 +278,12 @@ internal partial class FolderProcessingService(
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [appId, paths]);
-            using MemoryStream memoryStream = new MemoryStream();
 
 
-            using (ZipArchive zip = new ZipArchive(stream: memoryStream, mode: ZipArchiveMode.Create))
+            using (DocumentArchiveDependency zip = new())
             {
+
+
                 foreach (cCoder.DocumentManagement.Models.Path path in paths)
                 {
                     if (path.IsToFile)
@@ -308,14 +309,14 @@ internal partial class FolderProcessingService(
                     FolderArchiveData folderArchiveData = LoadFolderArchiveData(appId: appId, rootPath: byPath.Path, ignoreFilters: false);
                     AddFolderToZipFileFileContent(zip: zip, newFolder: byPath, subFoldersByParentId: folderArchiveData.SubFoldersByParentId, filesByFolderId: folderArchiveData.FilesByFolderId, fileContentsByFileId: folderArchiveData.FileContentsByFileId);
                 }
+
+
+                return new DMSResult
+                {
+                    MimeType = "application/zip",
+                    Data = new DocumentStreamDependency(buffer: zip.Complete())
+                };
             }
-
-
-            return new DMSResult
-            {
-                MimeType = "application/zip",
-                Data = new MemoryStream(buffer: memoryStream.ToArray())
-            };
 
         });
 
@@ -342,20 +343,16 @@ internal partial class FolderProcessingService(
 
             FolderArchiveData folderArchiveData = LoadFolderArchiveData(appId: appId, rootPath: byPath.Path, ignoreFilters: false);
 
-            using MemoryStream memoryStream = new MemoryStream();
-
-
-            using (ZipArchive zip = new ZipArchive(stream: memoryStream, mode: ZipArchiveMode.Create))
+            using (DocumentArchiveDependency zip = new())
             {
                 AddFolderToZipFileFileContent(zip: zip, newFolder: byPath, subFoldersByParentId: folderArchiveData.SubFoldersByParentId, filesByFolderId: folderArchiveData.FilesByFolderId, fileContentsByFileId: folderArchiveData.FileContentsByFileId, prefix: null, search: search);
+
+                return new DMSResult
+                {
+                    MimeType = "application/zip",
+                    Data = new DocumentStreamDependency(buffer: zip.Complete())
+                };
             }
-
-
-            return new DMSResult
-            {
-                MimeType = "application/zip",
-                Data = new MemoryStream(buffer: memoryStream.ToArray())
-            };
 
         });
 
@@ -374,19 +371,28 @@ internal partial class FolderProcessingService(
             }
 
 
-            using ZipArchive archive = new ZipArchive(stream: content, mode: ZipArchiveMode.Read);
+            using DocumentArchiveDependency archive =
+                new(bytes: ReadAllBytes(content: content));
 
 
-            ZipArchiveEntry rootEntry = archive.Entries.OrderBy(keySelector: (ZipArchiveEntry zipArchiveEntry) => zipArchiveEntry.FullName.Split(separator: '/').Length)
+            ArchiveEntryData[] archiveEntries = archive.ReadEntries();
+
+
+            ArchiveEntryData rootEntry = archiveEntries.OrderBy(
+                    keySelector: archiveEntry =>
+                        archiveEntry.FullName.Split(separator: '/').Length)
                 .First();
 
 
             string ignoreSegment = rootEntry.FullName;
 
 
-            foreach (ZipArchiveEntry entry in archive.Entries)
+            foreach (ArchiveEntryData entry in archiveEntries)
             {
-                using Stream entryStream = entry.Open();
+                using DocumentStreamDependency entryStream =
+                    new(buffer: entry.Content);
+
+
                 string destinationPath = (ignoreArchiveRoot ? (path.FullPath + "/" + entry.FullName).Replace(oldValue: ignoreSegment, newValue: "") : (path.FullPath + "/" + entry.FullName));
 
                 if (path.Lowered != destinationPath.ToLower())
@@ -937,10 +943,10 @@ internal partial class FolderProcessingService(
         return new FolderArchiveData(SubFoldersByParentId: source.ToLookup(keySelector: (Folder folder) => folder.ParentId), FilesByFolderId: source2.ToLookup(keySelector: (cCoder.Data.Models.DMS.File file) => file.FolderId), FileContentsByFileId: source3.ToLookup(keySelector: (FileContent fileContent) => fileContent.FileId));
     }
 
-    private static void AddFolderToZipFileFileContent(ZipArchive zip, Folder newFolder, ILookup<Guid?, Folder> subFoldersByParentId, ILookup<Guid, cCoder.Data.Models.DMS.File> filesByFolderId, ILookup<Guid, FileContent> fileContentsByFileId, string prefix = null, string search = "")
+    private static void AddFolderToZipFileFileContent(DocumentArchiveDependency zip, Folder newFolder, ILookup<Guid?, Folder> subFoldersByParentId, ILookup<Guid, cCoder.Data.Models.DMS.File> filesByFolderId, ILookup<Guid, FileContent> fileContentsByFileId, string prefix = null, string search = "")
     {
         string text = ((prefix == null) ? (newFolder.Name + "/") : (prefix + newFolder.Name + "/"));
-        zip.CreateEntry(entryName: text, compressionLevel: CompressionLevel.Optimal);
+        zip.AddEntry(name: text);
 
         foreach (Folder item in subFoldersByParentId[key: newFolder.Id].OrderBy(keySelector: (Folder folder2) => folder2.Name))
         {
@@ -956,7 +962,7 @@ internal partial class FolderProcessingService(
         }
     }
 
-    private static void AddFileToZipFileContent(ZipArchive zip, cCoder.Data.Models.DMS.File newFile, IEnumerable<FileContent> fileContents, string prefix = null)
+    private static void AddFileToZipFileContent(DocumentArchiveDependency zip, cCoder.Data.Models.DMS.File newFile, IEnumerable<FileContent> fileContents, string prefix = null)
     {
         string entryName = ((prefix != null) ? (prefix + newFile.Name) : newFile.Name);
 
@@ -969,10 +975,7 @@ internal partial class FolderProcessingService(
             return;
         }
 
-        using Stream stream = zip.CreateEntry(entryName: entryName, compressionLevel: CompressionLevel.Optimal)
-            .Open();
-
-        stream.Write(buffer: array, offset: 0, count: array.Length);
+        zip.AddEntry(name: entryName, content: array);
     }
 
     private Folder GetValue(Guid folderId) =>
@@ -994,4 +997,16 @@ internal partial class FolderProcessingService(
 
     private ValueTask DeleteValueAsync(Guid folderId) =>
         DeleteAsync(folderId: folderId);
+
+    private static byte[] ReadAllBytes(Stream content)
+    {
+        if (content is null)
+        {
+            return [];
+        }
+
+        using DocumentStreamDependency output = new();
+        content.CopyTo(destination: output);
+        return output.ToArray();
+    }
 }

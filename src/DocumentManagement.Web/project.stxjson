@@ -168,7 +168,7 @@
         },
         {
           "Name": "Security",
-          "Type": "cCoder.Security.Objects.SecurityConfiguration"
+          "Type": "cCoder.Security.Models.SecurityConfiguration"
         }
       ],
       "Methods": []

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cCoder.DocumentManagement.Extensions;
 
-internal static class QueryFilterExtensions
+internal static class IQueryableExtensions
 {
     internal static IQueryable<T> ApplyQueryFilters<T>(
         this IQueryable<T> query,
