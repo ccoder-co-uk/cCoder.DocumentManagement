@@ -101,7 +101,7 @@ public sealed partial class FolderRoleControllerTests(WebAcceptanceFixture fixtu
         string content = await response.Content.ReadAsStringAsync();
 
         response.StatusCode.Should()
-            .Be(expected: HttpStatusCode.OK, because: content);
+            .Be(expected: HttpStatusCode.Created, because: content);
 
         return JsonSerializer.Deserialize<FolderRole>(json: content, options: JsonOptions)!;
     }

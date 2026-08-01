@@ -1,8 +1,28 @@
 {
+  "SchemaVersion": 2,
+  "Project": {
+    "Id": "DocumentManagement.Web",
+    "Name": "DocumentManagement.Web",
+    "AssemblyName": "DocumentManagement.Web"
+  },
   "Classes": [
     {
       "Name": "Apps.Shared.Hosting.NoOpSession",
       "StandardElementType": "Dependency",
+      "LineNumber": 7,
+      "IsPublic": true,
+      "Kind": "Class",
+      "BaseType": {
+        "Id": "DocumentManagement.Web:ISession",
+        "FullName": "ISession",
+        "Name": "ISession",
+        "Namespace": "\u003Cglobal namespace\u003E",
+        "AssemblyName": "DocumentManagement.Web",
+        "Kind": "Class",
+        "IsInCurrentProject": true,
+        "StandardElementType": "Dependency"
+      },
+      "Interfaces": [],
       "Properties": [
         {
           "Name": "Id",
@@ -23,42 +43,104 @@
       ],
       "Methods": [
         {
+          "Id": "Apps.Shared.Hosting.NoOpSession.Clear()",
           "Name": "Clear",
+          "LineNumber": 27,
           "Inputs": [],
-          "ReturnType": "System.Void"
+          "ReturnType": "System.Void",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
         },
         {
+          "Id": "Apps.Shared.Hosting.NoOpSession.CommitAsync(System.Threading.CancellationToken)",
           "Name": "CommitAsync",
+          "LineNumber": 17,
           "Inputs": [
             {
               "Name": "cancellationToken",
               "Type": "System.Threading.CancellationToken"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.Task"
+          "ReturnType": "System.Threading.Tasks.Task",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
         },
         {
+          "Id": "Apps.Shared.Hosting.NoOpSession.LoadAsync(System.Threading.CancellationToken)",
           "Name": "LoadAsync",
+          "LineNumber": 15,
           "Inputs": [
             {
               "Name": "cancellationToken",
               "Type": "System.Threading.CancellationToken"
             }
           ],
-          "ReturnType": "System.Threading.Tasks.Task"
+          "ReturnType": "System.Threading.Tasks.Task",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
         },
         {
+          "Id": "Apps.Shared.Hosting.NoOpSession.Remove(System.String)",
           "Name": "Remove",
+          "LineNumber": 26,
           "Inputs": [
             {
               "Name": "key",
               "Type": "System.String"
             }
           ],
-          "ReturnType": "System.Void"
+          "ReturnType": "System.Void",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
         },
         {
+          "Id": "Apps.Shared.Hosting.NoOpSession.Set(System.String,System.Byte[])",
           "Name": "Set",
+          "LineNumber": 25,
           "Inputs": [
             {
               "Name": "key",
@@ -69,10 +151,25 @@
               "Type": "System.Byte[]"
             }
           ],
-          "ReturnType": "System.Void"
+          "ReturnType": "System.Void",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
         },
         {
+          "Id": "Apps.Shared.Hosting.NoOpSession.TryGetValue(System.String,System.Byte[])",
           "Name": "TryGetValue",
+          "LineNumber": 19,
           "Inputs": [
             {
               "Name": "key",
@@ -83,13 +180,40 @@
               "Type": "System.Byte[]"
             }
           ],
-          "ReturnType": "System.Boolean"
+          "ReturnType": "System.Boolean",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
         }
       ]
     },
     {
       "Name": "Apps.Shared.Hosting.NoOpSessionFeature",
       "StandardElementType": "Dependency",
+      "LineNumber": 10,
+      "IsPublic": true,
+      "Kind": "Class",
+      "BaseType": {
+        "Id": "DocumentManagement.Web:ISessionFeature",
+        "FullName": "ISessionFeature",
+        "Name": "ISessionFeature",
+        "Namespace": "\u003Cglobal namespace\u003E",
+        "AssemblyName": "DocumentManagement.Web",
+        "Kind": "Class",
+        "IsInCurrentProject": true,
+        "StandardElementType": "Dependency"
+      },
+      "Interfaces": [],
       "Properties": [
         {
           "Name": "Session",
@@ -101,6 +225,11 @@
     {
       "Name": "Apps.Shared.Models.Config",
       "StandardElementType": "Model",
+      "LineNumber": 7,
+      "IsPublic": true,
+      "Kind": "Class",
+      "BaseType": null,
+      "Interfaces": [],
       "Properties": [
         {
           "Name": "ConnectionStrings",
@@ -128,10 +257,17 @@
     {
       "Name": "DocumentManagement.Web.IServiceCollectionExtensions",
       "StandardElementType": "App",
+      "LineNumber": 15,
+      "IsPublic": true,
+      "Kind": "Class",
+      "BaseType": null,
+      "Interfaces": [],
       "Properties": [],
       "Methods": [
         {
+          "Id": "DocumentManagement.Web.IServiceCollectionExtensions.AddDocumentManagementWeb(IServiceCollection,IConfiguration,System.Action\u003CDocumentManagement.Web.Models.DocumentManagementWebConfiguration\u003E)",
           "Name": "AddDocumentManagementWeb",
+          "LineNumber": 17,
           "Inputs": [
             {
               "Name": "services",
@@ -146,13 +282,60 @@
               "Type": "System.Action\u003CDocumentManagement.Web.Models.DocumentManagementWebConfiguration\u003E"
             }
           ],
-          "ReturnType": "IServiceCollection"
+          "ReturnType": "IServiceCollection",
+          "Implements": [],
+          "Calls": [
+            {
+              "TypeName": "System.Action\u003CT\u003E",
+              "MethodName": "Invoke",
+              "MethodId": "System.Action\u003CT\u003E.Invoke(T)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Text.Json.JsonSerializerOptions",
+              "MethodName": ".ctor",
+              "MethodId": "System.Text.Json.JsonSerializerOptions..ctor(System.Text.Json.JsonSerializerDefaults)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.IServiceCollectionExtensions",
+              "MethodName": "AddDocumentManagementWeb",
+              "MethodId": "cCoder.DocumentManagement.IServiceCollectionExtensions.AddDocumentManagementWeb(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action\u003CcCoder.DocumentManagement.Models.DocumentManagementConfiguration\u003E,Microsoft.OData.ModelBuilder.ODataConventionModelBuilder)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.Eventing.Http.Models.HttpEventingOptions",
+              "MethodName": ".ctor",
+              "MethodId": "cCoder.Eventing.Http.Models.HttpEventingOptions..ctor()",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
         }
       ]
     },
     {
       "Name": "DocumentManagement.Web.Models.DocumentManagementWebConfiguration",
       "StandardElementType": "Model",
+      "LineNumber": 12,
+      "IsPublic": true,
+      "Kind": "Class",
+      "BaseType": null,
+      "Interfaces": [],
       "Properties": [
         {
           "Name": "Data",
@@ -176,38 +359,95 @@
     {
       "Name": "DocumentManagement.Web.Program",
       "StandardElementType": "App",
+      "LineNumber": 7,
+      "IsPublic": true,
+      "Kind": "Class",
+      "BaseType": null,
+      "Interfaces": [],
       "Properties": [],
       "Methods": [
         {
+          "Id": "DocumentManagement.Web.Program.Main(System.String[])",
           "Name": "Main",
+          "LineNumber": 9,
           "Inputs": [
             {
               "Name": "args",
               "Type": "System.String[]"
             }
           ],
-          "ReturnType": "System.Void"
+          "ReturnType": "System.Void",
+          "Implements": [],
+          "Calls": [
+            {
+              "TypeName": "DocumentManagement.Web.WebApplicationExtensions",
+              "MethodName": "UseDocumentManagementApplication",
+              "MethodId": "DocumentManagement.Web.WebApplicationExtensions.UseDocumentManagementApplication(WebApplication)",
+              "StandardElementType": "App",
+              "IsDependencyBoundary": false
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
         }
       ]
     },
     {
       "Name": "DocumentManagement.Web.WebApplicationExtensions",
       "StandardElementType": "App",
+      "LineNumber": 12,
+      "IsPublic": true,
+      "Kind": "Class",
+      "BaseType": null,
+      "Interfaces": [],
       "Properties": [],
       "Methods": [
         {
+          "Id": "DocumentManagement.Web.WebApplicationExtensions.UseDocumentManagementApplication(WebApplication)",
           "Name": "UseDocumentManagementApplication",
+          "LineNumber": 14,
           "Inputs": [
             {
               "Name": "app",
               "Type": "WebApplication"
             }
           ],
-          "ReturnType": "WebApplication"
+          "ReturnType": "WebApplication",
+          "Implements": [],
+          "Calls": [
+            {
+              "TypeName": "Microsoft.AspNetCore.OData.ODataApplicationBuilderExtensions",
+              "MethodName": "UseODataRouteDebug",
+              "MethodId": "Microsoft.AspNetCore.OData.ODataApplicationBuilderExtensions.UseODataRouteDebug(Microsoft.AspNetCore.Builder.IApplicationBuilder)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
         }
       ]
     }
   ],
+  "Interfaces": [],
   "Links": [],
   "AnalysisItems": []
 }

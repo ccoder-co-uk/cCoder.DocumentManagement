@@ -4,7 +4,7 @@
 
 using Newtonsoft.Json;
 
-namespace cCoder.DocumentManagement.Extensions.OData;
+namespace cCoder.DocumentManagement.Models.OData;
 
 public class ODataCollection<TCollectionType>
 {

@@ -60,7 +60,7 @@ public sealed partial class FolderControllerTests(WebAcceptanceFixture fixture)
         string content = await response.Content.ReadAsStringAsync();
 
         response.StatusCode.Should()
-            .Be(expected: HttpStatusCode.OK, because: content);
+            .Be(expected: HttpStatusCode.Created, because: content);
 
         return JsonSerializer.Deserialize<Folder>(json: content, options: JsonOptions)!;
     }
@@ -98,7 +98,7 @@ public sealed partial class FolderControllerTests(WebAcceptanceFixture fixture)
         string content = await response.Content.ReadAsStringAsync();
 
         response.StatusCode.Should()
-            .Be(expected: HttpStatusCode.OK, because: content);
+            .Be(expected: HttpStatusCode.NoContent, because: content);
 
         return (int)response.StatusCode;
     }
