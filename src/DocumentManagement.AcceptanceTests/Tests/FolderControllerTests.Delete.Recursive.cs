@@ -93,7 +93,7 @@ public sealed partial class FolderControllerTests
                 .CreateCoreContext();
 
             actualStatusCode.Should()
-                .Be(expected: 200);
+                .Be(expected: 204);
 
             core.Set<Folder>()
                 .IgnoreQueryFilters()

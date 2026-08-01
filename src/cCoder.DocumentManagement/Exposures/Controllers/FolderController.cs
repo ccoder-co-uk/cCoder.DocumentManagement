@@ -5,6 +5,7 @@
 using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Models.OData;
 using cCoder.DocumentManagement.Models;
+using cCoder.DocumentManagement.Models.Exceptions;
 using cCoder.Data.Extensions;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -32,20 +33,48 @@ public partial class FolderController(
         string destination,
         int sourceAppId,
         int destAppId
-    ) =>
-        Ok(value: await service.CopyAsync(source: source, destination: destination, sourceAppId: sourceAppId, destAppId: destAppId));
+    )
+    {
+        try
+        {
+            List<Result<Guid?>> copiedFolders = await service.CopyAsync(
+                source: source,
+                destination: destination,
+                sourceAppId: sourceAppId,
+                destAppId: destAppId);
+
+            return Ok(value: copiedFolders);
+        }
+        catch (DocumentManagementValidationException)
+        {
+            return BadRequest();
+        }
+        catch (System.Security.SecurityException)
+        {
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
 
     [HttpGet]
     public IActionResult GetMetadata()
     {
-        bool isExtendedMetaRequest = Request.Query[key: "extend"] == "true";
+        try
+        {
+            bool isExtendedMetaRequest = Request.Query[key: "extend"] == "true";
 
-        return isExtendedMetaRequest
-            ? Ok(
-                value: ODataConventionModelBuilderExtensions.CreateIEdmModel()
-                    .GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(Folder))
-            )
-            : Ok(value: new MetadataContainer(type: typeof(Folder), isEntity: true, hasEndpoint: true));
+            return isExtendedMetaRequest
+                ? Ok(value: ODataConventionModelBuilderExtensions.CreateIEdmModel()
+                    .GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(Folder)))
+                : Ok(value: new MetadataContainer(type: typeof(Folder), isEntity: true, hasEndpoint: true));
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
     }
 
     [HttpGet]
@@ -58,8 +87,21 @@ public partial class FolderController(
         MaxExpansionDepth = 5
     )]
     [ActionName("Get")]
-    public IActionResult GetAll(ODataQueryOptions<Folder> queryOptions) =>
-        Ok(value: service.GetAll());
+    public IActionResult GetAll(ODataQueryOptions<Folder> queryOptions)
+    {
+        try
+        {
+            return Ok(value: service.GetAll());
+        }
+        catch (System.Security.SecurityException)
+        {
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
 
     [HttpGet]
     [AllowAnonymous]
@@ -76,11 +118,21 @@ public partial class FolderController(
         try
         {
             Folder result = service.Get(folderId: key);
-            return result is null ? NotFound() : Ok(value: result);
+
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(value: result);
         }
         catch (System.Security.SecurityException)
         {
-            return NotFound();
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
 
@@ -95,12 +147,29 @@ public partial class FolderController(
     )]
     public async Task<IActionResult> Post([FromBody] Folder newFolder)
     {
-        if (!ModelState.IsValid)
+        try
         {
-            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
-        }
+            if (!ModelState.IsValid)
+            {
+                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+            }
 
-        return Ok(value: await service.AddFolderAsync(newFolder: newFolder));
+            Folder addedFolder = await service.AddFolderAsync(newFolder: newFolder);
+
+            return StatusCode(statusCode: StatusCodes.Status201Created, value: addedFolder);
+        }
+        catch (DocumentManagementValidationException)
+        {
+            return BadRequest();
+        }
+        catch (System.Security.SecurityException)
+        {
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
     }
 
     [HttpPut]
@@ -114,34 +183,82 @@ public partial class FolderController(
     )]
     public async Task<IActionResult> Put([FromRoute] Guid key, [FromBody] Folder updatedFolder)
     {
-        if (!ModelState.IsValid)
+        try
         {
-            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
-        }
+            if (!ModelState.IsValid)
+            {
+                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+            }
 
-        updatedFolder.Id = key;
-        return Ok(value: await service.UpdateFolderAsync(updatedFolder: updatedFolder));
+            updatedFolder.Id = key;
+
+            return Ok(value: await service.UpdateFolderAsync(updatedFolder: updatedFolder));
+        }
+        catch (DocumentManagementValidationException)
+        {
+            return BadRequest();
+        }
+        catch (System.Security.SecurityException)
+        {
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
     [ActionName("Patch")]
     public async Task<IActionResult> PutPatchAsync([FromRoute] Guid key, Delta<Folder> updatedFolderDelta)
     {
-        Folder originalEntity = service.Get(folderId: key);
-
-        if (originalEntity == null)
+        try
         {
-            return NotFound();
-        }
+            Folder originalEntity = service.Get(folderId: key);
 
-        updatedFolderDelta.Patch(original: originalEntity);
-        return Ok(value: await service.UpdateFolderAsync(updatedFolder: originalEntity));
+            if (originalEntity == null)
+            {
+                return NotFound();
+            }
+
+            updatedFolderDelta.Patch(original: originalEntity);
+
+            return Ok(value: await service.UpdateFolderAsync(updatedFolder: originalEntity));
+        }
+        catch (DocumentManagementValidationException)
+        {
+            return BadRequest();
+        }
+        catch (System.Security.SecurityException)
+        {
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete([FromRoute] Guid key)
     {
-        await service.DeleteAsync(folderId: key);
-        return Ok();
+        try
+        {
+            await service.DeleteAsync(folderId: key);
+
+            return NoContent();
+        }
+        catch (DocumentManagementValidationException)
+        {
+            return BadRequest();
+        }
+        catch (System.Security.SecurityException)
+        {
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
     }
 }

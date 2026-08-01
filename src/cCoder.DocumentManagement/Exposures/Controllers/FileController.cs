@@ -4,6 +4,7 @@
 
 using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Models.OData;
+using cCoder.DocumentManagement.Models.Exceptions;
 using cCoder.Data.Extensions;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using Microsoft.AspNetCore.Authorization;
@@ -25,14 +26,20 @@ public partial class FileController(
     [HttpGet]
     public IActionResult GetMetadata()
     {
-        bool isExtendedMetaRequest = Request.Query[key: "extend"] == "true";
+        try
+        {
+            bool isExtendedMetaRequest = Request.Query[key: "extend"] == "true";
 
-        return isExtendedMetaRequest
-            ? Ok(
-                value: ODataConventionModelBuilderExtensions.CreateIEdmModel()
-                    .GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(LocalFile))
-            )
-            : Ok(value: new MetadataContainer(type: typeof(LocalFile), isEntity: true, hasEndpoint: true));
+            return isExtendedMetaRequest
+                ? Ok(
+                    value: ODataConventionModelBuilderExtensions.CreateIEdmModel()
+                        .GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(LocalFile)))
+                : Ok(value: new MetadataContainer(type: typeof(LocalFile), isEntity: true, hasEndpoint: true));
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
     }
 
     [HttpGet]
@@ -45,8 +52,21 @@ public partial class FileController(
         MaxExpansionDepth = 5
     )]
     [ActionName("Get")]
-    public IActionResult GetAll(ODataQueryOptions<LocalFile> queryOptions) =>
-        Ok(value: service.GetAll());
+    public IActionResult GetAll(ODataQueryOptions<LocalFile> queryOptions)
+    {
+        try
+        {
+            return Ok(value: service.GetAll());
+        }
+        catch (System.Security.SecurityException)
+        {
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
 
     [HttpGet]
     [AllowAnonymous]
@@ -63,11 +83,21 @@ public partial class FileController(
         try
         {
             LocalFile result = service.Get(fileId: key);
-            return result is null ? NotFound() : Ok(value: result);
+
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(value: result);
         }
         catch (System.Security.SecurityException)
         {
-            return NotFound();
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
 
@@ -82,12 +112,29 @@ public partial class FileController(
     )]
     public async Task<IActionResult> Post([FromBody] LocalFile entity)
     {
-        if (!ModelState.IsValid)
+        try
         {
-            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
-        }
+            if (!ModelState.IsValid)
+            {
+                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+            }
 
-        return Ok(value: await service.AddFileAsync(newFile: entity));
+            LocalFile addedFile = await service.AddFileAsync(newFile: entity);
+
+            return StatusCode(statusCode: StatusCodes.Status201Created, value: addedFile);
+        }
+        catch (DocumentManagementValidationException)
+        {
+            return BadRequest();
+        }
+        catch (System.Security.SecurityException)
+        {
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
     }
 
     [HttpPut]
@@ -101,34 +148,82 @@ public partial class FileController(
     )]
     public async Task<IActionResult> Put([FromRoute] Guid key, [FromBody] LocalFile entity)
     {
-        if (!ModelState.IsValid)
+        try
         {
-            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
-        }
+            if (!ModelState.IsValid)
+            {
+                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+            }
 
-        entity.Id = key;
-        return Ok(value: await service.UpdateFileAsync(updatedFile: entity));
+            entity.Id = key;
+
+            return Ok(value: await service.UpdateFileAsync(updatedFile: entity));
+        }
+        catch (DocumentManagementValidationException)
+        {
+            return BadRequest();
+        }
+        catch (System.Security.SecurityException)
+        {
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
     }
 
     [AcceptVerbs("PATCH", "MERGE")]
     [ActionName("Patch")]
     public async Task<IActionResult> PutPatchAsync([FromRoute] Guid key, Delta<LocalFile> updatedFileDelta)
     {
-        LocalFile originalEntity = service.Get(fileId: key);
-
-        if (originalEntity == null)
+        try
         {
-            return NotFound();
-        }
+            LocalFile originalEntity = service.Get(fileId: key);
 
-        updatedFileDelta.Patch(original: originalEntity);
-        return Ok(value: await service.UpdateFileAsync(updatedFile: originalEntity));
+            if (originalEntity == null)
+            {
+                return NotFound();
+            }
+
+            updatedFileDelta.Patch(original: originalEntity);
+
+            return Ok(value: await service.UpdateFileAsync(updatedFile: originalEntity));
+        }
+        catch (DocumentManagementValidationException)
+        {
+            return BadRequest();
+        }
+        catch (System.Security.SecurityException)
+        {
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete([FromRoute] Guid key)
     {
-        await service.DeleteAsync(fileId: key);
-        return Ok();
+        try
+        {
+            await service.DeleteAsync(fileId: key);
+
+            return NoContent();
+        }
+        catch (DocumentManagementValidationException)
+        {
+            return BadRequest();
+        }
+        catch (System.Security.SecurityException)
+        {
+            return Forbid();
+        }
+        catch (Exception)
+        {
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
     }
 }
