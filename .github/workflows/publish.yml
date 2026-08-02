@@ -45,7 +45,9 @@ jobs:
         run: dotnet restore src/cCoder.DocumentManagement.slnx
 
       - name: Build
-        run: dotnet build src/cCoder.DocumentManagement.slnx -c Release --no-restore /p:Version="${{ steps.version.outputs.value }}" --verbosity minimal
+        # Multiple solution branches reference the same library output. Keep compilation
+        # serialized to avoid concurrent writers on the persistent Windows runner.
+        run: dotnet build src/cCoder.DocumentManagement.slnx -c Release --no-restore -m:1 /p:BuildInParallel=false /p:UseSharedCompilation=false /p:Version="${{ steps.version.outputs.value }}" --verbosity minimal
 
       - name: Test
         run: dotnet test src/cCoder.DocumentManagement.slnx -c Release --no-build --verbosity minimal
