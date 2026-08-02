@@ -33,14 +33,6 @@ jobs:
         run: |
           "value=$(Get-Date -Format 'yyyy.M.d.HHmm')" >> $env:GITHUB_OUTPUT
 
-      - name: Cache NuGet packages
-        uses: actions/cache@v5
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('src/**/*.csproj', 'src/**/*.slnx', 'Directory.Build.props') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-
       - name: Restore
         run: dotnet restore src/cCoder.DocumentManagement.slnx
 
