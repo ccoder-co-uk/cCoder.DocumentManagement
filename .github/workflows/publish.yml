@@ -34,7 +34,21 @@ jobs:
           "value=$(Get-Date -Format 'yyyy.M.d.HHmm')" >> $env:GITHUB_OUTPUT
 
       - name: Restore
-        run: dotnet restore src/cCoder.DocumentManagement.slnx
+        run: |
+          $restoreOutput = & dotnet restore src/cCoder.DocumentManagement.slnx 2>&1
+          $restoreExitCode = $LASTEXITCODE
+          $restoreText = $restoreOutput -join [Environment]::NewLine
+          $restoreText | Write-Output
+
+          if ($restoreExitCode -ne 0) {
+            if ($restoreText -notmatch 'NU1102') {
+              exit $restoreExitCode
+            }
+
+            Write-Warning 'A required package is not yet visible through the local NuGet HTTP cache; clearing it and retrying once.'
+            dotnet nuget locals http-cache --clear
+            dotnet restore src/cCoder.DocumentManagement.slnx --no-http-cache
+          }
 
       - name: Build
         # Multiple solution branches reference the same library output. Keep compilation
