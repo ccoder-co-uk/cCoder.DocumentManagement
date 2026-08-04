@@ -4,6 +4,7 @@
 
 using cCoder.Data.Models;
 using cCoder.DocumentManagement.Models;
+using cCoder.DocumentManagement.Extensions;
 using cCoder.Eventing.Models;
 using cCoder.Security.Models;
 
@@ -19,11 +20,4 @@ public sealed class DocumentManagementWebConfiguration
 
     public EventingConfiguration Eventing { get; set; }
 
-    public DocumentManagementWebConfiguration()
-    {
-        DocumentManagement = new DocumentManagementConfiguration();
-        Data = new DataConfiguration();
-        Security = new SecurityConfiguration();
-        Eventing = new EventingConfiguration();
-    }
 }

@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Services.Processings;
-using DmsPath = cCoder.DocumentManagement.Models.Path;
+using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
 
 namespace cCoder.DocumentManagement.Exposures;
 

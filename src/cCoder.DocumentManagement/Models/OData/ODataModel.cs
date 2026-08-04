@@ -13,9 +13,4 @@ public class ODataModel
     public string Description { get; set; }
     public IEdmModel EDMModel { get; set; }
 
-    public ODataModel()
-    {
-        Context = string.Empty;
-        Description = string.Empty;
-    }
 }

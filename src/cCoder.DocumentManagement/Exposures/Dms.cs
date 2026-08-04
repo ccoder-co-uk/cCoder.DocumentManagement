@@ -4,7 +4,7 @@
 
 using cCoder.DocumentManagement.Services.Orchestrations;
 using DmsFile = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Models.Path;
+using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
 using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
 
 

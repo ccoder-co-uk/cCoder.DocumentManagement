@@ -5,7 +5,7 @@
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Services.Foundations;
-using LocalPath = cCoder.DocumentManagement.Models.Path;
+using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
 using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
 using MemoryStream = System.IO.MemoryStream;
 
@@ -291,6 +291,7 @@ internal partial class DmsInstanceProcessingService(
             HasBody = hasBody,
             ContentType = contentType,
             StatusCode = statusCode,
+            Headers = [],
         };
 
     private static string TryGetSingleValue(Dictionary<string, string[]> query, string key) =>

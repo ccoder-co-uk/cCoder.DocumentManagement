@@ -85,7 +85,7 @@ internal partial class EventHandlerService(IEventHubBroker eventHubBroker) : IEv
             handler: (service, args) => service.ImportPackageDocumentManagementPackageAsync(appId: args.appId, package: ToLocalPackage(package: args.package)));
 
     static DocumentManagementPackage ToLocalPackage(Package package) =>
-        package == null ? null : new DocumentManagementPackage(name: package.Name)
+        package == null ? null : new DocumentManagementPackage
         {
             Id = package.Id,
             Name = package.Name,

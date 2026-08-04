@@ -6,13 +6,6 @@ namespace Apps.Shared.Models;
 
 public class Config
 {
-    public Config()
-    {
-        ConnectionStrings = new Dictionary<string, string>();
-        Settings = new Dictionary<string, string>();
-        Services = new Dictionary<string, string>();
-    }
-
     public IDictionary<string, string> ConnectionStrings { get; set; }
     public IDictionary<string, string> Settings { get; set; }
     public IDictionary<string, string> Services { get; set; }

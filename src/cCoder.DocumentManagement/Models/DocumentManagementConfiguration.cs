@@ -15,11 +15,4 @@ public class DocumentManagementConfiguration
     public string RootPath { get; set; }
     public EventProvider[] EventProviders { get; set; }
 
-    public DocumentManagementConfiguration()
-    {
-        ConnectionString = string.Empty;
-        RootPath = "Api/DocumentManagement";
-        EventProviders = [];
-    }
-
 }

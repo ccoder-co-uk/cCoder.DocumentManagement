@@ -6,6 +6,7 @@ using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Packaging;
 using cCoder.DocumentManagement.Extensions.OData;
+using cCoder.DocumentManagement.Extensions;
 using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Brokers.Events;
@@ -45,7 +46,7 @@ public static partial class IServiceCollectionExtensions
         Action<DocumentManagementConfiguration> configure = null,
         ODataConventionModelBuilder builder = null)
     {
-        DocumentManagementConfiguration configuration = new();
+        DocumentManagementConfiguration configuration = DocumentManagementConfigurationFactory.CreateDocumentManagementConfiguration();
         configure?.Invoke(obj: configuration);
         services.AddDocumentManagementWeb(configuration: configuration, builder: builder);
     }
@@ -72,7 +73,7 @@ public static partial class IServiceCollectionExtensions
         this IServiceCollection services,
         Action<DocumentManagementConfiguration> configure = null)
     {
-        DocumentManagementConfiguration configuration = new();
+        DocumentManagementConfiguration configuration = DocumentManagementConfigurationFactory.CreateDocumentManagementConfiguration();
         configure?.Invoke(obj: configuration);
         services.AddDocumentManagementHostedServices(configuration: configuration);
     }

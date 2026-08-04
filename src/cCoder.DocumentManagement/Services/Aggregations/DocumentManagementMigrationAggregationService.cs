@@ -83,7 +83,7 @@ internal partial class DocumentManagementMigrationAggregationService(
     : new Data.Models.Packaging.Package(name: packageName) { Items = [] };
 
 
-            return new DocumentManagementPackage(name: package.Name)
+            return new DocumentManagementPackage
             {
                 Id = package.Id,
                 Name = package.Name,

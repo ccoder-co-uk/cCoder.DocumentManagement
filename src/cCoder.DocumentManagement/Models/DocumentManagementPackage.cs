@@ -18,10 +18,4 @@ public class DocumentManagementPackage
 
     public virtual ICollection<DocumentManagementPackageItem> Items { get; set; }
 
-    public DocumentManagementPackage() { }
-
-    public DocumentManagementPackage(string name)
-    {
-        Name = name;
-    }
 }

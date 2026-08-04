@@ -6,7 +6,9 @@ using cCoder.Data.Models.DMS;
 
 namespace cCoder.DocumentManagement.Models;
 
-internal sealed record FolderArchiveData(
-    ILookup<Guid?, Folder> SubFoldersByParentId,
-    ILookup<Guid, cCoder.Data.Models.DMS.File> FilesByFolderId,
-    ILookup<Guid, FileContent> FileContentsByFileId);
+internal sealed class FolderArchiveData
+{
+    public ILookup<Guid?, Folder> SubFoldersByParentId { get; init; }
+    public ILookup<Guid, cCoder.Data.Models.DMS.File> FilesByFolderId { get; init; }
+    public ILookup<Guid, FileContent> FileContentsByFileId { get; init; }
+}

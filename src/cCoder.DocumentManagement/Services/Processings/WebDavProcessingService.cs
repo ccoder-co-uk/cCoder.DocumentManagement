@@ -13,7 +13,7 @@ using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services.Foundations;
 using LocalFile = cCoder.Data.Models.DMS.File;
 using LocalFolder = cCoder.Data.Models.DMS.Folder;
-using LocalPath = cCoder.DocumentManagement.Models.Path;
+using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
 using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
 using MemoryStream = System.IO.MemoryStream;
 
