@@ -2,6 +2,8 @@
 
 `cCoder.DocumentManagement` contains the Document Management domain for the cCoder platform. It provides folder, file, file-content, and folder-role functionality that can be consumed directly as a domain package or hosted through the standalone web app.
 
+[View the latest main-branch code coverage report](https://ccoder-co-uk.github.io/cCoder.DocumentManagement/)
+
 ## Local Configuration
 
 The Web app binds its structured `DocumentManagement`, `Data`, `Security`, and
