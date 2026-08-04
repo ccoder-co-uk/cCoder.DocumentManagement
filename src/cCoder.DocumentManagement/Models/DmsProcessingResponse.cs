@@ -12,10 +12,4 @@ public class DmsProcessingResponse
     public bool HasBody { get; init; }
     public List<KeyValuePair<string, string>> Headers { get; init; }
 
-    public DmsProcessingResponse()
-    {
-        Body = Stream.Null;
-        ContentType = string.Empty;
-        Headers = [];
-    }
 }

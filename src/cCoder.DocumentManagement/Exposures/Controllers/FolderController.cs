@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Extensions.OData;
+using cCoder.DocumentManagement.Dependencies;
 using cCoder.DocumentManagement.Models.OData;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Models.Exceptions;
@@ -69,7 +70,7 @@ public partial class FolderController(
             return isExtendedMetaRequest
                 ? Ok(value: ODataConventionModelBuilderExtensions.CreateIEdmModel()
                     .GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(Folder)))
-                : Ok(value: new MetadataContainer(type: typeof(Folder), isEntity: true, hasEndpoint: true));
+                : Ok(value: MetadataContainerDependency.CreateMetadataContainer(type: typeof(Folder), isEntity: true, hasEndpoint: true));
         }
         catch (Exception)
         {

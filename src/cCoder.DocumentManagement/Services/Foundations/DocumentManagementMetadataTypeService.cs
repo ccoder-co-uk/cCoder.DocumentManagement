@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Extensions.OData;
+using cCoder.DocumentManagement.Dependencies;
 using cCoder.DocumentManagement.Models.OData;
 using cCoder.Data.Models.DMS;
 using DmsFile = cCoder.Data.Models.DMS.File;
@@ -34,9 +35,10 @@ internal sealed partial class DocumentManagementMetadataTypeService : IDocumentM
         ];
         });
 
-    private static ExtendedMetadataContainer Entity<T>() =>
-        new(type: typeof(T), isEntity: true, hasEndpoint: true)
-        {
-            Category = "DocumentManagement",
-        };
+    private static ExtendedMetadataContainer Entity<T>()
+    {
+        ExtendedMetadataContainer container = MetadataContainerDependency.CreateExtendedMetadataContainer(type: typeof(T), isEntity: true, hasEndpoint: true);
+        container.Category = "DocumentManagement";
+        return container;
+    }
 }

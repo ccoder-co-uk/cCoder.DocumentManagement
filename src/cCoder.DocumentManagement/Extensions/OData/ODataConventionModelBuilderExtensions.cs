@@ -2,9 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Brokers.OData;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
+using cCoder.DocumentManagement.Brokers.OData;
 
 namespace cCoder.DocumentManagement.Extensions.OData;
 

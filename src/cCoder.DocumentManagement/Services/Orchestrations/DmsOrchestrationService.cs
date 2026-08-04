@@ -5,7 +5,7 @@
 using cCoder.DocumentManagement.Services.Processings;
 using DataFile = cCoder.Data.Models.DMS.File;
 using LocalApp = cCoder.Data.Models.CMS.App;
-using LocalPath = cCoder.DocumentManagement.Models.Path;
+using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
 
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;

@@ -4,6 +4,7 @@
 
 using Microsoft.OData.Edm;
 using cCoder.DocumentManagement.Models.OData;
+using cCoder.DocumentManagement.Dependencies;
 
 
 namespace cCoder.DocumentManagement.Extensions.OData
@@ -17,7 +18,8 @@ namespace cCoder.DocumentManagement.Extensions.OData
             bool hasEndpoint = true
         )
         {
-            ExtendedMetadataContainer result = new(type: type, isEntity: true, hasEndpoint: hasEndpoint) { Category = context };
+            ExtendedMetadataContainer result = MetadataContainerDependency.CreateExtendedMetadataContainer(type: type, isEntity: true, hasEndpoint: hasEndpoint);
+            result.Category = context;
             IEdmEntitySet set = model.EntityContainer.FindEntitySet(setName: type.Name);
 
             if (set is null)
@@ -56,7 +58,7 @@ namespace cCoder.DocumentManagement.Extensions.OData
             }
 
             Type cSharpType = Type.GetType(typeName: definition.FullTypeName(), throwOnError: false);
-            return cSharpType is null ? null : new MetadataContainer(type: cSharpType, isEntity: true, hasEndpoint: true);
+            return cSharpType is null ? null : MetadataContainerDependency.CreateMetadataContainer(type: cSharpType, isEntity: true, hasEndpoint: true);
         }
 
         private static IEnumerable<OperationContainer> GetBaseCrudOperations(MetadataContainer type) =>

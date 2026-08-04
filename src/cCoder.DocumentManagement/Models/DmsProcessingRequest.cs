@@ -21,14 +21,4 @@ public class DmsProcessingRequest
     public Stream Body { get; init; }
     public Dictionary<string, string[]> Headers { get; init; }
 
-    public DmsProcessingRequest()
-    {
-        Method = string.Empty;
-        RequestPath = string.Empty;
-        Host = string.Empty;
-        QueryString = string.Empty;
-        ContentType = string.Empty;
-        Body = Stream.Null;
-        Headers = new(comparer: StringComparer.OrdinalIgnoreCase);
-    }
 }
