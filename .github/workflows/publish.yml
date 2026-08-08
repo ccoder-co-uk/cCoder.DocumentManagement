@@ -56,16 +56,62 @@ jobs:
         # serialized to avoid concurrent writers on the persistent Windows runner.
         run: dotnet build src/cCoder.DocumentManagement.slnx -c Release --no-restore -m:1 /p:BuildInParallel=false /p:UseSharedCompilation=false /p:Version="${{ steps.version.outputs.value }}" --verbosity minimal
 
-      - name: Test
-        if: github.event_name != 'push' || github.ref != 'refs/heads/main'
-        run: dotnet test src/cCoder.DocumentManagement.slnx -c Release --no-build --verbosity minimal
-
       - name: Test and collect coverage
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: dotnet test src/cCoder.DocumentManagement.slnx -c Release --no-build --verbosity minimal --settings coverage.runsettings --results-directory "${{ env.TEST_RESULTS_DIRECTORY }}" --logger trx --collect:"XPlat Code Coverage"
 
+      - name: Enforce services and exposures coverage
+        run: |
+          $coverageFiles = @(
+            Get-ChildItem "${{ env.TEST_RESULTS_DIRECTORY }}" -Recurse -Filter coverage.cobertura.xml
+          )
+
+          if ($coverageFiles.Count -eq 0) {
+            throw 'No Cobertura coverage reports were produced.'
+          }
+
+          $lines = @{}
+
+          foreach ($coverageFile in $coverageFiles) {
+            [xml] $coverage = Get-Content -LiteralPath $coverageFile.FullName
+
+            foreach ($class in $coverage.coverage.packages.package.classes.class) {
+              $sourceFile = [string] $class.filename
+
+              if ($sourceFile -notmatch '(^|[/\\])(Services|Exposures)[/\\]') {
+                continue
+              }
+
+              foreach ($line in $class.lines.line) {
+                $key = "$sourceFile|$($line.number)"
+
+                if (-not $lines.ContainsKey($key)) {
+                  $lines[$key] = 0
+                }
+
+                if ([int] $line.hits -gt 0) {
+                  $lines[$key] = 1
+                }
+              }
+            }
+          }
+
+          if ($lines.Count -eq 0) {
+            throw 'No service or exposure source lines were found in the coverage reports.'
+          }
+
+          $coveredLines = @($lines.Values | Where-Object { $_ -eq 1 }).Count
+          $lineRate = $coveredLines / $lines.Count
+          $percentage = $lineRate.ToString('P3')
+
+          "Services and exposures line coverage: $coveredLines/$($lines.Count) ($percentage)" |
+            Write-Output
+
+          if ($lineRate -le 0.90) {
+            throw "Services and exposures line coverage must be greater than 90%; actual: $percentage."
+          }
+
       - name: Upload test and coverage results
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && always()
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: test-results
