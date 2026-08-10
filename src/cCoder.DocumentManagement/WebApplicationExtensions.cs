@@ -25,8 +25,13 @@ public static partial class WebApplicationExtensions
         app.UseDocumentManagementExposure(log: log)
             .UseDocumentManagementEventHandlers();
 
-    public static WebApplication StartDocumentManagementHostedServices(this WebApplication app) =>
-        app.UseDocumentManagementEventHandlers();
+    public static WebApplication StartDocumentManagementHostedServices(
+        this WebApplication app)
+    {
+        PopulateMetadataTypeCache(app: app);
+
+        return app.UseDocumentManagementEventHandlers();
+    }
 
     private static WebApplication UseDocumentManagementExposure(
         this WebApplication app,
