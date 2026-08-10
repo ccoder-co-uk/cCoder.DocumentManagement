@@ -415,13 +415,18 @@ internal partial class FolderProcessingService(
             {
                 try
                 {
-                    Folder savedItem = item.Id == Guid.Empty ? await AddFolderValueAsync(newFolder: item) : await UpdateFolderValueAsync(updatedFolder: item);
+                    bool folderExists = item.Id != Guid.Empty
+                        && service.GetForUpdate(folderId: item.Id, ignoreFilters: true) != null;
+
+                    Folder savedItem = folderExists
+                        ? await UpdateFolderValueAsync(updatedFolder: item)
+                        : await AddFolderValueAsync(newFolder: item);
 
                     results.Add(item: new Result<Folder>
                     {
                         Success = true,
                         Item = savedItem,
-                        Message = item.Id == Guid.Empty ? "Added Successfully" : "Updated Successfully"
+                        Message = folderExists ? "Updated Successfully" : "Added Successfully"
                     });
                 }
                 catch (Exception ex)

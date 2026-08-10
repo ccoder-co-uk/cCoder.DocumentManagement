@@ -32,7 +32,7 @@ internal partial class AppAggregationService(IFolderOrchestrationService folderO
             ValidateInputs(inputs: [updatedApp]);
             StampFoldersApp(app: updatedApp);
 
-            _ = await folderOrchestrationService.AddOrUpdateForAppFolderAsync(items: updatedApp.Folders ?? []);
+            _ = await folderOrchestrationService.AddOrUpdateFolder(items: updatedApp.Folders ?? []);
 
         });
 
