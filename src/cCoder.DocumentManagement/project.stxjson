@@ -740,28 +740,28 @@
       "Properties": [],
       "Methods": [
         {
-          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.CopyAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.CopyAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "CopyAsync",
           "LineNumber": 58,
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.CopyAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)"
+            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.CopyAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)"
           ],
           "Calls": [
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IDms",
               "MethodName": "CopyAsync",
-              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.CopyAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.CopyAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
               "StandardElementType": "Exposure",
               "IsDependencyBoundary": false
             },
@@ -797,13 +797,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.DropAsync(cCoder.DocumentManagement.Models.Path,System.Int32)",
+          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.DropAsync(cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
           "Name": "DropAsync",
           "LineNumber": 53,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -812,13 +812,13 @@
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.DropAsync(cCoder.DocumentManagement.Models.Path,System.Int32)"
+            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.DropAsync(cCoder.DocumentManagement.Dependencies.Path,System.Int32)"
           ],
           "Calls": [
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IDms",
               "MethodName": "DropAsync",
-              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.DropAsync(cCoder.DocumentManagement.Models.Path,System.Int32)",
+              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.DropAsync(cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
               "StandardElementType": "Exposure",
               "IsDependencyBoundary": false
             },
@@ -854,13 +854,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.Get(cCoder.DocumentManagement.Models.Path,System.Int32,System.String)",
+          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.Get(cCoder.DocumentManagement.Dependencies.Path,System.Int32,System.String)",
           "Name": "Get",
           "LineNumber": 33,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -873,13 +873,13 @@
           ],
           "ReturnType": "cCoder.DocumentManagement.Models.DMSResult",
           "Implements": [
-            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.Get(cCoder.DocumentManagement.Models.Path,System.Int32,System.String)"
+            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.Get(cCoder.DocumentManagement.Dependencies.Path,System.Int32,System.String)"
           ],
           "Calls": [
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IDms",
               "MethodName": "Get",
-              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.Get(cCoder.DocumentManagement.Models.Path,System.Int32,System.String)",
+              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.Get(cCoder.DocumentManagement.Dependencies.Path,System.Int32,System.String)",
               "StandardElementType": "Exposure",
               "IsDependencyBoundary": false
             },
@@ -915,24 +915,24 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E)",
+          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E)",
           "Name": "GetFilesZipped",
           "LineNumber": 28,
           "Inputs": [
             {
               "Name": "paths",
-              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E"
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
             }
           ],
           "ReturnType": "cCoder.DocumentManagement.Models.DMSResult",
           "Implements": [
-            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E)"
+            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E)"
           ],
           "Calls": [
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IDms",
               "MethodName": "GetFilesZipped",
-              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E)",
+              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E)",
               "StandardElementType": "Exposure",
               "IsDependencyBoundary": false
             },
@@ -968,28 +968,28 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.MoveAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.MoveAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "MoveAsync",
           "LineNumber": 63,
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.MoveAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)"
+            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.MoveAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)"
           ],
           "Calls": [
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IDms",
               "MethodName": "MoveAsync",
-              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.MoveAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.MoveAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
               "StandardElementType": "Exposure",
               "IsDependencyBoundary": false
             },
@@ -1025,13 +1025,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.SaveAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.SaveAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
           "Name": "SaveAsync",
           "LineNumber": 48,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -1040,13 +1040,13 @@
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.SaveAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)"
+            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.SaveAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)"
           ],
           "Calls": [
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IDms",
               "MethodName": "SaveAsync",
-              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.SaveAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.SaveAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
               "StandardElementType": "Exposure",
               "IsDependencyBoundary": false
             },
@@ -1135,13 +1135,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.UnpackAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream,System.Boolean)",
+          "Id": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker.UnpackAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream,System.Boolean)",
           "Name": "UnpackAsync",
           "LineNumber": 43,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -1154,13 +1154,13 @@
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.UnpackAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream,System.Boolean)"
+            "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.UnpackAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream,System.Boolean)"
           ],
           "Calls": [
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IDms",
               "MethodName": "UnpackAsync",
-              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.UnpackAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream,System.Boolean)",
+              "MethodId": "cCoder.DocumentManagement.Exposures.IDms.UnpackAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream,System.Boolean)",
               "StandardElementType": "Exposure",
               "IsDependencyBoundary": false
             },
@@ -1915,6 +1915,189 @@
               "TypeName": "Newtonsoft.Json.JsonConvert",
               "MethodName": "SerializeObject",
               "MethodId": "Newtonsoft.Json.JsonConvert.SerializeObject(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker",
+      "StandardElementType": "Broker",
+      "LineNumber": 9,
+      "IsPublic": false,
+      "Kind": "Class",
+      "BaseType": null,
+      "Interfaces": [
+        {
+          "Id": "cCoder.DocumentManagement:cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+          "FullName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+          "Name": "ILoggingBroker",
+          "Namespace": "cCoder.DocumentManagement.Brokers.Loggings",
+          "AssemblyName": "cCoder.DocumentManagement",
+          "Kind": "Interface",
+          "IsInCurrentProject": true,
+          "StandardElementType": "Broker"
+        }
+      ],
+      "Properties": [],
+      "Methods": [
+        {
+          "Id": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker.LogDebug(System.String,System.Object[])",
+          "Name": "LogDebug",
+          "LineNumber": 11,
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Object[]"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Implements": [
+            "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogDebug(System.String,System.Object[])"
+          ],
+          "Calls": [
+            {
+              "TypeName": "Microsoft.Extensions.Logging.LoggerExtensions",
+              "MethodName": "LogDebug",
+              "MethodId": "Microsoft.Extensions.Logging.LoggerExtensions.LogDebug(Microsoft.Extensions.Logging.ILogger,System.String?,System.Object?[])",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+          "Name": "LogError",
+          "LineNumber": 20,
+          "Inputs": [
+            {
+              "Name": "exception",
+              "Type": "System.Exception"
+            },
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Object[]"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Implements": [
+            "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])"
+          ],
+          "Calls": [
+            {
+              "TypeName": "Microsoft.Extensions.Logging.LoggerExtensions",
+              "MethodName": "LogError",
+              "MethodId": "Microsoft.Extensions.Logging.LoggerExtensions.LogError(Microsoft.Extensions.Logging.ILogger,System.Exception?,System.String?,System.Object?[])",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker.LogError(System.String,System.Object[])",
+          "Name": "LogError",
+          "LineNumber": 17,
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Object[]"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Implements": [
+            "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.String,System.Object[])"
+          ],
+          "Calls": [
+            {
+              "TypeName": "Microsoft.Extensions.Logging.LoggerExtensions",
+              "MethodName": "LogError",
+              "MethodId": "Microsoft.Extensions.Logging.LoggerExtensions.LogError(Microsoft.Extensions.Logging.ILogger,System.String?,System.Object?[])",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker.LogInformation(System.String,System.Object[])",
+          "Name": "LogInformation",
+          "LineNumber": 14,
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Object[]"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Implements": [
+            "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])"
+          ],
+          "Calls": [
+            {
+              "TypeName": "Microsoft.Extensions.Logging.LoggerExtensions",
+              "MethodName": "LogInformation",
+              "MethodId": "Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger,System.String?,System.Object?[])",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             }
@@ -5019,6 +5202,425 @@
       "Methods": []
     },
     {
+      "Name": "cCoder.DocumentManagement.Dependencies.MetadataContainerDependency",
+      "StandardElementType": "Dependency",
+      "LineNumber": 12,
+      "IsPublic": false,
+      "Kind": "Class",
+      "BaseType": null,
+      "Interfaces": [],
+      "Properties": [],
+      "Methods": []
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Dependencies.Path",
+      "StandardElementType": "Dependency",
+      "LineNumber": 7,
+      "IsPublic": true,
+      "Kind": "Class",
+      "BaseType": null,
+      "Interfaces": [
+        {
+          "Id": "System.Private.CoreLib:System.IEquatable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E",
+          "FullName": "System.IEquatable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E",
+          "Name": "IEquatable",
+          "Namespace": "System",
+          "AssemblyName": "System.Private.CoreLib",
+          "Kind": "Interface",
+          "IsInCurrentProject": false,
+          "StandardElementType": "Dependency"
+        }
+      ],
+      "Properties": [
+        {
+          "Name": "Depth",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "Empty",
+          "Type": "cCoder.DocumentManagement.Dependencies.Path"
+        },
+        {
+          "Name": "Extension",
+          "Type": "System.String"
+        },
+        {
+          "Name": "FullPath",
+          "Type": "System.String"
+        },
+        {
+          "Name": "IsToFile",
+          "Type": "System.Boolean"
+        },
+        {
+          "Name": "Length",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "Lowered",
+          "Type": "System.String"
+        },
+        {
+          "Name": "MimeType",
+          "Type": "System.String"
+        },
+        {
+          "Name": "Name",
+          "Type": "System.String"
+        },
+        {
+          "Name": "ParentPath",
+          "Type": "cCoder.DocumentManagement.Dependencies.Path"
+        },
+        {
+          "Name": "Segments",
+          "Type": "System.String[]"
+        }
+      ],
+      "Methods": [
+        {
+          "Id": "cCoder.DocumentManagement.Dependencies.Path.\u003CClone\u003E$()",
+          "Name": "\u003CClone\u003E$",
+          "LineNumber": 7,
+          "Inputs": [],
+          "ReturnType": "cCoder.DocumentManagement.Dependencies.Path",
+          "Implements": [],
+          "Calls": [
+            {
+              "TypeName": "System.Linq.Enumerable",
+              "MethodName": "Last",
+              "MethodId": "System.Linq.Enumerable.Last(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Enumerable",
+              "MethodName": "LastOrDefault",
+              "MethodId": "System.Linq.Enumerable.LastOrDefault(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Contains",
+              "MethodId": "System.String.Contains(System.Char)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Join",
+              "MethodId": "System.String.Join(System.String?,System.String?[])",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Split",
+              "MethodId": "System.String.Split(System.Char,System.StringSplitOptions)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "ToLower",
+              "MethodId": "System.String.ToLower()",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Trim",
+              "MethodId": "System.String.Trim()",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "TrimEnd",
+              "MethodId": "System.String.TrimEnd(System.Char)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Dependencies.Path.Equals(System.Object?)",
+          "Name": "Equals",
+          "LineNumber": 7,
+          "Inputs": [
+            {
+              "Name": "obj",
+              "Type": "System.Object?"
+            }
+          ],
+          "ReturnType": "System.Boolean",
+          "Implements": [],
+          "Calls": [
+            {
+              "TypeName": "System.Linq.Enumerable",
+              "MethodName": "Last",
+              "MethodId": "System.Linq.Enumerable.Last(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Enumerable",
+              "MethodName": "LastOrDefault",
+              "MethodId": "System.Linq.Enumerable.LastOrDefault(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Contains",
+              "MethodId": "System.String.Contains(System.Char)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Join",
+              "MethodId": "System.String.Join(System.String?,System.String?[])",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Split",
+              "MethodId": "System.String.Split(System.Char,System.StringSplitOptions)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "ToLower",
+              "MethodId": "System.String.ToLower()",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Trim",
+              "MethodId": "System.String.Trim()",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "TrimEnd",
+              "MethodId": "System.String.TrimEnd(System.Char)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Dependencies.Path.Equals(cCoder.DocumentManagement.Dependencies.Path?)",
+          "Name": "Equals",
+          "LineNumber": 7,
+          "Inputs": [
+            {
+              "Name": "other",
+              "Type": "cCoder.DocumentManagement.Dependencies.Path?"
+            }
+          ],
+          "ReturnType": "System.Boolean",
+          "Implements": [
+            "System.IEquatable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E.Equals(cCoder.DocumentManagement.Dependencies.Path?)"
+          ],
+          "Calls": [
+            {
+              "TypeName": "System.Linq.Enumerable",
+              "MethodName": "Last",
+              "MethodId": "System.Linq.Enumerable.Last(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Enumerable",
+              "MethodName": "LastOrDefault",
+              "MethodId": "System.Linq.Enumerable.LastOrDefault(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Contains",
+              "MethodId": "System.String.Contains(System.Char)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Join",
+              "MethodId": "System.String.Join(System.String?,System.String?[])",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Split",
+              "MethodId": "System.String.Split(System.Char,System.StringSplitOptions)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "ToLower",
+              "MethodId": "System.String.ToLower()",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Trim",
+              "MethodId": "System.String.Trim()",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "TrimEnd",
+              "MethodId": "System.String.TrimEnd(System.Char)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Dependencies.Path.GetHashCode()",
+          "Name": "GetHashCode",
+          "LineNumber": 7,
+          "Inputs": [],
+          "ReturnType": "System.Int32",
+          "Implements": [],
+          "Calls": [
+            {
+              "TypeName": "System.Linq.Enumerable",
+              "MethodName": "Last",
+              "MethodId": "System.Linq.Enumerable.Last(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Enumerable",
+              "MethodName": "LastOrDefault",
+              "MethodId": "System.Linq.Enumerable.LastOrDefault(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Contains",
+              "MethodId": "System.String.Contains(System.Char)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Join",
+              "MethodId": "System.String.Join(System.String?,System.String?[])",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Split",
+              "MethodId": "System.String.Split(System.Char,System.StringSplitOptions)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "ToLower",
+              "MethodId": "System.String.ToLower()",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "Trim",
+              "MethodId": "System.String.Trim()",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.String",
+              "MethodName": "TrimEnd",
+              "MethodId": "System.String.TrimEnd(System.Char)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Dependencies.Path.ToString()",
+          "Name": "ToString",
+          "LineNumber": 57,
+          "Inputs": [],
+          "ReturnType": "System.String",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.DocumentManagementConfigurationExtensions",
       "StandardElementType": "Exposure",
       "LineNumber": 9,
@@ -5062,7 +5664,7 @@
     {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
       "StandardElementType": "HttpExposure",
-      "LineNumber": 21,
+      "LineNumber": 23,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": {
@@ -5081,7 +5683,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController.Delete(System.Guid)",
           "Name": "Delete",
-          "LineNumber": 210,
+          "LineNumber": 241,
           "Inputs": [
             {
               "Name": "key",
@@ -5097,6 +5699,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFileContentManager",
@@ -5129,7 +5738,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 400,
@@ -5138,7 +5748,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -5147,7 +5758,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -5160,7 +5772,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController.Get(System.Guid)",
           "Name": "Get",
-          "LineNumber": 80,
+          "LineNumber": 89,
           "Inputs": [
             {
               "Name": "key",
@@ -5185,6 +5797,13 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFileContentManager",
               "MethodName": "GetAll",
               "MethodId": "cCoder.DocumentManagement.Exposures.IFileContentManager.GetAll(System.Boolean)",
@@ -5213,7 +5832,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 403,
@@ -5222,7 +5842,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 404,
@@ -5231,7 +5852,8 @@
               "IsExceptionPath": false,
               "IsNullPath": true,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             }
           ],
           "IsHttpRequestHandler": true,
@@ -5244,7 +5866,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController.GetAll(Microsoft.AspNetCore.OData.Query.ODataQueryOptions\u003CcCoder.Data.Models.DMS.FileContent\u003E)",
           "Name": "GetAll",
-          "LineNumber": 54,
+          "LineNumber": 59,
           "Inputs": [
             {
               "Name": "queryOptions",
@@ -5254,6 +5876,13 @@
           "ReturnType": "IActionResult",
           "Implements": [],
           "Calls": [
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFileContentManager",
               "MethodName": "GetAll",
@@ -5283,7 +5912,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 403,
@@ -5292,7 +5922,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -5305,11 +5936,18 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController.GetMetadata()",
           "Name": "GetMetadata",
-          "LineNumber": 27,
+          "LineNumber": 30,
           "Inputs": [],
           "ReturnType": "IActionResult",
           "Implements": [],
           "Calls": [
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
             {
               "TypeName": "cCoder.DocumentManagement.Extensions.OData.IEdmModelExtensions",
               "MethodName": "GetExtendedMetadataForType",
@@ -5339,7 +5977,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             }
           ],
           "IsHttpRequestHandler": true,
@@ -5352,7 +5991,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController.Post(cCoder.Data.Models.DMS.FileContent)",
           "Name": "Post",
-          "LineNumber": 113,
+          "LineNumber": 126,
           "Inputs": [
             {
               "Name": "entity",
@@ -5368,6 +6007,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFileContentManager",
@@ -5400,7 +6046,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -5409,7 +6056,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -5422,7 +6070,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController.Put(System.Guid,cCoder.Data.Models.DMS.FileContent)",
           "Name": "Put",
-          "LineNumber": 149,
+          "LineNumber": 168,
           "Inputs": [
             {
               "Name": "key",
@@ -5442,6 +6090,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFileContentManager",
@@ -5474,7 +6129,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 400,
@@ -5483,7 +6139,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -5492,7 +6149,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -5505,7 +6163,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController.PutPatchAsync(System.Guid,Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.FileContent\u003E)",
           "Name": "PutPatchAsync",
-          "LineNumber": 178,
+          "LineNumber": 203,
           "Inputs": [
             {
               "Name": "key",
@@ -5539,6 +6197,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.NotFound(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFileContentManager",
@@ -5576,7 +6241,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 400,
@@ -5585,7 +6251,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -5594,7 +6261,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 404,
@@ -5603,7 +6271,8 @@
               "IsExceptionPath": false,
               "IsNullPath": true,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             }
           ],
           "IsHttpRequestHandler": true,
@@ -5618,7 +6287,7 @@
     {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
       "StandardElementType": "HttpExposure",
-      "LineNumber": 21,
+      "LineNumber": 23,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": {
@@ -5637,7 +6306,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileController.Delete(System.Guid)",
           "Name": "Delete",
-          "LineNumber": 208,
+          "LineNumber": 239,
           "Inputs": [
             {
               "Name": "key",
@@ -5653,6 +6322,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFileManager",
@@ -5685,7 +6361,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 400,
@@ -5694,7 +6371,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -5703,7 +6381,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -5716,7 +6395,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileController.Get(System.Guid)",
           "Name": "Get",
-          "LineNumber": 81,
+          "LineNumber": 90,
           "Inputs": [
             {
               "Name": "key",
@@ -5732,6 +6411,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.NotFound(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFileManager",
@@ -5763,7 +6449,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 403,
@@ -5772,7 +6459,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 404,
@@ -5781,7 +6469,8 @@
               "IsExceptionPath": false,
               "IsNullPath": true,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             }
           ],
           "IsHttpRequestHandler": true,
@@ -5794,7 +6483,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileController.GetAll(Microsoft.AspNetCore.OData.Query.ODataQueryOptions\u003CcCoder.Data.Models.DMS.File\u003E)",
           "Name": "GetAll",
-          "LineNumber": 55,
+          "LineNumber": 60,
           "Inputs": [
             {
               "Name": "queryOptions",
@@ -5804,6 +6493,13 @@
           "ReturnType": "IActionResult",
           "Implements": [],
           "Calls": [
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFileManager",
               "MethodName": "GetAll",
@@ -5833,7 +6529,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 403,
@@ -5842,7 +6539,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -5855,11 +6553,18 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileController.GetMetadata()",
           "Name": "GetMetadata",
-          "LineNumber": 27,
+          "LineNumber": 30,
           "Inputs": [],
           "ReturnType": "IActionResult",
           "Implements": [],
           "Calls": [
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
             {
               "TypeName": "cCoder.DocumentManagement.Extensions.OData.IEdmModelExtensions",
               "MethodName": "GetExtendedMetadataForType",
@@ -5889,7 +6594,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             }
           ],
           "IsHttpRequestHandler": true,
@@ -5902,7 +6608,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileController.Post(cCoder.Data.Models.DMS.File)",
           "Name": "Post",
-          "LineNumber": 113,
+          "LineNumber": 126,
           "Inputs": [
             {
               "Name": "entity",
@@ -5918,6 +6624,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFileManager",
@@ -5950,7 +6663,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -5959,7 +6673,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -5972,7 +6687,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileController.Put(System.Guid,cCoder.Data.Models.DMS.File)",
           "Name": "Put",
-          "LineNumber": 149,
+          "LineNumber": 168,
           "Inputs": [
             {
               "Name": "key",
@@ -5992,6 +6707,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFileManager",
@@ -6024,7 +6746,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 400,
@@ -6033,7 +6756,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -6042,7 +6766,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6055,7 +6780,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileController.PutPatchAsync(System.Guid,Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.File\u003E)",
           "Name": "PutPatchAsync",
-          "LineNumber": 178,
+          "LineNumber": 203,
           "Inputs": [
             {
               "Name": "key",
@@ -6091,6 +6816,13 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFileManager",
               "MethodName": "Get",
               "MethodId": "cCoder.DocumentManagement.Exposures.IFileManager.Get(System.Guid)",
@@ -6126,7 +6858,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 400,
@@ -6135,7 +6868,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -6144,7 +6878,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 404,
@@ -6153,7 +6888,8 @@
               "IsExceptionPath": false,
               "IsNullPath": true,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6168,7 +6904,7 @@
     {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
       "StandardElementType": "HttpExposure",
-      "LineNumber": 24,
+      "LineNumber": 26,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": {
@@ -6187,7 +6923,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.Delete(System.Guid)",
           "Name": "Delete",
-          "LineNumber": 243,
+          "LineNumber": 280,
           "Inputs": [
             {
               "Name": "key",
@@ -6203,6 +6939,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFolderManager",
@@ -6235,7 +6978,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 400,
@@ -6244,7 +6988,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -6253,7 +6998,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6266,7 +7012,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.Get(System.Guid)",
           "Name": "Get",
-          "LineNumber": 116,
+          "LineNumber": 131,
           "Inputs": [
             {
               "Name": "key",
@@ -6282,6 +7028,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.NotFound(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFolderManager",
@@ -6313,7 +7066,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 403,
@@ -6322,7 +7076,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 404,
@@ -6331,7 +7086,8 @@
               "IsExceptionPath": false,
               "IsNullPath": true,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6344,7 +7100,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.GetAll(Microsoft.AspNetCore.OData.Query.ODataQueryOptions\u003CcCoder.Data.Models.DMS.Folder\u003E)",
           "Name": "GetAll",
-          "LineNumber": 90,
+          "LineNumber": 101,
           "Inputs": [
             {
               "Name": "queryOptions",
@@ -6354,6 +7110,13 @@
           "ReturnType": "IActionResult",
           "Implements": [],
           "Calls": [
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFolderManager",
               "MethodName": "GetAll",
@@ -6383,7 +7146,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 403,
@@ -6392,7 +7156,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6405,11 +7170,18 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.GetMetadata()",
           "Name": "GetMetadata",
-          "LineNumber": 63,
+          "LineNumber": 72,
           "Inputs": [],
           "ReturnType": "IActionResult",
           "Implements": [],
           "Calls": [
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
             {
               "TypeName": "cCoder.DocumentManagement.Extensions.OData.IEdmModelExtensions",
               "MethodName": "GetExtendedMetadataForType",
@@ -6439,7 +7211,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6452,7 +7225,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.Post(cCoder.Data.Models.DMS.Folder)",
           "Name": "Post",
-          "LineNumber": 148,
+          "LineNumber": 167,
           "Inputs": [
             {
               "Name": "newFolder",
@@ -6468,6 +7241,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFolderManager",
@@ -6499,7 +7279,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -6508,7 +7289,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6521,7 +7303,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.PostCopyAsync(System.String,System.String,System.Int32,System.Int32)",
           "Name": "PostCopyAsync",
-          "LineNumber": 31,
+          "LineNumber": 34,
           "Inputs": [
             {
               "Name": "source",
@@ -6549,6 +7331,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFolderManager",
@@ -6581,7 +7370,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 400,
@@ -6590,7 +7380,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -6599,7 +7390,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6612,7 +7404,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.Put(System.Guid,cCoder.Data.Models.DMS.Folder)",
           "Name": "Put",
-          "LineNumber": 184,
+          "LineNumber": 209,
           "Inputs": [
             {
               "Name": "key",
@@ -6632,6 +7424,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFolderManager",
@@ -6665,7 +7464,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 400,
@@ -6674,7 +7474,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -6683,7 +7484,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6696,7 +7498,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.PutPatchAsync(System.Guid,Microsoft.AspNetCore.OData.Deltas.Delta\u003CcCoder.Data.Models.DMS.Folder\u003E)",
           "Name": "PutPatchAsync",
-          "LineNumber": 213,
+          "LineNumber": 244,
           "Inputs": [
             {
               "Name": "key",
@@ -6732,6 +7534,13 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFolderManager",
               "MethodName": "Get",
               "MethodId": "cCoder.DocumentManagement.Exposures.IFolderManager.Get(System.Guid)",
@@ -6768,7 +7577,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 400,
@@ -6777,7 +7587,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -6786,7 +7597,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 404,
@@ -6795,7 +7607,8 @@
               "IsExceptionPath": false,
               "IsNullPath": true,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6810,7 +7623,7 @@
     {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
       "StandardElementType": "HttpExposure",
-      "LineNumber": 18,
+      "LineNumber": 19,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": {
@@ -6829,7 +7642,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController.DeleteAll(cCoder.DocumentManagement.Models.OData.ODataCollection\u003CcCoder.Data.Models.Security.FolderRole\u003E)",
           "Name": "DeleteAll",
-          "LineNumber": 87,
+          "LineNumber": 101,
           "Inputs": [
             {
               "Name": "deletedFolderRole",
@@ -6845,6 +7658,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFolderRoleManager",
@@ -6877,7 +7697,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 400,
@@ -6886,7 +7707,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -6895,7 +7717,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6908,11 +7731,18 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController.GetAll()",
           "Name": "GetAll",
-          "LineNumber": 42,
+          "LineNumber": 46,
           "Inputs": [],
           "ReturnType": "IActionResult",
           "Implements": [],
           "Calls": [
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFolderRoleManager",
               "MethodName": "GetAll",
@@ -6942,7 +7772,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             },
             {
               "StatusCode": 403,
@@ -6951,7 +7782,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6964,11 +7796,19 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController.GetMetadata()",
           "Name": "GetMetadata",
-          "LineNumber": 24,
+          "LineNumber": 26,
           "Inputs": [],
           "ReturnType": "IActionResult",
           "Implements": [],
-          "Calls": [],
+          "Calls": [
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            }
+          ],
           "PossibleExceptionTypes": [],
           "IncomingExceptionTypes": [],
           "ThrowsExceptionTypes": [],
@@ -6983,7 +7823,8 @@
               "IsExceptionPath": false,
               "IsNullPath": false,
               "HasBody": true,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": false
             }
           ],
           "IsHttpRequestHandler": true,
@@ -6996,7 +7837,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController.Post(cCoder.Data.Models.Security.FolderRole)",
           "Name": "Post",
-          "LineNumber": 59,
+          "LineNumber": 67,
           "Inputs": [
             {
               "Name": "newFolderRole",
@@ -7012,6 +7853,13 @@
               "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFolderRoleManager",
@@ -7044,7 +7892,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             },
             {
               "StatusCode": 403,
@@ -7053,7 +7902,8 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
-              "ExposesExceptionDetails": false
+              "ExposesExceptionDetails": false,
+              "LogsException": true
             }
           ],
           "IsHttpRequestHandler": true,
@@ -7087,22 +7937,22 @@
       "Properties": [],
       "Methods": [
         {
-          "Id": "cCoder.DocumentManagement.Exposures.Dms.CopyAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Exposures.Dms.CopyAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "CopyAsync",
           "LineNumber": 57,
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IDms.CopyAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)"
+            "cCoder.DocumentManagement.Exposures.IDms.CopyAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)"
           ],
           "Calls": [],
           "PossibleExceptionTypes": [
@@ -7129,13 +7979,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.Dms.DropAsync(cCoder.DocumentManagement.Models.Path,System.Int32)",
+          "Id": "cCoder.DocumentManagement.Exposures.Dms.DropAsync(cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
           "Name": "DropAsync",
           "LineNumber": 54,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -7144,7 +7994,7 @@
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IDms.DropAsync(cCoder.DocumentManagement.Models.Path,System.Int32)"
+            "cCoder.DocumentManagement.Exposures.IDms.DropAsync(cCoder.DocumentManagement.Dependencies.Path,System.Int32)"
           ],
           "Calls": [],
           "PossibleExceptionTypes": [
@@ -7171,13 +8021,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.Dms.Get(cCoder.DocumentManagement.Models.Path,System.Int32,System.String)",
+          "Id": "cCoder.DocumentManagement.Exposures.Dms.Get(cCoder.DocumentManagement.Dependencies.Path,System.Int32,System.String)",
           "Name": "Get",
           "LineNumber": 27,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -7190,7 +8040,7 @@
           ],
           "ReturnType": "cCoder.DocumentManagement.Models.DMSResult",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IDms.Get(cCoder.DocumentManagement.Models.Path,System.Int32,System.String)"
+            "cCoder.DocumentManagement.Exposures.IDms.Get(cCoder.DocumentManagement.Dependencies.Path,System.Int32,System.String)"
           ],
           "Calls": [
             {
@@ -7225,18 +8075,18 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.Dms.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E)",
+          "Id": "cCoder.DocumentManagement.Exposures.Dms.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E)",
           "Name": "GetFilesZipped",
           "LineNumber": 17,
           "Inputs": [
             {
               "Name": "paths",
-              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E"
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
             }
           ],
           "ReturnType": "cCoder.DocumentManagement.Models.DMSResult",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IDms.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E)"
+            "cCoder.DocumentManagement.Exposures.IDms.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E)"
           ],
           "Calls": [
             {
@@ -7278,22 +8128,22 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.Dms.MoveAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Exposures.Dms.MoveAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "MoveAsync",
           "LineNumber": 60,
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IDms.MoveAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)"
+            "cCoder.DocumentManagement.Exposures.IDms.MoveAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)"
           ],
           "Calls": [],
           "PossibleExceptionTypes": [
@@ -7320,13 +8170,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.Dms.SaveAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+          "Id": "cCoder.DocumentManagement.Exposures.Dms.SaveAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
           "Name": "SaveAsync",
           "LineNumber": 51,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -7335,7 +8185,7 @@
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IDms.SaveAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)"
+            "cCoder.DocumentManagement.Exposures.IDms.SaveAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)"
           ],
           "Calls": [],
           "PossibleExceptionTypes": [
@@ -7408,13 +8258,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.Dms.UnpackAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream,System.Boolean)",
+          "Id": "cCoder.DocumentManagement.Exposures.Dms.UnpackAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream,System.Boolean)",
           "Name": "UnpackAsync",
           "LineNumber": 45,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -7427,7 +8277,7 @@
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IDms.UnpackAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream,System.Boolean)"
+            "cCoder.DocumentManagement.Exposures.IDms.UnpackAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream,System.Boolean)"
           ],
           "Calls": [],
           "PossibleExceptionTypes": [
@@ -7522,22 +8372,22 @@
       "Properties": [],
       "Methods": [
         {
-          "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.CopyDmsPathAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.CopyDmsPathAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "CopyDmsPathAsync",
           "LineNumber": 36,
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.CopyDmsPathAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)"
+            "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.CopyDmsPathAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)"
           ],
           "Calls": [
             {
@@ -7572,13 +8422,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.DropDmsPathAsync(cCoder.DocumentManagement.Models.Path,System.Int32)",
+          "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.DropDmsPathAsync(cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
           "Name": "DropDmsPathAsync",
           "LineNumber": 43,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -7587,7 +8437,7 @@
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.DropDmsPathAsync(cCoder.DocumentManagement.Models.Path,System.Int32)"
+            "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.DropDmsPathAsync(cCoder.DocumentManagement.Dependencies.Path,System.Int32)"
           ],
           "Calls": [
             {
@@ -7622,13 +8472,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.GetDmsPath(cCoder.DocumentManagement.Models.Path,System.Int32)",
+          "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.GetDmsPath(cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
           "Name": "GetDmsPath",
           "LineNumber": 15,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -7637,7 +8487,7 @@
           ],
           "ReturnType": "cCoder.DocumentManagement.Models.DMSResult",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.GetDmsPath(cCoder.DocumentManagement.Models.Path,System.Int32)"
+            "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.GetDmsPath(cCoder.DocumentManagement.Dependencies.Path,System.Int32)"
           ],
           "Calls": [
             {
@@ -7672,22 +8522,22 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.MoveDmsPathAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.MoveDmsPathAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "MoveDmsPathAsync",
           "LineNumber": 29,
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.MoveDmsPathAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)"
+            "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.MoveDmsPathAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)"
           ],
           "Calls": [
             {
@@ -7722,13 +8572,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.SaveDmsPathAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+          "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.SaveDmsPathAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
           "Name": "SaveDmsPathAsync",
           "LineNumber": 22,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -7737,7 +8587,7 @@
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.SaveDmsPathAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)"
+            "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.SaveDmsPathAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)"
           ],
           "Calls": [
             {
@@ -8707,7 +9557,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Id": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure.CopyFilePathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure.CopyFilePathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "CopyFilePathAsync",
           "LineNumber": 23,
           "Inputs": [
@@ -8717,22 +9567,22 @@
             },
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure.CopyFilePathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)"
+            "cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure.CopyFilePathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)"
           ],
           "Calls": [
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService",
               "MethodName": "CopyAppPathAsync",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.CopyAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.CopyAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             }
@@ -8750,7 +9600,7 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure.SaveFilePathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+          "Id": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure.SaveFilePathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
           "Name": "SaveFilePathAsync",
           "LineNumber": 14,
           "Inputs": [
@@ -8760,7 +9610,7 @@
             },
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -8769,13 +9619,13 @@
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
           "Implements": [
-            "cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure.SaveFilePathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,System.IO.Stream)"
+            "cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure.SaveFilePathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)"
           ],
           "Calls": [
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService",
               "MethodName": "SaveAppPathAsync",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.SaveAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.SaveAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             }
@@ -9383,6 +10233,38 @@
       "Methods": []
     },
     {
+      "Name": "cCoder.DocumentManagement.Extensions.DocumentManagementConfigurationFactory",
+      "StandardElementType": "Exposure",
+      "LineNumber": 9,
+      "IsPublic": true,
+      "Kind": "Class",
+      "BaseType": null,
+      "Interfaces": [],
+      "Properties": [],
+      "Methods": [
+        {
+          "Id": "cCoder.DocumentManagement.Extensions.DocumentManagementConfigurationFactory.CreateDocumentManagementConfiguration()",
+          "Name": "CreateDocumentManagementConfiguration",
+          "LineNumber": 11,
+          "Inputs": [],
+          "ReturnType": "cCoder.DocumentManagement.Models.DocumentManagementConfiguration",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        }
+      ]
+    },
+    {
       "Name": "cCoder.DocumentManagement.Extensions.IQueryableExtensions",
       "StandardElementType": "Exposure",
       "LineNumber": 9,
@@ -9818,7 +10700,7 @@
     {
       "Name": "cCoder.DocumentManagement.Extensions.OData.IEdmModelExtensions",
       "StandardElementType": "Exposure",
-      "LineNumber": 11,
+      "LineNumber": 12,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": null,
@@ -9828,7 +10710,7 @@
         {
           "Id": "cCoder.DocumentManagement.Extensions.OData.IEdmModelExtensions.GetExtendedMetadataForType(Microsoft.OData.Edm.IEdmModel,System.String,System.Type,System.Boolean)",
           "Name": "GetExtendedMetadataForType",
-          "LineNumber": 13,
+          "LineNumber": 14,
           "Inputs": [
             {
               "Name": "model",
@@ -10046,7 +10928,7 @@
     {
       "Name": "cCoder.DocumentManagement.Extensions.OData.ODataMetadataProvider",
       "StandardElementType": "Exposure",
-      "LineNumber": 9,
+      "LineNumber": 10,
       "IsPublic": false,
       "Kind": "Class",
       "BaseType": null,
@@ -10176,7 +11058,7 @@
         {
           "Id": "cCoder.DocumentManagement.IServiceCollectionExtensions.AddDocumentManagementHostedServices(IServiceCollection,System.Action\u003CcCoder.DocumentManagement.Models.DocumentManagementConfiguration\u003E)",
           "Name": "AddDocumentManagementHostedServices",
-          "LineNumber": 71,
+          "LineNumber": 72,
           "Inputs": [
             {
               "Name": "services",
@@ -10196,6 +11078,13 @@
               "MethodId": "System.Action\u003CT\u003E.Invoke(T)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Extensions.DocumentManagementConfigurationFactory",
+              "MethodName": "CreateDocumentManagementConfiguration",
+              "MethodId": "cCoder.DocumentManagement.Extensions.DocumentManagementConfigurationFactory.CreateDocumentManagementConfiguration()",
+              "StandardElementType": "Exposure",
+              "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.IServiceCollectionExtensions",
@@ -10220,7 +11109,7 @@
         {
           "Id": "cCoder.DocumentManagement.IServiceCollectionExtensions.AddDocumentManagementHostedServices(IServiceCollection,cCoder.DocumentManagement.Models.DocumentManagementConfiguration)",
           "Name": "AddDocumentManagementHostedServices",
-          "LineNumber": 80,
+          "LineNumber": 81,
           "Inputs": [
             {
               "Name": "services",
@@ -10249,7 +11138,7 @@
         {
           "Id": "cCoder.DocumentManagement.IServiceCollectionExtensions.AddDocumentManagementWeb(IServiceCollection,System.Action\u003CcCoder.DocumentManagement.Models.DocumentManagementConfiguration\u003E,Microsoft.OData.ModelBuilder.ODataConventionModelBuilder)",
           "Name": "AddDocumentManagementWeb",
-          "LineNumber": 43,
+          "LineNumber": 44,
           "Inputs": [
             {
               "Name": "services",
@@ -10275,6 +11164,13 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "cCoder.DocumentManagement.Extensions.DocumentManagementConfigurationFactory",
+              "MethodName": "CreateDocumentManagementConfiguration",
+              "MethodId": "cCoder.DocumentManagement.Extensions.DocumentManagementConfigurationFactory.CreateDocumentManagementConfiguration()",
+              "StandardElementType": "Exposure",
+              "IsDependencyBoundary": false
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.IServiceCollectionExtensions",
               "MethodName": "AddDocumentManagementWeb",
               "MethodId": "cCoder.DocumentManagement.IServiceCollectionExtensions.AddDocumentManagementWeb(IServiceCollection,cCoder.DocumentManagement.Models.DocumentManagementConfiguration,Microsoft.OData.ModelBuilder.ODataConventionModelBuilder)",
@@ -10297,7 +11193,7 @@
         {
           "Id": "cCoder.DocumentManagement.IServiceCollectionExtensions.AddDocumentManagementWeb(IServiceCollection,cCoder.DocumentManagement.Models.DocumentManagementConfiguration,Microsoft.OData.ModelBuilder.ODataConventionModelBuilder)",
           "Name": "AddDocumentManagementWeb",
-          "LineNumber": 53,
+          "LineNumber": 54,
           "Inputs": [
             {
               "Name": "services",
@@ -10815,18 +11711,7 @@
       "IsPublic": false,
       "Kind": "Class",
       "BaseType": null,
-      "Interfaces": [
-        {
-          "Id": "System.Private.CoreLib:System.IEquatable\u003CcCoder.DocumentManagement.Models.FolderArchiveData\u003E",
-          "FullName": "System.IEquatable\u003CcCoder.DocumentManagement.Models.FolderArchiveData\u003E",
-          "Name": "IEquatable",
-          "Namespace": "System",
-          "AssemblyName": "System.Private.CoreLib",
-          "Kind": "Interface",
-          "IsInCurrentProject": false,
-          "StandardElementType": "Dependency"
-        }
-      ],
+      "Interfaces": [],
       "Properties": [
         {
           "Name": "FileContentsByFileId",
@@ -10841,153 +11726,7 @@
           "Type": "System.Linq.ILookup\u003CSystem.Guid?, cCoder.Data.Models.DMS.Folder\u003E"
         }
       ],
-      "Methods": [
-        {
-          "Id": "cCoder.DocumentManagement.Models.FolderArchiveData.\u003CClone\u003E$()",
-          "Name": "\u003CClone\u003E$",
-          "LineNumber": 9,
-          "Inputs": [],
-          "ReturnType": "cCoder.DocumentManagement.Models.FolderArchiveData",
-          "Implements": [],
-          "Calls": [],
-          "PossibleExceptionTypes": [],
-          "IncomingExceptionTypes": [],
-          "ThrowsExceptionTypes": [],
-          "HttpMethods": [],
-          "HttpResponses": [],
-          "IsHttpRequestHandler": false,
-          "IsODataControllerAction": false,
-          "HasFromBodyParameter": false,
-          "HasKeyParameter": false,
-          "HandlesNullWithNotFound": false,
-          "HasTryCatch": false
-        },
-        {
-          "Id": "cCoder.DocumentManagement.Models.FolderArchiveData.Deconstruct(System.Linq.ILookup\u003CSystem.Guid?, cCoder.Data.Models.DMS.Folder\u003E,System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.File\u003E,System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.FileContent\u003E)",
-          "Name": "Deconstruct",
-          "LineNumber": 9,
-          "Inputs": [
-            {
-              "Name": "SubFoldersByParentId",
-              "Type": "System.Linq.ILookup\u003CSystem.Guid?, cCoder.Data.Models.DMS.Folder\u003E"
-            },
-            {
-              "Name": "FilesByFolderId",
-              "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.File\u003E"
-            },
-            {
-              "Name": "FileContentsByFileId",
-              "Type": "System.Linq.ILookup\u003CSystem.Guid, cCoder.Data.Models.DMS.FileContent\u003E"
-            }
-          ],
-          "ReturnType": "System.Void",
-          "Implements": [],
-          "Calls": [],
-          "PossibleExceptionTypes": [],
-          "IncomingExceptionTypes": [],
-          "ThrowsExceptionTypes": [],
-          "HttpMethods": [],
-          "HttpResponses": [],
-          "IsHttpRequestHandler": false,
-          "IsODataControllerAction": false,
-          "HasFromBodyParameter": false,
-          "HasKeyParameter": false,
-          "HandlesNullWithNotFound": false,
-          "HasTryCatch": false
-        },
-        {
-          "Id": "cCoder.DocumentManagement.Models.FolderArchiveData.Equals(System.Object?)",
-          "Name": "Equals",
-          "LineNumber": 9,
-          "Inputs": [
-            {
-              "Name": "obj",
-              "Type": "System.Object?"
-            }
-          ],
-          "ReturnType": "System.Boolean",
-          "Implements": [],
-          "Calls": [],
-          "PossibleExceptionTypes": [],
-          "IncomingExceptionTypes": [],
-          "ThrowsExceptionTypes": [],
-          "HttpMethods": [],
-          "HttpResponses": [],
-          "IsHttpRequestHandler": false,
-          "IsODataControllerAction": false,
-          "HasFromBodyParameter": false,
-          "HasKeyParameter": false,
-          "HandlesNullWithNotFound": false,
-          "HasTryCatch": false
-        },
-        {
-          "Id": "cCoder.DocumentManagement.Models.FolderArchiveData.Equals(cCoder.DocumentManagement.Models.FolderArchiveData?)",
-          "Name": "Equals",
-          "LineNumber": 9,
-          "Inputs": [
-            {
-              "Name": "other",
-              "Type": "cCoder.DocumentManagement.Models.FolderArchiveData?"
-            }
-          ],
-          "ReturnType": "System.Boolean",
-          "Implements": [
-            "System.IEquatable\u003CcCoder.DocumentManagement.Models.FolderArchiveData\u003E.Equals(cCoder.DocumentManagement.Models.FolderArchiveData?)"
-          ],
-          "Calls": [],
-          "PossibleExceptionTypes": [],
-          "IncomingExceptionTypes": [],
-          "ThrowsExceptionTypes": [],
-          "HttpMethods": [],
-          "HttpResponses": [],
-          "IsHttpRequestHandler": false,
-          "IsODataControllerAction": false,
-          "HasFromBodyParameter": false,
-          "HasKeyParameter": false,
-          "HandlesNullWithNotFound": false,
-          "HasTryCatch": false
-        },
-        {
-          "Id": "cCoder.DocumentManagement.Models.FolderArchiveData.GetHashCode()",
-          "Name": "GetHashCode",
-          "LineNumber": 9,
-          "Inputs": [],
-          "ReturnType": "System.Int32",
-          "Implements": [],
-          "Calls": [],
-          "PossibleExceptionTypes": [],
-          "IncomingExceptionTypes": [],
-          "ThrowsExceptionTypes": [],
-          "HttpMethods": [],
-          "HttpResponses": [],
-          "IsHttpRequestHandler": false,
-          "IsODataControllerAction": false,
-          "HasFromBodyParameter": false,
-          "HasKeyParameter": false,
-          "HandlesNullWithNotFound": false,
-          "HasTryCatch": false
-        },
-        {
-          "Id": "cCoder.DocumentManagement.Models.FolderArchiveData.ToString()",
-          "Name": "ToString",
-          "LineNumber": 9,
-          "Inputs": [],
-          "ReturnType": "System.String",
-          "Implements": [],
-          "Calls": [],
-          "PossibleExceptionTypes": [],
-          "IncomingExceptionTypes": [],
-          "ThrowsExceptionTypes": [],
-          "HttpMethods": [],
-          "HttpResponses": [],
-          "IsHttpRequestHandler": false,
-          "IsODataControllerAction": false,
-          "HasFromBodyParameter": false,
-          "HasKeyParameter": false,
-          "HandlesNullWithNotFound": false,
-          "HasTryCatch": false
-        }
-      ]
+      "Methods": []
     },
     {
       "Name": "cCoder.DocumentManagement.Models.FolderRoleContext",
@@ -11077,7 +11816,7 @@
     {
       "Name": "cCoder.DocumentManagement.Models.OData.MetadataContainer",
       "StandardElementType": "Model",
-      "LineNumber": 12,
+      "LineNumber": 7,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": null,
@@ -11285,414 +12024,6 @@
         }
       ],
       "Methods": []
-    },
-    {
-      "Name": "cCoder.DocumentManagement.Models.Path",
-      "StandardElementType": "Model",
-      "LineNumber": 7,
-      "IsPublic": true,
-      "Kind": "Class",
-      "BaseType": null,
-      "Interfaces": [
-        {
-          "Id": "System.Private.CoreLib:System.IEquatable\u003CcCoder.DocumentManagement.Models.Path\u003E",
-          "FullName": "System.IEquatable\u003CcCoder.DocumentManagement.Models.Path\u003E",
-          "Name": "IEquatable",
-          "Namespace": "System",
-          "AssemblyName": "System.Private.CoreLib",
-          "Kind": "Interface",
-          "IsInCurrentProject": false,
-          "StandardElementType": "Dependency"
-        }
-      ],
-      "Properties": [
-        {
-          "Name": "Depth",
-          "Type": "System.Int32"
-        },
-        {
-          "Name": "Empty",
-          "Type": "cCoder.DocumentManagement.Models.Path"
-        },
-        {
-          "Name": "Extension",
-          "Type": "System.String"
-        },
-        {
-          "Name": "FullPath",
-          "Type": "System.String"
-        },
-        {
-          "Name": "IsToFile",
-          "Type": "System.Boolean"
-        },
-        {
-          "Name": "Length",
-          "Type": "System.Int32"
-        },
-        {
-          "Name": "Lowered",
-          "Type": "System.String"
-        },
-        {
-          "Name": "MimeType",
-          "Type": "System.String"
-        },
-        {
-          "Name": "Name",
-          "Type": "System.String"
-        },
-        {
-          "Name": "ParentPath",
-          "Type": "cCoder.DocumentManagement.Models.Path"
-        },
-        {
-          "Name": "Segments",
-          "Type": "System.String[]"
-        }
-      ],
-      "Methods": [
-        {
-          "Id": "cCoder.DocumentManagement.Models.Path.\u003CClone\u003E$()",
-          "Name": "\u003CClone\u003E$",
-          "LineNumber": 7,
-          "Inputs": [],
-          "ReturnType": "cCoder.DocumentManagement.Models.Path",
-          "Implements": [],
-          "Calls": [
-            {
-              "TypeName": "System.Linq.Enumerable",
-              "MethodName": "Last",
-              "MethodId": "System.Linq.Enumerable.Last(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.Linq.Enumerable",
-              "MethodName": "LastOrDefault",
-              "MethodId": "System.Linq.Enumerable.LastOrDefault(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Contains",
-              "MethodId": "System.String.Contains(System.Char)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Join",
-              "MethodId": "System.String.Join(System.String?,System.String?[])",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Split",
-              "MethodId": "System.String.Split(System.Char,System.StringSplitOptions)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "ToLower",
-              "MethodId": "System.String.ToLower()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Trim",
-              "MethodId": "System.String.Trim()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "TrimEnd",
-              "MethodId": "System.String.TrimEnd(System.Char)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            }
-          ],
-          "PossibleExceptionTypes": [],
-          "IncomingExceptionTypes": [],
-          "ThrowsExceptionTypes": [],
-          "HttpMethods": [],
-          "HttpResponses": [],
-          "IsHttpRequestHandler": false,
-          "IsODataControllerAction": false,
-          "HasFromBodyParameter": false,
-          "HasKeyParameter": false,
-          "HandlesNullWithNotFound": false,
-          "HasTryCatch": false
-        },
-        {
-          "Id": "cCoder.DocumentManagement.Models.Path.Equals(System.Object?)",
-          "Name": "Equals",
-          "LineNumber": 7,
-          "Inputs": [
-            {
-              "Name": "obj",
-              "Type": "System.Object?"
-            }
-          ],
-          "ReturnType": "System.Boolean",
-          "Implements": [],
-          "Calls": [
-            {
-              "TypeName": "System.Linq.Enumerable",
-              "MethodName": "Last",
-              "MethodId": "System.Linq.Enumerable.Last(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.Linq.Enumerable",
-              "MethodName": "LastOrDefault",
-              "MethodId": "System.Linq.Enumerable.LastOrDefault(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Contains",
-              "MethodId": "System.String.Contains(System.Char)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Join",
-              "MethodId": "System.String.Join(System.String?,System.String?[])",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Split",
-              "MethodId": "System.String.Split(System.Char,System.StringSplitOptions)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "ToLower",
-              "MethodId": "System.String.ToLower()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Trim",
-              "MethodId": "System.String.Trim()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "TrimEnd",
-              "MethodId": "System.String.TrimEnd(System.Char)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            }
-          ],
-          "PossibleExceptionTypes": [],
-          "IncomingExceptionTypes": [],
-          "ThrowsExceptionTypes": [],
-          "HttpMethods": [],
-          "HttpResponses": [],
-          "IsHttpRequestHandler": false,
-          "IsODataControllerAction": false,
-          "HasFromBodyParameter": false,
-          "HasKeyParameter": false,
-          "HandlesNullWithNotFound": false,
-          "HasTryCatch": false
-        },
-        {
-          "Id": "cCoder.DocumentManagement.Models.Path.Equals(cCoder.DocumentManagement.Models.Path?)",
-          "Name": "Equals",
-          "LineNumber": 7,
-          "Inputs": [
-            {
-              "Name": "other",
-              "Type": "cCoder.DocumentManagement.Models.Path?"
-            }
-          ],
-          "ReturnType": "System.Boolean",
-          "Implements": [
-            "System.IEquatable\u003CcCoder.DocumentManagement.Models.Path\u003E.Equals(cCoder.DocumentManagement.Models.Path?)"
-          ],
-          "Calls": [
-            {
-              "TypeName": "System.Linq.Enumerable",
-              "MethodName": "Last",
-              "MethodId": "System.Linq.Enumerable.Last(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.Linq.Enumerable",
-              "MethodName": "LastOrDefault",
-              "MethodId": "System.Linq.Enumerable.LastOrDefault(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Contains",
-              "MethodId": "System.String.Contains(System.Char)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Join",
-              "MethodId": "System.String.Join(System.String?,System.String?[])",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Split",
-              "MethodId": "System.String.Split(System.Char,System.StringSplitOptions)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "ToLower",
-              "MethodId": "System.String.ToLower()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Trim",
-              "MethodId": "System.String.Trim()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "TrimEnd",
-              "MethodId": "System.String.TrimEnd(System.Char)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            }
-          ],
-          "PossibleExceptionTypes": [],
-          "IncomingExceptionTypes": [],
-          "ThrowsExceptionTypes": [],
-          "HttpMethods": [],
-          "HttpResponses": [],
-          "IsHttpRequestHandler": false,
-          "IsODataControllerAction": false,
-          "HasFromBodyParameter": false,
-          "HasKeyParameter": false,
-          "HandlesNullWithNotFound": false,
-          "HasTryCatch": false
-        },
-        {
-          "Id": "cCoder.DocumentManagement.Models.Path.GetHashCode()",
-          "Name": "GetHashCode",
-          "LineNumber": 7,
-          "Inputs": [],
-          "ReturnType": "System.Int32",
-          "Implements": [],
-          "Calls": [
-            {
-              "TypeName": "System.Linq.Enumerable",
-              "MethodName": "Last",
-              "MethodId": "System.Linq.Enumerable.Last(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.Linq.Enumerable",
-              "MethodName": "LastOrDefault",
-              "MethodId": "System.Linq.Enumerable.LastOrDefault(System.Collections.Generic.IEnumerable\u003CTSource\u003E)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Contains",
-              "MethodId": "System.String.Contains(System.Char)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Join",
-              "MethodId": "System.String.Join(System.String?,System.String?[])",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Split",
-              "MethodId": "System.String.Split(System.Char,System.StringSplitOptions)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "ToLower",
-              "MethodId": "System.String.ToLower()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "Trim",
-              "MethodId": "System.String.Trim()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "System.String",
-              "MethodName": "TrimEnd",
-              "MethodId": "System.String.TrimEnd(System.Char)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            }
-          ],
-          "PossibleExceptionTypes": [],
-          "IncomingExceptionTypes": [],
-          "ThrowsExceptionTypes": [],
-          "HttpMethods": [],
-          "HttpResponses": [],
-          "IsHttpRequestHandler": false,
-          "IsODataControllerAction": false,
-          "HasFromBodyParameter": false,
-          "HasKeyParameter": false,
-          "HandlesNullWithNotFound": false,
-          "HasTryCatch": false
-        },
-        {
-          "Id": "cCoder.DocumentManagement.Models.Path.ToString()",
-          "Name": "ToString",
-          "LineNumber": 57,
-          "Inputs": [],
-          "ReturnType": "System.String",
-          "Implements": [],
-          "Calls": [],
-          "PossibleExceptionTypes": [],
-          "IncomingExceptionTypes": [],
-          "ThrowsExceptionTypes": [],
-          "HttpMethods": [],
-          "HttpResponses": [],
-          "IsHttpRequestHandler": false,
-          "IsODataControllerAction": false,
-          "HasFromBodyParameter": false,
-          "HasKeyParameter": false,
-          "HandlesNullWithNotFound": false,
-          "HasTryCatch": false
-        }
-      ]
     },
     {
       "Name": "cCoder.DocumentManagement.Models.Result",
@@ -12250,7 +12581,7 @@
             {
               "TypeName": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker",
               "MethodName": "CopyAsync",
-              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.CopyAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.CopyAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             }
@@ -12300,7 +12631,7 @@
             {
               "TypeName": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker",
               "MethodName": "DropAsync",
-              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.DropAsync(cCoder.DocumentManagement.Models.Path,System.Int32)",
+              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.DropAsync(cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             }
@@ -12354,7 +12685,7 @@
             {
               "TypeName": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker",
               "MethodName": "Get",
-              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.Get(cCoder.DocumentManagement.Models.Path,System.Int32,System.String)",
+              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.Get(cCoder.DocumentManagement.Dependencies.Path,System.Int32,System.String)",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             }
@@ -12407,7 +12738,7 @@
             {
               "TypeName": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker",
               "MethodName": "GetFilesZipped",
-              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E)",
+              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E)",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             }
@@ -12457,7 +12788,7 @@
             {
               "TypeName": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker",
               "MethodName": "MoveAsync",
-              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.MoveAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.MoveAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             }
@@ -12507,7 +12838,7 @@
             {
               "TypeName": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker",
               "MethodName": "SaveAsync",
-              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.SaveAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.SaveAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             }
@@ -12561,7 +12892,7 @@
             {
               "TypeName": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker",
               "MethodName": "UnpackAsync",
-              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.UnpackAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream,System.Boolean)",
+              "MethodId": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.UnpackAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream,System.Boolean)",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             }
@@ -12594,7 +12925,7 @@
     {
       "Name": "cCoder.DocumentManagement.Services.Foundations.DocumentManagementMetadataTypeService",
       "StandardElementType": "FoundationService",
-      "LineNumber": 14,
+      "LineNumber": 15,
       "IsPublic": false,
       "Kind": "Class",
       "BaseType": null,
@@ -12615,7 +12946,7 @@
         {
           "Id": "cCoder.DocumentManagement.Services.Foundations.DocumentManagementMetadataTypeService.GetKnownMetadata()",
           "Name": "GetKnownMetadata",
-          "LineNumber": 16,
+          "LineNumber": 17,
           "Inputs": [],
           "ReturnType": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.OData.MetadataContainerSet\u003E",
           "Implements": [
@@ -15972,14 +16303,14 @@
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService",
               "MethodName": "CopyAppPathAsync",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.CopyAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.CopyAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService",
               "MethodName": "CopyAppPathAsync",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.CopyAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.CopyAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             }
@@ -16032,14 +16363,14 @@
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService",
               "MethodName": "DropAppPathAsync",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.DropAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,System.Int32)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.DropAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService",
               "MethodName": "DropAppPathAsync",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.DropAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.DropAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             }
@@ -16092,14 +16423,14 @@
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService",
               "MethodName": "GetAppPath",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.GetAppPath(System.Int32,cCoder.DocumentManagement.Models.Path,System.Int32)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.GetAppPath(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService",
               "MethodName": "GetAppPath",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.GetAppPath(System.Int32,cCoder.DocumentManagement.Models.Path,System.String)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.GetAppPath(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.String)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             }
@@ -16159,7 +16490,7 @@
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService",
               "MethodName": "GetFilesZippedAppPath",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.GetFilesZippedAppPath(System.Int32,System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.GetFilesZippedAppPath(System.Int32,System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             }
@@ -16212,14 +16543,14 @@
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService",
               "MethodName": "MoveAppPathAsync",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.MoveAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.MoveAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService",
               "MethodName": "MoveAppPathAsync",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.MoveAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.MoveAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             }
@@ -16272,14 +16603,14 @@
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService",
               "MethodName": "SaveAppPathAsync",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.SaveAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.SaveAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             },
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService",
               "MethodName": "SaveAppPathAsync",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.SaveAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.SaveAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             }
@@ -16399,7 +16730,7 @@
             {
               "TypeName": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService",
               "MethodName": "UnpackAppPathAsync",
-              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.UnpackAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,System.IO.Stream,System.Boolean)",
+              "MethodId": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.UnpackAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream,System.Boolean)",
               "StandardElementType": "ProcessingService",
               "IsDependencyBoundary": false
             }
@@ -18454,7 +18785,7 @@
     {
       "Name": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
       "StandardElementType": "ProcessingService",
-      "LineNumber": 15,
+      "LineNumber": 16,
       "IsPublic": false,
       "Kind": "Class",
       "BaseType": null,
@@ -18475,7 +18806,7 @@
         {
           "Id": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService.ProcessDmsProcessingSessionAsync(cCoder.DocumentManagement.Models.DmsProcessingSession)",
           "Name": "ProcessDmsProcessingSessionAsync",
-          "LineNumber": 20,
+          "LineNumber": 21,
           "Inputs": [
             {
               "Name": "session",
@@ -20376,7 +20707,7 @@
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure",
               "MethodName": "SaveFilePathAsync",
-              "MethodId": "cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure.SaveFilePathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+              "MethodId": "cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure.SaveFilePathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
               "StandardElementType": "Exposure",
               "IsDependencyBoundary": false
             },
@@ -21671,7 +22002,7 @@
     {
       "Name": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
       "StandardElementType": "ProcessingService",
-      "LineNumber": 23,
+      "LineNumber": 24,
       "IsPublic": false,
       "Kind": "Class",
       "BaseType": null,
@@ -21692,7 +22023,7 @@
         {
           "Id": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService.ProcessDmsProcessingSessionAsync(cCoder.DocumentManagement.Models.DmsProcessingSession)",
           "Name": "ProcessDmsProcessingSessionAsync",
-          "LineNumber": 31,
+          "LineNumber": 32,
           "Inputs": [
             {
               "Name": "session",
@@ -22346,17 +22677,17 @@
       "Properties": [],
       "Methods": [
         {
-          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.CopyAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.CopyAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "CopyAsync",
           "LineNumber": 22,
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -22375,13 +22706,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.DropAsync(cCoder.DocumentManagement.Models.Path,System.Int32)",
+          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.DropAsync(cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
           "Name": "DropAsync",
           "LineNumber": 21,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -22404,13 +22735,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.Get(cCoder.DocumentManagement.Models.Path,System.Int32,System.String)",
+          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.Get(cCoder.DocumentManagement.Dependencies.Path,System.Int32,System.String)",
           "Name": "Get",
           "LineNumber": 17,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -22437,13 +22768,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E)",
+          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E)",
           "Name": "GetFilesZipped",
           "LineNumber": 16,
           "Inputs": [
             {
               "Name": "paths",
-              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E"
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
             }
           ],
           "ReturnType": "cCoder.DocumentManagement.Models.DMSResult",
@@ -22462,17 +22793,17 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.MoveAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.MoveAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "MoveAsync",
           "LineNumber": 23,
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -22491,13 +22822,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.SaveAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.SaveAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
           "Name": "SaveAsync",
           "LineNumber": 20,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -22545,13 +22876,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.UnpackAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream,System.Boolean)",
+          "Id": "cCoder.DocumentManagement.Brokers.IDmsInstanceBroker.UnpackAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream,System.Boolean)",
           "Name": "UnpackAsync",
           "LineNumber": 19,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -22853,6 +23184,138 @@
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask\u003CcCoder.Data.Models.Security.Role\u003E",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        }
+      ]
+    },
+    {
+      "Name": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+      "StandardElementType": "Broker",
+      "LineNumber": 7,
+      "IsPublic": true,
+      "Kind": "Interface",
+      "BaseType": null,
+      "Interfaces": [],
+      "Properties": [],
+      "Methods": [
+        {
+          "Id": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogDebug(System.String,System.Object[])",
+          "Name": "LogDebug",
+          "LineNumber": 9,
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Object[]"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+          "Name": "LogError",
+          "LineNumber": 12,
+          "Inputs": [
+            {
+              "Name": "exception",
+              "Type": "System.Exception"
+            },
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Object[]"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.String,System.Object[])",
+          "Name": "LogError",
+          "LineNumber": 11,
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Object[]"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+          "Name": "LogInformation",
+          "LineNumber": 10,
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Object[]"
+            }
+          ],
+          "ReturnType": "System.Void",
           "Implements": [],
           "Calls": [],
           "PossibleExceptionTypes": [],
@@ -24185,17 +24648,17 @@
       "Properties": [],
       "Methods": [
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IDms.CopyAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Exposures.IDms.CopyAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "CopyAsync",
           "LineNumber": 26,
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -24214,13 +24677,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IDms.DropAsync(cCoder.DocumentManagement.Models.Path,System.Int32)",
+          "Id": "cCoder.DocumentManagement.Exposures.IDms.DropAsync(cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
           "Name": "DropAsync",
           "LineNumber": 24,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -24243,13 +24706,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IDms.Get(cCoder.DocumentManagement.Models.Path,System.Int32,System.String)",
+          "Id": "cCoder.DocumentManagement.Exposures.IDms.Get(cCoder.DocumentManagement.Dependencies.Path,System.Int32,System.String)",
           "Name": "Get",
           "LineNumber": 16,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -24276,13 +24739,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IDms.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E)",
+          "Id": "cCoder.DocumentManagement.Exposures.IDms.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E)",
           "Name": "GetFilesZipped",
           "LineNumber": 14,
           "Inputs": [
             {
               "Name": "paths",
-              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E"
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
             }
           ],
           "ReturnType": "cCoder.DocumentManagement.Models.DMSResult",
@@ -24301,17 +24764,17 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IDms.MoveAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Exposures.IDms.MoveAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "MoveAsync",
           "LineNumber": 28,
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -24330,13 +24793,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IDms.SaveAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+          "Id": "cCoder.DocumentManagement.Exposures.IDms.SaveAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
           "Name": "SaveAsync",
           "LineNumber": 22,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -24384,13 +24847,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IDms.UnpackAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream,System.Boolean)",
+          "Id": "cCoder.DocumentManagement.Exposures.IDms.UnpackAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream,System.Boolean)",
           "Name": "UnpackAsync",
           "LineNumber": 20,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -24498,17 +24961,17 @@
       "Properties": [],
       "Methods": [
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.CopyDmsPathAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.CopyDmsPathAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "CopyDmsPathAsync",
           "LineNumber": 24,
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -24527,13 +24990,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.DropDmsPathAsync(cCoder.DocumentManagement.Models.Path,System.Int32)",
+          "Id": "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.DropDmsPathAsync(cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
           "Name": "DropDmsPathAsync",
           "LineNumber": 28,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -24556,13 +25019,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.GetDmsPath(cCoder.DocumentManagement.Models.Path,System.Int32)",
+          "Id": "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.GetDmsPath(cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
           "Name": "GetDmsPath",
           "LineNumber": 12,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -24585,17 +25048,17 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.MoveDmsPathAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.MoveDmsPathAsync(cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "MoveDmsPathAsync",
           "LineNumber": 20,
           "Inputs": [
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -24614,13 +25077,13 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.SaveDmsPathAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+          "Id": "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure.SaveDmsPathAsync(cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
           "Name": "SaveDmsPathAsync",
           "LineNumber": 16,
           "Inputs": [
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -25547,7 +26010,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure.CopyFilePathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure.CopyFilePathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "CopyFilePathAsync",
           "LineNumber": 16,
           "Inputs": [
@@ -25557,11 +26020,11 @@
             },
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -25580,7 +26043,7 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure.SaveFilePathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+          "Id": "cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure.SaveFilePathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
           "Name": "SaveFilePathAsync",
           "LineNumber": 11,
           "Inputs": [
@@ -25590,7 +26053,7 @@
             },
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -29195,7 +29658,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Id": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.CopyAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.CopyAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "CopyAppPathAsync",
           "LineNumber": 17,
           "Inputs": [
@@ -29205,11 +29668,11 @@
             },
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -29228,7 +29691,7 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.DropAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,System.Int32)",
+          "Id": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.DropAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
           "Name": "DropAppPathAsync",
           "LineNumber": 15,
           "Inputs": [
@@ -29238,7 +29701,7 @@
             },
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -29261,7 +29724,7 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.GetAppPath(System.Int32,cCoder.DocumentManagement.Models.Path,System.Int32)",
+          "Id": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.GetAppPath(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.Int32)",
           "Name": "GetAppPath",
           "LineNumber": 9,
           "Inputs": [
@@ -29271,7 +29734,7 @@
             },
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "version",
@@ -29294,7 +29757,7 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.MoveAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.MoveAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "MoveAppPathAsync",
           "LineNumber": 19,
           "Inputs": [
@@ -29304,11 +29767,11 @@
             },
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -29327,7 +29790,7 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.SaveAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
+          "Id": "cCoder.DocumentManagement.Services.Processings.IFilePathProcessingService.SaveAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream)",
           "Name": "SaveAppPathAsync",
           "LineNumber": 13,
           "Inputs": [
@@ -29337,7 +29800,7 @@
             },
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -29729,7 +30192,7 @@
       "Properties": [],
       "Methods": [
         {
-          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.CopyAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.CopyAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "CopyAppPathAsync",
           "LineNumber": 23,
           "Inputs": [
@@ -29739,11 +30202,11 @@
             },
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -29762,7 +30225,7 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.DropAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.DropAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "DropAppPathAsync",
           "LineNumber": 21,
           "Inputs": [
@@ -29772,7 +30235,7 @@
             },
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -29791,7 +30254,7 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.GetAppPath(System.Int32,cCoder.DocumentManagement.Models.Path,System.String)",
+          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.GetAppPath(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.String)",
           "Name": "GetAppPath",
           "LineNumber": 11,
           "Inputs": [
@@ -29801,7 +30264,7 @@
             },
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "search",
@@ -29824,7 +30287,7 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.GetFilesZippedAppPath(System.Int32,System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E)",
+          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.GetFilesZippedAppPath(System.Int32,System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E)",
           "Name": "GetFilesZippedAppPath",
           "LineNumber": 9,
           "Inputs": [
@@ -29834,7 +30297,7 @@
             },
             {
               "Name": "paths",
-              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E"
+              "Type": "System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Dependencies.Path\u003E"
             }
           ],
           "ReturnType": "cCoder.DocumentManagement.Models.DMSResult",
@@ -29853,7 +30316,7 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.MoveAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.MoveAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "MoveAppPathAsync",
           "LineNumber": 25,
           "Inputs": [
@@ -29863,11 +30326,11 @@
             },
             {
               "Name": "oldPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "newPath",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -29886,7 +30349,7 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.SaveAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path)",
+          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.SaveAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path)",
           "Name": "SaveAppPathAsync",
           "LineNumber": 19,
           "Inputs": [
@@ -29896,7 +30359,7 @@
             },
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             }
           ],
           "ReturnType": "System.Threading.Tasks.ValueTask",
@@ -29915,7 +30378,7 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.UnpackAppPathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,System.IO.Stream,System.Boolean)",
+          "Id": "cCoder.DocumentManagement.Services.Processings.IFolderPathProcessingService.UnpackAppPathAsync(System.Int32,cCoder.DocumentManagement.Dependencies.Path,System.IO.Stream,System.Boolean)",
           "Name": "UnpackAppPathAsync",
           "LineNumber": 13,
           "Inputs": [
@@ -29925,7 +30388,7 @@
             },
             {
               "Name": "path",
-              "Type": "cCoder.DocumentManagement.Models.Path"
+              "Type": "cCoder.DocumentManagement.Dependencies.Path"
             },
             {
               "Name": "content",
@@ -30697,8 +31160,20 @@
       "ToType": "cCoder.DocumentManagement.Exposures.DmsInstanceFactory"
     },
     {
+      "FromType": "cCoder.DocumentManagement.Dependencies.Path",
+      "ToType": "cCoder.DocumentManagement.Dependencies.Path"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
+      "ToType": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker"
+    },
+    {
       "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
       "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FileContentOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
+      "ToType": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker"
     },
     {
       "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
@@ -30706,7 +31181,15 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "ToType": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
       "ToType": "cCoder.DocumentManagement.Services.Orchestrations.FolderOrchestrationService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
+      "ToType": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker"
     },
     {
       "FromType": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
@@ -30759,14 +31242,6 @@
     {
       "FromType": "cCoder.DocumentManagement.Exposures.RoleOperationsExposure",
       "ToType": "cCoder.DocumentManagement.Services.Foundations.RoleService"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Models.FolderArchiveData",
-      "ToType": "cCoder.DocumentManagement.Models.FolderArchiveData"
-    },
-    {
-      "FromType": "cCoder.DocumentManagement.Models.Path",
-      "ToType": "cCoder.DocumentManagement.Models.Path"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService",
@@ -30950,6 +31425,10 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.DmsInstanceProcessingService",
       "ToType": "cCoder.DocumentManagement.Services.Foundations.DmsInstanceService"
     },
     {
@@ -31038,6 +31517,10 @@
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
+      "ToType": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.WebDavProcessingService",
       "ToType": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure"
     },
     {
@@ -31059,182 +31542,182 @@
       "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
-      "LineNumber": 27
+      "LineNumber": 30
     },
     {
       "Code": "STXAPI005",
       "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
-      "LineNumber": 54
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
-      "LineNumber": 80
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
-      "LineNumber": 113
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
-      "LineNumber": 149
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
-      "LineNumber": 178
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
-      "LineNumber": 210
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
-      "LineNumber": 27
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
-      "LineNumber": 55
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
-      "LineNumber": 81
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
-      "LineNumber": 113
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
-      "LineNumber": 149
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
-      "LineNumber": 178
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
-      "LineNumber": 208
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 31
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 63
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 90
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 116
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 148
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 184
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 213
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
-      "LineNumber": 243
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
-      "LineNumber": 24
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
-      "LineNumber": 42
-    },
-    {
-      "Code": "STXAPI005",
-      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
-      "Severity": "Warning",
-      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
       "LineNumber": 59
     },
     {
       "Code": "STXAPI005",
       "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
       "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
+      "LineNumber": 89
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
+      "LineNumber": 126
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
+      "LineNumber": 168
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
+      "LineNumber": 203
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController",
+      "LineNumber": 241
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
+      "LineNumber": 30
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
+      "LineNumber": 60
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
+      "LineNumber": 90
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
+      "LineNumber": 126
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
+      "LineNumber": 168
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
+      "LineNumber": 203
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
+      "LineNumber": 239
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "LineNumber": 34
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "LineNumber": 72
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "LineNumber": 101
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "LineNumber": 131
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "LineNumber": 167
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "LineNumber": 209
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "LineNumber": 244
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
+      "LineNumber": 280
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
-      "LineNumber": 87
+      "LineNumber": 26
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
+      "LineNumber": 46
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
+      "LineNumber": 67
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
+      "LineNumber": 101
     }
   ]
 }

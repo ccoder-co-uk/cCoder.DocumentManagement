@@ -106,6 +106,7 @@ public static partial class IServiceCollectionExtensions
 
     private static void AddBrokers(this IServiceCollection services)
     {
+        services.AddTransient<Brokers.Loggings.ILoggingBroker, Brokers.Loggings.LoggingBroker>();
         services.AddTransient<IEventHubBroker, EventHubBroker>();
         services.AddTransient<IDmsInstanceFactory, DmsInstanceFactory>();
         services.AddTransient<IDmsInstanceBroker, DmsInstanceBroker>();

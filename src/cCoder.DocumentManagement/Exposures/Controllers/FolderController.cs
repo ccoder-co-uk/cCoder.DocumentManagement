@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.DocumentManagement.Brokers.Loggings;
 using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Dependencies;
 using cCoder.DocumentManagement.Models.OData;
@@ -23,7 +24,8 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
 public partial class FolderController(
-    IFolderManager service
+    IFolderManager service,
+    ILoggingBroker loggingBroker
 ) : ODataController
 {
 
@@ -46,16 +48,22 @@ public partial class FolderController(
 
             return Ok(value: copiedFolders);
         }
-        catch (DocumentManagementValidationException)
+        catch (DocumentManagementValidationException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return BadRequest();
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -72,8 +80,10 @@ public partial class FolderController(
                     .GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(Folder)))
                 : Ok(value: MetadataContainerDependency.CreateMetadataContainer(type: typeof(Folder), isEntity: true, hasEndpoint: true));
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -94,12 +104,16 @@ public partial class FolderController(
         {
             return Ok(value: service.GetAll());
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -122,17 +136,21 @@ public partial class FolderController(
 
             if (result is null)
             {
-                return NotFound();
+            return NotFound();
             }
 
             return Ok(value: result);
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -152,23 +170,29 @@ public partial class FolderController(
         {
             if (!ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
             }
 
             Folder addedFolder = await service.AddFolderAsync(newFolder: newFolder);
 
             return StatusCode(statusCode: StatusCodes.Status201Created, value: addedFolder);
         }
-        catch (DocumentManagementValidationException)
+        catch (DocumentManagementValidationException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return BadRequest();
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -188,23 +212,29 @@ public partial class FolderController(
         {
             if (!ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
             }
 
             updatedFolder.Id = key;
 
             return Ok(value: await service.UpdateFolderAsync(updatedFolder: updatedFolder));
         }
-        catch (DocumentManagementValidationException)
+        catch (DocumentManagementValidationException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return BadRequest();
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -219,23 +249,29 @@ public partial class FolderController(
 
             if (originalEntity == null)
             {
-                return NotFound();
+            return NotFound();
             }
 
             updatedFolderDelta.Patch(original: originalEntity);
 
             return Ok(value: await service.UpdateFolderAsync(updatedFolder: originalEntity));
         }
-        catch (DocumentManagementValidationException)
+        catch (DocumentManagementValidationException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return BadRequest();
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -249,16 +285,22 @@ public partial class FolderController(
 
             return NoContent();
         }
-        catch (DocumentManagementValidationException)
+        catch (DocumentManagementValidationException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return BadRequest();
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }

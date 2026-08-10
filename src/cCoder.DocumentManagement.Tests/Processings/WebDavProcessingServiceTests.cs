@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.Data;
+using cCoder.DocumentManagement.Brokers.Loggings;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -10,7 +11,6 @@ using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Processings;
-using Microsoft.Extensions.Logging;
 using Moq;
 using MemoryStream = System.IO.MemoryStream;
 
@@ -22,7 +22,7 @@ public partial class WebDavProcessingServiceTests
     private readonly Mock<IFileService> fileServiceMock;
     private readonly Mock<IFolderService> folderServiceMock;
     private readonly Mock<IDmsInstanceService> dmsInstanceServiceMock;
-    private readonly Mock<ILogger<WebDavProcessingService>> loggerMock;
+    private readonly Mock<ILoggingBroker> loggingBrokerMock;
     private readonly WebDavProcessingService webDavProcessingService;
 
     public WebDavProcessingServiceTests()
@@ -33,7 +33,7 @@ public partial class WebDavProcessingServiceTests
         fileServiceMock = new();
         folderServiceMock = new();
         dmsInstanceServiceMock = new();
-        loggerMock = new();
+        loggingBrokerMock = new();
 
         DocumentManagementConfiguration config = new()
         {
@@ -48,7 +48,7 @@ public partial class WebDavProcessingServiceTests
             dmsInstanceOperationsExposure: new DmsInstanceOperationsExposure(
                 dmsInstanceService: dmsInstanceServiceMock.Object),
             config: config,
-            log: loggerMock.Object
+            log: loggingBrokerMock.Object
         );
     }
 

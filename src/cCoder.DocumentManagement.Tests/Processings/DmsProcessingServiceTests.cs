@@ -3,12 +3,12 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Models;
+using cCoder.DocumentManagement.Brokers.Loggings;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Processings;
-using Microsoft.Extensions.Logging;
 using Moq;
 using MemoryStream = System.IO.MemoryStream;
 
@@ -18,17 +18,17 @@ namespace cCoder.Core.Services.Tests.DMS.Processings;
 public partial class DmsInstanceProcessingServiceTests
 {
     private readonly Mock<IDmsInstanceService> dmsInstanceServiceMock;
-    private readonly Mock<ILogger<DmsInstanceProcessingService>> loggerMock;
+    private readonly Mock<ILoggingBroker> loggingBrokerMock;
     private readonly DmsInstanceProcessingService dmsProcessingService;
 
     public DmsInstanceProcessingServiceTests()
     {
         dmsInstanceServiceMock = new Mock<IDmsInstanceService>(behavior: MockBehavior.Strict);
         dmsInstanceServiceMock = new();
-        loggerMock = new();
+        loggingBrokerMock = new();
         dmsProcessingService = new DmsInstanceProcessingService(
             dmsInstanceService: dmsInstanceServiceMock.Object,
-            log: loggerMock.Object
+            log: loggingBrokerMock.Object
         );
     }
 

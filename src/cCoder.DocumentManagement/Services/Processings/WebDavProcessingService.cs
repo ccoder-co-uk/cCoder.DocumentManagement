@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.DocumentManagement.Brokers.Loggings;
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
@@ -25,7 +26,7 @@ internal partial class WebDavProcessingService(
     IFolderOperationsExposure folderOperationsExposure,
     IDmsInstanceOperationsExposure dmsInstanceOperationsExposure,
     DocumentManagementConfiguration config,
-    ILogger<WebDavProcessingService> log
+    ILoggingBroker log
 ) : IWebDavProcessingService
 {
     public ValueTask<DmsProcessingSession> ProcessDmsProcessingSessionAsync(

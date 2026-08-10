@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.DocumentManagement.Brokers.Loggings;
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Services.Foundations;
@@ -14,7 +15,7 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 internal partial class DmsInstanceProcessingService(
     IDmsInstanceService dmsInstanceService,
-    ILogger<DmsInstanceProcessingService> log
+    ILoggingBroker log
 ) : IDmsInstanceProcessingService
 {
     public ValueTask<DmsProcessingSession> ProcessDmsProcessingSessionAsync(
