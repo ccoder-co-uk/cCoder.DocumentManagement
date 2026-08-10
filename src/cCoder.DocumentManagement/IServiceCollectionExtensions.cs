@@ -98,7 +98,7 @@ public static partial class IServiceCollectionExtensions
         services.AddEventingForType<FileContent>();
         services.AddEventingForType<Package>();
         services.AddEventingForType<PackageItem>();
-        services.AddEventingForType<(int, Package)>();
+        services.AddEventingForType<DocumentManagementPackageEvent>();
         services.AddEventingForType<cCoder.Data.Models.DMS.File>();
         services.AddEventingForType<Folder>();
         services.AddEventingForType<cCoder.Data.Models.Security.FolderRole>();
