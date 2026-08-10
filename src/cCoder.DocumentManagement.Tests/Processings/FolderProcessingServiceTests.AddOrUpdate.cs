@@ -15,32 +15,50 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         Folder folder = CreateRandomFolder();
+        Folder createdFolder = CreateRandomFolder();
+
+        currentUser = ToLocalUser(user: TestUsers.WithPrivileges(
+            privileges: ["app_admin", "folder_create"],
+            appId: folder.AppId));
+
+        authorizationBrokerMock
+            .Setup(expression: broker => broker.GetCurrentUser())
+            .Returns(valueFunction: () => currentUser);
+
+        authorizationBrokerMock
+            .Setup(expression: broker => broker.IsAdminOfApp(appId: folder.AppId))
+            .Returns(value: true);
 
         folderServiceMock
             .Setup(expression: service => service.GetForUpdate(folderId: folder.Id, ignoreFilters: true))
             .Returns(value: null);
 
-        IQueryable<Folder> folders = Queryable.AsQueryable(
-            source: Array.Empty<Folder>());
+        folderServiceMock
+            .SetupSequence(expression: service => service.GetAll(ignoreFilters: true))
+            .Returns(value: Array.Empty<Folder>()
+                .AsQueryable())
+            .Returns(value: new[] { createdFolder }
+                .AsQueryable());
 
         folderServiceMock
-            .Setup(expression: service => service.GetAll(ignoreFilters: true))
-            .Returns(value: folders);
-
-        fileProcessingServiceMock
-            .Setup(expression: service => service.SaveAppPathAsync(
+            .Setup(expression: service => service.GetByPathWithRoles(
                 appId: folder.AppId,
-                path: It.IsAny<cCoder.DocumentManagement.Dependencies.Path>()))
-            .Returns(value: ValueTask.CompletedTask);
+                path: folder.Name.ToLowerInvariant(),
+                ignoreFilters: true))
+            .Returns(value: null);
+
+        folderServiceMock
+            .Setup(expression: service => service.AddForPathBuildFolderAsync(
+                newFolder: It.IsAny<Folder>()))
+            .ReturnsAsync(value: createdFolder);
 
         // When
         _ = await folderProcessingService.AddOrUpdateFolder(items: [folder]);
 
         // Then
-        fileProcessingServiceMock.Verify(
-            expression: service => service.SaveAppPathAsync(
-                appId: folder.AppId,
-                path: It.IsAny<cCoder.DocumentManagement.Dependencies.Path>()),
+        folderServiceMock.Verify(
+            expression: service => service.AddForPathBuildFolderAsync(
+                newFolder: It.IsAny<Folder>()),
             times: Times.Once);
     }
 }
