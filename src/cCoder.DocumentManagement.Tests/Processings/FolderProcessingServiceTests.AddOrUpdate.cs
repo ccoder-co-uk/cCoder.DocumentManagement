@@ -15,13 +15,17 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         Folder folder = CreateRandomFolder();
+
         folderServiceMock
             .Setup(expression: service => service.GetForUpdate(folderId: folder.Id, ignoreFilters: true))
             .Returns(value: null);
 
+        IQueryable<Folder> folders = Queryable.AsQueryable(
+            source: Array.Empty<Folder>());
+
         folderServiceMock
             .Setup(expression: service => service.GetAll(ignoreFilters: true))
-            .Returns(value: Array.Empty<Folder>().AsQueryable());
+            .Returns(value: folders);
 
         fileProcessingServiceMock
             .Setup(expression: service => service.SaveAppPathAsync(
