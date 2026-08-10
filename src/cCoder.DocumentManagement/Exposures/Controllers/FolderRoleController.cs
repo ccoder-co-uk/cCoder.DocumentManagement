@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.DocumentManagement.Brokers.Loggings;
 using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -16,7 +17,8 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
 public class FolderRoleController(
-    IFolderRoleManager service
+    IFolderRoleManager service,
+    ILoggingBroker loggingBroker
 ) : ODataController
 {
 
@@ -30,8 +32,10 @@ public class FolderRoleController(
                 isEntity: true,
                 hasEndpoint: true));
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -45,12 +49,16 @@ public class FolderRoleController(
         {
             return Ok(value: service.GetAll());
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -62,23 +70,29 @@ public class FolderRoleController(
         {
             if (!base.ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: base.ModelState);
+            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: base.ModelState);
             }
 
             FolderRole addedFolderRole = await service.AddFolderRoleAsync(newFolderRole: newFolderRole);
 
             return StatusCode(statusCode: StatusCodes.Status201Created, value: addedFolderRole);
         }
-        catch (DocumentManagementValidationException)
+        catch (DocumentManagementValidationException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return BadRequest();
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -90,23 +104,29 @@ public class FolderRoleController(
         {
             if (!base.ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: base.ModelState);
+            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: base.ModelState);
             }
 
             await service.DeleteAllFolderRoleAsync(deletedFolderRole: deletedFolderRole.Value);
 
             return Ok();
         }
-        catch (DocumentManagementValidationException)
+        catch (DocumentManagementValidationException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return BadRequest();
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }

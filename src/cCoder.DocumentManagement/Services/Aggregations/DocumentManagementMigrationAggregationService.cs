@@ -80,7 +80,7 @@ internal partial class DocumentManagementMigrationAggregationService(
 
             var package = packageName == "FolderRoles"
     ? ExportFolderRoles(appId: appId)
-    : new Data.Models.Packaging.Package(name: packageName) { Items = [] };
+    : new Data.Models.Packaging.Package { Name = packageName, Items = [] };
 
 
             return new DocumentManagementPackage
@@ -120,8 +120,9 @@ internal partial class DocumentManagementMigrationAggregationService(
 
         if (roles.Length == 0 || folders.Length == 0)
         {
-            return new Data.Models.Packaging.Package(name: "FolderRoles")
+            return new Data.Models.Packaging.Package
             {
+                Name = "FolderRoles",
                 Items =
                 [
                     new Data.Models.Packaging.PackageItem
@@ -156,8 +157,9 @@ internal partial class DocumentManagementMigrationAggregationService(
             })
             .ToArray();
 
-        return new Data.Models.Packaging.Package(name: "FolderRoles")
+        return new Data.Models.Packaging.Package
         {
+            Name = "FolderRoles",
             Items =
             [
                 new Data.Models.Packaging.PackageItem

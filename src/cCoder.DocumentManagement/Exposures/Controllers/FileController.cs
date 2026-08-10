@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.DocumentManagement.Brokers.Loggings;
 using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Dependencies;
 using cCoder.DocumentManagement.Models.OData;
@@ -20,7 +21,8 @@ using LocalFile = cCoder.Data.Models.DMS.File;
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
 public partial class FileController(
-    IFileManager service
+    IFileManager service,
+    ILoggingBroker loggingBroker
 ) : ODataController
 {
 
@@ -37,8 +39,10 @@ public partial class FileController(
                         .GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(LocalFile)))
                 : Ok(value: MetadataContainerDependency.CreateMetadataContainer(type: typeof(LocalFile), isEntity: true, hasEndpoint: true));
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -59,12 +63,16 @@ public partial class FileController(
         {
             return Ok(value: service.GetAll());
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -87,17 +95,21 @@ public partial class FileController(
 
             if (result is null)
             {
-                return NotFound();
+            return NotFound();
             }
 
             return Ok(value: result);
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -117,23 +129,29 @@ public partial class FileController(
         {
             if (!ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
             }
 
             LocalFile addedFile = await service.AddFileAsync(newFile: entity);
 
             return StatusCode(statusCode: StatusCodes.Status201Created, value: addedFile);
         }
-        catch (DocumentManagementValidationException)
+        catch (DocumentManagementValidationException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return BadRequest();
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -153,23 +171,29 @@ public partial class FileController(
         {
             if (!ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
             }
 
             entity.Id = key;
 
             return Ok(value: await service.UpdateFileAsync(updatedFile: entity));
         }
-        catch (DocumentManagementValidationException)
+        catch (DocumentManagementValidationException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return BadRequest();
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -184,23 +208,29 @@ public partial class FileController(
 
             if (originalEntity == null)
             {
-                return NotFound();
+            return NotFound();
             }
 
             updatedFileDelta.Patch(original: originalEntity);
 
             return Ok(value: await service.UpdateFileAsync(updatedFile: originalEntity));
         }
-        catch (DocumentManagementValidationException)
+        catch (DocumentManagementValidationException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return BadRequest();
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
@@ -214,16 +244,22 @@ public partial class FileController(
 
             return NoContent();
         }
-        catch (DocumentManagementValidationException)
+        catch (DocumentManagementValidationException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return BadRequest();
         }
-        catch (System.Security.SecurityException)
+        catch (System.Security.SecurityException exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return Forbid();
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
