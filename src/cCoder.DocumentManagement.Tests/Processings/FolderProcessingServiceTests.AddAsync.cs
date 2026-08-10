@@ -11,7 +11,6 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-
 namespace cCoder.Core.Services.Tests.DMS.Processings;
 
 public partial class FolderProcessingServiceTests
@@ -21,7 +20,8 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))
+            .Setup(
+                expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))
             .Callback(action: (int? appId, string privilege) =>
             {
                 if (!(currentUser?.Can(appId: appId, operation: privilege) ?? false))
@@ -34,7 +34,8 @@ public partial class FolderProcessingServiceTests
             .Setup(expression: x => x.IsAdminOfApp(appId: It.IsAny<int>()))
             .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId: appId) ?? false);
 
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+        authorizationBrokerMock
+            .Setup(expression: x => x.GetCurrentUser())
             .Returns(valueFunction: () => currentUser);
 
         Folder folder = new()

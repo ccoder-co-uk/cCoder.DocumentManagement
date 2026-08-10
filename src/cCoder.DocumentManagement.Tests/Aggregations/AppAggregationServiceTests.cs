@@ -92,4 +92,27 @@ public partial class AppAggregationServiceTests
         // Then
         folderOrchestrationServiceMock.VerifyAll();
     }
+
+    [Fact]
+    public async Task ShouldUpdateAppFoldersThroughAuthorizedOrchestrationAsync()
+    {
+        // Given
+        App app = new()
+        {
+            Id = 7,
+            Folders = [new Folder { Id = Guid.NewGuid(), Name = "Content" }]
+        };
+
+        folderOrchestrationServiceMock
+            .Setup(expression: service => service.AddOrUpdateFolder(
+                items: It.Is<IEnumerable<Folder>>(match: folders =>
+                    folders.Single().AppId == app.Id)))
+            .Returns(value: ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Models.Result<Folder>>>(result: []));
+
+        // When
+        await service.UpdateAppAsync(updatedApp: app);
+
+        // Then
+        folderOrchestrationServiceMock.VerifyAll();
+    }
 }
