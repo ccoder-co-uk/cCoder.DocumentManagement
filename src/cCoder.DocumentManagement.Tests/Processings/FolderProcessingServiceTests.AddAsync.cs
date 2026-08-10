@@ -16,12 +16,13 @@ namespace cCoder.Core.Services.Tests.DMS.Processings;
 
 public partial class FolderProcessingServiceTests
 {
+
     [Fact]
     public async Task ShouldThrowSecurityExceptionWhenAddAsync()
     {
         // Given
-        authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))
+        authorizationBrokerMock.Setup(
+                expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))
             .Callback(action: (int? appId, string privilege) =>
             {
                 if (!(currentUser?.Can(appId: appId, operation: privilege) ?? false))
