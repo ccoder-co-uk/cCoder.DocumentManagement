@@ -8762,6 +8762,7 @@
           "PossibleExceptionTypes": [
             "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException",
             "System.InvalidOperationException",
+            "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
@@ -11613,6 +11614,26 @@
       "Methods": []
     },
     {
+      "Name": "cCoder.DocumentManagement.Models.DocumentManagementPackageEvent",
+      "StandardElementType": "Model",
+      "LineNumber": 9,
+      "IsPublic": true,
+      "Kind": "Class",
+      "BaseType": null,
+      "Interfaces": [],
+      "Properties": [
+        {
+          "Name": "AppId",
+          "Type": "System.Int32"
+        },
+        {
+          "Name": "Package",
+          "Type": "cCoder.Data.Models.Packaging.Package"
+        }
+      ],
+      "Methods": []
+    },
+    {
       "Name": "cCoder.DocumentManagement.Models.DocumentManagementPackageItem",
       "StandardElementType": "Model",
       "LineNumber": 7,
@@ -12208,8 +12229,8 @@
           "Calls": [
             {
               "TypeName": "cCoder.DocumentManagement.Exposures.IFolderManager",
-              "MethodName": "AddOrUpdateForAppFolderAsync",
-              "MethodId": "cCoder.DocumentManagement.Exposures.IFolderManager.AddOrUpdateForAppFolderAsync(System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E)",
+              "MethodName": "AddOrUpdateFolder",
+              "MethodId": "cCoder.DocumentManagement.Exposures.IFolderManager.AddOrUpdateFolder(System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E)",
               "StandardElementType": "Exposure",
               "IsDependencyBoundary": false
             }
@@ -12217,6 +12238,7 @@
           "PossibleExceptionTypes": [
             "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException",
             "System.InvalidOperationException",
+            "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
@@ -20517,6 +20539,13 @@
               "MethodId": "System.Collections.Generic.List\u003CT\u003E.Add(T)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Services.Foundations.IFolderService",
+              "MethodName": "GetForUpdate",
+              "MethodId": "cCoder.DocumentManagement.Services.Foundations.IFolderService.GetForUpdate(System.Guid,System.Boolean)",
+              "StandardElementType": "FoundationService",
+              "IsDependencyBoundary": false
             }
           ],
           "PossibleExceptionTypes": [
@@ -20544,7 +20573,7 @@
         {
           "Id": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.AddOrUpdateForAppFolderAsync(System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E)",
           "Name": "AddOrUpdateForAppFolderAsync",
-          "LineNumber": 443,
+          "LineNumber": 448,
           "Inputs": [
             {
               "Name": "items",
@@ -20745,7 +20774,7 @@
         {
           "Id": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.DeleteAllFolderAsync(System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E)",
           "Name": "DeleteAllFolderAsync",
-          "LineNumber": 482,
+          "LineNumber": 487,
           "Inputs": [
             {
               "Name": "deletedFolder",
@@ -20860,7 +20889,7 @@
         {
           "Id": "cCoder.DocumentManagement.Services.Processings.FolderProcessingService.DeleteByAppIdAsync(System.Int32)",
           "Name": "DeleteByAppIdAsync",
-          "LineNumber": 495,
+          "LineNumber": 500,
           "Inputs": [
             {
               "Name": "appId",
