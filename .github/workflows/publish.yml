@@ -57,7 +57,16 @@ jobs:
         run: dotnet build src/cCoder.DocumentManagement.slnx -c Release --no-restore -m:1 /p:BuildInParallel=false /p:UseSharedCompilation=false /p:Version="${{ steps.version.outputs.value }}" --verbosity minimal
 
       - name: Test and collect coverage
-        run: dotnet test src/cCoder.DocumentManagement.slnx -c Release --no-build --verbosity minimal --settings coverage.runsettings --results-directory "${{ env.TEST_RESULTS_DIRECTORY }}" --logger trx --collect:"XPlat Code Coverage"
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:CoreData__ConnectionString)) {
+            $env:CoreData__ConnectionString = $env:DocumentManagement__ConnectionString
+          }
+
+          if ([string]::IsNullOrWhiteSpace($env:SecurityData__ConnectionString)) {
+            $env:SecurityData__ConnectionString = $env:Security__ConnectionString
+          }
+
+          dotnet test src/cCoder.DocumentManagement.slnx -c Release --no-build --verbosity minimal --settings coverage.runsettings --results-directory "${{ env.TEST_RESULTS_DIRECTORY }}" --logger trx --collect:"XPlat Code Coverage"
 
       - name: Enforce services and exposures coverage
         run: |

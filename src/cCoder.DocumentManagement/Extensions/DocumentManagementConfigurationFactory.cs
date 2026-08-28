@@ -11,7 +11,6 @@ public static class DocumentManagementConfigurationFactory
     public static DocumentManagementConfiguration CreateDocumentManagementConfiguration() =>
         new()
         {
-            ConnectionString = string.Empty,
             RootPath = "Api/DocumentManagement",
             EventProviders = []
         };

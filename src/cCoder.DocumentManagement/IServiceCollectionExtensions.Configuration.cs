@@ -4,7 +4,6 @@
 
 using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Models;
-using cCoder.Data;
 using cCoder.Eventing;
 using Microsoft.OData.ModelBuilder;
 
@@ -18,18 +17,6 @@ public static partial class IServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(argument: configuration);
         services.AddSingleton(implementationInstance: configuration);
-
-        if (!string.IsNullOrWhiteSpace(
-            value: configuration.ConnectionString))
-        {
-            services.AddData(
-                configuration: new cCoder.Data.Models.DataConfiguration
-                {
-                    ConnectionString = configuration.ConnectionString,
-                    DebugInfo = configuration.DebugInfo,
-                    LogSQL = configuration.LogSQL,
-                });
-        }
 
         services.AddEventProviders(eventProviders: configuration.EventProviders);
     }

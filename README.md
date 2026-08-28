@@ -6,15 +6,35 @@
 
 ## Local Configuration
 
-The Web app binds its structured `DocumentManagement`, `Data`, `Security`, and
-`Eventing` sections directly. Leave secret values empty in `appsettings.json`
-and define these as user-level or machine-level environment variables:
+The Web app binds the complete configuration root to
+`DocumentManagement.Web.Models.AppConfiguration`. The application composition
+root then registers each required domain side by side: `CoreData`,
+`DocumentManagement`, `SecurityData`, `Security`, and `Eventing`.
 
-- `DocumentManagement__ConnectionString`
-- `Security__ConnectionString`
+Persistence belongs to the Data domains. `DocumentManagement` contains only
+Document Management behavior, while `CoreData` owns its database connection and
+migrations. Likewise, `SecurityData` owns the Security database and `Security`
+contains authentication behavior. Leave secret values empty in
+`appsettings.json` and define these as user-level or machine-level environment
+variables:
+
+- `CoreData__ConnectionString`
+- `SecurityData__ConnectionString`
 - `Security__DecryptionKey`
 - `Eventing__ServiceBus__ConnectionString` when `Eventing__ProviderType` is
   `ServiceBus`
+
+`CoreData__AdminConnectionString` and
+`SecurityData__AdminConnectionString` are optional migration-only overrides. If
+an admin connection is configured, startup migrations use it and normal runtime
+operations continue to use the regular connection. If it is omitted, migrations
+use the regular connection.
+
+Library consumers register persistence and behavior explicitly at their own
+composition root: call `AddData`, `AddSecurityData`, `AddSecurityWeb`, and
+`AddDocumentManagementWeb` with their matching configuration objects. An
+application that consumes `cCoder.Core` should use Core's composite API instead;
+Core deliberately composes its configured child domains recursively.
 
 Restart Visual Studio, select the Web startup project, and press F5. No
 configuration conversion step is required.
