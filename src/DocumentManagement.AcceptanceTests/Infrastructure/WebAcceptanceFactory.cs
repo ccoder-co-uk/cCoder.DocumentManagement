@@ -32,13 +32,10 @@ internal sealed class WebAcceptanceFactory(AcceptanceSettings settings)
             config.AddInMemoryCollection(
             initialData: [
                 new KeyValuePair<string, string>(
-                    key: "DocumentManagement:ConnectionString",
+                    key: "CoreData:ConnectionString",
                     value: settings.CoreConnectionString),
                 new KeyValuePair<string, string>(
-                    key: "Data:ConnectionString",
-                    value: settings.CoreConnectionString),
-                new KeyValuePair<string, string>(
-                    key: "Security:ConnectionString",
+                    key: "SecurityData:ConnectionString",
                     value: settings.SsoConnectionString),
                 new KeyValuePair<string, string>(
                     key: "Security:DecryptionKey",
@@ -63,7 +60,7 @@ internal sealed class WebAcceptanceFactory(AcceptanceSettings settings)
                 });
 
             services.AddSecurityData(
-                configuration: new SecurityConfiguration
+                configuration: new SecurityDataConfiguration
                 {
                     ConnectionString = settings.SsoConnectionString,
                 });

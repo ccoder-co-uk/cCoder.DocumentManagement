@@ -257,7 +257,7 @@
     {
       "Name": "DocumentManagement.Web.IServiceCollectionExtensions",
       "StandardElementType": "App",
-      "LineNumber": 19,
+      "LineNumber": 16,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": null,
@@ -265,9 +265,9 @@
       "Properties": [],
       "Methods": [
         {
-          "Id": "DocumentManagement.Web.IServiceCollectionExtensions.AddDocumentManagementWeb(IServiceCollection,IConfiguration,System.Action\u003CDocumentManagement.Web.Models.DocumentManagementWebConfiguration\u003E)",
-          "Name": "AddDocumentManagementWeb",
-          "LineNumber": 21,
+          "Id": "DocumentManagement.Web.IServiceCollectionExtensions.AddWeb(IServiceCollection,IConfiguration,System.Action\u003CDocumentManagement.Web.Models.AppConfiguration\u003E)",
+          "Name": "AddWeb",
+          "LineNumber": 18,
           "Inputs": [
             {
               "Name": "services",
@@ -279,7 +279,7 @@
             },
             {
               "Name": "configure",
-              "Type": "System.Action\u003CDocumentManagement.Web.Models.DocumentManagementWebConfiguration\u003E"
+              "Type": "System.Action\u003CDocumentManagement.Web.Models.AppConfiguration\u003E"
             }
           ],
           "ReturnType": "IServiceCollection",
@@ -300,20 +300,6 @@
               "IsDependencyBoundary": true
             },
             {
-              "TypeName": "cCoder.Data.Models.DataConfiguration",
-              "MethodName": ".ctor",
-              "MethodId": "cCoder.Data.Models.DataConfiguration..ctor()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "cCoder.DocumentManagement.Extensions.DocumentManagementConfigurationFactory",
-              "MethodName": "CreateDocumentManagementConfiguration",
-              "MethodId": "cCoder.DocumentManagement.Extensions.DocumentManagementConfigurationFactory.CreateDocumentManagementConfiguration()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
               "TypeName": "cCoder.DocumentManagement.IServiceCollectionExtensions",
               "MethodName": "AddDocumentManagementWeb",
               "MethodId": "cCoder.DocumentManagement.IServiceCollectionExtensions.AddDocumentManagementWeb(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action\u003CcCoder.DocumentManagement.Models.DocumentManagementConfiguration\u003E,Microsoft.OData.ModelBuilder.ODataConventionModelBuilder)",
@@ -324,20 +310,6 @@
               "TypeName": "cCoder.Eventing.Http.Models.HttpEventingOptions",
               "MethodName": ".ctor",
               "MethodId": "cCoder.Eventing.Http.Models.HttpEventingOptions..ctor()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "cCoder.Eventing.Models.EventingConfiguration",
-              "MethodName": ".ctor",
-              "MethodId": "cCoder.Eventing.Models.EventingConfiguration..ctor()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "cCoder.Security.Models.SecurityConfiguration",
-              "MethodName": ".ctor",
-              "MethodId": "cCoder.Security.Models.SecurityConfiguration..ctor()",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             }
@@ -357,7 +329,7 @@
       ]
     },
     {
-      "Name": "DocumentManagement.Web.Models.DocumentManagementWebConfiguration",
+      "Name": "DocumentManagement.Web.Models.AppConfiguration",
       "StandardElementType": "Model",
       "LineNumber": 13,
       "IsPublic": true,
@@ -366,8 +338,8 @@
       "Interfaces": [],
       "Properties": [
         {
-          "Name": "Data",
-          "Type": "cCoder.Data.Models.DataConfiguration"
+          "Name": "CoreData",
+          "Type": "cCoder.Data.Models.CoreDataConfiguration"
         },
         {
           "Name": "DocumentManagement",
@@ -380,6 +352,10 @@
         {
           "Name": "Security",
           "Type": "cCoder.Security.Models.SecurityConfiguration"
+        },
+        {
+          "Name": "SecurityData",
+          "Type": "cCoder.Security.Models.SecurityDataConfiguration"
         }
       ],
       "Methods": []

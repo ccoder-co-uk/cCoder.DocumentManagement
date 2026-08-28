@@ -4,32 +4,23 @@
 
 using cCoder.Data;
 using cCoder.DocumentManagement;
-using cCoder.DocumentManagement.Extensions;
-using cCoder.Data.Models;
-using cCoder.Eventing.Models;
-using cCoder.Security.Models;
 using cCoder.Eventing;
 using cCoder.Eventing.Http;
 using cCoder.Eventing.Http.Models;
 using cCoder.Security;
+using cCoder.Security.Data.EF;
 using DocumentManagement.Web.Models;
 
 namespace DocumentManagement.Web;
 
 public static class IServiceCollectionExtensions
 {
-    public static IServiceCollection AddDocumentManagementWeb(
+    public static IServiceCollection AddWeb(
         this IServiceCollection services,
         IConfiguration configuration,
-        Action<DocumentManagementWebConfiguration> configure = null)
+        Action<AppConfiguration> configure = null)
     {
-        DocumentManagementWebConfiguration webConfiguration = new()
-        {
-            DocumentManagement = DocumentManagementConfigurationFactory.CreateDocumentManagementConfiguration(),
-            Data = new DataConfiguration(),
-            Security = new SecurityConfiguration(),
-            Eventing = new EventingConfiguration()
-        };
+        AppConfiguration webConfiguration = new();
         configuration.Bind(instance: webConfiguration);
         configure?.Invoke(obj: webConfiguration);
 
@@ -44,7 +35,8 @@ public static class IServiceCollectionExtensions
                     new System.Text.Json.JsonSerializerOptions(
                         System.Text.Json.JsonSerializerDefaults.Web)
             });
-        services.AddData(configuration: webConfiguration.Data);
+        services.AddData(configuration: webConfiguration.CoreData);
+        services.AddSecurityData(configuration: webConfiguration.SecurityData);
         services.AddSecurityWeb(configuration: webConfiguration.Security);
         cCoder.DocumentManagement.IServiceCollectionExtensions
             .AddDocumentManagementWeb(
