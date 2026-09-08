@@ -11655,7 +11655,7 @@
     },
     {
       "Name": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
-      "StandardElementType": "Dependency",
+      "StandardElementType": "Model",
       "LineNumber": 7,
       "IsPublic": true,
       "Kind": "Class",
@@ -11675,7 +11675,7 @@
     },
     {
       "Name": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
-      "StandardElementType": "Dependency",
+      "StandardElementType": "Model",
       "LineNumber": 7,
       "IsPublic": true,
       "Kind": "Class",
@@ -11695,7 +11695,7 @@
     },
     {
       "Name": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
-      "StandardElementType": "Dependency",
+      "StandardElementType": "Model",
       "LineNumber": 7,
       "IsPublic": true,
       "Kind": "Class",
@@ -31173,8 +31173,88 @@
   ],
   "Links": [
     {
+      "FromType": "cCoder.DocumentManagement.Brokers.AuthInfoBroker",
+      "ToType": "cCoder.Data.ICoreAuthInfo"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.AuthorizationBroker",
+      "ToType": "cCoder.Data.ICoreContextFactory"
+    },
+    {
       "FromType": "cCoder.DocumentManagement.Brokers.DmsInstanceBroker",
       "ToType": "cCoder.DocumentManagement.Exposures.DmsInstanceFactory"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.Events.EventHubBroker",
+      "ToType": "cCoder.Eventing.IEventHub"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.Events.FileContentEventBroker",
+      "ToType": "cCoder.Eventing.IEventHub"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.Events.FileEventBroker",
+      "ToType": "cCoder.Eventing.IEventHub"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.Events.FolderEventBroker",
+      "ToType": "cCoder.Eventing.IEventHub"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.Events.FolderRoleEventBroker",
+      "ToType": "cCoder.Eventing.IEventHub"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.FolderRoleContextBroker",
+      "ToType": "cCoder.Data.ICoreContextFactory"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker",
+      "ToType": "Microsoft.Extensions.Logging.ILogger\u003CcCoder.DocumentManagement.Brokers.Loggings.LoggingBroker\u003E"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.OData.DocumentManagementModelBroker",
+      "ToType": "Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.OData.ODataModelBroker",
+      "ToType": "Microsoft.OData.ModelBuilder.ODataConventionModelBuilder"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.RoleBroker",
+      "ToType": "cCoder.Data.ICoreContextFactory"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.Storage.AppBroker",
+      "ToType": "cCoder.Data.ICoreContextFactory"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.Storage.FileBroker",
+      "ToType": "cCoder.Data.ICoreContextFactory"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.Storage.FileContentBroker",
+      "ToType": "cCoder.Data.ICoreContextFactory"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.Storage.FolderBroker",
+      "ToType": "cCoder.Data.ICoreContextFactory"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker",
+      "ToType": "cCoder.Data.ICoreContextFactory"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Dependencies.DocumentArchiveDependency",
+      "ToType": "System.Byte[]"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Dependencies.DocumentStreamDependency",
+      "ToType": "System.Byte[]"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Dependencies.Path",
+      "ToType": "System.String"
     },
     {
       "FromType": "cCoder.DocumentManagement.Dependencies.Path",
@@ -31257,8 +31337,36 @@
       "ToType": "cCoder.DocumentManagement.Services.Foundations.FolderRoleService"
     },
     {
+      "FromType": "cCoder.DocumentManagement.Exposures.Middleware.DMSMiddleware",
+      "ToType": "RequestDelegate"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Exposures.Middleware.WebDavMiddleware",
+      "ToType": "RequestDelegate"
+    },
+    {
       "FromType": "cCoder.DocumentManagement.Exposures.RoleOperationsExposure",
       "ToType": "cCoder.DocumentManagement.Services.Foundations.RoleService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Extensions.OData.CompositePropertyInfo",
+      "ToType": "System.Type"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
+      "ToType": "System.Exception"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
+      "ToType": "System.Exception"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+      "ToType": "System.Exception"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Models.OData.BadRequestResult",
+      "ToType": "ModelStateDictionary"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Aggregations.AppAggregationService",
@@ -31435,6 +31543,10 @@
     {
       "FromType": "cCoder.DocumentManagement.Services.Orchestrations.RoleMigrationOrchestrationService",
       "ToType": "cCoder.DocumentManagement.Services.Processings.RoleMigrationRetrievalProcessingService"
+    },
+    {
+      "FromType": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService",
+      "ToType": "HttpContext"
     },
     {
       "FromType": "cCoder.DocumentManagement.Services.Processings.CurrentAppResolverProcessingService",
