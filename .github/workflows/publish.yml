@@ -29,6 +29,50 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Repair incomplete machine SDK
+        run: |
+          $dotnetRoot = 'C:\Program Files\dotnet'
+          $requiredAnalyzer = Join-Path $dotnetRoot 'packs\Microsoft.NETCore.App.Ref\10.0.12\analyzers\dotnet\cs\Microsoft.Interop.ComInterfaceGenerator.dll'
+
+          if (-not (Test-Path -LiteralPath $requiredAnalyzer)) {
+            $repairTargets = @(
+              (Join-Path $dotnetRoot 'sdk\10.0.401'),
+              (Join-Path $dotnetRoot 'packs\Microsoft.NETCore.App.Ref\10.0.12'),
+              (Join-Path $dotnetRoot 'packs\Microsoft.AspNetCore.App.Ref\10.0.12')
+            )
+
+            foreach ($target in $repairTargets) {
+              if (([IO.Path]::GetFullPath($target)).StartsWith($dotnetRoot, [StringComparison]::OrdinalIgnoreCase) -and
+                  (Test-Path -LiteralPath $target)) {
+                Remove-Item -LiteralPath $target -Recurse -Force
+              }
+            }
+          }
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.401
+
+      - name: Verify .NET reference packs
+        run: |
+          $dotnetRoot = (Get-Command dotnet).Source | Split-Path
+          $requiredAnalyzers = @(
+            'packs/Microsoft.NETCore.App.Ref/10.0.12/analyzers/dotnet/cs/Microsoft.Interop.ComInterfaceGenerator.dll',
+            'packs/Microsoft.AspNetCore.App.Ref/10.0.12/analyzers/dotnet/cs/Microsoft.AspNetCore.App.Analyzers.dll'
+          )
+
+          $missingAnalyzers = @($requiredAnalyzers | Where-Object {
+            -not (Test-Path -LiteralPath (Join-Path $dotnetRoot $_))
+          })
+
+          "Using SDK: $(dotnet --version)" | Write-Output
+          "DOTNET_ROOT: $dotnetRoot" | Write-Output
+
+          if ($missingAnalyzers.Count -gt 0) {
+            throw "The installed SDK has incomplete reference packs: $($missingAnalyzers -join ', ')."
+          }
+
       - name: Create version number
         id: version
         run: |

@@ -4873,7 +4873,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker.DeleteAllFolderRolesAsync(System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E)",
           "Name": "DeleteAllFolderRolesAsync",
-          "LineNumber": 47,
+          "LineNumber": 53,
           "Inputs": [
             {
               "Name": "deletedFolderRole",
@@ -4928,7 +4928,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker.DeleteFolderRoleAsync(cCoder.Data.Models.Security.FolderRole)",
           "Name": "DeleteFolderRoleAsync",
-          "LineNumber": 40,
+          "LineNumber": 46,
           "Inputs": [
             {
               "Name": "deletedFolderRole",
@@ -4983,7 +4983,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker.InsertFolderRoleAsync(cCoder.Data.Models.Security.FolderRole)",
           "Name": "InsertFolderRoleAsync",
-          "LineNumber": 32,
+          "LineNumber": 38,
           "Inputs": [
             {
               "Name": "newFolderRole",
@@ -5051,6 +5051,34 @@
           ],
           "Calls": [
             {
+              "TypeName": "Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions",
+              "MethodName": "IgnoreQueryFilters",
+              "MethodId": "Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.IgnoreQueryFilters(System.Linq.IQueryable\u003CTEntity\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Enumerable",
+              "MethodName": "Contains",
+              "MethodId": "System.Linq.Enumerable.Contains(System.Collections.Generic.IEnumerable\u003CTSource\u003E,TSource)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Queryable",
+              "MethodName": "Select",
+              "MethodId": "System.Linq.Queryable.Select(System.Linq.IQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, TResult\u003E\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Queryable",
+              "MethodName": "Where",
+              "MethodId": "System.Linq.Queryable.Where(System.Linq.IQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, System.Boolean\u003E\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.Data.ICoreContextFactory",
               "MethodName": "CreateCoreContext",
               "MethodId": "cCoder.Data.ICoreContextFactory.CreateCoreContext()",
@@ -5073,7 +5101,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FolderRoleBroker.SelectAppId(cCoder.Data.Models.Security.FolderRole)",
           "Name": "SelectAppId",
-          "LineNumber": 54,
+          "LineNumber": 60,
           "Inputs": [
             {
               "Name": "entity",
@@ -7640,9 +7668,116 @@
       "Properties": [],
       "Methods": [
         {
+          "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController.Delete(System.Guid,System.Guid)",
+          "Name": "Delete",
+          "LineNumber": 140,
+          "Inputs": [
+            {
+              "Name": "keyFolderId",
+              "Type": "System.Guid"
+            },
+            {
+              "Name": "keyRoleId",
+              "Type": "System.Guid"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task\u003CIActionResult\u003E",
+          "Implements": [],
+          "Calls": [
+            {
+              "TypeName": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController",
+              "MethodName": "BadRequest",
+              "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.BadRequest(System.String)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Exception",
+              "MethodName": "GetBaseException",
+              "MethodId": "System.Exception.GetBaseException()",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.Data.Models.Security.FolderRole",
+              "MethodName": ".ctor",
+              "MethodId": "cCoder.Data.Models.Security.FolderRole..ctor()",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogError",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Exposures.IFolderRoleManager",
+              "MethodName": "DeleteFolderRoleAsync",
+              "MethodId": "cCoder.DocumentManagement.Exposures.IFolderRoleManager.DeleteFolderRoleAsync(cCoder.Data.Models.Security.FolderRole)",
+              "StandardElementType": "Exposure",
+              "IsDependencyBoundary": false
+            }
+          ],
+          "PossibleExceptionTypes": [
+            "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException",
+            "System.Security.SecurityException",
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
+          ],
+          "IncomingExceptionTypes": [
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException"
+          ],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [
+            "DELETE"
+          ],
+          "HttpResponses": [
+            {
+              "StatusCode": 204,
+              "ResultMethod": "NoContent",
+              "ExceptionType": "",
+              "IsExceptionPath": false,
+              "IsNullPath": false,
+              "HasBody": false,
+              "ExposesExceptionDetails": false,
+              "LogsException": false
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": false,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "Forbid",
+              "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": false,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            }
+          ],
+          "IsHttpRequestHandler": true,
+          "IsODataControllerAction": true,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": true
+        },
+        {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController.DeleteAll(cCoder.DocumentManagement.Models.OData.ODataCollection\u003CcCoder.Data.Models.Security.FolderRole\u003E)",
           "Name": "DeleteAll",
-          "LineNumber": 101,
+          "LineNumber": 106,
           "Inputs": [
             {
               "Name": "deletedFolderRole",
@@ -7855,6 +7990,20 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController",
+              "MethodName": "Conflict",
+              "MethodId": "Microsoft.AspNetCore.OData.Routing.Controllers.ODataController.Conflict(System.String)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Exception",
+              "MethodName": "GetBaseException",
+              "MethodId": "System.Exception.GetBaseException()",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
@@ -7874,7 +8023,8 @@
             "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
-            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+            "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException"
           ],
           "IncomingExceptionTypes": [
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
@@ -7902,6 +8052,16 @@
               "IsExceptionPath": true,
               "IsNullPath": false,
               "HasBody": false,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 409,
+              "ResultMethod": "Conflict",
+              "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             }
@@ -8888,7 +9048,8 @@
             "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
-            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+            "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException"
           ],
           "IncomingExceptionTypes": [
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
@@ -8954,7 +9115,8 @@
             "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
-            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+            "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException"
           ],
           "IncomingExceptionTypes": [
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
@@ -11714,6 +11876,26 @@
       "Methods": []
     },
     {
+      "Name": "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException",
+      "StandardElementType": "Dependency",
+      "LineNumber": 7,
+      "IsPublic": true,
+      "Kind": "Class",
+      "BaseType": {
+        "Id": "System.Private.CoreLib:System.Exception",
+        "FullName": "System.Exception",
+        "Name": "Exception",
+        "Namespace": "System",
+        "AssemblyName": "System.Private.CoreLib",
+        "Kind": "Class",
+        "IsInCurrentProject": false,
+        "StandardElementType": "Dependency"
+      },
+      "Interfaces": [],
+      "Properties": [],
+      "Methods": []
+    },
+    {
       "Name": "cCoder.DocumentManagement.Models.FolderArchiveData",
       "StandardElementType": "Model",
       "LineNumber": 9,
@@ -12422,7 +12604,8 @@
             "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
-            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+            "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException"
           ],
           "IncomingExceptionTypes": [
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
@@ -13024,7 +13207,8 @@
             "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
-            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+            "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException"
           ],
           "IncomingExceptionTypes": [
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
@@ -18265,7 +18449,8 @@
             "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
-            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+            "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException"
           ],
           "IncomingExceptionTypes": [
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
@@ -18312,7 +18497,8 @@
             "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
-            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+            "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException"
           ],
           "IncomingExceptionTypes": [
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
@@ -21273,7 +21459,7 @@
     {
       "Name": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService",
       "StandardElementType": "ProcessingService",
-      "LineNumber": 16,
+      "LineNumber": 17,
       "IsPublic": false,
       "Kind": "Class",
       "BaseType": null,
@@ -21294,7 +21480,7 @@
         {
           "Id": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService.AddFolderRoleAsync(cCoder.Data.Models.Security.FolderRole)",
           "Name": "AddFolderRoleAsync",
-          "LineNumber": 34,
+          "LineNumber": 35,
           "Inputs": [
             {
               "Name": "newFolderRole",
@@ -21317,6 +21503,13 @@
               "TypeName": "System.Linq.Enumerable",
               "MethodName": "Any",
               "MethodId": "System.Linq.Enumerable.Any(System.Collections.Generic.IEnumerable\u003CTSource\u003E,System.Func\u003CTSource, System.Boolean\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Queryable",
+              "MethodName": "Any",
+              "MethodId": "System.Linq.Queryable.Any(System.Linq.IQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, System.Boolean\u003E\u003E)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -21347,6 +21540,13 @@
               "MethodId": "cCoder.DocumentManagement.Services.Foundations.IFolderRoleService.AddFolderRoleAsync(cCoder.Data.Models.Security.FolderRole)",
               "StandardElementType": "FoundationService",
               "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Services.Foundations.IFolderRoleService",
+              "MethodName": "GetAll",
+              "MethodId": "cCoder.DocumentManagement.Services.Foundations.IFolderRoleService.GetAll(System.Boolean)",
+              "StandardElementType": "FoundationService",
+              "IsDependencyBoundary": false
             }
           ],
           "PossibleExceptionTypes": [
@@ -21354,12 +21554,14 @@
             "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
-            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+            "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException"
           ],
           "IncomingExceptionTypes": [
             "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
-            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException"
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
+            "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException"
           ],
           "ThrowsExceptionTypes": [
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
@@ -21377,7 +21579,7 @@
         {
           "Id": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService.AddOrUpdateFolderRole(System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E)",
           "Name": "AddOrUpdateFolderRole",
-          "LineNumber": 99,
+          "LineNumber": 108,
           "Inputs": [
             {
               "Name": "items",
@@ -21451,7 +21653,8 @@
             "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
-            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+            "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException"
           ],
           "IncomingExceptionTypes": [
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
@@ -21470,7 +21673,7 @@
         {
           "Id": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService.DeleteAllFolderRoleAsync(System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.Security.FolderRole\u003E)",
           "Name": "DeleteAllFolderRoleAsync",
-          "LineNumber": 160,
+          "LineNumber": 169,
           "Inputs": [
             {
               "Name": "deletedFolderRole",
@@ -21509,7 +21712,7 @@
         {
           "Id": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService.DeleteFolderRoleAsync(cCoder.Data.Models.Security.FolderRole)",
           "Name": "DeleteFolderRoleAsync",
-          "LineNumber": 72,
+          "LineNumber": 81,
           "Inputs": [
             {
               "Name": "deletedFolderRole",
@@ -21592,7 +21795,7 @@
         {
           "Id": "cCoder.DocumentManagement.Services.Processings.FolderRoleProcessingService.GetAll(System.Boolean)",
           "Name": "GetAll",
-          "LineNumber": 25,
+          "LineNumber": 26,
           "Inputs": [
             {
               "Name": "ignoreFilters",
@@ -22107,7 +22310,8 @@
             "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
-            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+            "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException"
           ],
           "IncomingExceptionTypes": [
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
@@ -22149,7 +22353,8 @@
             "System.Security.SecurityException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
-            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException"
+            "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+            "cCoder.DocumentManagement.Models.Exceptions.DuplicateFolderRoleException"
           ],
           "IncomingExceptionTypes": [
             "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementDependencyException",
@@ -31846,7 +32051,14 @@
       "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
       "Severity": "Warning",
       "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
-      "LineNumber": 101
+      "LineNumber": 106
+    },
+    {
+      "Code": "STXAPI005",
+      "Description": "Every public HTTP handler must map success and caught failure paths to 2xx, 4xx, or 5xx responses.",
+      "Severity": "Warning",
+      "Type": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
+      "LineNumber": 140
     }
   ]
 }

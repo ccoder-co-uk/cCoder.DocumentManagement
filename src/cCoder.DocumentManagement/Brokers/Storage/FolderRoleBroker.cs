@@ -26,7 +26,13 @@ internal sealed class FolderRoleBroker(ICoreContextFactory coreContextFactory) :
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        return coreDataContext.FolderRoles.ApplyQueryFilters(ignoreFilters: ignoreFilters);
+        IQueryable<Guid> accessibleFolderIds = coreDataContext.Folders
+            .ApplyQueryFilters(ignoreFilters: ignoreFilters)
+            .Select(selector: folder => folder.Id);
+
+        return coreDataContext.FolderRoles
+            .IgnoreQueryFilters()
+            .Where(predicate: folderRole => accessibleFolderIds.Contains(value: folderRole.FolderId));
     }
 
     public async ValueTask<FolderRole> InsertFolderRoleAsync(FolderRole newFolderRole)

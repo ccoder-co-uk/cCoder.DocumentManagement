@@ -77,6 +77,11 @@ public class FolderRoleController(
 
             return StatusCode(statusCode: StatusCodes.Status201Created, value: addedFolderRole);
         }
+        catch (DocumentManagementServiceException exception) when (exception.GetBaseException() is DuplicateFolderRoleException)
+        {
+            loggingBroker.LogError(exception: exception, message: "Folder role already exists.");
+            return Conflict(error: new { Message = "The folder is already in the selected role." });
+        }
         catch (DocumentManagementValidationException exception)
         {
             loggingBroker.LogError(exception: exception, message: "Controller request failed.");
@@ -127,6 +132,36 @@ public class FolderRoleController(
         {
             loggingBroker.LogError(exception: exception, message: "Controller request failed.");
 
+            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete([FromRoute] Guid keyFolderId, [FromRoute] Guid keyRoleId)
+    {
+        try
+        {
+            await service.DeleteFolderRoleAsync(deletedFolderRole: new FolderRole
+            {
+                FolderId = keyFolderId,
+                RoleId = keyRoleId,
+            });
+
+            return NoContent();
+        }
+        catch (DocumentManagementServiceException exception) when (exception.GetBaseException() is System.Security.SecurityException)
+        {
+            loggingBroker.LogError(exception: exception, message: "Folder role deletion denied.");
+            return Forbid();
+        }
+        catch (DocumentManagementValidationException exception)
+        {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            return BadRequest();
+        }
+        catch (Exception exception)
+        {
+            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }
