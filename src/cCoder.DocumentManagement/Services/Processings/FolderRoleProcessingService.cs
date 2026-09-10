@@ -5,6 +5,7 @@
 using System.Security;
 using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Models;
+using cCoder.DocumentManagement.Models.Exceptions;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
@@ -49,8 +50,16 @@ internal partial class FolderRoleProcessingService(
 
             if (flag && func(arg1: folder, arg2: role))
             {
-                ICollection<cCoder.Data.Models.Security.FolderRole> roles = folder.Roles;
-                return (roles == null || !roles.Any(predicate: (cCoder.Data.Models.Security.FolderRole r) => r.RoleId == role.Id)) ? service.AddFolderRoleAsync(newFolderRole: newFolderRole) : ValueTask.FromResult(result: newFolderRole);
+                bool exists = service.GetAll(ignoreFilters: true)
+                    .Any(predicate: existing => existing.FolderId == newFolderRole.FolderId
+                        && existing.RoleId == newFolderRole.RoleId);
+
+                if (exists)
+                {
+                    throw new DuplicateFolderRoleException();
+                }
+
+                return service.AddFolderRoleAsync(newFolderRole: newFolderRole);
             }
 
 
