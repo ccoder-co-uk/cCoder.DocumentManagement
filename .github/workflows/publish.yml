@@ -29,6 +29,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Repair incomplete machine SDK
+        run: |
+          $dotnetRoot = 'C:\Program Files\dotnet'
+          $requiredAnalyzer = Join-Path $dotnetRoot 'packs\Microsoft.NETCore.App.Ref\10.0.12\analyzers\dotnet\cs\Microsoft.Interop.ComInterfaceGenerator.dll'
+
+          if (-not (Test-Path -LiteralPath $requiredAnalyzer)) {
+            $repairTargets = @(
+              (Join-Path $dotnetRoot 'sdk\10.0.401'),
+              (Join-Path $dotnetRoot 'packs\Microsoft.NETCore.App.Ref\10.0.12'),
+              (Join-Path $dotnetRoot 'packs\Microsoft.AspNetCore.App.Ref\10.0.12')
+            )
+
+            foreach ($target in $repairTargets) {
+              if (([IO.Path]::GetFullPath($target)).StartsWith($dotnetRoot, [StringComparison]::OrdinalIgnoreCase) -and
+                  (Test-Path -LiteralPath $target)) {
+                Remove-Item -LiteralPath $target -Recurse -Force
+              }
+            }
+          }
+
       - name: Install .NET
         uses: actions/setup-dotnet@v6
         with:
