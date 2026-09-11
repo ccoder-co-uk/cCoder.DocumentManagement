@@ -17,16 +17,16 @@ namespace cCoder.DocumentManagement.Services.Foundations.Events;
 internal partial class FolderEventService(IFolderEventBroker folderEventBroker, IAuthInfoBroker authInfoBroker)
     : IFolderEventService
 {
-    public ValueTask RaiseFolderAddEventAsync(Folder entity)
+    public ValueTask RaiseFolderAddEventAsync(Folder folder)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
+            ValidateInputs(inputs: [folder]);
 
             EventMessage<DataFolder> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
-                Data = ToExternalFolder(folder: entity),
+                Data = ToExternalFolder(folder: folder),
             };
 
 
@@ -34,16 +34,16 @@ internal partial class FolderEventService(IFolderEventBroker folderEventBroker, 
 
         });
 
-    public ValueTask RaiseFolderUpdateEventAsync(Folder entity)
+    public ValueTask RaiseFolderUpdateEventAsync(Folder folder)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
+            ValidateInputs(inputs: [folder]);
 
             EventMessage<DataFolder> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
-                Data = ToExternalFolder(folder: entity),
+                Data = ToExternalFolder(folder: folder),
             };
 
 
@@ -51,16 +51,16 @@ internal partial class FolderEventService(IFolderEventBroker folderEventBroker, 
 
         });
 
-    public ValueTask RaiseFolderDeleteEventAsync(Folder entity)
+    public ValueTask RaiseFolderDeleteEventAsync(Folder folder)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
+            ValidateInputs(inputs: [folder]);
 
             EventMessage<DataFolder> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
-                Data = ToExternalFolder(folder: entity),
+                Data = ToExternalFolder(folder: folder),
             };
 
 

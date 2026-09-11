@@ -27,7 +27,7 @@ public partial class DmsInstanceFactoryTests
         orchestrationServiceMock
             .Setup(expression: service =>
                 service.SearchFilesDmsOperation(
-                    operation: It.Is<DmsOperation>(match: operation =>
+                    dmsOperation: It.Is<DmsOperation>(match: operation =>
                         operation.Needle == "needle")))
             .Returns(value: new DmsOperation
             {
@@ -47,7 +47,7 @@ public partial class DmsInstanceFactoryTests
         orchestrationServiceMock.Verify(
             expression: service =>
                 service.SearchFilesDmsOperation(
-                    operation: It.Is<DmsOperation>(match: operation =>
+                    dmsOperation: It.Is<DmsOperation>(match: operation =>
                         operation.Needle == "needle")),
             times: Times.Once);
 
@@ -65,7 +65,7 @@ public partial class DmsInstanceFactoryTests
         orchestrationServiceMock
             .Setup(expression: service =>
                 service.SaveDmsOperationAsync(
-                    operation: It.Is<DmsOperation>(match: operation =>
+                    dmsOperation: It.Is<DmsOperation>(match: operation =>
                         operation.Path == path.FullPath
                         && operation.Content == content)))
             .Returns(value: ValueTask.FromResult(
@@ -82,7 +82,7 @@ public partial class DmsInstanceFactoryTests
         orchestrationServiceMock.Verify(
             expression: service =>
                 service.SaveDmsOperationAsync(
-                    operation: It.Is<DmsOperation>(match: operation =>
+                    dmsOperation: It.Is<DmsOperation>(match: operation =>
                         operation.Path == path.FullPath
                         && operation.Content == content)),
             times: Times.Once);

@@ -12,6 +12,6 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 internal interface IFolderRoleEventProcessingService
 {
-    ValueTask RaiseFolderRoleAddEventAsync(FolderRole entity);
-    ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole entity);
+    ValueTask RaiseFolderRoleAddEventAsync(FolderRole folderRole);
+    ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole folderRole);
 }

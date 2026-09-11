@@ -13,7 +13,7 @@ using cCoder.DocumentManagement.Services.Processings;
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 internal partial class DmsHttpRequestOrchestrationService(
-    ICurrentAppResolverProcessingService currentAppResolver,
+    IDmsHttpProcessingService dmsHttpProcessingService,
     IDmsInstanceProcessingService dmsProcessingService,
     IWebDavProcessingService webDavProcessingService
 ) : IDmsHttpRequestOrchestrationService
@@ -23,9 +23,13 @@ internal partial class DmsHttpRequestOrchestrationService(
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [context]);
-            App app = currentAppResolver.ResolveCurrentApp();
 
-            DmsProcessingRequest request = BuildRequestApp(context: context, app: app);
+            DmsProcessingRequest request = dmsHttpProcessingService.BuildDmsHttpSession(
+                dmsHttpSession: new DmsHttpSession
+                {
+                    HttpContext = context,
+                }).Request;
+
             DmsProcessingResponse response;
 
 
@@ -33,7 +37,7 @@ internal partial class DmsHttpRequestOrchestrationService(
             {
                 DmsProcessingSession session =
                     await webDavProcessingService.ProcessDmsProcessingSessionAsync(
-                        session: new DmsProcessingSession
+                        dmsProcessingSession: new DmsProcessingSession
                         {
                             Request = request
                         });
@@ -46,7 +50,7 @@ internal partial class DmsHttpRequestOrchestrationService(
                 {
                     DmsProcessingSession session =
                         await dmsProcessingService.ProcessDmsProcessingSessionAsync(
-                            session: new DmsProcessingSession
+                            dmsProcessingSession: new DmsProcessingSession
                             {
                                 Request = request
                             });
@@ -60,51 +64,13 @@ internal partial class DmsHttpRequestOrchestrationService(
                 }
             }
 
-            await WriteDmsProcessingResponseAsync(context: context, response: response);
+            await dmsHttpProcessingService.WriteDmsHttpSessionAsync(
+                dmsHttpSession: new DmsHttpSession
+                {
+                    HttpContext = context,
+                    Response = response,
+                });
         });
-
-    private static async ValueTask WriteDmsProcessingResponseAsync(
-        HttpContext context,
-        DmsProcessingResponse response)
-    {
-        foreach (KeyValuePair<string, string> header in response.Headers)
-        {
-            if (!context.Response.Headers.ContainsKey(key: header.Key))
-            {
-                context.Response.Headers.Append(key: header.Key, value: header.Value);
-            }
-        }
-
-        context.Response.ContentType = response.ContentType;
-        context.Response.StatusCode = response.StatusCode;
-
-        if (response.HasBody)
-        {
-            context.Response.Headers.Append(
-                key: "Content-Length",
-                value: response.Body.Length.ToString());
-
-            await response.Body.CopyToAsync(destination: context.Response.Body);
-            response.Body.Close();
-        }
-    }
-
-    private static DmsProcessingRequest BuildRequestApp(HttpContext context, App app) =>
-        new()
-        {
-            App = app,
-            Method = context.Request.Method,
-            RequestPath = context.Request.Path.Value ?? string.Empty,
-            Host = context.Request.Host.Host,
-            QueryString = context.Request.QueryString.Value ?? string.Empty,
-            ContentType = context.Request.Headers.ContentType.ToString(),
-            Body = context.Request.Body,
-            Headers = context.Request.Headers.ToDictionary(
-                keySelector: header => header.Key,
-                elementSelector: header => header.Value.ToArray(),
-                comparer: StringComparer.OrdinalIgnoreCase
-            ),
-        };
 
     private static bool IsWebDavRequestDmsProcessingRequest(DmsProcessingRequest request) =>
         request.RequestPath.Contains(value: "/webdav", comparisonType: StringComparison.OrdinalIgnoreCase);

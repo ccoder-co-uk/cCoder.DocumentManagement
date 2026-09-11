@@ -16,7 +16,7 @@ public interface IFolderRoleBroker
     ValueTask<FolderRole> InsertFolderRoleAsync(FolderRole newFolderRole);
     ValueTask<int> DeleteFolderRoleAsync(FolderRole deletedFolderRole);
     ValueTask DeleteAllFolderRolesAsync(IEnumerable<FolderRole> deletedFolderRole);
-    int? SelectAppId(FolderRole entity);
+    int? SelectAppId(FolderRole folderRole);
 }
 
 internal sealed class FolderRoleBroker(ICoreContextFactory coreContextFactory) : IFolderRoleBroker
@@ -57,13 +57,13 @@ internal sealed class FolderRoleBroker(ICoreContextFactory coreContextFactory) :
         _ = await coreDataContext.SaveChangesAsync();
     }
 
-    public int? SelectAppId(FolderRole entity)
+    public int? SelectAppId(FolderRole folderRole)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
         return coreDataContext.Folders
 
-            .Where(predicate: folder => folder.Id == entity.FolderId)
+            .Where(predicate: folder => folder.Id == folderRole.FolderId)
             .Select(selector: folder => (int?)folder.AppId)
             .FirstOrDefault();
 

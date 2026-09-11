@@ -19,19 +19,19 @@ internal partial class DocumentManagementMigrationAggregationService(
     IPackagePayloadMigrationOrchestrationService packagePayloadMigrationOrchestrationService
 ) : IDocumentManagementMigrationAggregationService
 {
-    public ValueTask ImportPackageDocumentManagementPackageAsync(int appId, DocumentManagementPackage package)
+    public ValueTask ImportPackageDocumentManagementPackageAsync(int appId, DocumentManagementPackage documentManagementPackage)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [appId, package]);
+            ValidateInputs(inputs: [appId, documentManagementPackage]);
 
-            if (package.Items is null || package.Items.Count == 0)
+            if (documentManagementPackage.Items is null || documentManagementPackage.Items.Count == 0)
             {
                 return;
             }
 
 
-            foreach (DocumentManagementPackageItem item in package.Items)
+            foreach (DocumentManagementPackageItem item in documentManagementPackage.Items)
             {
                 if (item.Type != "Core/FolderRole")
                 {
@@ -78,19 +78,19 @@ internal partial class DocumentManagementMigrationAggregationService(
         {
             ValidateInputs(inputs: [appId, packageName]);
 
-            var package = packageName == "FolderRoles"
+            var documentManagementPackage = packageName == "FolderRoles"
     ? ExportFolderRoles(appId: appId)
     : new Data.Models.Packaging.Package { Name = packageName, Items = [] };
 
 
             return new DocumentManagementPackage
             {
-                Id = package.Id,
-                Name = package.Name,
-                Description = package.Description,
-                Category = package.Category,
-                SourceApi = package.SourceApi,
-                Items = package.Items?
+                Id = documentManagementPackage.Id,
+                Name = documentManagementPackage.Name,
+                Description = documentManagementPackage.Description,
+                Category = documentManagementPackage.Category,
+                SourceApi = documentManagementPackage.SourceApi,
+                Items = documentManagementPackage.Items?
                     .Select(selector: item => new DocumentManagementPackageItem
                     {
                         Id = item.Id,

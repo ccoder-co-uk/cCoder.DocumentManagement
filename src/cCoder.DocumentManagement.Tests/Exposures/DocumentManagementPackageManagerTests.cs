@@ -28,7 +28,7 @@ public partial class DocumentManagementPackageManagerTests
         serviceMock
             .Setup(expression: service => service.ImportPackageDocumentManagementPackageAsync(
                 appId: appId,
-                package: package))
+                documentManagementPackage: package))
             .Returns(value: ValueTask.CompletedTask);
 
         serviceMock
@@ -43,7 +43,7 @@ public partial class DocumentManagementPackageManagerTests
         // When
         await manager.ImportPackageAsync(
             appId: appId,
-            package: package);
+            documentManagementPackage: package);
 
         DocumentManagementPackage result = manager.ExportPackage(
             appId: appId,

@@ -34,7 +34,7 @@ public partial class FolderEventServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFolderDeleteEventAsync(entity: entity);
+        await service.RaiseFolderDeleteEventAsync(folder: entity);
 
         // Then
         actualMessage.Should()

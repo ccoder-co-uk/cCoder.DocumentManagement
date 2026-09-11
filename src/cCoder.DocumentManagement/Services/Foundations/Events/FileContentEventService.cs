@@ -21,16 +21,16 @@ internal partial class FileContentEventService(
     IAuthInfoBroker authInfoBroker
 ) : IFileContentEventService
 {
-    public ValueTask RaiseFileContentAddEventAsync(FileContent entity)
+    public ValueTask RaiseFileContentAddEventAsync(FileContent fileContent)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
+            ValidateInputs(inputs: [fileContent]);
 
             EventMessage<DataFileContent> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
-                Data = ToExternalFileContent(fileContent: entity),
+                Data = ToExternalFileContent(fileContent: fileContent),
             };
 
 
@@ -38,16 +38,16 @@ internal partial class FileContentEventService(
 
         });
 
-    public ValueTask RaiseFileContentUpdateEventAsync(FileContent entity)
+    public ValueTask RaiseFileContentUpdateEventAsync(FileContent fileContent)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
+            ValidateInputs(inputs: [fileContent]);
 
             EventMessage<DataFileContent> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
-                Data = ToExternalFileContent(fileContent: entity),
+                Data = ToExternalFileContent(fileContent: fileContent),
             };
 
 
@@ -55,16 +55,16 @@ internal partial class FileContentEventService(
 
         });
 
-    public ValueTask RaiseFileContentDeleteEventAsync(FileContent entity)
+    public ValueTask RaiseFileContentDeleteEventAsync(FileContent fileContent)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
+            ValidateInputs(inputs: [fileContent]);
 
             EventMessage<DataFileContent> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
-                Data = ToExternalFileContent(fileContent: entity),
+                Data = ToExternalFileContent(fileContent: fileContent),
             };
 
 

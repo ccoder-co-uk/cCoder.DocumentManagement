@@ -6,19 +6,19 @@ namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 internal interface IDmsOrchestrationService
 {
-    DmsOperation GetFilesZippedDmsOperation(DmsOperation operation);
+    DmsOperation GetFilesZippedDmsOperation(DmsOperation dmsOperation);
 
-    DmsOperation GetDmsOperation(DmsOperation operation);
+    DmsOperation GetDmsOperation(DmsOperation dmsOperation);
 
-    DmsOperation SearchFilesDmsOperation(DmsOperation operation);
+    DmsOperation SearchFilesDmsOperation(DmsOperation dmsOperation);
 
-    ValueTask<DmsOperation> UnpackDmsOperationAsync(DmsOperation operation);
+    ValueTask<DmsOperation> UnpackDmsOperationAsync(DmsOperation dmsOperation);
 
-    ValueTask<DmsOperation> SaveDmsOperationAsync(DmsOperation operation);
+    ValueTask<DmsOperation> SaveDmsOperationAsync(DmsOperation dmsOperation);
 
-    ValueTask<DmsOperation> DropDmsOperationAsync(DmsOperation operation);
+    ValueTask<DmsOperation> DropDmsOperationAsync(DmsOperation dmsOperation);
 
-    ValueTask<DmsOperation> CopyDmsOperationAsync(DmsOperation operation);
+    ValueTask<DmsOperation> CopyDmsOperationAsync(DmsOperation dmsOperation);
 
-    ValueTask<DmsOperation> MoveDmsOperationAsync(DmsOperation operation);
+    ValueTask<DmsOperation> MoveDmsOperationAsync(DmsOperation dmsOperation);
 }

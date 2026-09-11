@@ -19,6 +19,7 @@ namespace cCoder.Core.Services.Tests.DMS.Orchestrations;
 public partial class DmsHttpRequestOrchestrationServiceTests
 {
     private readonly Mock<ICurrentAppResolverProcessingService> currentAppResolverMock;
+    private readonly Mock<IDmsHttpProcessingService> dmsHttpProcessingServiceMock;
     private readonly Mock<IDmsInstanceProcessingService> dmsProcessingServiceMock;
     private readonly Mock<IWebDavProcessingService> webDavProcessingServiceMock;
     private readonly DmsHttpRequestOrchestrationService orchestrationService;
@@ -26,11 +27,67 @@ public partial class DmsHttpRequestOrchestrationServiceTests
     public DmsHttpRequestOrchestrationServiceTests()
     {
         currentAppResolverMock = new Mock<ICurrentAppResolverProcessingService>(behavior: MockBehavior.Strict);
+        dmsHttpProcessingServiceMock = new Mock<IDmsHttpProcessingService>(behavior: MockBehavior.Strict);
         dmsProcessingServiceMock = new Mock<IDmsInstanceProcessingService>(behavior: MockBehavior.Strict);
         webDavProcessingServiceMock = new Mock<IWebDavProcessingService>(behavior: MockBehavior.Strict);
 
+        dmsHttpProcessingServiceMock
+            .Setup(expression: service => service.BuildDmsHttpSession(
+                dmsHttpSession: It.IsAny<DmsHttpSession>()))
+            .Returns(valueFunction: (DmsHttpSession dmsHttpSession) =>
+            {
+                HttpContext context = dmsHttpSession.HttpContext;
+                App app = currentAppResolverMock.Object.ResolveCurrentApp();
+                dmsHttpSession.App = app;
+                dmsHttpSession.Request = new DmsProcessingRequest
+                {
+                    App = app,
+                    Method = context.Request.Method,
+                    RequestPath = context.Request.Path.Value ?? string.Empty,
+                    Host = context.Request.Host.Host,
+                    QueryString = context.Request.QueryString.Value ?? string.Empty,
+                    ContentType = context.Request.ContentType,
+                    Body = context.Request.Body,
+                    Headers = context.Request.Headers.ToDictionary(
+                        keySelector: header => header.Key,
+                        elementSelector: header => header.Value.ToArray(),
+                        comparer: StringComparer.OrdinalIgnoreCase),
+                };
+
+                return dmsHttpSession;
+            });
+
+        dmsHttpProcessingServiceMock
+            .Setup(expression: service => service.WriteDmsHttpSessionAsync(
+                dmsHttpSession: It.IsAny<DmsHttpSession>()))
+            .Returns(valueFunction: async (DmsHttpSession dmsHttpSession) =>
+            {
+                HttpContext context = dmsHttpSession.HttpContext;
+                DmsProcessingResponse response = dmsHttpSession.Response;
+
+                foreach (KeyValuePair<string, string> header in response.Headers)
+                {
+                    context.Response.Headers.TryAdd(key: header.Key, value: header.Value);
+                }
+
+                context.Response.ContentType = response.ContentType;
+                context.Response.StatusCode = response.StatusCode;
+
+                if (response.HasBody)
+                {
+                    context.Response.Headers.Append(
+                        key: "Content-Length",
+                        value: response.Body.Length.ToString());
+
+                    await response.Body.CopyToAsync(destination: context.Response.Body);
+                    response.Body.Close();
+                }
+
+                return dmsHttpSession;
+            });
+
         orchestrationService = new DmsHttpRequestOrchestrationService(
-            currentAppResolver: currentAppResolverMock.Object,
+            dmsHttpProcessingService: dmsHttpProcessingServiceMock.Object,
             dmsProcessingService: dmsProcessingServiceMock.Object,
             webDavProcessingService: webDavProcessingServiceMock.Object
         );

@@ -37,7 +37,7 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
             ValidateInputs(inputs: [newFileContent]);
             FileContent result = await processingService.AddFileContentAsync(newFileContent: newFileContent);
 
-            await eventService.RaiseFileContentAddEventAsync(entity: result);
+            await eventService.RaiseFileContentAddEventAsync(fileContent: result);
 
             return result;
 
@@ -50,7 +50,7 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
             ValidateInputs(inputs: [updatedFileContent]);
             FileContent result = await processingService.UpdateFileContentAsync(updatedFileContent: updatedFileContent);
 
-            await eventService.RaiseFileContentUpdateEventAsync(entity: result);
+            await eventService.RaiseFileContentUpdateEventAsync(fileContent: result);
 
             return result;
 
@@ -63,7 +63,7 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
             ValidateInputs(inputs: [fileContentId]);
             FileContent entity = processingService.Get(fileContentId: fileContentId);
 
-            await eventService.RaiseFileContentDeleteEventAsync(entity: entity);
+            await eventService.RaiseFileContentDeleteEventAsync(fileContent: entity);
 
             await processingService.DeleteAsync(fileContentId: fileContentId);
 

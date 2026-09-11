@@ -21,14 +21,14 @@ public partial class FolderRoleEventProcessingServiceTests
         FolderRole entity = CreateRandomFolderRole();
 
         folderRoleEventServiceMock
-            .Setup(expression: x => x.RaiseFolderRoleDeleteEventAsync(entity: entity))
+            .Setup(expression: x => x.RaiseFolderRoleDeleteEventAsync(folderRole: entity))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFolderRoleDeleteEventAsync(entity: entity);
+        await service.RaiseFolderRoleDeleteEventAsync(folderRole: entity);
 
         // Then
-        folderRoleEventServiceMock.Verify(expression: x => x.RaiseFolderRoleDeleteEventAsync(entity: entity), times: Times.Once);
+        folderRoleEventServiceMock.Verify(expression: x => x.RaiseFolderRoleDeleteEventAsync(folderRole: entity), times: Times.Once);
         folderRoleEventServiceMock.VerifyNoOtherCalls();
     }
 

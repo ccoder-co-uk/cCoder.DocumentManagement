@@ -65,7 +65,7 @@ public sealed partial class EventHandlerServiceTests
         migrationServiceMock.Verify(
             expression: service => service.ImportPackageDocumentManagementPackageAsync(
                 appId: expectedAppId,
-                package: It.Is<DocumentManagementPackage>(match: package => package.Name == "Documents")),
+                documentManagementPackage: It.Is<DocumentManagementPackage>(match: package => package.Name == "Documents")),
             times: Times.Once);
     }
 }

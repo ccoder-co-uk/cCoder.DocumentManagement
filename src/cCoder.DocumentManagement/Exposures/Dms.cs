@@ -16,7 +16,7 @@ internal sealed class Dms(
 {
     public DmsResult GetFilesZipped(IEnumerable<DmsPath> paths) =>
         dmsOrchestrationService.GetFilesZippedDmsOperation(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Paths = paths.Select(
                     selector: path =>
@@ -26,7 +26,7 @@ internal sealed class Dms(
 
     public DmsResult Get(DmsPath path, int version = 0, string search = "") =>
         dmsOrchestrationService.GetDmsOperation(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = path.FullPath,
                 Version = version,
@@ -36,7 +36,7 @@ internal sealed class Dms(
 
     public IEnumerable<DmsFile> Search(string needle) =>
         dmsOrchestrationService.SearchFilesDmsOperation(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Needle = needle
             })
@@ -65,7 +65,7 @@ internal sealed class Dms(
         Stream content,
         bool ignoreArchiveRoot) =>
         _ = await dmsOrchestrationService.UnpackDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = path.FullPath,
                 Content = content,
@@ -76,7 +76,7 @@ internal sealed class Dms(
         DmsPath path,
         Stream content) =>
         _ = await dmsOrchestrationService.SaveDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = path.FullPath,
                 Content = content
@@ -86,7 +86,7 @@ internal sealed class Dms(
         DmsPath path,
         int version) =>
         _ = await dmsOrchestrationService.DropDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = path.FullPath,
                 Version = version
@@ -96,7 +96,7 @@ internal sealed class Dms(
         DmsPath oldPath,
         DmsPath newPath) =>
         _ = await dmsOrchestrationService.CopyDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = oldPath.FullPath,
                 NewPath = newPath.FullPath
@@ -106,7 +106,7 @@ internal sealed class Dms(
         DmsPath oldPath,
         DmsPath newPath) =>
         _ = await dmsOrchestrationService.MoveDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = oldPath.FullPath,
                 NewPath = newPath.FullPath

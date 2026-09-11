@@ -19,7 +19,7 @@ public interface IFileContentBroker
     ValueTask<FileContent> UpdateFileContentAsync(FileContent updatedFileContent);
     ValueTask<int> DeleteFileContentAsync(FileContent deletedFileContent);
     ValueTask DeleteAllFileContentsAsync(IEnumerable<FileContent> deletedFileContent);
-    int? SelectAppId(FileContent entity);
+    int? SelectAppId(FileContent fileContent);
 }
 
 internal sealed class FileContentBroker(ICoreContextFactory coreContextFactory) : IFileContentBroker
@@ -90,13 +90,13 @@ internal sealed class FileContentBroker(ICoreContextFactory coreContextFactory) 
         _ = await coreDataContext.SaveChangesAsync();
     }
 
-    public int? SelectAppId(FileContent entity)
+    public int? SelectAppId(FileContent fileContent)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
         return coreDataContext.Files
 
-            .Where(predicate: file => file.Id == entity.FileId)
+            .Where(predicate: file => file.Id == fileContent.FileId)
             .Join(inner: coreDataContext.Folders,
                 outerKeySelector: file => file.FolderId,
                 innerKeySelector: folder => folder.Id,

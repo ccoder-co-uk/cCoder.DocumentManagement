@@ -29,7 +29,7 @@ public partial class FolderOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         folderEventProcessingServiceMock
-            .Setup(expression: x => x.RaiseFolderDeleteEventAsync(entity: entity))
+            .Setup(expression: x => x.RaiseFolderDeleteEventAsync(folder: entity))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
@@ -38,7 +38,7 @@ public partial class FolderOrchestrationServiceTests
         // Then
         folderProcessingServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Once);
         folderProcessingServiceMock.Verify(expression: x => x.DeleteAsync(folderId: id), times: Times.Once);
-        folderEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderDeleteEventAsync(entity: entity), times: Times.Once);
+        folderEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderDeleteEventAsync(folder: entity), times: Times.Once);
     }
 
 }

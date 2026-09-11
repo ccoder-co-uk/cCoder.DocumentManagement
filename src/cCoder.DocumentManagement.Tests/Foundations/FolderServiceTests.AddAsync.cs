@@ -25,7 +25,7 @@ public partial class FolderServiceTests
 
         Folder submitted = null;
 
-        folderBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFolder>()))
+        folderBrokerMock.Setup(expression: x => x.SelectAppId(folder: It.IsAny<DataFolder>()))
             .Returns(value: (int?)7);
 
         authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_create"));
@@ -76,7 +76,7 @@ public partial class FolderServiceTests
             times: Times.Once
         );
 
-        folderBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
+        folderBrokerMock.Verify(expression: x => x.SelectAppId(folder: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_create"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
@@ -100,7 +100,7 @@ public partial class FolderServiceTests
             .ThrowAsync<DocumentManagementServiceException>()
             .WithInnerException(innerException: typeof(SecurityException));
 
-        folderBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
+        folderBrokerMock.Verify(expression: x => x.SelectAppId(folder: It.IsAny<DataFolder>()), times: Times.AtMostOnce());
         folderBrokerMock.VerifyNoOtherCalls();
         authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_create"), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();

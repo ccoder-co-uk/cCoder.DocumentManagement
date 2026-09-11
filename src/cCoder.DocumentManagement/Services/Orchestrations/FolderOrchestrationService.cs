@@ -37,7 +37,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
             ValidateInputs(inputs: [newFolder]);
             Folder result = await processingService.AddFolderAsync(newFolder: newFolder);
 
-            await eventService.RaiseFolderAddEventAsync(entity: result);
+            await eventService.RaiseFolderAddEventAsync(folder: result);
 
             return result;
 
@@ -50,7 +50,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
             ValidateInputs(inputs: [updatedFolder]);
             Folder result = await processingService.UpdateFolderAsync(updatedFolder: updatedFolder);
 
-            await eventService.RaiseFolderUpdateEventAsync(entity: result);
+            await eventService.RaiseFolderUpdateEventAsync(folder: result);
 
             return result;
 
@@ -72,7 +72,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
             }
 
 
-            await eventService.RaiseFolderDeleteEventAsync(entity: entity);
+            await eventService.RaiseFolderDeleteEventAsync(folder: entity);
 
             await processingService.DeleteAsync(folderId: folderId);
 

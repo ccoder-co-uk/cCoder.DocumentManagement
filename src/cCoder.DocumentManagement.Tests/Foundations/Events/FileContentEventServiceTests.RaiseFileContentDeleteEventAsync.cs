@@ -34,7 +34,7 @@ public partial class FileContentEventServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFileContentDeleteEventAsync(entity: entity);
+        await service.RaiseFileContentDeleteEventAsync(fileContent: entity);
 
         // Then
         actualMessage.Should()

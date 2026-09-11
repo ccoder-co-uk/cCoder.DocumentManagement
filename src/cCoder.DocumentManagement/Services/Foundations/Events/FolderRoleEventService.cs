@@ -19,16 +19,16 @@ internal partial class FolderRoleEventService(
     IAuthInfoBroker authInfoBroker
 ) : IFolderRoleEventService
 {
-    public ValueTask RaiseFolderRoleAddEventAsync(FolderRole entity)
+    public ValueTask RaiseFolderRoleAddEventAsync(FolderRole folderRole)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
+            ValidateInputs(inputs: [folderRole]);
 
             EventMessage<DataFolderRole> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
-                Data = ToExternalFolderRole(folderRole: entity),
+                Data = ToExternalFolderRole(folderRole: folderRole),
             };
 
 
@@ -36,16 +36,16 @@ internal partial class FolderRoleEventService(
 
         });
 
-    public ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole entity)
+    public ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole folderRole)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [entity]);
+            ValidateInputs(inputs: [folderRole]);
 
             EventMessage<DataFolderRole> message = new()
             {
                 AuthInfo = new EventAuthInfo { SSOUserId = authInfoBroker.GetCurrentSsoUserId() },
-                Data = ToExternalFolderRole(folderRole: entity),
+                Data = ToExternalFolderRole(folderRole: folderRole),
             };
 
 

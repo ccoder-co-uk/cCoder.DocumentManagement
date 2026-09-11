@@ -25,7 +25,7 @@ public partial class FileContentOrchestrationServiceTests
             .ReturnsAsync(value: entity);
 
         fileContentEventProcessingServiceMock
-            .Setup(expression: x => x.RaiseFileContentUpdateEventAsync(entity: entity))
+            .Setup(expression: x => x.RaiseFileContentUpdateEventAsync(fileContent: entity))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
@@ -36,7 +36,7 @@ public partial class FileContentOrchestrationServiceTests
             .BeSameAs(expected: entity);
 
         fileContentProcessingServiceMock.Verify(expression: x => x.UpdateFileContentAsync(updatedFileContent: entity), times: Times.Once);
-        fileContentEventProcessingServiceMock.Verify(expression: x => x.RaiseFileContentUpdateEventAsync(entity: entity), times: Times.Once);
+        fileContentEventProcessingServiceMock.Verify(expression: x => x.RaiseFileContentUpdateEventAsync(fileContent: entity), times: Times.Once);
     }
 
 }

@@ -34,7 +34,7 @@ public partial class FolderEventServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFolderAddEventAsync(entity: entity);
+        await service.RaiseFolderAddEventAsync(folder: entity);
 
         // Then
         actualMessage.Should()

@@ -12,7 +12,7 @@ namespace cCoder.DocumentManagement.Exposures;
 
 public interface IDocumentManagementPackageManager
 {
-    ValueTask ImportPackageAsync(int appId, DocumentManagementPackage package);
+    ValueTask ImportPackageAsync(int appId, DocumentManagementPackage documentManagementPackage);
 
     DocumentManagementPackage ExportPackage(int appId, string packageName);
 }

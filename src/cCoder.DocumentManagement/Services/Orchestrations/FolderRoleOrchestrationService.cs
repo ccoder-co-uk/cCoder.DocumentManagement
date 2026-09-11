@@ -28,7 +28,7 @@ internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingServi
             ValidateInputs(inputs: [newFolderRole]);
             FolderRole result = await processingService.AddFolderRoleAsync(newFolderRole: newFolderRole);
 
-            await eventService.RaiseFolderRoleAddEventAsync(entity: result);
+            await eventService.RaiseFolderRoleAddEventAsync(folderRole: result);
 
             return result;
 
@@ -39,7 +39,7 @@ internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingServi
         TryCatch(operation: async () =>
         {
             ValidateInputs(inputs: [deletedFolderRole]);
-            await eventService.RaiseFolderRoleDeleteEventAsync(entity: deletedFolderRole);
+            await eventService.RaiseFolderRoleDeleteEventAsync(folderRole: deletedFolderRole);
 
             await processingService.DeleteFolderRoleAsync(deletedFolderRole: deletedFolderRole);
 
