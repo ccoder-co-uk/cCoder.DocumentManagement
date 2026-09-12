@@ -25,7 +25,7 @@ public partial class FolderRoleOrchestrationServiceTests
             .ReturnsAsync(value: entity);
 
         folderRoleEventProcessingServiceMock
-            .Setup(expression: x => x.RaiseFolderRoleAddEventAsync(entity: entity))
+            .Setup(expression: x => x.RaiseFolderRoleAddEventAsync(folderRole: entity))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
@@ -36,7 +36,7 @@ public partial class FolderRoleOrchestrationServiceTests
             .BeSameAs(expected: entity);
 
         folderRoleProcessingServiceMock.Verify(expression: x => x.AddFolderRoleAsync(newFolderRole: entity), times: Times.Once);
-        folderRoleEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderRoleAddEventAsync(entity: entity), times: Times.Once);
+        folderRoleEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderRoleAddEventAsync(folderRole: entity), times: Times.Once);
     }
 
 }

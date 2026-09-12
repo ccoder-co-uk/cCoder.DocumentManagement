@@ -46,7 +46,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         DMSResult result = orchestrationService.GetFilesZippedDmsOperation(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Paths = paths.Select(
                     selector: path =>
@@ -96,7 +96,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         DMSResult result = orchestrationService.GetDmsOperation(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = path.FullPath,
                 Version = 2
@@ -141,7 +141,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         DMSResult result = orchestrationService.GetDmsOperation(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = path.FullPath,
                 Search = "needle"
@@ -179,7 +179,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         IEnumerable<DataFile> result = orchestrationService.SearchFilesDmsOperation(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Needle = "needle"
             })
@@ -228,7 +228,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         _ = await orchestrationService.UnpackDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = path.FullPath,
                 Content = stream,
@@ -271,7 +271,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         _ = await orchestrationService.SaveDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = path.FullPath,
                 Content = stream
@@ -310,7 +310,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         _ = await orchestrationService.SaveDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = path.FullPath
             });
@@ -348,7 +348,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         _ = await orchestrationService.DropDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = path.FullPath,
                 Version = 2
@@ -387,7 +387,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         _ = await orchestrationService.DropDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = path.FullPath
             });
@@ -426,7 +426,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         _ = await orchestrationService.CopyDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = oldPath.FullPath,
                 NewPath = newPath.FullPath
@@ -467,7 +467,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         _ = await orchestrationService.CopyDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = oldPath.FullPath,
                 NewPath = newPath.FullPath
@@ -508,7 +508,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         _ = await orchestrationService.MoveDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = oldPath.FullPath,
                 NewPath = newPath.FullPath
@@ -549,7 +549,7 @@ public partial class DmsOrchestrationServiceTests
 
         // When
         _ = await orchestrationService.MoveDmsOperationAsync(
-            operation: new DmsOperation
+            dmsOperation: new DmsOperation
             {
                 Path = oldPath.FullPath,
                 NewPath = newPath.FullPath

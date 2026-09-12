@@ -23,24 +23,6 @@ public class FolderRoleController(
 {
 
     [HttpGet]
-    public IActionResult GetMetadata()
-    {
-        try
-        {
-            return Ok(value: ODataMetadataProvider.GetMetadata(
-                type: typeof(FolderRole),
-                isEntity: true,
-                hasEndpoint: true));
-        }
-        catch (Exception exception)
-        {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
-
-            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
-        }
-    }
-
-    [HttpGet]
     [EnableQuery(AllowedArithmeticOperators = AllowedArithmeticOperators.All, AllowedFunctions = AllowedFunctions.AllFunctions, AllowedLogicalOperators = AllowedLogicalOperators.All, AllowedQueryOptions = AllowedQueryOptions.All, MaxAnyAllExpressionDepth = 3, MaxExpansionDepth = 3)]
     [ActionName("Get")]
     public IActionResult GetAll()
@@ -70,7 +52,7 @@ public class FolderRoleController(
         {
             if (!base.ModelState.IsValid)
             {
-            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: base.ModelState);
+                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: base.ModelState);
             }
 
             FolderRole addedFolderRole = await service.AddFolderRoleAsync(newFolderRole: newFolderRole);
@@ -109,7 +91,7 @@ public class FolderRoleController(
         {
             if (!base.ModelState.IsValid)
             {
-            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: base.ModelState);
+                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: base.ModelState);
             }
 
             await service.DeleteAllFolderRoleAsync(deletedFolderRole: deletedFolderRole.Value);

@@ -9,10 +9,10 @@ namespace cCoder.DocumentManagement;
 public static class DocumentManagementConfigurationExtensions
 {
     public static DocumentManagementConfiguration WithEventProviders(
-        this DocumentManagementConfiguration configuration,
+        this DocumentManagementConfiguration documentManagementConfiguration,
         params EventProvider[] eventProviders)
     {
-        configuration.EventProviders = eventProviders ?? [];
-        return configuration;
+        documentManagementConfiguration.EventProviders = eventProviders ?? [];
+        return documentManagementConfiguration;
     }
 }

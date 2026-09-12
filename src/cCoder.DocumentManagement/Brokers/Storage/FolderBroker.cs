@@ -25,7 +25,7 @@ public interface IFolderBroker
     ValueTask<int> DeleteFolderAsync(Folder deletedFolder);
     ValueTask DeleteAllFoldersAsync(IEnumerable<Folder> deletedFolder);
     ValueTask DeleteAllFoldersByAppIdAsync(int appId);
-    int? SelectAppId(Folder entity);
+    int? SelectAppId(Folder folder);
 }
 
 internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFolderBroker
@@ -227,8 +227,8 @@ internal sealed class FolderBroker(ICoreContextFactory coreContextFactory) : IFo
             .ExecuteDeleteAsync();
     }
 
-    public int? SelectAppId(Folder entity)
+    public int? SelectAppId(Folder folder)
     {
-        return entity.AppId;
+        return folder.AppId;
     }
 }

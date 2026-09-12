@@ -11,7 +11,6 @@ using cCoder.Data.Extensions;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Results;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
@@ -25,26 +24,6 @@ public partial class FileContentController(
     ILoggingBroker loggingBroker
 ) : ODataController
 {
-
-    [HttpGet]
-    public IActionResult GetMetadata()
-    {
-        try
-        {
-            bool isExtendedMetaRequest = Request.Query[key: "extend"] == "true";
-
-            return isExtendedMetaRequest
-                ? Ok(value: ODataConventionModelBuilderExtensions.CreateIEdmModel()
-                    .GetExtendedMetadataForType(context: "DocumentManagement", type: typeof(LocalFileContent)))
-                : Ok(value: MetadataContainerDependency.CreateMetadataContainer(type: typeof(LocalFileContent), isEntity: true, hasEndpoint: true));
-        }
-        catch (Exception exception)
-        {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
-
-            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
-        }
-    }
 
     [HttpGet]
     [EnableQuery(
@@ -95,7 +74,7 @@ public partial class FileContentController(
 
             if (result is null)
             {
-            return NotFound();
+                return NotFound();
             }
 
             return Ok(value: result);
@@ -129,7 +108,7 @@ public partial class FileContentController(
         {
             if (!ModelState.IsValid)
             {
-            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
             }
 
             LocalFileContent addedFileContent = await service.AddFileContentAsync(newFileContent: entity);
@@ -171,51 +150,12 @@ public partial class FileContentController(
         {
             if (!ModelState.IsValid)
             {
-            return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
             }
 
             entity.Id = key;
 
             return Ok(value: await service.UpdateFileContentAsync(updatedFileContent: entity));
-        }
-        catch (DocumentManagementValidationException exception)
-        {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
-
-            return BadRequest();
-        }
-        catch (System.Security.SecurityException exception)
-        {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
-
-            return Forbid();
-        }
-        catch (Exception exception)
-        {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
-
-            return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
-        }
-    }
-
-    [AcceptVerbs("PATCH", "MERGE")]
-    [ActionName("Patch")]
-    public async Task<IActionResult> PutPatchAsync(
-        [FromRoute] Guid key,
-        Delta<LocalFileContent> updatedFileContentDelta)
-    {
-        try
-        {
-            LocalFileContent originalEntity = service.Get(fileContentId: key);
-
-            if (originalEntity == null)
-            {
-            return NotFound();
-            }
-
-            updatedFileContentDelta.Patch(original: originalEntity);
-
-            return Ok(value: await service.UpdateFileContentAsync(updatedFileContent: originalEntity));
         }
         catch (DocumentManagementValidationException exception)
         {

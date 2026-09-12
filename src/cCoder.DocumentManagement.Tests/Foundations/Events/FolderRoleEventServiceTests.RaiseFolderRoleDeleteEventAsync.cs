@@ -34,7 +34,7 @@ public partial class FolderRoleEventServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFolderRoleDeleteEventAsync(entity: entity);
+        await service.RaiseFolderRoleDeleteEventAsync(folderRole: entity);
 
         // Then
         actualMessage.Should()

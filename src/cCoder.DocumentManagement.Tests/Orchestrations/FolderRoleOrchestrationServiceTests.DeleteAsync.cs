@@ -24,7 +24,7 @@ public partial class FolderRoleOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         folderRoleEventProcessingServiceMock
-            .Setup(expression: x => x.RaiseFolderRoleDeleteEventAsync(entity: folderRole))
+            .Setup(expression: x => x.RaiseFolderRoleDeleteEventAsync(folderRole: folderRole))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
@@ -32,7 +32,7 @@ public partial class FolderRoleOrchestrationServiceTests
 
         // Then
         folderRoleProcessingServiceMock.Verify(expression: x => x.DeleteFolderRoleAsync(deletedFolderRole: folderRole), times: Times.Once);
-        folderRoleEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderRoleDeleteEventAsync(entity: folderRole), times: Times.Once);
+        folderRoleEventProcessingServiceMock.Verify(expression: x => x.RaiseFolderRoleDeleteEventAsync(folderRole: folderRole), times: Times.Once);
     }
 
 }

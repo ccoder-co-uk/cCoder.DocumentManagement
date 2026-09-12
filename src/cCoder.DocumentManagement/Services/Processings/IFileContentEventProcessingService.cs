@@ -12,7 +12,7 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 internal interface IFileContentEventProcessingService
 {
-    ValueTask RaiseFileContentAddEventAsync(FileContent entity);
-    ValueTask RaiseFileContentUpdateEventAsync(FileContent entity);
-    ValueTask RaiseFileContentDeleteEventAsync(FileContent entity);
+    ValueTask RaiseFileContentAddEventAsync(FileContent fileContent);
+    ValueTask RaiseFileContentUpdateEventAsync(FileContent fileContent);
+    ValueTask RaiseFileContentDeleteEventAsync(FileContent fileContent);
 }

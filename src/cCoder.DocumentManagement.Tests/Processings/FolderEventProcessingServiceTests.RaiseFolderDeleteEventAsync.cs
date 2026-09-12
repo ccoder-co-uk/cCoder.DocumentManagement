@@ -21,14 +21,14 @@ public partial class FolderEventProcessingServiceTests
         Folder entity = CreateRandomFolder();
 
         folderEventServiceMock
-            .Setup(expression: x => x.RaiseFolderDeleteEventAsync(entity: entity))
+            .Setup(expression: x => x.RaiseFolderDeleteEventAsync(folder: entity))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFolderDeleteEventAsync(entity: entity);
+        await service.RaiseFolderDeleteEventAsync(folder: entity);
 
         // Then
-        folderEventServiceMock.Verify(expression: x => x.RaiseFolderDeleteEventAsync(entity: entity), times: Times.Once);
+        folderEventServiceMock.Verify(expression: x => x.RaiseFolderDeleteEventAsync(folder: entity), times: Times.Once);
         folderEventServiceMock.VerifyNoOtherCalls();
     }
 

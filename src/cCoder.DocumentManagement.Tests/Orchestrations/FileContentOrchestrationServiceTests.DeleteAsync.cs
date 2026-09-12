@@ -28,7 +28,7 @@ public partial class FileContentOrchestrationServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         fileContentEventProcessingServiceMock
-            .Setup(expression: x => x.RaiseFileContentDeleteEventAsync(entity: entity))
+            .Setup(expression: x => x.RaiseFileContentDeleteEventAsync(fileContent: entity))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
@@ -37,7 +37,7 @@ public partial class FileContentOrchestrationServiceTests
         // Then
         fileContentProcessingServiceMock.Verify(expression: x => x.Get(fileContentId: id), times: Times.Once);
         fileContentProcessingServiceMock.Verify(expression: x => x.DeleteAsync(fileContentId: id), times: Times.Once);
-        fileContentEventProcessingServiceMock.Verify(expression: x => x.RaiseFileContentDeleteEventAsync(entity: entity), times: Times.Once);
+        fileContentEventProcessingServiceMock.Verify(expression: x => x.RaiseFileContentDeleteEventAsync(fileContent: entity), times: Times.Once);
     }
 
 }

@@ -13,19 +13,19 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 internal partial class FolderRoleEventProcessingService(IFolderRoleEventService eventService) : IFolderRoleEventProcessingService
 {
-    public ValueTask RaiseFolderRoleAddEventAsync(FolderRole entity)
+    public ValueTask RaiseFolderRoleAddEventAsync(FolderRole folderRole)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [entity]);
-            return eventService.RaiseFolderRoleAddEventAsync(entity: entity);
+            ValidateInputs(inputs: [folderRole]);
+            return eventService.RaiseFolderRoleAddEventAsync(folderRole: folderRole);
         });
 
-    public ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole entity)
+    public ValueTask RaiseFolderRoleDeleteEventAsync(FolderRole folderRole)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [entity]);
-            return eventService.RaiseFolderRoleDeleteEventAsync(entity: entity);
+            ValidateInputs(inputs: [folderRole]);
+            return eventService.RaiseFolderRoleDeleteEventAsync(folderRole: folderRole);
         });
 }

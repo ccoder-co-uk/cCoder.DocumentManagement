@@ -2,7 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using Microsoft.EntityFrameworkCore;
+using cCoder.DocumentManagement.Brokers;
 
 namespace cCoder.DocumentManagement.Extensions;
 
@@ -12,7 +12,7 @@ internal static class IQueryableExtensions
         this IQueryable<T> query,
         bool ignoreFilters)
         where T : class =>
-        ignoreFilters
-            ? query.IgnoreQueryFilters()
-            : query;
+        new QueryFilterBroker().ApplyQueryFilters(
+            query: query,
+            ignoreFilters: ignoreFilters);
 }

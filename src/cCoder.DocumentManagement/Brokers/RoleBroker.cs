@@ -16,7 +16,7 @@ public interface IRoleBroker
     ValueTask<Role> UpdateRoleAsync(Role updatedRole);
     ValueTask<int> DeleteRoleAsync(Role deletedRole);
     ValueTask DeleteAllRolesAsync(IEnumerable<Role> deletedRole);
-    int? SelectAppId(Role entity);
+    int? SelectAppId(Role role);
 }
 
 internal class RoleBroker(ICoreContextFactory coreContextFactory) : IRoleBroker
@@ -58,6 +58,6 @@ internal class RoleBroker(ICoreContextFactory coreContextFactory) : IRoleBroker
         _ = await coreDataContext.SaveChangesAsync();
     }
 
-    public int? SelectAppId(Role entity) =>
-        entity.AppId;
+    public int? SelectAppId(Role role) =>
+        role.AppId;
 }

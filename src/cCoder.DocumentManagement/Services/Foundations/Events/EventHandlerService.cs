@@ -82,7 +82,7 @@ internal partial class EventHandlerService(IEventHubBroker eventHubBroker) : IEv
     void ListenToPackageImportEvents() =>
         eventHubBroker.ListenToEvent<DocumentManagementPackageEvent, IDocumentManagementMigrationAggregationService>(
             eventName: "package_import",
-            handler: (service, packageEvent) => service.ImportPackageDocumentManagementPackageAsync(appId: packageEvent.AppId, package: ToLocalPackage(package: packageEvent.Package)));
+            handler: (service, packageEvent) => service.ImportPackageDocumentManagementPackageAsync(appId: packageEvent.AppId, documentManagementPackage: ToLocalPackage(package: packageEvent.Package)));
 
     static DocumentManagementPackage ToLocalPackage(Package package) =>
         package == null ? null : new DocumentManagementPackage

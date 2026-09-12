@@ -33,7 +33,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         webDavProcessingServiceMock
             .Setup(expression: x =>
                 x.ProcessDmsProcessingSessionAsync(
-                    session: It.Is<DmsProcessingSession>(match: session =>
+                    dmsProcessingSession: It.Is<DmsProcessingSession>(match: session =>
                         session.Request.App.Id == app.Id
                         && session.Request.App.Domain == app.Domain
                         && session.Request.App.Name == app.Name
@@ -58,7 +58,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
 
         webDavProcessingServiceMock.Verify(
-            expression: x => x.ProcessDmsProcessingSessionAsync(session: It.IsAny<DmsProcessingSession>()),
+            expression: x => x.ProcessDmsProcessingSessionAsync(dmsProcessingSession: It.IsAny<DmsProcessingSession>()),
             times: Times.Once
         );
 
@@ -87,7 +87,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         dmsProcessingServiceMock
             .Setup(expression: x =>
                 x.ProcessDmsProcessingSessionAsync(
-                    session: It.Is<DmsProcessingSession>(match: session =>
+                    dmsProcessingSession: It.Is<DmsProcessingSession>(match: session =>
                         session.Request.App.Id == app.Id
                         && session.Request.App.Domain == app.Domain
                         && session.Request.App.Name == app.Name
@@ -118,7 +118,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
 
         dmsProcessingServiceMock.Verify(
-            expression: x => x.ProcessDmsProcessingSessionAsync(session: It.IsAny<DmsProcessingSession>()),
+            expression: x => x.ProcessDmsProcessingSessionAsync(dmsProcessingSession: It.IsAny<DmsProcessingSession>()),
             times: Times.Once
         );
 
@@ -145,7 +145,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             .Returns(value: app);
 
         dmsProcessingServiceMock
-            .Setup(expression: x => x.ProcessDmsProcessingSessionAsync(session: It.IsAny<DmsProcessingSession>()))
+            .Setup(expression: x => x.ProcessDmsProcessingSessionAsync(dmsProcessingSession: It.IsAny<DmsProcessingSession>()))
             .ReturnsAsync(value: new DmsProcessingSession { Response = response });
 
         // When
@@ -163,7 +163,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
 
         dmsProcessingServiceMock.Verify(
-            expression: x => x.ProcessDmsProcessingSessionAsync(session: It.IsAny<DmsProcessingSession>()),
+            expression: x => x.ProcessDmsProcessingSessionAsync(dmsProcessingSession: It.IsAny<DmsProcessingSession>()),
             times: Times.Once
         );
 
@@ -183,7 +183,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
             .Returns(value: app);
 
         dmsProcessingServiceMock
-            .Setup(expression: x => x.ProcessDmsProcessingSessionAsync(session: It.IsAny<DmsProcessingSession>()))
+            .Setup(expression: x => x.ProcessDmsProcessingSessionAsync(dmsProcessingSession: It.IsAny<DmsProcessingSession>()))
             .ThrowsAsync(exception: new SecurityException(message: "Denied"));
 
         // When
@@ -203,7 +203,7 @@ public partial class DmsHttpRequestOrchestrationServiceTests
         currentAppResolverMock.Verify(expression: x => x.ResolveCurrentApp(), times: Times.Once);
 
         dmsProcessingServiceMock.Verify(
-            expression: x => x.ProcessDmsProcessingSessionAsync(session: It.IsAny<DmsProcessingSession>()),
+            expression: x => x.ProcessDmsProcessingSessionAsync(dmsProcessingSession: It.IsAny<DmsProcessingSession>()),
             times: Times.Once
         );
 

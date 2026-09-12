@@ -162,8 +162,19 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IAppAggregationService, AppAggregationService>();
         services.AddTransient<IDocumentManagementMigrationAggregationService, DocumentManagementMigrationAggregationService>();
         services.AddTransient<IDmsOrchestrationService, DmsOrchestrationService>();
-        services.AddTransient<IDmsHttpRequestOrchestrationService, DmsHttpRequestOrchestrationService>();
-        services.AddTransient<IDmsHttpRequestManager, DmsHttpRequestOrchestrationService>();
+        services.AddTransient<IDmsHttpBroker, DmsHttpBroker>();
+        services.AddTransient<IDmsHttpService, DmsHttpService>();
+        services.AddTransient<IDmsHttpProcessingService, DmsHttpProcessingService>();
+        services.AddTransient<IDmsHttpRequestOrchestrationService>(
+            implementationFactory: serviceProvider =>
+                new DmsHttpRequestOrchestrationService(
+                    dmsHttpProcessingService: serviceProvider.GetRequiredService<IDmsHttpProcessingService>(),
+                    dmsProcessingService: serviceProvider.GetRequiredService<IDmsInstanceProcessingService>(),
+                    webDavProcessingService: serviceProvider.GetRequiredService<IWebDavProcessingService>()));
+
+        services.AddTransient<IDmsHttpRequestManager>(
+            implementationFactory: serviceProvider =>
+                serviceProvider.GetRequiredService<IDmsHttpRequestOrchestrationService>());
         services.AddTransient<IFileContentOrchestrationService, FileContentOrchestrationService>();
         services.AddTransient<IFileContentManager, FileContentOrchestrationService>();
         services.AddTransient<IFileOrchestrationService, FileOrchestrationService>();

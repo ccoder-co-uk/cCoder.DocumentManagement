@@ -34,7 +34,7 @@ public partial class FolderRoleEventServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await service.RaiseFolderRoleAddEventAsync(entity: entity);
+        await service.RaiseFolderRoleAddEventAsync(folderRole: entity);
 
         // Then
         actualMessage.Should()

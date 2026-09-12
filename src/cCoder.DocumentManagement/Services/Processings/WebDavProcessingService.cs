@@ -30,16 +30,16 @@ internal partial class WebDavProcessingService(
 ) : IWebDavProcessingService
 {
     public ValueTask<DmsProcessingSession> ProcessDmsProcessingSessionAsync(
-        DmsProcessingSession session) =>
+        DmsProcessingSession dmsProcessingSession) =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [session]);
+            ValidateInputs(inputs: [dmsProcessingSession]);
 
-            session.Response =
+            dmsProcessingSession.Response =
                 await ProcessDmsProcessingRequestAsync(
-                    request: session.Request);
+                    request: dmsProcessingSession.Request);
 
-            return session;
+            return dmsProcessingSession;
         });
 
     internal ValueTask<DmsProcessingResponse> ProcessDmsProcessingRequestAsync(DmsProcessingRequest request)

@@ -12,7 +12,7 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 internal interface IFolderEventProcessingService
 {
-    ValueTask RaiseFolderAddEventAsync(Folder entity);
-    ValueTask RaiseFolderUpdateEventAsync(Folder entity);
-    ValueTask RaiseFolderDeleteEventAsync(Folder entity);
+    ValueTask RaiseFolderAddEventAsync(Folder folder);
+    ValueTask RaiseFolderUpdateEventAsync(Folder folder);
+    ValueTask RaiseFolderDeleteEventAsync(Folder folder);
 }
