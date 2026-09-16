@@ -4,6 +4,7 @@
 
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Brokers.Loggings;
+using cCoder.DocumentManagement.Brokers;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
@@ -28,6 +29,7 @@ public partial class DmsInstanceProcessingServiceTests
         loggingBrokerMock = new();
         dmsProcessingService = new DmsInstanceProcessingService(
             dmsInstanceService: dmsInstanceServiceMock.Object,
+            streamBroker: new StreamBroker(),
             log: loggingBrokerMock.Object
         );
     }

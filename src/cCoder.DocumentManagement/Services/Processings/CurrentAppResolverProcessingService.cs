@@ -3,41 +3,21 @@
 // ---------------------------------------------------------------
 
 using cCoder.Data.Models.CMS;
-using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Services;
+using cCoder.DocumentManagement.Services.Foundations;
 
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
 internal partial class CurrentAppResolverProcessingService(
-    IAppBroker appBroker,
-    HttpContext httpContext = null
+    ICurrentAppResolverService currentAppResolverService
 ) : ICurrentAppResolverProcessingService
 {
     public App ResolveCurrentApp() =>
         TryCatch(operation: () =>
         {
-            string requestPath = httpContext?.Request.Path.Value ?? string.Empty;
-
-            if (
-                requestPath.Contains(value: "/webdav", comparisonType: StringComparison.OrdinalIgnoreCase)
-                && requestPath.Contains(value: "Core/App(", comparisonType: StringComparison.OrdinalIgnoreCase)
-            )
-            {
-                int start = requestPath.IndexOf(value: "Core/App(", comparisonType: StringComparison.OrdinalIgnoreCase) + 9;
-                int end = requestPath.IndexOf(value: ')', startIndex: start);
-
-                if (end > start && int.TryParse(s: requestPath[start..end], result: out int appId))
-                {
-                    return ToResolvedApp(app: appBroker.SelectAppById(appId: appId))
-                        ?? throw new InvalidOperationException(message: $"Unable to resolve app '{appId}'.");
-                }
-            }
-
-            string host = httpContext?.Request.Host.Host ?? string.Empty;
-
-            return ToResolvedApp(app: appBroker.SelectAppByDomain(domain: host))
-                ?? throw new InvalidOperationException(message: $"Unable to resolve current app for host '{host}'.");
+            return ToResolvedApp(
+                app: currentAppResolverService.ResolveCurrentApp());
         });
 
     private static App ToResolvedApp(App app) =>

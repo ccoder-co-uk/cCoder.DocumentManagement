@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.DocumentManagement.Brokers.OData;
 using cCoder.DocumentManagement.Models.OData;
 using cCoder.DocumentManagement.Services.Foundations;
 using FluentAssertions;
@@ -15,7 +16,8 @@ public partial class DocumentManagementMetadataTypeServiceTests
     public void ShouldExposeDocumentManagementMetadataContract()
     {
         // Given
-        DocumentManagementMetadataTypeService service = new();
+        DocumentManagementMetadataTypeService service = new(
+            metadataContainerBroker: new MetadataContainerBroker());
 
         // When
         MetadataContainerSet[] metadata = [.. service.GetKnownMetadata()];

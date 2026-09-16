@@ -14,4 +14,7 @@ internal sealed class DocumentStreamDependency : MemoryStream
         : base(buffer: buffer)
     {
     }
+
+    protected override void Dispose(bool disposing) =>
+        base.Dispose(disposing: disposing);
 }

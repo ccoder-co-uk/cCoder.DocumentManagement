@@ -5,7 +5,6 @@
 using cCoder.DocumentManagement.Services.Processings;
 using DataFile = cCoder.Data.Models.DMS.File;
 using LocalApp = cCoder.Data.Models.CMS.App;
-using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
 
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
@@ -25,9 +24,7 @@ internal partial class DmsOrchestrationService(
             dmsOperation.Result =
                 folderProcessingService.GetFilesZippedAppPath(
                 appId: app.Id,
-                paths: dmsOperation.Paths.Select(
-                    selector: path =>
-                        new LocalPath(path: path)));
+                paths: dmsOperation.Paths);
 
             return dmsOperation;
 
@@ -38,12 +35,10 @@ internal partial class DmsOrchestrationService(
         {
             ValidateInputs(inputs: [dmsOperation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
-            LocalPath localPath = new(path: dmsOperation.Path);
 
-
-            dmsOperation.Result = localPath.IsToFile
-                ? fileProcessingService.GetAppPath(appId: app.Id, path: localPath, version: dmsOperation.Version)
-                : folderProcessingService.GetAppPath(appId: app.Id, path: localPath, search: dmsOperation.Search);
+            dmsOperation.Result = IsFilePath(path: dmsOperation.Path)
+                ? fileProcessingService.GetAppPath(appId: app.Id, path: dmsOperation.Path, version: dmsOperation.Version)
+                : folderProcessingService.GetAppPath(appId: app.Id, path: dmsOperation.Path, search: dmsOperation.Search);
 
             return dmsOperation;
 
@@ -73,7 +68,7 @@ internal partial class DmsOrchestrationService(
 
             await folderProcessingService.UnpackAppPathAsync(
                 appId: app.Id,
-                path: new LocalPath(path: dmsOperation.Path),
+                path: dmsOperation.Path,
                 content: dmsOperation.Content,
                 ignoreArchiveRoot: dmsOperation.IgnoreArchiveRoot);
 
@@ -86,19 +81,17 @@ internal partial class DmsOrchestrationService(
         {
             ValidateInputs(inputs: [dmsOperation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
-            LocalPath localPath = new(path: dmsOperation.Path);
 
-
-            if (localPath.IsToFile)
+            if (IsFilePath(path: dmsOperation.Path))
             {
                 await fileProcessingService.SaveAppPathAsync(
                     appId: app.Id,
-                    path: localPath,
+                    path: dmsOperation.Path,
                     content: dmsOperation.Content);
             }
             else
             {
-                await folderProcessingService.SaveAppPathAsync(appId: app.Id, path: localPath);
+                await folderProcessingService.SaveAppPathAsync(appId: app.Id, path: dmsOperation.Path);
             }
 
             return dmsOperation;
@@ -109,19 +102,17 @@ internal partial class DmsOrchestrationService(
         {
             ValidateInputs(inputs: [dmsOperation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
-            LocalPath localPath = new(path: dmsOperation.Path);
 
-
-            if (localPath.IsToFile)
+            if (IsFilePath(path: dmsOperation.Path))
             {
                 await fileProcessingService.DropAppPathAsync(
                     appId: app.Id,
-                    path: localPath,
+                    path: dmsOperation.Path,
                     version: dmsOperation.Version);
             }
             else
             {
-                await folderProcessingService.DropAppPathAsync(appId: app.Id, path: localPath);
+                await folderProcessingService.DropAppPathAsync(appId: app.Id, path: dmsOperation.Path);
             }
 
             return dmsOperation;
@@ -132,17 +123,14 @@ internal partial class DmsOrchestrationService(
         {
             ValidateInputs(inputs: [dmsOperation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
-            LocalPath sourcePath = new(path: dmsOperation.Path);
-            LocalPath destinationPath = new(path: dmsOperation.NewPath);
 
-
-            if (sourcePath.IsToFile)
+            if (IsFilePath(path: dmsOperation.Path))
             {
-                await fileProcessingService.CopyAppPathAsync(appId: app.Id, oldPath: sourcePath, newPath: destinationPath);
+                await fileProcessingService.CopyAppPathAsync(appId: app.Id, oldPath: dmsOperation.Path, newPath: dmsOperation.NewPath);
             }
             else
             {
-                await folderProcessingService.CopyAppPathAsync(appId: app.Id, oldPath: sourcePath, newPath: destinationPath);
+                await folderProcessingService.CopyAppPathAsync(appId: app.Id, oldPath: dmsOperation.Path, newPath: dmsOperation.NewPath);
             }
 
             return dmsOperation;
@@ -153,21 +141,24 @@ internal partial class DmsOrchestrationService(
         {
             ValidateInputs(inputs: [dmsOperation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
-            LocalPath sourcePath = new(path: dmsOperation.Path);
-            LocalPath destinationPath = new(path: dmsOperation.NewPath);
 
-
-            if (sourcePath.IsToFile)
+            if (IsFilePath(path: dmsOperation.Path))
             {
-                await fileProcessingService.MoveAppPathAsync(appId: app.Id, oldPath: sourcePath, newPath: destinationPath);
+                await fileProcessingService.MoveAppPathAsync(appId: app.Id, oldPath: dmsOperation.Path, newPath: dmsOperation.NewPath);
             }
             else
             {
-                await folderProcessingService.MoveAppPathAsync(appId: app.Id, oldPath: sourcePath, newPath: destinationPath);
+                await folderProcessingService.MoveAppPathAsync(appId: app.Id, oldPath: dmsOperation.Path, newPath: dmsOperation.NewPath);
             }
 
             return dmsOperation;
         });
+
+    private static bool IsFilePath(string path) =>
+        path?
+            .Split(separator: '/')
+            .LastOrDefault()?
+            .Contains(value: '.') == true;
 
     private static DataFile ToExternalFile(DataFile file) =>
         file is null

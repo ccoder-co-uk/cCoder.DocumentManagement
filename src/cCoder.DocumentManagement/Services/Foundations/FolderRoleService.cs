@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
@@ -14,6 +15,7 @@ namespace cCoder.DocumentManagement.Services.Foundations;
 
 internal partial class FolderRoleService(
     IFolderRoleBroker folderRoleBroker,
+    IFolderRoleContextBroker contextBroker,
     IAuthorizationBroker authorizationBroker
 ) : IFolderRoleService
 {
@@ -66,6 +68,47 @@ internal partial class FolderRoleService(
             _ = await folderRoleBroker.DeleteFolderRoleAsync(deletedFolderRole: CreateStorageFolderRole(folderRole: deletedFolderRole));
 
         });
+
+    public bool CanCreateFolderRole(FolderRole folderRole) =>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [folderRole]);
+            FolderRoleContext context = SelectFolderRoleContext(folderRole: folderRole);
+
+            return context.Role is not null
+                && context.Folder is not null
+                && context.Folder.UserCan(
+                    user: authorizationBroker.GetCurrentUser(),
+                    privilege: "folderrole_create");
+        });
+
+    public bool CanDeleteFolderRole(FolderRole folderRole) =>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [folderRole]);
+            FolderRoleContext context = SelectFolderRoleContext(folderRole: folderRole);
+
+            return context.Folder is not null
+                && context.Folder.UserCan(
+                    user: authorizationBroker.GetCurrentUser(),
+                    privilege: "folderrole_delete");
+        });
+
+    public bool FolderRoleExists(FolderRole folderRole) =>
+        TryCatch(operation: () =>
+        {
+            ValidateInputs(inputs: [folderRole]);
+
+            return folderRoleBroker.SelectAllFolderRoles(ignoreFilters: true)
+                .Any(predicate: existing =>
+                    existing.FolderId == folderRole.FolderId
+                    && existing.RoleId == folderRole.RoleId);
+        });
+
+    private FolderRoleContext SelectFolderRoleContext(FolderRole folderRole) =>
+        contextBroker.SelectFolderRoleContext(
+            folderRole: folderRole,
+            ignoreFilters: true);
 
     private static cCoder.Data.Models.Security.FolderRole CreateStorageFolderRole(FolderRole folderRole)
     {

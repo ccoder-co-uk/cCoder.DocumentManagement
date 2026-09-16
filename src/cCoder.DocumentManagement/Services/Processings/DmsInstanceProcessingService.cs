@@ -3,18 +3,19 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Brokers.Loggings;
+using cCoder.DocumentManagement.Brokers;
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Services.Foundations;
-using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
+using LocalPath = cCoder.DocumentManagement.Models.Path;
 using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
-using MemoryStream = System.IO.MemoryStream;
 
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
 internal partial class DmsInstanceProcessingService(
     IDmsInstanceService dmsInstanceService,
+    IStreamBroker streamBroker,
     ILoggingBroker log
 ) : IDmsInstanceProcessingService
 {
@@ -157,9 +158,9 @@ internal partial class DmsInstanceProcessingService(
 
         Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
 
-        using MemoryStream memoryStream = new();
-        await request.Body.CopyToAsync(destination: memoryStream);
-        memoryStream.Position = 0;
+        using Stream requestContent = streamBroker.Create(
+            content: await streamBroker.ReadAllBytesAsync(
+                source: request.Body));
 
         if (query.ContainsKey(key: "copyTo"))
         {
@@ -191,7 +192,7 @@ internal partial class DmsInstanceProcessingService(
             return CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
         }
 
-        return await SaveOrUnpackAsync(path: path, query: query, memoryStream: memoryStream);
+        return await SaveOrUnpackAsync(path: path, query: query, content: requestContent);
     }
 
     private async ValueTask<DmsProcessingResponse> HandlePutRequestDmsProcessingRequestAsync(DmsProcessingRequest request)
@@ -202,9 +203,9 @@ internal partial class DmsInstanceProcessingService(
 
         Dictionary<string, string[]> query = ParseQuery(queryString: request.QueryString);
 
-        using MemoryStream memoryStream = new();
-        await request.Body.CopyToAsync(destination: memoryStream);
-        memoryStream.Position = 0;
+        using Stream requestContent = streamBroker.Create(
+            content: await streamBroker.ReadAllBytesAsync(
+                source: request.Body));
 
         if (query.ContainsKey(key: "copyTo"))
         {
@@ -236,16 +237,16 @@ internal partial class DmsInstanceProcessingService(
             return CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);
         }
 
-        return await SaveOrUnpackAsync(path: path, query: query, memoryStream: memoryStream);
+        return await SaveOrUnpackAsync(path: path, query: query, content: requestContent);
     }
 
     private async ValueTask<DmsProcessingResponse> SaveOrUnpackAsync(
         string path,
         Dictionary<string, string[]> query,
-        MemoryStream memoryStream
+        Stream content
     )
     {
-        LocalPath destinationPath = new(path: path);
+        LocalPath destinationPath = new() { FullPath = path };
 
         if (query.ContainsKey(key: "unpack"))
         {
@@ -266,7 +267,7 @@ internal partial class DmsInstanceProcessingService(
 
             await dmsInstanceService.UnpackAsync(
                 path: destinationPath.FullPath,
-                content: memoryStream,
+                content: content,
                 ignoreArchiveRoot: ignoreArchiveRoot
             );
         }
@@ -274,7 +275,7 @@ internal partial class DmsInstanceProcessingService(
         {
             await dmsInstanceService.SaveAsync(
                 path: destinationPath.FullPath,
-                content: memoryStream);
+                content: content);
         }
 
         return CreateDmsProcessingResponse(body: Stream.Null, hasBody: false, contentType: "application/json", statusCode: 204);

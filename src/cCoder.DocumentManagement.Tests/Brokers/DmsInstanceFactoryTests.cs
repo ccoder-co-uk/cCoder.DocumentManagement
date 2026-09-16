@@ -10,7 +10,7 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 using DataFile = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Brokers;
@@ -59,7 +59,7 @@ public partial class DmsInstanceFactoryTests
     {
         // Given
         var orchestrationServiceMock = new Mock<IDmsOrchestrationService>(behavior: MockBehavior.Strict);
-        var path = new DmsPath(path: "content/file.txt");
+        var path = new DmsPath { FullPath = "content/file.txt" };
         using var content = new MemoryStream(buffer: [1, 2, 3]);
 
         orchestrationServiceMock

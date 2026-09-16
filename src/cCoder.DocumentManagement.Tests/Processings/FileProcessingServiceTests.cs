@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Models;
+using cCoder.DocumentManagement.Brokers;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
@@ -32,7 +33,8 @@ public partial class FileProcessingServiceTests
                 folderService: folderServiceMock.Object),
             fileContentOperationsExposure: new FileContentOperationsExposure(
                 fileContentProcessingService: fileContentProcessingServiceMock.Object),
-            authorizationBroker: authorizationBrokerMock.Object
+            authorizationBroker: authorizationBrokerMock.Object,
+            streamBroker: new StreamBroker()
         );
     }
 

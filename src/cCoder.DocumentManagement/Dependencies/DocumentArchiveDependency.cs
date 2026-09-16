@@ -3,77 +3,75 @@
 // ---------------------------------------------------------------
 
 using System.IO.Compression;
-using cCoder.DocumentManagement.Models;
 
 namespace cCoder.DocumentManagement.Dependencies;
 
-internal sealed class DocumentArchiveDependency : IDisposable
+internal sealed class DocumentArchiveDependency : ZipArchive
 {
-    private readonly DocumentStreamDependency content;
-    private readonly ZipArchive archive;
-    private bool archiveDisposed;
+    private readonly MemoryStream content;
 
-    internal DocumentArchiveDependency(byte[] bytes = null)
+    internal DocumentArchiveDependency(bool create)
+        : this(
+            content: new MemoryStream(),
+            mode: create ? ZipArchiveMode.Create : ZipArchiveMode.Read)
     {
-        content = bytes is null
-            ? new DocumentStreamDependency()
-            : new DocumentStreamDependency(buffer: bytes);
-        archive = new(
-            stream: content,
-            mode: bytes is null
-                ? ZipArchiveMode.Create
-                : ZipArchiveMode.Read);
     }
 
-    internal void AddEntry(string name, byte[] content = null)
+    internal DocumentArchiveDependency(byte[] bytes)
+        : this(
+            content: new MemoryStream(buffer: bytes),
+            mode: ZipArchiveMode.Read)
     {
-        ZipArchiveEntry entry = archive.CreateEntry(
-            entryName: name,
-            compressionLevel: CompressionLevel.Optimal);
+    }
 
-        if (content is null)
+    private DocumentArchiveDependency(MemoryStream content, ZipArchiveMode mode)
+        : base(stream: content, mode: mode, leaveOpen: true)
+    {
+        this.content = content;
+    }
+
+    internal void Add(IEnumerable<(string FullName, byte[] Content)> entries)
+    {
+        foreach ((string fullName, byte[] entryContent) in entries)
         {
-            return;
-        }
+            ZipArchiveEntry entry = CreateEntry(
+                entryName: fullName,
+                compressionLevel: CompressionLevel.Optimal);
 
-        using Stream stream = entry.Open();
-        stream.Write(buffer: content, offset: 0, count: content.Length);
+            if (entryContent is not null)
+            {
+                using Stream entryStream = entry.Open();
+                entryStream.Write(
+                    buffer: entryContent,
+                    offset: 0,
+                    count: entryContent.Length);
+            }
+        }
     }
 
-    internal ArchiveEntryData[] ReadEntries() =>
-        archive.Entries.Select(selector: entry =>
+    internal (string FullName, byte[] Content)[] Read() =>
+        Entries.Select(selector: entry =>
         {
             using Stream entryStream = entry.Open();
-            using DocumentStreamDependency output = new();
+            using MemoryStream output = new();
             entryStream.CopyTo(destination: output);
 
-            return new ArchiveEntryData
-            {
-                FullName = entry.FullName,
-                Content = output.ToArray()
-            };
+            return (entry.FullName, output.ToArray());
         }).ToArray();
 
     internal byte[] Complete()
     {
-        DisposeArchive();
+        Dispose();
         return content.ToArray();
     }
 
-    public void Dispose()
+    protected override void Dispose(bool disposing)
     {
-        DisposeArchive();
-        content.Dispose();
-    }
+        base.Dispose(disposing: disposing);
 
-    private void DisposeArchive()
-    {
-        if (archiveDisposed)
+        if (disposing)
         {
-            return;
+            content.Dispose();
         }
-
-        archive.Dispose();
-        archiveDisposed = true;
     }
 }

@@ -4,7 +4,7 @@
 
 using Moq;
 using Xunit;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Foundations;
@@ -18,14 +18,14 @@ public partial class DmsInstanceServiceTests
         DmsPath path = CreatePath(fullPath: "folder/file.txt");
         MemoryStream stream = new(buffer: [4, 5, 6]);
 
-        dmsInstanceBrokerMock.Setup(expression: x => x.SaveAsync(path: path, content: stream))
+        dmsInstanceBrokerMock.Setup(expression: x => x.SaveAsync(path: path.FullPath, content: stream))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         await dmsInstanceService.SaveAsync(path: path.FullPath, content: stream);
 
         // Then
-        dmsInstanceBrokerMock.Verify(expression: x => x.SaveAsync(path: path, content: stream), times: Times.Once);
+        dmsInstanceBrokerMock.Verify(expression: x => x.SaveAsync(path: path.FullPath, content: stream), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 

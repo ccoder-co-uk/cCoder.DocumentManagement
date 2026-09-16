@@ -7,7 +7,6 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Foundations;
@@ -18,9 +17,7 @@ public partial class DmsInstanceServiceTests
     public void ShouldReturnBrokerResultWhenGetFilesZipped()
     {
         // Given
-        DmsPath firstPath = CreatePath(fullPath: "folder/one.txt");
-        DmsPath secondPath = CreatePath(fullPath: "folder/two.txt");
-        DmsPath[] paths = [firstPath, secondPath];
+        string[] paths = ["folder/one.txt", "folder/two.txt"];
         DMSResult result = CreateDmsResult(contentType: "application/zip");
 
         dmsInstanceBrokerMock.Setup(expression: x => x.GetFilesZipped(paths: paths))
@@ -28,9 +25,7 @@ public partial class DmsInstanceServiceTests
 
         // When
         DMSResult returnedResult = dmsInstanceService.GetFilesZipped(
-            paths: paths.Select(
-                selector: path =>
-                    path.FullPath));
+            paths: paths);
 
         // Then
         returnedResult.Should()

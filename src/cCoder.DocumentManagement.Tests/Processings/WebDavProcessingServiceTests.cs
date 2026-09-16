@@ -4,6 +4,7 @@
 
 using cCoder.Data;
 using cCoder.DocumentManagement.Brokers.Loggings;
+using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -48,6 +49,7 @@ public partial class WebDavProcessingServiceTests
             dmsInstanceOperationsExposure: new DmsInstanceOperationsExposure(
                 dmsInstanceService: dmsInstanceServiceMock.Object),
             config: config,
+            streamBroker: new StreamBroker(),
             log: loggingBrokerMock.Object
         );
     }

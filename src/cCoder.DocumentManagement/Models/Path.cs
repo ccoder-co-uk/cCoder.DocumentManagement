@@ -2,16 +2,23 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-namespace cCoder.DocumentManagement.Dependencies;
+namespace cCoder.DocumentManagement.Models;
 
-public record Path
+public sealed class Path
 {
     public static Path Empty =>
-        new(path: string.Empty);
+        new() { FullPath = string.Empty };
 
     public string Name => Segments.LastOrDefault();
 
-    public string FullPath { get; }
+    private string fullPath;
+
+    public string FullPath
+    {
+        get => fullPath;
+        init => fullPath = (value ?? string.Empty).Trim()
+            .TrimEnd(trimChar: '/');
+    }
 
     public string Lowered => FullPath.ToLower();
 
@@ -19,9 +26,10 @@ public record Path
 
     public Path ParentPath =>
         Segments.Length > 1
-            ? new Path(
-                path: string.Join(separator: "/", value: Segments)[..(FullPath.Length - (1 + Segments.Last().Length))]
-            )
+            ? new Path
+            {
+                FullPath = string.Join(separator: "/", value: Segments)[..(FullPath.Length - (1 + Segments.Last().Length))]
+            }
             : Empty;
 
     public string Extension =>
@@ -47,14 +55,5 @@ public record Path
     public int Depth => Segments.Length;
 
     public bool IsToFile => Extension.Length > 0;
-
-    public Path(string path)
-    {
-        FullPath = (path ?? string.Empty).Trim()
-            .TrimEnd(trimChar: '/');
-    }
-
-    public override string ToString() =>
-        FullPath;
 
 }

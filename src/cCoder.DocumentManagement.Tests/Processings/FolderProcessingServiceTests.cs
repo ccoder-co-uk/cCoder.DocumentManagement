@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Models;
+using cCoder.DocumentManagement.Brokers;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
@@ -50,7 +51,9 @@ public partial class FolderProcessingServiceTests
             filePathOperationsExposure: new FilePathOperationsExposure(
                 fileProcessingService: fileProcessingServiceMock.Object),
             fileContentOperationsExposure: fileContentOperationsExposureMock.Object,
-            authorizationBroker: authorizationBrokerMock.Object
+            authorizationBroker: authorizationBrokerMock.Object,
+            documentArchiveBroker: new DocumentArchiveBroker(),
+            streamBroker: new StreamBroker()
         );
         folderPathProcessingService = folderProcessingService;
     }

@@ -4,9 +4,9 @@
 
 using cCoder.Data.Models.DMS;
 
-namespace cCoder.DocumentManagement.Services.Processings;
+namespace cCoder.DocumentManagement.Services.Foundations;
 
-internal interface IPackagePayloadJsonProcessingService
+internal interface IPackagePayloadJsonService
 {
     FolderRoleInfo ParseFolderRoleInfo(string data);
 

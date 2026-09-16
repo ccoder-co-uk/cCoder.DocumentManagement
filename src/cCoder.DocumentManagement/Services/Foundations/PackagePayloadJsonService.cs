@@ -5,11 +5,11 @@
 using cCoder.Data.Models.DMS;
 using cCoder.DocumentManagement.Brokers;
 
-namespace cCoder.DocumentManagement.Services.Processings;
+namespace cCoder.DocumentManagement.Services.Foundations;
 
-internal sealed partial class PackagePayloadJsonProcessingService(
+internal sealed partial class PackagePayloadJsonService(
     IJsonBroker jsonBroker)
-    : IPackagePayloadJsonProcessingService
+    : IPackagePayloadJsonService
 {
     public FolderRoleInfo ParseFolderRoleInfo(string data) =>
         TryCatch(operation: () =>

@@ -3,26 +3,19 @@
 // ---------------------------------------------------------------
 
 using System.Security;
-using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Models.Exceptions;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
-using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services.Foundations;
 using Microsoft.EntityFrameworkCore;
 
 namespace cCoder.DocumentManagement.Services.Processings;
 
 internal partial class FolderRoleProcessingService(
-    IFolderRoleService service,
-    IFolderRoleContextBroker contextBroker,
-    IAuthorizationBroker authorizationBroker)
+    IFolderRoleService service)
     : IFolderRoleProcessingService
 {
-    private cCoder.Data.Models.Security.User GetCurrentUser() =>
-        authorizationBroker.GetCurrentUser();
-
     public IQueryable<cCoder.Data.Models.Security.FolderRole> GetAll(bool ignoreFilters = false)
 =>
         TryCatch(operation: () =>
@@ -37,40 +30,15 @@ internal partial class FolderRoleProcessingService(
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [newFolderRole]);
-            (cCoder.Data.Models.Security.Role, Folder) folderAndRole = GetFolderAndRoleFolderRole(entity: newFolderRole);
 
-            cCoder.Data.Models.Security.Role role = folderAndRole.Item1;
-
-            Folder folder = folderAndRole.Item2;
-
-            bool flag = role != null && folder != null;
-
-            Func<Folder, cCoder.Data.Models.Security.Role, bool> func = (Folder currentFolder, cCoder.Data.Models.Security.Role currentRole) => currentFolder.UserCan(user: GetCurrentUser(), privilege: "folderrole_create");
-
-
-            if (flag && func(arg1: folder, arg2: role))
+            if (service.CanCreateFolderRole(folderRole: newFolderRole))
             {
-                bool exists = service.GetAll(ignoreFilters: true)
-                    .Any(predicate: existing => existing.FolderId == newFolderRole.FolderId
-                        && existing.RoleId == newFolderRole.RoleId);
-
-                if (exists)
+                if (service.FolderRoleExists(folderRole: newFolderRole))
                 {
                     throw new DuplicateFolderRoleException();
                 }
 
                 return service.AddFolderRoleAsync(newFolderRole: newFolderRole);
-            }
-
-
-            if (role != null && folder != null)
-            {
-                ICollection<cCoder.Data.Models.Security.FolderRole> folders = role.Folders;
-
-                if (folders != null && folders.Any(predicate: (cCoder.Data.Models.Security.FolderRole r) => r.FolderId == folder.Id))
-                {
-                    return ValueTask.FromResult(result: newFolderRole);
-                }
             }
 
 
@@ -84,18 +52,11 @@ internal partial class FolderRoleProcessingService(
         {
             ValidateInputs(inputs: [deletedFolderRole]);
 
-            Folder folder = contextBroker
-                .SelectFolderRoleContext(
-                    folderRole: deletedFolderRole,
-                    ignoreFilters: true)
-                .Folder;
-
-
             cCoder.Data.Models.Security.FolderRole dbVersion = service.GetAll(ignoreFilters: true)
                 .FirstOrDefault(predicate: (cCoder.Data.Models.Security.FolderRole ur) => ur.RoleId == deletedFolderRole.RoleId && ur.FolderId == deletedFolderRole.FolderId);
 
 
-            if (dbVersion == null || folder == null || !folder.UserCan(user: GetCurrentUser(), privilege: "folderrole_delete"))
+            if (dbVersion == null || !service.CanDeleteFolderRole(folderRole: deletedFolderRole))
             {
                 throw new SecurityException(message: "Access Denied!");
             }
@@ -162,7 +123,7 @@ internal partial class FolderRoleProcessingService(
             }
 
 
-            return (IEnumerable<Result<FolderRole>>)results;
+            return (IEnumerable<Result<cCoder.Data.Models.Security.FolderRole>>)results;
 
         });
 
@@ -178,22 +139,6 @@ internal partial class FolderRoleProcessingService(
             }
 
         });
-
-    private (cCoder.Data.Models.Security.Role role, Folder folder) GetFolderAndRoleFolderRole(cCoder.Data.Models.Security.FolderRole entity)
-=>
-        GetFolderRoleContext(entity: entity);
-
-    private (cCoder.Data.Models.Security.Role role, Folder folder)
-        GetFolderRoleContext(
-            cCoder.Data.Models.Security.FolderRole entity)
-    {
-        FolderRoleContext context =
-            contextBroker.SelectFolderRoleContext(
-                folderRole: entity,
-                ignoreFilters: true);
-
-        return (role: context.Role, folder: context.Folder);
-    }
 
     private IQueryable<cCoder.Data.Models.Security.FolderRole> GetAllValue() =>
         GetAll();

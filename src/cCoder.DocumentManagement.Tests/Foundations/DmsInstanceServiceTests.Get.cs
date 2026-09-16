@@ -7,7 +7,7 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Foundations;
@@ -21,7 +21,7 @@ public partial class DmsInstanceServiceTests
         DmsPath path = CreatePath(fullPath: "folder/file.txt");
         DMSResult result = CreateDmsResult(contentType: "text/plain");
 
-        dmsInstanceBrokerMock.Setup(expression: x => x.Get(path: path, version: 3, search: "needle"))
+        dmsInstanceBrokerMock.Setup(expression: x => x.Get(path: path.FullPath, version: 3, search: "needle"))
             .Returns(value: result);
 
         // When
@@ -31,7 +31,7 @@ public partial class DmsInstanceServiceTests
         returnedResult.Should()
             .BeSameAs(expected: result);
 
-        dmsInstanceBrokerMock.Verify(expression: x => x.Get(path: path, version: 3, search: "needle"), times: Times.Once);
+        dmsInstanceBrokerMock.Verify(expression: x => x.Get(path: path.FullPath, version: 3, search: "needle"), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 

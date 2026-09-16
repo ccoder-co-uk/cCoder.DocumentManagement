@@ -3,8 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Brokers.Loggings;
-using System.Net;
-using System.Text;
+using cCoder.DocumentManagement.Brokers;
 using System.Xml.Linq;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Exposures;
@@ -14,9 +13,8 @@ using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services.Foundations;
 using LocalFile = cCoder.Data.Models.DMS.File;
 using LocalFolder = cCoder.Data.Models.DMS.Folder;
-using LocalPath = cCoder.DocumentManagement.Dependencies.Path;
+using LocalPath = cCoder.DocumentManagement.Models.Path;
 using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
-using MemoryStream = System.IO.MemoryStream;
 
 
 namespace cCoder.DocumentManagement.Services.Processings;
@@ -26,6 +24,7 @@ internal partial class WebDavProcessingService(
     IFolderOperationsExposure folderOperationsExposure,
     IDmsInstanceOperationsExposure dmsInstanceOperationsExposure,
     DocumentManagementConfiguration config,
+    IStreamBroker streamBroker,
     ILoggingBroker log
 ) : IWebDavProcessingService
 {
@@ -50,12 +49,13 @@ internal partial class WebDavProcessingService(
             int appId = ExtractAppId(requestPath: request.RequestPath);
 
 
-            LocalPath path = new(
-                path: WebUtility
-                    .UrlDecode(encodedValue: NormalizeRequestPath(requestPath: request.RequestPath, appId: appId))
+            LocalPath path = new()
+            {
+                FullPath = streamBroker
+                    .DecodeUrl(value: NormalizeRequestPath(requestPath: request.RequestPath, appId: appId))
                     .TrimStart(trimChar: '/')
                     .TrimEnd(trimChar: '/')
-            );
+            };
 
 
             string requestText = await ReadRequestBodyTextAsync(body: request.Body);
@@ -416,9 +416,13 @@ internal partial class WebDavProcessingService(
         ));
     }
 
-    private static LocalPath ResolveDestinationPathDmsProcessingRequest(DmsProcessingRequest request, int appId)
+    private LocalPath ResolveDestinationPathDmsProcessingRequest(DmsProcessingRequest request, int appId)
     {
-        string destination = WebUtility.UrlDecode(encodedValue: GetHeaderValueDmsProcessingRequest(request: request, key: "Destination"));
+        string destination = streamBroker.DecodeUrl(
+            value: GetHeaderValueDmsProcessingRequest(
+                request: request,
+                key: "Destination"));
+
         string marker = $"Core/App({appId})/DAV/";
         int markerIndex = destination.IndexOf(value: marker, comparisonType: StringComparison.OrdinalIgnoreCase);
 
@@ -427,8 +431,11 @@ internal partial class WebDavProcessingService(
             destination = destination[(markerIndex + marker.Length)..];
         }
 
-        return new LocalPath(path: destination.TrimStart(trimChar: '/')
-            .TrimEnd(trimChar: '/'));
+        return new LocalPath
+        {
+            FullPath = destination.TrimStart(trimChar: '/')
+                .TrimEnd(trimChar: '/')
+        };
     }
 
     private static int ExtractAppId(string requestPath)
@@ -462,35 +469,23 @@ internal partial class WebDavProcessingService(
             : requestPath;
     }
 
-    private static async ValueTask<string> ReadRequestBodyTextAsync(Stream body)
+    private async ValueTask<string> ReadRequestBodyTextAsync(Stream body)
     {
         if (!body.CanRead)
         {
             return string.Empty;
         }
 
-        if (body.CanSeek)
-        {
-            body.Position = 0;
-        }
+        byte[] content = await streamBroker.ReadAllBytesAsync(
+            source: body);
 
-        using MemoryStream memoryStream = new();
-        await body.CopyToAsync(destination: memoryStream);
-
-        if (body.CanSeek)
-        {
-            body.Position = 0;
-        }
-
-        return Encoding.UTF8.GetString(bytes: memoryStream.ToArray());
+        return streamBroker.DecodeUtf8(content: content);
     }
 
-    private static MemoryStream EncodeText(string content)
-    {
-        MemoryStream stream = new(buffer: Encoding.UTF8.GetBytes(s: content ?? string.Empty));
-        stream.Position = 0;
-        return stream;
-    }
+    private Stream EncodeText(string content) =>
+        streamBroker.Create(
+            content: streamBroker.EncodeUtf8(
+                content: content ?? string.Empty));
 
     private static string SerializeXml(XElement element) =>
         element.ToString(options: SaveOptions.DisableFormatting);

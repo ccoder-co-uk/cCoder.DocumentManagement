@@ -2,9 +2,11 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-namespace cCoder.DocumentManagement.Services.Processings;
+using cCoder.Data.Models.CMS;
 
-internal interface IPackagePayloadShapeProcessingService
+namespace cCoder.DocumentManagement.Services.Foundations;
+
+internal interface ICurrentAppResolverService
 {
-    bool IsSingleItem(string data);
+    App ResolveCurrentApp();
 }

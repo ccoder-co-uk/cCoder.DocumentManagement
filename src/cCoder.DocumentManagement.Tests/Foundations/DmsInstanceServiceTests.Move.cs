@@ -4,7 +4,7 @@
 
 using Moq;
 using Xunit;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Foundations;
@@ -18,14 +18,14 @@ public partial class DmsInstanceServiceTests
         DmsPath oldPath = CreatePath(fullPath: "folder/old.txt");
         DmsPath newPath = CreatePath(fullPath: "folder/new.txt");
 
-        dmsInstanceBrokerMock.Setup(expression: x => x.MoveAsync(oldPath: oldPath, newPath: newPath))
+        dmsInstanceBrokerMock.Setup(expression: x => x.MoveAsync(oldPath: oldPath.FullPath, newPath: newPath.FullPath))
             .Returns(value: ValueTask.CompletedTask);
 
         // When
         await dmsInstanceService.MoveAsync(oldPath: oldPath.FullPath, newPath: newPath.FullPath);
 
         // Then
-        dmsInstanceBrokerMock.Verify(expression: x => x.MoveAsync(oldPath: oldPath, newPath: newPath), times: Times.Once);
+        dmsInstanceBrokerMock.Verify(expression: x => x.MoveAsync(oldPath: oldPath.FullPath, newPath: newPath.FullPath), times: Times.Once);
         dmsInstanceBrokerMock.VerifyNoOtherCalls();
     }
 

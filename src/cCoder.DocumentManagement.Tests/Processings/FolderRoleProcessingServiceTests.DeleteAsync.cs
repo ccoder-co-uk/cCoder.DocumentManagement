@@ -20,23 +20,6 @@ public partial class FolderRoleProcessingServiceTests
     public async Task ShouldUseFoundationDeleteWhenUserCanDeleteFolderRoleForDeleteAsync()
     {
         // Given
-        authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))
-            .Callback(action: (int? appId, string privilege) =>
-            {
-                if (!(currentUser?.Can(appId: appId, operation: privilege) ?? false))
-                {
-                    throw new SecurityException(message: "Access Denied!");
-                }
-            });
-
-        authorizationBrokerMock
-            .Setup(expression: x => x.IsAdminOfApp(appId: It.IsAny<int>()))
-            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId: appId) ?? false);
-
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
-            .Returns(valueFunction: () => currentUser);
-
         User user = ToLocalUser(user: TestUsers.WithPrivilege(privilege: "folderrole_delete", appId: 1));
         UserRole currentUserRole = user.Roles.First();
 
@@ -73,15 +56,9 @@ public partial class FolderRoleProcessingServiceTests
 
         currentUser = user;
 
-        contextBrokerMock
-            .Setup(expression: broker =>
-                broker.SelectFolderRoleContext(
-                    folderRole: It.Is<FolderRole>(
-                        match: item =>
-                            item.FolderId == folder.Id
-                            && item.RoleId == role.Id),
-                    ignoreFilters: true))
-            .Returns(value: new FolderRoleContext
+        SetupFolderRoleContext(
+            folderRole: link,
+            context: new FolderRoleContext
             {
                 Folder = folder,
                 Role = role,
@@ -99,14 +76,11 @@ public partial class FolderRoleProcessingServiceTests
         );
 
         // Then
-        contextBrokerMock.Verify(
-            expression: broker =>
-                broker.SelectFolderRoleContext(
-                    folderRole: It.Is<FolderRole>(
-                        match: item =>
-                            item.FolderId == folder.Id
-                            && item.RoleId == role.Id),
-                    ignoreFilters: true),
+        folderRoleServiceMock.Verify(
+            expression: service => service.CanDeleteFolderRole(
+                folderRole: It.Is<FolderRole>(match: item =>
+                    item.FolderId == folder.Id
+                    && item.RoleId == role.Id)),
             times: Times.Once);
 
         folderRoleServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Once);
@@ -124,23 +98,6 @@ public partial class FolderRoleProcessingServiceTests
     public async Task ShouldThrowSecurityExceptionWhenUserLacksDeletePrivilegeForDeleteAsync()
     {
         // Given
-        authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(appId: It.IsAny<int?>(), privilege: It.IsAny<string>()))
-            .Callback(action: (int? appId, string privilege) =>
-            {
-                if (!(currentUser?.Can(appId: appId, operation: privilege) ?? false))
-                {
-                    throw new SecurityException(message: "Access Denied!");
-                }
-            });
-
-        authorizationBrokerMock
-            .Setup(expression: x => x.IsAdminOfApp(appId: It.IsAny<int>()))
-            .Returns(valueFunction: (int appId) => currentUser?.IsAdminOfApp(appId: appId) ?? false);
-
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
-            .Returns(valueFunction: () => currentUser);
-
         DataRole role = new()
         {
             Id = Guid.NewGuid(),
@@ -169,15 +126,9 @@ public partial class FolderRoleProcessingServiceTests
             RoleId = role.Id,
         };
 
-        contextBrokerMock
-            .Setup(expression: broker =>
-                broker.SelectFolderRoleContext(
-                    folderRole: It.Is<FolderRole>(
-                        match: item =>
-                            item.FolderId == folder.Id
-                            && item.RoleId == role.Id),
-                    ignoreFilters: true))
-            .Returns(value: new FolderRoleContext
+        SetupFolderRoleContext(
+            folderRole: link,
+            context: new FolderRoleContext
             {
                 Folder = folder,
                 Role = role,

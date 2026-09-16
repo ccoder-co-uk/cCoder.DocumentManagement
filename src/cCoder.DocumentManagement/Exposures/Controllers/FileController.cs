@@ -107,7 +107,7 @@ public partial class FileController(
         {
             if (!ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+                return new OData.BadRequestResult(modelState: ModelState);
             }
 
             LocalFile addedFile = await service.AddFileAsync(newFile: entity);
@@ -149,7 +149,7 @@ public partial class FileController(
         {
             if (!ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+                return new OData.BadRequestResult(modelState: ModelState);
             }
 
             entity.Id = key;

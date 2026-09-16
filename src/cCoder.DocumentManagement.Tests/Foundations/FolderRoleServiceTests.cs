@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Brokers.Storage;
+using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -19,14 +20,17 @@ public partial class FolderRoleServiceTests
 {
     private readonly Mock<IFolderRoleBroker> folderRoleBrokerMock;
     private readonly Mock<IAuthorizationBroker> authorizationBrokerMock;
+    private readonly Mock<IFolderRoleContextBroker> folderRoleContextBrokerMock;
     private readonly FolderRoleService folderRoleService;
 
     public FolderRoleServiceTests()
     {
         folderRoleBrokerMock = new Mock<IFolderRoleBroker>(behavior: MockBehavior.Strict);
         authorizationBrokerMock = new Mock<IAuthorizationBroker>(behavior: MockBehavior.Strict);
+        folderRoleContextBrokerMock = new Mock<IFolderRoleContextBroker>(behavior: MockBehavior.Strict);
         folderRoleService = new FolderRoleService(
             folderRoleBroker: folderRoleBrokerMock.Object,
+            contextBroker: folderRoleContextBrokerMock.Object,
             authorizationBroker: authorizationBrokerMock.Object
         );
     }

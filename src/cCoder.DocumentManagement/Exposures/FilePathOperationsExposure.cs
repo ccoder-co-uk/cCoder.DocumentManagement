@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Services.Processings;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 namespace cCoder.DocumentManagement.Exposures;
 
@@ -17,7 +17,7 @@ internal sealed class FilePathOperationsExposure(
         Stream content) =>
         fileProcessingService.SaveAppPathAsync(
             appId: appId,
-            path: path,
+            path: path.FullPath,
             content: content);
 
     public ValueTask CopyFilePathAsync(
@@ -26,6 +26,6 @@ internal sealed class FilePathOperationsExposure(
         DmsPath newPath) =>
         fileProcessingService.CopyAppPathAsync(
             appId: appId,
-            oldPath: oldPath,
-            newPath: newPath);
+            oldPath: oldPath.FullPath,
+            newPath: newPath.FullPath);
 }

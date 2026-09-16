@@ -5,9 +5,9 @@
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Packaging;
-using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Extensions;
 using cCoder.DocumentManagement.Brokers;
+using cCoder.DocumentManagement.Brokers.OData;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Brokers.Storage;
@@ -122,6 +122,10 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IRoleBroker, RoleBroker>();
         services.AddTransient<IAuthorizationBroker, AuthorizationBroker>();
         services.AddTransient<IJsonBroker, JsonBroker>();
+        services.AddTransient<IHttpContextBroker, HttpContextBroker>();
+        services.AddTransient<IMetadataContainerBroker, MetadataContainerBroker>();
+        services.AddTransient<IStreamBroker, StreamBroker>();
+        services.AddTransient<IDocumentArchiveBroker, DocumentArchiveBroker>();
     }
 
     private static void AddEventHandlers(this IServiceCollection services)
@@ -150,6 +154,9 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IFileEventService, FileEventService>();
         services.AddTransient<IFolderEventService, FolderEventService>();
         services.AddTransient<IFolderRoleEventService, FolderRoleEventService>();
+        services.AddTransient<ICurrentAppResolverService, CurrentAppResolverService>();
+        services.AddTransient<IPackagePayloadJsonService, PackagePayloadJsonService>();
+        services.AddTransient<IPackagePayloadShapeService, PackagePayloadShapeService>();
         services.AddTransient<ICurrentAppResolverProcessingService, CurrentAppResolverProcessingService>();
     }
 
@@ -177,6 +184,7 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IFileManager, FileOrchestrationService>();
         services.AddTransient<IFolderOrchestrationService, FolderOrchestrationService>();
         services.AddTransient<IFolderManager, FolderOrchestrationService>();
+        services.AddTransient<IFolderEventManager, FolderEventManager>();
         services.AddTransient<IFolderRoleOrchestrationService, FolderRoleOrchestrationService>();
         services.AddTransient<IFolderRoleManager, FolderRoleOrchestrationService>();
         services.AddTransient<IPackagePayloadMigrationOrchestrationService, PackagePayloadMigrationOrchestrationService>();
@@ -197,8 +205,6 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IFolderPathProcessingService, FolderProcessingService>();
         services.AddTransient<IFolderRoleEventProcessingService, FolderRoleEventProcessingService>();
         services.AddTransient<IFolderRoleProcessingService, FolderRoleProcessingService>();
-        services.AddTransient<IPackagePayloadJsonProcessingService, PackagePayloadJsonProcessingService>();
-        services.AddTransient<IPackagePayloadShapeProcessingService, PackagePayloadShapeProcessingService>();
         services.AddTransient<IRoleMigrationFilterProcessingService, RoleMigrationFilterProcessingService>();
         services.AddTransient<IRoleMigrationRetrievalProcessingService, RoleMigrationRetrievalProcessingService>();
         services.AddTransient<IWebDavProcessingService, WebDavProcessingService>();

@@ -22,6 +22,10 @@ internal sealed partial class CurrentAppResolverProcessingService
         {
             throw new DocumentManagementDependencyException(innerException: innerException);
         }
+        catch (DocumentManagementServiceException)
+        {
+            throw;
+        }
         catch (Exception innerException)
         {
             throw new DocumentManagementServiceException(innerException: innerException);

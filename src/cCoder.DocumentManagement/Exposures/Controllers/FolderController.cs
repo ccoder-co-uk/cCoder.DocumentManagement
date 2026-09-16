@@ -149,7 +149,7 @@ public partial class FolderController(
         {
             if (!ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+                return new OData.BadRequestResult(modelState: ModelState);
             }
 
             Folder addedFolder = await service.AddFolderAsync(newFolder: newFolder);
@@ -191,7 +191,7 @@ public partial class FolderController(
         {
             if (!ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+                return new OData.BadRequestResult(modelState: ModelState);
             }
 
             updatedFolder.Id = key;

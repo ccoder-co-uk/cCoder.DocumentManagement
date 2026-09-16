@@ -6,21 +6,21 @@ namespace cCoder.DocumentManagement.Services.Processings;
 
 internal interface IFolderPathProcessingService
 {
-    DMSResult GetFilesZippedAppPath(int appId, IEnumerable<cCoder.DocumentManagement.Dependencies.Path> paths);
+    DMSResult GetFilesZippedAppPath(int appId, IEnumerable<string> paths);
 
-    DMSResult GetAppPath(int appId, cCoder.DocumentManagement.Dependencies.Path path, string search = "");
+    DMSResult GetAppPath(int appId, string path, string search = "");
 
     ValueTask UnpackAppPathAsync(
         int appId,
-        cCoder.DocumentManagement.Dependencies.Path path,
+        string path,
         Stream content,
         bool ignoreArchiveRoot = false);
 
-    ValueTask SaveAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path path);
+    ValueTask SaveAppPathAsync(int appId, string path);
 
-    ValueTask DropAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path path);
+    ValueTask DropAppPathAsync(int appId, string path);
 
-    ValueTask CopyAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath);
+    ValueTask CopyAppPathAsync(int appId, string oldPath, string newPath);
 
-    ValueTask MoveAppPathAsync(int appId, cCoder.DocumentManagement.Dependencies.Path oldPath, cCoder.DocumentManagement.Dependencies.Path newPath);
+    ValueTask MoveAppPathAsync(int appId, string oldPath, string newPath);
 }

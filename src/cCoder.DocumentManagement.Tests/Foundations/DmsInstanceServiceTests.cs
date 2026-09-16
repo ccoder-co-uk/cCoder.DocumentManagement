@@ -7,7 +7,7 @@ using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Services.Foundations;
 using Moq;
 using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Foundations;
@@ -25,7 +25,7 @@ public partial class DmsInstanceServiceTests
     }
 
     private static DmsPath CreatePath(string fullPath) =>
-        new(path: fullPath);
+        new() { FullPath = fullPath };
 
     private static DMSResult CreateDmsResult(string contentType = "application/json") =>
         new() { MimeType = contentType, Data = new MemoryStream(buffer: [1, 2, 3]) };

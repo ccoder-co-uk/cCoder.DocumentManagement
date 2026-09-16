@@ -10,8 +10,6 @@ using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Processings;
 using Moq;
-using IAuthorizationBroker = cCoder.DocumentManagement.Brokers.IAuthorizationBroker;
-using IFolderRoleContextBroker = cCoder.DocumentManagement.Brokers.IFolderRoleContextBroker;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -20,24 +18,12 @@ public partial class FolderRoleProcessingServiceTests
 {
     private User currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
     private readonly Mock<IFolderRoleService> folderRoleServiceMock = new();
-    private readonly Mock<IFolderRoleContextBroker> contextBrokerMock = new();
-    private readonly Mock<IAuthorizationBroker> authorizationBrokerMock = new();
     private readonly FolderRoleProcessingService folderRoleProcessingService;
 
     public FolderRoleProcessingServiceTests()
     {
-        contextBrokerMock
-            .Setup(expression: broker =>
-                broker.SelectFolderRoleContext(
-                    folderRole: It.IsAny<FolderRole>(),
-                    ignoreFilters: It.IsAny<bool>()))
-            .Returns(value: new FolderRoleContext());
-
         folderRoleProcessingService = new FolderRoleProcessingService(
-            service: folderRoleServiceMock.Object,
-            contextBroker: contextBrokerMock.Object,
-            authorizationBroker: authorizationBrokerMock.Object
-        );
+            service: folderRoleServiceMock.Object);
     }
 
     private static User ToLocalUser(cCoder.Data.Models.Security.User user) =>
@@ -94,11 +80,27 @@ public partial class FolderRoleProcessingServiceTests
 
     private void SetupFolderRoleContext(
         FolderRole folderRole,
-        FolderRoleContext context) =>
-        contextBrokerMock
-            .Setup(expression: broker =>
-                broker.SelectFolderRoleContext(
-                    folderRole: folderRole,
-                    ignoreFilters: true))
-            .Returns(value: context);
+        FolderRoleContext context)
+    {
+        folderRoleServiceMock
+            .Setup(expression: service => service.CanCreateFolderRole(
+                folderRole: It.Is<FolderRole>(match: item =>
+                    item.FolderId == folderRole.FolderId
+                    && item.RoleId == folderRole.RoleId)))
+            .Returns(value: context.Role is not null
+                && context.Folder is not null
+                && context.Folder.UserCan(
+                    user: currentUser,
+                    privilege: "folderrole_create"));
+
+        folderRoleServiceMock
+            .Setup(expression: service => service.CanDeleteFolderRole(
+                folderRole: It.Is<FolderRole>(match: item =>
+                    item.FolderId == folderRole.FolderId
+                    && item.RoleId == folderRole.RoleId)))
+            .Returns(value: context.Folder is not null
+                && context.Folder.UserCan(
+                    user: currentUser,
+                    privilege: "folderrole_delete"));
+    }
 }

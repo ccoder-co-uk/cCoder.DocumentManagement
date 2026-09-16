@@ -4,18 +4,11 @@
 
 using System.Xml.Linq;
 using cCoder.Data.Models.Security;
-using cCoder.DocumentManagement.Dependencies;
 
 namespace cCoder.Data.Models.DMS;
 
 public static class FileExtensions
 {
-    public static Stream GetContent(this File file, int version = 0) =>
-        version > 0
-            ? new DocumentStreamDependency(buffer: file.Contents.FirstOrDefault(predicate: content => content.Version == version)?.RawData)
-            : new DocumentStreamDependency(buffer: file.Contents.OrderBy(keySelector: content => content.Version)
-                                                                                        .Last().RawData);
-
     public static void RecomputePath(this File file) =>
         file.Path = file.FolderId != Guid.Empty
             ? $"{file.Folder?.Path}/{file.Name}".ToLowerInvariant()

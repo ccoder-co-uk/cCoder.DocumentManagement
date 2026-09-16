@@ -4,9 +4,9 @@
 
 using cCoder.DocumentManagement.Models.Exceptions;
 
-namespace cCoder.DocumentManagement.Services.Processings;
+namespace cCoder.DocumentManagement.Services.Foundations;
 
-internal sealed partial class PackagePayloadJsonProcessingService
+internal sealed partial class PackagePayloadShapeService
 {
     private static TResult TryCatch<TResult>(Func<TResult> operation)
     {

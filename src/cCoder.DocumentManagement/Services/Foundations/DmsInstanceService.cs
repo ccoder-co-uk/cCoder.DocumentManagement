@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Brokers;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
 using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
 
 
@@ -17,9 +16,7 @@ internal partial class DmsInstanceService(IDmsInstanceBroker dmsInstanceBroker) 
             ValidateFilesZippedOnGet(paths: paths);
 
             return dmsInstanceBroker.GetFilesZipped(
-                paths: paths.Select(
-                    selector: path =>
-                        new DmsPath(path: path)));
+                paths: paths);
         });
 
     public DmsResult Get(string path, int version = 0, string search = "") =>
@@ -28,7 +25,7 @@ internal partial class DmsInstanceService(IDmsInstanceBroker dmsInstanceBroker) 
             ValidateInputs(inputs: [path, version, search]);
 
             return dmsInstanceBroker.Get(
-                path: new DmsPath(path: path),
+                path: path,
                 version: version,
                 search: search);
         });
@@ -39,7 +36,7 @@ internal partial class DmsInstanceService(IDmsInstanceBroker dmsInstanceBroker) 
             ValidateInputs(inputs: [path, content, ignoreArchiveRoot]);
 
             return dmsInstanceBroker.UnpackAsync(
-                path: new DmsPath(path: path),
+                path: path,
                 content: content,
                 ignoreArchiveRoot: ignoreArchiveRoot);
         });
@@ -50,7 +47,7 @@ internal partial class DmsInstanceService(IDmsInstanceBroker dmsInstanceBroker) 
             ValidateInputs(inputs: [path, content]);
 
             return dmsInstanceBroker.SaveAsync(
-                path: new DmsPath(path: path),
+                path: path,
                 content: content);
         });
 
@@ -60,7 +57,7 @@ internal partial class DmsInstanceService(IDmsInstanceBroker dmsInstanceBroker) 
             ValidateInputs(inputs: [path, version]);
 
             return dmsInstanceBroker.DropAsync(
-                path: new DmsPath(path: path),
+                path: path,
                 version: version);
         });
 
@@ -70,8 +67,8 @@ internal partial class DmsInstanceService(IDmsInstanceBroker dmsInstanceBroker) 
             ValidateInputs(inputs: [oldPath, newPath]);
 
             return dmsInstanceBroker.CopyAsync(
-                oldPath: new DmsPath(path: oldPath),
-                newPath: new DmsPath(path: newPath));
+                oldPath: oldPath,
+                newPath: newPath);
         });
 
     public ValueTask MoveAsync(string oldPath, string newPath) =>
@@ -80,7 +77,7 @@ internal partial class DmsInstanceService(IDmsInstanceBroker dmsInstanceBroker) 
             ValidateInputs(inputs: [oldPath, newPath]);
 
             return dmsInstanceBroker.MoveAsync(
-                oldPath: new DmsPath(path: oldPath),
-                newPath: new DmsPath(path: newPath));
+                oldPath: oldPath,
+                newPath: newPath);
         });
 }
