@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using System;
 using System.Text.Json;
 using cCoder.Data.Exposures;
-using cCoder.DocumentManagement.Exposures.EventHandlers;
 using cCoder.DocumentManagement.Exposures.Middleware;
 using cCoder.DocumentManagement.Services.Foundations;
 
@@ -22,15 +21,14 @@ public static partial class WebApplicationExtensions
     public static WebApplication StartDocumentManagementWeb(
         this WebApplication app,
         ILogger log = null) =>
-        app.UseDocumentManagementExposure(log: log)
-            .UseDocumentManagementEventHandlers();
+        app.UseDocumentManagementExposure(log: log);
 
     public static WebApplication StartDocumentManagementHostedServices(
         this WebApplication app)
     {
         PopulateMetadataTypeCache(app: app);
 
-        return app.UseDocumentManagementEventHandlers();
+        return app;
     }
 
     private static WebApplication UseDocumentManagementExposure(
@@ -50,19 +48,6 @@ public static partial class WebApplicationExtensions
             predicate: context => WebDavRouteRegex.IsMatch(input: context.Request.Path.Value?.ToLower() ?? string.Empty),
             configuration: branch => branch.UseMiddleware<WebDavMiddleware>()
         );
-
-        return app;
-    }
-
-    private static WebApplication UseDocumentManagementEventHandlers(this WebApplication app)
-    {
-        using IServiceScope scope = app.Services.CreateScope();
-        IServiceProvider services = scope.ServiceProvider;
-
-        foreach (IDocumentManagementEventHandlers handlers in services.GetServices<IDocumentManagementEventHandlers>())
-        {
-            handlers.ListenToAllEvents();
-        }
 
         return app;
     }
