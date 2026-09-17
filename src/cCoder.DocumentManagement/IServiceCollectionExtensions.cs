@@ -13,7 +13,6 @@ using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Dependencies;
 using cCoder.DocumentManagement.Extensions.OData;
-using cCoder.DocumentManagement.Exposures.EventHandlers;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Services;
 using cCoder.DocumentManagement.Services.Aggregations;
@@ -107,7 +106,6 @@ public static partial class IServiceCollectionExtensions
     private static void AddBrokers(this IServiceCollection services)
     {
         services.AddTransient<Brokers.Loggings.ILoggingBroker, Brokers.Loggings.LoggingBroker>();
-        services.AddTransient<IEventHubBroker, EventHubBroker>();
         services.AddTransient<IDmsInstanceFactory, DmsInstanceFactory>();
         services.AddTransient<IDmsInstanceBroker, DmsInstanceBroker>();
         services.AddTransient<IAuthInfoBroker, AuthInfoBroker>();
@@ -137,12 +135,10 @@ public static partial class IServiceCollectionExtensions
         services.AddTransient<IFolderRoleOperationsExposure, FolderRoleOperationsExposure>();
         services.AddTransient<IRoleOperationsExposure, RoleOperationsExposure>();
         services.AddTransient<IDocumentManagementPackageManager, DocumentManagementPackageManager>();
-        services.AddTransient<IDocumentManagementEventHandlers, DocumentManagementEventHandlers>();
     }
 
     private static void AddFoundations(this IServiceCollection services)
     {
-        services.AddTransient<Services.Foundations.Events.IEventHandlerService, Services.Foundations.Events.EventHandlerService>();
         services.AddTransient<IDmsInstanceService, DmsInstanceService>();
         services.AddTransient<IFileContentService, FileContentService>();
         services.AddTransient<IFileService, FileService>();

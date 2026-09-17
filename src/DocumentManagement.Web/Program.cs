@@ -4,6 +4,9 @@
 
 namespace DocumentManagement.Web;
 
+using cCoder.DocumentManagement;
+using cCoder.Eventing;
+
 public class Program
 {
     public static void Main(string[] args)
@@ -13,6 +16,11 @@ public class Program
             configuration: builder.Configuration);
 
         WebApplication app = builder.Build();
+
+        app.Services
+            .GetRequiredService<IEventHub>()
+            .ListenToDocumentManagementEvents();
+
         app.UseDocumentManagementApplication()
             .Run();
     }
