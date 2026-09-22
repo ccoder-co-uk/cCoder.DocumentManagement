@@ -11,4 +11,4 @@ using cCoder.DocumentManagement.Exposures;
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
-internal interface IFolderOrchestrationService : IFolderManager { }
+public interface IFolderOrchestrationService : IFolderManager { }

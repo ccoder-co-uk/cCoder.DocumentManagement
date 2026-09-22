@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
 public class FolderRoleController(
-    IFolderRoleManager service,
+    IFolderRoleOrchestrationService service,
     ILoggingBroker loggingBroker
 ) : ODataController
 {

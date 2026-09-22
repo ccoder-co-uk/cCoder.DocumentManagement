@@ -23,7 +23,7 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
 public partial class FolderController(
-    IFolderManager service,
+    IFolderOrchestrationService service,
     ILoggingBroker loggingBroker
 ) : ODataController
 {

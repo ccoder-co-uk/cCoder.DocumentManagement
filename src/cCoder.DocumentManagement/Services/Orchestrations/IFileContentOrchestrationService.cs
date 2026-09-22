@@ -11,4 +11,4 @@ using cCoder.DocumentManagement.Exposures;
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
-internal interface IFileContentOrchestrationService : IFileContentManager { }
+public interface IFileContentOrchestrationService : IFileContentManager { }

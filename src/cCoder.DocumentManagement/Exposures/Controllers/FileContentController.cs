@@ -20,7 +20,7 @@ using LocalFileContent = cCoder.Data.Models.DMS.FileContent;
 namespace cCoder.DocumentManagement.Exposures.Controllers;
 
 public partial class FileContentController(
-    IFileContentManager service,
+    IFileContentOrchestrationService service,
     ILoggingBroker loggingBroker
 ) : ODataController
 {
