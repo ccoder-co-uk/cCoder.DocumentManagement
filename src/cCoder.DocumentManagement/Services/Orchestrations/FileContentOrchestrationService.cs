@@ -25,7 +25,7 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [ignoreFilters]);
+            ValidateAllOnGet(inputs: [ignoreFilters]);
             return processingService.GetAll(ignoreFilters: ignoreFilters);
 
         });
@@ -34,7 +34,7 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [newFileContent]);
+            ValidateFileContentOnAdd(inputs: [newFileContent]);
             FileContent result = await processingService.AddFileContentAsync(newFileContent: newFileContent);
 
             await eventService.RaiseFileContentAddEventAsync(fileContent: result);
@@ -47,7 +47,7 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [updatedFileContent]);
+            ValidateFileContentOnUpdate(inputs: [updatedFileContent]);
             FileContent result = await processingService.UpdateFileContentAsync(updatedFileContent: updatedFileContent);
 
             await eventService.RaiseFileContentUpdateEventAsync(fileContent: result);
@@ -73,7 +73,7 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [items]);
+            ValidateOrUpdateFileContentOnAdd(inputs: [items]);
             return processingService.AddOrUpdateFileContent(items: items);
 
         });
@@ -82,7 +82,7 @@ internal partial class FileContentOrchestrationService(IFileContentProcessingSer
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [deletedFileContent]);
+            ValidateAllFileContentOnDelete(inputs: [deletedFileContent]);
             return processingService.DeleteAllFileContentAsync(deletedFileContent: deletedFileContent);
 
         });

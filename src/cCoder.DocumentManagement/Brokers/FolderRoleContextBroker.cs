@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.Data;
+using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Dependencies;
 using cCoder.DocumentManagement.Models;
@@ -28,15 +29,31 @@ internal sealed class FolderRoleContextBroker(
         CoreDataContext coreDataContext =
             coreContextFactory.CreateCoreContext();
 
+        Func<IQueryable<Folder>>[] folderQuerySelectors =
+        [
+            () => coreDataContext.Folders,
+            () => coreDataContext.Folders.IgnoreQueryFilters(),
+        ];
+
+        Func<IQueryable<Role>>[] roleQuerySelectors =
+        [
+            () => coreDataContext.Roles,
+            () => coreDataContext.Roles.IgnoreQueryFilters(),
+        ];
+
+        IQueryable<Folder> folders =
+            folderQuerySelectors[Convert.ToInt32(value: ignoreFilters)]();
+
+        IQueryable<Role> roles =
+            roleQuerySelectors[Convert.ToInt32(value: ignoreFilters)]();
+
         return new FolderRoleContext
         {
-            Folder = coreDataContext.Folders
-                .ApplyQueryFilters(ignoreFilters: ignoreFilters)
+            Folder = folders
                 .FirstOrDefault(
                     predicate: folder =>
                         folder.Id == folderRole.FolderId),
-            Role = coreDataContext.Roles
-                .ApplyQueryFilters(ignoreFilters: ignoreFilters)
+            Role = roles
                 .FirstOrDefault(
                     predicate: role =>
                         role.Id == folderRole.RoleId),

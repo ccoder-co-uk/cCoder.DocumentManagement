@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.Data;
+using cCoder.Data.Models.DMS;
 using cCoder.DocumentManagement.Dependencies;
 using cCoder.Data.Models.Security;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +27,16 @@ internal sealed class FolderRoleBroker(ICoreContextFactory coreContextFactory) :
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<Guid> accessibleFolderIds = coreDataContext.Folders
-            .ApplyQueryFilters(ignoreFilters: ignoreFilters)
+        Func<IQueryable<Folder>>[] querySelectors =
+        [
+            () => coreDataContext.Folders,
+            () => coreDataContext.Folders.IgnoreQueryFilters(),
+        ];
+
+        IQueryable<Folder> folders =
+            querySelectors[Convert.ToInt32(value: ignoreFilters)]();
+
+        IQueryable<Guid> accessibleFolderIds = folders
             .Select(selector: folder => folder.Id);
 
         return coreDataContext.FolderRoles

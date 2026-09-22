@@ -16,7 +16,7 @@ internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingServi
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [ignoreFilters]);
+            ValidateAllOnGet(inputs: [ignoreFilters]);
             return processingService.GetAll(ignoreFilters: ignoreFilters);
 
         });
@@ -25,7 +25,7 @@ internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingServi
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [newFolderRole]);
+            ValidateFolderRoleOnAdd(inputs: [newFolderRole]);
             FolderRole result = await processingService.AddFolderRoleAsync(newFolderRole: newFolderRole);
 
             await eventService.RaiseFolderRoleAddEventAsync(folderRole: result);
@@ -38,7 +38,7 @@ internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingServi
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [deletedFolderRole]);
+            ValidateFolderRoleOnDelete(inputs: [deletedFolderRole]);
             await eventService.RaiseFolderRoleDeleteEventAsync(folderRole: deletedFolderRole);
 
             await processingService.DeleteFolderRoleAsync(deletedFolderRole: deletedFolderRole);
@@ -49,7 +49,7 @@ internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingServi
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [items]);
+            ValidateOrUpdateFolderRoleOnAdd(inputs: [items]);
             return processingService.AddOrUpdateFolderRole(items: items);
 
         });
@@ -58,7 +58,7 @@ internal partial class FolderRoleOrchestrationService(IFolderRoleProcessingServi
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [deletedFolderRole]);
+            ValidateAllFolderRoleOnDelete(inputs: [deletedFolderRole]);
             return processingService.DeleteAllFolderRoleAsync(deletedFolderRole: deletedFolderRole);
 
         });

@@ -30,7 +30,7 @@ internal class AuthorizationBroker(ICoreContextFactory coreContextFactory) : IAu
     public LocalUser GetCurrentUser()
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        return coreDataContext.User.ToLocalUser();
+        return coreDataContext.User;
     }
 
     public bool IsAdminOfApp(int? appId) =>
@@ -52,9 +52,22 @@ internal class AuthorizationBroker(ICoreContextFactory coreContextFactory) : IAu
         return app?.IsAppAdmin(user: user) ?? false;
     }
 
-    public void Authorize(int? appId, string privilege) =>
-        GetCurrentUser()
-            .ThrowIfUnauthorized(
-                appId: appId,
-                privilege: privilege);
+    public void Authorize(int? appId, string privilege)
+    {
+        LocalUser user = GetCurrentUser();
+        string normalizedPrivilege = privilege.ToLower();
+
+        bool hasPrivilege = user?.Roles?.Any(predicate: userRole =>
+            (appId is null || userRole.Role.AppId == appId)
+            && userRole.Role.Privileges.Contains(item: normalizedPrivilege))
+            ?? false;
+
+        if (user is null
+            || !(user.IsAdminOfApp(appId: appId)
+                || hasPrivilege))
+        {
+            throw new System.Security.SecurityException(
+                message: "Access Denied!");
+        }
+    }
 }

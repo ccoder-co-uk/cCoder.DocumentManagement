@@ -25,7 +25,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [ignoreFilters]);
+            ValidateAllOnGet(inputs: [ignoreFilters]);
             return processingService.GetAll(ignoreFilters: ignoreFilters);
 
         });
@@ -34,7 +34,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [newFile]);
+            ValidateFileOnAdd(inputs: [newFile]);
             cCoder.Data.Models.DMS.File result = await processingService.AddFileAsync(newFile: newFile);
 
             await eventService.RaiseFileAddEventAsync(entity: result);
@@ -47,7 +47,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [updatedFile]);
+            ValidateFileOnUpdate(inputs: [updatedFile]);
             cCoder.Data.Models.DMS.File result = await processingService.UpdateFileAsync(updatedFile: updatedFile);
 
             await eventService.RaiseFileUpdateEventAsync(entity: result);
@@ -82,7 +82,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [items]);
+            ValidateOrUpdateFileOnAdd(inputs: [items]);
             return processingService.AddOrUpdateFile(items: items);
 
         });
@@ -91,7 +91,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [deletedFile]);
+            ValidateAllFileOnDelete(inputs: [deletedFile]);
             return processingService.DeleteAllFileAsync(deletedFile: deletedFile);
 
         });
@@ -100,7 +100,7 @@ internal partial class FileOrchestrationService(IFileProcessingService processin
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [appId, path]);
+            ValidateByPathOnGet(inputs: [appId, path]);
             return processingService.GetByPath(appId: appId, path: path);
 
         });

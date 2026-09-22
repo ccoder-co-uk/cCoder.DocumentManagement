@@ -20,7 +20,7 @@ internal partial class FolderRoleProcessingService(
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [ignoreFilters]);
+            ValidateAllOnGet(inputs: [ignoreFilters]);
             return service.GetAll(ignoreFilters: ignoreFilters);
 
         });
@@ -29,7 +29,7 @@ internal partial class FolderRoleProcessingService(
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [newFolderRole]);
+            ValidateFolderRoleOnAdd(inputs: [newFolderRole]);
 
             if (service.CanCreateFolderRole(folderRole: newFolderRole))
             {
@@ -50,7 +50,7 @@ internal partial class FolderRoleProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [deletedFolderRole]);
+            ValidateFolderRoleOnDelete(inputs: [deletedFolderRole]);
 
             cCoder.Data.Models.Security.FolderRole dbVersion = service.GetAll(ignoreFilters: true)
                 .FirstOrDefault(predicate: (cCoder.Data.Models.Security.FolderRole ur) => ur.RoleId == deletedFolderRole.RoleId && ur.FolderId == deletedFolderRole.FolderId);
@@ -70,7 +70,7 @@ internal partial class FolderRoleProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [items]);
+            ValidateOrUpdateFolderRoleOnAdd(inputs: [items]);
             cCoder.Data.Models.Security.FolderRole[] itemArray = items.ToArray();
 
 
@@ -131,7 +131,7 @@ internal partial class FolderRoleProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [deletedFolderRole]);
+            ValidateAllFolderRoleOnDelete(inputs: [deletedFolderRole]);
 
             foreach (cCoder.Data.Models.Security.FolderRole item in deletedFolderRole)
             {

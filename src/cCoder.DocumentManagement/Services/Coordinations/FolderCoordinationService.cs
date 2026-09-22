@@ -15,7 +15,7 @@ internal partial class FolderCoordinationService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [deletedFolder]);
+            ValidateFolderOnDelete(inputs: [deletedFolder]);
 
             if (deletedFolder == null)
             {

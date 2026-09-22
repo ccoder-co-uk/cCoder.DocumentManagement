@@ -37,7 +37,7 @@ internal partial class FileProcessingService(
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [ignoreFilters]);
+            ValidateAllOnGet(inputs: [ignoreFilters]);
             return service.GetAll(ignoreFilters: ignoreFilters);
 
         });
@@ -46,7 +46,7 @@ internal partial class FileProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [newFile]);
+            ValidateFileOnAdd(inputs: [newFile]);
             Folder folder = folderOperationsExposure.GetFolderWithRoles(folderId: newFile.FolderId, ignoreFilters: true);
 
 
@@ -109,7 +109,7 @@ internal partial class FileProcessingService(
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [appId, path]);
+            ValidateByPathOnGet(inputs: [appId, path]);
             cCoder.Data.Models.DMS.File byPath = service.GetByPath(appId: appId, path: path, ignoreFilters: true);
 
 
@@ -136,7 +136,7 @@ internal partial class FileProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: (object[])[updatedFile]);
+            ValidateFileOnUpdate(inputs: (object[])[updatedFile]);
             cCoder.Data.Models.DMS.File dbVersion = service.GetWithFolderRolesAndContents(fileId: (Guid)updatedFile.Id, ignoreFilters: true);
 
 
@@ -385,7 +385,7 @@ internal partial class FileProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [items]);
+            ValidateOrUpdateFileOnAdd(inputs: [items]);
             List<Result<cCoder.Data.Models.DMS.File>> results = new List<Result<cCoder.Data.Models.DMS.File>>();
 
 
@@ -422,7 +422,7 @@ internal partial class FileProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [deletedFile]);
+            ValidateAllFileOnDelete(inputs: [deletedFile]);
 
             foreach (cCoder.Data.Models.DMS.File item in deletedFile)
             {

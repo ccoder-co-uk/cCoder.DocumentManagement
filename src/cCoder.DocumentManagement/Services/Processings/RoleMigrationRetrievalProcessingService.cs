@@ -14,7 +14,7 @@ internal sealed partial class RoleMigrationRetrievalProcessingService(
     public IQueryable<Role> GetAllRoles(bool ignoreFilters) =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [ignoreFilters]);
+            ValidateAllRolesOnGet(inputs: [ignoreFilters]);
 
             return roleService.GetAll(
                 ignoreFilters: ignoreFilters);

@@ -18,7 +18,7 @@ internal partial class DmsOrchestrationService(
     public DmsOperation GetFilesZippedDmsOperation(DmsOperation dmsOperation) =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [dmsOperation]);
+            ValidateFilesZippedDmsOperationOnGet(inputs: [dmsOperation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
 
             dmsOperation.Result =
@@ -33,7 +33,7 @@ internal partial class DmsOrchestrationService(
     public DmsOperation GetDmsOperation(DmsOperation dmsOperation) =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [dmsOperation]);
+            ValidateDmsOperationOnGet(inputs: [dmsOperation]);
             LocalApp app = currentAppResolver.ResolveCurrentApp();
 
             dmsOperation.Result = IsFilePath(path: dmsOperation.Path)

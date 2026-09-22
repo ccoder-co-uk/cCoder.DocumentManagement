@@ -25,7 +25,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [ignoreFilters]);
+            ValidateAllOnGet(inputs: [ignoreFilters]);
             return processingService.GetAll(ignoreFilters: ignoreFilters);
 
         });
@@ -34,7 +34,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [newFolder]);
+            ValidateFolderOnAdd(inputs: [newFolder]);
             Folder result = await processingService.AddFolderAsync(newFolder: newFolder);
 
             await eventService.RaiseFolderAddEventAsync(folder: result);
@@ -47,7 +47,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [updatedFolder]);
+            ValidateFolderOnUpdate(inputs: [updatedFolder]);
             Folder result = await processingService.UpdateFolderAsync(updatedFolder: updatedFolder);
 
             await eventService.RaiseFolderUpdateEventAsync(folder: result);
@@ -82,7 +82,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [items]);
+            ValidateOrUpdateFolderOnAdd(inputs: [items]);
             return processingService.AddOrUpdateFolder(items: items);
 
         });
@@ -91,7 +91,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [items]);
+            ValidateOrUpdateForAppFolderOnAdd(inputs: [items]);
             return processingService.AddOrUpdateForAppFolderAsync(items: items);
 
         });
@@ -100,7 +100,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [deletedFolder]);
+            ValidateAllFolderOnDelete(inputs: [deletedFolder]);
             return processingService.DeleteAllFolderAsync(deletedFolder: deletedFolder);
 
         });
@@ -109,7 +109,7 @@ internal partial class FolderOrchestrationService(IFolderProcessingService proce
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [appId]);
+            ValidateAllByAppIdOnDelete(inputs: [appId]);
             return processingService.DeleteByAppIdAsync(appId: appId);
 
         });

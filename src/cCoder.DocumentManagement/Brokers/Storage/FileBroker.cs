@@ -34,14 +34,18 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
     {
         CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        return coreDataContext.Files.ApplyQueryFilters(ignoreFilters: ignoreFilters);
+        return ApplyQueryFilters(
+            query: coreDataContext.Files,
+            ignoreFilters: ignoreFilters);
     }
 
     public FileEntity SelectFileByPath(int appId, string path, bool ignoreFilters)
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<FileEntity> query = coreDataContext.Files.ApplyQueryFilters(ignoreFilters: ignoreFilters);
+        IQueryable<FileEntity> query = ApplyQueryFilters(
+            query: coreDataContext.Files,
+            ignoreFilters: ignoreFilters);
 
         return query
             .Include(navigationPropertyPath: file => file.Folder)
@@ -52,7 +56,9 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<FileEntity> query = coreDataContext.Files.ApplyQueryFilters(ignoreFilters: ignoreFilters);
+        IQueryable<FileEntity> query = ApplyQueryFilters(
+            query: coreDataContext.Files,
+            ignoreFilters: ignoreFilters);
 
         return query
             .Where(predicate: file => folderIds.Contains(value: file.FolderId))
@@ -64,7 +70,9 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<FileEntity> query = coreDataContext.Files.ApplyQueryFilters(ignoreFilters: ignoreFilters);
+        IQueryable<FileEntity> query = ApplyQueryFilters(
+            query: coreDataContext.Files,
+            ignoreFilters: ignoreFilters);
 
         return query
             .Include(navigationPropertyPath: file => file.Folder)
@@ -76,7 +84,9 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<FileEntity> query = coreDataContext.Files.ApplyQueryFilters(ignoreFilters: ignoreFilters);
+        IQueryable<FileEntity> query = ApplyQueryFilters(
+            query: coreDataContext.Files,
+            ignoreFilters: ignoreFilters);
 
         return query
             .Include(navigationPropertyPath: file => file.Contents)
@@ -90,7 +100,9 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<FileEntity> query = coreDataContext.Files.ApplyQueryFilters(ignoreFilters: ignoreFilters);
+        IQueryable<FileEntity> query = ApplyQueryFilters(
+            query: coreDataContext.Files,
+            ignoreFilters: ignoreFilters);
 
         return query
             .Include(navigationPropertyPath: file => file.Folder)
@@ -102,7 +114,9 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
 
-        IQueryable<FileEntity> query = coreDataContext.Files.ApplyQueryFilters(ignoreFilters: ignoreFilters);
+        IQueryable<FileEntity> query = ApplyQueryFilters(
+            query: coreDataContext.Files,
+            ignoreFilters: ignoreFilters);
 
         return query
             .Include(navigationPropertyPath: file => file.Contents)
@@ -122,6 +136,20 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
             .Where(predicate: file =>
                 file.Folder.AppId == appId
                 && file.Contents.Any(predicate: content => content.RawData.SequenceEqual(other: needle)));
+    }
+
+    private static IQueryable<T> ApplyQueryFilters<T>(
+        IQueryable<T> query,
+        bool ignoreFilters)
+        where T : class
+    {
+        Func<IQueryable<T>>[] querySelectors =
+        [
+            () => query,
+            () => query.IgnoreQueryFilters(),
+        ];
+
+        return querySelectors[Convert.ToInt32(value: ignoreFilters)]();
     }
 
     public async ValueTask<FileEntity> InsertFileAsync(FileEntity entity)

@@ -25,7 +25,7 @@ internal partial class FileContentProcessingService(IFileContentService service)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [ignoreFilters]);
+            ValidateAllOnGet(inputs: [ignoreFilters]);
             return service.GetAll(ignoreFilters: ignoreFilters);
 
         });
@@ -34,7 +34,7 @@ internal partial class FileContentProcessingService(IFileContentService service)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [newFileContent]);
+            ValidateFileContentOnAdd(inputs: [newFileContent]);
             return service.AddFileContentAsync(newFileContent: newFileContent);
 
         });
@@ -43,7 +43,7 @@ internal partial class FileContentProcessingService(IFileContentService service)
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [updatedFileContent]);
+            ValidateFileContentOnUpdate(inputs: [updatedFileContent]);
             return service.UpdateFileContentAsync(updatedFileContent: updatedFileContent);
 
         });
@@ -60,7 +60,7 @@ internal partial class FileContentProcessingService(IFileContentService service)
     public ValueTask DeleteAllForFileAsync(Guid fileId) =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [fileId]);
+            ValidateAllForFileOnDelete(inputs: [fileId]);
 
             return service.DeleteAllForFileAsync(
                 fileId: fileId);
@@ -70,7 +70,7 @@ internal partial class FileContentProcessingService(IFileContentService service)
         IEnumerable<Guid> fileIds) =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [fileIds]);
+            ValidateAllForFilesOnDelete(inputs: [fileIds]);
 
             return service.DeleteAllForFilesAsync(
                 fileIds: fileIds.ToArray());
@@ -80,7 +80,7 @@ internal partial class FileContentProcessingService(IFileContentService service)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [items]);
+            ValidateOrUpdateFileContentOnAdd(inputs: [items]);
             List<Result<FileContent>> results = new List<Result<FileContent>>();
 
 
@@ -117,7 +117,7 @@ internal partial class FileContentProcessingService(IFileContentService service)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [deletedFileContent]);
+            ValidateAllFileContentOnDelete(inputs: [deletedFileContent]);
 
             foreach (FileContent item in deletedFileContent)
             {

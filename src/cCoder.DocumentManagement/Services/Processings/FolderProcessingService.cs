@@ -41,7 +41,7 @@ internal partial class FolderProcessingService(
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [ignoreFilters]);
+            ValidateAllOnGet(inputs: [ignoreFilters]);
             return service.GetAll(ignoreFilters: ignoreFilters);
 
         });
@@ -139,7 +139,7 @@ internal partial class FolderProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [newFolder]);
+            ValidateFolderOnAdd(inputs: [newFolder]);
 
             if (newFolder.ParentId.HasValue)
             {
@@ -227,7 +227,7 @@ internal partial class FolderProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [updatedFolder]);
+            ValidateFolderOnUpdate(inputs: [updatedFolder]);
             Folder dbVersion = service.GetForUpdate(folderId: updatedFolder.Id, ignoreFilters: true);
 
 
@@ -444,7 +444,7 @@ internal partial class FolderProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [items]);
+            ValidateOrUpdateFolderOnAdd(inputs: [items]);
             List<Result<Folder>> results = new List<Result<Folder>>();
 
 
@@ -486,7 +486,7 @@ internal partial class FolderProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [items]);
+            ValidateOrUpdateForAppFolderOnAdd(inputs: [items]);
             List<Result<Folder>> results = new List<Result<Folder>>();
 
 
@@ -525,7 +525,7 @@ internal partial class FolderProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [deletedFolder]);
+            ValidateAllFolderOnDelete(inputs: [deletedFolder]);
 
             foreach (Folder item in deletedFolder)
             {
@@ -538,7 +538,7 @@ internal partial class FolderProcessingService(
 =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [appId]);
+            ValidateByAppIdOnDelete(inputs: [appId]);
             return service.DeleteAllByAppIdAsync(appId: appId);
         });
 
@@ -551,7 +551,7 @@ internal partial class FolderProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [appId, path]);
+            ValidateByAppIdOnDelete(inputs: [appId, path]);
             await BuildPathAppAsync(appId: appId, folderPath: path);
 
         });
@@ -565,7 +565,7 @@ internal partial class FolderProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [appId, path]);
+            ValidateByAppIdOnDelete(inputs: [appId, path]);
             await DropFolderAppPathAsync(appId: appId, path: path);
 
         });
@@ -580,7 +580,7 @@ internal partial class FolderProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [appId, oldPath, newPath]);
+            ValidateByAppIdOnDelete(inputs: [appId, oldPath, newPath]);
 
             if (oldPath.IsToFile)
             {
@@ -602,7 +602,7 @@ internal partial class FolderProcessingService(
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [appId, oldPath, newPath]);
+            ValidateByAppIdOnDelete(inputs: [appId, oldPath, newPath]);
 
             if (oldPath.IsToFile)
             {
