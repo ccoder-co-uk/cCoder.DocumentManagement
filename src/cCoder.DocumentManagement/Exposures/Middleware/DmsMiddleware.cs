@@ -14,7 +14,7 @@ public class DMSMiddleware
 
     public async Task InvokeAsync(
         HttpContext context,
-        IDmsHttpRequestOrchestrationService dmsHttpRequestOrchestrationService
+        IDmsHttpRequestManager dmsHttpRequestOrchestrationService
     )
     {
         await dmsHttpRequestOrchestrationService.ProcessRequestAsync(context: context);

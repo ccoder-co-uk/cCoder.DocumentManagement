@@ -9,4 +9,4 @@ using cCoder.DocumentManagement.Exposures;
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
-public interface IDmsHttpRequestOrchestrationService : IDmsHttpRequestManager { }
+internal interface IDmsHttpRequestOrchestrationService : IDmsHttpRequestManager { }
