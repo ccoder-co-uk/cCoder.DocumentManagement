@@ -19,6 +19,23 @@ internal partial class FileContentService(
     IAuthorizationBroker authorizationBroker
 ) : IFileContentService
 {
+    private void Authorize(int? appId, string privilege)
+    {
+        User user = authorizationBroker.GetCurrentUser();
+        string normalizedPrivilege = privilege.ToLowerInvariant();
+
+        bool hasPrivilege = user?.Roles?.Any(predicate: userRole =>
+            (appId is null || userRole.Role.AppId == appId)
+            && userRole.Role.Privileges.Contains(item: normalizedPrivilege))
+            ?? false;
+
+        if (user is null
+            || !(user.IsAdminOfApp(appId: appId) || hasPrivilege))
+        {
+            throw new SecurityException(message: "Access Denied!");
+        }
+    }
+
     public FileContent Get(Guid fileContentId)
 =>
         TryCatch(operation: () =>
@@ -83,7 +100,7 @@ internal partial class FileContentService(
                 CreateFileContent(fileContent: newFileContent, includeId: false);
 
 
-            authorizationBroker.Authorize(
+            Authorize(
                 appId: fileContentBroker.SelectAppId(fileContent: storageFileContent),
                 privilege: $"{nameof(FileContent)}_create"
             );
@@ -128,7 +145,7 @@ internal partial class FileContentService(
             cCoder.Data.Models.DMS.FileContent updateFileContent = CreateFileContent(fileContent: updatedFileContent, includeId: true);
 
 
-            authorizationBroker.Authorize(
+            Authorize(
                 appId: fileContentBroker.SelectAppId(fileContent: updateFileContent),
                 privilege: $"{nameof(FileContent)}_update"
             );
@@ -164,7 +181,7 @@ internal partial class FileContentService(
             FileContent fileContent = GetValue(fileContentId: fileContentId);
 
 
-            authorizationBroker.Authorize(
+            Authorize(
                 appId: fileContentBroker.SelectAppId(fileContent: CreateFileContent(fileContent: fileContent, includeId: true)),
                 privilege: $"{nameof(FileContent)}_delete"
             );

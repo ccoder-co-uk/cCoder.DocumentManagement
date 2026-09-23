@@ -23,7 +23,7 @@ public partial class FileServiceTests
     {
         // Given
         authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
-            .Returns(value: new User { Id = "test-user" });
+            .Returns(value: CreateAuthorizedUser(appId: 7, privilege: "file_delete"));
 
         Guid fileId = Guid.NewGuid();
         FileEntity file = CreateRandomFile(id: fileId);
@@ -34,8 +34,6 @@ public partial class FileServiceTests
 
         fileBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()))
             .Returns(value: (int?)7);
-
-        authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "file_delete"));
 
         fileBrokerMock.Setup(expression: x => x.DeleteFileAsync(entity: It.IsAny<DataFile>()))
             .ReturnsAsync(value: 1);
@@ -53,7 +51,7 @@ public partial class FileServiceTests
 
         fileBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "file_delete"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -71,9 +69,8 @@ public partial class FileServiceTests
         fileBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()))
             .Returns(value: (int?)7);
 
-        authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "file_delete"))
-            .Throws(exception: new SecurityException(message: "Access Denied!"));
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(value: null);
 
         // When
         Func<Task> action = async () => await fileService.DeleteAsync(fileId: fileId);
@@ -86,7 +83,7 @@ public partial class FileServiceTests
         fileBrokerMock.Verify(expression: x => x.SelectAllFiles(ignoreFilters: true), times: Times.Once);
         fileBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "file_delete"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 

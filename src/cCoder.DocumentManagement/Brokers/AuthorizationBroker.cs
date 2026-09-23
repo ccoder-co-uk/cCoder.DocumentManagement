@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.CodeAnalysis.Exposures;
 using cCoder.DocumentManagement.Dependencies;
 using cCoder.Data;
 using cCoder.Data.Models.CMS;
@@ -22,10 +23,10 @@ public interface IAuthorizationBroker
     LocalUser GetCurrentUser();
     bool IsAdminOfApp(int? appId);
     bool IsAdmin(int appId, string userName);
-    void Authorize(int? appId, string privilege);
 }
 
-internal class AuthorizationBroker(ICoreContextFactory coreContextFactory) : IAuthorizationBroker
+internal class AuthorizationBroker(ICoreContextFactory coreContextFactory)
+    : IAuthorizationBroker, IUtilityBroker
 {
     public LocalUser GetCurrentUser()
     {
@@ -52,22 +53,4 @@ internal class AuthorizationBroker(ICoreContextFactory coreContextFactory) : IAu
         return app?.IsAppAdmin(user: user) ?? false;
     }
 
-    public void Authorize(int? appId, string privilege)
-    {
-        LocalUser user = GetCurrentUser();
-        string normalizedPrivilege = privilege.ToLower();
-
-        bool hasPrivilege = user?.Roles?.Any(predicate: userRole =>
-            (appId is null || userRole.Role.AppId == appId)
-            && userRole.Role.Privileges.Contains(item: normalizedPrivilege))
-            ?? false;
-
-        if (user is null
-            || !(user.IsAdminOfApp(appId: appId)
-                || hasPrivilege))
-        {
-            throw new System.Security.SecurityException(
-                message: "Access Denied!");
-        }
-    }
 }

@@ -44,6 +44,23 @@ public partial class FileServiceTests
         return file;
     }
 
+    private static cCoder.Data.Models.Security.User CreateAuthorizedUser(int appId, string privilege) =>
+        new()
+        {
+            Id = "test-user",
+            Roles =
+            [
+                new cCoder.Data.Models.Security.UserRole
+                {
+                    Role = new cCoder.Data.Models.Security.Role
+                    {
+                        AppId = appId,
+                        Privileges = [privilege.ToLowerInvariant()]
+                    }
+                }
+            ]
+        };
+
     private static DataFile ToExternalFile(FileEntity file) =>
         file == null
             ? null

@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.CodeAnalysis.Exposures;
 using cCoder.DocumentManagement.Brokers.Loggings;
 using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.Data.Models.CMS;
@@ -19,7 +20,7 @@ namespace cCoder.DocumentManagement.Exposures.Controllers;
 public class FolderRoleController(
     IFolderRoleManager service,
     ILoggingBroker loggingBroker
-) : ODataController
+) : ODataController, ICompositionExposure
 {
 
     [HttpGet]

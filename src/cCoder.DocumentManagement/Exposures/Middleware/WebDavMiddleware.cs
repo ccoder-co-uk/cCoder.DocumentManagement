@@ -2,21 +2,19 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.CodeAnalysis.Exposures;
 using cCoder.DocumentManagement.Services.Orchestrations;
 namespace cCoder.DocumentManagement.Exposures.Middleware;
 
-public class WebDavMiddleware
+public class WebDavMiddleware(
+    IDmsHttpRequestManager dmsHttpRequestManager)
+    : IMiddleware, ICompositionExposure
 {
-    public WebDavMiddleware(RequestDelegate next)
-    {
-        ArgumentNullException.ThrowIfNull(argument: next);
-    }
-
     public async Task InvokeAsync(
         HttpContext context,
-        IDmsHttpRequestManager dmsHttpRequestOrchestrationService
+        RequestDelegate next
     )
     {
-        await dmsHttpRequestOrchestrationService.ProcessRequestAsync(context: context);
+        await dmsHttpRequestManager.ProcessRequestAsync(context: context);
     }
 }

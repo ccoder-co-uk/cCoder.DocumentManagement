@@ -9,6 +9,8 @@ using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using cCoder.DocumentManagement.Services.Processings;
+using cCoder.DocumentManagement.Services.Aggregations;
+using cCoder.DocumentManagement.Exposures;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using MemoryStream = System.IO.MemoryStream;
@@ -20,16 +22,16 @@ public partial class DmsHttpRequestOrchestrationServiceTests
 {
     private readonly Mock<ICurrentAppResolverProcessingService> currentAppResolverMock;
     private readonly Mock<IDmsHttpProcessingService> dmsHttpProcessingServiceMock;
-    private readonly Mock<IDmsInstanceProcessingService> dmsProcessingServiceMock;
-    private readonly Mock<IWebDavProcessingService> webDavProcessingServiceMock;
-    private readonly DmsHttpRequestOrchestrationService orchestrationService;
+    private readonly Mock<IDmsRequestOperationsExposure> dmsProcessingServiceMock;
+    private readonly Mock<IWebDavOperationsExposure> webDavProcessingServiceMock;
+    private readonly DmsHttpRequestAggregationService orchestrationService;
 
     public DmsHttpRequestOrchestrationServiceTests()
     {
         currentAppResolverMock = new Mock<ICurrentAppResolverProcessingService>(behavior: MockBehavior.Strict);
         dmsHttpProcessingServiceMock = new Mock<IDmsHttpProcessingService>(behavior: MockBehavior.Strict);
-        dmsProcessingServiceMock = new Mock<IDmsInstanceProcessingService>(behavior: MockBehavior.Strict);
-        webDavProcessingServiceMock = new Mock<IWebDavProcessingService>(behavior: MockBehavior.Strict);
+        dmsProcessingServiceMock = new Mock<IDmsRequestOperationsExposure>(behavior: MockBehavior.Strict);
+        webDavProcessingServiceMock = new Mock<IWebDavOperationsExposure>(behavior: MockBehavior.Strict);
 
         dmsHttpProcessingServiceMock
             .Setup(expression: service => service.BuildDmsHttpSession(
@@ -86,10 +88,10 @@ public partial class DmsHttpRequestOrchestrationServiceTests
                 return dmsHttpSession;
             });
 
-        orchestrationService = new DmsHttpRequestOrchestrationService(
+        orchestrationService = new DmsHttpRequestAggregationService(
             dmsHttpProcessingService: dmsHttpProcessingServiceMock.Object,
-            dmsProcessingService: dmsProcessingServiceMock.Object,
-            webDavProcessingService: webDavProcessingServiceMock.Object
+            dmsOperationsExposure: dmsProcessingServiceMock.Object,
+            webDavOperationsExposure: webDavProcessingServiceMock.Object
         );
     }
 

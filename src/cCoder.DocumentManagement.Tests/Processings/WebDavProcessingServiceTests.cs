@@ -12,6 +12,7 @@ using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Processings;
+using cCoder.DocumentManagement.Services.Aggregations;
 using Moq;
 using MemoryStream = System.IO.MemoryStream;
 
@@ -22,15 +23,15 @@ public partial class WebDavProcessingServiceTests
 {
     private readonly Mock<IFileService> fileServiceMock;
     private readonly Mock<IFolderService> folderServiceMock;
-    private readonly Mock<IDmsInstanceService> dmsInstanceServiceMock;
+    private readonly Mock<IDmsInstanceOperationsExposure> dmsInstanceServiceMock;
     private readonly Mock<ILoggingBroker> loggingBrokerMock;
-    private readonly WebDavProcessingService webDavProcessingService;
+    private readonly WebDavAggregationService webDavProcessingService;
 
     public WebDavProcessingServiceTests()
     {
         fileServiceMock = new Mock<IFileService>(behavior: MockBehavior.Strict);
         folderServiceMock = new Mock<IFolderService>(behavior: MockBehavior.Strict);
-        dmsInstanceServiceMock = new Mock<IDmsInstanceService>(behavior: MockBehavior.Strict);
+        dmsInstanceServiceMock = new Mock<IDmsInstanceOperationsExposure>(behavior: MockBehavior.Strict);
         fileServiceMock = new();
         folderServiceMock = new();
         dmsInstanceServiceMock = new();
@@ -41,13 +42,12 @@ public partial class WebDavProcessingServiceTests
             SslPort = 443
         };
 
-        webDavProcessingService = new WebDavProcessingService(
+        webDavProcessingService = new WebDavAggregationService(
             fileOperationsExposure: new FileOperationsExposure(
                 fileService: fileServiceMock.Object),
             folderOperationsExposure: new FolderOperationsExposure(
                 folderService: folderServiceMock.Object),
-            dmsInstanceOperationsExposure: new DmsInstanceOperationsExposure(
-                dmsInstanceService: dmsInstanceServiceMock.Object),
+            dmsInstanceOperationsExposure: dmsInstanceServiceMock.Object,
             config: config,
             streamBroker: new StreamBroker(),
             log: loggingBrokerMock.Object

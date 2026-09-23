@@ -15,10 +15,26 @@ namespace cCoder.DocumentManagement.Services.Foundations;
 
 internal partial class FolderRoleService(
     IFolderRoleBroker folderRoleBroker,
-    IFolderRoleContextBroker contextBroker,
     IAuthorizationBroker authorizationBroker
 ) : IFolderRoleService
 {
+    private void Authorize(int? appId, string privilege)
+    {
+        User user = authorizationBroker.GetCurrentUser();
+        string normalizedPrivilege = privilege.ToLowerInvariant();
+
+        bool hasPrivilege = user?.Roles?.Any(predicate: userRole =>
+            (appId is null || userRole.Role.AppId == appId)
+            && userRole.Role.Privileges.Contains(item: normalizedPrivilege))
+            ?? false;
+
+        if (user is null
+            || !(user.IsAdminOfApp(appId: appId) || hasPrivilege))
+        {
+            throw new System.Security.SecurityException(message: "Access Denied!");
+        }
+    }
+
     public IQueryable<FolderRole> GetAll(bool ignoreFilters = false)
 =>
         TryCatch(operation: () =>
@@ -37,7 +53,7 @@ internal partial class FolderRoleService(
                 CreateStorageFolderRole(folderRole: newFolderRole);
 
 
-            authorizationBroker.Authorize(
+            Authorize(
                 appId: folderRoleBroker.SelectAppId(folderRole: storageFolderRole),
                 privilege: $"{nameof(FolderRole)}_create"
             );
@@ -59,7 +75,7 @@ internal partial class FolderRoleService(
         {
             ValidateFolderRoleOnDelete(deletedFolderRole: deletedFolderRole);
 
-            authorizationBroker.Authorize(
+            Authorize(
     appId: folderRoleBroker.SelectAppId(folderRole: CreateStorageFolderRole(folderRole: deletedFolderRole)),
     privilege: $"{nameof(FolderRole)}_delete"
 );
@@ -73,11 +89,20 @@ internal partial class FolderRoleService(
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [folderRole]);
-            FolderRoleContext context = SelectFolderRoleContext(folderRole: folderRole);
 
-            return context.Role is not null
-                && context.Folder is not null
-                && context.Folder.UserCan(
+            Role role = folderRoleBroker.SelectRole(
+                roleId: folderRole.RoleId,
+                ignoreFilters: true);
+
+
+            Folder folder = folderRoleBroker.SelectFolder(
+                folderId: folderRole.FolderId,
+                ignoreFilters: true);
+
+            return role is not null
+                && folder is not null
+                && UserCan(
+                    folder: folder,
                     user: authorizationBroker.GetCurrentUser(),
                     privilege: "folderrole_create");
         });
@@ -86,10 +111,15 @@ internal partial class FolderRoleService(
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [folderRole]);
-            FolderRoleContext context = SelectFolderRoleContext(folderRole: folderRole);
 
-            return context.Folder is not null
-                && context.Folder.UserCan(
+            Folder folder = folderRoleBroker.SelectFolder(
+                folderId: folderRole.FolderId,
+                ignoreFilters: true);
+
+
+            return folder is not null
+                && UserCan(
+                    folder: folder,
                     user: authorizationBroker.GetCurrentUser(),
                     privilege: "folderrole_delete");
         });
@@ -105,10 +135,20 @@ internal partial class FolderRoleService(
                     && existing.RoleId == folderRole.RoleId);
         });
 
-    private FolderRoleContext SelectFolderRoleContext(FolderRole folderRole) =>
-        contextBroker.SelectFolderRoleContext(
-            folderRole: folderRole,
-            ignoreFilters: true);
+    private static bool UserCan(Folder folder, User user, string privilege)
+    {
+        Guid[] userRoles = user?.Roles?
+            .Select(selector: role => role.RoleId)
+            .ToArray() ?? [];
+
+        return user.IsAdminOfApp(appId: folder.AppId)
+            || (folder.Roles?
+                .Where(predicate: folderRole =>
+                    userRoles.Contains(value: folderRole.RoleId))
+                .SelectMany(selector: folderRole =>
+                    folderRole.Role?.Privileges ?? [])
+                .Contains(value: privilege) ?? false);
+    }
 
     private static cCoder.Data.Models.Security.FolderRole CreateStorageFolderRole(FolderRole folderRole)
     {

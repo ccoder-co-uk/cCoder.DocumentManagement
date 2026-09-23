@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.CodeAnalysis.Exposures;
 using cCoder.Data.Models.CMS;
 
 namespace cCoder.DocumentManagement.Brokers;
@@ -16,7 +17,7 @@ internal interface IDmsHttpBroker
     void CloseResponseBody(DmsProcessingResponse dmsProcessingResponse);
 }
 
-internal sealed class DmsHttpBroker : IDmsHttpBroker
+internal sealed class DmsHttpBroker : IDmsHttpBroker, IUtilityBroker
 {
     public DmsProcessingRequest BuildRequest(HttpContext httpContext, App app) =>
         new()

@@ -6,6 +6,7 @@ using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
+using FluentAssertions;
 using Moq;
 using Xunit;
 
@@ -14,6 +15,25 @@ namespace cCoder.Core.Services.Tests.DMS.Processings;
 
 public partial class FolderProcessingServiceTests
 {
+    [Fact]
+    public async Task HandleFolderDeleteEventAsync_WhenFolderIsNull_ThrowsValidationExceptionAsync()
+    {
+        // Given
+        Folder folder = null;
+
+        // When
+        Func<Task> action = async () =>
+            await folderProcessingService.HandleFolderDeleteEventAsync(folder: folder);
+
+        // Then
+        await action.Should()
+            .ThrowAsync<DocumentManagementValidationException>()
+            .WithInnerException(innerException: typeof(ArgumentNullException));
+
+        fileMutationOperationsExposureMock.VerifyNoOtherCalls();
+        folderServiceMock.VerifyNoOtherCalls();
+    }
+
     [Fact]
     public async Task ShouldDeleteTrackedFolderContentsWhenHandleFolderDeleteEventAsync()
     {
@@ -43,6 +63,11 @@ public partial class FolderProcessingServiceTests
         folderServiceMock.Setup(expression: x => x.GetAll(ignoreFilters: true))
             .Returns(value: new[] { folder }.AsQueryable());
 
+        fileMutationOperationsExposureMock
+            .Setup(expression: x => x.GetAllFiles(ignoreFilters: true))
+            .Returns(value: Array.Empty<cCoder.Data.Models.DMS.File>()
+                .AsQueryable());
+
         fileServiceMock
             .Setup(expression: x => x.GetIdsByFolderIds(folderIds: It.Is<Guid[]>(match: ids => ids.Single() == folder.Id), ignoreFilters: true))
             .Returns(value: [file.Id]);
@@ -55,7 +80,7 @@ public partial class FolderProcessingServiceTests
         await folderProcessingService.HandleFolderDeleteEventAsync(folder: folder);
 
         // Then
-        folderServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Exactly(callCount: 2));
+        folderServiceMock.Verify(expression: x => x.GetAll(ignoreFilters: true), times: Times.Exactly(callCount: 3));
 
         fileServiceMock.Verify(
             expression: x => x.GetIdsByFolderIds(folderIds: It.Is<Guid[]>(match: ids => ids.Single() == folder.Id), ignoreFilters: true),
@@ -67,9 +92,14 @@ public partial class FolderProcessingServiceTests
             times: Times.Once
         );
 
+        fileMutationOperationsExposureMock.Verify(
+            expression: x => x.GetAllFiles(ignoreFilters: true),
+            times: Times.Once);
+
         folderServiceMock.VerifyNoOtherCalls();
         fileServiceMock.VerifyNoOtherCalls();
         fileContentOperationsExposureMock.VerifyNoOtherCalls();
+        fileMutationOperationsExposureMock.VerifyNoOtherCalls();
         loggerMock.VerifyNoOtherCalls();
     }
 

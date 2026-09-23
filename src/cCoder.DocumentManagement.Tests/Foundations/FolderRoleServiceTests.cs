@@ -20,17 +20,14 @@ public partial class FolderRoleServiceTests
 {
     private readonly Mock<IFolderRoleBroker> folderRoleBrokerMock;
     private readonly Mock<IAuthorizationBroker> authorizationBrokerMock;
-    private readonly Mock<IFolderRoleContextBroker> folderRoleContextBrokerMock;
     private readonly FolderRoleService folderRoleService;
 
     public FolderRoleServiceTests()
     {
         folderRoleBrokerMock = new Mock<IFolderRoleBroker>(behavior: MockBehavior.Strict);
         authorizationBrokerMock = new Mock<IAuthorizationBroker>(behavior: MockBehavior.Strict);
-        folderRoleContextBrokerMock = new Mock<IFolderRoleContextBroker>(behavior: MockBehavior.Strict);
         folderRoleService = new FolderRoleService(
             folderRoleBroker: folderRoleBrokerMock.Object,
-            contextBroker: folderRoleContextBrokerMock.Object,
             authorizationBroker: authorizationBrokerMock.Object
         );
     }
@@ -47,6 +44,22 @@ public partial class FolderRoleServiceTests
 
         return folderRole;
     }
+
+    private static User CreateAuthorizedUser(int appId, string privilege) =>
+        new()
+        {
+            Roles =
+            [
+                new UserRole
+                {
+                    Role = new Role
+                    {
+                        AppId = appId,
+                        Privileges = [privilege.ToLowerInvariant()]
+                    }
+                }
+            ]
+        };
 
     private static DataFolderRole ToExternalFolderRole(FolderRole folderRole) =>
         folderRole == null

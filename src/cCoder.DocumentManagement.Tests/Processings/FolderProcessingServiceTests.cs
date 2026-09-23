@@ -9,7 +9,9 @@ using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Foundations;
+using cCoder.DocumentManagement.Services.Foundations.Events;
 using cCoder.DocumentManagement.Services.Processings;
+using cCoder.DocumentManagement.Services.Aggregations;
 using FizzWare.NBuilder;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -32,15 +34,17 @@ public partial class FolderProcessingServiceTests
     private readonly Mock<IRoleService> roleServiceMock = new();
     private readonly Mock<IFileService> fileServiceMock = new();
     private readonly Mock<IFileContentOperationsExposure> fileContentOperationsExposureMock = new();
-    private readonly Mock<IFilePathProcessingService> fileProcessingServiceMock = new();
-    private readonly Mock<ILogger<FolderProcessingService>> loggerMock = new();
+    private readonly Mock<IFilePathOperationsExposure> fileProcessingServiceMock = new();
+    private readonly Mock<IFileMutationOperationsExposure> fileMutationOperationsExposureMock = new();
+    private readonly Mock<IFolderEventService> folderEventServiceMock = new();
+    private readonly Mock<ILogger<FolderMutationAggregationService>> loggerMock = new();
     private User currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
-    private readonly FolderProcessingService folderProcessingService;
-    private readonly IFolderPathProcessingService folderPathProcessingService;
+    private readonly FolderMutationAggregationService folderProcessingService;
+    private readonly FolderMutationAggregationService folderPathProcessingService;
 
     public FolderProcessingServiceTests()
     {
-        folderProcessingService = new FolderProcessingService(
+        folderProcessingService = new FolderMutationAggregationService(
             service: folderServiceMock.Object,
             folderRoleOperationsExposure: new FolderRoleOperationsExposure(
                 folderRoleService: folderRoleServiceMock.Object),
@@ -48,9 +52,10 @@ public partial class FolderProcessingServiceTests
                 roleService: roleServiceMock.Object),
             fileOperationsExposure: new FileOperationsExposure(
                 fileService: fileServiceMock.Object),
-            filePathOperationsExposure: new FilePathOperationsExposure(
-                fileProcessingService: fileProcessingServiceMock.Object),
+            fileMutationOperationsExposure: fileMutationOperationsExposureMock.Object,
+            filePathOperationsExposure: fileProcessingServiceMock.Object,
             fileContentOperationsExposure: fileContentOperationsExposureMock.Object,
+            eventService: folderEventServiceMock.Object,
             authorizationBroker: authorizationBrokerMock.Object,
             documentArchiveBroker: new DocumentArchiveBroker(),
             streamBroker: new StreamBroker()

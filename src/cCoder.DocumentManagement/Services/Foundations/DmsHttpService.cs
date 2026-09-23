@@ -17,6 +17,7 @@ internal sealed partial class DmsHttpService(
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [dmsHttpSession]);
+
             dmsHttpSession.App = ResolveApp(httpContext: dmsHttpSession.HttpContext);
 
             dmsHttpSession.Request = dmsHttpBroker.BuildRequest(

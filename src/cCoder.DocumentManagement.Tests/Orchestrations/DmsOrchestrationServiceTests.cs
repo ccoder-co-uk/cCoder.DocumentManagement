@@ -9,6 +9,8 @@ using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using cCoder.DocumentManagement.Services.Processings;
+using cCoder.DocumentManagement.Services.Aggregations;
+using cCoder.DocumentManagement.Exposures;
 using FizzWare.NBuilder;
 using Moq;
 
@@ -18,16 +20,16 @@ namespace cCoder.Core.Services.Tests.DMS.Orchestrations;
 public partial class DmsOrchestrationServiceTests
 {
     private readonly Mock<ICurrentAppResolverProcessingService> currentAppResolverMock;
-    private readonly Mock<IFilePathProcessingService> fileProcessingServiceMock;
-    private readonly Mock<IFolderPathProcessingService> folderProcessingServiceMock;
-    private readonly DmsOrchestrationService orchestrationService;
+    private readonly Mock<IFilePathOperationsExposure> fileProcessingServiceMock;
+    private readonly Mock<IFolderPathOperationsExposure> folderProcessingServiceMock;
+    private readonly DmsAggregationService orchestrationService;
 
     public DmsOrchestrationServiceTests()
     {
         currentAppResolverMock = new Mock<ICurrentAppResolverProcessingService>(behavior: MockBehavior.Strict);
-        fileProcessingServiceMock = new Mock<IFilePathProcessingService>(behavior: MockBehavior.Strict);
-        folderProcessingServiceMock = new Mock<IFolderPathProcessingService>(behavior: MockBehavior.Strict);
-        orchestrationService = new DmsOrchestrationService(
+        fileProcessingServiceMock = new Mock<IFilePathOperationsExposure>(behavior: MockBehavior.Strict);
+        folderProcessingServiceMock = new Mock<IFolderPathOperationsExposure>(behavior: MockBehavior.Strict);
+        orchestrationService = new DmsAggregationService(
             currentAppResolver: currentAppResolverMock.Object,
             fileProcessingService: fileProcessingServiceMock.Object,
             folderProcessingService: folderProcessingServiceMock.Object

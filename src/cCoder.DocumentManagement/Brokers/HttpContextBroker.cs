@@ -2,6 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.CodeAnalysis.Exposures;
+
 namespace cCoder.DocumentManagement.Brokers;
 
 internal interface IHttpContextBroker
@@ -11,7 +13,8 @@ internal interface IHttpContextBroker
     string GetRequestHost();
 }
 
-internal sealed class HttpContextBroker(HttpContext httpContext) : IHttpContextBroker
+internal sealed class HttpContextBroker(HttpContext httpContext)
+    : IHttpContextBroker, IUtilityBroker
 {
     public string GetRequestPath() =>
         httpContext?.Request.Path.Value ?? string.Empty;

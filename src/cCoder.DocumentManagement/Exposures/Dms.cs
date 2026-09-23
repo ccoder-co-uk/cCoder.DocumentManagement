@@ -2,7 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Services.Orchestrations;
+using cCoder.DocumentManagement.Services.Aggregations;
 using DmsFile = cCoder.Data.Models.DMS.File;
 using DmsPath = cCoder.DocumentManagement.Models.Path;
 using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
@@ -11,14 +11,14 @@ using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
 namespace cCoder.DocumentManagement.Exposures;
 
 internal sealed class Dms(
-    IDmsOrchestrationService dmsOrchestrationService)
+    IDmsAggregationService dmsAggregationService)
     : IDms
 {
     public DmsResult GetFilesZipped(IEnumerable<DmsPath> paths) =>
         GetFilesZipped(paths: paths.Select(selector: path => path.FullPath));
 
     public DmsResult GetFilesZipped(IEnumerable<string> paths) =>
-        dmsOrchestrationService.GetFilesZippedDmsOperation(
+        dmsAggregationService.GetFilesZippedDmsOperation(
             dmsOperation: new DmsOperation
             {
                 Paths = paths
@@ -29,7 +29,7 @@ internal sealed class Dms(
         Get(path: path.FullPath, version: version, search: search);
 
     public DmsResult Get(string path, int version = 0, string search = "") =>
-        dmsOrchestrationService.GetDmsOperation(
+        dmsAggregationService.GetDmsOperation(
             dmsOperation: new DmsOperation
             {
                 Path = path,
@@ -39,7 +39,7 @@ internal sealed class Dms(
             .Result;
 
     public IEnumerable<DmsFile> Search(string needle) =>
-        dmsOrchestrationService.SearchFilesDmsOperation(
+        dmsAggregationService.SearchFilesDmsOperation(
             dmsOperation: new DmsOperation
             {
                 Needle = needle
@@ -83,7 +83,7 @@ internal sealed class Dms(
         string path,
         Stream content,
         bool ignoreArchiveRoot) =>
-        _ = await dmsOrchestrationService.UnpackDmsOperationAsync(
+        _ = await dmsAggregationService.UnpackDmsOperationAsync(
             dmsOperation: new DmsOperation
             {
                 Path = path,
@@ -94,7 +94,7 @@ internal sealed class Dms(
     private async ValueTask ExecuteSaveDmsOperationAsync(
         string path,
         Stream content) =>
-        _ = await dmsOrchestrationService.SaveDmsOperationAsync(
+        _ = await dmsAggregationService.SaveDmsOperationAsync(
             dmsOperation: new DmsOperation
             {
                 Path = path,
@@ -104,7 +104,7 @@ internal sealed class Dms(
     private async ValueTask ExecuteDropDmsOperationAsync(
         string path,
         int version) =>
-        _ = await dmsOrchestrationService.DropDmsOperationAsync(
+        _ = await dmsAggregationService.DropDmsOperationAsync(
             dmsOperation: new DmsOperation
             {
                 Path = path,
@@ -114,7 +114,7 @@ internal sealed class Dms(
     private async ValueTask ExecuteCopyDmsOperationAsync(
         string oldPath,
         string newPath) =>
-        _ = await dmsOrchestrationService.CopyDmsOperationAsync(
+        _ = await dmsAggregationService.CopyDmsOperationAsync(
             dmsOperation: new DmsOperation
             {
                 Path = oldPath,
@@ -124,7 +124,7 @@ internal sealed class Dms(
     private async ValueTask ExecuteMoveDmsOperationAsync(
         string oldPath,
         string newPath) =>
-        _ = await dmsOrchestrationService.MoveDmsOperationAsync(
+        _ = await dmsAggregationService.MoveDmsOperationAsync(
             dmsOperation: new DmsOperation
             {
                 Path = oldPath,

@@ -7,6 +7,7 @@ using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services.Orchestrations;
+using cCoder.DocumentManagement.Exposures;
 using LocalFolderRole = cCoder.Data.Models.Security.FolderRole;
 
 
@@ -14,7 +15,7 @@ namespace cCoder.DocumentManagement.Services.Aggregations;
 
 internal partial class DocumentManagementMigrationAggregationService(
     IFolderRoleOrchestrationService folderRoleOrchestrationService,
-    IFolderOrchestrationService folderOrchestrationService,
+    IFolderMutationOperationsExposure folderOperationsExposure,
     IRoleMigrationOrchestrationService roleMigrationOrchestrationService,
     IPackagePayloadMigrationOrchestrationService packagePayloadMigrationOrchestrationService
 ) : IDocumentManagementMigrationAggregationService
@@ -47,8 +48,8 @@ internal partial class DocumentManagementMigrationAggregationService(
                         appId: appId,
                         ignoreFilters: false);
 
-                Folder[] folders = folderOrchestrationService
-                    .GetAll(ignoreFilters: false)
+                Folder[] folders = folderOperationsExposure
+                    .GetAllFolders(ignoreFilters: false)
                     .Where(predicate: folder => folder.AppId == appId)
                     .ToArray();
 
@@ -112,8 +113,8 @@ internal partial class DocumentManagementMigrationAggregationService(
             .Select(selector: role => new { role.Id, role.Name })
             .ToArray();
 
-        var folders = folderOrchestrationService
-            .GetAll(ignoreFilters: true)
+        var folders = folderOperationsExposure
+            .GetAllFolders(ignoreFilters: true)
             .Where(predicate: folder => folder.AppId == appId)
             .Select(selector: folder => new { folder.Id, folder.Path })
             .ToArray();

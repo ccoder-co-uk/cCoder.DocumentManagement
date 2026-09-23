@@ -18,6 +18,8 @@ public interface IFolderRoleBroker
     ValueTask<int> DeleteFolderRoleAsync(FolderRole deletedFolderRole);
     ValueTask DeleteAllFolderRolesAsync(IEnumerable<FolderRole> deletedFolderRole);
     int? SelectAppId(FolderRole folderRole);
+    Folder SelectFolder(Guid folderId, bool ignoreFilters);
+    Role SelectRole(Guid roleId, bool ignoreFilters);
 }
 
 internal sealed class FolderRoleBroker(ICoreContextFactory coreContextFactory) : IFolderRoleBroker
@@ -76,5 +78,39 @@ internal sealed class FolderRoleBroker(ICoreContextFactory coreContextFactory) :
             .Select(selector: folder => (int?)folder.AppId)
             .FirstOrDefault();
 
+    }
+
+    public Folder SelectFolder(Guid folderId, bool ignoreFilters)
+    {
+        using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
+        Func<IQueryable<Folder>>[] folderQuerySelectors =
+        [
+            () => coreDataContext.Folders,
+            () => coreDataContext.Folders.IgnoreQueryFilters(),
+        ];
+
+        IQueryable<Folder> folders =
+            folderQuerySelectors[Convert.ToInt32(value: ignoreFilters)]();
+
+        return folders.FirstOrDefault(
+            predicate: folder => folder.Id == folderId);
+    }
+
+    public Role SelectRole(Guid roleId, bool ignoreFilters)
+    {
+        using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
+
+        Func<IQueryable<Role>>[] roleQuerySelectors =
+        [
+            () => coreDataContext.Roles,
+            () => coreDataContext.Roles.IgnoreQueryFilters(),
+        ];
+
+        IQueryable<Role> roles =
+            roleQuerySelectors[Convert.ToInt32(value: ignoreFilters)]();
+
+        return roles.FirstOrDefault(
+            predicate: role => role.Id == roleId);
     }
 }
