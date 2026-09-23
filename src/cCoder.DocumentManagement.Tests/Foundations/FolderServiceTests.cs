@@ -42,6 +42,22 @@ public partial class FolderServiceTests
         return folder;
     }
 
+    private static User CreateAuthorizedUser(int appId, string privilege) =>
+        new()
+        {
+            Roles =
+            [
+                new UserRole
+                {
+                    Role = new Role
+                    {
+                        AppId = appId,
+                        Privileges = [privilege.ToLowerInvariant()]
+                    }
+                }
+            ]
+        };
+
     private static DataFolder ToExternalFolder(Folder folder) =>
         folder == null
             ? null

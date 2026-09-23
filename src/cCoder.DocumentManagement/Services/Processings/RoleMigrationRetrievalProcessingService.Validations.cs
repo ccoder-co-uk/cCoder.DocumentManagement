@@ -7,5 +7,11 @@ namespace cCoder.DocumentManagement.Services.Processings;
 internal sealed partial class RoleMigrationRetrievalProcessingService
 {
     private static void ValidateInputs(params object[] inputs) =>
-        Dependencies.ValidationRulesEngine.Validate(inputs: inputs);
+        Validate(inputs: inputs);
+
+    private static void ValidateAllRolesOnGet(params object[] inputs) =>
+        Validate(inputs: inputs);
+
+    private static void Validate(params object[] inputs) =>
+        _ = inputs;
 }

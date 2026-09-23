@@ -10,7 +10,7 @@ using cCoder.Data.Models.Security;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -54,7 +54,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: ValueTask.CompletedTask);
 
         // When
-        await folderPathProcessingService.DropAppPathAsync(appId: app.Id, path: new DmsPath(path: folder.Path));
+        await folderPathProcessingService.DropAppPathAsync(appId: app.Id, path: folder.Path);
 
         // Then
         folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: folder.Path, ignoreFilters: false), times: Times.Once);
@@ -74,14 +74,14 @@ public partial class FolderProcessingServiceTests
             .Returns(valueFunction: () => currentUser);
 
         App app = CreateRandomAppForTests();
-        DmsPath path = new(path: "docs");
+        DmsPath path = new() { FullPath = "docs" };
 
         folderServiceMock
             .Setup(expression: x => x.GetByPathWithRoles(appId: app.Id, path: path.Lowered, ignoreFilters: false))
             .Returns(value: (Folder)null);
 
         // When
-        Func<Task> act = async () => await folderPathProcessingService.DropAppPathAsync(appId: app.Id, path: path);
+        Func<Task> act = async () => await folderPathProcessingService.DropAppPathAsync(appId: app.Id, path: path.FullPath);
 
         // Then
         await act.Should()

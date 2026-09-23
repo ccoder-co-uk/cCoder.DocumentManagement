@@ -17,6 +17,23 @@ namespace cCoder.DocumentManagement.Services.Foundations;
 internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationBroker authorizationBroker)
     : IFolderService
 {
+    private void Authorize(int? appId, string privilege)
+    {
+        User user = authorizationBroker.GetCurrentUser();
+        string normalizedPrivilege = privilege.ToLowerInvariant();
+
+        bool hasPrivilege = user?.Roles?.Any(predicate: userRole =>
+            (appId is null || userRole.Role.AppId == appId)
+            && userRole.Role.Privileges.Contains(item: normalizedPrivilege))
+            ?? false;
+
+        if (user is null
+            || !(user.IsAdminOfApp(appId: appId) || hasPrivilege))
+        {
+            throw new SecurityException(message: "Access Denied!");
+        }
+    }
+
     public Folder Get(Guid folderId)
 =>
         TryCatch(operation: () =>
@@ -127,7 +144,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
         TryCatch(operation: async () =>
         {
             ValidateFolderOnAdd(newFolder: newFolder);
-            authorizationBroker.Authorize(appId: newFolder.AppId, privilege: $"{nameof(Folder)}_create");
+            Authorize(appId: newFolder.AppId, privilege: $"{nameof(Folder)}_create");
 
             Folder storageFolder = CreateStorageFolderForAdd(folder: newFolder);
 
@@ -179,7 +196,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
         TryCatch(operation: async () =>
         {
             ValidateFolderOnUpdate(updatedFolder: updatedFolder);
-            authorizationBroker.Authorize(appId: updatedFolder.AppId, privilege: $"{nameof(Folder)}_update");
+            Authorize(appId: updatedFolder.AppId, privilege: $"{nameof(Folder)}_update");
 
             return await UpdateForAppFolderValueAsync(updatedFolder: updatedFolder);
 
@@ -227,7 +244,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
             }
 
 
-            authorizationBroker.Authorize(appId: folder.AppId, privilege: $"{nameof(Folder)}_delete");
+            Authorize(appId: folder.AppId, privilege: $"{nameof(Folder)}_delete");
 
             _ = await folderBroker.DeleteFolderAsync(deletedFolder: CreateStorageFolder(folder: folder, includeId: true));
 

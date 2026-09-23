@@ -6,7 +6,6 @@ using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.Packaging;
 using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services.Aggregations;
-using cCoder.DocumentManagement.Services.Coordinations;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using cCoder.Eventing;
 using DataFolder = cCoder.Data.Models.DMS.Folder;
@@ -43,12 +42,12 @@ public static class IEventHubExtensions
     }
 
     private static void ListenToFolderEvents(IEventHub eventHub) =>
-        eventHub.ListenToEvent<DataFolder, IFolderCoordinationService>(
+        eventHub.ListenToEvent<DataFolder, IFolderMutationAggregationService>(
             name: "folder_delete",
-            handler: (service, folder) => service.DeleteFolderAsync(deletedFolder: folder));
+            handler: (service, folder) => service.HandleFolderDeleteEventAsync(folder: folder));
 
     private static void ListenToFileEvents(IEventHub eventHub) =>
-        eventHub.ListenToEvent<DmsFile, IFileOrchestrationService>(
+        eventHub.ListenToEvent<DmsFile, IFileMutationAggregationService>(
             name: "file_delete",
             handler: (service, file) => service.HandleFileDeleteEventAsync(file: file));
 

@@ -18,6 +18,23 @@ namespace cCoder.DocumentManagement.Services.Foundations;
 internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker authorizationBroker)
     : IFileService
 {
+    private void Authorize(int? appId, string privilege)
+    {
+        User user = authorizationBroker.GetCurrentUser();
+        string normalizedPrivilege = privilege.ToLowerInvariant();
+
+        bool hasPrivilege = user?.Roles?.Any(predicate: userRole =>
+            (appId is null || userRole.Role.AppId == appId)
+            && userRole.Role.Privileges.Contains(item: normalizedPrivilege))
+            ?? false;
+
+        if (user is null
+            || !(user.IsAdminOfApp(appId: appId) || hasPrivilege))
+        {
+            throw new SecurityException(message: "Access Denied!");
+        }
+    }
+
     public LocalFile Get(Guid fileId)
 =>
         TryCatch(operation: () =>
@@ -135,7 +152,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
             FileEntity newFileEntity = CreateLocalFileEntity(file: file, includeId: false);
 
 
-            authorizationBroker.Authorize(
+            Authorize(
                 appId: fileBroker.SelectAppId(entity: newFileEntity),
                 privilege: $"{nameof(cCoder.Data.Models.DMS.File)}_create"
             );
@@ -184,7 +201,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
             FileEntity updateFileEntity = CreateLocalFileEntity(file: file, includeId: true);
 
 
-            authorizationBroker.Authorize(
+            Authorize(
                 appId: fileBroker.SelectAppId(entity: updateFileEntity),
                 privilege: $"{nameof(cCoder.Data.Models.DMS.File)}_update"
             );
@@ -243,7 +260,7 @@ internal partial class FileService(IFileBroker fileBroker, IAuthorizationBroker 
             }
 
 
-            authorizationBroker.Authorize(
+            Authorize(
                 appId: fileBroker.SelectAppId(entity: new FileEntity
                 {
                     Id = file.Id,

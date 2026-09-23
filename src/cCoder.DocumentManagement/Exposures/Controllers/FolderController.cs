@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.CodeAnalysis.Exposures;
 using cCoder.DocumentManagement.Brokers.Loggings;
 using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Dependencies;
@@ -25,7 +26,7 @@ namespace cCoder.DocumentManagement.Exposures.Controllers;
 public partial class FolderController(
     IFolderManager service,
     ILoggingBroker loggingBroker
-) : ODataController
+) : ODataController, ICompositionExposure
 {
 
     [HttpPost]
@@ -149,7 +150,7 @@ public partial class FolderController(
         {
             if (!ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+                return new OData.BadRequestResult(modelState: ModelState);
             }
 
             Folder addedFolder = await service.AddFolderAsync(newFolder: newFolder);
@@ -191,7 +192,7 @@ public partial class FolderController(
         {
             if (!ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+                return new OData.BadRequestResult(modelState: ModelState);
             }
 
             updatedFolder.Id = key;

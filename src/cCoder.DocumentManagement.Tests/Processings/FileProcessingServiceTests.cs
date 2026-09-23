@@ -3,12 +3,15 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Models;
+using cCoder.DocumentManagement.Brokers;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Foundations;
+using cCoder.DocumentManagement.Services.Foundations.Events;
 using cCoder.DocumentManagement.Services.Processings;
+using cCoder.DocumentManagement.Services.Aggregations;
 using Moq;
 using IAuthorizationBroker = cCoder.DocumentManagement.Brokers.IAuthorizationBroker;
 
@@ -22,17 +25,20 @@ public partial class FileProcessingServiceTests
     private User currentUser = ToLocalUser(user: TestUsers.WithoutPrivileges());
     private readonly Mock<IAuthorizationBroker> authorizationBrokerMock = new();
     private readonly Mock<IFileContentProcessingService> fileContentProcessingServiceMock = new();
-    private readonly FileProcessingService fileProcessingService;
+    private readonly Mock<IFileEventService> fileEventServiceMock = new();
+    private readonly FileMutationAggregationService fileProcessingService;
 
     public FileProcessingServiceTests()
     {
-        fileProcessingService = new FileProcessingService(
+        fileProcessingService = new FileMutationAggregationService(
             service: fileServiceMock.Object,
             folderOperationsExposure: new FolderOperationsExposure(
                 folderService: folderServiceMock.Object),
             fileContentOperationsExposure: new FileContentOperationsExposure(
                 fileContentProcessingService: fileContentProcessingServiceMock.Object),
-            authorizationBroker: authorizationBrokerMock.Object
+            eventService: fileEventServiceMock.Object,
+            authorizationBroker: authorizationBrokerMock.Object,
+            streamBroker: new StreamBroker()
         );
     }
 

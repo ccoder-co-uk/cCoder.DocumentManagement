@@ -15,7 +15,7 @@ internal sealed partial class RoleMigrationOrchestrationService(
     public Role[] GetRolesForApp(int appId, bool ignoreFilters) =>
         TryCatch(operation: () =>
         {
-            ValidateInputs(inputs: [appId, ignoreFilters]);
+            ValidateRolesForAppOnGet(inputs: [appId, ignoreFilters]);
 
             IQueryable<Role> roles =
                 retrievalProcessingService.GetAllRoles(

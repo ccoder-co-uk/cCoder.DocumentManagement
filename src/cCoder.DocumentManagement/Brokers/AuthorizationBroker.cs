@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.CodeAnalysis.Exposures;
 using cCoder.DocumentManagement.Dependencies;
 using cCoder.Data;
 using cCoder.Data.Models.CMS;
@@ -22,15 +23,15 @@ public interface IAuthorizationBroker
     LocalUser GetCurrentUser();
     bool IsAdminOfApp(int? appId);
     bool IsAdmin(int appId, string userName);
-    void Authorize(int? appId, string privilege);
 }
 
-internal class AuthorizationBroker(ICoreContextFactory coreContextFactory) : IAuthorizationBroker
+internal class AuthorizationBroker(ICoreContextFactory coreContextFactory)
+    : IAuthorizationBroker, IUtilityBroker
 {
     public LocalUser GetCurrentUser()
     {
         using CoreDataContext coreDataContext = coreContextFactory.CreateCoreContext();
-        return coreDataContext.User.ToLocalUser();
+        return coreDataContext.User;
     }
 
     public bool IsAdminOfApp(int? appId) =>
@@ -52,9 +53,4 @@ internal class AuthorizationBroker(ICoreContextFactory coreContextFactory) : IAu
         return app?.IsAppAdmin(user: user) ?? false;
     }
 
-    public void Authorize(int? appId, string privilege) =>
-        GetCurrentUser()
-            .ThrowIfUnauthorized(
-                appId: appId,
-                privilege: privilege);
 }

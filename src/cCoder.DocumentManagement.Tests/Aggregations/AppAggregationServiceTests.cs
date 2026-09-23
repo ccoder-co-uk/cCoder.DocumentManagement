@@ -5,7 +5,7 @@
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.DocumentManagement.Services.Aggregations;
-using cCoder.DocumentManagement.Services.Orchestrations;
+using cCoder.DocumentManagement.Exposures;
 using Moq;
 using Xunit;
 
@@ -13,13 +13,13 @@ namespace cCoder.Core.Services.Tests.DMS.Aggregations;
 
 public partial class AppAggregationServiceTests
 {
-    private readonly Mock<IFolderOrchestrationService> folderOrchestrationServiceMock;
+    private readonly Mock<IFolderMutationOperationsExposure> folderOrchestrationServiceMock;
     private readonly AppAggregationService service;
 
     public AppAggregationServiceTests()
     {
-        folderOrchestrationServiceMock = new Mock<IFolderOrchestrationService>(behavior: MockBehavior.Strict);
-        service = new AppAggregationService(folderOrchestrationService: folderOrchestrationServiceMock.Object);
+        folderOrchestrationServiceMock = new Mock<IFolderMutationOperationsExposure>(behavior: MockBehavior.Strict);
+        service = new AppAggregationService(folderOperationsExposure: folderOrchestrationServiceMock.Object);
     }
 
     [Fact]
@@ -53,7 +53,7 @@ public partial class AppAggregationServiceTests
         };
 
         folderOrchestrationServiceMock
-            .Setup(expression: x => x.AddOrUpdateForAppFolderAsync(items: It.Is<IEnumerable<Folder>>(match: folders => folders.All(predicate: folder => folder.AppId == 7))))
+            .Setup(expression: x => x.AddOrUpdateAppFoldersAsync(folders: It.Is<IEnumerable<Folder>>(match: folders => folders.All(predicate: folder => folder.AppId == 7))))
             .Returns(
                 value: ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Models.Result<Folder>>>(
                     result: []));
@@ -76,8 +76,8 @@ public partial class AppAggregationServiceTests
         };
 
         folderOrchestrationServiceMock
-            .Setup(expression: x => x.AddOrUpdateForAppFolderAsync(
-                items: It.Is<IEnumerable<Folder>>(match: folders =>
+            .Setup(expression: x => x.AddOrUpdateAppFoldersAsync(
+                folders: It.Is<IEnumerable<Folder>>(match: folders =>
                     folders.Count() == 1
                     && folders.Single().AppId == 7
                     && folders.Single().Name == "Content"
@@ -104,8 +104,8 @@ public partial class AppAggregationServiceTests
         };
 
         folderOrchestrationServiceMock
-            .Setup(expression: service => service.AddOrUpdateFolder(
-                items: It.Is<IEnumerable<Folder>>(match: folders =>
+            .Setup(expression: service => service.AddOrUpdateFoldersAsync(
+                folders: It.Is<IEnumerable<Folder>>(match: folders =>
                     folders.Single().AppId == app.Id)))
             .Returns(value: ValueTask.FromResult<IEnumerable<cCoder.DocumentManagement.Models.Result<Folder>>>(result: []));
 

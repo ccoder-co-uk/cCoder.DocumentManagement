@@ -22,7 +22,7 @@ public partial class FileContentServiceTests
     {
         // Given
         authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
-            .Returns(value: new User { Id = "test-user" });
+            .Returns(value: CreateAuthorizedUser(appId: 7, privilege: "FileContent_delete"));
 
         Guid fileContentId = Guid.NewGuid();
         FileContent fileContent = CreateRandomFileContent(id: fileContentId);
@@ -33,8 +33,6 @@ public partial class FileContentServiceTests
 
         fileContentBrokerMock.Setup(expression: x => x.SelectAppId(fileContent: It.IsAny<DataFileContent>()))
             .Returns(value: (int?)7);
-
-        authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_delete"));
 
         fileContentBrokerMock
             .Setup(expression: x => x.DeleteFileContentAsync(deletedFileContent: It.IsAny<DataFileContent>()))
@@ -57,7 +55,7 @@ public partial class FileContentServiceTests
         );
 
         fileContentBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_delete"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -75,9 +73,8 @@ public partial class FileContentServiceTests
         fileContentBrokerMock.Setup(expression: x => x.SelectAppId(fileContent: It.IsAny<DataFileContent>()))
             .Returns(value: (int?)7);
 
-        authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_delete"))
-            .Throws(exception: new SecurityException(message: "Access Denied!"));
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(value: null);
 
         // When
         Func<Task> action = async () => await fileContentService.DeleteAsync(fileContentId: fileContentId);
@@ -95,7 +92,7 @@ public partial class FileContentServiceTests
         );
 
         fileContentBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_delete"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 

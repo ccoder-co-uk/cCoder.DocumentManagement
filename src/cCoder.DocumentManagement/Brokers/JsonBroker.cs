@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.CodeAnalysis.Exposures;
 using Newtonsoft.Json;
 
 
@@ -14,7 +15,7 @@ public interface IJsonBroker
     string Serialize(object value);
 }
 
-internal sealed class JsonBroker : IJsonBroker
+internal sealed class JsonBroker : IJsonBroker, IUtilityBroker
 {
     public object ParseJson(string json) =>
         JsonConvert.DeserializeObject(value: json);

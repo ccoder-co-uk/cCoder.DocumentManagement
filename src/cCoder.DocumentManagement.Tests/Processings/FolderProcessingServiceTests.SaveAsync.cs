@@ -10,7 +10,7 @@ using cCoder.Data.Models.Security;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -46,7 +46,7 @@ public partial class FolderProcessingServiceTests
         authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
             .Returns(valueFunction: () => currentUser);
 
-        DmsPath path = new(path: "docs/nested");
+        DmsPath path = new() { FullPath = "docs/nested" };
         Folder createdRoot = CreateRandomFolder();
         createdRoot.AppId = app.Id;
         createdRoot.Name = "docs";
@@ -90,7 +90,7 @@ public partial class FolderProcessingServiceTests
             .ReturnsAsync(value: createdChild);
 
         // When
-        await folderPathProcessingService.SaveAppPathAsync(appId: app.Id, path: path);
+        await folderPathProcessingService.SaveAppPathAsync(appId: app.Id, path: path.FullPath);
 
         // Then
         folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs/nested", ignoreFilters: true), times: Times.Once);
@@ -155,7 +155,7 @@ public partial class FolderProcessingServiceTests
             .Returns(valueFunction: () => currentUser);
 
         App app = CreateRandomAppForTests();
-        DmsPath path = new(path: "docs/nested");
+        DmsPath path = new() { FullPath = "docs/nested" };
         Folder parentFolder = CreateRandomFolder();
         parentFolder.AppId = app.Id;
         parentFolder.Name = "docs";
@@ -202,7 +202,7 @@ public partial class FolderProcessingServiceTests
             .ReturnsAsync(value: createdChild);
 
         // When
-        await folderPathProcessingService.SaveAppPathAsync(appId: app.Id, path: path);
+        await folderPathProcessingService.SaveAppPathAsync(appId: app.Id, path: path.FullPath);
 
         // Then
         folderServiceMock.Verify(expression: x => x.GetByPathWithRoles(appId: app.Id, path: "docs/nested", ignoreFilters: true), times: Times.Once);
@@ -236,14 +236,14 @@ public partial class FolderProcessingServiceTests
             .Returns(valueFunction: () => currentUser);
 
         App app = CreateRandomAppForTests();
-        DmsPath path = new(path: "docs");
+        DmsPath path = new() { FullPath = "docs" };
 
         folderServiceMock
             .Setup(expression: x => x.GetByPathWithRoles(appId: app.Id, path: path.Lowered, ignoreFilters: true))
             .Returns(value: (Folder)null);
 
         // When
-        Func<Task> act = async () => await folderPathProcessingService.SaveAppPathAsync(appId: app.Id, path: path);
+        Func<Task> act = async () => await folderPathProcessingService.SaveAppPathAsync(appId: app.Id, path: path.FullPath);
 
         // Then
         await act.Should()

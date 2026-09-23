@@ -20,9 +20,6 @@ public partial class FolderRoleProcessingServiceTests
     public async Task ShouldUseDataContextWhenUserCanCreateFolderRoleForAddAsync()
     {
         // Given
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
-            .Returns(valueFunction: () => currentUser);
-
         User user = ToLocalUser(user: TestUsers.WithPrivilege(privilege: "folderrole_create", appId: 1));
         UserRole currentUserRole = user.Roles.First();
 
@@ -68,9 +65,6 @@ public partial class FolderRoleProcessingServiceTests
     public async Task ShouldThrowSecurityExceptionWhenUserLacksCreatePrivilegeForAddAsync()
     {
         // Given
-        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
-            .Returns(valueFunction: () => currentUser);
-
         DataRole roleToAdd = new()
         {
             Id = Guid.NewGuid(),

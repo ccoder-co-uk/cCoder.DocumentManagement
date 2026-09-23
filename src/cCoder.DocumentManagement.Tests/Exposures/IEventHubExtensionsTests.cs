@@ -8,7 +8,6 @@ using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.Packaging;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Services.Aggregations;
-using cCoder.DocumentManagement.Services.Coordinations;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using cCoder.Eventing;
 using cCoder.Eventing.Models;
@@ -163,15 +162,15 @@ public sealed partial class IEventHubExtensionsTests
             times: Times.Once);
 
         eventHubMock.Verify(
-            expression: eventHub => eventHub.ListenToEvent<DataFolder, IFolderCoordinationService>(
+            expression: eventHub => eventHub.ListenToEvent<DataFolder, IFolderMutationAggregationService>(
                 name: "folder_delete",
-                handler: It.IsAny<Func<IFolderCoordinationService, DataFolder, ValueTask>>()),
+                handler: It.IsAny<Func<IFolderMutationAggregationService, DataFolder, ValueTask>>()),
             times: Times.Once);
 
         eventHubMock.Verify(
-            expression: eventHub => eventHub.ListenToEvent<DmsFile, IFileOrchestrationService>(
+            expression: eventHub => eventHub.ListenToEvent<DmsFile, IFileMutationAggregationService>(
                 name: "file_delete",
-                handler: It.IsAny<Func<IFileOrchestrationService, DmsFile, ValueTask>>()),
+                handler: It.IsAny<Func<IFileMutationAggregationService, DmsFile, ValueTask>>()),
             times: Times.Once);
 
         eventHubMock.Verify(

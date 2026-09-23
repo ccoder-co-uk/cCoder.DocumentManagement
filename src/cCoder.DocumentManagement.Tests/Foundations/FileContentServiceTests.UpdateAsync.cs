@@ -22,7 +22,7 @@ public partial class FileContentServiceTests
     {
         // Given
         authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
-            .Returns(value: new User { Id = "test-user" });
+            .Returns(value: CreateAuthorizedUser(appId: 7, privilege: "FileContent_update"));
 
         FileContent fileContent = CreateRandomFileContent();
 
@@ -30,8 +30,6 @@ public partial class FileContentServiceTests
 
         fileContentBrokerMock.Setup(expression: x => x.SelectAppId(fileContent: It.IsAny<DataFileContent>()))
             .Returns(value: (int?)7);
-
-        authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_update"));
 
         fileContentBrokerMock
             .Setup(expression: x => x.UpdateFileContentAsync(updatedFileContent: It.IsAny<DataFileContent>()))
@@ -83,7 +81,7 @@ public partial class FileContentServiceTests
         );
 
         fileContentBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_update"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -96,9 +94,8 @@ public partial class FileContentServiceTests
         fileContentBrokerMock.Setup(expression: x => x.SelectAppId(fileContent: It.IsAny<DataFileContent>()))
             .Returns(value: (int?)7);
 
-        authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_update"))
-            .Throws(exception: new SecurityException(message: "Access Denied!"));
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(value: null);
 
         // When
         Func<Task> action = async () => await fileContentService.UpdateFileContentAsync(updatedFileContent: fileContent);
@@ -114,7 +111,7 @@ public partial class FileContentServiceTests
         );
 
         fileContentBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "FileContent_update"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 

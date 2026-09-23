@@ -6,22 +6,22 @@ using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
-using cCoder.DocumentManagement.Services.Orchestrations;
+using cCoder.DocumentManagement.Exposures;
 
 namespace cCoder.DocumentManagement.Services.Aggregations;
 
-internal partial class AppAggregationService(IFolderOrchestrationService folderOrchestrationService)
+internal partial class AppAggregationService(IFolderMutationOperationsExposure folderOperationsExposure)
     : IAppAggregationService
 {
     public ValueTask AddAppAsync(App newApp)
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [newApp]);
+            ValidateAppOnAdd(inputs: [newApp]);
             EnsureContentRootFolder(app: newApp);
             StampFoldersApp(app: newApp);
 
-            _ = await folderOrchestrationService.AddOrUpdateForAppFolderAsync(items: newApp.Folders ?? []);
+            _ = await folderOperationsExposure.AddOrUpdateAppFoldersAsync(folders: newApp.Folders ?? []);
 
         });
 
@@ -29,10 +29,10 @@ internal partial class AppAggregationService(IFolderOrchestrationService folderO
 =>
         TryCatch(operation: async () =>
         {
-            ValidateInputs(inputs: [updatedApp]);
+            ValidateAppOnUpdate(inputs: [updatedApp]);
             StampFoldersApp(app: updatedApp);
 
-            _ = await folderOrchestrationService.AddOrUpdateFolder(items: updatedApp.Folders ?? []);
+            _ = await folderOperationsExposure.AddOrUpdateFoldersAsync(folders: updatedApp.Folders ?? []);
 
         });
 
@@ -41,7 +41,7 @@ internal partial class AppAggregationService(IFolderOrchestrationService folderO
         TryCatch(operation: () =>
         {
             ValidateInputs(inputs: [appId]);
-            return folderOrchestrationService.DeleteAllByAppIdAsync(appId: appId);
+            return folderOperationsExposure.DeleteAllByAppIdAsync(appId: appId);
         });
 
     private static void StampFoldersApp(App app)

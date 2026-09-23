@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Brokers.Storage;
+using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
@@ -43,6 +44,22 @@ public partial class FolderRoleServiceTests
 
         return folderRole;
     }
+
+    private static User CreateAuthorizedUser(int appId, string privilege) =>
+        new()
+        {
+            Roles =
+            [
+                new UserRole
+                {
+                    Role = new Role
+                    {
+                        AppId = appId,
+                        Privileges = [privilege.ToLowerInvariant()]
+                    }
+                }
+            ]
+        };
 
     private static DataFolderRole ToExternalFolderRole(FolderRole folderRole) =>
         folderRole == null

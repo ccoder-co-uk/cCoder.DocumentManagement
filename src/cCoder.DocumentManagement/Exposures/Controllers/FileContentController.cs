@@ -2,6 +2,7 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.CodeAnalysis.Exposures;
 using cCoder.DocumentManagement.Brokers.Loggings;
 using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Dependencies;
@@ -22,7 +23,7 @@ namespace cCoder.DocumentManagement.Exposures.Controllers;
 public partial class FileContentController(
     IFileContentManager service,
     ILoggingBroker loggingBroker
-) : ODataController
+) : ODataController, ICompositionExposure
 {
 
     [HttpGet]
@@ -108,7 +109,7 @@ public partial class FileContentController(
         {
             if (!ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+                return new OData.BadRequestResult(modelState: ModelState);
             }
 
             LocalFileContent addedFileContent = await service.AddFileContentAsync(newFileContent: entity);
@@ -150,7 +151,7 @@ public partial class FileContentController(
         {
             if (!ModelState.IsValid)
             {
-                return new cCoder.DocumentManagement.Models.OData.BadRequestResult(modelState: ModelState);
+                return new OData.BadRequestResult(modelState: ModelState);
             }
 
             entity.Id = key;

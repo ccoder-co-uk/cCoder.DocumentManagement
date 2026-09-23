@@ -26,9 +26,8 @@ public partial class CurrentAppResolverTests
         appBrokerMock.Setup(expression: broker => broker.SelectAppById(appId: 42))
             .Returns(value: dataApp);
 
-        ICurrentAppResolverProcessingService resolver = new CurrentAppResolverProcessingService(
-            appBroker: appBrokerMock.Object,
-            httpContext: httpContext);
+        ICurrentAppResolverProcessingService resolver =
+            CreateResolver(httpContext: httpContext);
 
         // When
         App result = resolver.ResolveCurrentApp();
@@ -51,9 +50,8 @@ public partial class CurrentAppResolverTests
         appBrokerMock.Setup(expression: broker => broker.SelectAppById(appId: 42))
             .Returns(value: (DataApp)null);
 
-        ICurrentAppResolverProcessingService resolver = new CurrentAppResolverProcessingService(
-            appBroker: appBrokerMock.Object,
-            httpContext: httpContext);
+        ICurrentAppResolverProcessingService resolver =
+            CreateResolver(httpContext: httpContext);
 
         // When
         Action action = () => resolver.ResolveCurrentApp();
@@ -79,9 +77,8 @@ public partial class CurrentAppResolverTests
         appBrokerMock.Setup(expression: broker => broker.SelectAppByDomain(domain: "demo.localhost"))
             .Returns(value: dataApp);
 
-        ICurrentAppResolverProcessingService resolver = new CurrentAppResolverProcessingService(
-            appBroker: appBrokerMock.Object,
-            httpContext: httpContext);
+        ICurrentAppResolverProcessingService resolver =
+            CreateResolver(httpContext: httpContext);
 
         // When
         App result = resolver.ResolveCurrentApp();
@@ -104,9 +101,8 @@ public partial class CurrentAppResolverTests
         appBrokerMock.Setup(expression: broker => broker.SelectAppByDomain(domain: "missing.localhost"))
             .Returns(value: (DataApp)null);
 
-        ICurrentAppResolverProcessingService resolver = new CurrentAppResolverProcessingService(
-            appBroker: appBrokerMock.Object,
-            httpContext: httpContext);
+        ICurrentAppResolverProcessingService resolver =
+            CreateResolver(httpContext: httpContext);
 
         // When
         Action action = () => resolver.ResolveCurrentApp();

@@ -3,13 +3,14 @@
 // ---------------------------------------------------------------
 
 using cCoder.Data.Models.DMS;
+using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Processings;
 
 namespace cCoder.DocumentManagement.Services.Orchestrations;
 
 internal sealed partial class PackagePayloadMigrationOrchestrationService(
-    IPackagePayloadShapeProcessingService shapeProcessingService,
-    IPackagePayloadJsonProcessingService jsonProcessingService)
+    IPackagePayloadShapeService shapeProcessingService,
+    IPackagePayloadJsonService jsonProcessingService)
     : IPackagePayloadMigrationOrchestrationService
 {
     public FolderRoleInfo[] ParseFolderRoleInfos(string data) =>

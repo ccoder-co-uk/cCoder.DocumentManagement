@@ -14,7 +14,7 @@ using Moq;
 using Xunit;
 using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
 using DmsFile = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -47,10 +47,10 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         App app = CreateRandomAppForTests();
-        DmsPath filePath = new(path: "docs/file.txt");
+        DmsPath filePath = new() { FullPath = "docs/file.txt" };
 
         // When
-        Action act = () => folderPathProcessingService.GetAppPath(appId: app.Id, path: filePath);
+        Action act = () => folderPathProcessingService.GetAppPath(appId: app.Id, path: filePath.FullPath);
 
         // Then
         act.Should()
@@ -67,13 +67,13 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         App app = CreateRandomAppForTests();
-        DmsPath folderPath = new(path: "docs");
+        DmsPath folderPath = new() { FullPath = "docs" };
 
         folderServiceMock.Setup(expression: x => x.GetByPath(appId: app.Id, path: folderPath.Lowered, ignoreFilters: false))
             .Returns(value: (Folder)null);
 
         // When
-        Action act = () => folderPathProcessingService.GetAppPath(appId: app.Id, path: folderPath);
+        Action act = () => folderPathProcessingService.GetAppPath(appId: app.Id, path: folderPath.FullPath);
 
         // Then
         act.Should()
@@ -151,7 +151,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: new[] { rootContent, childContent }.AsQueryable());
 
         // When
-        DMSResult result = folderPathProcessingService.GetAppPath(appId: app.Id, path: new DmsPath(path: rootFolder.Path));
+        DMSResult result = folderPathProcessingService.GetAppPath(appId: app.Id, path: rootFolder.Path);
 
         // Then
         using ZipArchive zip = new(stream: result.Data, mode: ZipArchiveMode.Read);

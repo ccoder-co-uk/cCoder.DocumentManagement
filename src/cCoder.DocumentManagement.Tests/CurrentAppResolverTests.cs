@@ -3,10 +3,14 @@
 // ---------------------------------------------------------------
 
 using cCoder.DocumentManagement.Brokers.Storage;
+using cCoder.DocumentManagement.Brokers;
+using cCoder.DocumentManagement.Services.Foundations;
+using cCoder.DocumentManagement.Services.Processings;
 using FizzWare.NBuilder;
 using Moq;
 using App = cCoder.Data.Models.CMS.App;
 using DataApp = cCoder.Data.Models.CMS.App;
+using Microsoft.AspNetCore.Http;
 
 
 namespace cCoder.Core.Services.Tests.DMS;
@@ -41,4 +45,12 @@ public partial class CurrentAppResolverTests
             .With(func: localApp => localApp.Roles = [])
             .With(func: localApp => localApp.Folders = [])
             .Build();
+
+    private ICurrentAppResolverProcessingService CreateResolver(
+        HttpContext httpContext) =>
+        new CurrentAppResolverProcessingService(
+            currentAppResolverService: new CurrentAppResolverService(
+                appBroker: appBrokerMock.Object,
+                httpContextBroker: new HttpContextBroker(
+                    httpContext: httpContext)));
 }

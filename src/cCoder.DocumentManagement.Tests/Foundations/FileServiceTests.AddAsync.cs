@@ -23,7 +23,7 @@ public partial class FileServiceTests
     {
         // Given
         authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
-            .Returns(value: new User { Id = "test-user" });
+            .Returns(value: CreateAuthorizedUser(appId: 7, privilege: "File_create"));
 
         FileEntity file = CreateRandomFile();
 
@@ -31,8 +31,6 @@ public partial class FileServiceTests
 
         fileBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()))
             .Returns(value: (int?)7);
-
-        authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "File_create"));
 
         fileBrokerMock
             .Setup(expression: x =>
@@ -151,7 +149,7 @@ public partial class FileServiceTests
 
         fileBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "File_create"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Exactly(callCount: 2));
     }
 
     [Fact]
@@ -163,9 +161,8 @@ public partial class FileServiceTests
         fileBrokerMock.Setup(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()))
             .Returns(value: (int?)7);
 
-        authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "File_create"))
-            .Throws(exception: new SecurityException(message: "Access Denied!"));
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(value: null);
 
         // When
         Func<Task> action = async () => await fileService.AddFileAsync(file: file);
@@ -177,7 +174,7 @@ public partial class FileServiceTests
 
         fileBrokerMock.Verify(expression: x => x.SelectAppId(entity: It.IsAny<DataFile>()), times: Times.AtMostOnce());
         fileBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "File_create"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
     }
 
 }

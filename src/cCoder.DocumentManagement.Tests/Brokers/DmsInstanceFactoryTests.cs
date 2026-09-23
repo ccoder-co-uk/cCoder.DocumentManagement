@@ -5,12 +5,12 @@
 using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Models;
-using cCoder.DocumentManagement.Services.Orchestrations;
+using cCoder.DocumentManagement.Services.Aggregations;
 using FluentAssertions;
 using Moq;
 using Xunit;
 using DataFile = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Brokers;
@@ -22,7 +22,7 @@ public partial class DmsInstanceFactoryTests
     {
         // Given
         IEnumerable<DataFile> expectedFiles = [new() { Id = Guid.NewGuid(), Name = "file.txt" }];
-        var orchestrationServiceMock = new Mock<IDmsOrchestrationService>(behavior: MockBehavior.Strict);
+        var orchestrationServiceMock = new Mock<IDmsAggregationService>(behavior: MockBehavior.Strict);
 
         orchestrationServiceMock
             .Setup(expression: service =>
@@ -34,7 +34,9 @@ public partial class DmsInstanceFactoryTests
                 Files = expectedFiles
             });
 
-        var factory = new DmsInstanceFactory(dmsOrchestrationService: orchestrationServiceMock.Object);
+        var factory = new DmsInstanceFactory(
+            dms: new Dms(
+                dmsAggregationService: orchestrationServiceMock.Object));
 
         // When
         IDms dms = factory.CreateDms();
@@ -58,8 +60,8 @@ public partial class DmsInstanceFactoryTests
     public async Task ShouldCreateDmsThatDelegatesSaveAsync()
     {
         // Given
-        var orchestrationServiceMock = new Mock<IDmsOrchestrationService>(behavior: MockBehavior.Strict);
-        var path = new DmsPath(path: "content/file.txt");
+        var orchestrationServiceMock = new Mock<IDmsAggregationService>(behavior: MockBehavior.Strict);
+        var path = new DmsPath { FullPath = "content/file.txt" };
         using var content = new MemoryStream(buffer: [1, 2, 3]);
 
         orchestrationServiceMock
@@ -71,7 +73,9 @@ public partial class DmsInstanceFactoryTests
             .Returns(value: ValueTask.FromResult(
                 result: new DmsOperation()));
 
-        var factory = new DmsInstanceFactory(dmsOrchestrationService: orchestrationServiceMock.Object);
+        var factory = new DmsInstanceFactory(
+            dms: new Dms(
+                dmsAggregationService: orchestrationServiceMock.Object));
 
         IDms dms = factory.CreateDms();
 

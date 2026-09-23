@@ -2,40 +2,44 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Services.Orchestrations;
+using cCoder.DocumentManagement.Services.Aggregations;
 using DmsFile = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 using DmsResult = cCoder.DocumentManagement.Models.DMSResult;
 
 
 namespace cCoder.DocumentManagement.Exposures;
 
 internal sealed class Dms(
-    IDmsOrchestrationService dmsOrchestrationService)
+    IDmsAggregationService dmsAggregationService)
     : IDms
 {
     public DmsResult GetFilesZipped(IEnumerable<DmsPath> paths) =>
-        dmsOrchestrationService.GetFilesZippedDmsOperation(
+        GetFilesZipped(paths: paths.Select(selector: path => path.FullPath));
+
+    public DmsResult GetFilesZipped(IEnumerable<string> paths) =>
+        dmsAggregationService.GetFilesZippedDmsOperation(
             dmsOperation: new DmsOperation
             {
-                Paths = paths.Select(
-                    selector: path =>
-                        path.FullPath)
+                Paths = paths
             })
             .Result;
 
     public DmsResult Get(DmsPath path, int version = 0, string search = "") =>
-        dmsOrchestrationService.GetDmsOperation(
+        Get(path: path.FullPath, version: version, search: search);
+
+    public DmsResult Get(string path, int version = 0, string search = "") =>
+        dmsAggregationService.GetDmsOperation(
             dmsOperation: new DmsOperation
             {
-                Path = path.FullPath,
+                Path = path,
                 Version = version,
                 Search = search
             })
             .Result;
 
     public IEnumerable<DmsFile> Search(string needle) =>
-        dmsOrchestrationService.SearchFilesDmsOperation(
+        dmsAggregationService.SearchFilesDmsOperation(
             dmsOperation: new DmsOperation
             {
                 Needle = needle
@@ -43,72 +47,87 @@ internal sealed class Dms(
             .Files;
 
     public ValueTask UnpackAsync(DmsPath path, Stream content, bool ignoreArchiveRoot = false) =>
+        UnpackAsync(path: path.FullPath, content: content, ignoreArchiveRoot: ignoreArchiveRoot);
+
+    public ValueTask UnpackAsync(string path, Stream content, bool ignoreArchiveRoot = false) =>
         ExecuteUnpackDmsOperationAsync(
             path: path,
             content: content,
             ignoreArchiveRoot: ignoreArchiveRoot);
 
     public ValueTask SaveAsync(DmsPath path, Stream content = null) =>
+        SaveAsync(path: path.FullPath, content: content);
+
+    public ValueTask SaveAsync(string path, Stream content = null) =>
         ExecuteSaveDmsOperationAsync(path: path, content: content);
 
     public ValueTask DropAsync(DmsPath path, int version = 0) =>
+        DropAsync(path: path.FullPath, version: version);
+
+    public ValueTask DropAsync(string path, int version = 0) =>
         ExecuteDropDmsOperationAsync(path: path, version: version);
 
     public ValueTask CopyAsync(DmsPath oldPath, DmsPath newPath) =>
+        CopyAsync(oldPath: oldPath.FullPath, newPath: newPath.FullPath);
+
+    public ValueTask CopyAsync(string oldPath, string newPath) =>
         ExecuteCopyDmsOperationAsync(oldPath: oldPath, newPath: newPath);
 
     public ValueTask MoveAsync(DmsPath oldPath, DmsPath newPath) =>
+        MoveAsync(oldPath: oldPath.FullPath, newPath: newPath.FullPath);
+
+    public ValueTask MoveAsync(string oldPath, string newPath) =>
         ExecuteMoveDmsOperationAsync(oldPath: oldPath, newPath: newPath);
 
     private async ValueTask ExecuteUnpackDmsOperationAsync(
-        DmsPath path,
+        string path,
         Stream content,
         bool ignoreArchiveRoot) =>
-        _ = await dmsOrchestrationService.UnpackDmsOperationAsync(
+        _ = await dmsAggregationService.UnpackDmsOperationAsync(
             dmsOperation: new DmsOperation
             {
-                Path = path.FullPath,
+                Path = path,
                 Content = content,
                 IgnoreArchiveRoot = ignoreArchiveRoot
             });
 
     private async ValueTask ExecuteSaveDmsOperationAsync(
-        DmsPath path,
+        string path,
         Stream content) =>
-        _ = await dmsOrchestrationService.SaveDmsOperationAsync(
+        _ = await dmsAggregationService.SaveDmsOperationAsync(
             dmsOperation: new DmsOperation
             {
-                Path = path.FullPath,
+                Path = path,
                 Content = content
             });
 
     private async ValueTask ExecuteDropDmsOperationAsync(
-        DmsPath path,
+        string path,
         int version) =>
-        _ = await dmsOrchestrationService.DropDmsOperationAsync(
+        _ = await dmsAggregationService.DropDmsOperationAsync(
             dmsOperation: new DmsOperation
             {
-                Path = path.FullPath,
+                Path = path,
                 Version = version
             });
 
     private async ValueTask ExecuteCopyDmsOperationAsync(
-        DmsPath oldPath,
-        DmsPath newPath) =>
-        _ = await dmsOrchestrationService.CopyDmsOperationAsync(
+        string oldPath,
+        string newPath) =>
+        _ = await dmsAggregationService.CopyDmsOperationAsync(
             dmsOperation: new DmsOperation
             {
-                Path = oldPath.FullPath,
-                NewPath = newPath.FullPath
+                Path = oldPath,
+                NewPath = newPath
             });
 
     private async ValueTask ExecuteMoveDmsOperationAsync(
-        DmsPath oldPath,
-        DmsPath newPath) =>
-        _ = await dmsOrchestrationService.MoveDmsOperationAsync(
+        string oldPath,
+        string newPath) =>
+        _ = await dmsAggregationService.MoveDmsOperationAsync(
             dmsOperation: new DmsOperation
             {
-                Path = oldPath.FullPath,
-                NewPath = newPath.FullPath
+                Path = oldPath,
+                NewPath = newPath
             });
 }

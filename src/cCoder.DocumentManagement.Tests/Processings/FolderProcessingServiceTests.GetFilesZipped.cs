@@ -14,7 +14,7 @@ using Moq;
 using Xunit;
 using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
 using DmsFile = cCoder.Data.Models.DMS.File;
-using DmsPath = cCoder.DocumentManagement.Dependencies.Path;
+using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;
@@ -26,14 +26,14 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         App app = CreateRandomAppForTests();
-        DmsPath filePath = new(path: "docs/file.txt");
+        DmsPath filePath = new() { FullPath = "docs/file.txt" };
 
         fileServiceMock
             .Setup(expression: x => x.GetByPathWithFolderAndContents(appId: app.Id, path: filePath.Lowered, ignoreFilters: false))
             .Returns(value: (DmsFile)null);
 
         // When
-        Action act = () => folderPathProcessingService.GetFilesZippedAppPath(appId: app.Id, paths: [filePath]);
+        Action act = () => folderPathProcessingService.GetFilesZippedAppPath(appId: app.Id, paths: [filePath.FullPath]);
 
         // Then
         act.Should()
@@ -55,8 +55,8 @@ public partial class FolderProcessingServiceTests
     {
         // Given
         App app = CreateRandomAppForTests();
-        DmsPath directFilePath = new(path: "docs/direct.txt");
-        DmsPath folderPath = new(path: "docs");
+        DmsPath directFilePath = new() { FullPath = "docs/direct.txt" };
+        DmsPath folderPath = new() { FullPath = "docs" };
 
         DmsFile directFile = new()
         {
@@ -116,7 +116,7 @@ public partial class FolderProcessingServiceTests
             .Returns(value: new[] { nestedContent }.AsQueryable());
 
         // When
-        DMSResult result = folderPathProcessingService.GetFilesZippedAppPath(appId: app.Id, paths: [directFilePath, folderPath]);
+        DMSResult result = folderPathProcessingService.GetFilesZippedAppPath(appId: app.Id, paths: [directFilePath.FullPath, folderPath.FullPath]);
 
         // Then
         using ZipArchive zip = new(stream: result.Data, mode: ZipArchiveMode.Read);

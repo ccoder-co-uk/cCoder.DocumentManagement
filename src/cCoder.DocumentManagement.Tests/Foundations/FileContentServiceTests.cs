@@ -49,6 +49,23 @@ public partial class FileContentServiceTests
         return fileContent;
     }
 
+    private static User CreateAuthorizedUser(int appId, string privilege) =>
+        new()
+        {
+            Id = "test-user",
+            Roles =
+            [
+                new UserRole
+                {
+                    Role = new Role
+                    {
+                        AppId = appId,
+                        Privileges = [privilege.ToLowerInvariant()]
+                    }
+                }
+            ]
+        };
+
     private static DataFileContent ToExternalFileContent(FileContent fileContent) =>
         fileContent == null
             ? null

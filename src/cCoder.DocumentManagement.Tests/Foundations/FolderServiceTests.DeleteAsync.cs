@@ -28,7 +28,8 @@ public partial class FolderServiceTests
             .Setup(expression: x => x.SelectAllFolders(ignoreFilters: true))
             .Returns(value: new[] { ToExternalFolder(folder: folder) }.AsQueryable());
 
-        authorizationBrokerMock.Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_delete"));
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(value: CreateAuthorizedUser(appId: 7, privilege: "Folder_delete"));
 
         folderBrokerMock.Setup(expression: x => x.DeleteFolderAsync(deletedFolder: It.IsAny<DataFolder>()))
             .ReturnsAsync(value: 1);
@@ -45,7 +46,7 @@ public partial class FolderServiceTests
         );
 
         folderBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_delete"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 
@@ -60,9 +61,8 @@ public partial class FolderServiceTests
             .Setup(expression: x => x.SelectAllFolders(ignoreFilters: true))
             .Returns(value: new[] { ToExternalFolder(folder: folder) }.AsQueryable());
 
-        authorizationBrokerMock
-            .Setup(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_delete"))
-            .Throws(exception: new SecurityException(message: "Access Denied!"));
+        authorizationBrokerMock.Setup(expression: x => x.GetCurrentUser())
+            .Returns(value: null);
 
         // When
         Func<Task> action = async () => await folderService.DeleteAsync(folderId: folderId);
@@ -74,7 +74,7 @@ public partial class FolderServiceTests
 
         folderBrokerMock.Verify(expression: x => x.SelectAllFolders(ignoreFilters: true), times: Times.Once);
         folderBrokerMock.VerifyNoOtherCalls();
-        authorizationBrokerMock.Verify(expression: x => x.Authorize(appId: (int?)7, privilege: "Folder_delete"), times: Times.Once);
+        authorizationBrokerMock.Verify(expression: x => x.GetCurrentUser(), times: Times.Once);
         authorizationBrokerMock.VerifyNoOtherCalls();
     }
 

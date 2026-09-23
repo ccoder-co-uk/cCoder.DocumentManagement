@@ -45,7 +45,7 @@ public sealed partial class FolderControllerTests
     public async Task Get_ReturnsFolderById()
     {
         // Given
-        SeededFolderContext seededContext = await SeedDatabase(privileges:["folder_create","folder_delete"]);
+        SeededFolderContext seededContext = await SeedDatabase(privileges: ["folder_create", "folder_delete"]);
         string name = Unique(prefix: "Folder");
 
         Folder expectedFolder = await CreateFolderAsync(payload: new
