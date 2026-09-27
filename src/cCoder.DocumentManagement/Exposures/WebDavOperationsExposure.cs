@@ -8,7 +8,8 @@ namespace cCoder.DocumentManagement.Exposures;
 
 internal sealed class WebDavOperationsExposure(
     IWebDavAggregationService webDavAggregationService)
-    : IWebDavOperationsExposure
+    : IWebDavOperationsExposure,
+      cCoder.CodeAnalysis.Exposures.ICompositionExposure
 {
     public ValueTask<DmsProcessingSession> ProcessDmsProcessingSessionAsync(DmsProcessingSession dmsProcessingSession) =>
         webDavAggregationService.ProcessDmsProcessingSessionAsync(dmsProcessingSession: dmsProcessingSession);

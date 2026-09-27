@@ -10,7 +10,8 @@ namespace cCoder.DocumentManagement.Exposures;
 
 internal sealed class FolderMutationOperationsExposure(
     IFolderMutationAggregationService folderMutationAggregationService)
-    : IFolderMutationOperationsExposure
+    : IFolderMutationOperationsExposure,
+      cCoder.CodeAnalysis.Exposures.ICompositionExposure
 {
     public IQueryable<Folder> GetAllFolders(bool ignoreFilters = false) =>
         folderMutationAggregationService.GetAll(ignoreFilters: ignoreFilters);

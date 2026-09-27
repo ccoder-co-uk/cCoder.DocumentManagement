@@ -9,7 +9,8 @@ namespace cCoder.DocumentManagement.Exposures;
 
 internal sealed class FilePathOperationsExposure(
     FileMutationAggregationService fileProcessingService)
-    : IFilePathOperationsExposure
+    : IFilePathOperationsExposure,
+      cCoder.CodeAnalysis.Exposures.ICompositionExposure
 {
     public DMSResult GetAppPath(int appId, string path, int version = 0) =>
         fileProcessingService.GetAppPath(appId: appId, path: path, version: version);

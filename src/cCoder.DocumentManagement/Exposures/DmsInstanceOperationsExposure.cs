@@ -10,7 +10,8 @@ namespace cCoder.DocumentManagement.Exposures;
 
 internal sealed class DmsInstanceOperationsExposure(
     IDmsAggregationService dmsAggregationService)
-    : IDmsInstanceOperationsExposure
+    : IDmsInstanceOperationsExposure,
+      cCoder.CodeAnalysis.Exposures.ICompositionExposure
 {
     public DmsResult Get(string path, int version = 0, string search = "") =>
         GetDmsPath(path: new DmsPath { FullPath = path }, version: version, search: search);

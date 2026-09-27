@@ -8,7 +8,8 @@ namespace cCoder.DocumentManagement.Exposures;
 
 internal sealed class FolderPathOperationsExposure(
     FolderMutationAggregationService folderMutationAggregationService)
-    : IFolderPathOperationsExposure
+    : IFolderPathOperationsExposure,
+      cCoder.CodeAnalysis.Exposures.ICompositionExposure
 {
     public DMSResult GetFilesZippedAppPath(int appId, IEnumerable<string> paths) =>
         folderMutationAggregationService.GetFilesZippedAppPath(appId: appId, paths: paths);

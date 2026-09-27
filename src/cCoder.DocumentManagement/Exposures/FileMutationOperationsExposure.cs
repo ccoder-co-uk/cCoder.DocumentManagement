@@ -9,7 +9,8 @@ namespace cCoder.DocumentManagement.Exposures;
 
 internal sealed class FileMutationOperationsExposure(
     IFileMutationAggregationService fileMutationAggregationService)
-    : IFileMutationOperationsExposure
+    : IFileMutationOperationsExposure,
+      cCoder.CodeAnalysis.Exposures.ICompositionExposure
 {
     public IQueryable<DataFile> GetAllFiles(bool ignoreFilters = false) =>
         fileMutationAggregationService.GetAll(ignoreFilters: ignoreFilters);

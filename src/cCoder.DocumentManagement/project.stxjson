@@ -8515,6 +8515,16 @@
       "BaseType": null,
       "Interfaces": [
         {
+          "Id": "cCoder.CodeAnalysis.Contracts:cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "FullName": "cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "Name": "ICompositionExposure",
+          "Namespace": "cCoder.CodeAnalysis.Exposures",
+          "AssemblyName": "cCoder.CodeAnalysis.Contracts",
+          "Kind": "Interface",
+          "IsInCurrentProject": false,
+          "StandardElementType": "Dependency"
+        },
+        {
           "Id": "cCoder.DocumentManagement:cCoder.DocumentManagement.Exposures.IDms",
           "FullName": "cCoder.DocumentManagement.Exposures.IDms",
           "Name": "IDms",
@@ -8530,7 +8540,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.CopyAsync(System.String,System.String)",
           "Name": "CopyAsync",
-          "LineNumber": 73,
+          "LineNumber": 74,
           "Inputs": [
             {
               "Name": "oldPath",
@@ -8574,7 +8584,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.CopyAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
           "Name": "CopyAsync",
-          "LineNumber": 70,
+          "LineNumber": 71,
           "Inputs": [
             {
               "Name": "oldPath",
@@ -8626,7 +8636,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.DropAsync(System.String,System.Int32)",
           "Name": "DropAsync",
-          "LineNumber": 67,
+          "LineNumber": 68,
           "Inputs": [
             {
               "Name": "path",
@@ -8670,7 +8680,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.DropAsync(cCoder.DocumentManagement.Models.Path,System.Int32)",
           "Name": "DropAsync",
-          "LineNumber": 64,
+          "LineNumber": 65,
           "Inputs": [
             {
               "Name": "path",
@@ -8722,7 +8732,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.Get(System.String,System.Int32,System.String)",
           "Name": "Get",
-          "LineNumber": 31,
+          "LineNumber": 32,
           "Inputs": [
             {
               "Name": "path",
@@ -8777,7 +8787,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.Get(cCoder.DocumentManagement.Models.Path,System.Int32,System.String)",
           "Name": "Get",
-          "LineNumber": 28,
+          "LineNumber": 29,
           "Inputs": [
             {
               "Name": "path",
@@ -8832,7 +8842,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CSystem.String\u003E)",
           "Name": "GetFilesZipped",
-          "LineNumber": 20,
+          "LineNumber": 21,
           "Inputs": [
             {
               "Name": "paths",
@@ -8879,7 +8889,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CcCoder.DocumentManagement.Models.Path\u003E)",
           "Name": "GetFilesZipped",
-          "LineNumber": 17,
+          "LineNumber": 18,
           "Inputs": [
             {
               "Name": "paths",
@@ -8933,7 +8943,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.MoveAsync(System.String,System.String)",
           "Name": "MoveAsync",
-          "LineNumber": 79,
+          "LineNumber": 80,
           "Inputs": [
             {
               "Name": "oldPath",
@@ -8977,7 +8987,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.MoveAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
           "Name": "MoveAsync",
-          "LineNumber": 76,
+          "LineNumber": 77,
           "Inputs": [
             {
               "Name": "oldPath",
@@ -9029,7 +9039,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.SaveAsync(System.String,System.IO.Stream)",
           "Name": "SaveAsync",
-          "LineNumber": 61,
+          "LineNumber": 62,
           "Inputs": [
             {
               "Name": "path",
@@ -9073,7 +9083,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.SaveAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
           "Name": "SaveAsync",
-          "LineNumber": 58,
+          "LineNumber": 59,
           "Inputs": [
             {
               "Name": "path",
@@ -9125,7 +9135,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.Search(System.String)",
           "Name": "Search",
-          "LineNumber": 41,
+          "LineNumber": 42,
           "Inputs": [
             {
               "Name": "needle",
@@ -9171,7 +9181,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.UnpackAsync(System.String,System.IO.Stream,System.Boolean)",
           "Name": "UnpackAsync",
-          "LineNumber": 52,
+          "LineNumber": 53,
           "Inputs": [
             {
               "Name": "path",
@@ -9219,7 +9229,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Dms.UnpackAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream,System.Boolean)",
           "Name": "UnpackAsync",
-          "LineNumber": 49,
+          "LineNumber": 50,
           "Inputs": [
             {
               "Name": "path",
@@ -9768,6 +9778,16 @@
       "BaseType": null,
       "Interfaces": [
         {
+          "Id": "cCoder.CodeAnalysis.Contracts:cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "FullName": "cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "Name": "ICompositionExposure",
+          "Namespace": "cCoder.CodeAnalysis.Exposures",
+          "AssemblyName": "cCoder.CodeAnalysis.Contracts",
+          "Kind": "Interface",
+          "IsInCurrentProject": false,
+          "StandardElementType": "Dependency"
+        },
+        {
           "Id": "cCoder.DocumentManagement:cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure",
           "FullName": "cCoder.DocumentManagement.Exposures.IDmsInstanceOperationsExposure",
           "Name": "IDmsInstanceOperationsExposure",
@@ -9783,7 +9803,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.CopyAsync(System.String,System.String)",
           "Name": "CopyAsync",
-          "LineNumber": 30,
+          "LineNumber": 31,
           "Inputs": [
             {
               "Name": "oldPath",
@@ -9835,7 +9855,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.CopyDmsPathAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
           "Name": "CopyDmsPathAsync",
-          "LineNumber": 72,
+          "LineNumber": 73,
           "Inputs": [
             {
               "Name": "oldPath",
@@ -9879,7 +9899,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.DropAsync(System.String,System.Int32)",
           "Name": "DropAsync",
-          "LineNumber": 27,
+          "LineNumber": 28,
           "Inputs": [
             {
               "Name": "path",
@@ -9931,7 +9951,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.DropDmsPathAsync(cCoder.DocumentManagement.Models.Path,System.Int32)",
           "Name": "DropDmsPathAsync",
-          "LineNumber": 77,
+          "LineNumber": 78,
           "Inputs": [
             {
               "Name": "path",
@@ -9975,7 +9995,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.Get(System.String,System.Int32,System.String)",
           "Name": "Get",
-          "LineNumber": 15,
+          "LineNumber": 16,
           "Inputs": [
             {
               "Name": "path",
@@ -10030,7 +10050,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.GetDmsPath(cCoder.DocumentManagement.Models.Path,System.Int32,System.String)",
           "Name": "GetDmsPath",
-          "LineNumber": 40,
+          "LineNumber": 41,
           "Inputs": [
             {
               "Name": "path",
@@ -10085,7 +10105,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.GetFilesZipped(System.Collections.Generic.IEnumerable\u003CSystem.String\u003E)",
           "Name": "GetFilesZipped",
-          "LineNumber": 52,
+          "LineNumber": 53,
           "Inputs": [
             {
               "Name": "paths",
@@ -10132,7 +10152,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.MoveAsync(System.String,System.String)",
           "Name": "MoveAsync",
-          "LineNumber": 35,
+          "LineNumber": 36,
           "Inputs": [
             {
               "Name": "oldPath",
@@ -10184,7 +10204,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.MoveDmsPathAsync(cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
           "Name": "MoveDmsPathAsync",
-          "LineNumber": 67,
+          "LineNumber": 68,
           "Inputs": [
             {
               "Name": "oldPath",
@@ -10228,7 +10248,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.SaveAsync(System.String,System.IO.Stream)",
           "Name": "SaveAsync",
-          "LineNumber": 24,
+          "LineNumber": 25,
           "Inputs": [
             {
               "Name": "path",
@@ -10280,7 +10300,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.SaveDmsPathAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
           "Name": "SaveDmsPathAsync",
-          "LineNumber": 62,
+          "LineNumber": 63,
           "Inputs": [
             {
               "Name": "path",
@@ -10324,7 +10344,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.UnpackAsync(System.String,System.IO.Stream,System.Boolean)",
           "Name": "UnpackAsync",
-          "LineNumber": 18,
+          "LineNumber": 19,
           "Inputs": [
             {
               "Name": "path",
@@ -10380,7 +10400,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsInstanceOperationsExposure.UnpackDmsPathAsync(cCoder.DocumentManagement.Models.Path,System.IO.Stream,System.Boolean)",
           "Name": "UnpackDmsPathAsync",
-          "LineNumber": 56,
+          "LineNumber": 57,
           "Inputs": [
             {
               "Name": "path",
@@ -10436,6 +10456,16 @@
       "BaseType": null,
       "Interfaces": [
         {
+          "Id": "cCoder.CodeAnalysis.Contracts:cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "FullName": "cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "Name": "ICompositionExposure",
+          "Namespace": "cCoder.CodeAnalysis.Exposures",
+          "AssemblyName": "cCoder.CodeAnalysis.Contracts",
+          "Kind": "Interface",
+          "IsInCurrentProject": false,
+          "StandardElementType": "Dependency"
+        },
+        {
           "Id": "cCoder.DocumentManagement:cCoder.DocumentManagement.Exposures.IDmsRequestOperationsExposure",
           "FullName": "cCoder.DocumentManagement.Exposures.IDmsRequestOperationsExposure",
           "Name": "IDmsRequestOperationsExposure",
@@ -10451,7 +10481,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DmsRequestOperationsExposure.ProcessDmsProcessingSessionAsync(cCoder.DocumentManagement.Models.DmsProcessingSession)",
           "Name": "ProcessDmsProcessingSessionAsync",
-          "LineNumber": 13,
+          "LineNumber": 14,
           "Inputs": [
             {
               "Name": "dmsProcessingSession",
@@ -10507,6 +10537,16 @@
       "BaseType": null,
       "Interfaces": [
         {
+          "Id": "cCoder.CodeAnalysis.Contracts:cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "FullName": "cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "Name": "ICompositionExposure",
+          "Namespace": "cCoder.CodeAnalysis.Exposures",
+          "AssemblyName": "cCoder.CodeAnalysis.Contracts",
+          "Kind": "Interface",
+          "IsInCurrentProject": false,
+          "StandardElementType": "Dependency"
+        },
+        {
           "Id": "cCoder.DocumentManagement:cCoder.DocumentManagement.Exposures.IDocumentManagementAppExposure",
           "FullName": "cCoder.DocumentManagement.Exposures.IDocumentManagementAppExposure",
           "Name": "IDocumentManagementAppExposure",
@@ -10522,7 +10562,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure.AddAsync(cCoder.Data.Models.CMS.App)",
           "Name": "AddAsync",
-          "LineNumber": 16,
+          "LineNumber": 17,
           "Inputs": [
             {
               "Name": "newApp",
@@ -10569,7 +10609,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure.DeleteAsync(System.Int32)",
           "Name": "DeleteAsync",
-          "LineNumber": 22,
+          "LineNumber": 23,
           "Inputs": [
             {
               "Name": "appId",
@@ -10614,7 +10654,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DocumentManagementAppExposure.UpdateAsync(cCoder.Data.Models.CMS.App)",
           "Name": "UpdateAsync",
-          "LineNumber": 19,
+          "LineNumber": 20,
           "Inputs": [
             {
               "Name": "updatedApp",
@@ -10670,6 +10710,16 @@
       "BaseType": null,
       "Interfaces": [
         {
+          "Id": "cCoder.CodeAnalysis.Contracts:cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "FullName": "cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "Name": "ICompositionExposure",
+          "Namespace": "cCoder.CodeAnalysis.Exposures",
+          "AssemblyName": "cCoder.CodeAnalysis.Contracts",
+          "Kind": "Interface",
+          "IsInCurrentProject": false,
+          "StandardElementType": "Dependency"
+        },
+        {
           "Id": "cCoder.DocumentManagement:cCoder.DocumentManagement.Exposures.IDocumentManagementPackageManager",
           "FullName": "cCoder.DocumentManagement.Exposures.IDocumentManagementPackageManager",
           "Name": "IDocumentManagementPackageManager",
@@ -10685,7 +10735,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DocumentManagementPackageManager.ExportPackage(System.Int32,System.String)",
           "Name": "ExportPackage",
-          "LineNumber": 21,
+          "LineNumber": 22,
           "Inputs": [
             {
               "Name": "appId",
@@ -10734,7 +10784,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.DocumentManagementPackageManager.ImportPackageAsync(System.Int32,cCoder.DocumentManagement.Models.DocumentManagementPackage)",
           "Name": "ImportPackageAsync",
-          "LineNumber": 18,
+          "LineNumber": 19,
           "Inputs": [
             {
               "Name": "appId",
@@ -11089,6 +11139,16 @@
       "BaseType": null,
       "Interfaces": [
         {
+          "Id": "cCoder.CodeAnalysis.Contracts:cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "FullName": "cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "Name": "ICompositionExposure",
+          "Namespace": "cCoder.CodeAnalysis.Exposures",
+          "AssemblyName": "cCoder.CodeAnalysis.Contracts",
+          "Kind": "Interface",
+          "IsInCurrentProject": false,
+          "StandardElementType": "Dependency"
+        },
+        {
           "Id": "cCoder.DocumentManagement:cCoder.DocumentManagement.Exposures.IFileMutationOperationsExposure",
           "FullName": "cCoder.DocumentManagement.Exposures.IFileMutationOperationsExposure",
           "Name": "IFileMutationOperationsExposure",
@@ -11104,7 +11164,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FileMutationOperationsExposure.DeleteFileAsync(System.Guid)",
           "Name": "DeleteFileAsync",
-          "LineNumber": 17,
+          "LineNumber": 18,
           "Inputs": [
             {
               "Name": "fileId",
@@ -11151,7 +11211,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FileMutationOperationsExposure.GetAllFiles(System.Boolean)",
           "Name": "GetAllFiles",
-          "LineNumber": 14,
+          "LineNumber": 15,
           "Inputs": [
             {
               "Name": "ignoreFilters",
@@ -11470,6 +11530,16 @@
       "BaseType": null,
       "Interfaces": [
         {
+          "Id": "cCoder.CodeAnalysis.Contracts:cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "FullName": "cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "Name": "ICompositionExposure",
+          "Namespace": "cCoder.CodeAnalysis.Exposures",
+          "AssemblyName": "cCoder.CodeAnalysis.Contracts",
+          "Kind": "Interface",
+          "IsInCurrentProject": false,
+          "StandardElementType": "Dependency"
+        },
+        {
           "Id": "cCoder.DocumentManagement:cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure",
           "FullName": "cCoder.DocumentManagement.Exposures.IFilePathOperationsExposure",
           "Name": "IFilePathOperationsExposure",
@@ -11485,7 +11555,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure.CopyAppPathAsync(System.Int32,System.String,System.String)",
           "Name": "CopyAppPathAsync",
-          "LineNumber": 26,
+          "LineNumber": 27,
           "Inputs": [
             {
               "Name": "appId",
@@ -11533,7 +11603,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure.CopyFilePathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,cCoder.DocumentManagement.Models.Path)",
           "Name": "CopyFilePathAsync",
-          "LineNumber": 41,
+          "LineNumber": 42,
           "Inputs": [
             {
               "Name": "appId",
@@ -11581,7 +11651,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure.DropAppPathAsync(System.Int32,System.String,System.Int32)",
           "Name": "DropAppPathAsync",
-          "LineNumber": 23,
+          "LineNumber": 24,
           "Inputs": [
             {
               "Name": "appId",
@@ -11629,7 +11699,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure.GetAppPath(System.Int32,System.String,System.Int32)",
           "Name": "GetAppPath",
-          "LineNumber": 14,
+          "LineNumber": 15,
           "Inputs": [
             {
               "Name": "appId",
@@ -11676,7 +11746,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure.MoveAppPathAsync(System.Int32,System.String,System.String)",
           "Name": "MoveAppPathAsync",
-          "LineNumber": 29,
+          "LineNumber": 30,
           "Inputs": [
             {
               "Name": "appId",
@@ -11724,7 +11794,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure.SaveAppPathAsync(System.Int32,System.String,System.IO.Stream)",
           "Name": "SaveAppPathAsync",
-          "LineNumber": 20,
+          "LineNumber": 21,
           "Inputs": [
             {
               "Name": "appId",
@@ -11771,7 +11841,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure.SaveFilePathAsync(System.Int32,cCoder.DocumentManagement.Models.Path,System.IO.Stream)",
           "Name": "SaveFilePathAsync",
-          "LineNumber": 32,
+          "LineNumber": 33,
           "Inputs": [
             {
               "Name": "appId",
@@ -11818,7 +11888,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FilePathOperationsExposure.SearchApp(System.Int32,System.String)",
           "Name": "SearchApp",
-          "LineNumber": 17,
+          "LineNumber": 18,
           "Inputs": [
             {
               "Name": "appId",
@@ -11867,6 +11937,16 @@
       "BaseType": null,
       "Interfaces": [
         {
+          "Id": "cCoder.CodeAnalysis.Contracts:cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "FullName": "cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "Name": "ICompositionExposure",
+          "Namespace": "cCoder.CodeAnalysis.Exposures",
+          "AssemblyName": "cCoder.CodeAnalysis.Contracts",
+          "Kind": "Interface",
+          "IsInCurrentProject": false,
+          "StandardElementType": "Dependency"
+        },
+        {
           "Id": "cCoder.DocumentManagement:cCoder.DocumentManagement.Exposures.IFolderEventManager",
           "FullName": "cCoder.DocumentManagement.Exposures.IFolderEventManager",
           "Name": "IFolderEventManager",
@@ -11882,7 +11962,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FolderEventManager.HandleFolderDeleteEventAsync(cCoder.Data.Models.DMS.Folder)",
           "Name": "HandleFolderDeleteEventAsync",
-          "LineNumber": 14,
+          "LineNumber": 15,
           "Inputs": [
             {
               "Name": "folder",
@@ -11938,6 +12018,16 @@
       "BaseType": null,
       "Interfaces": [
         {
+          "Id": "cCoder.CodeAnalysis.Contracts:cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "FullName": "cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "Name": "ICompositionExposure",
+          "Namespace": "cCoder.CodeAnalysis.Exposures",
+          "AssemblyName": "cCoder.CodeAnalysis.Contracts",
+          "Kind": "Interface",
+          "IsInCurrentProject": false,
+          "StandardElementType": "Dependency"
+        },
+        {
           "Id": "cCoder.DocumentManagement:cCoder.DocumentManagement.Exposures.IFolderMutationOperationsExposure",
           "FullName": "cCoder.DocumentManagement.Exposures.IFolderMutationOperationsExposure",
           "Name": "IFolderMutationOperationsExposure",
@@ -11953,7 +12043,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FolderMutationOperationsExposure.AddOrUpdateAppFoldersAsync(System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E)",
           "Name": "AddOrUpdateAppFoldersAsync",
-          "LineNumber": 21,
+          "LineNumber": 22,
           "Inputs": [
             {
               "Name": "folders",
@@ -11994,7 +12084,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FolderMutationOperationsExposure.AddOrUpdateFoldersAsync(System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.Folder\u003E)",
           "Name": "AddOrUpdateFoldersAsync",
-          "LineNumber": 18,
+          "LineNumber": 19,
           "Inputs": [
             {
               "Name": "folders",
@@ -12036,7 +12126,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FolderMutationOperationsExposure.DeleteAllByAppIdAsync(System.Int32)",
           "Name": "DeleteAllByAppIdAsync",
-          "LineNumber": 24,
+          "LineNumber": 25,
           "Inputs": [
             {
               "Name": "appId",
@@ -12081,7 +12171,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FolderMutationOperationsExposure.GetAllFolders(System.Boolean)",
           "Name": "GetAllFolders",
-          "LineNumber": 15,
+          "LineNumber": 16,
           "Inputs": [
             {
               "Name": "ignoreFilters",
@@ -12404,6 +12494,16 @@
       "BaseType": null,
       "Interfaces": [
         {
+          "Id": "cCoder.CodeAnalysis.Contracts:cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "FullName": "cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "Name": "ICompositionExposure",
+          "Namespace": "cCoder.CodeAnalysis.Exposures",
+          "AssemblyName": "cCoder.CodeAnalysis.Contracts",
+          "Kind": "Interface",
+          "IsInCurrentProject": false,
+          "StandardElementType": "Dependency"
+        },
+        {
           "Id": "cCoder.DocumentManagement:cCoder.DocumentManagement.Exposures.IFolderPathOperationsExposure",
           "FullName": "cCoder.DocumentManagement.Exposures.IFolderPathOperationsExposure",
           "Name": "IFolderPathOperationsExposure",
@@ -12419,7 +12519,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FolderPathOperationsExposure.CopyAppPathAsync(System.Int32,System.String,System.String)",
           "Name": "CopyAppPathAsync",
-          "LineNumber": 32,
+          "LineNumber": 33,
           "Inputs": [
             {
               "Name": "appId",
@@ -12467,7 +12567,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FolderPathOperationsExposure.DropAppPathAsync(System.Int32,System.String)",
           "Name": "DropAppPathAsync",
-          "LineNumber": 29,
+          "LineNumber": 30,
           "Inputs": [
             {
               "Name": "appId",
@@ -12510,7 +12610,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FolderPathOperationsExposure.GetAppPath(System.Int32,System.String,System.String)",
           "Name": "GetAppPath",
-          "LineNumber": 16,
+          "LineNumber": 17,
           "Inputs": [
             {
               "Name": "appId",
@@ -12557,7 +12657,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FolderPathOperationsExposure.GetFilesZippedAppPath(System.Int32,System.Collections.Generic.IEnumerable\u003CSystem.String\u003E)",
           "Name": "GetFilesZippedAppPath",
-          "LineNumber": 13,
+          "LineNumber": 14,
           "Inputs": [
             {
               "Name": "appId",
@@ -12599,7 +12699,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FolderPathOperationsExposure.MoveAppPathAsync(System.Int32,System.String,System.String)",
           "Name": "MoveAppPathAsync",
-          "LineNumber": 35,
+          "LineNumber": 36,
           "Inputs": [
             {
               "Name": "appId",
@@ -12647,7 +12747,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FolderPathOperationsExposure.SaveAppPathAsync(System.Int32,System.String)",
           "Name": "SaveAppPathAsync",
-          "LineNumber": 26,
+          "LineNumber": 27,
           "Inputs": [
             {
               "Name": "appId",
@@ -12690,7 +12790,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.FolderPathOperationsExposure.UnpackAppPathAsync(System.Int32,System.String,System.IO.Stream,System.Boolean)",
           "Name": "UnpackAppPathAsync",
-          "LineNumber": 19,
+          "LineNumber": 20,
           "Inputs": [
             {
               "Name": "appId",
@@ -13128,6 +13228,16 @@
       "BaseType": null,
       "Interfaces": [
         {
+          "Id": "cCoder.CodeAnalysis.Contracts:cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "FullName": "cCoder.CodeAnalysis.Exposures.ICompositionExposure",
+          "Name": "ICompositionExposure",
+          "Namespace": "cCoder.CodeAnalysis.Exposures",
+          "AssemblyName": "cCoder.CodeAnalysis.Contracts",
+          "Kind": "Interface",
+          "IsInCurrentProject": false,
+          "StandardElementType": "Dependency"
+        },
+        {
           "Id": "cCoder.DocumentManagement:cCoder.DocumentManagement.Exposures.IWebDavOperationsExposure",
           "FullName": "cCoder.DocumentManagement.Exposures.IWebDavOperationsExposure",
           "Name": "IWebDavOperationsExposure",
@@ -13143,7 +13253,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.WebDavOperationsExposure.ProcessDmsProcessingSessionAsync(cCoder.DocumentManagement.Models.DmsProcessingSession)",
           "Name": "ProcessDmsProcessingSessionAsync",
-          "LineNumber": 13,
+          "LineNumber": 14,
           "Inputs": [
             {
               "Name": "dmsProcessingSession",
