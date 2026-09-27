@@ -12,7 +12,8 @@ namespace cCoder.DocumentManagement.Exposures;
 
 internal sealed class Dms(
     IDmsAggregationService dmsAggregationService)
-    : IDms
+    : IDms,
+      cCoder.CodeAnalysis.Exposures.ICompositionExposure
 {
     public DmsResult GetFilesZipped(IEnumerable<DmsPath> paths) =>
         GetFilesZipped(paths: paths.Select(selector: path => path.FullPath));

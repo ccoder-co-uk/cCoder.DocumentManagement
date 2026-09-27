@@ -9,7 +9,8 @@ namespace cCoder.DocumentManagement.Exposures;
 
 internal sealed class FolderEventManager(
     IFolderMutationAggregationService folderMutationAggregationService)
-    : IFolderEventManager
+    : IFolderEventManager,
+      cCoder.CodeAnalysis.Exposures.ICompositionExposure
 {
     public ValueTask HandleFolderDeleteEventAsync(Folder folder) =>
         folderMutationAggregationService.HandleFolderDeleteEventAsync(folder: folder);

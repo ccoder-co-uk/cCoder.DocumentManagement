@@ -11,7 +11,8 @@ using cCoder.DocumentManagement.Services.Aggregations;
 namespace cCoder.DocumentManagement.Exposures;
 
 internal class DocumentManagementAppExposure(IAppAggregationService appOrchestrationService)
-    : IDocumentManagementAppExposure
+    : IDocumentManagementAppExposure,
+      cCoder.CodeAnalysis.Exposures.ICompositionExposure
 {
     public ValueTask AddAsync(App newApp) =>
         appOrchestrationService.AddAppAsync(newApp: newApp);
