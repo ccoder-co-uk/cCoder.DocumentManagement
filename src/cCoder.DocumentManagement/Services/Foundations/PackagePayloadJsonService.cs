@@ -2,7 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.Data.Models.DMS;
+using System.Collections.Generic;
+using System.Linq;
+using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Brokers;
 
 namespace cCoder.DocumentManagement.Services.Foundations;

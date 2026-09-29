@@ -2,9 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Models;
-using cCoder.Data.Models.CMS;
-using cCoder.Data.Models.DMS;
+using System;
+using System.Threading.Tasks;
+using cCoder.DocumentManagement.Models.Exceptions;
 using cCoder.Data.Models.Security;
 using FluentAssertions;
 using Xunit;

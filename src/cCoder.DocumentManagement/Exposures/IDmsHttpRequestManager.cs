@@ -2,7 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Services.Processings;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 
 namespace cCoder.DocumentManagement.Exposures;

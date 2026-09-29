@@ -2,6 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.IO;
+
 using DmsFile = cCoder.Data.Models.DMS.File;
 
 namespace cCoder.DocumentManagement.Models;

@@ -2,11 +2,16 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
 using cCoder.DocumentManagement.Brokers.Loggings;
 using cCoder.DocumentManagement.Brokers;
 using System.Security;
 using cCoder.DocumentManagement.Models;
-using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Exposures;
 using LocalPath = cCoder.DocumentManagement.Models.Path;
 using DmsResult = cCoder.DocumentManagement.Models.DMSResult;

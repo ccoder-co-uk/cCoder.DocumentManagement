@@ -2,11 +2,12 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Linq;
+using cCoder.DocumentManagement.Models;
+
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.Packaging;
-using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Services.Aggregations;
-using cCoder.DocumentManagement.Services.Orchestrations;
 using cCoder.Eventing;
 using DataFolder = cCoder.Data.Models.DMS.Folder;
 using DataPackageItem = cCoder.Data.Models.Packaging.PackageItem;

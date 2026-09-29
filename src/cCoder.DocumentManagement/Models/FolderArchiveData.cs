@@ -2,6 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using System.Linq;
+
 using cCoder.Data.Models.DMS;
 
 namespace cCoder.DocumentManagement.Models;

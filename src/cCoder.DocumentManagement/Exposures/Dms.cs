@@ -2,6 +2,12 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using cCoder.DocumentManagement.Models;
+
 using cCoder.DocumentManagement.Services.Aggregations;
 using DmsFile = cCoder.Data.Models.DMS.File;
 using DmsPath = cCoder.DocumentManagement.Models.Path;

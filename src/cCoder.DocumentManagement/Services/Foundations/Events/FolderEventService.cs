@@ -2,12 +2,11 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Threading.Tasks;
+
 using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Brokers.Events;
-using cCoder.DocumentManagement.Models;
-using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
-using cCoder.Data.Models.Security;
 using cCoder.Eventing.Models;
 using DataFolder = cCoder.Data.Models.DMS.Folder;
 

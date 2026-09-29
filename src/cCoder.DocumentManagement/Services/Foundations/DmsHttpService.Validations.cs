@@ -2,6 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using System.Linq;
+
 namespace cCoder.DocumentManagement.Services.Foundations;
 
 internal sealed partial class DmsHttpService

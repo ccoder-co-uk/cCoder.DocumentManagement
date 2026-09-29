@@ -2,6 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Linq;
+
 namespace cCoder.DocumentManagement.Models;
 
 public sealed class Path

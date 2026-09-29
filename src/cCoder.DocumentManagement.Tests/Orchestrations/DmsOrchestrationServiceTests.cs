@@ -2,12 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Models;
+using System;
 using cCoder.Data.Models.CMS;
-using cCoder.Data.Models.DMS;
-using cCoder.Data.Models.Security;
-using cCoder.DocumentManagement.Services;
-using cCoder.DocumentManagement.Services.Orchestrations;
 using cCoder.DocumentManagement.Services.Processings;
 using cCoder.DocumentManagement.Services.Aggregations;
 using cCoder.DocumentManagement.Exposures;

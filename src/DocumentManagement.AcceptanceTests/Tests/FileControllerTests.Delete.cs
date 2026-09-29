@@ -2,6 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Threading.Tasks;
+
 using FluentAssertions;
 using Xunit;
 using DmsFile = cCoder.Data.Models.DMS.File;

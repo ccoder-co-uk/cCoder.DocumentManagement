@@ -2,11 +2,12 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.Data;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using cCoder.DocumentManagement.Models;
-using cCoder.Data.Models.CMS;
-using cCoder.Data.Models.DMS;
-using cCoder.Data.Models.Security;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -14,7 +15,6 @@ using DMSResult = cCoder.DocumentManagement.Models.DMSResult;
 using DataFile = cCoder.Data.Models.DMS.File;
 using ExternalPath = cCoder.DocumentManagement.Models.Path;
 using LocalFile = cCoder.Data.Models.DMS.File;
-using LocalPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Orchestrations;

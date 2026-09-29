@@ -2,8 +2,10 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+
 using cCoder.CodeAnalysis.Exposures;
-using cCoder.DocumentManagement.Services.Orchestrations;
 namespace cCoder.DocumentManagement.Exposures.Middleware;
 
 public class DMSMiddleware(

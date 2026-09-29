@@ -2,11 +2,12 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Services.Processings;
+using System.IO;
+using System.Threading.Tasks;
+using cCoder.DocumentManagement.Models;
 using FluentAssertions;
 using Moq;
 using Xunit;
-using DmsPath = cCoder.DocumentManagement.Models.Path;
 
 
 namespace cCoder.Core.Services.Tests.DMS.Processings;

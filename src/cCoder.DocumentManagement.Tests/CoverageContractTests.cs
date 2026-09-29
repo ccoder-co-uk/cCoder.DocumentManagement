@@ -2,6 +2,12 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
 using cCoder.DocumentManagement.Exposures.Controllers;
 using FluentAssertions;
 using System.Linq.Expressions;

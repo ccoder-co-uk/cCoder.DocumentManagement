@@ -2,6 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Threading.Tasks;
+using cCoder.DocumentManagement.Models;
+
 using cCoder.DocumentManagement.Services.Aggregations;
 
 namespace cCoder.DocumentManagement.Exposures;

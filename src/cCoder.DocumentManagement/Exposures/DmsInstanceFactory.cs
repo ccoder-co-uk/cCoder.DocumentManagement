@@ -2,6 +2,10 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+
 using cCoder.CodeAnalysis.Exposures;
 using cCoder.DocumentManagement.Models;
 

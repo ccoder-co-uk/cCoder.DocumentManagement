@@ -2,6 +2,10 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using Microsoft.Extensions.DependencyInjection;
+
+using System;
+
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Packaging;
@@ -12,22 +16,14 @@ using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Exposures.Middleware;
 using cCoder.DocumentManagement.Brokers.Events;
 using cCoder.DocumentManagement.Brokers.Storage;
-using cCoder.DocumentManagement.Dependencies;
-using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Models;
-using cCoder.DocumentManagement.Services;
 using cCoder.DocumentManagement.Services.Aggregations;
 using cCoder.DocumentManagement.Services.Foundations;
 using cCoder.DocumentManagement.Services.Foundations.Events;
 using cCoder.DocumentManagement.Services.Orchestrations;
 using cCoder.DocumentManagement.Services.Processings;
 using cCoder.Eventing;
-using Microsoft.AspNetCore.OData;
-using Microsoft.AspNetCore.OData.Batch;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
-using Microsoft.OpenApi;
 using AuthorizationBroker = cCoder.DocumentManagement.Brokers.AuthorizationBroker;
 using IAuthorizationBroker = cCoder.DocumentManagement.Brokers.IAuthorizationBroker;
 using IJsonBroker = cCoder.DocumentManagement.Brokers.IJsonBroker;

@@ -2,10 +2,12 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using System.Linq;
+
 using cCoder.Data;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
-using cCoder.DocumentManagement.Dependencies;
 using cCoder.DocumentManagement.Models;
 using Microsoft.EntityFrameworkCore;
 

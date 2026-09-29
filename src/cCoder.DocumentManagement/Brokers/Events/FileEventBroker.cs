@@ -2,6 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Threading.Tasks;
+
 using cCoder.Eventing;
 using cCoder.Eventing.Models;
 using FileEntity = cCoder.Data.Models.DMS.File;

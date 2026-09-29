@@ -2,6 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using cCoder.DocumentManagement.Extensions.OData;
+
 using System.Linq.Expressions;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;

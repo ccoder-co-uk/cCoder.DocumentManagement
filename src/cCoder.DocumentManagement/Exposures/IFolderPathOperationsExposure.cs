@@ -2,6 +2,11 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using cCoder.DocumentManagement.Models;
+
 namespace cCoder.DocumentManagement.Exposures;
 
 internal interface IFolderPathOperationsExposure

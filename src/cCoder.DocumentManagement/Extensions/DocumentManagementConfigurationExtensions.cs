@@ -2,6 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using cCoder.DocumentManagement.Models;
+
 using cCoder.Eventing.Models;
 
 namespace cCoder.DocumentManagement;

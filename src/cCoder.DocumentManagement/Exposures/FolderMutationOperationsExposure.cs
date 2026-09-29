@@ -2,6 +2,10 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Services.Aggregations;
 using Folder = cCoder.Data.Models.DMS.Folder;

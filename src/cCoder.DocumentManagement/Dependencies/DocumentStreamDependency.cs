@@ -2,6 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.IO;
+
 namespace cCoder.DocumentManagement.Dependencies;
 
 internal sealed class DocumentStreamDependency : MemoryStream
