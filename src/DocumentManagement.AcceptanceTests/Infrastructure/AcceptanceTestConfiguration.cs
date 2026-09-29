@@ -2,6 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+
 using Microsoft.Data.SqlClient;
 namespace Web.AcceptanceTests.Infrastructure;
 

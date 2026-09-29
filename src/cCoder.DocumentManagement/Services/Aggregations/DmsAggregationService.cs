@@ -2,8 +2,11 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Linq;
+using System.Threading.Tasks;
+using cCoder.DocumentManagement.Models;
+
 using cCoder.DocumentManagement.Services.Processings;
-using cCoder.DocumentManagement.Services.Aggregations;
 using cCoder.DocumentManagement.Exposures;
 using DataFile = cCoder.Data.Models.DMS.File;
 using LocalApp = cCoder.Data.Models.CMS.App;

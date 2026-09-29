@@ -2,6 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using cCoder.DocumentManagement.Models.Exceptions;
+
 using cCoder.DocumentManagement.Services.Processings;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;

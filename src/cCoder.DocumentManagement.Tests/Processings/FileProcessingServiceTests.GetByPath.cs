@@ -2,6 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using cCoder.DocumentManagement.Models.Exceptions;
+
 using System.Security;
 using cCoder.Data.Models.Security;
 using FluentAssertions;

@@ -2,9 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.DocumentManagement.Models;
-using cCoder.Data.Models.CMS;
-using cCoder.Data.Models.DMS;
+using System;
+using System.Threading.Tasks;
 using cCoder.Data.Models.Security;
 using cCoder.Eventing.Models;
 using FluentAssertions;

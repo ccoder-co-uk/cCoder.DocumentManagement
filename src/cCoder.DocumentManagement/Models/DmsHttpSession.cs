@@ -2,6 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using Microsoft.AspNetCore.Http;
+
 using cCoder.Data.Models.CMS;
 
 namespace cCoder.DocumentManagement.Models;

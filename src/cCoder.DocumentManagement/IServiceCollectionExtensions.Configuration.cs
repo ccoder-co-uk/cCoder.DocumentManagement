@@ -2,6 +2,10 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using Microsoft.Extensions.DependencyInjection;
+
+using System;
+
 using cCoder.DocumentManagement.Extensions.OData;
 using cCoder.DocumentManagement.Models;
 using cCoder.Eventing;

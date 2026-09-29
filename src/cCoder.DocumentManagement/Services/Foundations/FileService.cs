@@ -2,10 +2,13 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 using System.Security;
 using cCoder.DocumentManagement.Brokers.Storage;
-using cCoder.DocumentManagement.Models;
-using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
 using FileEntity = cCoder.Data.Models.DMS.File;

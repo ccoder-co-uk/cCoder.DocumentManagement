@@ -2,13 +2,14 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using System.Linq;
+using cCoder.DocumentManagement.Models.Exceptions;
+
 using System.IO.Compression;
 using System.Security;
-using cCoder.Data;
-using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
-using cCoder.Data.Models.Security;
 using FluentAssertions;
 using Moq;
 using Xunit;

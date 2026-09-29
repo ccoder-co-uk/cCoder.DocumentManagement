@@ -2,12 +2,14 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace cCoder.DocumentManagement.Services.Foundations;
 
-using cCoder.DocumentManagement.Models;
-using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
-using cCoder.Data.Models.Security;
 
 internal interface IFileService
 {

@@ -2,8 +2,10 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 using FluentAssertions;
-using cCoder.Data;
 using cCoder.Data.Models.CMS;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;

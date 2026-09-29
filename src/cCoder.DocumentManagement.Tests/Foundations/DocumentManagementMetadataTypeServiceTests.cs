@@ -2,6 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Linq;
+
 using cCoder.DocumentManagement.Brokers.OData;
 using cCoder.DocumentManagement.Models.OData;
 using cCoder.DocumentManagement.Services.Foundations;

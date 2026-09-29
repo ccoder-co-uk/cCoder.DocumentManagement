@@ -2,6 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using System.Threading.Tasks;
+
 using cCoder.DocumentManagement.Models.Exceptions;
 
 namespace cCoder.DocumentManagement.Services.Foundations.Events;

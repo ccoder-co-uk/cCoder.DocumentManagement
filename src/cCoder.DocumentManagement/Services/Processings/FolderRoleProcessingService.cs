@@ -2,11 +2,14 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 using System.Security;
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Models.Exceptions;
-using cCoder.Data.Models.CMS;
-using cCoder.Data.Models.DMS;
 using cCoder.DocumentManagement.Services.Foundations;
 using Microsoft.EntityFrameworkCore;
 

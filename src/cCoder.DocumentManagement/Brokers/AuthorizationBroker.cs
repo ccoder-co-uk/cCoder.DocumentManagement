@@ -2,18 +2,15 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.Linq;
+
 using cCoder.CodeAnalysis.Exposures;
-using cCoder.DocumentManagement.Dependencies;
 using cCoder.Data;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.Security;
 using Microsoft.EntityFrameworkCore;
-using DataRole = cCoder.Data.Models.Security.Role;
 using DataUser = cCoder.Data.Models.Security.User;
-using DataUserRole = cCoder.Data.Models.Security.UserRole;
-using LocalRole = cCoder.Data.Models.Security.Role;
 using LocalUser = cCoder.Data.Models.Security.User;
-using LocalUserRole = cCoder.Data.Models.Security.UserRole;
 
 
 namespace cCoder.DocumentManagement.Brokers;

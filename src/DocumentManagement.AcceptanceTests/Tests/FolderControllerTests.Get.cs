@@ -2,7 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
 using FluentAssertions;

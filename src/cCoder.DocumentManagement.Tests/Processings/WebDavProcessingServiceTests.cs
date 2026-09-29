@@ -2,16 +2,17 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
-using cCoder.Data;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using cCoder.DocumentManagement.Brokers.Loggings;
 using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Models;
 using cCoder.Data.Models.CMS;
 using cCoder.Data.Models.DMS;
-using cCoder.Data.Models.Security;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Foundations;
-using cCoder.DocumentManagement.Services.Processings;
 using cCoder.DocumentManagement.Services.Aggregations;
 using Moq;
 using MemoryStream = System.IO.MemoryStream;

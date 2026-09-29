@@ -2,6 +2,13 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using Microsoft.AspNetCore.Http;
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using cCoder.DocumentManagement.Models;
+
 using cCoder.Data.Models.CMS;
 using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Brokers.Storage;

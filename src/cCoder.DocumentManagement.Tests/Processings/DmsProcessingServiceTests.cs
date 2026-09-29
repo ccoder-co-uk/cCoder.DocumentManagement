@@ -2,14 +2,12 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.IO;
+
 using cCoder.DocumentManagement.Models;
 using cCoder.DocumentManagement.Brokers.Loggings;
 using cCoder.DocumentManagement.Brokers;
 using cCoder.Data.Models.CMS;
-using cCoder.Data.Models.DMS;
-using cCoder.Data.Models.Security;
-using cCoder.DocumentManagement.Services.Foundations;
-using cCoder.DocumentManagement.Services.Processings;
 using cCoder.DocumentManagement.Services.Aggregations;
 using cCoder.DocumentManagement.Exposures;
 using Moq;

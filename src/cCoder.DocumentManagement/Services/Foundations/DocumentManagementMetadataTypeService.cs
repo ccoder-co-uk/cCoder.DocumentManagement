@@ -2,6 +2,10 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using System.Reflection;
 using cCoder.Data.Models.DMS;
 using cCoder.DocumentManagement.Brokers.OData;

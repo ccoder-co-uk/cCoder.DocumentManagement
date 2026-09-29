@@ -2,6 +2,10 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using cCoder.DocumentManagement.Exposures.Controllers;
 using Microsoft.AspNetCore.Mvc;

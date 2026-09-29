@@ -9,7 +9,7 @@
     {
       "Name": "Apps.Shared.Hosting.NoOpSession",
       "StandardElementType": "Dependency",
-      "LineNumber": 7,
+      "LineNumber": 12,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": null,
@@ -47,7 +47,7 @@
         {
           "Id": "Apps.Shared.Hosting.NoOpSession.Clear()",
           "Name": "Clear",
-          "LineNumber": 27,
+          "LineNumber": 32,
           "Inputs": [],
           "ReturnType": "System.Void",
           "Implements": [
@@ -69,7 +69,7 @@
         {
           "Id": "Apps.Shared.Hosting.NoOpSession.CommitAsync(System.Threading.CancellationToken)",
           "Name": "CommitAsync",
-          "LineNumber": 17,
+          "LineNumber": 22,
           "Inputs": [
             {
               "Name": "cancellationToken",
@@ -96,7 +96,7 @@
         {
           "Id": "Apps.Shared.Hosting.NoOpSession.LoadAsync(System.Threading.CancellationToken)",
           "Name": "LoadAsync",
-          "LineNumber": 15,
+          "LineNumber": 20,
           "Inputs": [
             {
               "Name": "cancellationToken",
@@ -123,7 +123,7 @@
         {
           "Id": "Apps.Shared.Hosting.NoOpSession.Remove(System.String)",
           "Name": "Remove",
-          "LineNumber": 26,
+          "LineNumber": 31,
           "Inputs": [
             {
               "Name": "key",
@@ -150,7 +150,7 @@
         {
           "Id": "Apps.Shared.Hosting.NoOpSession.Set(System.String,System.Byte[])",
           "Name": "Set",
-          "LineNumber": 25,
+          "LineNumber": 30,
           "Inputs": [
             {
               "Name": "key",
@@ -181,7 +181,7 @@
         {
           "Id": "Apps.Shared.Hosting.NoOpSession.TryGetValue(System.String,System.Byte[])",
           "Name": "TryGetValue",
-          "LineNumber": 19,
+          "LineNumber": 24,
           "Inputs": [
             {
               "Name": "key",
@@ -214,7 +214,7 @@
     {
       "Name": "Apps.Shared.Hosting.NoOpSessionFeature",
       "StandardElementType": "Dependency",
-      "LineNumber": 10,
+      "LineNumber": 12,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": null,
@@ -241,7 +241,7 @@
     {
       "Name": "Apps.Shared.Models.Config",
       "StandardElementType": "Model",
-      "LineNumber": 7,
+      "LineNumber": 9,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": null,
@@ -273,7 +273,7 @@
     {
       "Name": "DocumentManagement.Web.IServiceCollectionExtensions",
       "StandardElementType": "App",
-      "LineNumber": 16,
+      "LineNumber": 20,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": null,
@@ -283,7 +283,7 @@
         {
           "Id": "DocumentManagement.Web.IServiceCollectionExtensions.AddWeb(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.Action\u003CDocumentManagement.Web.Models.AppConfiguration\u003E)",
           "Name": "AddWeb",
-          "LineNumber": 18,
+          "LineNumber": 22,
           "Inputs": [
             {
               "Name": "services",
@@ -421,7 +421,7 @@
     {
       "Name": "DocumentManagement.Web.Program",
       "StandardElementType": "App",
-      "LineNumber": 10,
+      "LineNumber": 13,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": null,
@@ -431,7 +431,7 @@
         {
           "Id": "DocumentManagement.Web.Program.Main(System.String[])",
           "Name": "Main",
-          "LineNumber": 12,
+          "LineNumber": 15,
           "Inputs": [
             {
               "Name": "args",
@@ -508,7 +508,7 @@
     {
       "Name": "DocumentManagement.Web.WebApplicationExtensions",
       "StandardElementType": "App",
-      "LineNumber": 12,
+      "LineNumber": 21,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": null,
@@ -518,7 +518,7 @@
         {
           "Id": "DocumentManagement.Web.WebApplicationExtensions.UseDocumentManagementApplication(Microsoft.AspNetCore.Builder.WebApplication)",
           "Name": "UseDocumentManagementApplication",
-          "LineNumber": 14,
+          "LineNumber": 23,
           "Inputs": [
             {
               "Name": "app",

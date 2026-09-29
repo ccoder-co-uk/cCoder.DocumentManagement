@@ -2,6 +2,8 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System;
+
 using cCoder.DocumentManagement.Brokers.Storage;
 using cCoder.DocumentManagement.Brokers;
 using cCoder.DocumentManagement.Services.Foundations;

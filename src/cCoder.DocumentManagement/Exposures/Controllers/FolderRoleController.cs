@@ -2,13 +2,14 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using Microsoft.AspNetCore.Http;
+
+using System;
+using System.Threading.Tasks;
+
 using cCoder.CodeAnalysis.Exposures;
 using cCoder.DocumentManagement.Brokers.Loggings;
-using cCoder.DocumentManagement.Extensions.OData;
-using cCoder.Data.Models.CMS;
-using cCoder.Data.Models.DMS;
 using cCoder.Data.Models.Security;
-using cCoder.DocumentManagement.Services.Orchestrations;
 using cCoder.DocumentManagement.Models.Exceptions;
 using cCoder.DocumentManagement.Models.OData;
 using Microsoft.AspNetCore.Mvc;

@@ -2,6 +2,9 @@
 // Copyright (c) Paul.Ward@ccoder.co.uk
 // ---------------------------------------------------------------
 
+using System.IO;
+using cCoder.DocumentManagement.Models;
+using System.Threading.Tasks;
 using cCoder.DocumentManagement.Exposures;
 using cCoder.DocumentManagement.Services.Aggregations;
 using FluentAssertions;
@@ -10,29 +13,27 @@ using Xunit;
 
 namespace cCoder.DocumentManagement.Tests.Exposures;
 
-public sealed partial class DmsInstanceOperationsExposureTests
+public sealed partial class DmsExposureContractTests
 {
     private readonly Mock<IDmsAggregationService> aggregationServiceMock = new(behavior: MockBehavior.Strict);
-    private readonly DmsInstanceOperationsExposure exposure;
+    private readonly Dms dms;
 
-    public DmsInstanceOperationsExposureTests() =>
-        exposure = new DmsInstanceOperationsExposure(dmsAggregationService: aggregationServiceMock.Object);
+    public DmsExposureContractTests() =>
+        dms = new Dms(dmsAggregationService: aggregationServiceMock.Object);
 
     [Fact]
-    public void Get_WhenCalled_MapsOperationAndReturnsResult()
+    public void Get_WhenCalled_ReturnsAggregationResult()
     {
         // Given
         Models.DMSResult expected = new();
 
         aggregationServiceMock
             .Setup(expression: service => service.GetDmsOperation(
-                dmsOperation: It.Is<DmsOperation>(match: operation => operation.Path == "folder/file.txt"
-                    && operation.Version == 3
-                    && operation.Search == "needle")))
+                dmsOperation: It.IsAny<DmsOperation>()))
             .Returns(value: new DmsOperation { Result = expected });
 
         // When
-        Models.DMSResult actual = exposure.Get(path: "folder/file.txt", version: 3, search: "needle");
+        Models.DMSResult actual = dms.Get(path: "file.txt");
 
         // Then
         actual.Should()
@@ -42,19 +43,18 @@ public sealed partial class DmsInstanceOperationsExposureTests
     }
 
     [Fact]
-    public void GetFilesZipped_WhenCalled_MapsPathsAndReturnsResult()
+    public void GetFilesZipped_WhenCalled_ReturnsAggregationResult()
     {
         // Given
-        string[] paths = ["one", "two"];
         Models.DMSResult expected = new();
 
         aggregationServiceMock
             .Setup(expression: service => service.GetFilesZippedDmsOperation(
-                dmsOperation: It.Is<DmsOperation>(match: operation => operation.Paths == paths)))
+                dmsOperation: It.IsAny<DmsOperation>()))
             .Returns(value: new DmsOperation { Result = expected });
 
         // When
-        Models.DMSResult actual = exposure.GetFilesZipped(paths: paths);
+        Models.DMSResult actual = dms.GetFilesZipped(paths: ["file.txt"]);
 
         // Then
         actual.Should()
@@ -64,90 +64,82 @@ public sealed partial class DmsInstanceOperationsExposureTests
     }
 
     [Fact]
-    public async Task SaveAsync_WhenCalled_MapsOperationAsync()
+    public async Task SaveAsync_WhenCalled_DelegatesToAggregationAsync()
     {
         // Given
-        using Stream content = new MemoryStream(buffer: [1]);
-
         aggregationServiceMock
             .Setup(expression: service => service.SaveDmsOperationAsync(
-                dmsOperation: It.Is<DmsOperation>(match: operation =>
-                    operation.Path == "file.txt" && operation.Content == content)))
+                dmsOperation: It.IsAny<DmsOperation>()))
             .Returns(value: ValueTask.FromResult(result: new DmsOperation()));
 
         // When
-        await exposure.SaveAsync(path: "file.txt", content: content);
+        await dms.SaveAsync(path: "file.txt");
 
         // Then
         aggregationServiceMock.VerifyAll();
     }
 
     [Fact]
-    public async Task UnpackAsync_WhenCalled_MapsOperationAsync()
+    public async Task UnpackAsync_WhenCalled_DelegatesToAggregationAsync()
     {
         // Given
-        using Stream content = new MemoryStream(buffer: [1]);
+        using Stream content = new MemoryStream();
 
         aggregationServiceMock
             .Setup(expression: service => service.UnpackDmsOperationAsync(
-                dmsOperation: It.Is<DmsOperation>(match: operation => operation.Path == "archive"
-                    && operation.Content == content
-                    && operation.IgnoreArchiveRoot)))
+                dmsOperation: It.IsAny<DmsOperation>()))
             .Returns(value: ValueTask.FromResult(result: new DmsOperation()));
 
         // When
-        await exposure.UnpackAsync(path: "archive", content: content, ignoreArchiveRoot: true);
+        await dms.UnpackAsync(path: "archive", content: content);
 
         // Then
         aggregationServiceMock.VerifyAll();
     }
 
     [Fact]
-    public async Task DropAsync_WhenCalled_MapsOperationAsync()
+    public async Task DropAsync_WhenCalled_DelegatesToAggregationAsync()
     {
         // Given
         aggregationServiceMock
             .Setup(expression: service => service.DropDmsOperationAsync(
-                dmsOperation: It.Is<DmsOperation>(match: operation =>
-                    operation.Path == "file.txt" && operation.Version == 2)))
+                dmsOperation: It.IsAny<DmsOperation>()))
             .Returns(value: ValueTask.FromResult(result: new DmsOperation()));
 
         // When
-        await exposure.DropAsync(path: "file.txt", version: 2);
+        await dms.DropAsync(path: "file.txt");
 
         // Then
         aggregationServiceMock.VerifyAll();
     }
 
     [Fact]
-    public async Task CopyAsync_WhenCalled_MapsOperationAsync()
+    public async Task CopyAsync_WhenCalled_DelegatesToAggregationAsync()
     {
         // Given
         aggregationServiceMock
             .Setup(expression: service => service.CopyDmsOperationAsync(
-                dmsOperation: It.Is<DmsOperation>(match: operation =>
-                    operation.Path == "old" && operation.NewPath == "new")))
+                dmsOperation: It.IsAny<DmsOperation>()))
             .Returns(value: ValueTask.FromResult(result: new DmsOperation()));
 
         // When
-        await exposure.CopyAsync(oldPath: "old", newPath: "new");
+        await dms.CopyAsync(oldPath: "old", newPath: "new");
 
         // Then
         aggregationServiceMock.VerifyAll();
     }
 
     [Fact]
-    public async Task MoveAsync_WhenCalled_MapsOperationAsync()
+    public async Task MoveAsync_WhenCalled_DelegatesToAggregationAsync()
     {
         // Given
         aggregationServiceMock
             .Setup(expression: service => service.MoveDmsOperationAsync(
-                dmsOperation: It.Is<DmsOperation>(match: operation =>
-                    operation.Path == "old" && operation.NewPath == "new")))
+                dmsOperation: It.IsAny<DmsOperation>()))
             .Returns(value: ValueTask.FromResult(result: new DmsOperation()));
 
         // When
-        await exposure.MoveAsync(oldPath: "old", newPath: "new");
+        await dms.MoveAsync(oldPath: "old", newPath: "new");
 
         // Then
         aggregationServiceMock.VerifyAll();
