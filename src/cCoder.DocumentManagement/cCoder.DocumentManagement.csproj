@@ -39,8 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="cCoder.CodeAnalysis.Contracts" Version="2026.9.30.1047" />
-    <PackageReference Include="cCoder.Data" Version="2026.9.30.925" Condition="'$(UseLocalData)' != 'true'" />
-    <PackageReference Include="cCoder.Eventing" Version="2026.9.30.924" Condition="'$(UseLocalEventing)' != 'true'" />
+    <PackageReference Include="cCoder.Data" Version="2026.9.30.1134" Condition="'$(UseLocalData)' != 'true'" />
+    <PackageReference Include="cCoder.Eventing" Version="2026.9.30.1112" Condition="'$(UseLocalEventing)' != 'true'" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="9.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.11" />
