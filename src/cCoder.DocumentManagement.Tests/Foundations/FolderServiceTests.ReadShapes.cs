@@ -165,7 +165,7 @@ public partial class FolderServiceTests
             .Returns(value: dataFolder);
 
         // When
-        LocalFolder result = folderService.GetByPathWithSubFoldersAndFiles(appId: 7, path: "docs", ignoreFilters: false);
+        LocalFolder result = folderService.GetFolderByPathWithSubFoldersAndFiles(appId: 7, path: "docs", ignoreFilters: false);
 
         // Then
         result.Should()

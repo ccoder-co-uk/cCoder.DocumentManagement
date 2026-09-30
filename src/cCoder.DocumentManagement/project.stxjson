@@ -20893,8 +20893,8 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Services.Foundations.FolderService.GetByPathWithSubFoldersAndFiles(System.Int32,System.String,System.Boolean)",
-          "Name": "GetByPathWithSubFoldersAndFiles",
+          "Id": "cCoder.DocumentManagement.Services.Foundations.FolderService.GetFolderByPathWithSubFoldersAndFiles(System.Int32,System.String,System.Boolean)",
+          "Name": "GetFolderByPathWithSubFoldersAndFiles",
           "LineNumber": 134,
           "Inputs": [
             {
@@ -20912,7 +20912,7 @@
           ],
           "ReturnType": "cCoder.Data.Models.DMS.Folder",
           "Implements": [
-            "cCoder.DocumentManagement.Services.Foundations.IFolderService.GetByPathWithSubFoldersAndFiles(System.Int32,System.String,System.Boolean)"
+            "cCoder.DocumentManagement.Services.Foundations.IFolderService.GetFolderByPathWithSubFoldersAndFiles(System.Int32,System.String,System.Boolean)"
           ],
           "Calls": [
             {
@@ -32612,8 +32612,8 @@
           "HasTryCatch": false
         },
         {
-          "Id": "cCoder.DocumentManagement.Services.Foundations.IFolderService.GetByPathWithSubFoldersAndFiles(System.Int32,System.String,System.Boolean)",
-          "Name": "GetByPathWithSubFoldersAndFiles",
+          "Id": "cCoder.DocumentManagement.Services.Foundations.IFolderService.GetFolderByPathWithSubFoldersAndFiles(System.Int32,System.String,System.Boolean)",
+          "Name": "GetFolderByPathWithSubFoldersAndFiles",
           "LineNumber": 23,
           "Inputs": [
             {

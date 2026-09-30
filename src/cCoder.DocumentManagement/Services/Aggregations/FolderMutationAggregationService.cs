@@ -941,7 +941,7 @@ internal partial class FolderMutationAggregationService(
             throw new SecurityException(message: "Access Denied!");
         }
 
-        Folder folder2 = service.GetByPathWithSubFoldersAndFiles(appId: appId, path: oldPath.Lowered);
+        Folder folder2 = service.GetFolderByPathWithSubFoldersAndFiles(appId: appId, path: oldPath.Lowered);
 
         if (folder2 == null)
         {

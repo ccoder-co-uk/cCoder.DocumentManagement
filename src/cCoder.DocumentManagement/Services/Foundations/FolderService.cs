@@ -131,7 +131,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
             );
         });
 
-    public Folder GetByPathWithSubFoldersAndFiles(
+    public Folder GetFolderByPathWithSubFoldersAndFiles(
         int appId,
         string path,
         bool ignoreFilters = false
@@ -139,7 +139,7 @@ internal partial class FolderService(IFolderBroker folderBroker, IAuthorizationB
 =>
         TryCatch(operation: () =>
         {
-            ValidateByPathWithSubFoldersAndFilesOnGet(appId: appId, path: path, ignoreFilters: ignoreFilters);
+            ValidateFolderByPathWithSubFoldersAndFilesOnGet(appId: appId, path: path, ignoreFilters: ignoreFilters);
             return CreateFolderForMove(folder: folderBroker.SelectFolderByPathWithSubFoldersAndFiles(appId: appId, path: path, ignoreFilters: ignoreFilters));
         });
 

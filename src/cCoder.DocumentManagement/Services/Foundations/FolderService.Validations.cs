@@ -35,7 +35,7 @@ internal sealed partial class FolderService
     private static void ValidateByPathWithRolesAndFilesAndContentsOnGet(int appId, string path, bool ignoreFilters) =>
         Validate(inputs: [appId, path, ignoreFilters]);
 
-    private static void ValidateByPathWithSubFoldersAndFilesOnGet(int appId, string path, bool ignoreFilters) =>
+    private static void ValidateFolderByPathWithSubFoldersAndFilesOnGet(int appId, string path, bool ignoreFilters) =>
         Validate(inputs: [appId, path, ignoreFilters]);
 
     private static void ValidateFolderOnAdd(Folder newFolder) =>

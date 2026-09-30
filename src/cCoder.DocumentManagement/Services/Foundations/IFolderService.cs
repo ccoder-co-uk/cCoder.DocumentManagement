@@ -20,7 +20,7 @@ internal interface IFolderService
     Folder GetByPathWithRoles(int appId, string path, bool ignoreFilters = false);
     Folder GetByPathWithParentAndRoles(int appId, string path, bool ignoreFilters = false);
     Folder GetByPathWithRolesAndFilesAndContents(int appId, string path, bool ignoreFilters = false);
-    Folder GetByPathWithSubFoldersAndFiles(int appId, string path, bool ignoreFilters = false);
+    Folder GetFolderByPathWithSubFoldersAndFiles(int appId, string path, bool ignoreFilters = false);
     IQueryable<Folder> GetAll(bool ignoreFilters = false);
     ValueTask<Folder> AddForPathBuildFolderAsync(Folder newFolder);
     ValueTask<Folder> AddFolderAsync(Folder newFolder);
