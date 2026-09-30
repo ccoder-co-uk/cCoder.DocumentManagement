@@ -38,7 +38,7 @@
     <ProjectReference Include="$(LocalEventingProject)" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="cCoder.CodeAnalysis.Contracts" Version="2026.9.30.1006" />
+    <PackageReference Include="cCoder.CodeAnalysis.Contracts" Version="2026.9.30.1047" />
     <PackageReference Include="cCoder.Data" Version="2026.9.30.925" Condition="'$(UseLocalData)' != 'true'" />
     <PackageReference Include="cCoder.Eventing" Version="2026.9.30.924" Condition="'$(UseLocalEventing)' != 'true'" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="9.5.0" />
