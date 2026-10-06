@@ -503,6 +503,8 @@ internal partial class FileMutationAggregationService(
             RawData = rawBytes,
             File = existingFile
         });
+
+        await eventService.RaiseFileUpdateEventAsync(entity: existingFile);
     }
 
     private async ValueTask BuildLocalFilePathFolderAsync(string path, byte[] rawBytes, Folder folder)
@@ -531,6 +533,8 @@ internal partial class FileMutationAggregationService(
             Size = GetSizeOf(content: rawBytes),
             RawData = rawBytes
         });
+
+        await eventService.RaiseFileAddEventAsync(entity: fileObject);
     }
 
     private async ValueTask DropFileAppPathAsync(int appId, string path, int version)

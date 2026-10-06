@@ -82,5 +82,16 @@ internal partial class FileEventService(IFileEventBroker fileEventBroker, IAuthI
                 Size = file.Size,
                 CreatedOn = file.CreatedOn,
                 DeletedOn = file.DeletedOn,
+                Folder = file.Folder is null
+                    ? null
+                    : new cCoder.Data.Models.DMS.Folder
+                    {
+                        Id = file.Folder.Id,
+                        AppId = file.Folder.AppId,
+                        ParentId = file.Folder.ParentId,
+                        Name = file.Folder.Name,
+                        Path = file.Folder.Path,
+                        DeletedOn = file.Folder.DeletedOn,
+                    },
             };
 }
