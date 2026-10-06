@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 
 using cCoder.Eventing.Models;
+using cCoder.Data.Models.DMS;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -21,7 +22,15 @@ public partial class FileEventServiceTests
     public async Task ShouldMapAndCallBrokerWhenRaiseFileAddEventAsync()
     {
         // Given
-        LocalFile entity = new() { Id = Guid.NewGuid(), Name = "file.txt", Path = "file.txt" };
+
+        LocalFile entity = new()
+        {
+            Id = Guid.NewGuid(),
+            Name = "file.txt",
+            Path = "file.txt",
+            Folder = new Folder { AppId = 21 }
+        };
+
         EventMessage<DataFile> actualMessage = null;
 
         fileEventBrokerMock
@@ -44,6 +53,12 @@ public partial class FileEventServiceTests
 
         actualMessage.Data.Path.Should()
             .Be(expected: entity.Path);
+
+        actualMessage.Data.Folder.Should()
+            .NotBeNull();
+
+        actualMessage.Data.Folder.AppId.Should()
+            .Be(expected: entity.Folder.AppId);
 
         actualMessage.AuthInfo.Should()
             .NotBeNull();
