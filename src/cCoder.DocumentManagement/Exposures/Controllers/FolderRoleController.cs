@@ -5,6 +5,7 @@
 using Microsoft.AspNetCore.Http;
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using cCoder.CodeAnalysis.Exposures;
@@ -31,13 +32,40 @@ public class FolderRoleController(
     {
         try
         {
-            return Ok(value: service.GetAll());
+            IQueryable<FolderRole> result = service.GetAll();
+            loggingBroker.LogInformation(message: "Controller request succeeded.");
+
+            return Ok(value: result);
+        }
+        catch (DocumentManagementValidationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The document management request is invalid.");
+        }
+        catch (ArgumentException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The request is invalid.");
+        }
+        catch (System.Security.Authentication.AuthenticationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authentication failed.");
+
+            return Unauthorized(value: "Authentication failed.");
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
+
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (System.Security.SecurityException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
 
-            return Forbid();
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (Exception exception)
         {
@@ -54,29 +82,53 @@ public class FolderRoleController(
         {
             if (!base.ModelState.IsValid)
             {
-                return new OData.BadRequestResult(modelState: base.ModelState);
+                loggingBroker.LogWarning(message: "Controller request model was invalid.");
+
+                return BadRequest(error: "The request is invalid.");
             }
 
             FolderRole addedFolderRole = await service.AddFolderRoleAsync(newFolderRole: newFolderRole);
+            loggingBroker.LogInformation(message: "Controller request succeeded.");
 
             return StatusCode(statusCode: StatusCodes.Status201Created, value: addedFolderRole);
         }
         catch (DocumentManagementServiceException exception) when (exception.GetBaseException() is DuplicateFolderRoleException)
         {
-            loggingBroker.LogError(exception: exception, message: "Folder role already exists.");
+            loggingBroker.LogWarning(
+                exception: exception,
+                message: "Controller request conflicted with existing state.");
+
             return Conflict(error: new { Message = "The folder is already in the selected role." });
         }
         catch (DocumentManagementValidationException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
 
-            return BadRequest();
+            return BadRequest(error: "The document management request is invalid.");
+        }
+        catch (ArgumentException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The request is invalid.");
+        }
+        catch (System.Security.Authentication.AuthenticationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authentication failed.");
+
+            return Unauthorized(value: "Authentication failed.");
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
+
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (System.Security.SecurityException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
 
-            return Forbid();
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (Exception exception)
         {
@@ -93,24 +145,45 @@ public class FolderRoleController(
         {
             if (!base.ModelState.IsValid)
             {
-                return new OData.BadRequestResult(modelState: base.ModelState);
+                loggingBroker.LogWarning(message: "Controller request model was invalid.");
+
+                return BadRequest(error: "The request is invalid.");
             }
 
             await service.DeleteAllFolderRoleAsync(deletedFolderRole: deletedFolderRole.Value);
+            loggingBroker.LogInformation(message: "Controller request succeeded.");
 
             return Ok();
         }
         catch (DocumentManagementValidationException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
 
-            return BadRequest();
+            return BadRequest(error: "The document management request is invalid.");
+        }
+        catch (ArgumentException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The request is invalid.");
+        }
+        catch (System.Security.Authentication.AuthenticationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authentication failed.");
+
+            return Unauthorized(value: "Authentication failed.");
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
+
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (System.Security.SecurityException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
 
-            return Forbid();
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (Exception exception)
         {
@@ -131,21 +204,49 @@ public class FolderRoleController(
                 RoleId = keyRoleId,
             });
 
+            loggingBroker.LogInformation(message: "Controller request succeeded.");
             return NoContent();
         }
         catch (DocumentManagementServiceException exception) when (exception.GetBaseException() is System.Security.SecurityException)
         {
-            loggingBroker.LogError(exception: exception, message: "Folder role deletion denied.");
-            return Forbid();
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
+
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (DocumentManagementValidationException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
-            return BadRequest();
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The document management request is invalid.");
+        }
+        catch (ArgumentException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The request is invalid.");
+        }
+        catch (System.Security.Authentication.AuthenticationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authentication failed.");
+
+            return Unauthorized(value: "Authentication failed.");
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
+
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
+        }
+        catch (System.Security.SecurityException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
+
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (Exception exception)
         {
             loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+
             return StatusCode(statusCode: StatusCodes.Status500InternalServerError);
         }
     }

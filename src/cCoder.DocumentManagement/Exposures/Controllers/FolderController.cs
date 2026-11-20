@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using cCoder.CodeAnalysis.Exposures;
@@ -44,19 +45,38 @@ public partial class FolderController(
                 sourceAppId: sourceAppId,
                 destAppId: destAppId);
 
+            loggingBroker.LogInformation(message: "Controller request succeeded.");
             return Ok(value: copiedFolders);
         }
         catch (DocumentManagementValidationException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
 
-            return BadRequest();
+            return BadRequest(error: "The document management request is invalid.");
+        }
+        catch (ArgumentException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The request is invalid.");
+        }
+        catch (System.Security.Authentication.AuthenticationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authentication failed.");
+
+            return Unauthorized(value: "Authentication failed.");
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
+
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (System.Security.SecurityException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
 
-            return Forbid();
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (Exception exception)
         {
@@ -80,13 +100,40 @@ public partial class FolderController(
     {
         try
         {
-            return Ok(value: service.GetAll());
+            IQueryable<Folder> result = service.GetAll();
+            loggingBroker.LogInformation(message: "Controller request succeeded.");
+
+            return Ok(value: result);
+        }
+        catch (DocumentManagementValidationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The document management request is invalid.");
+        }
+        catch (ArgumentException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The request is invalid.");
+        }
+        catch (System.Security.Authentication.AuthenticationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authentication failed.");
+
+            return Unauthorized(value: "Authentication failed.");
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
+
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (System.Security.SecurityException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
 
-            return Forbid();
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (Exception exception)
         {
@@ -114,16 +161,43 @@ public partial class FolderController(
 
             if (result is null)
             {
+                loggingBroker.LogWarning(message: "Controller resource was not found.");
+
                 return NotFound();
             }
 
+            loggingBroker.LogInformation(message: "Controller request succeeded.");
             return Ok(value: result);
+        }
+        catch (DocumentManagementValidationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The document management request is invalid.");
+        }
+        catch (ArgumentException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The request is invalid.");
+        }
+        catch (System.Security.Authentication.AuthenticationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authentication failed.");
+
+            return Unauthorized(value: "Authentication failed.");
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
+
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (System.Security.SecurityException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
 
-            return Forbid();
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (Exception exception)
         {
@@ -148,24 +222,45 @@ public partial class FolderController(
         {
             if (!ModelState.IsValid)
             {
-                return new OData.BadRequestResult(modelState: ModelState);
+                loggingBroker.LogWarning(message: "Controller request model was invalid.");
+
+                return BadRequest(error: "The request is invalid.");
             }
 
             Folder addedFolder = await service.AddFolderAsync(newFolder: newFolder);
+            loggingBroker.LogInformation(message: "Controller request succeeded.");
 
             return StatusCode(statusCode: StatusCodes.Status201Created, value: addedFolder);
         }
         catch (DocumentManagementValidationException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
 
-            return BadRequest();
+            return BadRequest(error: "The document management request is invalid.");
+        }
+        catch (ArgumentException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The request is invalid.");
+        }
+        catch (System.Security.Authentication.AuthenticationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authentication failed.");
+
+            return Unauthorized(value: "Authentication failed.");
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
+
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (System.Security.SecurityException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
 
-            return Forbid();
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (Exception exception)
         {
@@ -190,24 +285,47 @@ public partial class FolderController(
         {
             if (!ModelState.IsValid)
             {
-                return new OData.BadRequestResult(modelState: ModelState);
+                loggingBroker.LogWarning(message: "Controller request model was invalid.");
+
+                return BadRequest(error: "The request is invalid.");
             }
 
             updatedFolder.Id = key;
 
-            return Ok(value: await service.UpdateFolderAsync(updatedFolder: updatedFolder));
+            Folder result = await service.UpdateFolderAsync(updatedFolder: updatedFolder);
+            loggingBroker.LogInformation(message: "Controller request succeeded.");
+
+            return Ok(value: result);
         }
         catch (DocumentManagementValidationException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
 
-            return BadRequest();
+            return BadRequest(error: "The document management request is invalid.");
+        }
+        catch (ArgumentException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The request is invalid.");
+        }
+        catch (System.Security.Authentication.AuthenticationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authentication failed.");
+
+            return Unauthorized(value: "Authentication failed.");
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
+
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (System.Security.SecurityException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
 
-            return Forbid();
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (Exception exception)
         {
@@ -223,20 +341,39 @@ public partial class FolderController(
         try
         {
             await service.DeleteAsync(folderId: key);
+            loggingBroker.LogInformation(message: "Controller request succeeded.");
 
             return NoContent();
         }
         catch (DocumentManagementValidationException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
 
-            return BadRequest();
+            return BadRequest(error: "The document management request is invalid.");
+        }
+        catch (ArgumentException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller request was rejected.");
+
+            return BadRequest(error: "The request is invalid.");
+        }
+        catch (System.Security.Authentication.AuthenticationException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authentication failed.");
+
+            return Unauthorized(value: "Authentication failed.");
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
+
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (System.Security.SecurityException exception)
         {
-            loggingBroker.LogError(exception: exception, message: "Controller request failed.");
+            loggingBroker.LogWarning(exception: exception, message: "Controller authorization failed.");
 
-            return Forbid();
+            return StatusCode(statusCode: StatusCodes.Status403Forbidden, value: "Authorization failed.");
         }
         catch (Exception exception)
         {
