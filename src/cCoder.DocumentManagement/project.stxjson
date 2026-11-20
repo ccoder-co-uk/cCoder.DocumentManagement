@@ -1880,7 +1880,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker.LogError(System.Exception,System.String,System.Object[])",
           "Name": "LogError",
-          "LineNumber": 24,
+          "LineNumber": 30,
           "Inputs": [
             {
               "Name": "exception",
@@ -1923,7 +1923,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker.LogError(System.String,System.Object[])",
           "Name": "LogError",
-          "LineNumber": 21,
+          "LineNumber": 27,
           "Inputs": [
             {
               "Name": "message",
@@ -1982,6 +1982,88 @@
               "TypeName": "Microsoft.Extensions.Logging.LoggerExtensions",
               "MethodName": "LogInformation",
               "MethodId": "Microsoft.Extensions.Logging.LoggerExtensions.LogInformation(Microsoft.Extensions.Logging.ILogger,System.String?,System.Object?[])",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+          "Name": "LogWarning",
+          "LineNumber": 24,
+          "Inputs": [
+            {
+              "Name": "exception",
+              "Type": "System.Exception"
+            },
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Object[]"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Implements": [
+            "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])"
+          ],
+          "Calls": [
+            {
+              "TypeName": "Microsoft.Extensions.Logging.LoggerExtensions",
+              "MethodName": "LogWarning",
+              "MethodId": "Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(Microsoft.Extensions.Logging.ILogger,System.Exception?,System.String?,System.Object?[])",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            }
+          ],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Brokers.Loggings.LoggingBroker.LogWarning(System.String,System.Object[])",
+          "Name": "LogWarning",
+          "LineNumber": 21,
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Object[]"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Implements": [
+            "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])"
+          ],
+          "Calls": [
+            {
+              "TypeName": "Microsoft.Extensions.Logging.LoggerExtensions",
+              "MethodName": "LogWarning",
+              "MethodId": "Microsoft.Extensions.Logging.LoggerExtensions.LogWarning(Microsoft.Extensions.Logging.ILogger,System.String?,System.Object?[])",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             }
@@ -6023,7 +6105,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController.Delete(System.Guid)",
           "Name": "Delete",
-          "LineNumber": 182,
+          "LineNumber": 280,
           "Inputs": [
             {
               "Name": "key",
@@ -6036,14 +6118,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -6062,9 +6137,37 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -6108,17 +6211,47 @@
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -6143,7 +6276,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController.Get(System.Guid)",
           "Name": "Get",
-          "LineNumber": 69,
+          "LineNumber": 96,
           "Inputs": [
             {
               "Name": "key",
@@ -6155,8 +6288,8 @@
           "Calls": [
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodName": "BadRequest",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -6182,6 +6315,20 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "System.Linq.Queryable",
               "MethodName": "FirstOrDefault",
               "MethodId": "System.Linq.Queryable.FirstOrDefault(System.Linq.IQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, System.Boolean\u003E\u003E)",
@@ -6192,6 +6339,27 @@
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -6228,12 +6396,52 @@
               "LogsException": false
             },
             {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -6280,8 +6488,8 @@
           "Calls": [
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodName": "BadRequest",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -6300,9 +6508,37 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -6339,12 +6575,52 @@
               "LogsException": false
             },
             {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -6369,7 +6645,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController.Post(cCoder.Data.Models.DMS.FileContent)",
           "Name": "Post",
-          "LineNumber": 106,
+          "LineNumber": 160,
           "Inputs": [
             {
               "Name": "entity",
@@ -6382,14 +6658,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -6408,9 +6677,37 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -6451,20 +6748,60 @@
             {
               "StatusCode": 400,
               "ResultMethod": "BadRequest",
+              "ExceptionType": "",
+              "IsExceptionPath": false,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": false
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -6489,7 +6826,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileContentController.Put(System.Guid,cCoder.Data.Models.DMS.FileContent)",
           "Name": "Put",
-          "LineNumber": 148,
+          "LineNumber": 223,
           "Inputs": [
             {
               "Name": "key",
@@ -6506,14 +6843,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -6532,9 +6862,44 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -6575,20 +6940,60 @@
             {
               "StatusCode": 400,
               "ResultMethod": "BadRequest",
+              "ExceptionType": "",
+              "IsExceptionPath": false,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": false
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -6615,7 +7020,7 @@
     {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.FileController",
       "StandardElementType": "HttpExposure",
-      "LineNumber": 22,
+      "LineNumber": 23,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": {
@@ -6645,7 +7050,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileController.Delete(System.Guid)",
           "Name": "Delete",
-          "LineNumber": 180,
+          "LineNumber": 279,
           "Inputs": [
             {
               "Name": "key",
@@ -6658,14 +7063,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -6684,9 +7082,37 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -6730,17 +7156,47 @@
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -6765,7 +7221,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileController.Get(System.Guid)",
           "Name": "Get",
-          "LineNumber": 68,
+          "LineNumber": 96,
           "Inputs": [
             {
               "Name": "key",
@@ -6777,8 +7233,8 @@
           "Calls": [
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodName": "BadRequest",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -6804,9 +7260,44 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -6844,12 +7335,52 @@
               "LogsException": false
             },
             {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -6884,7 +7415,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileController.GetAll(Microsoft.AspNetCore.OData.Query.ODataQueryOptions\u003CcCoder.Data.Models.DMS.File\u003E)",
           "Name": "GetAll",
-          "LineNumber": 38,
+          "LineNumber": 39,
           "Inputs": [
             {
               "Name": "queryOptions",
@@ -6896,8 +7427,8 @@
           "Calls": [
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodName": "BadRequest",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -6916,9 +7447,37 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -6955,12 +7514,52 @@
               "LogsException": false
             },
             {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -6985,7 +7584,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileController.Post(cCoder.Data.Models.DMS.File)",
           "Name": "Post",
-          "LineNumber": 104,
+          "LineNumber": 159,
           "Inputs": [
             {
               "Name": "entity",
@@ -6998,14 +7597,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -7024,9 +7616,37 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -7067,20 +7687,60 @@
             {
               "StatusCode": 400,
               "ResultMethod": "BadRequest",
+              "ExceptionType": "",
+              "IsExceptionPath": false,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": false
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -7105,7 +7765,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FileController.Put(System.Guid,cCoder.Data.Models.DMS.File)",
           "Name": "Put",
-          "LineNumber": 146,
+          "LineNumber": 222,
           "Inputs": [
             {
               "Name": "key",
@@ -7122,14 +7782,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -7148,9 +7801,44 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -7191,20 +7879,60 @@
             {
               "StatusCode": 400,
               "ResultMethod": "BadRequest",
+              "ExceptionType": "",
+              "IsExceptionPath": false,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": false
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -7231,7 +7959,7 @@
     {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.FolderController",
       "StandardElementType": "HttpExposure",
-      "LineNumber": 24,
+      "LineNumber": 25,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": {
@@ -7261,7 +7989,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.Delete(System.Guid)",
           "Name": "Delete",
-          "LineNumber": 221,
+          "LineNumber": 339,
           "Inputs": [
             {
               "Name": "key",
@@ -7274,14 +8002,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -7300,9 +8021,37 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -7346,17 +8095,47 @@
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -7381,7 +8160,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.Get(System.Guid)",
           "Name": "Get",
-          "LineNumber": 109,
+          "LineNumber": 156,
           "Inputs": [
             {
               "Name": "key",
@@ -7393,8 +8172,8 @@
           "Calls": [
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodName": "BadRequest",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -7420,9 +8199,44 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -7460,12 +8274,52 @@
               "LogsException": false
             },
             {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -7500,7 +8354,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.GetAll(Microsoft.AspNetCore.OData.Query.ODataQueryOptions\u003CcCoder.Data.Models.DMS.Folder\u003E)",
           "Name": "GetAll",
-          "LineNumber": 79,
+          "LineNumber": 99,
           "Inputs": [
             {
               "Name": "queryOptions",
@@ -7512,8 +8366,8 @@
           "Calls": [
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodName": "BadRequest",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -7532,9 +8386,37 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -7571,12 +8453,52 @@
               "LogsException": false
             },
             {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -7601,7 +8523,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.Post(cCoder.Data.Models.DMS.Folder)",
           "Name": "Post",
-          "LineNumber": 145,
+          "LineNumber": 219,
           "Inputs": [
             {
               "Name": "newFolder",
@@ -7614,14 +8536,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -7640,9 +8555,37 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -7683,20 +8626,60 @@
             {
               "StatusCode": 400,
               "ResultMethod": "BadRequest",
+              "ExceptionType": "",
+              "IsExceptionPath": false,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": false
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -7721,7 +8704,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.PostCopyAsync(System.String,System.String,System.Int32,System.Int32)",
           "Name": "PostCopyAsync",
-          "LineNumber": 32,
+          "LineNumber": 33,
           "Inputs": [
             {
               "Name": "source",
@@ -7746,14 +8729,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -7772,9 +8748,37 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -7816,17 +8820,47 @@
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -7851,7 +8885,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderController.Put(System.Guid,cCoder.Data.Models.DMS.Folder)",
           "Name": "Put",
-          "LineNumber": 187,
+          "LineNumber": 282,
           "Inputs": [
             {
               "Name": "key",
@@ -7868,14 +8902,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -7894,9 +8921,44 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -7938,20 +9000,60 @@
             {
               "StatusCode": 400,
               "ResultMethod": "BadRequest",
+              "ExceptionType": "",
+              "IsExceptionPath": false,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": false
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -7978,7 +9080,7 @@
     {
       "Name": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController",
       "StandardElementType": "HttpExposure",
-      "LineNumber": 21,
+      "LineNumber": 22,
       "IsPublic": true,
       "Kind": "Class",
       "BaseType": {
@@ -8008,7 +9110,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController.Delete(System.Guid,System.Guid)",
           "Name": "Delete",
-          "LineNumber": 124,
+          "LineNumber": 197,
           "Inputs": [
             {
               "Name": "keyFolderId",
@@ -8025,14 +9127,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -8047,6 +9142,20 @@
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "StatusCode",
               "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -8068,6 +9177,20 @@
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -8111,17 +9234,57 @@
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementServiceException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.Security.SecurityException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -8146,7 +9309,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController.DeleteAll(cCoder.DocumentManagement.Models.OData.ODataCollection\u003CcCoder.Data.Models.Security.FolderRole\u003E)",
           "Name": "DeleteAll",
-          "LineNumber": 90,
+          "LineNumber": 142,
           "Inputs": [
             {
               "Name": "deletedFolderRole",
@@ -8159,14 +9322,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -8185,9 +9341,44 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -8228,20 +9419,60 @@
             {
               "StatusCode": 400,
               "ResultMethod": "BadRequest",
+              "ExceptionType": "",
+              "IsExceptionPath": false,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": false
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -8266,15 +9497,15 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController.GetAll()",
           "Name": "GetAll",
-          "LineNumber": 30,
+          "LineNumber": 31,
           "Inputs": [],
           "ReturnType": "Microsoft.AspNetCore.Mvc.IActionResult",
           "Implements": [],
           "Calls": [
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
+              "MethodName": "BadRequest",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -8293,9 +9524,37 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "StatusCode",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.StatusCode(System.Int32,System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -8332,12 +9591,52 @@
               "LogsException": false
             },
             {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -8362,7 +9661,7 @@
         {
           "Id": "cCoder.DocumentManagement.Exposures.Controllers.FolderRoleController.Post(cCoder.Data.Models.Security.FolderRole)",
           "Name": "Post",
-          "LineNumber": 51,
+          "LineNumber": 79,
           "Inputs": [
             {
               "Name": "newFolderRole",
@@ -8375,7 +9674,7 @@
             {
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "BadRequest",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest()",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.BadRequest(System.Object?)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -8383,13 +9682,6 @@
               "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
               "MethodName": "Conflict",
               "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Conflict(System.Object?)",
-              "StandardElementType": "Dependency",
-              "IsDependencyBoundary": true
-            },
-            {
-              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
-              "MethodName": "Forbid",
-              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Forbid()",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -8408,6 +9700,13 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "Microsoft.AspNetCore.Mvc.ControllerBase",
+              "MethodName": "Unauthorized",
+              "MethodId": "Microsoft.AspNetCore.Mvc.ControllerBase.Unauthorized(System.Object?)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "System.Exception",
               "MethodName": "GetBaseException",
               "MethodId": "System.Exception.GetBaseException()",
@@ -8418,6 +9717,27 @@
               "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
               "MethodName": "LogError",
               "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogInformation",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+              "StandardElementType": "Broker",
+              "IsDependencyBoundary": false
+            },
+            {
+              "TypeName": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker",
+              "MethodName": "LogWarning",
+              "MethodId": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])",
               "StandardElementType": "Broker",
               "IsDependencyBoundary": false
             },
@@ -8459,20 +9779,60 @@
             {
               "StatusCode": 400,
               "ResultMethod": "BadRequest",
+              "ExceptionType": "",
+              "IsExceptionPath": false,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": false
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
               "ExceptionType": "cCoder.DocumentManagement.Models.Exceptions.DocumentManagementValidationException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 400,
+              "ResultMethod": "BadRequest",
+              "ExceptionType": "System.ArgumentException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 401,
+              "ResultMethod": "Unauthorized",
+              "ExceptionType": "System.Security.Authentication.AuthenticationException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
             {
               "StatusCode": 403,
-              "ResultMethod": "Forbid",
+              "ResultMethod": "StatusCode",
+              "ExceptionType": "System.UnauthorizedAccessException",
+              "IsExceptionPath": true,
+              "IsNullPath": false,
+              "HasBody": true,
+              "ExposesExceptionDetails": false,
+              "LogsException": true
+            },
+            {
+              "StatusCode": 403,
+              "ResultMethod": "StatusCode",
               "ExceptionType": "System.Security.SecurityException",
               "IsExceptionPath": true,
               "IsNullPath": false,
-              "HasBody": false,
+              "HasBody": true,
               "ExposesExceptionDetails": false,
               "LogsException": true
             },
@@ -25004,7 +26364,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.Exception,System.String,System.Object[])",
           "Name": "LogError",
-          "LineNumber": 14,
+          "LineNumber": 16,
           "Inputs": [
             {
               "Name": "exception",
@@ -25037,7 +26397,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogError(System.String,System.Object[])",
           "Name": "LogError",
-          "LineNumber": 13,
+          "LineNumber": 15,
           "Inputs": [
             {
               "Name": "message",
@@ -25067,6 +26427,68 @@
           "Id": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogInformation(System.String,System.Object[])",
           "Name": "LogInformation",
           "LineNumber": 12,
+          "Inputs": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Object[]"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.Exception,System.String,System.Object[])",
+          "Name": "LogWarning",
+          "LineNumber": 14,
+          "Inputs": [
+            {
+              "Name": "exception",
+              "Type": "System.Exception"
+            },
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Object[]"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Implements": [],
+          "Calls": [],
+          "PossibleExceptionTypes": [],
+          "IncomingExceptionTypes": [],
+          "ThrowsExceptionTypes": [],
+          "HttpMethods": [],
+          "HttpResponses": [],
+          "IsHttpRequestHandler": false,
+          "IsODataControllerAction": false,
+          "HasFromBodyParameter": false,
+          "HasKeyParameter": false,
+          "HandlesNullWithNotFound": false,
+          "HasTryCatch": false
+        },
+        {
+          "Id": "cCoder.DocumentManagement.Brokers.Loggings.ILoggingBroker.LogWarning(System.String,System.Object[])",
+          "Name": "LogWarning",
+          "LineNumber": 13,
           "Inputs": [
             {
               "Name": "message",
