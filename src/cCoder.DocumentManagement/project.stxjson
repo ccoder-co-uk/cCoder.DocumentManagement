@@ -3090,7 +3090,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FileBroker.DeleteAllFilesAsync(System.Collections.Generic.IEnumerable\u003CcCoder.Data.Models.DMS.File\u003E)",
           "Name": "DeleteAllFilesAsync",
-          "LineNumber": 182,
+          "LineNumber": 191,
           "Inputs": [
             {
               "Name": "items",
@@ -3145,7 +3145,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FileBroker.DeleteFileAsync(cCoder.Data.Models.DMS.File)",
           "Name": "DeleteFileAsync",
-          "LineNumber": 175,
+          "LineNumber": 184,
           "Inputs": [
             {
               "Name": "entity",
@@ -3200,7 +3200,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FileBroker.InsertFileAsync(cCoder.Data.Models.DMS.File)",
           "Name": "InsertFileAsync",
-          "LineNumber": 159,
+          "LineNumber": 168,
           "Inputs": [
             {
               "Name": "entity",
@@ -3290,7 +3290,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FileBroker.SelectAppId(cCoder.Data.Models.DMS.File)",
           "Name": "SelectAppId",
-          "LineNumber": 189,
+          "LineNumber": 198,
           "Inputs": [
             {
               "Name": "entity",
@@ -3374,9 +3374,30 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "System.Linq.Enumerable",
+              "MethodName": "Max",
+              "MethodId": "System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable\u003CTSource\u003E,System.Func\u003CTSource, TResult\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "System.Linq.Queryable",
               "MethodName": "FirstOrDefault",
               "MethodId": "System.Linq.Queryable.FirstOrDefault(System.Linq.IQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, System.Boolean\u003E\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Queryable",
+              "MethodName": "OrderByDescending",
+              "MethodId": "System.Linq.Queryable.OrderByDescending(System.Linq.IQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, TKey\u003E\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Queryable",
+              "MethodName": "ThenByDescending",
+              "MethodId": "System.Linq.Queryable.ThenByDescending(System.Linq.IOrderedQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, TKey\u003E\u003E)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -3410,7 +3431,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FileBroker.SelectFileByPathWithFolderAndContents(System.Int32,System.String,System.Boolean)",
           "Name": "SelectFileByPathWithFolderAndContents",
-          "LineNumber": 73,
+          "LineNumber": 76,
           "Inputs": [
             {
               "Name": "appId",
@@ -3438,9 +3459,30 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "System.Linq.Enumerable",
+              "MethodName": "Max",
+              "MethodId": "System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable\u003CTSource\u003E,System.Func\u003CTSource, TResult\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "System.Linq.Queryable",
               "MethodName": "FirstOrDefault",
               "MethodId": "System.Linq.Queryable.FirstOrDefault(System.Linq.IQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, System.Boolean\u003E\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Queryable",
+              "MethodName": "OrderByDescending",
+              "MethodId": "System.Linq.Queryable.OrderByDescending(System.Linq.IQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, TKey\u003E\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Queryable",
+              "MethodName": "ThenByDescending",
+              "MethodId": "System.Linq.Queryable.ThenByDescending(System.Linq.IOrderedQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, TKey\u003E\u003E)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -3474,7 +3516,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FileBroker.SelectFileByPathWithFolderRolesAndContents(System.Int32,System.String,System.Boolean)",
           "Name": "SelectFileByPathWithFolderRolesAndContents",
-          "LineNumber": 87,
+          "LineNumber": 93,
           "Inputs": [
             {
               "Name": "appId",
@@ -3516,9 +3558,30 @@
               "IsDependencyBoundary": true
             },
             {
+              "TypeName": "System.Linq.Enumerable",
+              "MethodName": "Max",
+              "MethodId": "System.Linq.Enumerable.Max(System.Collections.Generic.IEnumerable\u003CTSource\u003E,System.Func\u003CTSource, TResult\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
               "TypeName": "System.Linq.Queryable",
               "MethodName": "FirstOrDefault",
               "MethodId": "System.Linq.Queryable.FirstOrDefault(System.Linq.IQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, System.Boolean\u003E\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Queryable",
+              "MethodName": "OrderByDescending",
+              "MethodId": "System.Linq.Queryable.OrderByDescending(System.Linq.IQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, TKey\u003E\u003E)",
+              "StandardElementType": "Dependency",
+              "IsDependencyBoundary": true
+            },
+            {
+              "TypeName": "System.Linq.Queryable",
+              "MethodName": "ThenByDescending",
+              "MethodId": "System.Linq.Queryable.ThenByDescending(System.Linq.IOrderedQueryable\u003CTSource\u003E,System.Linq.Expressions.Expression\u003CSystem.Func\u003CTSource, TKey\u003E\u003E)",
               "StandardElementType": "Dependency",
               "IsDependencyBoundary": true
             },
@@ -3552,7 +3615,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FileBroker.SelectFileIdsByFolderIds(System.Guid[],System.Boolean)",
           "Name": "SelectFileIdsByFolderIds",
-          "LineNumber": 59,
+          "LineNumber": 62,
           "Inputs": [
             {
               "Name": "folderIds",
@@ -3619,7 +3682,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FileBroker.SelectFileWithFolderAndContents(System.Guid,System.Boolean)",
           "Name": "SelectFileWithFolderAndContents",
-          "LineNumber": 103,
+          "LineNumber": 112,
           "Inputs": [
             {
               "Name": "fileId",
@@ -3672,7 +3735,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FileBroker.SelectFileWithFolderRolesAndContents(System.Guid,System.Boolean)",
           "Name": "SelectFileWithFolderRolesAndContents",
-          "LineNumber": 117,
+          "LineNumber": 126,
           "Inputs": [
             {
               "Name": "fileId",
@@ -3739,7 +3802,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FileBroker.SelectFilesByContent(System.Int32,System.Byte[])",
           "Name": "SelectFilesByContent",
-          "LineNumber": 133,
+          "LineNumber": 142,
           "Inputs": [
             {
               "Name": "appId",
@@ -3806,7 +3869,7 @@
         {
           "Id": "cCoder.DocumentManagement.Brokers.Storage.FileBroker.UpdateFileAsync(cCoder.Data.Models.DMS.File)",
           "Name": "UpdateFileAsync",
-          "LineNumber": 167,
+          "LineNumber": 176,
           "Inputs": [
             {
               "Name": "entity",
