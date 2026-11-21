@@ -136,4 +136,113 @@ public sealed partial class DmsMiddlewareTests
             _ = await core.SaveChangesAsync();
         }
     }
+
+    [Fact]
+    public async Task Invoke_ReturnsLatestLogicalFileWhenLegacyRowsSharePath()
+    {
+        // Given
+        string unique = Guid.NewGuid()
+            .ToString(format: "N");
+
+        string folderPath = $"latest-logical-file-{unique}";
+        string filePath = $"{folderPath}/document.txt";
+        Guid folderId;
+        Guid oldestFileId;
+        Guid latestFileId;
+
+        using (IServiceScope scope = fixture.Factory.Services.CreateScope())
+        {
+            using var core = scope.ServiceProvider
+                .GetRequiredService<cCoder.Data.ICoreContextFactory>()
+                .CreateCoreContext();
+
+            Folder folder = await core.InsertFolderAsync(folder: new Folder
+            {
+                AppId = 1,
+                Name = folderPath,
+                Path = folderPath,
+            });
+
+            DmsFile oldestFile = await core.InsertFileAsync(file: new DmsFile
+            {
+                FolderId = folder.Id,
+                Name = "document.txt",
+                Path = filePath,
+                MimeType = "text/plain",
+                CreatedOn = DateTimeOffset.UtcNow.AddDays(days: -1),
+            });
+
+            _ = await core.InsertFileContentAsync(fileContent: new FileContent
+            {
+                FileId = oldestFile.Id,
+                Version = 1,
+                CreatedOn = DateTimeOffset.UtcNow.AddDays(days: -1),
+                RawData = Encoding.UTF8.GetBytes(s: "oldest logical file"),
+            });
+
+            DmsFile latestFile = await core.InsertFileAsync(file: new DmsFile
+            {
+                FolderId = folder.Id,
+                Name = "document.txt",
+                Path = filePath,
+                MimeType = "text/plain",
+                CreatedOn = DateTimeOffset.UtcNow,
+            });
+
+            _ = await core.InsertFileContentAsync(fileContent: new FileContent
+            {
+                FileId = latestFile.Id,
+                Version = 1,
+                CreatedOn = DateTimeOffset.UtcNow,
+                RawData = Encoding.UTF8.GetBytes(s: "latest logical file"),
+            });
+
+            folderId = folder.Id;
+            oldestFileId = oldestFile.Id;
+            latestFileId = latestFile.Id;
+        }
+
+        string actualContent;
+
+        // When
+        using (HttpResponseMessage response = await Client.GetAsync(requestUri: $"{BaseUrl}/{filePath}"))
+        {
+            actualContent = await response.Content.ReadAsStringAsync();
+
+            response.StatusCode.Should()
+                .Be(expected: HttpStatusCode.OK, because: actualContent);
+        }
+
+        // Then
+        actualContent.Should()
+            .Be(expected: "latest logical file");
+
+        using (IServiceScope scope = fixture.Factory.Services.CreateScope())
+        {
+            using var core = scope.ServiceProvider
+                .GetRequiredService<cCoder.Data.ICoreContextFactory>()
+                .CreateCoreContext();
+
+            FileContent[] contents = await core.Set<FileContent>()
+                .IgnoreQueryFilters()
+                .Where(predicate: content => content.FileId == oldestFileId || content.FileId == latestFileId)
+                .ToArrayAsync();
+
+            core.RemoveRange(entities: contents);
+
+            DmsFile[] files = await core.Set<DmsFile>()
+                .IgnoreQueryFilters()
+                .Where(predicate: found => found.Id == oldestFileId || found.Id == latestFileId)
+                .ToArrayAsync();
+
+            core.RemoveRange(entities: files);
+
+            Folder folder = await core.Set<Folder>()
+                .IgnoreQueryFilters()
+                .SingleAsync(predicate: found => found.Id == folderId);
+
+            core.Remove(entity: folder);
+            _ = await core.SaveChangesAsync();
+        }
+    }
 }

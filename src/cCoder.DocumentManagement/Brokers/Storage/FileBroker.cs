@@ -53,6 +53,9 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
 
         return query
             .Include(navigationPropertyPath: file => file.Folder)
+            .OrderByDescending(keySelector: file => file.Contents
+                .Max(selector: content => (DateTimeOffset?)content.CreatedOn) ?? file.CreatedOn)
+            .ThenByDescending(keySelector: file => file.CreatedOn)
             .FirstOrDefault(predicate: file => file.Folder.AppId == appId && file.Path.ToLower() == path.ToLower());
     }
 
@@ -81,6 +84,9 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
         return query
             .Include(navigationPropertyPath: file => file.Folder)
             .Include(navigationPropertyPath: file => file.Contents)
+            .OrderByDescending(keySelector: file => file.Contents
+                .Max(selector: content => (DateTimeOffset?)content.CreatedOn) ?? file.CreatedOn)
+            .ThenByDescending(keySelector: file => file.CreatedOn)
             .FirstOrDefault(predicate: file => file.Folder.AppId == appId && file.Path.ToLower() == path.ToLower());
     }
 
@@ -97,6 +103,9 @@ internal sealed class FileBroker(ICoreContextFactory coreContextFactory) : IFile
             .Include(navigationPropertyPath: file => file.Folder)
                 .ThenInclude(navigationPropertyPath: folder => folder.Roles)
                     .ThenInclude(navigationPropertyPath: folderRole => folderRole.Role)
+            .OrderByDescending(keySelector: file => file.Contents
+                .Max(selector: content => (DateTimeOffset?)content.CreatedOn) ?? file.CreatedOn)
+            .ThenByDescending(keySelector: file => file.CreatedOn)
             .FirstOrDefault(predicate: file => file.Folder.AppId == appId && file.Path.ToLower() == path.ToLower());
     }
 
